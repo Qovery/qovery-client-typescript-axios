@@ -4882,6 +4882,25 @@ export enum EnvironmentEditRequestModeEnum {
 /**
  * 
  * @export
+ * @interface EnvironmentEnvironmentIdApplicationDeployApplications
+ */
+export interface EnvironmentEnvironmentIdApplicationDeployApplications {
+    /**
+     * id of the application to be deployed.
+     * @type {string}
+     * @memberof EnvironmentEnvironmentIdApplicationDeployApplications
+     */
+    'application_id': string;
+    /**
+     * Commit ID to deploy.
+     * @type {string}
+     * @memberof EnvironmentEnvironmentIdApplicationDeployApplications
+     */
+    'git_commit_id': string;
+}
+/**
+ * 
+ * @export
  * @interface EnvironmentLogPaginatedResponseList
  */
 export interface EnvironmentLogPaginatedResponseList {
@@ -5877,6 +5896,19 @@ export interface InlineObject {
      * @memberof InlineObject
      */
     'project_deployment_rule_ids_in_order'?: Array<ProjectProjectIdDeploymentRuleOrderProjectDeploymentRuleIdsInOrder>;
+}
+/**
+ * 
+ * @export
+ * @interface InlineObject1
+ */
+export interface InlineObject1 {
+    /**
+     * 
+     * @type {Array<EnvironmentEnvironmentIdApplicationDeployApplications>}
+     * @memberof InlineObject1
+     */
+    'applications'?: Array<EnvironmentEnvironmentIdApplicationDeployApplications>;
 }
 /**
  * 
@@ -12927,6 +12959,48 @@ export const ApplicationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
+         * Deploy to the last commit the applications you specified.
+         * @summary Deploy applications
+         * @param {string} environmentId Environment ID
+         * @param {InlineObject1} [inlineObject1] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deployAllApplications: async (environmentId: string, inlineObject1?: InlineObject1, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('deployAllApplications', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/application/deploy`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject1, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary List running instances with CPU and RAM usage for each application
          * @param {string} environmentId Environment ID
@@ -13182,6 +13256,18 @@ export const ApplicationsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Deploy to the last commit the applications you specified.
+         * @summary Deploy applications
+         * @param {string} environmentId Environment ID
+         * @param {InlineObject1} [inlineObject1] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deployAllApplications(environmentId: string, inlineObject1?: InlineObject1, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deployAllApplications(environmentId, inlineObject1, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * 
          * @summary List running instances with CPU and RAM usage for each application
          * @param {string} environmentId Environment ID
@@ -13270,6 +13356,17 @@ export const ApplicationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.createApplication(environmentId, applicationRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * Deploy to the last commit the applications you specified.
+         * @summary Deploy applications
+         * @param {string} environmentId Environment ID
+         * @param {InlineObject1} [inlineObject1] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deployAllApplications(environmentId: string, inlineObject1?: InlineObject1, options?: any): AxiosPromise<Status> {
+            return localVarFp.deployAllApplications(environmentId, inlineObject1, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary List running instances with CPU and RAM usage for each application
          * @param {string} environmentId Environment ID
@@ -13351,6 +13448,19 @@ export class ApplicationsApi extends BaseAPI {
      */
     public createApplication(environmentId: string, applicationRequest?: ApplicationRequest, options?: AxiosRequestConfig) {
         return ApplicationsApiFp(this.configuration).createApplication(environmentId, applicationRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Deploy to the last commit the applications you specified.
+     * @summary Deploy applications
+     * @param {string} environmentId Environment ID
+     * @param {InlineObject1} [inlineObject1] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApplicationsApi
+     */
+    public deployAllApplications(environmentId: string, inlineObject1?: InlineObject1, options?: AxiosRequestConfig) {
+        return ApplicationsApiFp(this.configuration).deployAllApplications(environmentId, inlineObject1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
