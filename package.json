@@ -1,14 +1,14 @@
 {
-  "name": "qovery-typescript-axiox",
-  "version": "$(grep &#39;version&#39; _build/openapi.yaml | head -1 | tr &#39;:&#39; &#39;\n&#39; | tail -1 | tr -d &#39; &#39;)",
-  "description": "OpenAPI client for qovery-typescript-axiox",
+  "name": "qovery-typescript-axios",
+  "version": "1.0.3",
+  "description": "OpenAPI client for qovery-typescript-axios",
   "author": "OpenAPI-Generator Contributors",
   "keywords": [
     "axios",
     "typescript",
     "openapi-client",
     "openapi-generator",
-    "qovery-typescript-axiox"
+    "qovery-typescript-axios"
   ],
   "license": "Unlicense",
   "main": "./dist/index.js",
