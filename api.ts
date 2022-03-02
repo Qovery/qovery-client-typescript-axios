@@ -6921,6 +6921,202 @@ export interface Name {
 /**
  * 
  * @export
+ * @interface OrganizationApiTokenCreateRequest
+ */
+export interface OrganizationApiTokenCreateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenCreateRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenCreateRequest
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {OrganizationApiTokenScope}
+     * @memberof OrganizationApiTokenCreateRequest
+     */
+    'scope': OrganizationApiTokenScope;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationApiTokenCreateResponse
+ */
+export interface OrganizationApiTokenCreateResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenCreateResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenCreateResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenCreateResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenCreateResponse
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenCreateResponse
+     */
+    'description'?: string;
+    /**
+     * the generated token to send in \'Authorization\' header prefixed by \'Token \'
+     * @type {string}
+     * @memberof OrganizationApiTokenCreateResponse
+     */
+    'token'?: string;
+    /**
+     * 
+     * @type {OrganizationApiTokenScope}
+     * @memberof OrganizationApiTokenCreateResponse
+     */
+    'scope'?: OrganizationApiTokenScope;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationApiTokenCreateResponseAllOf
+ */
+export interface OrganizationApiTokenCreateResponseAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenCreateResponseAllOf
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenCreateResponseAllOf
+     */
+    'description'?: string;
+    /**
+     * the generated token to send in \'Authorization\' header prefixed by \'Token \'
+     * @type {string}
+     * @memberof OrganizationApiTokenCreateResponseAllOf
+     */
+    'token'?: string;
+    /**
+     * 
+     * @type {OrganizationApiTokenScope}
+     * @memberof OrganizationApiTokenCreateResponseAllOf
+     */
+    'scope'?: OrganizationApiTokenScope;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationApiTokenResponse
+ */
+export interface OrganizationApiTokenResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenResponse
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenResponse
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {OrganizationApiTokenScope}
+     * @memberof OrganizationApiTokenResponse
+     */
+    'scope'?: OrganizationApiTokenScope;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationApiTokenResponseAllOf
+ */
+export interface OrganizationApiTokenResponseAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenResponseAllOf
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenResponseAllOf
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {OrganizationApiTokenScope}
+     * @memberof OrganizationApiTokenResponseAllOf
+     */
+    'scope'?: OrganizationApiTokenScope;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationApiTokenResponseList
+ */
+export interface OrganizationApiTokenResponseList {
+    /**
+     * 
+     * @type {Array<OrganizationApiTokenResponse>}
+     * @memberof OrganizationApiTokenResponseList
+     */
+    'results'?: Array<OrganizationApiTokenResponse>;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum OrganizationApiTokenScope {
+    ADMIN = 'ADMIN'
+}
+
+/**
+ * 
+ * @export
  * @interface OrganizationCreditCodeRequest
  */
 export interface OrganizationCreditCodeRequest {
@@ -24425,6 +24621,271 @@ export class MembersApi extends BaseAPI {
      */
     public postOrganizationTransferOwnership(organizationId: string, transferOwnershipRequest?: TransferOwnershipRequest, options?: AxiosRequestConfig) {
         return MembersApiFp(this.configuration).postOrganizationTransferOwnership(organizationId, transferOwnershipRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * OrganizationApiTokenApi - axios parameter creator
+ * @export
+ */
+export const OrganizationApiTokenApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Create an organization api token
+         * @summary Create an organization api token
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationApiTokenCreateRequest} [organizationApiTokenCreateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrganizationApiToken: async (organizationId: string, organizationApiTokenCreateRequest?: OrganizationApiTokenCreateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('createOrganizationApiToken', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/apiToken`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organizationApiTokenCreateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete organization api token
+         * @summary Delete organization api token
+         * @param {string} organizationId Organization ID
+         * @param {string} apiTokenId Organization Api Token ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteOrganizationApiToken: async (organizationId: string, apiTokenId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('deleteOrganizationApiToken', 'organizationId', organizationId)
+            // verify required parameter 'apiTokenId' is not null or undefined
+            assertParamExists('deleteOrganizationApiToken', 'apiTokenId', apiTokenId)
+            const localVarPath = `/organization/{organizationId}/apiToken/{apiTokenId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"apiTokenId"}}`, encodeURIComponent(String(apiTokenId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List organization api tokens
+         * @summary List organization api tokens
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationApiTokens: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listOrganizationApiTokens', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/apiToken`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * OrganizationApiTokenApi - functional programming interface
+ * @export
+ */
+export const OrganizationApiTokenApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = OrganizationApiTokenApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Create an organization api token
+         * @summary Create an organization api token
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationApiTokenCreateRequest} [organizationApiTokenCreateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createOrganizationApiToken(organizationId: string, organizationApiTokenCreateRequest?: OrganizationApiTokenCreateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationApiTokenCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createOrganizationApiToken(organizationId, organizationApiTokenCreateRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Delete organization api token
+         * @summary Delete organization api token
+         * @param {string} organizationId Organization ID
+         * @param {string} apiTokenId Organization Api Token ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteOrganizationApiToken(organizationId: string, apiTokenId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOrganizationApiToken(organizationId, apiTokenId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * List organization api tokens
+         * @summary List organization api tokens
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listOrganizationApiTokens(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationApiTokenResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizationApiTokens(organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * OrganizationApiTokenApi - factory interface
+ * @export
+ */
+export const OrganizationApiTokenApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = OrganizationApiTokenApiFp(configuration)
+    return {
+        /**
+         * Create an organization api token
+         * @summary Create an organization api token
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationApiTokenCreateRequest} [organizationApiTokenCreateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrganizationApiToken(organizationId: string, organizationApiTokenCreateRequest?: OrganizationApiTokenCreateRequest, options?: any): AxiosPromise<OrganizationApiTokenCreateResponse> {
+            return localVarFp.createOrganizationApiToken(organizationId, organizationApiTokenCreateRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete organization api token
+         * @summary Delete organization api token
+         * @param {string} organizationId Organization ID
+         * @param {string} apiTokenId Organization Api Token ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteOrganizationApiToken(organizationId: string, apiTokenId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteOrganizationApiToken(organizationId, apiTokenId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List organization api tokens
+         * @summary List organization api tokens
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationApiTokens(organizationId: string, options?: any): AxiosPromise<OrganizationApiTokenResponseList> {
+            return localVarFp.listOrganizationApiTokens(organizationId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * OrganizationApiTokenApi - object-oriented interface
+ * @export
+ * @class OrganizationApiTokenApi
+ * @extends {BaseAPI}
+ */
+export class OrganizationApiTokenApi extends BaseAPI {
+    /**
+     * Create an organization api token
+     * @summary Create an organization api token
+     * @param {string} organizationId Organization ID
+     * @param {OrganizationApiTokenCreateRequest} [organizationApiTokenCreateRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationApiTokenApi
+     */
+    public createOrganizationApiToken(organizationId: string, organizationApiTokenCreateRequest?: OrganizationApiTokenCreateRequest, options?: AxiosRequestConfig) {
+        return OrganizationApiTokenApiFp(this.configuration).createOrganizationApiToken(organizationId, organizationApiTokenCreateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete organization api token
+     * @summary Delete organization api token
+     * @param {string} organizationId Organization ID
+     * @param {string} apiTokenId Organization Api Token ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationApiTokenApi
+     */
+    public deleteOrganizationApiToken(organizationId: string, apiTokenId: string, options?: AxiosRequestConfig) {
+        return OrganizationApiTokenApiFp(this.configuration).deleteOrganizationApiToken(organizationId, apiTokenId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List organization api tokens
+     * @summary List organization api tokens
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationApiTokenApi
+     */
+    public listOrganizationApiTokens(organizationId: string, options?: AxiosRequestConfig) {
+        return OrganizationApiTokenApiFp(this.configuration).listOrganizationApiTokens(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
