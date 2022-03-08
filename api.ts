@@ -109,23 +109,11 @@ export interface AliasedSecret {
     'key'?: string;
     /**
      * 
-     * @type {string}
+     * @type {EnvironmentVariableScopeEnum}
      * @memberof AliasedSecret
      */
-    'scope'?: AliasedSecretScopeEnum;
+    'scope'?: EnvironmentVariableScopeEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum AliasedSecretScopeEnum {
-    BUILT_IN = 'BUILT_IN',
-    ENVIRONMENT = 'ENVIRONMENT',
-    PROJECT = 'PROJECT',
-    APPLICATION = 'APPLICATION'
-}
-
 /**
  * 
  * @export
@@ -170,10 +158,10 @@ export interface ApplicationCurrentScaleResponse {
     'alert_threshold_in_percent'?: number;
     /**
      * 
-     * @type {string}
+     * @type {ThresholdMetricStatusEnum}
      * @memberof ApplicationCurrentScaleResponse
      */
-    'status'?: ApplicationCurrentScaleResponseStatusEnum;
+    'status'?: ThresholdMetricStatusEnum;
     /**
      * 
      * @type {string}
@@ -181,17 +169,6 @@ export interface ApplicationCurrentScaleResponse {
      */
     'updated_at'?: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ApplicationCurrentScaleResponseStatusEnum {
-    OK = 'OK',
-    WARNING = 'Warning',
-    ALERT = 'Alert'
-}
-
 /**
  * 
  * @export
@@ -212,17 +189,17 @@ export interface ApplicationDependencyRequest {
  */
 export interface ApplicationDeploymentRestriction {
     /**
-     * Match mode will rebuild app only if specified items are updated. Exclude mode will not rebuild app if specified items are updated.
-     * @type {string}
+     * 
+     * @type {DeploymentRestrictionModeEnum}
      * @memberof ApplicationDeploymentRestriction
      */
-    'mode': ApplicationDeploymentRestrictionModeEnum;
+    'mode': DeploymentRestrictionModeEnum;
     /**
      * 
-     * @type {string}
+     * @type {DeploymentRestrictionTypeEnum}
      * @memberof ApplicationDeploymentRestriction
      */
-    'type': ApplicationDeploymentRestrictionTypeEnum;
+    'type': DeploymentRestrictionTypeEnum;
     /**
      * 
      * @type {string}
@@ -230,24 +207,6 @@ export interface ApplicationDeploymentRestriction {
      */
     'value': string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ApplicationDeploymentRestrictionModeEnum {
-    MATCH = 'MATCH',
-    EXCLUDE = 'EXCLUDE'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ApplicationDeploymentRestrictionTypeEnum {
-    FILE = 'FILE',
-    PATH = 'PATH'
-}
-
 /**
  * 
  * @export
@@ -329,11 +288,11 @@ export interface ApplicationEditRequest {
      */
     'git_repository'?: ApplicationGitRepositoryRequest;
     /**
-     * `DOCKER` requires `dockerfile_path` `BUILDPACKS` does not require any `dockerfile_path` 
-     * @type {string}
+     * 
+     * @type {BuildModeEnum}
      * @memberof ApplicationEditRequest
      */
-    'build_mode'?: ApplicationEditRequestBuildModeEnum;
+    'build_mode'?: BuildModeEnum;
     /**
      * The path of the associated Dockerfile
      * @type {string}
@@ -389,16 +348,6 @@ export interface ApplicationEditRequest {
      */
     'sticky_session'?: boolean;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ApplicationEditRequestBuildModeEnum {
-    DOCKER = 'DOCKER',
-    BUILDPACKS = 'BUILDPACKS'
-}
-
 /**
  * 
  * @export
@@ -424,11 +373,11 @@ export interface ApplicationEditRequestAllOf {
      */
     'git_repository'?: ApplicationGitRepositoryRequest;
     /**
-     * `DOCKER` requires `dockerfile_path` `BUILDPACKS` does not require any `dockerfile_path` 
-     * @type {string}
+     * 
+     * @type {BuildModeEnum}
      * @memberof ApplicationEditRequestAllOf
      */
-    'build_mode'?: ApplicationEditRequestAllOfBuildModeEnum;
+    'build_mode'?: BuildModeEnum;
     /**
      * The path of the associated Dockerfile
      * @type {string}
@@ -484,16 +433,6 @@ export interface ApplicationEditRequestAllOf {
      */
     'sticky_session'?: boolean;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ApplicationEditRequestAllOfBuildModeEnum {
-    DOCKER = 'DOCKER',
-    BUILDPACKS = 'BUILDPACKS'
-}
-
 /**
  * 
  * @export
@@ -533,10 +472,10 @@ export interface ApplicationGitRepositoryResponse {
     'has_access'?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {GitProviderEnum}
      * @memberof ApplicationGitRepositoryResponse
      */
-    'provider'?: ApplicationGitRepositoryResponseProviderEnum;
+    'provider'?: GitProviderEnum;
     /**
      * 
      * @type {string}
@@ -592,16 +531,6 @@ export interface ApplicationGitRepositoryResponse {
      */
     'deployed_commit_tag'?: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ApplicationGitRepositoryResponseProviderEnum {
-    GITHUB = 'GITHUB',
-    GITLAB = 'GITLAB'
-}
-
 /**
  * 
  * @export
@@ -673,23 +602,11 @@ export interface ApplicationPortRequestPorts {
     'publicly_accessible': boolean;
     /**
      * 
-     * @type {string}
+     * @type {PortProtocolEnum}
      * @memberof ApplicationPortRequestPorts
      */
-    'protocol'?: ApplicationPortRequestPortsProtocolEnum;
+    'protocol'?: PortProtocolEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ApplicationPortRequestPortsProtocolEnum {
-    HTTPS = 'HTTPS',
-    HTTP = 'HTTP',
-    TCP = 'TCP',
-    UDP = 'UDP'
-}
-
 /**
  * 
  * @export
@@ -741,23 +658,11 @@ export interface ApplicationPortResponsePorts {
     'publicly_accessible': boolean;
     /**
      * 
-     * @type {string}
+     * @type {PortProtocolEnum}
      * @memberof ApplicationPortResponsePorts
      */
-    'protocol'?: ApplicationPortResponsePortsProtocolEnum;
+    'protocol'?: PortProtocolEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ApplicationPortResponsePortsProtocolEnum {
-    HTTPS = 'HTTPS',
-    HTTP = 'HTTP',
-    TCP = 'TCP',
-    UDP = 'UDP'
-}
-
 /**
  * 
  * @export
@@ -795,11 +700,11 @@ export interface ApplicationRequest {
      */
     'git_repository': ApplicationGitRepositoryRequest;
     /**
-     * `DOCKER` requires `dockerfile_path` `BUILDPACKS` does not require any `dockerfile_path` 
-     * @type {string}
+     * 
+     * @type {BuildModeEnum}
      * @memberof ApplicationRequest
      */
-    'build_mode'?: ApplicationRequestBuildModeEnum;
+    'build_mode'?: BuildModeEnum;
     /**
      * The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
      * @type {string}
@@ -849,16 +754,6 @@ export interface ApplicationRequest {
      */
     'auto_preview'?: boolean;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ApplicationRequestBuildModeEnum {
-    DOCKER = 'DOCKER',
-    BUILDPACKS = 'BUILDPACKS'
-}
-
 /**
  * 
  * @export
@@ -884,11 +779,11 @@ export interface ApplicationRequestAllOf {
      */
     'git_repository': ApplicationGitRepositoryRequest;
     /**
-     * `DOCKER` requires `dockerfile_path` `BUILDPACKS` does not require any `dockerfile_path` 
-     * @type {string}
+     * 
+     * @type {BuildModeEnum}
      * @memberof ApplicationRequestAllOf
      */
-    'build_mode'?: ApplicationRequestAllOfBuildModeEnum;
+    'build_mode'?: BuildModeEnum;
     /**
      * The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
      * @type {string}
@@ -938,16 +833,6 @@ export interface ApplicationRequestAllOf {
      */
     'auto_preview'?: boolean;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ApplicationRequestAllOfBuildModeEnum {
-    DOCKER = 'DOCKER',
-    BUILDPACKS = 'BUILDPACKS'
-}
-
 /**
  * 
  * @export
@@ -1021,11 +906,11 @@ export interface ApplicationResponse {
      */
     'description'?: string | null;
     /**
-     * `DOCKER` requires `dockerfile_path` `BUILDPACKS` does not require any `dockerfile_path` 
-     * @type {string}
+     * 
+     * @type {BuildModeEnum}
      * @memberof ApplicationResponse
      */
-    'build_mode'?: ApplicationResponseBuildModeEnum;
+    'build_mode'?: BuildModeEnum;
     /**
      * The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
      * @type {string}
@@ -1075,16 +960,6 @@ export interface ApplicationResponse {
      */
     'auto_preview'?: boolean;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ApplicationResponseBuildModeEnum {
-    DOCKER = 'DOCKER',
-    BUILDPACKS = 'BUILDPACKS'
-}
-
 /**
  * 
  * @export
@@ -1128,11 +1003,11 @@ export interface ApplicationResponseAllOf {
      */
     'description'?: string | null;
     /**
-     * `DOCKER` requires `dockerfile_path` `BUILDPACKS` does not require any `dockerfile_path` 
-     * @type {string}
+     * 
+     * @type {BuildModeEnum}
      * @memberof ApplicationResponseAllOf
      */
-    'build_mode'?: ApplicationResponseAllOfBuildModeEnum;
+    'build_mode'?: BuildModeEnum;
     /**
      * The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
      * @type {string}
@@ -1182,16 +1057,6 @@ export interface ApplicationResponseAllOf {
      */
     'auto_preview'?: boolean;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ApplicationResponseAllOfBuildModeEnum {
-    DOCKER = 'DOCKER',
-    BUILDPACKS = 'BUILDPACKS'
-}
-
 /**
  * 
  * @export
@@ -1279,10 +1144,10 @@ export interface ApplicationStorageResponseStorage {
     'id'?: string;
     /**
      * 
-     * @type {string}
+     * @type {StorageTypeEnum}
      * @memberof ApplicationStorageResponseStorage
      */
-    'type': ApplicationStorageResponseStorageTypeEnum;
+    'type': StorageTypeEnum;
     /**
      * unit is GB
      * @type {number}
@@ -1296,18 +1161,6 @@ export interface ApplicationStorageResponseStorage {
      */
     'mount_point': string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ApplicationStorageResponseStorageTypeEnum {
-    SLOW_HDD = 'SLOW_HDD',
-    HDD = 'HDD',
-    SSD = 'SSD',
-    FAST_SSD = 'FAST_SSD'
-}
-
 /**
  * 
  * @export
@@ -1720,6 +1573,17 @@ export interface BudgetThreshold {
     'currency_code'?: string;
 }
 /**
+ * `DOCKER` requires `dockerfile_path` `BUILDPACKS` does not require any `dockerfile_path` 
+ * @export
+ * @enum {string}
+ */
+
+export enum BuildModeEnum {
+    DOCKER = 'DOCKER',
+    BUILDPACKS = 'BUILDPACKS'
+}
+
+/**
  * Development language of the application
  * @export
  * @enum {string}
@@ -1759,21 +1623,21 @@ export interface CloneRequest {
     'cluster_id'?: string;
     /**
      * 
-     * @type {string}
+     * @type {EnvironmentModeEnum}
      * @memberof CloneRequest
      */
-    'mode'?: CloneRequestModeEnum;
+    'mode'?: EnvironmentModeEnum;
 }
-
 /**
-    * @export
-    * @enum {string}
-    */
-export enum CloneRequestModeEnum {
-    PRODUCTION = 'PRODUCTION',
-    DEVELOPMENT = 'DEVELOPMENT',
-    STAGING = 'STAGING',
-    PREVIEW = 'PREVIEW'
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum CloudProviderEnum {
+    AWS = 'AWS',
+    DIGITAL_OCEAN = 'DIGITAL_OCEAN',
+    SCALEWAY = 'SCALEWAY'
 }
 
 /**
@@ -1840,10 +1704,10 @@ export interface Cluster {
     'description'?: string;
     /**
      * 
-     * @type {string}
+     * @type {CloudProviderEnum}
      * @memberof Cluster
      */
-    'cloud_provider': ClusterCloudProviderEnum;
+    'cloud_provider': CloudProviderEnum;
     /**
      * 
      * @type {string}
@@ -1881,17 +1745,6 @@ export interface Cluster {
      */
     'max_running_nodes'?: number;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ClusterCloudProviderEnum {
-    AWS = 'AWS',
-    DIGITAL_OCEAN = 'DIGITAL_OCEAN',
-    SCALEWAY = 'SCALEWAY'
-}
-
 /**
  * 
  * @export
@@ -1900,10 +1753,10 @@ export enum ClusterCloudProviderEnum {
 export interface ClusterCloudProviderInfoRequest {
     /**
      * 
-     * @type {string}
+     * @type {CloudProviderEnum}
      * @memberof ClusterCloudProviderInfoRequest
      */
-    'cloud_provider'?: ClusterCloudProviderInfoRequestCloudProviderEnum;
+    'cloud_provider'?: CloudProviderEnum;
     /**
      * 
      * @type {ClusterCloudProviderInfoRequestCredentials}
@@ -1917,17 +1770,6 @@ export interface ClusterCloudProviderInfoRequest {
      */
     'region'?: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ClusterCloudProviderInfoRequestCloudProviderEnum {
-    AWS = 'AWS',
-    DIGITAL_OCEAN = 'DIGITAL_OCEAN',
-    SCALEWAY = 'SCALEWAY'
-}
-
 /**
  * 
  * @export
@@ -1955,10 +1797,10 @@ export interface ClusterCloudProviderInfoRequestCredentials {
 export interface ClusterCloudProviderInfoResponse {
     /**
      * 
-     * @type {string}
+     * @type {CloudProviderEnum}
      * @memberof ClusterCloudProviderInfoResponse
      */
-    'cloud_provider'?: ClusterCloudProviderInfoResponseCloudProviderEnum;
+    'cloud_provider'?: CloudProviderEnum;
     /**
      * 
      * @type {ClusterCloudProviderInfoRequestCredentials}
@@ -1972,17 +1814,6 @@ export interface ClusterCloudProviderInfoResponse {
      */
     'region'?: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ClusterCloudProviderInfoResponseCloudProviderEnum {
-    AWS = 'AWS',
-    DIGITAL_OCEAN = 'DIGITAL_OCEAN',
-    SCALEWAY = 'SCALEWAY'
-}
-
 /**
  * 
  * @export
@@ -2040,6 +1871,33 @@ export interface ClusterCredentialsResponseList {
      */
     'results'?: Array<ClusterCredentialsResponse>;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum ClusterDeploymentStatusEnum {
+    READY = 'READY',
+    QUEUED = 'QUEUED',
+    STOP_QUEUED = 'STOP_QUEUED',
+    DELETE_QUEUED = 'DELETE_QUEUED',
+    BUILDING = 'BUILDING',
+    BUILD_ERROR = 'BUILD_ERROR',
+    BUILT = 'BUILT',
+    DEPLOYING = 'DEPLOYING',
+    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
+    DEPLOYED = 'DEPLOYED',
+    STOPPING = 'STOPPING',
+    STOP_ERROR = 'STOP_ERROR',
+    STOPPED = 'STOPPED',
+    DELETING = 'DELETING',
+    DELETE_ERROR = 'DELETE_ERROR',
+    DELETED = 'DELETED',
+    RUNNING = 'RUNNING',
+    RUNNING_ERROR = 'RUNNING_ERROR'
+}
+
 /**
  * 
  * @export
@@ -2238,10 +2096,10 @@ export interface ClusterRequest {
     'description'?: string;
     /**
      * 
-     * @type {string}
+     * @type {CloudProviderEnum}
      * @memberof ClusterRequest
      */
-    'cloud_provider': ClusterRequestCloudProviderEnum;
+    'cloud_provider': CloudProviderEnum;
     /**
      * 
      * @type {string}
@@ -2285,17 +2143,6 @@ export interface ClusterRequest {
      */
     'features'?: Array<ClusterFeatureRequestFeatures>;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ClusterRequestCloudProviderEnum {
-    AWS = 'AWS',
-    DIGITAL_OCEAN = 'DIGITAL_OCEAN',
-    SCALEWAY = 'SCALEWAY'
-}
-
 /**
  * 
  * @export
@@ -2334,10 +2181,10 @@ export interface ClusterResponse {
     'description'?: string | null;
     /**
      * 
-     * @type {string}
+     * @type {CloudProviderEnum}
      * @memberof ClusterResponse
      */
-    'cloud_provider': ClusterResponseCloudProviderEnum;
+    'cloud_provider': CloudProviderEnum;
     /**
      * 
      * @type {string}
@@ -2430,10 +2277,10 @@ export interface ClusterResponse {
     'estimated_cloud_provider_cost'?: number;
     /**
      * 
-     * @type {string}
+     * @type {ClusterStatusEnum}
      * @memberof ClusterResponse
      */
-    'status'?: ClusterResponseStatusEnum;
+    'status'?: ClusterStatusEnum;
     /**
      * 
      * @type {boolean}
@@ -2458,26 +2305,8 @@ export interface ClusterResponse {
     * @export
     * @enum {string}
     */
-export enum ClusterResponseCloudProviderEnum {
-    AWS = 'AWS',
-    DIGITAL_OCEAN = 'DIGITAL_OCEAN',
-    SCALEWAY = 'SCALEWAY'
-}
-/**
-    * @export
-    * @enum {string}
-    */
 export enum ClusterResponseValueTypeEnum {
     BOOLEAN = 'BOOLEAN'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ClusterResponseStatusEnum {
-    READY = 'READY',
-    RUNNING = 'RUNNING',
-    WARNING = 'WARNING'
 }
 
 /**
@@ -2494,10 +2323,10 @@ export interface ClusterResponseAllOf {
     'estimated_cloud_provider_cost'?: number;
     /**
      * 
-     * @type {string}
+     * @type {ClusterStatusEnum}
      * @memberof ClusterResponseAllOf
      */
-    'status'?: ClusterResponseAllOfStatusEnum;
+    'status'?: ClusterStatusEnum;
     /**
      * 
      * @type {boolean}
@@ -2517,17 +2346,6 @@ export interface ClusterResponseAllOf {
      */
     'is_default'?: boolean;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ClusterResponseAllOfStatusEnum {
-    READY = 'READY',
-    RUNNING = 'RUNNING',
-    WARNING = 'WARNING'
-}
-
 /**
  * 
  * @export
@@ -2620,6 +2438,33 @@ export interface ClusterRoutingTableResponseResults {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export enum ClusterStatusEnum {
+    READY = 'READY',
+    QUEUED = 'QUEUED',
+    STOP_QUEUED = 'STOP_QUEUED',
+    DELETE_QUEUED = 'DELETE_QUEUED',
+    BUILDING = 'BUILDING',
+    BUILD_ERROR = 'BUILD_ERROR',
+    BUILT = 'BUILT',
+    DEPLOYING = 'DEPLOYING',
+    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
+    DEPLOYED = 'DEPLOYED',
+    STOPPING = 'STOPPING',
+    STOP_ERROR = 'STOP_ERROR',
+    STOPPED = 'STOPPED',
+    DELETING = 'DELETING',
+    DELETE_ERROR = 'DELETE_ERROR',
+    DELETED = 'DELETED',
+    RUNNING = 'RUNNING',
+    RUNNING_ERROR = 'RUNNING_ERROR'
+}
+
+/**
+ * 
+ * @export
  * @interface ClusterStatusResponse
  */
 export interface ClusterStatusResponse {
@@ -2631,10 +2476,10 @@ export interface ClusterStatusResponse {
     'cluster_id'?: string;
     /**
      * 
-     * @type {string}
+     * @type {ClusterDeploymentStatusEnum}
      * @memberof ClusterStatusResponse
      */
-    'status'?: ClusterStatusResponseStatusEnum;
+    'status'?: ClusterDeploymentStatusEnum;
     /**
      * 
      * @type {boolean}
@@ -2642,29 +2487,6 @@ export interface ClusterStatusResponse {
      */
     'is_deployed'?: boolean;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ClusterStatusResponseStatusEnum {
-    READY = 'READY',
-    DEPLOYMENT_QUEUED = 'DEPLOYMENT_QUEUED',
-    DEPLOYING = 'DEPLOYING',
-    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
-    DEPLOYED = 'DEPLOYED',
-    STOP_QUEUED = 'STOP_QUEUED',
-    STOPPING = 'STOPPING',
-    STOP_ERROR = 'STOP_ERROR',
-    STOPPED = 'STOPPED',
-    DELETE_QUEUED = 'DELETE_QUEUED',
-    DELETING = 'DELETING',
-    DELETE_ERROR = 'DELETE_ERROR',
-    DELETED = 'DELETED',
-    RUNNING = 'RUNNING',
-    RUNNING_ERROR = 'RUNNING_ERROR'
-}
-
 /**
  * 
  * @export
@@ -3024,10 +2846,10 @@ export interface CreditCardResponseList {
 export interface CurrentCost {
     /**
      * 
-     * @type {string}
+     * @type {PlanEnum}
      * @memberof CurrentCost
      */
-    'plan'?: CurrentCostPlanEnum;
+    'plan'?: PlanEnum;
     /**
      * number of days remaining before the end of the trial period
      * @type {number}
@@ -3047,18 +2869,6 @@ export interface CurrentCost {
      */
     'cost'?: Cost;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum CurrentCostPlanEnum {
-    COMMUNITY = 'COMMUNITY',
-    FREE = 'FREE',
-    PROFESSIONAL = 'PROFESSIONAL',
-    BUSINESS = 'BUSINESS'
-}
-
 /**
  * 
  * @export
@@ -3174,15 +2984,26 @@ export interface CustomDomainResponseList {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export enum DatabaseAccessibilityEnum {
+    PUBLIC = 'PUBLIC',
+    PRIVATE = 'PRIVATE'
+}
+
+/**
+ * 
+ * @export
  * @interface DatabaseConfigurationResponse
  */
 export interface DatabaseConfigurationResponse {
     /**
      * 
-     * @type {string}
+     * @type {DatabaseTypeEnum}
      * @memberof DatabaseConfigurationResponse
      */
-    'database_type'?: DatabaseConfigurationResponseDatabaseTypeEnum;
+    'database_type'?: DatabaseTypeEnum;
     /**
      * 
      * @type {Array<DatabaseVersionMode>}
@@ -3190,18 +3011,6 @@ export interface DatabaseConfigurationResponse {
      */
     'version'?: Array<DatabaseVersionMode>;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DatabaseConfigurationResponseDatabaseTypeEnum {
-    POSTGRESQL = 'POSTGRESQL',
-    MYSQL = 'MYSQL',
-    MONGODB = 'MONGODB',
-    REDIS = 'REDIS'
-}
-
 /**
  * 
  * @export
@@ -3260,10 +3069,10 @@ export interface DatabaseEditRequest {
     'version'?: string;
     /**
      * 
-     * @type {string}
+     * @type {DatabaseAccessibilityEnum}
      * @memberof DatabaseEditRequest
      */
-    'accessibility'?: DatabaseEditRequestAccessibilityEnum;
+    'accessibility'?: DatabaseAccessibilityEnum;
     /**
      * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -3283,14 +3092,15 @@ export interface DatabaseEditRequest {
      */
     'storage'?: number;
 }
-
 /**
-    * @export
-    * @enum {string}
-    */
-export enum DatabaseEditRequestAccessibilityEnum {
-    PUBLIC = 'PUBLIC',
-    PRIVATE = 'PRIVATE'
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum DatabaseModeEnum {
+    MANAGED = 'MANAGED',
+    CONTAINER = 'CONTAINER'
 }
 
 /**
@@ -3307,10 +3117,10 @@ export interface DatabaseRequest {
     'name': string;
     /**
      * 
-     * @type {string}
+     * @type {DatabaseTypeEnum}
      * @memberof DatabaseRequest
      */
-    'type': DatabaseRequestTypeEnum;
+    'type': DatabaseTypeEnum;
     /**
      * 
      * @type {string}
@@ -3319,16 +3129,16 @@ export interface DatabaseRequest {
     'version': string;
     /**
      * 
-     * @type {string}
+     * @type {DatabaseModeEnum}
      * @memberof DatabaseRequest
      */
-    'mode': DatabaseRequestModeEnum;
+    'mode': DatabaseModeEnum;
     /**
      * 
-     * @type {string}
+     * @type {DatabaseAccessibilityEnum}
      * @memberof DatabaseRequest
      */
-    'accessibility'?: DatabaseRequestAccessibilityEnum;
+    'accessibility'?: DatabaseAccessibilityEnum;
     /**
      * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -3348,34 +3158,6 @@ export interface DatabaseRequest {
      */
     'storage'?: number;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DatabaseRequestTypeEnum {
-    POSTGRESQL = 'POSTGRESQL',
-    MYSQL = 'MYSQL',
-    MONGODB = 'MONGODB',
-    REDIS = 'REDIS'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DatabaseRequestModeEnum {
-    MANAGED = 'MANAGED',
-    CONTAINER = 'CONTAINER'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DatabaseRequestAccessibilityEnum {
-    PUBLIC = 'PUBLIC',
-    PRIVATE = 'PRIVATE'
-}
-
 /**
  * 
  * @export
@@ -3408,10 +3190,10 @@ export interface DatabaseResponse {
     'name': string;
     /**
      * 
-     * @type {string}
+     * @type {DatabaseTypeEnum}
      * @memberof DatabaseResponse
      */
-    'type': DatabaseResponseTypeEnum;
+    'type': DatabaseTypeEnum;
     /**
      * 
      * @type {string}
@@ -3420,16 +3202,16 @@ export interface DatabaseResponse {
     'version': string;
     /**
      * 
-     * @type {string}
+     * @type {DatabaseModeEnum}
      * @memberof DatabaseResponse
      */
-    'mode': DatabaseResponseModeEnum;
+    'mode': DatabaseModeEnum;
     /**
      * 
-     * @type {string}
+     * @type {DatabaseAccessibilityEnum}
      * @memberof DatabaseResponse
      */
-    'accessibility'?: DatabaseResponseAccessibilityEnum;
+    'accessibility'?: DatabaseAccessibilityEnum;
     /**
      * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -3485,34 +3267,6 @@ export interface DatabaseResponse {
      */
     'disk_encrypted'?: boolean;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DatabaseResponseTypeEnum {
-    POSTGRESQL = 'POSTGRESQL',
-    MYSQL = 'MYSQL',
-    MONGODB = 'MONGODB',
-    REDIS = 'REDIS'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DatabaseResponseModeEnum {
-    MANAGED = 'MANAGED',
-    CONTAINER = 'CONTAINER'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DatabaseResponseAccessibilityEnum {
-    PUBLIC = 'PUBLIC',
-    PRIVATE = 'PRIVATE'
-}
-
 /**
  * 
  * @export
@@ -3572,6 +3326,19 @@ export interface DatabaseResponseList {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export enum DatabaseTypeEnum {
+    POSTGRESQL = 'POSTGRESQL',
+    MYSQL = 'MYSQL',
+    MONGODB = 'MONGODB',
+    REDIS = 'REDIS'
+}
+
+/**
+ * 
+ * @export
  * @interface DatabaseVersionMode
  */
 export interface DatabaseVersionMode {
@@ -3583,21 +3350,11 @@ export interface DatabaseVersionMode {
     'name'?: string;
     /**
      * 
-     * @type {string}
+     * @type {DatabaseModeEnum}
      * @memberof DatabaseVersionMode
      */
-    'supported_mode'?: DatabaseVersionModeSupportedModeEnum;
+    'supported_mode'?: DatabaseModeEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DatabaseVersionModeSupportedModeEnum {
-    CONTAINER = 'CONTAINER',
-    MANAGED = 'MANAGED'
-}
-
 /**
  * 
  * @export
@@ -3649,37 +3406,11 @@ export interface DeploymentHistoryApplicationResponse {
     'commit'?: CommitResponse;
     /**
      * 
-     * @type {string}
+     * @type {GlobalDeploymentStatus}
      * @memberof DeploymentHistoryApplicationResponse
      */
-    'status'?: DeploymentHistoryApplicationResponseStatusEnum;
+    'status'?: GlobalDeploymentStatus;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DeploymentHistoryApplicationResponseStatusEnum {
-    READY = 'READY',
-    BUILDING = 'BUILDING',
-    BUILD_ERROR = 'BUILD_ERROR',
-    BUILT = 'BUILT',
-    DEPLOYMENT_QUEUED = 'DEPLOYMENT_QUEUED',
-    DEPLOYING = 'DEPLOYING',
-    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
-    DEPLOYED = 'DEPLOYED',
-    STOP_QUEUED = 'STOP_QUEUED',
-    STOPPING = 'STOPPING',
-    STOP_ERROR = 'STOP_ERROR',
-    STOPPED = 'STOPPED',
-    DELETE_QUEUED = 'DELETE_QUEUED',
-    DELETING = 'DELETING',
-    DELETE_ERROR = 'DELETE_ERROR',
-    DELETED = 'DELETED',
-    RUNNING = 'RUNNING',
-    RUNNING_ERROR = 'RUNNING_ERROR'
-}
-
 /**
  * 
  * @export
@@ -3700,37 +3431,11 @@ export interface DeploymentHistoryApplicationResponseAllOf {
     'commit'?: CommitResponse;
     /**
      * 
-     * @type {string}
+     * @type {GlobalDeploymentStatus}
      * @memberof DeploymentHistoryApplicationResponseAllOf
      */
-    'status'?: DeploymentHistoryApplicationResponseAllOfStatusEnum;
+    'status'?: GlobalDeploymentStatus;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DeploymentHistoryApplicationResponseAllOfStatusEnum {
-    READY = 'READY',
-    BUILDING = 'BUILDING',
-    BUILD_ERROR = 'BUILD_ERROR',
-    BUILT = 'BUILT',
-    DEPLOYMENT_QUEUED = 'DEPLOYMENT_QUEUED',
-    DEPLOYING = 'DEPLOYING',
-    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
-    DEPLOYED = 'DEPLOYED',
-    STOP_QUEUED = 'STOP_QUEUED',
-    STOPPING = 'STOPPING',
-    STOP_ERROR = 'STOP_ERROR',
-    STOPPED = 'STOPPED',
-    DELETE_QUEUED = 'DELETE_QUEUED',
-    DELETING = 'DELETING',
-    DELETE_ERROR = 'DELETE_ERROR',
-    DELETED = 'DELETED',
-    RUNNING = 'RUNNING',
-    RUNNING_ERROR = 'RUNNING_ERROR'
-}
-
 /**
  * 
  * @export
@@ -3763,37 +3468,11 @@ export interface DeploymentHistoryDatabaseResponse {
     'name'?: string;
     /**
      * 
-     * @type {string}
+     * @type {GlobalDeploymentStatus}
      * @memberof DeploymentHistoryDatabaseResponse
      */
-    'status'?: DeploymentHistoryDatabaseResponseStatusEnum;
+    'status'?: GlobalDeploymentStatus;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DeploymentHistoryDatabaseResponseStatusEnum {
-    READY = 'READY',
-    BUILDING = 'BUILDING',
-    BUILD_ERROR = 'BUILD_ERROR',
-    BUILT = 'BUILT',
-    DEPLOYMENT_QUEUED = 'DEPLOYMENT_QUEUED',
-    DEPLOYING = 'DEPLOYING',
-    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
-    DEPLOYED = 'DEPLOYED',
-    STOP_QUEUED = 'STOP_QUEUED',
-    STOPPING = 'STOPPING',
-    STOP_ERROR = 'STOP_ERROR',
-    STOPPED = 'STOPPED',
-    DELETE_QUEUED = 'DELETE_QUEUED',
-    DELETING = 'DELETING',
-    DELETE_ERROR = 'DELETE_ERROR',
-    DELETED = 'DELETED',
-    RUNNING = 'RUNNING',
-    RUNNING_ERROR = 'RUNNING_ERROR'
-}
-
 /**
  * 
  * @export
@@ -3808,37 +3487,11 @@ export interface DeploymentHistoryDatabaseResponseAllOf {
     'name'?: string;
     /**
      * 
-     * @type {string}
+     * @type {GlobalDeploymentStatus}
      * @memberof DeploymentHistoryDatabaseResponseAllOf
      */
-    'status'?: DeploymentHistoryDatabaseResponseAllOfStatusEnum;
+    'status'?: GlobalDeploymentStatus;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DeploymentHistoryDatabaseResponseAllOfStatusEnum {
-    READY = 'READY',
-    BUILDING = 'BUILDING',
-    BUILD_ERROR = 'BUILD_ERROR',
-    BUILT = 'BUILT',
-    DEPLOYMENT_QUEUED = 'DEPLOYMENT_QUEUED',
-    DEPLOYING = 'DEPLOYING',
-    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
-    DEPLOYED = 'DEPLOYED',
-    STOP_QUEUED = 'STOP_QUEUED',
-    STOPPING = 'STOPPING',
-    STOP_ERROR = 'STOP_ERROR',
-    STOPPED = 'STOPPED',
-    DELETE_QUEUED = 'DELETE_QUEUED',
-    DELETING = 'DELETING',
-    DELETE_ERROR = 'DELETE_ERROR',
-    DELETED = 'DELETED',
-    RUNNING = 'RUNNING',
-    RUNNING_ERROR = 'RUNNING_ERROR'
-}
-
 /**
  * 
  * @export
@@ -3903,10 +3556,10 @@ export interface DeploymentHistoryEnvironmentResponse {
     'updated_at'?: string;
     /**
      * 
-     * @type {string}
+     * @type {GlobalDeploymentStatus}
      * @memberof DeploymentHistoryEnvironmentResponse
      */
-    'status'?: DeploymentHistoryEnvironmentResponseStatusEnum;
+    'status'?: GlobalDeploymentStatus;
     /**
      * 
      * @type {Array<DeploymentHistoryApplicationResponse>}
@@ -3920,32 +3573,6 @@ export interface DeploymentHistoryEnvironmentResponse {
      */
     'databases'?: Array<DeploymentHistoryDatabaseResponse>;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DeploymentHistoryEnvironmentResponseStatusEnum {
-    READY = 'READY',
-    BUILDING = 'BUILDING',
-    BUILD_ERROR = 'BUILD_ERROR',
-    BUILT = 'BUILT',
-    DEPLOYMENT_QUEUED = 'DEPLOYMENT_QUEUED',
-    DEPLOYING = 'DEPLOYING',
-    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
-    DEPLOYED = 'DEPLOYED',
-    STOP_QUEUED = 'STOP_QUEUED',
-    STOPPING = 'STOPPING',
-    STOP_ERROR = 'STOP_ERROR',
-    STOPPED = 'STOPPED',
-    DELETE_QUEUED = 'DELETE_QUEUED',
-    DELETING = 'DELETING',
-    DELETE_ERROR = 'DELETE_ERROR',
-    DELETED = 'DELETED',
-    RUNNING = 'RUNNING',
-    RUNNING_ERROR = 'RUNNING_ERROR'
-}
-
 /**
  * 
  * @export
@@ -3954,10 +3581,10 @@ export enum DeploymentHistoryEnvironmentResponseStatusEnum {
 export interface DeploymentHistoryEnvironmentResponseAllOf {
     /**
      * 
-     * @type {string}
+     * @type {GlobalDeploymentStatus}
      * @memberof DeploymentHistoryEnvironmentResponseAllOf
      */
-    'status'?: DeploymentHistoryEnvironmentResponseAllOfStatusEnum;
+    'status'?: GlobalDeploymentStatus;
     /**
      * 
      * @type {Array<DeploymentHistoryApplicationResponse>}
@@ -3971,32 +3598,6 @@ export interface DeploymentHistoryEnvironmentResponseAllOf {
      */
     'databases'?: Array<DeploymentHistoryDatabaseResponse>;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DeploymentHistoryEnvironmentResponseAllOfStatusEnum {
-    READY = 'READY',
-    BUILDING = 'BUILDING',
-    BUILD_ERROR = 'BUILD_ERROR',
-    BUILT = 'BUILT',
-    DEPLOYMENT_QUEUED = 'DEPLOYMENT_QUEUED',
-    DEPLOYING = 'DEPLOYING',
-    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
-    DEPLOYED = 'DEPLOYED',
-    STOP_QUEUED = 'STOP_QUEUED',
-    STOPPING = 'STOPPING',
-    STOP_ERROR = 'STOP_ERROR',
-    STOPPED = 'STOPPED',
-    DELETE_QUEUED = 'DELETE_QUEUED',
-    DELETING = 'DELETING',
-    DELETE_ERROR = 'DELETE_ERROR',
-    DELETED = 'DELETED',
-    RUNNING = 'RUNNING',
-    RUNNING_ERROR = 'RUNNING_ERROR'
-}
-
 /**
  * 
  * @export
@@ -4067,21 +3668,11 @@ export interface DeploymentHistoryResponse {
     'commit'?: CommitResponse;
     /**
      * 
-     * @type {string}
+     * @type {DeploymentHistoryStatusEnum}
      * @memberof DeploymentHistoryResponse
      */
-    'status'?: DeploymentHistoryResponseStatusEnum;
+    'status'?: DeploymentHistoryStatusEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DeploymentHistoryResponseStatusEnum {
-    SUCCESS = 'SUCCESS',
-    FAILED = 'FAILED'
-}
-
 /**
  * 
  * @export
@@ -4096,21 +3687,11 @@ export interface DeploymentHistoryResponseAllOf {
     'commit'?: CommitResponse;
     /**
      * 
-     * @type {string}
+     * @type {DeploymentHistoryStatusEnum}
      * @memberof DeploymentHistoryResponseAllOf
      */
-    'status'?: DeploymentHistoryResponseAllOfStatusEnum;
+    'status'?: DeploymentHistoryStatusEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DeploymentHistoryResponseAllOfStatusEnum {
-    SUCCESS = 'SUCCESS',
-    FAILED = 'FAILED'
-}
-
 /**
  * 
  * @export
@@ -4124,6 +3705,39 @@ export interface DeploymentHistoryResponseList {
      */
     'results'?: Array<DeploymentHistoryResponse>;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum DeploymentHistoryStatusEnum {
+    SUCCESS = 'SUCCESS',
+    FAILED = 'FAILED'
+}
+
+/**
+ * Match mode will rebuild app only if specified items are updated. Exclude mode will not rebuild app if specified items are updated.
+ * @export
+ * @enum {string}
+ */
+
+export enum DeploymentRestrictionModeEnum {
+    MATCH = 'MATCH',
+    EXCLUDE = 'EXCLUDE'
+}
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum DeploymentRestrictionTypeEnum {
+    FILE = 'FILE',
+    PATH = 'PATH'
+}
+
 /**
  * 
  * @export
@@ -4144,10 +3758,10 @@ export interface DeploymentRuleRequest {
     'description'?: string;
     /**
      * 
-     * @type {string}
+     * @type {EnvironmentModeEnum}
      * @memberof DeploymentRuleRequest
      */
-    'mode': DeploymentRuleRequestModeEnum;
+    'mode': EnvironmentModeEnum;
     /**
      * 
      * @type {string}
@@ -4186,34 +3800,11 @@ export interface DeploymentRuleRequest {
     'stop_time'?: string | null;
     /**
      * specify value only if auto_stop = false
-     * @type {Array<string>}
+     * @type {Array<WeekdayEnum>}
      * @memberof DeploymentRuleRequest
      */
-    'weekdays'?: Array<DeploymentRuleRequestWeekdaysEnum>;
+    'weekdays'?: Array<WeekdayEnum> | null;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DeploymentRuleRequestModeEnum {
-    PRODUCTION = 'PRODUCTION',
-    DEVELOPMENT = 'DEVELOPMENT'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DeploymentRuleRequestWeekdaysEnum {
-    MONDAY = 'MONDAY',
-    TUESDAY = 'TUESDAY',
-    WEDNESDAY = 'WEDNESDAY',
-    THURSDAY = 'THURSDAY',
-    FRIDAY = 'FRIDAY',
-    SATURDAY = 'SATURDAY',
-    SUNDAY = 'SUNDAY'
-}
-
 /**
  * 
  * @export
@@ -4295,10 +3886,10 @@ export interface EnvironmentApplicationsCurrentScaleResponse {
     'alert_threshold_in_percent'?: number;
     /**
      * 
-     * @type {string}
+     * @type {ThresholdMetricStatusEnum}
      * @memberof EnvironmentApplicationsCurrentScaleResponse
      */
-    'status'?: EnvironmentApplicationsCurrentScaleResponseStatusEnum;
+    'status'?: ThresholdMetricStatusEnum;
     /**
      * 
      * @type {string}
@@ -4306,17 +3897,6 @@ export interface EnvironmentApplicationsCurrentScaleResponse {
      */
     'updated_at'?: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum EnvironmentApplicationsCurrentScaleResponseStatusEnum {
-    OK = 'OK',
-    WARNING = 'Warning',
-    ALERT = 'Alert'
-}
-
 /**
  * 
  * @export
@@ -4489,22 +4069,11 @@ export interface EnvironmentDatabasesCurrentMetricResponseCpu {
     'alert_threshold_in_percent'?: number;
     /**
      * 
-     * @type {string}
+     * @type {ThresholdMetricStatusEnum}
      * @memberof EnvironmentDatabasesCurrentMetricResponseCpu
      */
-    'status'?: EnvironmentDatabasesCurrentMetricResponseCpuStatusEnum;
+    'status'?: ThresholdMetricStatusEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum EnvironmentDatabasesCurrentMetricResponseCpuStatusEnum {
-    OK = 'OK',
-    WARNING = 'Warning',
-    ALERT = 'Alert'
-}
-
 /**
  * 
  * @export
@@ -4556,22 +4125,11 @@ export interface EnvironmentDatabasesCurrentMetricResponseMemory {
     'alert_threshold_in_percent'?: number;
     /**
      * 
-     * @type {string}
+     * @type {ThresholdMetricStatusEnum}
      * @memberof EnvironmentDatabasesCurrentMetricResponseMemory
      */
-    'status'?: EnvironmentDatabasesCurrentMetricResponseMemoryStatusEnum;
+    'status'?: ThresholdMetricStatusEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum EnvironmentDatabasesCurrentMetricResponseMemoryStatusEnum {
-    OK = 'OK',
-    WARNING = 'Warning',
-    ALERT = 'Alert'
-}
-
 /**
  * 
  * @export
@@ -4610,22 +4168,11 @@ export interface EnvironmentDatabasesCurrentMetricResponseStorage {
     'alert_threshold_in_percent'?: number;
     /**
      * 
-     * @type {string}
+     * @type {ThresholdMetricStatusEnum}
      * @memberof EnvironmentDatabasesCurrentMetricResponseStorage
      */
-    'status'?: EnvironmentDatabasesCurrentMetricResponseStorageStatusEnum;
+    'status'?: ThresholdMetricStatusEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum EnvironmentDatabasesCurrentMetricResponseStorageStatusEnum {
-    OK = 'OK',
-    WARNING = 'Warning',
-    ALERT = 'Alert'
-}
-
 /**
  * 
  * @export
@@ -4670,26 +4217,11 @@ export interface EnvironmentDeploymentRuleEditRequest {
     'stop_time': string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<WeekdayEnum>}
      * @memberof EnvironmentDeploymentRuleEditRequest
      */
-    'weekdays': Array<EnvironmentDeploymentRuleEditRequestWeekdaysEnum>;
+    'weekdays': Array<WeekdayEnum>;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum EnvironmentDeploymentRuleEditRequestWeekdaysEnum {
-    MONDAY = 'MONDAY',
-    TUESDAY = 'TUESDAY',
-    WEDNESDAY = 'WEDNESDAY',
-    THURSDAY = 'THURSDAY',
-    FRIDAY = 'FRIDAY',
-    SATURDAY = 'SATURDAY',
-    SUNDAY = 'SUNDAY'
-}
-
 /**
  * 
  * @export
@@ -4758,26 +4290,11 @@ export interface EnvironmentDeploymentRuleResponse {
     'stop_time': string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<WeekdayEnum>}
      * @memberof EnvironmentDeploymentRuleResponse
      */
-    'weekdays': Array<EnvironmentDeploymentRuleResponseWeekdaysEnum>;
+    'weekdays': Array<WeekdayEnum>;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum EnvironmentDeploymentRuleResponseWeekdaysEnum {
-    MONDAY = 'MONDAY',
-    TUESDAY = 'TUESDAY',
-    WEDNESDAY = 'WEDNESDAY',
-    THURSDAY = 'THURSDAY',
-    FRIDAY = 'FRIDAY',
-    SATURDAY = 'SATURDAY',
-    SUNDAY = 'SUNDAY'
-}
-
 /**
  * 
  * @export
@@ -4828,26 +4345,11 @@ export interface EnvironmentDeploymentRuleResponseAllOf {
     'stop_time': string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<WeekdayEnum>}
      * @memberof EnvironmentDeploymentRuleResponseAllOf
      */
-    'weekdays': Array<EnvironmentDeploymentRuleResponseAllOfWeekdaysEnum>;
+    'weekdays': Array<WeekdayEnum>;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum EnvironmentDeploymentRuleResponseAllOfWeekdaysEnum {
-    MONDAY = 'MONDAY',
-    TUESDAY = 'TUESDAY',
-    WEDNESDAY = 'WEDNESDAY',
-    THURSDAY = 'THURSDAY',
-    FRIDAY = 'FRIDAY',
-    SATURDAY = 'SATURDAY',
-    SUNDAY = 'SUNDAY'
-}
-
 /**
  * 
  * @export
@@ -4861,24 +4363,12 @@ export interface EnvironmentEditRequest {
      */
     'name'?: string;
     /**
-     * PREVIEW value is reserved for preview environments only
-     * @type {string}
+     * 
+     * @type {EnvironmentModeEnum}
      * @memberof EnvironmentEditRequest
      */
-    'mode'?: EnvironmentEditRequestModeEnum;
+    'mode'?: EnvironmentModeEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum EnvironmentEditRequestModeEnum {
-    DEVELOPMENT = 'DEVELOPMENT',
-    STAGING = 'STAGING',
-    PRODUCTION = 'PRODUCTION',
-    PREVIEW = 'PREVIEW'
-}
-
 /**
  * 
  * @export
@@ -4961,11 +4451,11 @@ export interface EnvironmentLogResponse {
      */
     'scope'?: EnvironmentLogResponseScope;
     /**
-     * Status is a state machine. It starts with `BUILDING` or `DEPLOYING` state (or `INITIALIZED`if auto-deploy is deactivated). Then finish with `*_ERROR` or any termination state. 
-     * @type {string}
+     * 
+     * @type {GlobalDeploymentStatus}
      * @memberof EnvironmentLogResponse
      */
-    'state'?: EnvironmentLogResponseStateEnum;
+    'state'?: GlobalDeploymentStatus;
     /**
      * Log message
      * @type {string}
@@ -4985,30 +4475,6 @@ export interface EnvironmentLogResponse {
      */
     'hint'?: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum EnvironmentLogResponseStateEnum {
-    BUILD_ERROR = 'BUILD_ERROR',
-    BUILDING = 'BUILDING',
-    BUILT = 'BUILT',
-    DELETE_ERROR = 'DELETE_ERROR',
-    DELETED = 'DELETED',
-    DELETING = 'DELETING',
-    DEPLOYED = 'DEPLOYED',
-    DEPLOYING = 'DEPLOYING',
-    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
-    INITIALIZED = 'INITIALIZED',
-    QUEUED = 'QUEUED',
-    RUNNING = 'RUNNING',
-    RUNNING_ERROR = 'RUNNING_ERROR',
-    STOP_ERROR = 'STOP_ERROR',
-    STOPPED = 'STOPPED',
-    STOPPING = 'STOPPING'
-}
-
 /**
  * 
  * @export
@@ -5030,10 +4496,10 @@ export interface EnvironmentLogResponseList {
 export interface EnvironmentLogResponseScope {
     /**
      * 
-     * @type {string}
+     * @type {EnvironmentLogTypeEnum}
      * @memberof EnvironmentLogResponseScope
      */
-    'type'?: EnvironmentLogResponseScopeTypeEnum;
+    'type'?: EnvironmentLogTypeEnum;
     /**
      * 
      * @type {string}
@@ -5047,15 +4513,29 @@ export interface EnvironmentLogResponseScope {
      */
     'id'?: string;
 }
-
 /**
-    * @export
-    * @enum {string}
-    */
-export enum EnvironmentLogResponseScopeTypeEnum {
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum EnvironmentLogTypeEnum {
     APPLICATION = 'APPLICATION',
     DATABASE = 'DATABASE',
     ENVIRONMENT = 'ENVIRONMENT'
+}
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum EnvironmentModeEnum {
+    PRODUCTION = 'PRODUCTION',
+    DEVELOPMENT = 'DEVELOPMENT',
+    STAGING = 'STAGING',
+    PREVIEW = 'PREVIEW'
 }
 
 /**
@@ -5078,23 +4558,11 @@ export interface EnvironmentRequest {
     'cluster'?: string;
     /**
      * 
-     * @type {string}
+     * @type {EnvironmentModeEnum}
      * @memberof EnvironmentRequest
      */
-    'mode'?: EnvironmentRequestModeEnum;
+    'mode'?: EnvironmentModeEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum EnvironmentRequestModeEnum {
-    PRODUCTION = 'PRODUCTION',
-    DEVELOPMENT = 'DEVELOPMENT',
-    STAGING = 'STAGING',
-    PREVIEW = 'PREVIEW'
-}
-
 /**
  * 
  * @export
@@ -5145,10 +4613,10 @@ export interface EnvironmentResponse {
     'cloud_provider': EnvironmentResponseAllOfCloudProvider;
     /**
      * 
-     * @type {string}
+     * @type {EnvironmentModeEnum}
      * @memberof EnvironmentResponse
      */
-    'mode': EnvironmentResponseModeEnum;
+    'mode': EnvironmentModeEnum;
     /**
      * 
      * @type {string}
@@ -5156,18 +4624,6 @@ export interface EnvironmentResponse {
      */
     'cluster_id': string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum EnvironmentResponseModeEnum {
-    PRODUCTION = 'PRODUCTION',
-    DEVELOPMENT = 'DEVELOPMENT',
-    STAGING = 'STAGING',
-    PREVIEW = 'PREVIEW'
-}
-
 /**
  * 
  * @export
@@ -5200,10 +4656,10 @@ export interface EnvironmentResponseAllOf {
     'cloud_provider': EnvironmentResponseAllOfCloudProvider;
     /**
      * 
-     * @type {string}
+     * @type {EnvironmentModeEnum}
      * @memberof EnvironmentResponseAllOf
      */
-    'mode': EnvironmentResponseAllOfModeEnum;
+    'mode': EnvironmentModeEnum;
     /**
      * 
      * @type {string}
@@ -5211,18 +4667,6 @@ export interface EnvironmentResponseAllOf {
      */
     'cluster_id': string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum EnvironmentResponseAllOfModeEnum {
-    PRODUCTION = 'PRODUCTION',
-    DEVELOPMENT = 'DEVELOPMENT',
-    STAGING = 'STAGING',
-    PREVIEW = 'PREVIEW'
-}
-
 /**
  * 
  * @export
@@ -5401,10 +4845,10 @@ export interface EnvironmentVariableResponse {
     'aliased_variable'?: EnvironmentVariableResponseAllOfAliasedVariable;
     /**
      * 
-     * @type {string}
+     * @type {EnvironmentVariableScopeEnum}
      * @memberof EnvironmentVariableResponse
      */
-    'scope': EnvironmentVariableResponseScopeEnum;
+    'scope': EnvironmentVariableScopeEnum;
     /**
      * 
      * @type {string}
@@ -5412,18 +4856,6 @@ export interface EnvironmentVariableResponse {
      */
     'service_name'?: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum EnvironmentVariableResponseScopeEnum {
-    BUILT_IN = 'BUILT_IN',
-    ENVIRONMENT = 'ENVIRONMENT',
-    PROJECT = 'PROJECT',
-    APPLICATION = 'APPLICATION'
-}
-
 /**
  * 
  * @export
@@ -5444,10 +4876,10 @@ export interface EnvironmentVariableResponseAllOf {
     'aliased_variable'?: EnvironmentVariableResponseAllOfAliasedVariable;
     /**
      * 
-     * @type {string}
+     * @type {EnvironmentVariableScopeEnum}
      * @memberof EnvironmentVariableResponseAllOf
      */
-    'scope': EnvironmentVariableResponseAllOfScopeEnum;
+    'scope': EnvironmentVariableScopeEnum;
     /**
      * 
      * @type {string}
@@ -5455,18 +4887,6 @@ export interface EnvironmentVariableResponseAllOf {
      */
     'service_name'?: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum EnvironmentVariableResponseAllOfScopeEnum {
-    BUILT_IN = 'BUILT_IN',
-    ENVIRONMENT = 'ENVIRONMENT',
-    PROJECT = 'PROJECT',
-    APPLICATION = 'APPLICATION'
-}
-
 /**
  * 
  * @export
@@ -5493,23 +4913,11 @@ export interface EnvironmentVariableResponseAllOfAliasedVariable {
     'value'?: string;
     /**
      * 
-     * @type {string}
+     * @type {EnvironmentVariableScopeEnum}
      * @memberof EnvironmentVariableResponseAllOfAliasedVariable
      */
-    'scope'?: EnvironmentVariableResponseAllOfAliasedVariableScopeEnum;
+    'scope'?: EnvironmentVariableScopeEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum EnvironmentVariableResponseAllOfAliasedVariableScopeEnum {
-    BUILT_IN = 'BUILT_IN',
-    ENVIRONMENT = 'ENVIRONMENT',
-    PROJECT = 'PROJECT',
-    APPLICATION = 'APPLICATION'
-}
-
 /**
  * 
  * @export
@@ -5536,23 +4944,11 @@ export interface EnvironmentVariableResponseAllOfOverriddenVariable {
     'value'?: string;
     /**
      * 
-     * @type {string}
+     * @type {EnvironmentVariableScopeEnum}
      * @memberof EnvironmentVariableResponseAllOfOverriddenVariable
      */
-    'scope'?: EnvironmentVariableResponseAllOfOverriddenVariableScopeEnum;
+    'scope'?: EnvironmentVariableScopeEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum EnvironmentVariableResponseAllOfOverriddenVariableScopeEnum {
-    BUILT_IN = 'BUILT_IN',
-    ENVIRONMENT = 'ENVIRONMENT',
-    PROJECT = 'PROJECT',
-    APPLICATION = 'APPLICATION'
-}
-
 /**
  * 
  * @export
@@ -5566,6 +4962,19 @@ export interface EnvironmentVariableResponseList {
      */
     'results'?: Array<EnvironmentVariableResponse>;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum EnvironmentVariableScopeEnum {
+    BUILT_IN = 'BUILT_IN',
+    ENVIRONMENT = 'ENVIRONMENT',
+    PROJECT = 'PROJECT',
+    APPLICATION = 'APPLICATION'
+}
+
 /**
  * 
  * @export
@@ -5781,6 +5190,17 @@ export interface GitAuthProviderResponseList {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export enum GitProviderEnum {
+    GITHUB = 'GITHUB',
+    GITLAB = 'GITLAB'
+}
+
+/**
+ * 
+ * @export
  * @interface GitRepositoryBranchResponse
  */
 export interface GitRepositoryBranchResponse {
@@ -5854,6 +5274,33 @@ export interface GitRepositoryResponseList {
      */
     'results'?: Array<GitRepositoryResponse>;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum GlobalDeploymentStatus {
+    READY = 'READY',
+    QUEUED = 'QUEUED',
+    STOP_QUEUED = 'STOP_QUEUED',
+    DELETE_QUEUED = 'DELETE_QUEUED',
+    BUILDING = 'BUILDING',
+    BUILD_ERROR = 'BUILD_ERROR',
+    BUILT = 'BUILT',
+    DEPLOYING = 'DEPLOYING',
+    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
+    DEPLOYED = 'DEPLOYED',
+    STOPPING = 'STOPPING',
+    STOP_ERROR = 'STOP_ERROR',
+    STOPPED = 'STOPPED',
+    DELETING = 'DELETING',
+    DELETE_ERROR = 'DELETE_ERROR',
+    DELETED = 'DELETED',
+    RUNNING = 'RUNNING',
+    RUNNING_ERROR = 'RUNNING_ERROR'
+}
+
 /**
  * 
  * @export
@@ -5968,22 +5415,11 @@ export interface InviteMemberRequest {
     'email': string;
     /**
      * 
-     * @type {string}
+     * @type {InviteMemberRoleEnum}
      * @memberof InviteMemberRequest
      */
-    'role': InviteMemberRequestRoleEnum;
+    'role': InviteMemberRoleEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum InviteMemberRequestRoleEnum {
-    ADMIN = 'ADMIN',
-    DEVELOPER = 'DEVELOPER',
-    VIEWER = 'VIEWER'
-}
-
 /**
  * 
  * @export
@@ -6016,10 +5452,10 @@ export interface InviteMemberResponse {
     'email': string;
     /**
      * 
-     * @type {string}
+     * @type {InviteMemberRoleEnum}
      * @memberof InviteMemberResponse
      */
-    'role': InviteMemberResponseRoleEnum;
+    'role': InviteMemberRoleEnum;
     /**
      * 
      * @type {string}
@@ -6028,10 +5464,10 @@ export interface InviteMemberResponse {
     'invitation_link': string;
     /**
      * 
-     * @type {string}
+     * @type {InviteStatusEnum}
      * @memberof InviteMemberResponse
      */
-    'invitation_status': InviteMemberResponseInvitationStatusEnum;
+    'invitation_status': InviteStatusEnum;
     /**
      * 
      * @type {string}
@@ -6045,25 +5481,6 @@ export interface InviteMemberResponse {
      */
     'logo_url'?: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum InviteMemberResponseRoleEnum {
-    ADMIN = 'ADMIN',
-    DEVELOPER = 'DEVELOPER',
-    VIEWER = 'VIEWER'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum InviteMemberResponseInvitationStatusEnum {
-    PENDING = 'PENDING',
-    EXPIRED = 'EXPIRED'
-}
-
 /**
  * 
  * @export
@@ -6078,10 +5495,10 @@ export interface InviteMemberResponseAllOf {
     'email': string;
     /**
      * 
-     * @type {string}
+     * @type {InviteMemberRoleEnum}
      * @memberof InviteMemberResponseAllOf
      */
-    'role': InviteMemberResponseAllOfRoleEnum;
+    'role': InviteMemberRoleEnum;
     /**
      * 
      * @type {string}
@@ -6090,10 +5507,10 @@ export interface InviteMemberResponseAllOf {
     'invitation_link': string;
     /**
      * 
-     * @type {string}
+     * @type {InviteStatusEnum}
      * @memberof InviteMemberResponseAllOf
      */
-    'invitation_status': InviteMemberResponseAllOfInvitationStatusEnum;
+    'invitation_status': InviteStatusEnum;
     /**
      * 
      * @type {string}
@@ -6107,25 +5524,6 @@ export interface InviteMemberResponseAllOf {
      */
     'logo_url'?: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum InviteMemberResponseAllOfRoleEnum {
-    ADMIN = 'ADMIN',
-    DEVELOPER = 'DEVELOPER',
-    VIEWER = 'VIEWER'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum InviteMemberResponseAllOfInvitationStatusEnum {
-    PENDING = 'PENDING',
-    EXPIRED = 'EXPIRED'
-}
-
 /**
  * 
  * @export
@@ -6139,6 +5537,30 @@ export interface InviteMemberResponseList {
      */
     'results'?: Array<InviteMemberResponse>;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum InviteMemberRoleEnum {
+    OWNER = 'OWNER',
+    ADMIN = 'ADMIN',
+    DEVELOPER = 'DEVELOPER',
+    VIEWER = 'VIEWER'
+}
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum InviteStatusEnum {
+    PENDING = 'PENDING',
+    EXPIRED = 'EXPIRED'
+}
+
 /**
  * 
  * @export
@@ -6177,26 +5599,11 @@ export interface InvoiceResponse {
     'created_at': string;
     /**
      * 
-     * @type {string}
+     * @type {InvoiceStatusEnum}
      * @memberof InvoiceResponse
      */
-    'status': InvoiceResponseStatusEnum;
+    'status': InvoiceStatusEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum InvoiceResponseStatusEnum {
-    PAID = 'PAID',
-    POSTED = 'POSTED',
-    PAYMENT_DUE = 'PAYMENT_DUE',
-    NOT_PAID = 'NOT_PAID',
-    VOIDED = 'VOIDED',
-    PENDING = 'PENDING',
-    UNKNOWN = 'UNKNOWN'
-}
-
 /**
  * 
  * @export
@@ -6217,26 +5624,11 @@ export interface InvoiceResponseAllOf {
     'created_at': string;
     /**
      * 
-     * @type {string}
+     * @type {InvoiceStatusEnum}
      * @memberof InvoiceResponseAllOf
      */
-    'status': InvoiceResponseAllOfStatusEnum;
+    'status': InvoiceStatusEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum InvoiceResponseAllOfStatusEnum {
-    PAID = 'PAID',
-    POSTED = 'POSTED',
-    PAYMENT_DUE = 'PAYMENT_DUE',
-    NOT_PAID = 'NOT_PAID',
-    VOIDED = 'VOIDED',
-    PENDING = 'PENDING',
-    UNKNOWN = 'UNKNOWN'
-}
-
 /**
  * 
  * @export
@@ -6250,6 +5642,22 @@ export interface InvoiceResponseList {
      */
     'results'?: Array<InvoiceResponse>;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum InvoiceStatusEnum {
+    PAID = 'PAID',
+    POSTED = 'POSTED',
+    PAYMENT_DUE = 'PAYMENT_DUE',
+    NOT_PAID = 'NOT_PAID',
+    VOIDED = 'VOIDED',
+    PENDING = 'PENDING',
+    UNKNOWN = 'UNKNOWN'
+}
+
 /**
  * 
  * @export
@@ -6509,23 +5917,11 @@ export interface MemberResponse {
     'last_activity_at'?: string;
     /**
      * 
-     * @type {string}
+     * @type {InviteMemberRoleEnum}
      * @memberof MemberResponse
      */
-    'role'?: MemberResponseRoleEnum;
+    'role'?: InviteMemberRoleEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum MemberResponseRoleEnum {
-    OWNER = 'OWNER',
-    ADMIN = 'ADMIN',
-    DEVELOPER = 'DEVELOPER',
-    VIEWER = 'VIEWER'
-}
-
 /**
  * 
  * @export
@@ -6564,23 +5960,11 @@ export interface MemberResponseAllOf {
     'last_activity_at'?: string;
     /**
      * 
-     * @type {string}
+     * @type {InviteMemberRoleEnum}
      * @memberof MemberResponseAllOf
      */
-    'role'?: MemberResponseAllOfRoleEnum;
+    'role'?: InviteMemberRoleEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum MemberResponseAllOfRoleEnum {
-    OWNER = 'OWNER',
-    ADMIN = 'ADMIN',
-    DEVELOPER = 'DEVELOPER',
-    VIEWER = 'VIEWER'
-}
-
 /**
  * 
  * @export
@@ -7135,10 +6519,10 @@ export interface OrganizationCreditCodeRequest {
 export interface OrganizationCurrentCostResponse {
     /**
      * 
-     * @type {string}
+     * @type {PlanEnum}
      * @memberof OrganizationCurrentCostResponse
      */
-    'plan'?: OrganizationCurrentCostResponsePlanEnum;
+    'plan'?: PlanEnum;
     /**
      * number of days remaining before the end of the trial period
      * @type {number}
@@ -7170,18 +6554,6 @@ export interface OrganizationCurrentCostResponse {
      */
     'community_usage'?: CommunityUsageResponse;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum OrganizationCurrentCostResponsePlanEnum {
-    COMMUNITY = 'COMMUNITY',
-    FREE = 'FREE',
-    PROFESSIONAL = 'PROFESSIONAL',
-    BUSINESS = 'BUSINESS'
-}
-
 /**
  * 
  * @export
@@ -7245,10 +6617,10 @@ export interface OrganizationRequest {
     'description'?: string;
     /**
      * 
-     * @type {string}
+     * @type {PlanEnum}
      * @memberof OrganizationRequest
      */
-    'plan': OrganizationRequestPlanEnum;
+    'plan': PlanEnum;
     /**
      * 
      * @type {string}
@@ -7274,18 +6646,6 @@ export interface OrganizationRequest {
      */
     'icon_url'?: string | null;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum OrganizationRequestPlanEnum {
-    COMMUNITY = 'COMMUNITY',
-    FREE = 'FREE',
-    PROFESSIONAL = 'PROFESSIONAL',
-    BUSINESS = 'BUSINESS'
-}
-
 /**
  * 
  * @export
@@ -7324,10 +6684,10 @@ export interface OrganizationResponse {
     'description'?: string;
     /**
      * 
-     * @type {string}
+     * @type {PlanEnum}
      * @memberof OrganizationResponse
      */
-    'plan': OrganizationResponsePlanEnum;
+    'plan': PlanEnum;
     /**
      * 
      * @type {string}
@@ -7359,18 +6719,6 @@ export interface OrganizationResponse {
      */
     'owner'?: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum OrganizationResponsePlanEnum {
-    COMMUNITY = 'COMMUNITY',
-    FREE = 'FREE',
-    PROFESSIONAL = 'PROFESSIONAL',
-    BUSINESS = 'BUSINESS'
-}
-
 /**
  * 
  * @export
@@ -7417,23 +6765,11 @@ export interface OverriddenSecret {
     'key'?: string;
     /**
      * 
-     * @type {string}
+     * @type {EnvironmentVariableScopeEnum}
      * @memberof OverriddenSecret
      */
-    'scope'?: OverriddenSecretScopeEnum;
+    'scope'?: EnvironmentVariableScopeEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum OverriddenSecretScopeEnum {
-    BUILT_IN = 'BUILT_IN',
-    ENVIRONMENT = 'ENVIRONMENT',
-    PROJECT = 'PROJECT',
-    APPLICATION = 'APPLICATION'
-}
-
 /**
  * 
  * @export
@@ -7518,6 +6854,32 @@ export interface PaidUsageResponse {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export enum PlanEnum {
+    COMMUNITY = 'COMMUNITY',
+    FREE = 'FREE',
+    PROFESSIONAL = 'PROFESSIONAL',
+    BUSINESS = 'BUSINESS'
+}
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum PortProtocolEnum {
+    HTTPS = 'HTTPS',
+    HTTP = 'HTTP',
+    TCP = 'TCP',
+    UDP = 'UDP'
+}
+
+/**
+ * 
+ * @export
  * @interface ProjectCurrentCostResponse
  */
 export interface ProjectCurrentCostResponse {
@@ -7598,10 +6960,10 @@ export interface ProjectDeploymentRuleRequest {
     'description'?: string | null;
     /**
      * 
-     * @type {string}
+     * @type {EnvironmentModeEnum}
      * @memberof ProjectDeploymentRuleRequest
      */
-    'mode': ProjectDeploymentRuleRequestModeEnum;
+    'mode': EnvironmentModeEnum;
     /**
      * 
      * @type {string}
@@ -7646,10 +7008,10 @@ export interface ProjectDeploymentRuleRequest {
     'stop_time': string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<WeekdayEnum>}
      * @memberof ProjectDeploymentRuleRequest
      */
-    'weekdays': Array<ProjectDeploymentRuleRequestWeekdaysEnum>;
+    'weekdays': Array<WeekdayEnum>;
     /**
      * wildcard pattern composed of \'?\' and/or \'*\' used to target new created environments
      * @type {string}
@@ -7657,30 +7019,6 @@ export interface ProjectDeploymentRuleRequest {
      */
     'wildcard': string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ProjectDeploymentRuleRequestModeEnum {
-    DEVELOPMENT = 'DEVELOPMENT',
-    STAGING = 'STAGING',
-    PRODUCTION = 'PRODUCTION'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ProjectDeploymentRuleRequestWeekdaysEnum {
-    MONDAY = 'MONDAY',
-    TUESDAY = 'TUESDAY',
-    WEDNESDAY = 'WEDNESDAY',
-    THURSDAY = 'THURSDAY',
-    FRIDAY = 'FRIDAY',
-    SATURDAY = 'SATURDAY',
-    SUNDAY = 'SUNDAY'
-}
-
 /**
  * 
  * @export
@@ -7719,10 +7057,10 @@ export interface ProjectDeploymentRuleResponse {
     'description'?: string | null;
     /**
      * 
-     * @type {string}
+     * @type {EnvironmentModeEnum}
      * @memberof ProjectDeploymentRuleResponse
      */
-    'mode': ProjectDeploymentRuleResponseModeEnum;
+    'mode': EnvironmentModeEnum;
     /**
      * 
      * @type {string}
@@ -7767,10 +7105,10 @@ export interface ProjectDeploymentRuleResponse {
     'stop_time': string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<WeekdayEnum>}
      * @memberof ProjectDeploymentRuleResponse
      */
-    'weekdays': Array<ProjectDeploymentRuleResponseWeekdaysEnum>;
+    'weekdays': Array<WeekdayEnum>;
     /**
      * wildcard pattern composed of \'?\' and/or \'*\' used to target new created environments
      * @type {string}
@@ -7784,30 +7122,6 @@ export interface ProjectDeploymentRuleResponse {
      */
     'priority_index'?: number;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ProjectDeploymentRuleResponseModeEnum {
-    DEVELOPMENT = 'DEVELOPMENT',
-    STAGING = 'STAGING',
-    PRODUCTION = 'PRODUCTION'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ProjectDeploymentRuleResponseWeekdaysEnum {
-    MONDAY = 'MONDAY',
-    TUESDAY = 'TUESDAY',
-    WEDNESDAY = 'WEDNESDAY',
-    THURSDAY = 'THURSDAY',
-    FRIDAY = 'FRIDAY',
-    SATURDAY = 'SATURDAY',
-    SUNDAY = 'SUNDAY'
-}
-
 /**
  * 
  * @export
@@ -8011,11 +7325,11 @@ export interface ReferenceObjectStatusResponse {
      */
     'id': string;
     /**
-     * Status is a state machine. It starts with `BUILDING` or `DEPLOYING` state (or `INITIALIZED`if auto-deploy is deactivated). Then finish with `*_ERROR` or any termination state. 
-     * @type {string}
+     * 
+     * @type {GlobalDeploymentStatus}
      * @memberof ReferenceObjectStatusResponse
      */
-    'state': ReferenceObjectStatusResponseStateEnum;
+    'state': GlobalDeploymentStatus;
     /**
      * message related to the state
      * @type {string}
@@ -8024,51 +7338,11 @@ export interface ReferenceObjectStatusResponse {
     'message'?: string | null;
     /**
      * 
-     * @type {string}
+     * @type {ServiceDeploymentStatusEnum}
      * @memberof ReferenceObjectStatusResponse
      */
-    'service_deployment_status'?: ReferenceObjectStatusResponseServiceDeploymentStatusEnum;
+    'service_deployment_status'?: ServiceDeploymentStatusEnum | null;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ReferenceObjectStatusResponseStateEnum {
-    INITIALIZED = 'INITIALIZED',
-    BUILDING_QUEUED = 'BUILDING_QUEUED',
-    BUILDING = 'BUILDING',
-    BUILD_ERROR = 'BUILD_ERROR',
-    BUILT = 'BUILT',
-    DEPLOYMENT_QUEUED = 'DEPLOYMENT_QUEUED',
-    DEPLOYING = 'DEPLOYING',
-    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
-    DEPLOYED = 'DEPLOYED',
-    STOP_QUEUED = 'STOP_QUEUED',
-    STOPPING = 'STOPPING',
-    STOP_ERROR = 'STOP_ERROR',
-    STOPPED = 'STOPPED',
-    DELETE_QUEUED = 'DELETE_QUEUED',
-    DELETING = 'DELETING',
-    DELETE_ERROR = 'DELETE_ERROR',
-    DELETED = 'DELETED',
-    RUNNING = 'RUNNING',
-    RUNNING_ERROR = 'RUNNING_ERROR',
-    CANCEL_QUEUED = 'CANCEL_QUEUED',
-    CANCELLING = 'CANCELLING',
-    CANCEL_ERROR = 'CANCEL_ERROR',
-    CANCELLED = 'CANCELLED'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ReferenceObjectStatusResponseServiceDeploymentStatusEnum {
-    NEVER_DEPLOYED = 'NEVER_DEPLOYED',
-    UP_TO_DATE = 'UP_TO_DATE',
-    OUT_OF_DATE = 'OUT_OF_DATE'
-}
-
 /**
  * 
  * @export
@@ -8267,23 +7541,11 @@ export interface SecretResponse {
     'aliased_secret'?: AliasedSecret;
     /**
      * 
-     * @type {string}
+     * @type {EnvironmentVariableScopeEnum}
      * @memberof SecretResponse
      */
-    'scope': SecretResponseScopeEnum;
+    'scope': EnvironmentVariableScopeEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum SecretResponseScopeEnum {
-    BUILT_IN = 'BUILT_IN',
-    ENVIRONMENT = 'ENVIRONMENT',
-    PROJECT = 'PROJECT',
-    APPLICATION = 'APPLICATION'
-}
-
 /**
  * 
  * @export
@@ -8310,23 +7572,11 @@ export interface SecretResponseAllOf {
     'aliased_secret'?: AliasedSecret;
     /**
      * 
-     * @type {string}
+     * @type {EnvironmentVariableScopeEnum}
      * @memberof SecretResponseAllOf
      */
-    'scope': SecretResponseAllOfScopeEnum;
+    'scope': EnvironmentVariableScopeEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum SecretResponseAllOfScopeEnum {
-    BUILT_IN = 'BUILT_IN',
-    ENVIRONMENT = 'ENVIRONMENT',
-    PROJECT = 'PROJECT',
-    APPLICATION = 'APPLICATION'
-}
-
 /**
  * 
  * @export
@@ -8340,6 +7590,18 @@ export interface SecretResponseList {
      */
     'results'?: Array<SecretResponse>;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum ServiceDeploymentStatusEnum {
+    NEVER_DEPLOYED = 'NEVER_DEPLOYED',
+    UP_TO_DATE = 'UP_TO_DATE',
+    OUT_OF_DATE = 'OUT_OF_DATE'
+}
+
 /**
  * 
  * @export
@@ -8365,11 +7627,11 @@ export interface ServiceResponse {
      */
     'updated_at'?: string;
     /**
-     * type of the service (application, database, job, gateway...)
-     * @type {string}
+     * 
+     * @type {ServiceTypeEnum}
      * @memberof ServiceResponse
      */
-    'type'?: ServiceResponseTypeEnum;
+    'type'?: ServiceTypeEnum;
     /**
      * name of the service
      * @type {string}
@@ -8413,16 +7675,6 @@ export interface ServiceResponse {
      */
     'to_update'?: boolean;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ServiceResponseTypeEnum {
-    APPLICATION = 'APPLICATION',
-    DATABASE = 'DATABASE'
-}
-
 /**
  * 
  * @export
@@ -8430,11 +7682,11 @@ export enum ServiceResponseTypeEnum {
  */
 export interface ServiceResponseAllOf {
     /**
-     * type of the service (application, database, job, gateway...)
-     * @type {string}
+     * 
+     * @type {ServiceTypeEnum}
      * @memberof ServiceResponseAllOf
      */
-    'type'?: ServiceResponseAllOfTypeEnum;
+    'type'?: ServiceTypeEnum;
     /**
      * name of the service
      * @type {string}
@@ -8484,16 +7736,6 @@ export interface ServiceResponseAllOf {
      */
     'to_update'?: boolean;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ServiceResponseAllOfTypeEnum {
-    APPLICATION = 'APPLICATION',
-    DATABASE = 'DATABASE'
-}
-
 /**
  * 
  * @export
@@ -8521,6 +7763,17 @@ export interface ServiceTotalNumber {
     'service_total_number'?: number;
 }
 /**
+ * type of the service (application, database, job, gateway...)
+ * @export
+ * @enum {string}
+ */
+
+export enum ServiceTypeEnum {
+    APPLICATION = 'APPLICATION',
+    DATABASE = 'DATABASE'
+}
+
+/**
  * 
  * @export
  * @interface Status
@@ -8533,11 +7786,11 @@ export interface Status {
      */
     'id'?: string;
     /**
-     * Status is a state machine. It starts with `BUILDING` or `DEPLOYING` state (or `INITIALIZED`if auto-deploy is deactivated). Then finish with `*_ERROR` or any termination state. 
-     * @type {string}
+     * 
+     * @type {GlobalDeploymentStatus}
      * @memberof Status
      */
-    'state': StatusStateEnum;
+    'state': GlobalDeploymentStatus;
     /**
      * message related to the state
      * @type {string}
@@ -8546,51 +7799,11 @@ export interface Status {
     'message'?: string | null;
     /**
      * 
-     * @type {string}
+     * @type {ServiceDeploymentStatusEnum}
      * @memberof Status
      */
-    'service_deployment_status'?: StatusServiceDeploymentStatusEnum;
+    'service_deployment_status'?: ServiceDeploymentStatusEnum | null;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum StatusStateEnum {
-    INITIALIZED = 'INITIALIZED',
-    BUILDING_QUEUED = 'BUILDING_QUEUED',
-    BUILDING = 'BUILDING',
-    BUILD_ERROR = 'BUILD_ERROR',
-    BUILT = 'BUILT',
-    DEPLOYMENT_QUEUED = 'DEPLOYMENT_QUEUED',
-    DEPLOYING = 'DEPLOYING',
-    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
-    DEPLOYED = 'DEPLOYED',
-    STOP_QUEUED = 'STOP_QUEUED',
-    STOPPING = 'STOPPING',
-    STOP_ERROR = 'STOP_ERROR',
-    STOPPED = 'STOPPED',
-    DELETE_QUEUED = 'DELETE_QUEUED',
-    DELETING = 'DELETING',
-    DELETE_ERROR = 'DELETE_ERROR',
-    DELETED = 'DELETED',
-    RUNNING = 'RUNNING',
-    RUNNING_ERROR = 'RUNNING_ERROR',
-    CANCEL_QUEUED = 'CANCEL_QUEUED',
-    CANCELLING = 'CANCELLING',
-    CANCEL_ERROR = 'CANCEL_ERROR',
-    CANCELLED = 'CANCELLED'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum StatusServiceDeploymentStatusEnum {
-    NEVER_DEPLOYED = 'NEVER_DEPLOYED',
-    UP_TO_DATE = 'UP_TO_DATE',
-    OUT_OF_DATE = 'OUT_OF_DATE'
-}
-
 /**
  * 
  * @export
@@ -8641,22 +7854,11 @@ export interface StorageDiskResponse {
     'alert_threshold_in_percent'?: number;
     /**
      * 
-     * @type {string}
+     * @type {ThresholdMetricStatusEnum}
      * @memberof StorageDiskResponse
      */
-    'status'?: StorageDiskResponseStatusEnum;
+    'status'?: ThresholdMetricStatusEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum StorageDiskResponseStatusEnum {
-    OK = 'OK',
-    WARNING = 'Warning',
-    ALERT = 'Alert'
-}
-
 /**
  * 
  * @export
@@ -8670,6 +7872,18 @@ export interface StorageDiskResponseList {
      */
     'results'?: Array<StorageDiskResponse>;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum StorageTypeEnum {
+    AWS = 'AWS',
+    DIGITAL_OCEAN = 'DIGITAL_OCEAN',
+    SCALEWAY = 'SCALEWAY'
+}
+
 /**
  * 
  * @export
@@ -8715,6 +7929,18 @@ export interface TagResponseList {
      */
     'results'?: Array<TagResponse>;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum ThresholdMetricStatusEnum {
+    OK = 'OK',
+    WARNING = 'Warning',
+    ALERT = 'Alert'
+}
+
 /**
  * 
  * @export
@@ -8855,10 +8081,10 @@ export interface VariableImportRequestVars {
     'value': string;
     /**
      * 
-     * @type {string}
+     * @type {EnvironmentVariableScopeEnum}
      * @memberof VariableImportRequestVars
      */
-    'scope': VariableImportRequestVarsScopeEnum;
+    'scope': EnvironmentVariableScopeEnum;
     /**
      * 
      * @type {boolean}
@@ -8866,18 +8092,6 @@ export interface VariableImportRequestVars {
      */
     'is_secret': boolean;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum VariableImportRequestVarsScopeEnum {
-    ORGANIZATION = 'ORGANIZATION',
-    PROJECT = 'PROJECT',
-    ENVIRONMENT = 'ENVIRONMENT',
-    APPLICATION = 'APPLICATION'
-}
-
 /**
  * 
  * @export
@@ -8917,10 +8131,10 @@ export interface VariableImportResponseSuccessfulImportedVariables {
     'value'?: string;
     /**
      * 
-     * @type {string}
+     * @type {EnvironmentVariableScopeEnum}
      * @memberof VariableImportResponseSuccessfulImportedVariables
      */
-    'scope': VariableImportResponseSuccessfulImportedVariablesScopeEnum;
+    'scope': EnvironmentVariableScopeEnum;
     /**
      * 
      * @type {boolean}
@@ -8928,18 +8142,6 @@ export interface VariableImportResponseSuccessfulImportedVariables {
      */
     'is_secret': boolean;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum VariableImportResponseSuccessfulImportedVariablesScopeEnum {
-    ORGANIZATION = 'ORGANIZATION',
-    PROJECT = 'PROJECT',
-    ENVIRONMENT = 'ENVIRONMENT',
-    APPLICATION = 'APPLICATION'
-}
-
 /**
  * 
  * @export
@@ -8966,6 +8168,22 @@ export interface VersionResponseList {
      */
     'results'?: Array<VersionResponse>;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum WeekdayEnum {
+    MONDAY = 'MONDAY',
+    TUESDAY = 'TUESDAY',
+    WEDNESDAY = 'WEDNESDAY',
+    THURSDAY = 'THURSDAY',
+    FRIDAY = 'FRIDAY',
+    SATURDAY = 'SATURDAY',
+    SUNDAY = 'SUNDAY'
+}
+
 
 /**
  * AccountInfoApi - axios parameter creator
