@@ -5339,10 +5339,10 @@ export enum HealthcheckProtocolEnum {
 export interface InlineObject {
     /**
      * 
-     * @type {Array<ProjectProjectIdDeploymentRuleOrderProjectDeploymentRuleIdsInOrder>}
+     * @type {Array<string>}
      * @memberof InlineObject
      */
-    'project_deployment_rule_ids_in_order'?: Array<ProjectProjectIdDeploymentRuleOrderProjectDeploymentRuleIdsInOrder>;
+    'project_deployment_rule_ids_in_order'?: Array<string>;
 }
 /**
  * 
@@ -7147,19 +7147,6 @@ export interface ProjectDeploymentRuleResponseList {
      * @memberof ProjectDeploymentRuleResponseList
      */
     'results'?: Array<ProjectDeploymentRuleResponse>;
-}
-/**
- * 
- * @export
- * @interface ProjectProjectIdDeploymentRuleOrderProjectDeploymentRuleIdsInOrder
- */
-export interface ProjectProjectIdDeploymentRuleOrderProjectDeploymentRuleIdsInOrder {
-    /**
-     * project deployment rule id
-     * @type {string}
-     * @memberof ProjectProjectIdDeploymentRuleOrderProjectDeploymentRuleIdsInOrder
-     */
-    'id': string;
 }
 /**
  * 
