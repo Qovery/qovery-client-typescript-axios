@@ -185,71 +185,40 @@ export interface ApplicationDependencyRequest {
 /**
  * 
  * @export
- * @interface ApplicationDeploymentRestriction
+ * @interface ApplicationDeploymentRestrictionRequest
  */
-export interface ApplicationDeploymentRestriction {
+export interface ApplicationDeploymentRestrictionRequest {
     /**
      * 
      * @type {DeploymentRestrictionModeEnum}
-     * @memberof ApplicationDeploymentRestriction
+     * @memberof ApplicationDeploymentRestrictionRequest
      */
     'mode': DeploymentRestrictionModeEnum;
     /**
      * 
      * @type {DeploymentRestrictionTypeEnum}
-     * @memberof ApplicationDeploymentRestriction
+     * @memberof ApplicationDeploymentRestrictionRequest
      */
     'type': DeploymentRestrictionTypeEnum;
     /**
-     * 
+     * For `PATH` restrictions, the value must not start with `/`
      * @type {string}
-     * @memberof ApplicationDeploymentRestriction
+     * @memberof ApplicationDeploymentRestrictionRequest
      */
     'value': string;
 }
 /**
  * 
  * @export
- * @interface ApplicationDeploymentRuleEditRequest
+ * @interface ApplicationDeploymentRestrictionResponse
  */
-export interface ApplicationDeploymentRuleEditRequest {
+export interface ApplicationDeploymentRestrictionResponse {
     /**
      * 
-     * @type {Array<ApplicationDeploymentRestriction>}
-     * @memberof ApplicationDeploymentRuleEditRequest
+     * @type {Array<object>}
+     * @memberof ApplicationDeploymentRestrictionResponse
      */
-    'deployment_restrictions'?: Array<ApplicationDeploymentRestriction>;
-}
-/**
- * 
- * @export
- * @interface ApplicationDeploymentRuleResponse
- */
-export interface ApplicationDeploymentRuleResponse {
-    /**
-     * 
-     * @type {Array<ApplicationDeploymentRestriction>}
-     * @memberof ApplicationDeploymentRuleResponse
-     */
-    'deployment_restrictions'?: Array<ApplicationDeploymentRestriction>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApplicationDeploymentRuleResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApplicationDeploymentRuleResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApplicationDeploymentRuleResponse
-     */
-    'updated_at'?: string;
+    'deployment_restrictions'?: Array<object>;
 }
 /**
  * 
@@ -3734,7 +3703,6 @@ export enum DeploymentRestrictionModeEnum {
  */
 
 export enum DeploymentRestrictionTypeEnum {
-    FILE = 'FILE',
     PATH = 'PATH'
 }
 
@@ -9329,28 +9297,108 @@ export class ApplicationDeploymentHistoryApi extends BaseAPI {
 
 
 /**
- * ApplicationDeploymentRuleApi - axios parameter creator
+ * ApplicationDeploymentRestrictionApi - axios parameter creator
  * @export
  */
-export const ApplicationDeploymentRuleApiAxiosParamCreator = function (configuration?: Configuration) {
+export const ApplicationDeploymentRestrictionApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Edit an application deployment rule
-         * @summary Edit an application deployment rule
+         * Create an application deployment restriction
+         * @summary Create an application deployment restriction
          * @param {string} applicationId Application ID
-         * @param {string} deploymentRuleId Deployment Rule ID
-         * @param {ApplicationDeploymentRuleEditRequest} [applicationDeploymentRuleEditRequest] 
+         * @param {ApplicationDeploymentRestrictionRequest} [applicationDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editApplicationDeploymentRule: async (applicationId: string, deploymentRuleId: string, applicationDeploymentRuleEditRequest?: ApplicationDeploymentRuleEditRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createApplicationDeploymentRestriction: async (applicationId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'applicationId' is not null or undefined
-            assertParamExists('editApplicationDeploymentRule', 'applicationId', applicationId)
-            // verify required parameter 'deploymentRuleId' is not null or undefined
-            assertParamExists('editApplicationDeploymentRule', 'deploymentRuleId', deploymentRuleId)
-            const localVarPath = `/application/{applicationId}/deploymentRule/{deploymentRuleId}`
+            assertParamExists('createApplicationDeploymentRestriction', 'applicationId', applicationId)
+            const localVarPath = `/application/{applicationId}/deploymentRestriction`
+                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(applicationDeploymentRestrictionRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete an application deployment restriction
+         * @summary Delete an application deployment restriction
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteApplicationDeploymentRestriction: async (applicationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'applicationId' is not null or undefined
+            assertParamExists('deleteApplicationDeploymentRestriction', 'applicationId', applicationId)
+            const localVarPath = `/application/{applicationId}/deploymentRestriction/{deploymentRestrictionId}`
+                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Edit an application deployment restriction
+         * @summary Edit an application deployment restriction
+         * @param {string} applicationId Application ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {ApplicationDeploymentRestrictionRequest} [applicationDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editApplicationDeploymentRestriction: async (applicationId: string, deploymentRestrictionId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'applicationId' is not null or undefined
+            assertParamExists('editApplicationDeploymentRestriction', 'applicationId', applicationId)
+            // verify required parameter 'deploymentRestrictionId' is not null or undefined
+            assertParamExists('editApplicationDeploymentRestriction', 'deploymentRestrictionId', deploymentRestrictionId)
+            const localVarPath = `/application/{applicationId}/deploymentRestriction/{deploymentRestrictionId}`
                 .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)))
-                .replace(`{${"deploymentRuleId"}}`, encodeURIComponent(String(deploymentRuleId)));
+                .replace(`{${"deploymentRestrictionId"}}`, encodeURIComponent(String(deploymentRestrictionId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -9373,7 +9421,7 @@ export const ApplicationDeploymentRuleApiAxiosParamCreator = function (configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(applicationDeploymentRuleEditRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(applicationDeploymentRestrictionRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -9381,16 +9429,16 @@ export const ApplicationDeploymentRuleApiAxiosParamCreator = function (configura
             };
         },
         /**
-         * Get application deployment rule
-         * @summary Get application deployment rule
+         * Get application deployment restrictions
+         * @summary Get application deployment restrictions
          * @param {string} applicationId Application ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getApplicationDeploymentRule: async (applicationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getApplicationDeploymentRestrictions: async (applicationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'applicationId' is not null or undefined
-            assertParamExists('getApplicationDeploymentRule', 'applicationId', applicationId)
-            const localVarPath = `/application/{applicationId}/deploymentRule`
+            assertParamExists('getApplicationDeploymentRestrictions', 'applicationId', applicationId)
+            const localVarPath = `/application/{applicationId}/deploymentRestriction`
                 .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -9422,102 +9470,171 @@ export const ApplicationDeploymentRuleApiAxiosParamCreator = function (configura
 };
 
 /**
- * ApplicationDeploymentRuleApi - functional programming interface
+ * ApplicationDeploymentRestrictionApi - functional programming interface
  * @export
  */
-export const ApplicationDeploymentRuleApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = ApplicationDeploymentRuleApiAxiosParamCreator(configuration)
+export const ApplicationDeploymentRestrictionApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ApplicationDeploymentRestrictionApiAxiosParamCreator(configuration)
     return {
         /**
-         * Edit an application deployment rule
-         * @summary Edit an application deployment rule
+         * Create an application deployment restriction
+         * @summary Create an application deployment restriction
          * @param {string} applicationId Application ID
-         * @param {string} deploymentRuleId Deployment Rule ID
-         * @param {ApplicationDeploymentRuleEditRequest} [applicationDeploymentRuleEditRequest] 
+         * @param {ApplicationDeploymentRestrictionRequest} [applicationDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editApplicationDeploymentRule(applicationId: string, deploymentRuleId: string, applicationDeploymentRuleEditRequest?: ApplicationDeploymentRuleEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationDeploymentRuleResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.editApplicationDeploymentRule(applicationId, deploymentRuleId, applicationDeploymentRuleEditRequest, options);
+        async createApplicationDeploymentRestriction(applicationId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseResponse & ApplicationDeploymentRestrictionRequest>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createApplicationDeploymentRestriction(applicationId, applicationDeploymentRestrictionRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get application deployment rule
-         * @summary Get application deployment rule
+         * Delete an application deployment restriction
+         * @summary Delete an application deployment restriction
          * @param {string} applicationId Application ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getApplicationDeploymentRule(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationDeploymentRuleResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getApplicationDeploymentRule(applicationId, options);
+        async deleteApplicationDeploymentRestriction(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteApplicationDeploymentRestriction(applicationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Edit an application deployment restriction
+         * @summary Edit an application deployment restriction
+         * @param {string} applicationId Application ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {ApplicationDeploymentRestrictionRequest} [applicationDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editApplicationDeploymentRestriction(applicationId: string, deploymentRestrictionId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editApplicationDeploymentRestriction(applicationId, deploymentRestrictionId, applicationDeploymentRestrictionRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get application deployment restrictions
+         * @summary Get application deployment restrictions
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getApplicationDeploymentRestrictions(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationDeploymentRestrictionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getApplicationDeploymentRestrictions(applicationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
 
 /**
- * ApplicationDeploymentRuleApi - factory interface
+ * ApplicationDeploymentRestrictionApi - factory interface
  * @export
  */
-export const ApplicationDeploymentRuleApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = ApplicationDeploymentRuleApiFp(configuration)
+export const ApplicationDeploymentRestrictionApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ApplicationDeploymentRestrictionApiFp(configuration)
     return {
         /**
-         * Edit an application deployment rule
-         * @summary Edit an application deployment rule
+         * Create an application deployment restriction
+         * @summary Create an application deployment restriction
          * @param {string} applicationId Application ID
-         * @param {string} deploymentRuleId Deployment Rule ID
-         * @param {ApplicationDeploymentRuleEditRequest} [applicationDeploymentRuleEditRequest] 
+         * @param {ApplicationDeploymentRestrictionRequest} [applicationDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editApplicationDeploymentRule(applicationId: string, deploymentRuleId: string, applicationDeploymentRuleEditRequest?: ApplicationDeploymentRuleEditRequest, options?: any): AxiosPromise<ApplicationDeploymentRuleResponse> {
-            return localVarFp.editApplicationDeploymentRule(applicationId, deploymentRuleId, applicationDeploymentRuleEditRequest, options).then((request) => request(axios, basePath));
+        createApplicationDeploymentRestriction(applicationId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: any): AxiosPromise<BaseResponse & ApplicationDeploymentRestrictionRequest> {
+            return localVarFp.createApplicationDeploymentRestriction(applicationId, applicationDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get application deployment rule
-         * @summary Get application deployment rule
+         * Delete an application deployment restriction
+         * @summary Delete an application deployment restriction
          * @param {string} applicationId Application ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getApplicationDeploymentRule(applicationId: string, options?: any): AxiosPromise<ApplicationDeploymentRuleResponse> {
-            return localVarFp.getApplicationDeploymentRule(applicationId, options).then((request) => request(axios, basePath));
+        deleteApplicationDeploymentRestriction(applicationId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteApplicationDeploymentRestriction(applicationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Edit an application deployment restriction
+         * @summary Edit an application deployment restriction
+         * @param {string} applicationId Application ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {ApplicationDeploymentRestrictionRequest} [applicationDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editApplicationDeploymentRestriction(applicationId: string, deploymentRestrictionId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: any): AxiosPromise<object> {
+            return localVarFp.editApplicationDeploymentRestriction(applicationId, deploymentRestrictionId, applicationDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get application deployment restrictions
+         * @summary Get application deployment restrictions
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getApplicationDeploymentRestrictions(applicationId: string, options?: any): AxiosPromise<ApplicationDeploymentRestrictionResponse> {
+            return localVarFp.getApplicationDeploymentRestrictions(applicationId, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * ApplicationDeploymentRuleApi - object-oriented interface
+ * ApplicationDeploymentRestrictionApi - object-oriented interface
  * @export
- * @class ApplicationDeploymentRuleApi
+ * @class ApplicationDeploymentRestrictionApi
  * @extends {BaseAPI}
  */
-export class ApplicationDeploymentRuleApi extends BaseAPI {
+export class ApplicationDeploymentRestrictionApi extends BaseAPI {
     /**
-     * Edit an application deployment rule
-     * @summary Edit an application deployment rule
+     * Create an application deployment restriction
+     * @summary Create an application deployment restriction
      * @param {string} applicationId Application ID
-     * @param {string} deploymentRuleId Deployment Rule ID
-     * @param {ApplicationDeploymentRuleEditRequest} [applicationDeploymentRuleEditRequest] 
+     * @param {ApplicationDeploymentRestrictionRequest} [applicationDeploymentRestrictionRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ApplicationDeploymentRuleApi
+     * @memberof ApplicationDeploymentRestrictionApi
      */
-    public editApplicationDeploymentRule(applicationId: string, deploymentRuleId: string, applicationDeploymentRuleEditRequest?: ApplicationDeploymentRuleEditRequest, options?: AxiosRequestConfig) {
-        return ApplicationDeploymentRuleApiFp(this.configuration).editApplicationDeploymentRule(applicationId, deploymentRuleId, applicationDeploymentRuleEditRequest, options).then((request) => request(this.axios, this.basePath));
+    public createApplicationDeploymentRestriction(applicationId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: AxiosRequestConfig) {
+        return ApplicationDeploymentRestrictionApiFp(this.configuration).createApplicationDeploymentRestriction(applicationId, applicationDeploymentRestrictionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Get application deployment rule
-     * @summary Get application deployment rule
+     * Delete an application deployment restriction
+     * @summary Delete an application deployment restriction
      * @param {string} applicationId Application ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ApplicationDeploymentRuleApi
+     * @memberof ApplicationDeploymentRestrictionApi
      */
-    public getApplicationDeploymentRule(applicationId: string, options?: AxiosRequestConfig) {
-        return ApplicationDeploymentRuleApiFp(this.configuration).getApplicationDeploymentRule(applicationId, options).then((request) => request(this.axios, this.basePath));
+    public deleteApplicationDeploymentRestriction(applicationId: string, options?: AxiosRequestConfig) {
+        return ApplicationDeploymentRestrictionApiFp(this.configuration).deleteApplicationDeploymentRestriction(applicationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Edit an application deployment restriction
+     * @summary Edit an application deployment restriction
+     * @param {string} applicationId Application ID
+     * @param {string} deploymentRestrictionId Deployment Restriction ID
+     * @param {ApplicationDeploymentRestrictionRequest} [applicationDeploymentRestrictionRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApplicationDeploymentRestrictionApi
+     */
+    public editApplicationDeploymentRestriction(applicationId: string, deploymentRestrictionId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: AxiosRequestConfig) {
+        return ApplicationDeploymentRestrictionApiFp(this.configuration).editApplicationDeploymentRestriction(applicationId, deploymentRestrictionId, applicationDeploymentRestrictionRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get application deployment restrictions
+     * @summary Get application deployment restrictions
+     * @param {string} applicationId Application ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApplicationDeploymentRestrictionApi
+     */
+    public getApplicationDeploymentRestrictions(applicationId: string, options?: AxiosRequestConfig) {
+        return ApplicationDeploymentRestrictionApiFp(this.configuration).getApplicationDeploymentRestrictions(applicationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
