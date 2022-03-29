@@ -5328,6 +5328,107 @@ export interface InlineObject1 {
 /**
  * 
  * @export
+ * @interface InlineObject2
+ */
+export interface InlineObject2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineObject2
+     */
+    'first_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineObject2
+     */
+    'last_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineObject2
+     */
+    'user_email': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineObject2
+     */
+    'type_of_use': InlineObject2TypeOfUseEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineObject2
+     */
+    'qovery_usage': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineObject2
+     */
+    'company_name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineObject2
+     */
+    'company_size'?: InlineObject2CompanySizeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineObject2
+     */
+    'user_role'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineObject2
+     */
+    'qovery_usage_other'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineObject2
+     */
+    'user_questions'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineObject2
+     */
+    'current_step'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof InlineObject2
+     */
+    'dx_auth'?: boolean | null;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum InlineObject2TypeOfUseEnum {
+    PERSONAL = 'PERSONAL',
+    WORK = 'WORK',
+    SCHOOL = 'SCHOOL'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum InlineObject2CompanySizeEnum {
+    _1_10 = '1-10',
+    _11_50 = '11-50',
+    _51_200 = '51-200',
+    _201_500 = '201-500',
+    _500 = '500+'
+}
+
+/**
+ * 
+ * @export
  * @interface InstanceResponse
  */
 export interface InstanceResponse {
@@ -26840,6 +26941,179 @@ export class ReferralRewardsApi extends BaseAPI {
      */
     public postAccountRewardClaim(rewardClaimResponse?: RewardClaimResponse, options?: AxiosRequestConfig) {
         return ReferralRewardsApiFp(this.configuration).postAccountRewardClaim(rewardClaimResponse, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * UserSignUpApi - axios parameter creator
+ * @export
+ */
+export const UserSignUpApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Send a Sign Up request containing the user information
+         * @summary Send Sign Up request
+         * @param {InlineObject2} [inlineObject2] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createUserSignUp: async (inlineObject2?: InlineObject2, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/admin/userSignUp`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject2, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve the Sign Up information of the user
+         * @summary Get Sign up information
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserSignUp: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/admin/userSignUp`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * UserSignUpApi - functional programming interface
+ * @export
+ */
+export const UserSignUpApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = UserSignUpApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Send a Sign Up request containing the user information
+         * @summary Send Sign Up request
+         * @param {InlineObject2} [inlineObject2] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createUserSignUp(inlineObject2?: InlineObject2, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createUserSignUp(inlineObject2, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Retrieve the Sign Up information of the user
+         * @summary Get Sign up information
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUserSignUp(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseResponse & object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUserSignUp(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * UserSignUpApi - factory interface
+ * @export
+ */
+export const UserSignUpApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = UserSignUpApiFp(configuration)
+    return {
+        /**
+         * Send a Sign Up request containing the user information
+         * @summary Send Sign Up request
+         * @param {InlineObject2} [inlineObject2] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createUserSignUp(inlineObject2?: InlineObject2, options?: any): AxiosPromise<void> {
+            return localVarFp.createUserSignUp(inlineObject2, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Retrieve the Sign Up information of the user
+         * @summary Get Sign up information
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserSignUp(options?: any): AxiosPromise<BaseResponse & object> {
+            return localVarFp.getUserSignUp(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * UserSignUpApi - object-oriented interface
+ * @export
+ * @class UserSignUpApi
+ * @extends {BaseAPI}
+ */
+export class UserSignUpApi extends BaseAPI {
+    /**
+     * Send a Sign Up request containing the user information
+     * @summary Send Sign Up request
+     * @param {InlineObject2} [inlineObject2] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserSignUpApi
+     */
+    public createUserSignUp(inlineObject2?: InlineObject2, options?: AxiosRequestConfig) {
+        return UserSignUpApiFp(this.configuration).createUserSignUp(inlineObject2, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Retrieve the Sign Up information of the user
+     * @summary Get Sign up information
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserSignUpApi
+     */
+    public getUserSignUp(options?: AxiosRequestConfig) {
+        return UserSignUpApiFp(this.configuration).getUserSignUp(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
