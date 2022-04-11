@@ -1,6 +1,6 @@
 {
   "name": "qovery-typescript-axios",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "OpenAPI client for qovery-typescript-axios",
   "author": "OpenAPI-Generator Contributors",
   "keywords": [
