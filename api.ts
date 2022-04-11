@@ -24,6 +24,49 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 /**
  * 
  * @export
+ * @interface AccountInfo
+ */
+export interface AccountInfo {
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInfo
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInfo
+     */
+    'created_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInfo
+     */
+    'nickname'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInfo
+     */
+    'first_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInfo
+     */
+    'last_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInfo
+     */
+    'profile_picture_url'?: string;
+}
+/**
+ * 
+ * @export
  * @interface AccountInfoEditRequest
  */
 export interface AccountInfoEditRequest {
@@ -43,49 +86,6 @@ export interface AccountInfoEditRequest {
      * 
      * @type {string}
      * @memberof AccountInfoEditRequest
-     */
-    'profile_picture_url'?: string;
-}
-/**
- * 
- * @export
- * @interface AccountInfoResponse
- */
-export interface AccountInfoResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfoResponse
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfoResponse
-     */
-    'created_at'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfoResponse
-     */
-    'nickname'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfoResponse
-     */
-    'first_name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfoResponse
-     */
-    'last_name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfoResponse
      */
     'profile_picture_url'?: string;
 }
@@ -117,55 +117,279 @@ export interface AliasedSecret {
 /**
  * 
  * @export
- * @interface ApplicationCurrentScaleResponse
+ * @interface Application
  */
-export interface ApplicationCurrentScaleResponse {
+export interface Application {
+    /**
+     * 
+     * @type {string}
+     * @memberof Application
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Application
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Application
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {Array<ApplicationStorageStorage>}
+     * @memberof Application
+     */
+    'storage'?: Array<ApplicationStorageStorage>;
+    /**
+     * 
+     * @type {Array<ApplicationPortPorts>}
+     * @memberof Application
+     */
+    'ports'?: Array<ApplicationPortPorts>;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof Application
+     */
+    'environment'?: ReferenceObject;
+    /**
+     * 
+     * @type {ApplicationGitRepository}
+     * @memberof Application
+     */
+    'git_repository'?: ApplicationGitRepository;
+    /**
+     * Maximum cpu that can be allocated to the application based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof Application
+     */
+    'maximum_cpu'?: number;
+    /**
+     * Maximum memory that can be allocated to the application based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof Application
+     */
+    'maximum_memory'?: number;
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof Application
+     */
+    'name'?: string;
+    /**
+     * give a description to this application
+     * @type {string}
+     * @memberof Application
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {BuildModeEnum}
+     * @memberof Application
+     */
+    'build_mode'?: BuildModeEnum;
+    /**
+     * The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+     * @type {string}
+     * @memberof Application
+     */
+    'dockerfile_path'?: string | null;
+    /**
+     * 
+     * @type {BuildPackLanguageEnum}
+     * @memberof Application
+     */
+    'buildpack_language'?: BuildPackLanguageEnum | null;
+    /**
+     * unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof Application
+     */
+    'cpu'?: number;
+    /**
+     * unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof Application
+     */
+    'memory'?: number;
+    /**
+     * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no application running. 
+     * @type {number}
+     * @memberof Application
+     */
+    'min_running_instances'?: number;
+    /**
+     * Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: -1 means that there is no limit. 
+     * @type {number}
+     * @memberof Application
+     */
+    'max_running_instances'?: number;
+    /**
+     * 
+     * @type {Healthcheck}
+     * @memberof Application
+     */
+    'healthcheck'?: Healthcheck;
+    /**
+     * Specify if the environment preview option is activated or not for this application. If activated, a preview environment will be automatically cloned at each pull request. 
+     * @type {boolean}
+     * @memberof Application
+     */
+    'auto_preview'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface ApplicationAllOf
+ */
+export interface ApplicationAllOf {
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof ApplicationAllOf
+     */
+    'environment'?: ReferenceObject;
+    /**
+     * 
+     * @type {ApplicationGitRepository}
+     * @memberof ApplicationAllOf
+     */
+    'git_repository'?: ApplicationGitRepository;
+    /**
+     * Maximum cpu that can be allocated to the application based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof ApplicationAllOf
+     */
+    'maximum_cpu'?: number;
+    /**
+     * Maximum memory that can be allocated to the application based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof ApplicationAllOf
+     */
+    'maximum_memory'?: number;
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof ApplicationAllOf
+     */
+    'name'?: string;
+    /**
+     * give a description to this application
+     * @type {string}
+     * @memberof ApplicationAllOf
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {BuildModeEnum}
+     * @memberof ApplicationAllOf
+     */
+    'build_mode'?: BuildModeEnum;
+    /**
+     * The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+     * @type {string}
+     * @memberof ApplicationAllOf
+     */
+    'dockerfile_path'?: string | null;
+    /**
+     * 
+     * @type {BuildPackLanguageEnum}
+     * @memberof ApplicationAllOf
+     */
+    'buildpack_language'?: BuildPackLanguageEnum | null;
+    /**
+     * unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof ApplicationAllOf
+     */
+    'cpu'?: number;
+    /**
+     * unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof ApplicationAllOf
+     */
+    'memory'?: number;
+    /**
+     * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no application running. 
+     * @type {number}
+     * @memberof ApplicationAllOf
+     */
+    'min_running_instances'?: number;
+    /**
+     * Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: -1 means that there is no limit. 
+     * @type {number}
+     * @memberof ApplicationAllOf
+     */
+    'max_running_instances'?: number;
+    /**
+     * 
+     * @type {Healthcheck}
+     * @memberof ApplicationAllOf
+     */
+    'healthcheck'?: Healthcheck;
+    /**
+     * Specify if the environment preview option is activated or not for this application. If activated, a preview environment will be automatically cloned at each pull request. 
+     * @type {boolean}
+     * @memberof ApplicationAllOf
+     */
+    'auto_preview'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface ApplicationCurrentScale
+ */
+export interface ApplicationCurrentScale {
     /**
      * 
      * @type {number}
-     * @memberof ApplicationCurrentScaleResponse
+     * @memberof ApplicationCurrentScale
      */
     'min'?: number;
     /**
      * 
      * @type {number}
-     * @memberof ApplicationCurrentScaleResponse
+     * @memberof ApplicationCurrentScale
      */
     'max'?: number;
     /**
      * 
      * @type {number}
-     * @memberof ApplicationCurrentScaleResponse
+     * @memberof ApplicationCurrentScale
      */
     'running'?: number;
     /**
      * 
      * @type {number}
-     * @memberof ApplicationCurrentScaleResponse
+     * @memberof ApplicationCurrentScale
      */
     'running_in_percent'?: number;
     /**
      * 
      * @type {number}
-     * @memberof ApplicationCurrentScaleResponse
+     * @memberof ApplicationCurrentScale
      */
     'warning_threshold_in_percent'?: number;
     /**
      * 
      * @type {number}
-     * @memberof ApplicationCurrentScaleResponse
+     * @memberof ApplicationCurrentScale
      */
     'alert_threshold_in_percent'?: number;
     /**
      * 
      * @type {ThresholdMetricStatusEnum}
-     * @memberof ApplicationCurrentScaleResponse
+     * @memberof ApplicationCurrentScale
      */
     'status'?: ThresholdMetricStatusEnum;
     /**
      * 
      * @type {string}
-     * @memberof ApplicationCurrentScaleResponse
+     * @memberof ApplicationCurrentScale
      */
     'updated_at'?: string;
 }
@@ -181,6 +405,19 @@ export interface ApplicationDependencyRequest {
      * @memberof ApplicationDependencyRequest
      */
     'id': string;
+}
+/**
+ * 
+ * @export
+ * @interface ApplicationDeploymentRestriction
+ */
+export interface ApplicationDeploymentRestriction {
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof ApplicationDeploymentRestriction
+     */
+    'deployment_restrictions'?: Array<object>;
 }
 /**
  * 
@@ -210,34 +447,21 @@ export interface ApplicationDeploymentRestrictionRequest {
 /**
  * 
  * @export
- * @interface ApplicationDeploymentRestrictionResponse
- */
-export interface ApplicationDeploymentRestrictionResponse {
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof ApplicationDeploymentRestrictionResponse
-     */
-    'deployment_restrictions'?: Array<object>;
-}
-/**
- * 
- * @export
  * @interface ApplicationEditRequest
  */
 export interface ApplicationEditRequest {
     /**
      * 
-     * @type {Array<ApplicationStorageResponseStorage>}
+     * @type {Array<ApplicationStorageStorage>}
      * @memberof ApplicationEditRequest
      */
-    'storage'?: Array<ApplicationStorageResponseStorage>;
+    'storage'?: Array<ApplicationStorageStorage>;
     /**
      * 
-     * @type {Array<ApplicationPortResponsePorts>}
+     * @type {Array<ApplicationPortPorts>}
      * @memberof ApplicationEditRequest
      */
-    'ports'?: Array<ApplicationPortResponsePorts>;
+    'ports'?: Array<ApplicationPortPorts>;
     /**
      * name is case insensitive
      * @type {string}
@@ -405,6 +629,79 @@ export interface ApplicationEditRequestAllOf {
 /**
  * 
  * @export
+ * @interface ApplicationGitRepository
+ */
+export interface ApplicationGitRepository {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ApplicationGitRepository
+     */
+    'has_access'?: boolean;
+    /**
+     * 
+     * @type {GitProviderEnum}
+     * @memberof ApplicationGitRepository
+     */
+    'provider'?: GitProviderEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplicationGitRepository
+     */
+    'owner'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplicationGitRepository
+     */
+    'url'?: string;
+    /**
+     * repository name
+     * @type {string}
+     * @memberof ApplicationGitRepository
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplicationGitRepository
+     */
+    'branch'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplicationGitRepository
+     */
+    'root_path'?: string;
+    /**
+     * Git commit ID corresponding to the deployed version of the app
+     * @type {string}
+     * @memberof ApplicationGitRepository
+     */
+    'deployed_commit_id'?: string;
+    /**
+     * Git commit date corresponding to the deployed version of the app
+     * @type {string}
+     * @memberof ApplicationGitRepository
+     */
+    'deployed_commit_date'?: string;
+    /**
+     * Git commit user corresponding to the deployed version of the app
+     * @type {string}
+     * @memberof ApplicationGitRepository
+     */
+    'deployed_commit_contributor'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplicationGitRepository
+     */
+    'deployed_commit_tag'?: string;
+}
+/**
+ * 
+ * @export
  * @interface ApplicationGitRepositoryRequest
  */
 export interface ApplicationGitRepositoryRequest {
@@ -430,75 +727,15 @@ export interface ApplicationGitRepositoryRequest {
 /**
  * 
  * @export
- * @interface ApplicationGitRepositoryResponse
+ * @interface ApplicationNetwork
  */
-export interface ApplicationGitRepositoryResponse {
+export interface ApplicationNetwork {
     /**
-     * 
+     * Specify if the sticky session option (also called persistant session) is activated or not for this application. If activated, user will be redirected by the load balancer to the same instance each time he access to the application.  
      * @type {boolean}
-     * @memberof ApplicationGitRepositoryResponse
+     * @memberof ApplicationNetwork
      */
-    'has_access'?: boolean;
-    /**
-     * 
-     * @type {GitProviderEnum}
-     * @memberof ApplicationGitRepositoryResponse
-     */
-    'provider'?: GitProviderEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApplicationGitRepositoryResponse
-     */
-    'owner'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApplicationGitRepositoryResponse
-     */
-    'url'?: string;
-    /**
-     * repository name
-     * @type {string}
-     * @memberof ApplicationGitRepositoryResponse
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApplicationGitRepositoryResponse
-     */
-    'branch'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApplicationGitRepositoryResponse
-     */
-    'root_path'?: string;
-    /**
-     * Git commit ID corresponding to the deployed version of the app
-     * @type {string}
-     * @memberof ApplicationGitRepositoryResponse
-     */
-    'deployed_commit_id'?: string;
-    /**
-     * Git commit date corresponding to the deployed version of the app
-     * @type {string}
-     * @memberof ApplicationGitRepositoryResponse
-     */
-    'deployed_commit_date'?: string;
-    /**
-     * Git commit user corresponding to the deployed version of the app
-     * @type {string}
-     * @memberof ApplicationGitRepositoryResponse
-     */
-    'deployed_commit_contributor'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApplicationGitRepositoryResponse
-     */
-    'deployed_commit_tag'?: string;
+    'sticky_session'?: boolean;
 }
 /**
  * 
@@ -516,15 +753,58 @@ export interface ApplicationNetworkRequest {
 /**
  * 
  * @export
- * @interface ApplicationNetworkResponse
+ * @interface ApplicationPort
  */
-export interface ApplicationNetworkResponse {
+export interface ApplicationPort {
     /**
-     * Specify if the sticky session option (also called persistant session) is activated or not for this application. If activated, user will be redirected by the load balancer to the same instance each time he access to the application.  
-     * @type {boolean}
-     * @memberof ApplicationNetworkResponse
+     * 
+     * @type {Array<ApplicationPortPorts>}
+     * @memberof ApplicationPort
      */
-    'sticky_session'?: boolean;
+    'ports'?: Array<ApplicationPortPorts>;
+}
+/**
+ * 
+ * @export
+ * @interface ApplicationPortPorts
+ */
+export interface ApplicationPortPorts {
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplicationPortPorts
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplicationPortPorts
+     */
+    'name'?: string | null;
+    /**
+     * The listening port of your application
+     * @type {number}
+     * @memberof ApplicationPortPorts
+     */
+    'internal_port': number;
+    /**
+     * The exposed port for your application. This is optional. If not set a default port will be used.
+     * @type {number}
+     * @memberof ApplicationPortPorts
+     */
+    'external_port'?: number;
+    /**
+     * Expose the port to the world
+     * @type {boolean}
+     * @memberof ApplicationPortPorts
+     */
+    'publicly_accessible': boolean;
+    /**
+     * 
+     * @type {PortProtocolEnum}
+     * @memberof ApplicationPortPorts
+     */
+    'protocol'?: PortProtocolEnum;
 }
 /**
  * 
@@ -573,62 +853,6 @@ export interface ApplicationPortRequestPorts {
      * 
      * @type {PortProtocolEnum}
      * @memberof ApplicationPortRequestPorts
-     */
-    'protocol'?: PortProtocolEnum;
-}
-/**
- * 
- * @export
- * @interface ApplicationPortResponse
- */
-export interface ApplicationPortResponse {
-    /**
-     * 
-     * @type {Array<ApplicationPortResponsePorts>}
-     * @memberof ApplicationPortResponse
-     */
-    'ports'?: Array<ApplicationPortResponsePorts>;
-}
-/**
- * 
- * @export
- * @interface ApplicationPortResponsePorts
- */
-export interface ApplicationPortResponsePorts {
-    /**
-     * 
-     * @type {string}
-     * @memberof ApplicationPortResponsePorts
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApplicationPortResponsePorts
-     */
-    'name'?: string | null;
-    /**
-     * The listening port of your application
-     * @type {number}
-     * @memberof ApplicationPortResponsePorts
-     */
-    'internal_port': number;
-    /**
-     * The exposed port for your application. This is optional. If not set a default port will be used.
-     * @type {number}
-     * @memberof ApplicationPortResponsePorts
-     */
-    'external_port'?: number;
-    /**
-     * Expose the port to the world
-     * @type {boolean}
-     * @memberof ApplicationPortResponsePorts
-     */
-    'publicly_accessible': boolean;
-    /**
-     * 
-     * @type {PortProtocolEnum}
-     * @memberof ApplicationPortResponsePorts
      */
     'protocol'?: PortProtocolEnum;
 }
@@ -805,239 +1029,28 @@ export interface ApplicationRequestAllOf {
 /**
  * 
  * @export
- * @interface ApplicationResponse
- */
-export interface ApplicationResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof ApplicationResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApplicationResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApplicationResponse
-     */
-    'updated_at'?: string;
-    /**
-     * 
-     * @type {Array<ApplicationStorageResponseStorage>}
-     * @memberof ApplicationResponse
-     */
-    'storage'?: Array<ApplicationStorageResponseStorage>;
-    /**
-     * 
-     * @type {Array<ApplicationPortResponsePorts>}
-     * @memberof ApplicationResponse
-     */
-    'ports'?: Array<ApplicationPortResponsePorts>;
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof ApplicationResponse
-     */
-    'environment'?: ReferenceObject;
-    /**
-     * 
-     * @type {ApplicationGitRepositoryResponse}
-     * @memberof ApplicationResponse
-     */
-    'git_repository'?: ApplicationGitRepositoryResponse;
-    /**
-     * Maximum cpu that can be allocated to the application based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof ApplicationResponse
-     */
-    'maximum_cpu'?: number;
-    /**
-     * Maximum memory that can be allocated to the application based on organization cluster configuration. unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof ApplicationResponse
-     */
-    'maximum_memory'?: number;
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof ApplicationResponse
-     */
-    'name'?: string;
-    /**
-     * give a description to this application
-     * @type {string}
-     * @memberof ApplicationResponse
-     */
-    'description'?: string | null;
-    /**
-     * 
-     * @type {BuildModeEnum}
-     * @memberof ApplicationResponse
-     */
-    'build_mode'?: BuildModeEnum;
-    /**
-     * The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
-     * @type {string}
-     * @memberof ApplicationResponse
-     */
-    'dockerfile_path'?: string | null;
-    /**
-     * 
-     * @type {BuildPackLanguageEnum}
-     * @memberof ApplicationResponse
-     */
-    'buildpack_language'?: BuildPackLanguageEnum | null;
-    /**
-     * unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof ApplicationResponse
-     */
-    'cpu'?: number;
-    /**
-     * unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof ApplicationResponse
-     */
-    'memory'?: number;
-    /**
-     * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no application running. 
-     * @type {number}
-     * @memberof ApplicationResponse
-     */
-    'min_running_instances'?: number;
-    /**
-     * Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: -1 means that there is no limit. 
-     * @type {number}
-     * @memberof ApplicationResponse
-     */
-    'max_running_instances'?: number;
-    /**
-     * 
-     * @type {Healthcheck}
-     * @memberof ApplicationResponse
-     */
-    'healthcheck'?: Healthcheck;
-    /**
-     * Specify if the environment preview option is activated or not for this application. If activated, a preview environment will be automatically cloned at each pull request. 
-     * @type {boolean}
-     * @memberof ApplicationResponse
-     */
-    'auto_preview'?: boolean;
-}
-/**
- * 
- * @export
- * @interface ApplicationResponseAllOf
- */
-export interface ApplicationResponseAllOf {
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof ApplicationResponseAllOf
-     */
-    'environment'?: ReferenceObject;
-    /**
-     * 
-     * @type {ApplicationGitRepositoryResponse}
-     * @memberof ApplicationResponseAllOf
-     */
-    'git_repository'?: ApplicationGitRepositoryResponse;
-    /**
-     * Maximum cpu that can be allocated to the application based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof ApplicationResponseAllOf
-     */
-    'maximum_cpu'?: number;
-    /**
-     * Maximum memory that can be allocated to the application based on organization cluster configuration. unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof ApplicationResponseAllOf
-     */
-    'maximum_memory'?: number;
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof ApplicationResponseAllOf
-     */
-    'name'?: string;
-    /**
-     * give a description to this application
-     * @type {string}
-     * @memberof ApplicationResponseAllOf
-     */
-    'description'?: string | null;
-    /**
-     * 
-     * @type {BuildModeEnum}
-     * @memberof ApplicationResponseAllOf
-     */
-    'build_mode'?: BuildModeEnum;
-    /**
-     * The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
-     * @type {string}
-     * @memberof ApplicationResponseAllOf
-     */
-    'dockerfile_path'?: string | null;
-    /**
-     * 
-     * @type {BuildPackLanguageEnum}
-     * @memberof ApplicationResponseAllOf
-     */
-    'buildpack_language'?: BuildPackLanguageEnum | null;
-    /**
-     * unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof ApplicationResponseAllOf
-     */
-    'cpu'?: number;
-    /**
-     * unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof ApplicationResponseAllOf
-     */
-    'memory'?: number;
-    /**
-     * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no application running. 
-     * @type {number}
-     * @memberof ApplicationResponseAllOf
-     */
-    'min_running_instances'?: number;
-    /**
-     * Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: -1 means that there is no limit. 
-     * @type {number}
-     * @memberof ApplicationResponseAllOf
-     */
-    'max_running_instances'?: number;
-    /**
-     * 
-     * @type {Healthcheck}
-     * @memberof ApplicationResponseAllOf
-     */
-    'healthcheck'?: Healthcheck;
-    /**
-     * Specify if the environment preview option is activated or not for this application. If activated, a preview environment will be automatically cloned at each pull request. 
-     * @type {boolean}
-     * @memberof ApplicationResponseAllOf
-     */
-    'auto_preview'?: boolean;
-}
-/**
- * 
- * @export
  * @interface ApplicationResponseList
  */
 export interface ApplicationResponseList {
     /**
      * 
-     * @type {Array<ApplicationResponse>}
+     * @type {Array<Application>}
      * @memberof ApplicationResponseList
      */
-    'results'?: Array<ApplicationResponse>;
+    'results'?: Array<Application>;
+}
+/**
+ * 
+ * @export
+ * @interface ApplicationStorage
+ */
+export interface ApplicationStorage {
+    /**
+     * 
+     * @type {Array<ApplicationStorageStorage>}
+     * @memberof ApplicationStorage
+     */
+    'storage'?: Array<ApplicationStorageStorage>;
 }
 /**
  * 
@@ -1089,44 +1102,31 @@ export enum ApplicationStorageRequestStorageTypeEnum {
 /**
  * 
  * @export
- * @interface ApplicationStorageResponse
+ * @interface ApplicationStorageStorage
  */
-export interface ApplicationStorageResponse {
-    /**
-     * 
-     * @type {Array<ApplicationStorageResponseStorage>}
-     * @memberof ApplicationStorageResponse
-     */
-    'storage'?: Array<ApplicationStorageResponseStorage>;
-}
-/**
- * 
- * @export
- * @interface ApplicationStorageResponseStorage
- */
-export interface ApplicationStorageResponseStorage {
+export interface ApplicationStorageStorage {
     /**
      * 
      * @type {string}
-     * @memberof ApplicationStorageResponseStorage
+     * @memberof ApplicationStorageStorage
      */
     'id'?: string;
     /**
      * 
      * @type {StorageTypeEnum}
-     * @memberof ApplicationStorageResponseStorage
+     * @memberof ApplicationStorageStorage
      */
     'type': StorageTypeEnum;
     /**
      * unit is GB
      * @type {number}
-     * @memberof ApplicationStorageResponseStorage
+     * @memberof ApplicationStorageStorage
      */
     'size': number;
     /**
      * 
      * @type {string}
-     * @memberof ApplicationStorageResponseStorage
+     * @memberof ApplicationStorageStorage
      */
     'mount_point': string;
 }
@@ -1158,6 +1158,62 @@ export interface AwsCredentialsRequest {
 /**
  * 
  * @export
+ * @interface Backup
+ */
+export interface Backup {
+    /**
+     * 
+     * @type {string}
+     * @memberof Backup
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Backup
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Backup
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Backup
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Backup
+     */
+    'message': string;
+    /**
+     * 
+     * @type {Status}
+     * @memberof Backup
+     */
+    'status'?: Status;
+}
+/**
+ * 
+ * @export
+ * @interface BackupAllOf
+ */
+export interface BackupAllOf {
+    /**
+     * 
+     * @type {Status}
+     * @memberof BackupAllOf
+     */
+    'status'?: Status;
+}
+/**
+ * 
+ * @export
  * @interface BackupPaginatedResponseList
  */
 export interface BackupPaginatedResponseList {
@@ -1175,10 +1231,10 @@ export interface BackupPaginatedResponseList {
     'page_size': number;
     /**
      * 
-     * @type {Array<BackupResponse>}
+     * @type {Array<Backup>}
      * @memberof BackupPaginatedResponseList
      */
-    'results'?: Array<BackupResponse>;
+    'results'?: Array<Backup>;
 }
 /**
  * 
@@ -1202,94 +1258,38 @@ export interface BackupRequest {
 /**
  * 
  * @export
- * @interface BackupResponse
- */
-export interface BackupResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof BackupResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BackupResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BackupResponse
-     */
-    'updated_at'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BackupResponse
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BackupResponse
-     */
-    'message': string;
-    /**
-     * 
-     * @type {Status}
-     * @memberof BackupResponse
-     */
-    'status'?: Status;
-}
-/**
- * 
- * @export
- * @interface BackupResponseAllOf
- */
-export interface BackupResponseAllOf {
-    /**
-     * 
-     * @type {Status}
-     * @memberof BackupResponseAllOf
-     */
-    'status'?: Status;
-}
-/**
- * 
- * @export
  * @interface BackupResponseList
  */
 export interface BackupResponseList {
     /**
      * 
-     * @type {Array<BackupResponse>}
+     * @type {Array<Backup>}
      * @memberof BackupResponseList
      */
-    'results'?: Array<BackupResponse>;
+    'results'?: Array<Backup>;
 }
 /**
  * 
  * @export
- * @interface BaseResponse
+ * @interface Base
  */
-export interface BaseResponse {
+export interface Base {
     /**
      * 
      * @type {string}
-     * @memberof BaseResponse
+     * @memberof Base
      */
     'id': string;
     /**
      * 
      * @type {string}
-     * @memberof BaseResponse
+     * @memberof Base
      */
     'created_at': string;
     /**
      * 
      * @type {string}
-     * @memberof BaseResponse
+     * @memberof Base
      */
     'updated_at'?: string;
 }
@@ -1305,6 +1305,73 @@ export interface BillingEnd {
      * @memberof BillingEnd
      */
     'billing_ended_on'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BillingInfo
+ */
+export interface BillingInfo {
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingInfo
+     */
+    'first_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingInfo
+     */
+    'last_name': string;
+    /**
+     * email used for billing, and to receive all invoices by email
+     * @type {string}
+     * @memberof BillingInfo
+     */
+    'email': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingInfo
+     */
+    'address': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingInfo
+     */
+    'city': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingInfo
+     */
+    'zip': string;
+    /**
+     * only for US
+     * @type {string}
+     * @memberof BillingInfo
+     */
+    'state'?: string;
+    /**
+     * ISO code of the country
+     * @type {string}
+     * @memberof BillingInfo
+     */
+    'country_code': string;
+    /**
+     * name of the company to bill
+     * @type {string}
+     * @memberof BillingInfo
+     */
+    'company'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingInfo
+     */
+    'vat_number'?: string;
 }
 /**
  * 
@@ -1376,73 +1443,6 @@ export interface BillingInfoRequest {
 /**
  * 
  * @export
- * @interface BillingInfoResponse
- */
-export interface BillingInfoResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingInfoResponse
-     */
-    'first_name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingInfoResponse
-     */
-    'last_name': string;
-    /**
-     * email used for billing, and to receive all invoices by email
-     * @type {string}
-     * @memberof BillingInfoResponse
-     */
-    'email': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingInfoResponse
-     */
-    'address': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingInfoResponse
-     */
-    'city': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingInfoResponse
-     */
-    'zip': string;
-    /**
-     * only for US
-     * @type {string}
-     * @memberof BillingInfoResponse
-     */
-    'state'?: string;
-    /**
-     * ISO code of the country
-     * @type {string}
-     * @memberof BillingInfoResponse
-     */
-    'country_code': string;
-    /**
-     * name of the company to bill
-     * @type {string}
-     * @memberof BillingInfoResponse
-     */
-    'company'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingInfoResponse
-     */
-    'vat_number'?: string;
-}
-/**
- * 
- * @export
  * @interface BillingPeriod
  */
 export interface BillingPeriod {
@@ -1494,25 +1494,25 @@ export interface BillingStatus {
 /**
  * 
  * @export
- * @interface BudgetResponse
+ * @interface Budget
  */
-export interface BudgetResponse {
+export interface Budget {
     /**
      * 
      * @type {number}
-     * @memberof BudgetResponse
+     * @memberof Budget
      */
     'total_in_cents'?: number;
     /**
      * 
      * @type {number}
-     * @memberof BudgetResponse
+     * @memberof Budget
      */
     'total'?: number;
     /**
      * 
      * @type {string}
-     * @memberof BudgetResponse
+     * @memberof Budget
      */
     'currency_code'?: string;
 }
@@ -1600,6 +1600,37 @@ export interface CloneRequest {
 /**
  * 
  * @export
+ * @interface CloudProvider
+ */
+export interface CloudProvider {
+    /**
+     * 
+     * @type {string}
+     * @memberof CloudProvider
+     */
+    'short_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CloudProvider
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CloudProvider
+     */
+    'logo_url'?: string;
+    /**
+     * 
+     * @type {Array<ClusterRegion>}
+     * @memberof CloudProvider
+     */
+    'regions'?: Array<ClusterRegion>;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -1612,46 +1643,40 @@ export enum CloudProviderEnum {
 /**
  * 
  * @export
- * @interface CloudProviderResponse
- */
-export interface CloudProviderResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof CloudProviderResponse
-     */
-    'short_name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CloudProviderResponse
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CloudProviderResponse
-     */
-    'logo_url'?: string;
-    /**
-     * 
-     * @type {Array<ClusterRegionResponse>}
-     * @memberof CloudProviderResponse
-     */
-    'regions'?: Array<ClusterRegionResponse>;
-}
-/**
- * 
- * @export
  * @interface CloudProviderResponseList
  */
 export interface CloudProviderResponseList {
     /**
      * 
-     * @type {Array<CloudProviderResponse>}
+     * @type {Array<CloudProvider>}
      * @memberof CloudProviderResponseList
      */
-    'results'?: Array<CloudProviderResponse>;
+    'results'?: Array<CloudProvider>;
+}
+/**
+ * 
+ * @export
+ * @interface CluserCredentials
+ */
+export interface CluserCredentials {
+    /**
+     * 
+     * @type {string}
+     * @memberof CluserCredentials
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CluserCredentials
+     */
+    'access_key_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CluserCredentials
+     */
+    'secret_access_key'?: string;
 }
 /**
  * 
@@ -1659,6 +1684,24 @@ export interface CloudProviderResponseList {
  * @interface Cluster
  */
 export interface Cluster {
+    /**
+     * 
+     * @type {string}
+     * @memberof Cluster
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Cluster
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Cluster
+     */
+    'updated_at'?: string;
     /**
      * name is case-insensitive
      * @type {string}
@@ -1670,7 +1713,7 @@ export interface Cluster {
      * @type {string}
      * @memberof Cluster
      */
-    'description'?: string;
+    'description'?: string | null;
     /**
      * 
      * @type {CloudProviderEnum}
@@ -1713,6 +1756,216 @@ export interface Cluster {
      * @memberof Cluster
      */
     'max_running_nodes'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Cluster
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Cluster
+     */
+    'cost_per_month_in_cents'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof Cluster
+     */
+    'cost_per_month'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Cluster
+     */
+    'currency_code'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Cluster
+     */
+    'value_type'?: ClusterValueTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof Cluster
+     */
+    'value'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Cluster
+     */
+    'is_value_updatable'?: boolean;
+    /**
+     * 
+     * @type {Array<string | boolean>}
+     * @memberof Cluster
+     */
+    'accepted_values'?: Array<string | boolean>;
+    /**
+     * This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration
+     * @type {number}
+     * @memberof Cluster
+     */
+    'estimated_cloud_provider_cost'?: number;
+    /**
+     * 
+     * @type {ClusterStatusEnum}
+     * @memberof Cluster
+     */
+    'status'?: ClusterStatusEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Cluster
+     */
+    'has_access'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Cluster
+     */
+    'version'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Cluster
+     */
+    'is_default'?: boolean;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ClusterValueTypeEnum {
+    BOOLEAN = 'BOOLEAN'
+}
+
+/**
+ * 
+ * @export
+ * @interface ClusterAllOf
+ */
+export interface ClusterAllOf {
+    /**
+     * name is case-insensitive
+     * @type {string}
+     * @memberof ClusterAllOf
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterAllOf
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {CloudProviderEnum}
+     * @memberof ClusterAllOf
+     */
+    'cloud_provider': CloudProviderEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterAllOf
+     */
+    'region': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterAllOf
+     */
+    'auto_update'?: boolean;
+    /**
+     * unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof ClusterAllOf
+     */
+    'cpu'?: number;
+    /**
+     * unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof ClusterAllOf
+     */
+    'memory'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterAllOf
+     */
+    'min_running_nodes'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterAllOf
+     */
+    'max_running_nodes'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterAllOf1
+ */
+export interface ClusterAllOf1 {
+    /**
+     * This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration
+     * @type {number}
+     * @memberof ClusterAllOf1
+     */
+    'estimated_cloud_provider_cost'?: number;
+    /**
+     * 
+     * @type {ClusterStatusEnum}
+     * @memberof ClusterAllOf1
+     */
+    'status'?: ClusterStatusEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterAllOf1
+     */
+    'has_access'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterAllOf1
+     */
+    'version'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterAllOf1
+     */
+    'is_default'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterCloudProviderInfo
+ */
+export interface ClusterCloudProviderInfo {
+    /**
+     * 
+     * @type {CloudProviderEnum}
+     * @memberof ClusterCloudProviderInfo
+     */
+    'cloud_provider'?: CloudProviderEnum;
+    /**
+     * 
+     * @type {ClusterCloudProviderInfoRequestCredentials}
+     * @memberof ClusterCloudProviderInfo
+     */
+    'credentials'?: ClusterCloudProviderInfoRequestCredentials;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterCloudProviderInfo
+     */
+    'region'?: string;
 }
 /**
  * 
@@ -1761,69 +2014,19 @@ export interface ClusterCloudProviderInfoRequestCredentials {
 /**
  * 
  * @export
- * @interface ClusterCloudProviderInfoResponse
+ * @interface ClusterCredentials
  */
-export interface ClusterCloudProviderInfoResponse {
-    /**
-     * 
-     * @type {CloudProviderEnum}
-     * @memberof ClusterCloudProviderInfoResponse
-     */
-    'cloud_provider'?: CloudProviderEnum;
-    /**
-     * 
-     * @type {ClusterCloudProviderInfoRequestCredentials}
-     * @memberof ClusterCloudProviderInfoResponse
-     */
-    'credentials'?: ClusterCloudProviderInfoRequestCredentials;
+export interface ClusterCredentials {
     /**
      * 
      * @type {string}
-     * @memberof ClusterCloudProviderInfoResponse
-     */
-    'region'?: string;
-}
-/**
- * 
- * @export
- * @interface ClusterCredentialsRequest
- */
-export interface ClusterCredentialsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterCredentialsRequest
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterCredentialsRequest
-     */
-    'access_key_id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterCredentialsRequest
-     */
-    'secret_access_key'?: string;
-}
-/**
- * 
- * @export
- * @interface ClusterCredentialsResponse
- */
-export interface ClusterCredentialsResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterCredentialsResponse
+     * @memberof ClusterCredentials
      */
     'id'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ClusterCredentialsResponse
+     * @memberof ClusterCredentials
      */
     'name'?: string;
 }
@@ -1835,10 +2038,10 @@ export interface ClusterCredentialsResponse {
 export interface ClusterCredentialsResponseList {
     /**
      * 
-     * @type {Array<ClusterCredentialsResponse>}
+     * @type {Array<ClusterCredentials>}
      * @memberof ClusterCredentialsResponseList
      */
-    'results'?: Array<ClusterCredentialsResponse>;
+    'results'?: Array<ClusterCredentials>;
 }
 /**
  * 
@@ -1865,6 +2068,82 @@ export enum ClusterDeploymentStatusEnum {
     DELETED = 'DELETED',
     RUNNING = 'RUNNING',
     RUNNING_ERROR = 'RUNNING_ERROR'
+}
+
+/**
+ * 
+ * @export
+ * @interface ClusterFeature
+ */
+export interface ClusterFeature {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeature
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeature
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeature
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterFeature
+     */
+    'cost_per_month_in_cents'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterFeature
+     */
+    'cost_per_month'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeature
+     */
+    'currency_code'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeature
+     */
+    'value_type'?: ClusterFeatureValueTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeature
+     */
+    'value'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterFeature
+     */
+    'is_value_updatable'?: boolean;
+    /**
+     * 
+     * @type {Array<string | boolean>}
+     * @memberof ClusterFeature
+     */
+    'accepted_values'?: Array<string | boolean>;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ClusterFeatureValueTypeEnum {
+    BOOLEAN = 'BOOLEAN'
 }
 
 /**
@@ -1902,91 +2181,15 @@ export interface ClusterFeatureRequestFeatures {
 /**
  * 
  * @export
- * @interface ClusterFeatureResponse
- */
-export interface ClusterFeatureResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterFeatureResponse
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterFeatureResponse
-     */
-    'title'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterFeatureResponse
-     */
-    'description'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof ClusterFeatureResponse
-     */
-    'cost_per_month_in_cents'?: number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof ClusterFeatureResponse
-     */
-    'cost_per_month'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterFeatureResponse
-     */
-    'currency_code'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterFeatureResponse
-     */
-    'value_type'?: ClusterFeatureResponseValueTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterFeatureResponse
-     */
-    'value'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ClusterFeatureResponse
-     */
-    'is_value_updatable'?: boolean;
-    /**
-     * 
-     * @type {Array<string | boolean>}
-     * @memberof ClusterFeatureResponse
-     */
-    'accepted_values'?: Array<string | boolean>;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ClusterFeatureResponseValueTypeEnum {
-    BOOLEAN = 'BOOLEAN'
-}
-
-/**
- * 
- * @export
  * @interface ClusterFeatureResponseList
  */
 export interface ClusterFeatureResponseList {
     /**
      * 
-     * @type {Array<ClusterFeatureResponse>}
+     * @type {Array<ClusterFeature>}
      * @memberof ClusterFeatureResponseList
      */
-    'results'?: Array<ClusterFeatureResponse>;
+    'results'?: Array<ClusterFeature>;
 }
 /**
  * 
@@ -2004,31 +2207,31 @@ export interface ClusterReadinessStatus {
 /**
  * 
  * @export
- * @interface ClusterRegionResponse
+ * @interface ClusterRegion
  */
-export interface ClusterRegionResponse {
+export interface ClusterRegion {
     /**
      * 
      * @type {string}
-     * @memberof ClusterRegionResponse
+     * @memberof ClusterRegion
      */
     'name': string;
     /**
      * 
      * @type {string}
-     * @memberof ClusterRegionResponse
+     * @memberof ClusterRegion
      */
     'country_code': string;
     /**
      * 
      * @type {string}
-     * @memberof ClusterRegionResponse
+     * @memberof ClusterRegion
      */
     'country': string;
     /**
      * 
      * @type {string}
-     * @memberof ClusterRegionResponse
+     * @memberof ClusterRegion
      */
     'city': string;
 }
@@ -2040,10 +2243,10 @@ export interface ClusterRegionResponse {
 export interface ClusterRegionResponseList {
     /**
      * 
-     * @type {Array<ClusterRegionResponse>}
+     * @type {Array<ClusterRegion>}
      * @memberof ClusterRegionResponseList
      */
-    'results'?: Array<ClusterRegionResponse>;
+    'results'?: Array<ClusterRegion>;
 }
 /**
  * 
@@ -2051,60 +2254,6 @@ export interface ClusterRegionResponseList {
  * @interface ClusterRequest
  */
 export interface ClusterRequest {
-    /**
-     * name is case-insensitive
-     * @type {string}
-     * @memberof ClusterRequest
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterRequest
-     */
-    'description'?: string;
-    /**
-     * 
-     * @type {CloudProviderEnum}
-     * @memberof ClusterRequest
-     */
-    'cloud_provider': CloudProviderEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterRequest
-     */
-    'region': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ClusterRequest
-     */
-    'auto_update'?: boolean;
-    /**
-     * unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof ClusterRequest
-     */
-    'cpu'?: number;
-    /**
-     * unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof ClusterRequest
-     */
-    'memory'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ClusterRequest
-     */
-    'min_running_nodes'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ClusterRequest
-     */
-    'max_running_nodes'?: number;
     /**
      * 
      * @type {Array<ClusterFeatureRequestFeatures>}
@@ -2115,218 +2264,28 @@ export interface ClusterRequest {
 /**
  * 
  * @export
- * @interface ClusterResponse
- */
-export interface ClusterResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterResponse
-     */
-    'updated_at'?: string;
-    /**
-     * name is case-insensitive
-     * @type {string}
-     * @memberof ClusterResponse
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterResponse
-     */
-    'description'?: string | null;
-    /**
-     * 
-     * @type {CloudProviderEnum}
-     * @memberof ClusterResponse
-     */
-    'cloud_provider': CloudProviderEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterResponse
-     */
-    'region': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ClusterResponse
-     */
-    'auto_update'?: boolean;
-    /**
-     * unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof ClusterResponse
-     */
-    'cpu'?: number;
-    /**
-     * unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof ClusterResponse
-     */
-    'memory'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ClusterResponse
-     */
-    'min_running_nodes'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ClusterResponse
-     */
-    'max_running_nodes'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterResponse
-     */
-    'title'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ClusterResponse
-     */
-    'cost_per_month_in_cents'?: number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof ClusterResponse
-     */
-    'cost_per_month'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterResponse
-     */
-    'currency_code'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterResponse
-     */
-    'value_type'?: ClusterResponseValueTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterResponse
-     */
-    'value'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ClusterResponse
-     */
-    'is_value_updatable'?: boolean;
-    /**
-     * 
-     * @type {Array<string | boolean>}
-     * @memberof ClusterResponse
-     */
-    'accepted_values'?: Array<string | boolean>;
-    /**
-     * This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration
-     * @type {number}
-     * @memberof ClusterResponse
-     */
-    'estimated_cloud_provider_cost'?: number;
-    /**
-     * 
-     * @type {ClusterStatusEnum}
-     * @memberof ClusterResponse
-     */
-    'status'?: ClusterStatusEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ClusterResponse
-     */
-    'has_access'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterResponse
-     */
-    'version'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ClusterResponse
-     */
-    'is_default'?: boolean;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ClusterResponseValueTypeEnum {
-    BOOLEAN = 'BOOLEAN'
-}
-
-/**
- * 
- * @export
- * @interface ClusterResponseAllOf
- */
-export interface ClusterResponseAllOf {
-    /**
-     * This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration
-     * @type {number}
-     * @memberof ClusterResponseAllOf
-     */
-    'estimated_cloud_provider_cost'?: number;
-    /**
-     * 
-     * @type {ClusterStatusEnum}
-     * @memberof ClusterResponseAllOf
-     */
-    'status'?: ClusterStatusEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ClusterResponseAllOf
-     */
-    'has_access'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterResponseAllOf
-     */
-    'version'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ClusterResponseAllOf
-     */
-    'is_default'?: boolean;
-}
-/**
- * 
- * @export
  * @interface ClusterResponseList
  */
 export interface ClusterResponseList {
     /**
      * 
-     * @type {Array<ClusterResponse>}
+     * @type {Array<Cluster>}
      * @memberof ClusterResponseList
      */
-    'results'?: Array<ClusterResponse>;
+    'results'?: Array<Cluster>;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterRoutingTable
+ */
+export interface ClusterRoutingTable {
+    /**
+     * 
+     * @type {Array<ClusterRoutingTableResults>}
+     * @memberof ClusterRoutingTable
+     */
+    'results'?: Array<ClusterRoutingTableResults>;
 }
 /**
  * 
@@ -2369,40 +2328,52 @@ export interface ClusterRoutingTableRequestRoutes {
 /**
  * 
  * @export
- * @interface ClusterRoutingTableResponse
+ * @interface ClusterRoutingTableResults
  */
-export interface ClusterRoutingTableResponse {
-    /**
-     * 
-     * @type {Array<ClusterRoutingTableResponseResults>}
-     * @memberof ClusterRoutingTableResponse
-     */
-    'results'?: Array<ClusterRoutingTableResponseResults>;
-}
-/**
- * 
- * @export
- * @interface ClusterRoutingTableResponseResults
- */
-export interface ClusterRoutingTableResponseResults {
+export interface ClusterRoutingTableResults {
     /**
      * 
      * @type {string}
-     * @memberof ClusterRoutingTableResponseResults
+     * @memberof ClusterRoutingTableResults
      */
     'destination'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ClusterRoutingTableResponseResults
+     * @memberof ClusterRoutingTableResults
      */
     'target'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ClusterRoutingTableResponseResults
+     * @memberof ClusterRoutingTableResults
      */
     'description'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterStatus
+ */
+export interface ClusterStatus {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterStatus
+     */
+    'cluster_id'?: string;
+    /**
+     * 
+     * @type {ClusterDeploymentStatusEnum}
+     * @memberof ClusterStatus
+     */
+    'status'?: ClusterDeploymentStatusEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterStatus
+     */
+    'is_deployed'?: boolean;
 }
 /**
  * 
@@ -2434,40 +2405,64 @@ export enum ClusterStatusEnum {
 /**
  * 
  * @export
- * @interface ClusterStatusResponse
- */
-export interface ClusterStatusResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterStatusResponse
-     */
-    'cluster_id'?: string;
-    /**
-     * 
-     * @type {ClusterDeploymentStatusEnum}
-     * @memberof ClusterStatusResponse
-     */
-    'status'?: ClusterDeploymentStatusEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ClusterStatusResponse
-     */
-    'is_deployed'?: boolean;
-}
-/**
- * 
- * @export
  * @interface ClusterStatusResponseList
  */
 export interface ClusterStatusResponseList {
     /**
      * 
-     * @type {Array<ClusterStatusResponse>}
+     * @type {Array<ClusterStatus>}
      * @memberof ClusterStatusResponseList
      */
-    'results'?: Array<ClusterStatusResponse>;
+    'results'?: Array<ClusterStatus>;
+}
+/**
+ * 
+ * @export
+ * @interface Commit
+ */
+export interface Commit {
+    /**
+     * 
+     * @type {string}
+     * @memberof Commit
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Commit
+     */
+    'git_commit_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Commit
+     */
+    'tag': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Commit
+     */
+    'message': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Commit
+     */
+    'author_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Commit
+     */
+    'author_avatar_url'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Commit
+     */
+    'commit_page_url'?: string;
 }
 /**
  * 
@@ -2477,10 +2472,10 @@ export interface ClusterStatusResponseList {
 export interface CommitPaginatedResponseList {
     /**
      * 
-     * @type {Array<CommitResponse>}
+     * @type {Array<Commit>}
      * @memberof CommitPaginatedResponseList
      */
-    'results'?: Array<CommitResponse>;
+    'results'?: Array<Commit>;
     /**
      * 
      * @type {number}
@@ -2502,59 +2497,10 @@ export interface CommitPaginatedResponseList {
 export interface CommitPaginatedResponseListAllOf {
     /**
      * 
-     * @type {Array<CommitResponse>}
+     * @type {Array<Commit>}
      * @memberof CommitPaginatedResponseListAllOf
      */
-    'results'?: Array<CommitResponse>;
-}
-/**
- * 
- * @export
- * @interface CommitResponse
- */
-export interface CommitResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof CommitResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CommitResponse
-     */
-    'git_commit_id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CommitResponse
-     */
-    'tag': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CommitResponse
-     */
-    'message': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CommitResponse
-     */
-    'author_name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CommitResponse
-     */
-    'author_avatar_url'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CommitResponse
-     */
-    'commit_page_url'?: string;
+    'results'?: Array<Commit>;
 }
 /**
  * 
@@ -2564,10 +2510,10 @@ export interface CommitResponse {
 export interface CommitResponseList {
     /**
      * 
-     * @type {Array<CommitResponse>}
+     * @type {Array<Commit>}
      * @memberof CommitResponseList
      */
-    'results'?: Array<CommitResponse>;
+    'results'?: Array<Commit>;
 }
 /**
  * 
@@ -2577,23 +2523,10 @@ export interface CommitResponseList {
 export interface CommunityUsage {
     /**
      * 
-     * @type {CommunityUsageResponse}
+     * @type {Array<ProjectCurrentCost>}
      * @memberof CommunityUsage
      */
-    'community_usage'?: CommunityUsageResponse;
-}
-/**
- * 
- * @export
- * @interface CommunityUsageResponse
- */
-export interface CommunityUsageResponse {
-    /**
-     * 
-     * @type {Array<ProjectCurrentCostResponse>}
-     * @memberof CommunityUsageResponse
-     */
-    'projects'?: Array<ProjectCurrentCostResponse>;
+    'projects'?: Array<ProjectCurrentCost>;
 }
 /**
  * 
@@ -2623,64 +2556,58 @@ export interface Cost {
 /**
  * 
  * @export
- * @interface CostRangeResponse
+ * @interface CostRange
  */
-export interface CostRangeResponse {
+export interface CostRange {
     /**
      * 
      * @type {number}
-     * @memberof CostRangeResponse
+     * @memberof CostRange
      */
     'min_cost_in_cents'?: number;
     /**
      * 
      * @type {number}
-     * @memberof CostRangeResponse
+     * @memberof CostRange
      */
     'min_cost'?: number;
     /**
      * 
      * @type {number}
-     * @memberof CostRangeResponse
+     * @memberof CostRange
      */
     'max_cost_in_cents'?: number;
     /**
      * 
      * @type {number}
-     * @memberof CostRangeResponse
+     * @memberof CostRange
      */
     'max_cost'?: number;
     /**
      * 
      * @type {string}
-     * @memberof CostRangeResponse
+     * @memberof CostRange
      */
     'currency_code': string;
 }
 /**
  * 
  * @export
- * @interface CostResponse
+ * @interface Credentials
  */
-export interface CostResponse {
-    /**
-     * 
-     * @type {number}
-     * @memberof CostResponse
-     */
-    'total_in_cents': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof CostResponse
-     */
-    'total': number;
+export interface Credentials {
     /**
      * 
      * @type {string}
-     * @memberof CostResponse
+     * @memberof Credentials
      */
-    'currency_code': string;
+    'login': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Credentials
+     */
+    'password': string;
 }
 /**
  * 
@@ -2704,21 +2631,45 @@ export interface CredentialsRequest {
 /**
  * 
  * @export
- * @interface CredentialsResponse
+ * @interface CreditCard
  */
-export interface CredentialsResponse {
+export interface CreditCard {
     /**
      * 
      * @type {string}
-     * @memberof CredentialsResponse
+     * @memberof CreditCard
      */
-    'login': string;
+    'id': string;
     /**
      * 
      * @type {string}
-     * @memberof CredentialsResponse
+     * @memberof CreditCard
      */
-    'password': string;
+    'created_at': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreditCard
+     */
+    'expiry_month': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreditCard
+     */
+    'expiry_year': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreditCard
+     */
+    'last_digit': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreditCard
+     */
+    'is_expired': boolean;
 }
 /**
  * 
@@ -2754,58 +2705,15 @@ export interface CreditCardRequest {
 /**
  * 
  * @export
- * @interface CreditCardResponse
- */
-export interface CreditCardResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof CreditCardResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreditCardResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof CreditCardResponse
-     */
-    'expiry_month': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof CreditCardResponse
-     */
-    'expiry_year': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreditCardResponse
-     */
-    'last_digit': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreditCardResponse
-     */
-    'is_expired': boolean;
-}
-/**
- * 
- * @export
  * @interface CreditCardResponseList
  */
 export interface CreditCardResponseList {
     /**
      * 
-     * @type {Array<CreditCardResponse>}
+     * @type {Array<CreditCard>}
      * @memberof CreditCardResponseList
      */
-    'results'?: Array<CreditCardResponse>;
+    'results'?: Array<CreditCard>;
 }
 /**
  * 
@@ -2841,6 +2749,92 @@ export interface CurrentCost {
 /**
  * 
  * @export
+ * @interface CustomDomain
+ */
+export interface CustomDomain {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomDomain
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomDomain
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomDomain
+     */
+    'updated_at'?: string;
+    /**
+     * your custom domain
+     * @type {string}
+     * @memberof CustomDomain
+     */
+    'domain': string;
+    /**
+     * URL provided by Qovery. You must create a CNAME on your DNS provider using that URL
+     * @type {string}
+     * @memberof CustomDomain
+     */
+    'validation_domain'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomDomain
+     */
+    'status'?: CustomDomainStatusEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CustomDomainStatusEnum {
+    DEPLOYING = 'deploying',
+    CHECKING = 'checking',
+    READY = 'ready',
+    ERROR = 'error'
+}
+
+/**
+ * 
+ * @export
+ * @interface CustomDomainAllOf
+ */
+export interface CustomDomainAllOf {
+    /**
+     * URL provided by Qovery. You must create a CNAME on your DNS provider using that URL
+     * @type {string}
+     * @memberof CustomDomainAllOf
+     */
+    'validation_domain'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomDomainAllOf
+     */
+    'status'?: CustomDomainAllOfStatusEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CustomDomainAllOfStatusEnum {
+    DEPLOYING = 'deploying',
+    CHECKING = 'checking',
+    READY = 'ready',
+    ERROR = 'error'
+}
+
+/**
+ * 
+ * @export
  * @interface CustomDomainRequest
  */
 export interface CustomDomainRequest {
@@ -2854,101 +2848,124 @@ export interface CustomDomainRequest {
 /**
  * 
  * @export
- * @interface CustomDomainResponse
- */
-export interface CustomDomainResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomDomainResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomDomainResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomDomainResponse
-     */
-    'updated_at'?: string;
-    /**
-     * your custom domain
-     * @type {string}
-     * @memberof CustomDomainResponse
-     */
-    'domain': string;
-    /**
-     * URL provided by Qovery. You must create a CNAME on your DNS provider using that URL
-     * @type {string}
-     * @memberof CustomDomainResponse
-     */
-    'validation_domain'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomDomainResponse
-     */
-    'status'?: CustomDomainResponseStatusEnum;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum CustomDomainResponseStatusEnum {
-    DEPLOYING = 'deploying',
-    CHECKING = 'checking',
-    READY = 'ready',
-    ERROR = 'error'
-}
-
-/**
- * 
- * @export
- * @interface CustomDomainResponseAllOf
- */
-export interface CustomDomainResponseAllOf {
-    /**
-     * URL provided by Qovery. You must create a CNAME on your DNS provider using that URL
-     * @type {string}
-     * @memberof CustomDomainResponseAllOf
-     */
-    'validation_domain'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomDomainResponseAllOf
-     */
-    'status'?: CustomDomainResponseAllOfStatusEnum;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum CustomDomainResponseAllOfStatusEnum {
-    DEPLOYING = 'deploying',
-    CHECKING = 'checking',
-    READY = 'ready',
-    ERROR = 'error'
-}
-
-/**
- * 
- * @export
  * @interface CustomDomainResponseList
  */
 export interface CustomDomainResponseList {
     /**
      * 
-     * @type {Array<CustomDomainResponse>}
+     * @type {Array<CustomDomain>}
      * @memberof CustomDomainResponseList
      */
-    'results'?: Array<CustomDomainResponse>;
+    'results'?: Array<CustomDomain>;
+}
+/**
+ * 
+ * @export
+ * @interface Database
+ */
+export interface Database {
+    /**
+     * 
+     * @type {string}
+     * @memberof Database
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Database
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Database
+     */
+    'updated_at'?: string;
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof Database
+     */
+    'name': string;
+    /**
+     * 
+     * @type {DatabaseTypeEnum}
+     * @memberof Database
+     */
+    'type': DatabaseTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof Database
+     */
+    'version': string;
+    /**
+     * 
+     * @type {DatabaseModeEnum}
+     * @memberof Database
+     */
+    'mode': DatabaseModeEnum;
+    /**
+     * 
+     * @type {DatabaseAccessibilityEnum}
+     * @memberof Database
+     */
+    'accessibility'?: DatabaseAccessibilityEnum;
+    /**
+     * unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof Database
+     */
+    'cpu'?: number;
+    /**
+     * unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof Database
+     */
+    'memory'?: number;
+    /**
+     * unit is MB
+     * @type {number}
+     * @memberof Database
+     */
+    'storage'?: number;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof Database
+     */
+    'environment'?: ReferenceObject;
+    /**
+     * 
+     * @type {string}
+     * @memberof Database
+     */
+    'host'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Database
+     */
+    'port'?: number;
+    /**
+     * Maximum cpu that can be allocated to the database based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof Database
+     */
+    'maximum_cpu'?: number;
+    /**
+     * Maximum memory that can be allocated to the database based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof Database
+     */
+    'maximum_memory'?: number;
+    /**
+     * indicates if the database disk is encrypted or not
+     * @type {boolean}
+     * @memberof Database
+     */
+    'disk_encrypted'?: boolean;
 }
 /**
  * 
@@ -2964,19 +2981,62 @@ export enum DatabaseAccessibilityEnum {
 /**
  * 
  * @export
- * @interface DatabaseConfigurationResponse
+ * @interface DatabaseAllOf
  */
-export interface DatabaseConfigurationResponse {
+export interface DatabaseAllOf {
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof DatabaseAllOf
+     */
+    'environment'?: ReferenceObject;
+    /**
+     * 
+     * @type {string}
+     * @memberof DatabaseAllOf
+     */
+    'host'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof DatabaseAllOf
+     */
+    'port'?: number;
+    /**
+     * Maximum cpu that can be allocated to the database based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof DatabaseAllOf
+     */
+    'maximum_cpu'?: number;
+    /**
+     * Maximum memory that can be allocated to the database based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof DatabaseAllOf
+     */
+    'maximum_memory'?: number;
+    /**
+     * indicates if the database disk is encrypted or not
+     * @type {boolean}
+     * @memberof DatabaseAllOf
+     */
+    'disk_encrypted'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface DatabaseConfiguration
+ */
+export interface DatabaseConfiguration {
     /**
      * 
      * @type {DatabaseTypeEnum}
-     * @memberof DatabaseConfigurationResponse
+     * @memberof DatabaseConfiguration
      */
     'database_type'?: DatabaseTypeEnum;
     /**
      * 
      * @type {Array<DatabaseVersionMode>}
-     * @memberof DatabaseConfigurationResponse
+     * @memberof DatabaseConfiguration
      */
     'version'?: Array<DatabaseVersionMode>;
 }
@@ -2988,35 +3048,35 @@ export interface DatabaseConfigurationResponse {
 export interface DatabaseConfigurationResponseList {
     /**
      * 
-     * @type {Array<DatabaseConfigurationResponse>}
+     * @type {Array<DatabaseConfiguration>}
      * @memberof DatabaseConfigurationResponseList
      */
-    'results'?: Array<DatabaseConfigurationResponse>;
+    'results'?: Array<DatabaseConfiguration>;
 }
 /**
  * 
  * @export
- * @interface DatabaseCurrentMetricResponse
+ * @interface DatabaseCurrentMetric
  */
-export interface DatabaseCurrentMetricResponse {
+export interface DatabaseCurrentMetric {
     /**
      * 
-     * @type {EnvironmentDatabasesCurrentMetricResponseCpu}
-     * @memberof DatabaseCurrentMetricResponse
+     * @type {EnvironmentDatabasesCurrentMetricCpu}
+     * @memberof DatabaseCurrentMetric
      */
-    'cpu'?: EnvironmentDatabasesCurrentMetricResponseCpu;
+    'cpu'?: EnvironmentDatabasesCurrentMetricCpu;
     /**
      * 
-     * @type {EnvironmentDatabasesCurrentMetricResponseMemory}
-     * @memberof DatabaseCurrentMetricResponse
+     * @type {EnvironmentDatabasesCurrentMetricMemory}
+     * @memberof DatabaseCurrentMetric
      */
-    'memory'?: EnvironmentDatabasesCurrentMetricResponseMemory;
+    'memory'?: EnvironmentDatabasesCurrentMetricMemory;
     /**
      * 
-     * @type {EnvironmentDatabasesCurrentMetricResponseStorage}
-     * @memberof DatabaseCurrentMetricResponse
+     * @type {EnvironmentDatabasesCurrentMetricStorage}
+     * @memberof DatabaseCurrentMetric
      */
-    'storage'?: EnvironmentDatabasesCurrentMetricResponseStorage;
+    'storage'?: EnvironmentDatabasesCurrentMetricStorage;
 }
 /**
  * 
@@ -3130,167 +3190,15 @@ export interface DatabaseRequest {
 /**
  * 
  * @export
- * @interface DatabaseResponse
- */
-export interface DatabaseResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof DatabaseResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DatabaseResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DatabaseResponse
-     */
-    'updated_at'?: string;
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof DatabaseResponse
-     */
-    'name': string;
-    /**
-     * 
-     * @type {DatabaseTypeEnum}
-     * @memberof DatabaseResponse
-     */
-    'type': DatabaseTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof DatabaseResponse
-     */
-    'version': string;
-    /**
-     * 
-     * @type {DatabaseModeEnum}
-     * @memberof DatabaseResponse
-     */
-    'mode': DatabaseModeEnum;
-    /**
-     * 
-     * @type {DatabaseAccessibilityEnum}
-     * @memberof DatabaseResponse
-     */
-    'accessibility'?: DatabaseAccessibilityEnum;
-    /**
-     * unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof DatabaseResponse
-     */
-    'cpu'?: number;
-    /**
-     * unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof DatabaseResponse
-     */
-    'memory'?: number;
-    /**
-     * unit is MB
-     * @type {number}
-     * @memberof DatabaseResponse
-     */
-    'storage'?: number;
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof DatabaseResponse
-     */
-    'environment'?: ReferenceObject;
-    /**
-     * 
-     * @type {string}
-     * @memberof DatabaseResponse
-     */
-    'host'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof DatabaseResponse
-     */
-    'port'?: number;
-    /**
-     * Maximum cpu that can be allocated to the database based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof DatabaseResponse
-     */
-    'maximum_cpu'?: number;
-    /**
-     * Maximum memory that can be allocated to the database based on organization cluster configuration. unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof DatabaseResponse
-     */
-    'maximum_memory'?: number;
-    /**
-     * indicates if the database disk is encrypted or not
-     * @type {boolean}
-     * @memberof DatabaseResponse
-     */
-    'disk_encrypted'?: boolean;
-}
-/**
- * 
- * @export
- * @interface DatabaseResponseAllOf
- */
-export interface DatabaseResponseAllOf {
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof DatabaseResponseAllOf
-     */
-    'environment'?: ReferenceObject;
-    /**
-     * 
-     * @type {string}
-     * @memberof DatabaseResponseAllOf
-     */
-    'host'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof DatabaseResponseAllOf
-     */
-    'port'?: number;
-    /**
-     * Maximum cpu that can be allocated to the database based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof DatabaseResponseAllOf
-     */
-    'maximum_cpu'?: number;
-    /**
-     * Maximum memory that can be allocated to the database based on organization cluster configuration. unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof DatabaseResponseAllOf
-     */
-    'maximum_memory'?: number;
-    /**
-     * indicates if the database disk is encrypted or not
-     * @type {boolean}
-     * @memberof DatabaseResponseAllOf
-     */
-    'disk_encrypted'?: boolean;
-}
-/**
- * 
- * @export
  * @interface DatabaseResponseList
  */
 export interface DatabaseResponseList {
     /**
      * 
-     * @type {Array<DatabaseResponse>}
+     * @type {Array<Database>}
      * @memberof DatabaseResponseList
      */
-    'results'?: Array<DatabaseResponse>;
+    'results'?: Array<Database>;
 }
 /**
  * 
@@ -3340,126 +3248,250 @@ export interface DeployRequest {
 /**
  * 
  * @export
- * @interface DeploymentHistoryApplicationResponse
+ * @interface DeploymentHistory
  */
-export interface DeploymentHistoryApplicationResponse {
+export interface DeploymentHistory {
     /**
      * 
      * @type {string}
-     * @memberof DeploymentHistoryApplicationResponse
+     * @memberof DeploymentHistory
      */
     'id': string;
     /**
      * 
      * @type {string}
-     * @memberof DeploymentHistoryApplicationResponse
+     * @memberof DeploymentHistory
      */
     'created_at': string;
     /**
      * 
      * @type {string}
-     * @memberof DeploymentHistoryApplicationResponse
+     * @memberof DeploymentHistory
      */
     'updated_at'?: string;
     /**
      * 
-     * @type {string}
-     * @memberof DeploymentHistoryApplicationResponse
+     * @type {Commit}
+     * @memberof DeploymentHistory
      */
-    'name'?: string;
+    'commit'?: Commit;
     /**
      * 
-     * @type {CommitResponse}
-     * @memberof DeploymentHistoryApplicationResponse
+     * @type {DeploymentHistoryStatusEnum}
+     * @memberof DeploymentHistory
      */
-    'commit'?: CommitResponse;
-    /**
-     * 
-     * @type {GlobalDeploymentStatus}
-     * @memberof DeploymentHistoryApplicationResponse
-     */
-    'status'?: GlobalDeploymentStatus;
+    'status'?: DeploymentHistoryStatusEnum;
 }
 /**
  * 
  * @export
- * @interface DeploymentHistoryApplicationResponseAllOf
+ * @interface DeploymentHistoryAllOf
  */
-export interface DeploymentHistoryApplicationResponseAllOf {
+export interface DeploymentHistoryAllOf {
     /**
      * 
-     * @type {string}
-     * @memberof DeploymentHistoryApplicationResponseAllOf
+     * @type {Commit}
+     * @memberof DeploymentHistoryAllOf
      */
-    'name'?: string;
+    'commit'?: Commit;
     /**
      * 
-     * @type {CommitResponse}
-     * @memberof DeploymentHistoryApplicationResponseAllOf
+     * @type {DeploymentHistoryStatusEnum}
+     * @memberof DeploymentHistoryAllOf
      */
-    'commit'?: CommitResponse;
-    /**
-     * 
-     * @type {GlobalDeploymentStatus}
-     * @memberof DeploymentHistoryApplicationResponseAllOf
-     */
-    'status'?: GlobalDeploymentStatus;
+    'status'?: DeploymentHistoryStatusEnum;
 }
 /**
  * 
  * @export
- * @interface DeploymentHistoryDatabaseResponse
+ * @interface DeploymentHistoryApplication
  */
-export interface DeploymentHistoryDatabaseResponse {
+export interface DeploymentHistoryApplication {
     /**
      * 
      * @type {string}
-     * @memberof DeploymentHistoryDatabaseResponse
+     * @memberof DeploymentHistoryApplication
      */
     'id': string;
     /**
      * 
      * @type {string}
-     * @memberof DeploymentHistoryDatabaseResponse
+     * @memberof DeploymentHistoryApplication
      */
     'created_at': string;
     /**
      * 
      * @type {string}
-     * @memberof DeploymentHistoryDatabaseResponse
+     * @memberof DeploymentHistoryApplication
      */
     'updated_at'?: string;
     /**
      * 
      * @type {string}
-     * @memberof DeploymentHistoryDatabaseResponse
+     * @memberof DeploymentHistoryApplication
      */
     'name'?: string;
     /**
      * 
+     * @type {Commit}
+     * @memberof DeploymentHistoryApplication
+     */
+    'commit'?: Commit;
+    /**
+     * 
      * @type {GlobalDeploymentStatus}
-     * @memberof DeploymentHistoryDatabaseResponse
+     * @memberof DeploymentHistoryApplication
      */
     'status'?: GlobalDeploymentStatus;
 }
 /**
  * 
  * @export
- * @interface DeploymentHistoryDatabaseResponseAllOf
+ * @interface DeploymentHistoryApplicationAllOf
  */
-export interface DeploymentHistoryDatabaseResponseAllOf {
+export interface DeploymentHistoryApplicationAllOf {
     /**
      * 
      * @type {string}
-     * @memberof DeploymentHistoryDatabaseResponseAllOf
+     * @memberof DeploymentHistoryApplicationAllOf
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {Commit}
+     * @memberof DeploymentHistoryApplicationAllOf
+     */
+    'commit'?: Commit;
+    /**
+     * 
+     * @type {GlobalDeploymentStatus}
+     * @memberof DeploymentHistoryApplicationAllOf
+     */
+    'status'?: GlobalDeploymentStatus;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentHistoryDatabase
+ */
+export interface DeploymentHistoryDatabase {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryDatabase
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryDatabase
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryDatabase
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryDatabase
      */
     'name'?: string;
     /**
      * 
      * @type {GlobalDeploymentStatus}
-     * @memberof DeploymentHistoryDatabaseResponseAllOf
+     * @memberof DeploymentHistoryDatabase
      */
     'status'?: GlobalDeploymentStatus;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentHistoryDatabaseAllOf
+ */
+export interface DeploymentHistoryDatabaseAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryDatabaseAllOf
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {GlobalDeploymentStatus}
+     * @memberof DeploymentHistoryDatabaseAllOf
+     */
+    'status'?: GlobalDeploymentStatus;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentHistoryEnvironment
+ */
+export interface DeploymentHistoryEnvironment {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryEnvironment
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryEnvironment
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryEnvironment
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {GlobalDeploymentStatus}
+     * @memberof DeploymentHistoryEnvironment
+     */
+    'status'?: GlobalDeploymentStatus;
+    /**
+     * 
+     * @type {Array<DeploymentHistoryApplication>}
+     * @memberof DeploymentHistoryEnvironment
+     */
+    'applications'?: Array<DeploymentHistoryApplication>;
+    /**
+     * 
+     * @type {Array<DeploymentHistoryDatabase>}
+     * @memberof DeploymentHistoryEnvironment
+     */
+    'databases'?: Array<DeploymentHistoryDatabase>;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentHistoryEnvironmentAllOf
+ */
+export interface DeploymentHistoryEnvironmentAllOf {
+    /**
+     * 
+     * @type {GlobalDeploymentStatus}
+     * @memberof DeploymentHistoryEnvironmentAllOf
+     */
+    'status'?: GlobalDeploymentStatus;
+    /**
+     * 
+     * @type {Array<DeploymentHistoryApplication>}
+     * @memberof DeploymentHistoryEnvironmentAllOf
+     */
+    'applications'?: Array<DeploymentHistoryApplication>;
+    /**
+     * 
+     * @type {Array<DeploymentHistoryDatabase>}
+     * @memberof DeploymentHistoryEnvironmentAllOf
+     */
+    'databases'?: Array<DeploymentHistoryDatabase>;
 }
 /**
  * 
@@ -3481,10 +3513,10 @@ export interface DeploymentHistoryEnvironmentPaginatedResponseList {
     'page_size': number;
     /**
      * 
-     * @type {Array<DeploymentHistoryEnvironmentResponse>}
+     * @type {Array<DeploymentHistoryEnvironment>}
      * @memberof DeploymentHistoryEnvironmentPaginatedResponseList
      */
-    'results'?: Array<DeploymentHistoryEnvironmentResponse>;
+    'results'?: Array<DeploymentHistoryEnvironment>;
 }
 /**
  * 
@@ -3494,78 +3526,10 @@ export interface DeploymentHistoryEnvironmentPaginatedResponseList {
 export interface DeploymentHistoryEnvironmentPaginatedResponseListAllOf {
     /**
      * 
-     * @type {Array<DeploymentHistoryEnvironmentResponse>}
+     * @type {Array<DeploymentHistoryEnvironment>}
      * @memberof DeploymentHistoryEnvironmentPaginatedResponseListAllOf
      */
-    'results'?: Array<DeploymentHistoryEnvironmentResponse>;
-}
-/**
- * 
- * @export
- * @interface DeploymentHistoryEnvironmentResponse
- */
-export interface DeploymentHistoryEnvironmentResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentHistoryEnvironmentResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentHistoryEnvironmentResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentHistoryEnvironmentResponse
-     */
-    'updated_at'?: string;
-    /**
-     * 
-     * @type {GlobalDeploymentStatus}
-     * @memberof DeploymentHistoryEnvironmentResponse
-     */
-    'status'?: GlobalDeploymentStatus;
-    /**
-     * 
-     * @type {Array<DeploymentHistoryApplicationResponse>}
-     * @memberof DeploymentHistoryEnvironmentResponse
-     */
-    'applications'?: Array<DeploymentHistoryApplicationResponse>;
-    /**
-     * 
-     * @type {Array<DeploymentHistoryDatabaseResponse>}
-     * @memberof DeploymentHistoryEnvironmentResponse
-     */
-    'databases'?: Array<DeploymentHistoryDatabaseResponse>;
-}
-/**
- * 
- * @export
- * @interface DeploymentHistoryEnvironmentResponseAllOf
- */
-export interface DeploymentHistoryEnvironmentResponseAllOf {
-    /**
-     * 
-     * @type {GlobalDeploymentStatus}
-     * @memberof DeploymentHistoryEnvironmentResponseAllOf
-     */
-    'status'?: GlobalDeploymentStatus;
-    /**
-     * 
-     * @type {Array<DeploymentHistoryApplicationResponse>}
-     * @memberof DeploymentHistoryEnvironmentResponseAllOf
-     */
-    'applications'?: Array<DeploymentHistoryApplicationResponse>;
-    /**
-     * 
-     * @type {Array<DeploymentHistoryDatabaseResponse>}
-     * @memberof DeploymentHistoryEnvironmentResponseAllOf
-     */
-    'databases'?: Array<DeploymentHistoryDatabaseResponse>;
+    'results'?: Array<DeploymentHistoryEnvironment>;
 }
 /**
  * 
@@ -3587,10 +3551,10 @@ export interface DeploymentHistoryPaginatedResponseList {
     'page_size': number;
     /**
      * 
-     * @type {Array<DeploymentHistoryResponse>}
+     * @type {Array<DeploymentHistory>}
      * @memberof DeploymentHistoryPaginatedResponseList
      */
-    'results'?: Array<DeploymentHistoryResponse>;
+    'results'?: Array<DeploymentHistory>;
 }
 /**
  * 
@@ -3600,66 +3564,10 @@ export interface DeploymentHistoryPaginatedResponseList {
 export interface DeploymentHistoryPaginatedResponseListAllOf {
     /**
      * 
-     * @type {Array<DeploymentHistoryResponse>}
+     * @type {Array<DeploymentHistory>}
      * @memberof DeploymentHistoryPaginatedResponseListAllOf
      */
-    'results'?: Array<DeploymentHistoryResponse>;
-}
-/**
- * 
- * @export
- * @interface DeploymentHistoryResponse
- */
-export interface DeploymentHistoryResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentHistoryResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentHistoryResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentHistoryResponse
-     */
-    'updated_at'?: string;
-    /**
-     * 
-     * @type {CommitResponse}
-     * @memberof DeploymentHistoryResponse
-     */
-    'commit'?: CommitResponse;
-    /**
-     * 
-     * @type {DeploymentHistoryStatusEnum}
-     * @memberof DeploymentHistoryResponse
-     */
-    'status'?: DeploymentHistoryStatusEnum;
-}
-/**
- * 
- * @export
- * @interface DeploymentHistoryResponseAllOf
- */
-export interface DeploymentHistoryResponseAllOf {
-    /**
-     * 
-     * @type {CommitResponse}
-     * @memberof DeploymentHistoryResponseAllOf
-     */
-    'commit'?: CommitResponse;
-    /**
-     * 
-     * @type {DeploymentHistoryStatusEnum}
-     * @memberof DeploymentHistoryResponseAllOf
-     */
-    'status'?: DeploymentHistoryStatusEnum;
+    'results'?: Array<DeploymentHistory>;
 }
 /**
  * 
@@ -3669,10 +3577,10 @@ export interface DeploymentHistoryResponseAllOf {
 export interface DeploymentHistoryResponseList {
     /**
      * 
-     * @type {Array<DeploymentHistoryResponse>}
+     * @type {Array<DeploymentHistory>}
      * @memberof DeploymentHistoryResponseList
      */
-    'results'?: Array<DeploymentHistoryResponse>;
+    'results'?: Array<DeploymentHistory>;
 }
 /**
  * 
@@ -3807,61 +3715,184 @@ export interface DoCredentialsRequest {
 /**
  * 
  * @export
- * @interface EnvironmentApplicationsCurrentScaleResponse
+ * @interface Environment
  */
-export interface EnvironmentApplicationsCurrentScaleResponse {
+export interface Environment {
     /**
      * 
      * @type {string}
-     * @memberof EnvironmentApplicationsCurrentScaleResponse
+     * @memberof Environment
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'updated_at'?: string;
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof Environment
+     */
+    'name': string;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof Environment
+     */
+    'project'?: ReferenceObject;
+    /**
+     * uuid of the user that made the last update
+     * @type {string}
+     * @memberof Environment
+     */
+    'last_updated_by'?: string;
+    /**
+     * 
+     * @type {EnvironmentAllOfCloudProvider}
+     * @memberof Environment
+     */
+    'cloud_provider': EnvironmentAllOfCloudProvider;
+    /**
+     * 
+     * @type {EnvironmentModeEnum}
+     * @memberof Environment
+     */
+    'mode': EnvironmentModeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'cluster_id': string;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentAllOf
+ */
+export interface EnvironmentAllOf {
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof EnvironmentAllOf
+     */
+    'name': string;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof EnvironmentAllOf
+     */
+    'project'?: ReferenceObject;
+    /**
+     * uuid of the user that made the last update
+     * @type {string}
+     * @memberof EnvironmentAllOf
+     */
+    'last_updated_by'?: string;
+    /**
+     * 
+     * @type {EnvironmentAllOfCloudProvider}
+     * @memberof EnvironmentAllOf
+     */
+    'cloud_provider': EnvironmentAllOfCloudProvider;
+    /**
+     * 
+     * @type {EnvironmentModeEnum}
+     * @memberof EnvironmentAllOf
+     */
+    'mode': EnvironmentModeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentAllOf
+     */
+    'cluster_id': string;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentAllOfCloudProvider
+ */
+export interface EnvironmentAllOfCloudProvider {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentAllOfCloudProvider
+     */
+    'provider'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentAllOfCloudProvider
+     */
+    'cluster'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentApplicationsCurrentScale
+ */
+export interface EnvironmentApplicationsCurrentScale {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentApplicationsCurrentScale
      */
     'application'?: string;
     /**
      * 
      * @type {number}
-     * @memberof EnvironmentApplicationsCurrentScaleResponse
+     * @memberof EnvironmentApplicationsCurrentScale
      */
     'min'?: number;
     /**
      * 
      * @type {number}
-     * @memberof EnvironmentApplicationsCurrentScaleResponse
+     * @memberof EnvironmentApplicationsCurrentScale
      */
     'max'?: number;
     /**
      * 
      * @type {number}
-     * @memberof EnvironmentApplicationsCurrentScaleResponse
+     * @memberof EnvironmentApplicationsCurrentScale
      */
     'running'?: number;
     /**
      * 
      * @type {number}
-     * @memberof EnvironmentApplicationsCurrentScaleResponse
+     * @memberof EnvironmentApplicationsCurrentScale
      */
     'running_in_percent'?: number;
     /**
      * 
      * @type {number}
-     * @memberof EnvironmentApplicationsCurrentScaleResponse
+     * @memberof EnvironmentApplicationsCurrentScale
      */
     'warning_threshold_in_percent'?: number;
     /**
      * 
      * @type {number}
-     * @memberof EnvironmentApplicationsCurrentScaleResponse
+     * @memberof EnvironmentApplicationsCurrentScale
      */
     'alert_threshold_in_percent'?: number;
     /**
      * 
      * @type {ThresholdMetricStatusEnum}
-     * @memberof EnvironmentApplicationsCurrentScaleResponse
+     * @memberof EnvironmentApplicationsCurrentScale
      */
     'status'?: ThresholdMetricStatusEnum;
     /**
      * 
      * @type {string}
-     * @memberof EnvironmentApplicationsCurrentScaleResponse
+     * @memberof EnvironmentApplicationsCurrentScale
      */
     'updated_at'?: string;
 }
@@ -3873,10 +3904,10 @@ export interface EnvironmentApplicationsCurrentScaleResponse {
 export interface EnvironmentApplicationsCurrentScaleResponseList {
     /**
      * 
-     * @type {Array<EnvironmentApplicationsCurrentScaleResponse>}
+     * @type {Array<EnvironmentApplicationsCurrentScale>}
      * @memberof EnvironmentApplicationsCurrentScaleResponseList
      */
-    'results'?: Array<EnvironmentApplicationsCurrentScaleResponse>;
+    'results'?: Array<EnvironmentApplicationsCurrentScale>;
 }
 /**
  * 
@@ -3905,29 +3936,29 @@ export interface EnvironmentApplicationsInstanceResponseListResults {
     'application': string;
     /**
      * 
-     * @type {Array<InstanceResponse>}
+     * @type {Array<Instance>}
      * @memberof EnvironmentApplicationsInstanceResponseListResults
      */
-    'instances': Array<InstanceResponse>;
+    'instances': Array<Instance>;
 }
 /**
  * 
  * @export
- * @interface EnvironmentApplicationsStorageResponse
+ * @interface EnvironmentApplicationsStorage
  */
-export interface EnvironmentApplicationsStorageResponse {
+export interface EnvironmentApplicationsStorage {
     /**
      * 
      * @type {string}
-     * @memberof EnvironmentApplicationsStorageResponse
+     * @memberof EnvironmentApplicationsStorage
      */
     'application': string;
     /**
      * 
-     * @type {Array<StorageDiskResponse>}
-     * @memberof EnvironmentApplicationsStorageResponse
+     * @type {Array<StorageDisk>}
+     * @memberof EnvironmentApplicationsStorage
      */
-    'disks'?: Array<StorageDiskResponse>;
+    'disks'?: Array<StorageDisk>;
 }
 /**
  * 
@@ -3937,10 +3968,10 @@ export interface EnvironmentApplicationsStorageResponse {
 export interface EnvironmentApplicationsStorageResponseList {
     /**
      * 
-     * @type {Array<EnvironmentApplicationsStorageResponse>}
+     * @type {Array<EnvironmentApplicationsStorage>}
      * @memberof EnvironmentApplicationsStorageResponseList
      */
-    'results'?: Array<EnvironmentApplicationsStorageResponse>;
+    'results'?: Array<EnvironmentApplicationsStorage>;
 }
 /**
  * 
@@ -3971,74 +4002,117 @@ export interface EnvironmentApplicationsSupportedLanguageList {
 /**
  * 
  * @export
- * @interface EnvironmentDatabasesCurrentMetricResponse
+ * @interface EnvironmentDatabasesCurrentMetric
  */
-export interface EnvironmentDatabasesCurrentMetricResponse {
+export interface EnvironmentDatabasesCurrentMetric {
     /**
      * 
      * @type {string}
-     * @memberof EnvironmentDatabasesCurrentMetricResponse
+     * @memberof EnvironmentDatabasesCurrentMetric
      */
     'database'?: string;
     /**
      * 
-     * @type {EnvironmentDatabasesCurrentMetricResponseCpu}
-     * @memberof EnvironmentDatabasesCurrentMetricResponse
+     * @type {EnvironmentDatabasesCurrentMetricCpu}
+     * @memberof EnvironmentDatabasesCurrentMetric
      */
-    'cpu'?: EnvironmentDatabasesCurrentMetricResponseCpu;
+    'cpu'?: EnvironmentDatabasesCurrentMetricCpu;
     /**
      * 
-     * @type {EnvironmentDatabasesCurrentMetricResponseMemory}
-     * @memberof EnvironmentDatabasesCurrentMetricResponse
+     * @type {EnvironmentDatabasesCurrentMetricMemory}
+     * @memberof EnvironmentDatabasesCurrentMetric
      */
-    'memory'?: EnvironmentDatabasesCurrentMetricResponseMemory;
+    'memory'?: EnvironmentDatabasesCurrentMetricMemory;
     /**
      * 
-     * @type {EnvironmentDatabasesCurrentMetricResponseStorage}
-     * @memberof EnvironmentDatabasesCurrentMetricResponse
+     * @type {EnvironmentDatabasesCurrentMetricStorage}
+     * @memberof EnvironmentDatabasesCurrentMetric
      */
-    'storage'?: EnvironmentDatabasesCurrentMetricResponseStorage;
+    'storage'?: EnvironmentDatabasesCurrentMetricStorage;
 }
 /**
  * 
  * @export
- * @interface EnvironmentDatabasesCurrentMetricResponseCpu
+ * @interface EnvironmentDatabasesCurrentMetricCpu
  */
-export interface EnvironmentDatabasesCurrentMetricResponseCpu {
+export interface EnvironmentDatabasesCurrentMetricCpu {
     /**
      * 
      * @type {number}
-     * @memberof EnvironmentDatabasesCurrentMetricResponseCpu
+     * @memberof EnvironmentDatabasesCurrentMetricCpu
      */
     'requested_in_float'?: number;
     /**
      * 
      * @type {number}
-     * @memberof EnvironmentDatabasesCurrentMetricResponseCpu
+     * @memberof EnvironmentDatabasesCurrentMetricCpu
      */
     'consumed_in_number'?: number;
     /**
      * 
      * @type {number}
-     * @memberof EnvironmentDatabasesCurrentMetricResponseCpu
+     * @memberof EnvironmentDatabasesCurrentMetricCpu
      */
     'consumed_in_percent'?: number;
     /**
      * 
      * @type {number}
-     * @memberof EnvironmentDatabasesCurrentMetricResponseCpu
+     * @memberof EnvironmentDatabasesCurrentMetricCpu
      */
     'warning_threshold_in_percent'?: number;
     /**
      * 
      * @type {number}
-     * @memberof EnvironmentDatabasesCurrentMetricResponseCpu
+     * @memberof EnvironmentDatabasesCurrentMetricCpu
      */
     'alert_threshold_in_percent'?: number;
     /**
      * 
      * @type {ThresholdMetricStatusEnum}
-     * @memberof EnvironmentDatabasesCurrentMetricResponseCpu
+     * @memberof EnvironmentDatabasesCurrentMetricCpu
+     */
+    'status'?: ThresholdMetricStatusEnum;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentDatabasesCurrentMetricMemory
+ */
+export interface EnvironmentDatabasesCurrentMetricMemory {
+    /**
+     * 
+     * @type {number}
+     * @memberof EnvironmentDatabasesCurrentMetricMemory
+     */
+    'requested_in_mb'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof EnvironmentDatabasesCurrentMetricMemory
+     */
+    'consumed_in_mb'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof EnvironmentDatabasesCurrentMetricMemory
+     */
+    'consumed_in_percent'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof EnvironmentDatabasesCurrentMetricMemory
+     */
+    'warning_threshold_in_percent'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof EnvironmentDatabasesCurrentMetricMemory
+     */
+    'alert_threshold_in_percent'?: number;
+    /**
+     * 
+     * @type {ThresholdMetricStatusEnum}
+     * @memberof EnvironmentDatabasesCurrentMetricMemory
      */
     'status'?: ThresholdMetricStatusEnum;
 }
@@ -4050,96 +4124,181 @@ export interface EnvironmentDatabasesCurrentMetricResponseCpu {
 export interface EnvironmentDatabasesCurrentMetricResponseList {
     /**
      * 
-     * @type {Array<EnvironmentDatabasesCurrentMetricResponse>}
+     * @type {Array<EnvironmentDatabasesCurrentMetric>}
      * @memberof EnvironmentDatabasesCurrentMetricResponseList
      */
-    'results'?: Array<EnvironmentDatabasesCurrentMetricResponse>;
+    'results'?: Array<EnvironmentDatabasesCurrentMetric>;
 }
 /**
  * 
  * @export
- * @interface EnvironmentDatabasesCurrentMetricResponseMemory
+ * @interface EnvironmentDatabasesCurrentMetricStorage
  */
-export interface EnvironmentDatabasesCurrentMetricResponseMemory {
+export interface EnvironmentDatabasesCurrentMetricStorage {
     /**
      * 
      * @type {number}
-     * @memberof EnvironmentDatabasesCurrentMetricResponseMemory
-     */
-    'requested_in_mb'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof EnvironmentDatabasesCurrentMetricResponseMemory
-     */
-    'consumed_in_mb'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof EnvironmentDatabasesCurrentMetricResponseMemory
-     */
-    'consumed_in_percent'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof EnvironmentDatabasesCurrentMetricResponseMemory
-     */
-    'warning_threshold_in_percent'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof EnvironmentDatabasesCurrentMetricResponseMemory
-     */
-    'alert_threshold_in_percent'?: number;
-    /**
-     * 
-     * @type {ThresholdMetricStatusEnum}
-     * @memberof EnvironmentDatabasesCurrentMetricResponseMemory
-     */
-    'status'?: ThresholdMetricStatusEnum;
-}
-/**
- * 
- * @export
- * @interface EnvironmentDatabasesCurrentMetricResponseStorage
- */
-export interface EnvironmentDatabasesCurrentMetricResponseStorage {
-    /**
-     * 
-     * @type {number}
-     * @memberof EnvironmentDatabasesCurrentMetricResponseStorage
+     * @memberof EnvironmentDatabasesCurrentMetricStorage
      */
     'requested_in_gb'?: number;
     /**
      * 
      * @type {number}
-     * @memberof EnvironmentDatabasesCurrentMetricResponseStorage
+     * @memberof EnvironmentDatabasesCurrentMetricStorage
      */
     'consumed_in_gb'?: number;
     /**
      * 
      * @type {number}
-     * @memberof EnvironmentDatabasesCurrentMetricResponseStorage
+     * @memberof EnvironmentDatabasesCurrentMetricStorage
      */
     'consumed_in_percent'?: number;
     /**
      * 
      * @type {number}
-     * @memberof EnvironmentDatabasesCurrentMetricResponseStorage
+     * @memberof EnvironmentDatabasesCurrentMetricStorage
      */
     'warning_threshold_in_percent'?: number;
     /**
      * 
      * @type {number}
-     * @memberof EnvironmentDatabasesCurrentMetricResponseStorage
+     * @memberof EnvironmentDatabasesCurrentMetricStorage
      */
     'alert_threshold_in_percent'?: number;
     /**
      * 
      * @type {ThresholdMetricStatusEnum}
-     * @memberof EnvironmentDatabasesCurrentMetricResponseStorage
+     * @memberof EnvironmentDatabasesCurrentMetricStorage
      */
     'status'?: ThresholdMetricStatusEnum;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentDeploymentRule
+ */
+export interface EnvironmentDeploymentRule {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentDeploymentRule
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentDeploymentRule
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentDeploymentRule
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnvironmentDeploymentRule
+     */
+    'auto_deploy'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnvironmentDeploymentRule
+     */
+    'auto_stop'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnvironmentDeploymentRule
+     */
+    'auto_delete'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnvironmentDeploymentRule
+     */
+    'auto_preview'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentDeploymentRule
+     */
+    'timezone': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentDeploymentRule
+     */
+    'start_time': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentDeploymentRule
+     */
+    'stop_time': string;
+    /**
+     * 
+     * @type {Array<WeekdayEnum>}
+     * @memberof EnvironmentDeploymentRule
+     */
+    'weekdays': Array<WeekdayEnum>;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentDeploymentRuleAllOf
+ */
+export interface EnvironmentDeploymentRuleAllOf {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnvironmentDeploymentRuleAllOf
+     */
+    'auto_deploy'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnvironmentDeploymentRuleAllOf
+     */
+    'auto_stop'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnvironmentDeploymentRuleAllOf
+     */
+    'auto_delete'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnvironmentDeploymentRuleAllOf
+     */
+    'auto_preview'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentDeploymentRuleAllOf
+     */
+    'timezone': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentDeploymentRuleAllOf
+     */
+    'start_time': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentDeploymentRuleAllOf
+     */
+    'stop_time': string;
+    /**
+     * 
+     * @type {Array<WeekdayEnum>}
+     * @memberof EnvironmentDeploymentRuleAllOf
+     */
+    'weekdays': Array<WeekdayEnum>;
 }
 /**
  * 
@@ -4193,134 +4352,6 @@ export interface EnvironmentDeploymentRuleEditRequest {
 /**
  * 
  * @export
- * @interface EnvironmentDeploymentRuleResponse
- */
-export interface EnvironmentDeploymentRuleResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentDeploymentRuleResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentDeploymentRuleResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentDeploymentRuleResponse
-     */
-    'updated_at'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnvironmentDeploymentRuleResponse
-     */
-    'auto_deploy'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnvironmentDeploymentRuleResponse
-     */
-    'auto_stop'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnvironmentDeploymentRuleResponse
-     */
-    'auto_delete'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnvironmentDeploymentRuleResponse
-     */
-    'auto_preview'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentDeploymentRuleResponse
-     */
-    'timezone': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentDeploymentRuleResponse
-     */
-    'start_time': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentDeploymentRuleResponse
-     */
-    'stop_time': string;
-    /**
-     * 
-     * @type {Array<WeekdayEnum>}
-     * @memberof EnvironmentDeploymentRuleResponse
-     */
-    'weekdays': Array<WeekdayEnum>;
-}
-/**
- * 
- * @export
- * @interface EnvironmentDeploymentRuleResponseAllOf
- */
-export interface EnvironmentDeploymentRuleResponseAllOf {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnvironmentDeploymentRuleResponseAllOf
-     */
-    'auto_deploy'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnvironmentDeploymentRuleResponseAllOf
-     */
-    'auto_stop'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnvironmentDeploymentRuleResponseAllOf
-     */
-    'auto_delete'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnvironmentDeploymentRuleResponseAllOf
-     */
-    'auto_preview'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentDeploymentRuleResponseAllOf
-     */
-    'timezone': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentDeploymentRuleResponseAllOf
-     */
-    'start_time': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentDeploymentRuleResponseAllOf
-     */
-    'stop_time': string;
-    /**
-     * 
-     * @type {Array<WeekdayEnum>}
-     * @memberof EnvironmentDeploymentRuleResponseAllOf
-     */
-    'weekdays': Array<WeekdayEnum>;
-}
-/**
- * 
- * @export
  * @interface EnvironmentEditRequest
  */
 export interface EnvironmentEditRequest {
@@ -4359,6 +4390,55 @@ export interface EnvironmentEnvironmentIdApplicationDeployApplications {
 /**
  * 
  * @export
+ * @interface EnvironmentLog
+ */
+export interface EnvironmentLog {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLog
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLog
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {EnvironmentLogScope}
+     * @memberof EnvironmentLog
+     */
+    'scope'?: EnvironmentLogScope;
+    /**
+     * 
+     * @type {GlobalDeploymentStatus}
+     * @memberof EnvironmentLog
+     */
+    'state'?: GlobalDeploymentStatus;
+    /**
+     * Log message
+     * @type {string}
+     * @memberof EnvironmentLog
+     */
+    'message': string | null;
+    /**
+     * Only for errors. Helps Qovery team to investigate.
+     * @type {string}
+     * @memberof EnvironmentLog
+     */
+    'execution_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLog
+     */
+    'hint'?: string;
+}
+/**
+ * 
+ * @export
  * @interface EnvironmentLogPaginatedResponseList
  */
 export interface EnvironmentLogPaginatedResponseList {
@@ -4376,10 +4456,10 @@ export interface EnvironmentLogPaginatedResponseList {
     'page_size': number;
     /**
      * 
-     * @type {Array<EnvironmentLogResponse>}
+     * @type {Array<EnvironmentLog>}
      * @memberof EnvironmentLogPaginatedResponseList
      */
-    'results'?: Array<EnvironmentLogResponse>;
+    'results'?: Array<EnvironmentLog>;
 }
 /**
  * 
@@ -4389,59 +4469,10 @@ export interface EnvironmentLogPaginatedResponseList {
 export interface EnvironmentLogPaginatedResponseListAllOf {
     /**
      * 
-     * @type {Array<EnvironmentLogResponse>}
+     * @type {Array<EnvironmentLog>}
      * @memberof EnvironmentLogPaginatedResponseListAllOf
      */
-    'results'?: Array<EnvironmentLogResponse>;
-}
-/**
- * 
- * @export
- * @interface EnvironmentLogResponse
- */
-export interface EnvironmentLogResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentLogResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentLogResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {EnvironmentLogResponseScope}
-     * @memberof EnvironmentLogResponse
-     */
-    'scope'?: EnvironmentLogResponseScope;
-    /**
-     * 
-     * @type {GlobalDeploymentStatus}
-     * @memberof EnvironmentLogResponse
-     */
-    'state'?: GlobalDeploymentStatus;
-    /**
-     * Log message
-     * @type {string}
-     * @memberof EnvironmentLogResponse
-     */
-    'message': string | null;
-    /**
-     * Only for errors. Helps Qovery team to investigate.
-     * @type {string}
-     * @memberof EnvironmentLogResponse
-     */
-    'execution_id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentLogResponse
-     */
-    'hint'?: string;
+    'results'?: Array<EnvironmentLog>;
 }
 /**
  * 
@@ -4451,33 +4482,33 @@ export interface EnvironmentLogResponse {
 export interface EnvironmentLogResponseList {
     /**
      * 
-     * @type {Array<EnvironmentLogResponse>}
+     * @type {Array<EnvironmentLog>}
      * @memberof EnvironmentLogResponseList
      */
-    'results'?: Array<EnvironmentLogResponse>;
+    'results'?: Array<EnvironmentLog>;
 }
 /**
  * 
  * @export
- * @interface EnvironmentLogResponseScope
+ * @interface EnvironmentLogScope
  */
-export interface EnvironmentLogResponseScope {
+export interface EnvironmentLogScope {
     /**
      * 
      * @type {EnvironmentLogTypeEnum}
-     * @memberof EnvironmentLogResponseScope
+     * @memberof EnvironmentLogScope
      */
     'type'?: EnvironmentLogTypeEnum;
     /**
      * 
      * @type {string}
-     * @memberof EnvironmentLogResponseScope
+     * @memberof EnvironmentLogScope
      */
     'name'?: string;
     /**
      * 
      * @type {string}
-     * @memberof EnvironmentLogResponseScope
+     * @memberof EnvironmentLogScope
      */
     'id'?: string;
 }
@@ -4534,138 +4565,15 @@ export interface EnvironmentRequest {
 /**
  * 
  * @export
- * @interface EnvironmentResponse
- */
-export interface EnvironmentResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentResponse
-     */
-    'updated_at'?: string;
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof EnvironmentResponse
-     */
-    'name': string;
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof EnvironmentResponse
-     */
-    'project'?: ReferenceObject;
-    /**
-     * uuid of the user that made the last update
-     * @type {string}
-     * @memberof EnvironmentResponse
-     */
-    'last_updated_by'?: string;
-    /**
-     * 
-     * @type {EnvironmentResponseAllOfCloudProvider}
-     * @memberof EnvironmentResponse
-     */
-    'cloud_provider': EnvironmentResponseAllOfCloudProvider;
-    /**
-     * 
-     * @type {EnvironmentModeEnum}
-     * @memberof EnvironmentResponse
-     */
-    'mode': EnvironmentModeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentResponse
-     */
-    'cluster_id': string;
-}
-/**
- * 
- * @export
- * @interface EnvironmentResponseAllOf
- */
-export interface EnvironmentResponseAllOf {
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof EnvironmentResponseAllOf
-     */
-    'name': string;
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof EnvironmentResponseAllOf
-     */
-    'project'?: ReferenceObject;
-    /**
-     * uuid of the user that made the last update
-     * @type {string}
-     * @memberof EnvironmentResponseAllOf
-     */
-    'last_updated_by'?: string;
-    /**
-     * 
-     * @type {EnvironmentResponseAllOfCloudProvider}
-     * @memberof EnvironmentResponseAllOf
-     */
-    'cloud_provider': EnvironmentResponseAllOfCloudProvider;
-    /**
-     * 
-     * @type {EnvironmentModeEnum}
-     * @memberof EnvironmentResponseAllOf
-     */
-    'mode': EnvironmentModeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentResponseAllOf
-     */
-    'cluster_id': string;
-}
-/**
- * 
- * @export
- * @interface EnvironmentResponseAllOfCloudProvider
- */
-export interface EnvironmentResponseAllOfCloudProvider {
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentResponseAllOfCloudProvider
-     */
-    'provider'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentResponseAllOfCloudProvider
-     */
-    'cluster'?: string;
-}
-/**
- * 
- * @export
  * @interface EnvironmentResponseList
  */
 export interface EnvironmentResponseList {
     /**
      * 
-     * @type {Array<EnvironmentResponse>}
+     * @type {Array<Environment>}
      * @memberof EnvironmentResponseList
      */
-    'results'?: Array<EnvironmentResponse>;
+    'results'?: Array<Environment>;
 }
 /**
  * 
@@ -4683,19 +4591,19 @@ export interface EnvironmentRestartRequest {
 /**
  * 
  * @export
- * @interface EnvironmentStatsResponse
+ * @interface EnvironmentStats
  */
-export interface EnvironmentStatsResponse {
+export interface EnvironmentStats {
     /**
      * 
      * @type {string}
-     * @memberof EnvironmentStatsResponse
+     * @memberof EnvironmentStats
      */
     'id': string;
     /**
      * 
      * @type {number}
-     * @memberof EnvironmentStatsResponse
+     * @memberof EnvironmentStats
      */
     'service_total_number'?: number;
 }
@@ -4707,10 +4615,10 @@ export interface EnvironmentStatsResponse {
 export interface EnvironmentStatsResponseList {
     /**
      * 
-     * @type {Array<EnvironmentStatsResponse>}
+     * @type {Array<EnvironmentStats>}
      * @memberof EnvironmentStatsResponseList
      */
-    'results'?: Array<EnvironmentStatsResponse>;
+    'results'?: Array<EnvironmentStats>;
 }
 /**
  * 
@@ -4724,6 +4632,160 @@ export interface EnvironmentTotalNumber {
      * @memberof EnvironmentTotalNumber
      */
     'environment_total_number'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentVariable
+ */
+export interface EnvironmentVariable {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentVariable
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentVariable
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentVariable
+     */
+    'updated_at'?: string;
+    /**
+     * key is case sensitive
+     * @type {string}
+     * @memberof EnvironmentVariable
+     */
+    'key': string;
+    /**
+     * value of the env variable.
+     * @type {string}
+     * @memberof EnvironmentVariable
+     */
+    'value': string;
+    /**
+     * 
+     * @type {EnvironmentVariableAllOfOverriddenVariable}
+     * @memberof EnvironmentVariable
+     */
+    'overridden_variable'?: EnvironmentVariableAllOfOverriddenVariable;
+    /**
+     * 
+     * @type {EnvironmentVariableAllOfAliasedVariable}
+     * @memberof EnvironmentVariable
+     */
+    'aliased_variable'?: EnvironmentVariableAllOfAliasedVariable;
+    /**
+     * 
+     * @type {EnvironmentVariableScopeEnum}
+     * @memberof EnvironmentVariable
+     */
+    'scope': EnvironmentVariableScopeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentVariable
+     */
+    'service_name'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentVariableAllOf
+ */
+export interface EnvironmentVariableAllOf {
+    /**
+     * 
+     * @type {EnvironmentVariableAllOfOverriddenVariable}
+     * @memberof EnvironmentVariableAllOf
+     */
+    'overridden_variable'?: EnvironmentVariableAllOfOverriddenVariable;
+    /**
+     * 
+     * @type {EnvironmentVariableAllOfAliasedVariable}
+     * @memberof EnvironmentVariableAllOf
+     */
+    'aliased_variable'?: EnvironmentVariableAllOfAliasedVariable;
+    /**
+     * 
+     * @type {EnvironmentVariableScopeEnum}
+     * @memberof EnvironmentVariableAllOf
+     */
+    'scope': EnvironmentVariableScopeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentVariableAllOf
+     */
+    'service_name'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentVariableAllOfAliasedVariable
+ */
+export interface EnvironmentVariableAllOfAliasedVariable {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentVariableAllOfAliasedVariable
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentVariableAllOfAliasedVariable
+     */
+    'key'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentVariableAllOfAliasedVariable
+     */
+    'value'?: string;
+    /**
+     * 
+     * @type {EnvironmentVariableScopeEnum}
+     * @memberof EnvironmentVariableAllOfAliasedVariable
+     */
+    'scope'?: EnvironmentVariableScopeEnum;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentVariableAllOfOverriddenVariable
+ */
+export interface EnvironmentVariableAllOfOverriddenVariable {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentVariableAllOfOverriddenVariable
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentVariableAllOfOverriddenVariable
+     */
+    'key'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentVariableAllOfOverriddenVariable
+     */
+    'value'?: string;
+    /**
+     * 
+     * @type {EnvironmentVariableScopeEnum}
+     * @memberof EnvironmentVariableAllOfOverriddenVariable
+     */
+    'scope'?: EnvironmentVariableScopeEnum;
 }
 /**
  * 
@@ -4766,169 +4828,15 @@ export interface EnvironmentVariableRequest {
 /**
  * 
  * @export
- * @interface EnvironmentVariableResponse
- */
-export interface EnvironmentVariableResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentVariableResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentVariableResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentVariableResponse
-     */
-    'updated_at'?: string;
-    /**
-     * key is case sensitive
-     * @type {string}
-     * @memberof EnvironmentVariableResponse
-     */
-    'key': string;
-    /**
-     * value of the env variable.
-     * @type {string}
-     * @memberof EnvironmentVariableResponse
-     */
-    'value': string;
-    /**
-     * 
-     * @type {EnvironmentVariableResponseAllOfOverriddenVariable}
-     * @memberof EnvironmentVariableResponse
-     */
-    'overridden_variable'?: EnvironmentVariableResponseAllOfOverriddenVariable;
-    /**
-     * 
-     * @type {EnvironmentVariableResponseAllOfAliasedVariable}
-     * @memberof EnvironmentVariableResponse
-     */
-    'aliased_variable'?: EnvironmentVariableResponseAllOfAliasedVariable;
-    /**
-     * 
-     * @type {EnvironmentVariableScopeEnum}
-     * @memberof EnvironmentVariableResponse
-     */
-    'scope': EnvironmentVariableScopeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentVariableResponse
-     */
-    'service_name'?: string;
-}
-/**
- * 
- * @export
- * @interface EnvironmentVariableResponseAllOf
- */
-export interface EnvironmentVariableResponseAllOf {
-    /**
-     * 
-     * @type {EnvironmentVariableResponseAllOfOverriddenVariable}
-     * @memberof EnvironmentVariableResponseAllOf
-     */
-    'overridden_variable'?: EnvironmentVariableResponseAllOfOverriddenVariable;
-    /**
-     * 
-     * @type {EnvironmentVariableResponseAllOfAliasedVariable}
-     * @memberof EnvironmentVariableResponseAllOf
-     */
-    'aliased_variable'?: EnvironmentVariableResponseAllOfAliasedVariable;
-    /**
-     * 
-     * @type {EnvironmentVariableScopeEnum}
-     * @memberof EnvironmentVariableResponseAllOf
-     */
-    'scope': EnvironmentVariableScopeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentVariableResponseAllOf
-     */
-    'service_name'?: string;
-}
-/**
- * 
- * @export
- * @interface EnvironmentVariableResponseAllOfAliasedVariable
- */
-export interface EnvironmentVariableResponseAllOfAliasedVariable {
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentVariableResponseAllOfAliasedVariable
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentVariableResponseAllOfAliasedVariable
-     */
-    'key'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentVariableResponseAllOfAliasedVariable
-     */
-    'value'?: string;
-    /**
-     * 
-     * @type {EnvironmentVariableScopeEnum}
-     * @memberof EnvironmentVariableResponseAllOfAliasedVariable
-     */
-    'scope'?: EnvironmentVariableScopeEnum;
-}
-/**
- * 
- * @export
- * @interface EnvironmentVariableResponseAllOfOverriddenVariable
- */
-export interface EnvironmentVariableResponseAllOfOverriddenVariable {
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentVariableResponseAllOfOverriddenVariable
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentVariableResponseAllOfOverriddenVariable
-     */
-    'key'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentVariableResponseAllOfOverriddenVariable
-     */
-    'value'?: string;
-    /**
-     * 
-     * @type {EnvironmentVariableScopeEnum}
-     * @memberof EnvironmentVariableResponseAllOfOverriddenVariable
-     */
-    'scope'?: EnvironmentVariableScopeEnum;
-}
-/**
- * 
- * @export
  * @interface EnvironmentVariableResponseList
  */
 export interface EnvironmentVariableResponseList {
     /**
      * 
-     * @type {Array<EnvironmentVariableResponse>}
+     * @type {Array<EnvironmentVariable>}
      * @memberof EnvironmentVariableResponseList
      */
-    'results'?: Array<EnvironmentVariableResponse>;
+    'results'?: Array<EnvironmentVariable>;
 }
 /**
  * 
@@ -4943,6 +4851,98 @@ export enum EnvironmentVariableScopeEnum {
     APPLICATION = 'APPLICATION'
 }
 
+/**
+ * 
+ * @export
+ * @interface Event
+ */
+export interface Event {
+    /**
+     * 
+     * @type {string}
+     * @memberof Event
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Event
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Event
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {User}
+     * @memberof Event
+     */
+    'user'?: User;
+    /**
+     * 
+     * @type {Commit}
+     * @memberof Event
+     */
+    'commit'?: Commit;
+    /**
+     * 
+     * @type {Status}
+     * @memberof Event
+     */
+    'status'?: Status;
+    /**
+     * DRAFT - we have to specify here all the possible events
+     * @type {string}
+     * @memberof Event
+     */
+    'type'?: string;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof Event
+     */
+    'log'?: ReferenceObject;
+}
+/**
+ * 
+ * @export
+ * @interface EventAllOf
+ */
+export interface EventAllOf {
+    /**
+     * 
+     * @type {User}
+     * @memberof EventAllOf
+     */
+    'user'?: User;
+    /**
+     * 
+     * @type {Commit}
+     * @memberof EventAllOf
+     */
+    'commit'?: Commit;
+    /**
+     * 
+     * @type {Status}
+     * @memberof EventAllOf
+     */
+    'status'?: Status;
+    /**
+     * DRAFT - we have to specify here all the possible events
+     * @type {string}
+     * @memberof EventAllOf
+     */
+    'type'?: string;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof EventAllOf
+     */
+    'log'?: ReferenceObject;
+}
 /**
  * 
  * @export
@@ -4963,10 +4963,10 @@ export interface EventPaginatedResponseList {
     'page_size': number;
     /**
      * 
-     * @type {Array<EventResponse>}
+     * @type {Array<Event>}
      * @memberof EventPaginatedResponseList
      */
-    'results'?: Array<EventResponse>;
+    'results'?: Array<Event>;
 }
 /**
  * 
@@ -4976,102 +4976,10 @@ export interface EventPaginatedResponseList {
 export interface EventPaginatedResponseListAllOf {
     /**
      * 
-     * @type {Array<EventResponse>}
+     * @type {Array<Event>}
      * @memberof EventPaginatedResponseListAllOf
      */
-    'results'?: Array<EventResponse>;
-}
-/**
- * 
- * @export
- * @interface EventResponse
- */
-export interface EventResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof EventResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EventResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EventResponse
-     */
-    'updated_at'?: string;
-    /**
-     * 
-     * @type {UserResponse}
-     * @memberof EventResponse
-     */
-    'user'?: UserResponse;
-    /**
-     * 
-     * @type {CommitResponse}
-     * @memberof EventResponse
-     */
-    'commit'?: CommitResponse;
-    /**
-     * 
-     * @type {Status}
-     * @memberof EventResponse
-     */
-    'status'?: Status;
-    /**
-     * DRAFT - we have to specify here all the possible events
-     * @type {string}
-     * @memberof EventResponse
-     */
-    'type'?: string;
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof EventResponse
-     */
-    'log'?: ReferenceObject;
-}
-/**
- * 
- * @export
- * @interface EventResponseAllOf
- */
-export interface EventResponseAllOf {
-    /**
-     * 
-     * @type {UserResponse}
-     * @memberof EventResponseAllOf
-     */
-    'user'?: UserResponse;
-    /**
-     * 
-     * @type {CommitResponse}
-     * @memberof EventResponseAllOf
-     */
-    'commit'?: CommitResponse;
-    /**
-     * 
-     * @type {Status}
-     * @memberof EventResponseAllOf
-     */
-    'status'?: Status;
-    /**
-     * DRAFT - we have to specify here all the possible events
-     * @type {string}
-     * @memberof EventResponseAllOf
-     */
-    'type'?: string;
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof EventResponseAllOf
-     */
-    'log'?: ReferenceObject;
+    'results'?: Array<Event>;
 }
 /**
  * 
@@ -5081,64 +4989,64 @@ export interface EventResponseAllOf {
 export interface EventResponseList {
     /**
      * 
-     * @type {Array<EventResponse>}
+     * @type {Array<Event>}
      * @memberof EventResponseList
      */
-    'results'?: Array<EventResponse>;
+    'results'?: Array<Event>;
 }
 /**
  * 
  * @export
- * @interface GenericObjectCurrentCostResponse
+ * @interface GenericObjectCurrentCost
  */
-export interface GenericObjectCurrentCostResponse {
+export interface GenericObjectCurrentCost {
     /**
      * 
      * @type {string}
-     * @memberof GenericObjectCurrentCostResponse
+     * @memberof GenericObjectCurrentCost
      */
     'id': string;
     /**
      * 
      * @type {string}
-     * @memberof GenericObjectCurrentCostResponse
+     * @memberof GenericObjectCurrentCost
      */
     'name': string;
     /**
      * 
      * @type {number}
-     * @memberof GenericObjectCurrentCostResponse
+     * @memberof GenericObjectCurrentCost
      */
     'consumed_time_in_seconds': number;
     /**
      * 
-     * @type {CostResponse}
-     * @memberof GenericObjectCurrentCostResponse
+     * @type {Cost}
+     * @memberof GenericObjectCurrentCost
      */
-    'cost': CostResponse;
+    'cost': Cost;
 }
 /**
  * 
  * @export
- * @interface GitAuthProviderResponse
+ * @interface GitAuthProvider
  */
-export interface GitAuthProviderResponse {
+export interface GitAuthProvider {
     /**
      * 
      * @type {string}
-     * @memberof GitAuthProviderResponse
+     * @memberof GitAuthProvider
      */
     'id'?: string;
     /**
      * 
      * @type {string}
-     * @memberof GitAuthProviderResponse
+     * @memberof GitAuthProvider
      */
     'name': string;
     /**
      * 
      * @type {string}
-     * @memberof GitAuthProviderResponse
+     * @memberof GitAuthProvider
      */
     'owner': string;
 }
@@ -5150,10 +5058,10 @@ export interface GitAuthProviderResponse {
 export interface GitAuthProviderResponseList {
     /**
      * 
-     * @type {Array<GitAuthProviderResponse>}
+     * @type {Array<GitAuthProvider>}
      * @memberof GitAuthProviderResponseList
      */
-    'results'?: Array<GitAuthProviderResponse>;
+    'results'?: Array<GitAuthProvider>;
 }
 /**
  * 
@@ -5169,13 +5077,50 @@ export enum GitProviderEnum {
 /**
  * 
  * @export
- * @interface GitRepositoryBranchResponse
+ * @interface GitRepository
  */
-export interface GitRepositoryBranchResponse {
+export interface GitRepository {
     /**
      * 
      * @type {string}
-     * @memberof GitRepositoryBranchResponse
+     * @memberof GitRepository
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GitRepository
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GitRepository
+     */
+    'url': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GitRepository
+     */
+    'default_branch'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof GitRepository
+     */
+    'is_private'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface GitRepositoryBranch
+ */
+export interface GitRepositoryBranch {
+    /**
+     * 
+     * @type {string}
+     * @memberof GitRepositoryBranch
      */
     'name': string;
 }
@@ -5187,47 +5132,10 @@ export interface GitRepositoryBranchResponse {
 export interface GitRepositoryBranchResponseList {
     /**
      * 
-     * @type {Array<GitRepositoryBranchResponse>}
+     * @type {Array<GitRepositoryBranch>}
      * @memberof GitRepositoryBranchResponseList
      */
-    'results'?: Array<GitRepositoryBranchResponse>;
-}
-/**
- * 
- * @export
- * @interface GitRepositoryResponse
- */
-export interface GitRepositoryResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof GitRepositoryResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GitRepositoryResponse
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GitRepositoryResponse
-     */
-    'url': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GitRepositoryResponse
-     */
-    'default_branch'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof GitRepositoryResponse
-     */
-    'is_private'?: boolean;
+    'results'?: Array<GitRepositoryBranch>;
 }
 /**
  * 
@@ -5237,10 +5145,10 @@ export interface GitRepositoryResponse {
 export interface GitRepositoryResponseList {
     /**
      * 
-     * @type {Array<GitRepositoryResponse>}
+     * @type {Array<GitRepository>}
      * @memberof GitRepositoryResponseList
      */
-    'results'?: Array<GitRepositoryResponse>;
+    'results'?: Array<GitRepository>;
 }
 /**
  * 
@@ -5429,33 +5337,33 @@ export enum InlineObject2CompanySizeEnum {
 /**
  * 
  * @export
- * @interface InstanceResponse
+ * @interface Instance
  */
-export interface InstanceResponse {
+export interface Instance {
     /**
      * 
      * @type {string}
-     * @memberof InstanceResponse
+     * @memberof Instance
      */
     'created_at'?: string;
     /**
      * 
      * @type {string}
-     * @memberof InstanceResponse
+     * @memberof Instance
      */
     'name'?: string;
     /**
      * 
-     * @type {EnvironmentDatabasesCurrentMetricResponseCpu}
-     * @memberof InstanceResponse
+     * @type {EnvironmentDatabasesCurrentMetricCpu}
+     * @memberof Instance
      */
-    'cpu'?: EnvironmentDatabasesCurrentMetricResponseCpu;
+    'cpu'?: EnvironmentDatabasesCurrentMetricCpu;
     /**
      * 
-     * @type {EnvironmentDatabasesCurrentMetricResponseMemory}
-     * @memberof InstanceResponse
+     * @type {EnvironmentDatabasesCurrentMetricMemory}
+     * @memberof Instance
      */
-    'memory'?: EnvironmentDatabasesCurrentMetricResponseMemory;
+    'memory'?: EnvironmentDatabasesCurrentMetricMemory;
 }
 /**
  * 
@@ -5465,10 +5373,114 @@ export interface InstanceResponse {
 export interface InstanceResponseList {
     /**
      * 
-     * @type {Array<InstanceResponse>}
+     * @type {Array<Instance>}
      * @memberof InstanceResponseList
      */
-    'results'?: Array<InstanceResponse>;
+    'results'?: Array<Instance>;
+}
+/**
+ * 
+ * @export
+ * @interface InviteMember
+ */
+export interface InviteMember {
+    /**
+     * 
+     * @type {string}
+     * @memberof InviteMember
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InviteMember
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InviteMember
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InviteMember
+     */
+    'email': string;
+    /**
+     * 
+     * @type {InviteMemberRoleEnum}
+     * @memberof InviteMember
+     */
+    'role': InviteMemberRoleEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof InviteMember
+     */
+    'invitation_link': string;
+    /**
+     * 
+     * @type {InviteStatusEnum}
+     * @memberof InviteMember
+     */
+    'invitation_status': InviteStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof InviteMember
+     */
+    'inviter': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InviteMember
+     */
+    'logo_url'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface InviteMemberAllOf
+ */
+export interface InviteMemberAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof InviteMemberAllOf
+     */
+    'email': string;
+    /**
+     * 
+     * @type {InviteMemberRoleEnum}
+     * @memberof InviteMemberAllOf
+     */
+    'role': InviteMemberRoleEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof InviteMemberAllOf
+     */
+    'invitation_link': string;
+    /**
+     * 
+     * @type {InviteStatusEnum}
+     * @memberof InviteMemberAllOf
+     */
+    'invitation_status': InviteStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof InviteMemberAllOf
+     */
+    'inviter': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InviteMemberAllOf
+     */
+    'logo_url'?: string;
 }
 /**
  * 
@@ -5492,119 +5504,15 @@ export interface InviteMemberRequest {
 /**
  * 
  * @export
- * @interface InviteMemberResponse
- */
-export interface InviteMemberResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof InviteMemberResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InviteMemberResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InviteMemberResponse
-     */
-    'updated_at'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InviteMemberResponse
-     */
-    'email': string;
-    /**
-     * 
-     * @type {InviteMemberRoleEnum}
-     * @memberof InviteMemberResponse
-     */
-    'role': InviteMemberRoleEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof InviteMemberResponse
-     */
-    'invitation_link': string;
-    /**
-     * 
-     * @type {InviteStatusEnum}
-     * @memberof InviteMemberResponse
-     */
-    'invitation_status': InviteStatusEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof InviteMemberResponse
-     */
-    'inviter': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InviteMemberResponse
-     */
-    'logo_url'?: string;
-}
-/**
- * 
- * @export
- * @interface InviteMemberResponseAllOf
- */
-export interface InviteMemberResponseAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof InviteMemberResponseAllOf
-     */
-    'email': string;
-    /**
-     * 
-     * @type {InviteMemberRoleEnum}
-     * @memberof InviteMemberResponseAllOf
-     */
-    'role': InviteMemberRoleEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof InviteMemberResponseAllOf
-     */
-    'invitation_link': string;
-    /**
-     * 
-     * @type {InviteStatusEnum}
-     * @memberof InviteMemberResponseAllOf
-     */
-    'invitation_status': InviteStatusEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof InviteMemberResponseAllOf
-     */
-    'inviter': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InviteMemberResponseAllOf
-     */
-    'logo_url'?: string;
-}
-/**
- * 
- * @export
  * @interface InviteMemberResponseList
  */
 export interface InviteMemberResponseList {
     /**
      * 
-     * @type {Array<InviteMemberResponse>}
+     * @type {Array<InviteMember>}
      * @memberof InviteMemberResponseList
      */
-    'results'?: Array<InviteMemberResponse>;
+    'results'?: Array<InviteMember>;
 }
 /**
  * 
@@ -5633,68 +5541,68 @@ export enum InviteStatusEnum {
 /**
  * 
  * @export
- * @interface InvoiceResponse
+ * @interface Invoice
  */
-export interface InvoiceResponse {
+export interface Invoice {
     /**
      * 
      * @type {number}
-     * @memberof InvoiceResponse
+     * @memberof Invoice
      */
     'total_in_cents': number;
     /**
      * 
      * @type {number}
-     * @memberof InvoiceResponse
+     * @memberof Invoice
      */
     'total': number;
     /**
      * 
      * @type {string}
-     * @memberof InvoiceResponse
+     * @memberof Invoice
      */
     'currency_code': string;
     /**
      * 
      * @type {string}
-     * @memberof InvoiceResponse
+     * @memberof Invoice
      */
     'id': string;
     /**
      * 
      * @type {string}
-     * @memberof InvoiceResponse
+     * @memberof Invoice
      */
     'created_at': string;
     /**
      * 
      * @type {InvoiceStatusEnum}
-     * @memberof InvoiceResponse
+     * @memberof Invoice
      */
     'status': InvoiceStatusEnum;
 }
 /**
  * 
  * @export
- * @interface InvoiceResponseAllOf
+ * @interface InvoiceAllOf
  */
-export interface InvoiceResponseAllOf {
+export interface InvoiceAllOf {
     /**
      * 
      * @type {string}
-     * @memberof InvoiceResponseAllOf
+     * @memberof InvoiceAllOf
      */
     'id': string;
     /**
      * 
      * @type {string}
-     * @memberof InvoiceResponseAllOf
+     * @memberof InvoiceAllOf
      */
     'created_at': string;
     /**
      * 
      * @type {InvoiceStatusEnum}
-     * @memberof InvoiceResponseAllOf
+     * @memberof InvoiceAllOf
      */
     'status': InvoiceStatusEnum;
 }
@@ -5706,10 +5614,10 @@ export interface InvoiceResponseAllOf {
 export interface InvoiceResponseList {
     /**
      * 
-     * @type {Array<InvoiceResponse>}
+     * @type {Array<Invoice>}
      * @memberof InvoiceResponseList
      */
-    'results'?: Array<InvoiceResponse>;
+    'results'?: Array<Invoice>;
 }
 /**
  * 
@@ -5743,13 +5651,13 @@ export interface Key {
 /**
  * 
  * @export
- * @interface LinkResponse
+ * @interface Link
  */
-export interface LinkResponse {
+export interface Link {
     /**
      * 
      * @type {string}
-     * @memberof LinkResponse
+     * @memberof Link
      */
     'url'?: string;
 }
@@ -5761,10 +5669,35 @@ export interface LinkResponse {
 export interface LinkResponseList {
     /**
      * 
-     * @type {Array<LinkResponse>}
+     * @type {Array<Link>}
      * @memberof LinkResponseList
      */
-    'results'?: Array<LinkResponse>;
+    'results'?: Array<Link>;
+}
+/**
+ * 
+ * @export
+ * @interface Log
+ */
+export interface Log {
+    /**
+     * 
+     * @type {string}
+     * @memberof Log
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Log
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Log
+     */
+    'message': string;
 }
 /**
  * 
@@ -5786,10 +5719,10 @@ export interface LogPaginatedResponseList {
     'page_size': number;
     /**
      * 
-     * @type {Array<LogResponse>}
+     * @type {Array<Log>}
      * @memberof LogPaginatedResponseList
      */
-    'results'?: Array<LogResponse>;
+    'results'?: Array<Log>;
 }
 /**
  * 
@@ -5799,35 +5732,10 @@ export interface LogPaginatedResponseList {
 export interface LogPaginatedResponseListAllOf {
     /**
      * 
-     * @type {Array<LogResponse>}
+     * @type {Array<Log>}
      * @memberof LogPaginatedResponseListAllOf
      */
-    'results'?: Array<LogResponse>;
-}
-/**
- * 
- * @export
- * @interface LogResponse
- */
-export interface LogResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof LogResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LogResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LogResponse
-     */
-    'message': string;
+    'results'?: Array<Log>;
 }
 /**
  * 
@@ -5837,10 +5745,66 @@ export interface LogResponse {
 export interface LogResponseList {
     /**
      * 
-     * @type {Array<LogResponse>}
+     * @type {Array<Log>}
      * @memberof LogResponseList
      */
-    'results'?: Array<LogResponse>;
+    'results'?: Array<Log>;
+}
+/**
+ * 
+ * @export
+ * @interface LogicalDatabase
+ */
+export interface LogicalDatabase {
+    /**
+     * 
+     * @type {string}
+     * @memberof LogicalDatabase
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LogicalDatabase
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LogicalDatabase
+     */
+    'updated_at'?: string;
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof LogicalDatabase
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LogicalDatabase
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof LogicalDatabase
+     */
+    'database'?: ReferenceObject;
+}
+/**
+ * 
+ * @export
+ * @interface LogicalDatabaseAllOf
+ */
+export interface LogicalDatabaseAllOf {
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof LogicalDatabaseAllOf
+     */
+    'database'?: ReferenceObject;
 }
 /**
  * 
@@ -5864,173 +5828,117 @@ export interface LogicalDatabaseRequest {
 /**
  * 
  * @export
- * @interface LogicalDatabaseResponse
- */
-export interface LogicalDatabaseResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof LogicalDatabaseResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LogicalDatabaseResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LogicalDatabaseResponse
-     */
-    'updated_at'?: string;
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof LogicalDatabaseResponse
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LogicalDatabaseResponse
-     */
-    'description'?: string;
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof LogicalDatabaseResponse
-     */
-    'database'?: ReferenceObject;
-}
-/**
- * 
- * @export
- * @interface LogicalDatabaseResponseAllOf
- */
-export interface LogicalDatabaseResponseAllOf {
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof LogicalDatabaseResponseAllOf
-     */
-    'database'?: ReferenceObject;
-}
-/**
- * 
- * @export
  * @interface LogicalDatabaseResponseList
  */
 export interface LogicalDatabaseResponseList {
     /**
      * 
-     * @type {Array<LogicalDatabaseResponse>}
+     * @type {Array<LogicalDatabase>}
      * @memberof LogicalDatabaseResponseList
      */
-    'results'?: Array<LogicalDatabaseResponse>;
+    'results'?: Array<LogicalDatabase>;
 }
 /**
  * 
  * @export
- * @interface MemberResponse
+ * @interface Member
  */
-export interface MemberResponse {
+export interface Member {
     /**
      * 
      * @type {string}
-     * @memberof MemberResponse
+     * @memberof Member
      */
     'id': string;
     /**
      * 
      * @type {string}
-     * @memberof MemberResponse
+     * @memberof Member
      */
     'created_at': string;
     /**
      * 
      * @type {string}
-     * @memberof MemberResponse
+     * @memberof Member
      */
     'updated_at'?: string;
     /**
      * 
      * @type {string}
-     * @memberof MemberResponse
+     * @memberof Member
      */
     'name'?: string;
     /**
      * 
      * @type {string}
-     * @memberof MemberResponse
+     * @memberof Member
      */
     'nickname'?: string;
     /**
      * 
      * @type {string}
-     * @memberof MemberResponse
+     * @memberof Member
      */
     'email': string;
     /**
      * 
      * @type {string}
-     * @memberof MemberResponse
+     * @memberof Member
      */
     'profile_picture_url'?: string;
     /**
      * last time the user was connected
      * @type {string}
-     * @memberof MemberResponse
+     * @memberof Member
      */
     'last_activity_at'?: string;
     /**
      * 
      * @type {InviteMemberRoleEnum}
-     * @memberof MemberResponse
+     * @memberof Member
      */
     'role'?: InviteMemberRoleEnum;
 }
 /**
  * 
  * @export
- * @interface MemberResponseAllOf
+ * @interface MemberAllOf
  */
-export interface MemberResponseAllOf {
+export interface MemberAllOf {
     /**
      * 
      * @type {string}
-     * @memberof MemberResponseAllOf
+     * @memberof MemberAllOf
      */
     'name'?: string;
     /**
      * 
      * @type {string}
-     * @memberof MemberResponseAllOf
+     * @memberof MemberAllOf
      */
     'nickname'?: string;
     /**
      * 
      * @type {string}
-     * @memberof MemberResponseAllOf
+     * @memberof MemberAllOf
      */
     'email': string;
     /**
      * 
      * @type {string}
-     * @memberof MemberResponseAllOf
+     * @memberof MemberAllOf
      */
     'profile_picture_url'?: string;
     /**
      * last time the user was connected
      * @type {string}
-     * @memberof MemberResponseAllOf
+     * @memberof MemberAllOf
      */
     'last_activity_at'?: string;
     /**
      * 
      * @type {InviteMemberRoleEnum}
-     * @memberof MemberResponseAllOf
+     * @memberof MemberAllOf
      */
     'role'?: InviteMemberRoleEnum;
 }
@@ -6042,39 +5950,58 @@ export interface MemberResponseAllOf {
 export interface MemberResponseList {
     /**
      * 
-     * @type {Array<MemberResponse>}
+     * @type {Array<Member>}
      * @memberof MemberResponseList
      */
-    'results'?: Array<MemberResponse>;
+    'results'?: Array<Member>;
 }
 /**
  * 
  * @export
- * @interface MetricCPUDatapointResponse
+ * @interface MetricCPU
  */
-export interface MetricCPUDatapointResponse {
+export interface MetricCPU {
     /**
      * 
      * @type {string}
-     * @memberof MetricCPUDatapointResponse
+     * @memberof MetricCPU
+     */
+    'instance_name': string;
+    /**
+     * 
+     * @type {Array<MetricCPUDatapoint>}
+     * @memberof MetricCPU
+     */
+    'data': Array<MetricCPUDatapoint>;
+}
+/**
+ * 
+ * @export
+ * @interface MetricCPUDatapoint
+ */
+export interface MetricCPUDatapoint {
+    /**
+     * 
+     * @type {string}
+     * @memberof MetricCPUDatapoint
      */
     'created_at': string;
     /**
      * 
      * @type {number}
-     * @memberof MetricCPUDatapointResponse
+     * @memberof MetricCPUDatapoint
      */
     'requested_in_number'?: number;
     /**
      * 
      * @type {number}
-     * @memberof MetricCPUDatapointResponse
+     * @memberof MetricCPUDatapoint
      */
     'consumed_in_number': number;
     /**
      * 
      * @type {number}
-     * @memberof MetricCPUDatapointResponse
+     * @memberof MetricCPUDatapoint
      */
     'consumed_in_percent': number;
 }
@@ -6086,29 +6013,10 @@ export interface MetricCPUDatapointResponse {
 export interface MetricCPUDatapointResponseList {
     /**
      * 
-     * @type {Array<MetricCPUDatapointResponse>}
+     * @type {Array<MetricCPUDatapoint>}
      * @memberof MetricCPUDatapointResponseList
      */
-    'results'?: Array<MetricCPUDatapointResponse>;
-}
-/**
- * 
- * @export
- * @interface MetricCPUResponse
- */
-export interface MetricCPUResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof MetricCPUResponse
-     */
-    'instance_name': string;
-    /**
-     * 
-     * @type {Array<MetricCPUDatapointResponse>}
-     * @memberof MetricCPUResponse
-     */
-    'data': Array<MetricCPUDatapointResponse>;
+    'results'?: Array<MetricCPUDatapoint>;
 }
 /**
  * 
@@ -6118,48 +6026,48 @@ export interface MetricCPUResponse {
 export interface MetricCPUResponseList {
     /**
      * 
-     * @type {Array<MetricCPUResponse>}
+     * @type {Array<MetricCPU>}
      * @memberof MetricCPUResponseList
      */
-    'results'?: Array<MetricCPUResponse>;
+    'results'?: Array<MetricCPU>;
 }
 /**
  * 
  * @export
- * @interface MetricGenericDatapointResponse
+ * @interface MetricGeneric
  */
-export interface MetricGenericDatapointResponse {
+export interface MetricGeneric {
     /**
      * 
      * @type {string}
-     * @memberof MetricGenericDatapointResponse
+     * @memberof MetricGeneric
+     */
+    'instance_name': string;
+    /**
+     * 
+     * @type {Array<MetricGenericDatapoint>}
+     * @memberof MetricGeneric
+     */
+    'data': Array<MetricGenericDatapoint>;
+}
+/**
+ * 
+ * @export
+ * @interface MetricGenericDatapoint
+ */
+export interface MetricGenericDatapoint {
+    /**
+     * 
+     * @type {string}
+     * @memberof MetricGenericDatapoint
      */
     'created_at': string;
     /**
      * 
      * @type {number}
-     * @memberof MetricGenericDatapointResponse
+     * @memberof MetricGenericDatapoint
      */
     'value': number;
-}
-/**
- * 
- * @export
- * @interface MetricGenericResponse
- */
-export interface MetricGenericResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof MetricGenericResponse
-     */
-    'instance_name': string;
-    /**
-     * 
-     * @type {Array<MetricGenericDatapointResponse>}
-     * @memberof MetricGenericResponse
-     */
-    'data': Array<MetricGenericDatapointResponse>;
 }
 /**
  * 
@@ -6169,39 +6077,58 @@ export interface MetricGenericResponse {
 export interface MetricGenericResponseList {
     /**
      * 
-     * @type {Array<MetricGenericResponse>}
+     * @type {Array<MetricGeneric>}
      * @memberof MetricGenericResponseList
      */
-    'results'?: Array<MetricGenericResponse>;
+    'results'?: Array<MetricGeneric>;
 }
 /**
  * 
  * @export
- * @interface MetricMemoryDatapointResponse
+ * @interface MetricMemory
  */
-export interface MetricMemoryDatapointResponse {
+export interface MetricMemory {
     /**
      * 
      * @type {string}
-     * @memberof MetricMemoryDatapointResponse
+     * @memberof MetricMemory
+     */
+    'instance_name': string;
+    /**
+     * 
+     * @type {Array<MetricMemoryDatapoint>}
+     * @memberof MetricMemory
+     */
+    'data': Array<MetricMemoryDatapoint>;
+}
+/**
+ * 
+ * @export
+ * @interface MetricMemoryDatapoint
+ */
+export interface MetricMemoryDatapoint {
+    /**
+     * 
+     * @type {string}
+     * @memberof MetricMemoryDatapoint
      */
     'created_at': string;
     /**
      * 
      * @type {number}
-     * @memberof MetricMemoryDatapointResponse
+     * @memberof MetricMemoryDatapoint
      */
     'requested_in_mb': number;
     /**
      * 
      * @type {number}
-     * @memberof MetricMemoryDatapointResponse
+     * @memberof MetricMemoryDatapoint
      */
     'consumed_in_mb': number;
     /**
      * 
      * @type {number}
-     * @memberof MetricMemoryDatapointResponse
+     * @memberof MetricMemoryDatapoint
      */
     'consumed_in_percent': number;
 }
@@ -6213,29 +6140,10 @@ export interface MetricMemoryDatapointResponse {
 export interface MetricMemoryDatapointResponseList {
     /**
      * 
-     * @type {Array<MetricMemoryDatapointResponse>}
+     * @type {Array<MetricMemoryDatapoint>}
      * @memberof MetricMemoryDatapointResponseList
      */
-    'results'?: Array<MetricMemoryDatapointResponse>;
-}
-/**
- * 
- * @export
- * @interface MetricMemoryResponse
- */
-export interface MetricMemoryResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof MetricMemoryResponse
-     */
-    'instance_name': string;
-    /**
-     * 
-     * @type {Array<MetricMemoryDatapointResponse>}
-     * @memberof MetricMemoryResponse
-     */
-    'data': Array<MetricMemoryDatapointResponse>;
+    'results'?: Array<MetricMemoryDatapoint>;
 }
 /**
  * 
@@ -6245,71 +6153,90 @@ export interface MetricMemoryResponse {
 export interface MetricMemoryResponseList {
     /**
      * 
-     * @type {Array<MetricMemoryResponse>}
+     * @type {Array<MetricMemory>}
      * @memberof MetricMemoryResponseList
      */
-    'results'?: Array<MetricMemoryResponse>;
+    'results'?: Array<MetricMemory>;
 }
 /**
  * 
  * @export
- * @interface MetricRestartResponse
+ * @interface MetricRestart
  */
-export interface MetricRestartResponse {
+export interface MetricRestart {
     /**
      * 
-     * @type {Array<MetricRestartResponseResults>}
-     * @memberof MetricRestartResponse
+     * @type {Array<MetricRestartResults>}
+     * @memberof MetricRestart
      */
-    'results'?: Array<MetricRestartResponseResults>;
+    'results'?: Array<MetricRestartResults>;
 }
 /**
  * 
  * @export
- * @interface MetricRestartResponseResults
+ * @interface MetricRestartResults
  */
-export interface MetricRestartResponseResults {
+export interface MetricRestartResults {
     /**
      * 
      * @type {string}
-     * @memberof MetricRestartResponseResults
+     * @memberof MetricRestartResults
      */
     'datetime': string;
     /**
      * 
      * @type {string}
-     * @memberof MetricRestartResponseResults
+     * @memberof MetricRestartResults
      */
     'message': string;
 }
 /**
  * 
  * @export
- * @interface MetricStorageDatapointResponse
+ * @interface MetricStorage
  */
-export interface MetricStorageDatapointResponse {
+export interface MetricStorage {
     /**
      * 
      * @type {string}
-     * @memberof MetricStorageDatapointResponse
+     * @memberof MetricStorage
+     */
+    'storage_id'?: string;
+    /**
+     * 
+     * @type {Array<MetricStorageDatapoint>}
+     * @memberof MetricStorage
+     */
+    'data': Array<MetricStorageDatapoint>;
+}
+/**
+ * 
+ * @export
+ * @interface MetricStorageDatapoint
+ */
+export interface MetricStorageDatapoint {
+    /**
+     * 
+     * @type {string}
+     * @memberof MetricStorageDatapoint
      */
     'created_at': string;
     /**
      * 
      * @type {number}
-     * @memberof MetricStorageDatapointResponse
+     * @memberof MetricStorageDatapoint
      */
     'requested_in_gb'?: number;
     /**
      * 
      * @type {number}
-     * @memberof MetricStorageDatapointResponse
+     * @memberof MetricStorageDatapoint
      */
     'consumed_in_gb'?: number;
     /**
      * 
      * @type {number}
-     * @memberof MetricStorageDatapointResponse
+     * @memberof MetricStorageDatapoint
      */
     'consumed_in_percent': number;
 }
@@ -6321,29 +6248,10 @@ export interface MetricStorageDatapointResponse {
 export interface MetricStorageDatapointResponseList {
     /**
      * 
-     * @type {Array<MetricStorageDatapointResponse>}
+     * @type {Array<MetricStorageDatapoint>}
      * @memberof MetricStorageDatapointResponseList
      */
-    'results'?: Array<MetricStorageDatapointResponse>;
-}
-/**
- * 
- * @export
- * @interface MetricStorageResponse
- */
-export interface MetricStorageResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof MetricStorageResponse
-     */
-    'storage_id'?: string;
-    /**
-     * 
-     * @type {Array<MetricStorageDatapointResponse>}
-     * @memberof MetricStorageResponse
-     */
-    'data': Array<MetricStorageDatapointResponse>;
+    'results'?: Array<MetricStorageDatapoint>;
 }
 /**
  * 
@@ -6353,10 +6261,10 @@ export interface MetricStorageResponse {
 export interface MetricStorageResponseList {
     /**
      * 
-     * @type {Array<MetricStorageResponse>}
+     * @type {Array<MetricStorage>}
      * @memberof MetricStorageResponseList
      */
-    'results'?: Array<MetricStorageResponse>;
+    'results'?: Array<MetricStorage>;
 }
 /**
  * 
@@ -6370,6 +6278,240 @@ export interface Name {
      * @memberof Name
      */
     'name': string;
+}
+/**
+ * 
+ * @export
+ * @interface Organization
+ */
+export interface Organization {
+    /**
+     * 
+     * @type {string}
+     * @memberof Organization
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Organization
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Organization
+     */
+    'updated_at'?: string;
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof Organization
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Organization
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {PlanEnum}
+     * @memberof Organization
+     */
+    'plan': PlanEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof Organization
+     */
+    'website_url'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Organization
+     */
+    'repository'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Organization
+     */
+    'logo_url'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Organization
+     */
+    'icon_url'?: string | null;
+    /**
+     * uuid of the user owning the organization
+     * @type {string}
+     * @memberof Organization
+     */
+    'owner'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationAllOf
+ */
+export interface OrganizationAllOf {
+    /**
+     * uuid of the user owning the organization
+     * @type {string}
+     * @memberof OrganizationAllOf
+     */
+    'owner'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationApiToken
+ */
+export interface OrganizationApiToken {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiToken
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiToken
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiToken
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiToken
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiToken
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {OrganizationApiTokenScope}
+     * @memberof OrganizationApiToken
+     */
+    'scope'?: OrganizationApiTokenScope;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationApiTokenAllOf
+ */
+export interface OrganizationApiTokenAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenAllOf
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenAllOf
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {OrganizationApiTokenScope}
+     * @memberof OrganizationApiTokenAllOf
+     */
+    'scope'?: OrganizationApiTokenScope;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationApiTokenCreate
+ */
+export interface OrganizationApiTokenCreate {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenCreate
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenCreate
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenCreate
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenCreate
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenCreate
+     */
+    'description'?: string;
+    /**
+     * the generated token to send in \'Authorization\' header prefixed by \'Token \'
+     * @type {string}
+     * @memberof OrganizationApiTokenCreate
+     */
+    'token'?: string;
+    /**
+     * 
+     * @type {OrganizationApiTokenScope}
+     * @memberof OrganizationApiTokenCreate
+     */
+    'scope'?: OrganizationApiTokenScope;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationApiTokenCreateAllOf
+ */
+export interface OrganizationApiTokenCreateAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenCreateAllOf
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenCreateAllOf
+     */
+    'description'?: string;
+    /**
+     * the generated token to send in \'Authorization\' header prefixed by \'Token \'
+     * @type {string}
+     * @memberof OrganizationApiTokenCreateAllOf
+     */
+    'token'?: string;
+    /**
+     * 
+     * @type {OrganizationApiTokenScope}
+     * @memberof OrganizationApiTokenCreateAllOf
+     */
+    'scope'?: OrganizationApiTokenScope;
 }
 /**
  * 
@@ -6399,163 +6541,15 @@ export interface OrganizationApiTokenCreateRequest {
 /**
  * 
  * @export
- * @interface OrganizationApiTokenCreateResponse
- */
-export interface OrganizationApiTokenCreateResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenCreateResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenCreateResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenCreateResponse
-     */
-    'updated_at'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenCreateResponse
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenCreateResponse
-     */
-    'description'?: string;
-    /**
-     * the generated token to send in \'Authorization\' header prefixed by \'Token \'
-     * @type {string}
-     * @memberof OrganizationApiTokenCreateResponse
-     */
-    'token'?: string;
-    /**
-     * 
-     * @type {OrganizationApiTokenScope}
-     * @memberof OrganizationApiTokenCreateResponse
-     */
-    'scope'?: OrganizationApiTokenScope;
-}
-/**
- * 
- * @export
- * @interface OrganizationApiTokenCreateResponseAllOf
- */
-export interface OrganizationApiTokenCreateResponseAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenCreateResponseAllOf
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenCreateResponseAllOf
-     */
-    'description'?: string;
-    /**
-     * the generated token to send in \'Authorization\' header prefixed by \'Token \'
-     * @type {string}
-     * @memberof OrganizationApiTokenCreateResponseAllOf
-     */
-    'token'?: string;
-    /**
-     * 
-     * @type {OrganizationApiTokenScope}
-     * @memberof OrganizationApiTokenCreateResponseAllOf
-     */
-    'scope'?: OrganizationApiTokenScope;
-}
-/**
- * 
- * @export
- * @interface OrganizationApiTokenResponse
- */
-export interface OrganizationApiTokenResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenResponse
-     */
-    'updated_at'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenResponse
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenResponse
-     */
-    'description'?: string;
-    /**
-     * 
-     * @type {OrganizationApiTokenScope}
-     * @memberof OrganizationApiTokenResponse
-     */
-    'scope'?: OrganizationApiTokenScope;
-}
-/**
- * 
- * @export
- * @interface OrganizationApiTokenResponseAllOf
- */
-export interface OrganizationApiTokenResponseAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenResponseAllOf
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenResponseAllOf
-     */
-    'description'?: string;
-    /**
-     * 
-     * @type {OrganizationApiTokenScope}
-     * @memberof OrganizationApiTokenResponseAllOf
-     */
-    'scope'?: OrganizationApiTokenScope;
-}
-/**
- * 
- * @export
  * @interface OrganizationApiTokenResponseList
  */
 export interface OrganizationApiTokenResponseList {
     /**
      * 
-     * @type {Array<OrganizationApiTokenResponse>}
+     * @type {Array<OrganizationApiToken>}
      * @memberof OrganizationApiTokenResponseList
      */
-    'results'?: Array<OrganizationApiTokenResponse>;
+    'results'?: Array<OrganizationApiToken>;
 }
 /**
  * 
@@ -6583,45 +6577,64 @@ export interface OrganizationCreditCodeRequest {
 /**
  * 
  * @export
- * @interface OrganizationCurrentCostResponse
+ * @interface OrganizationCurrentCost
  */
-export interface OrganizationCurrentCostResponse {
+export interface OrganizationCurrentCost {
     /**
      * 
      * @type {PlanEnum}
-     * @memberof OrganizationCurrentCostResponse
+     * @memberof OrganizationCurrentCost
      */
     'plan'?: PlanEnum;
     /**
      * number of days remaining before the end of the trial period
      * @type {number}
-     * @memberof OrganizationCurrentCostResponse
+     * @memberof OrganizationCurrentCost
      */
     'remaining_trial_day'?: number;
     /**
      * 
      * @type {RemainingCredits}
-     * @memberof OrganizationCurrentCostResponse
+     * @memberof OrganizationCurrentCost
      */
     'remaining_credits'?: RemainingCredits;
     /**
      * 
      * @type {Cost}
-     * @memberof OrganizationCurrentCostResponse
+     * @memberof OrganizationCurrentCost
      */
     'cost'?: Cost;
     /**
      * 
-     * @type {PaidUsageResponse}
-     * @memberof OrganizationCurrentCostResponse
+     * @type {PaidUsage}
+     * @memberof OrganizationCurrentCost
      */
-    'paid_usage'?: PaidUsageResponse;
+    'paid_usage'?: PaidUsage;
     /**
      * 
-     * @type {CommunityUsageResponse}
-     * @memberof OrganizationCurrentCostResponse
+     * @type {CommunityUsage}
+     * @memberof OrganizationCurrentCost
      */
-    'community_usage'?: CommunityUsageResponse;
+    'community_usage'?: CommunityUsage;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationCurrentCostAllOf
+ */
+export interface OrganizationCurrentCostAllOf {
+    /**
+     * 
+     * @type {PaidUsage}
+     * @memberof OrganizationCurrentCostAllOf
+     */
+    'paid_usage'?: PaidUsage;
+    /**
+     * 
+     * @type {CommunityUsage}
+     * @memberof OrganizationCurrentCostAllOf
+     */
+    'community_usage'?: CommunityUsage;
 }
 /**
  * 
@@ -6718,101 +6731,15 @@ export interface OrganizationRequest {
 /**
  * 
  * @export
- * @interface OrganizationResponse
- */
-export interface OrganizationResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationResponse
-     */
-    'updated_at'?: string;
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof OrganizationResponse
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationResponse
-     */
-    'description'?: string;
-    /**
-     * 
-     * @type {PlanEnum}
-     * @memberof OrganizationResponse
-     */
-    'plan': PlanEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationResponse
-     */
-    'website_url'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationResponse
-     */
-    'repository'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationResponse
-     */
-    'logo_url'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationResponse
-     */
-    'icon_url'?: string | null;
-    /**
-     * uuid of the user owning the organization
-     * @type {string}
-     * @memberof OrganizationResponse
-     */
-    'owner'?: string;
-}
-/**
- * 
- * @export
- * @interface OrganizationResponseAllOf
- */
-export interface OrganizationResponseAllOf {
-    /**
-     * uuid of the user owning the organization
-     * @type {string}
-     * @memberof OrganizationResponseAllOf
-     */
-    'owner'?: string;
-}
-/**
- * 
- * @export
  * @interface OrganizationResponseList
  */
 export interface OrganizationResponseList {
     /**
      * 
-     * @type {Array<OrganizationResponse>}
+     * @type {Array<Organization>}
      * @memberof OrganizationResponseList
      */
-    'results'?: Array<OrganizationResponse>;
+    'results'?: Array<Organization>;
 }
 /**
  * 
@@ -6842,19 +6769,19 @@ export interface OverriddenSecret {
 /**
  * 
  * @export
- * @interface PaginationDataResponse
+ * @interface PaginationData
  */
-export interface PaginationDataResponse {
+export interface PaginationData {
     /**
      * 
      * @type {number}
-     * @memberof PaginationDataResponse
+     * @memberof PaginationData
      */
     'page': number;
     /**
      * 
      * @type {number}
-     * @memberof PaginationDataResponse
+     * @memberof PaginationData
      */
     'page_size': number;
 }
@@ -6866,57 +6793,44 @@ export interface PaginationDataResponse {
 export interface PaidUsage {
     /**
      * 
-     * @type {PaidUsageResponse}
-     * @memberof PaidUsage
-     */
-    'paid_usage'?: PaidUsageResponse;
-}
-/**
- * 
- * @export
- * @interface PaidUsageResponse
- */
-export interface PaidUsageResponse {
-    /**
-     * 
      * @type {number}
-     * @memberof PaidUsageResponse
+     * @memberof PaidUsage
      */
     'max_deployments_per_month'?: number;
     /**
      * 
      * @type {number}
-     * @memberof PaidUsageResponse
+     * @memberof PaidUsage
      */
     'consumed_deployments'?: number;
     /**
      * 
      * @type {number}
-     * @memberof PaidUsageResponse
+     * @memberof PaidUsage
      */
     'monthly_plan_cost'?: number;
     /**
      * 
      * @type {number}
-     * @memberof PaidUsageResponse
+     * @memberof PaidUsage
      */
     'monthly_plan_cost_in_cents'?: number;
     /**
      * 
      * @type {number}
-     * @memberof PaidUsageResponse
+     * @memberof PaidUsage
      */
     'remaining_deployments'?: number;
     /**
      * 
      * @type {boolean}
-     * @memberof PaidUsageResponse
+     * @memberof PaidUsage
      */
     'deployments_exceeded'?: boolean;
     /**
      * 
      * @type {string}
-     * @memberof PaidUsageResponse
+     * @memberof PaidUsage
      */
     'renewal_at'?: string;
 }
@@ -6949,52 +6863,120 @@ export enum PortProtocolEnum {
 /**
  * 
  * @export
- * @interface ProjectCurrentCostResponse
+ * @interface Project
  */
-export interface ProjectCurrentCostResponse {
+export interface Project {
     /**
      * 
      * @type {string}
-     * @memberof ProjectCurrentCostResponse
+     * @memberof Project
      */
     'id': string;
     /**
      * 
      * @type {string}
-     * @memberof ProjectCurrentCostResponse
+     * @memberof Project
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Project
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Project
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Project
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof Project
+     */
+    'organization'?: ReferenceObject;
+}
+/**
+ * 
+ * @export
+ * @interface ProjectAllOf
+ */
+export interface ProjectAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectAllOf
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectAllOf
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof ProjectAllOf
+     */
+    'organization'?: ReferenceObject;
+}
+/**
+ * 
+ * @export
+ * @interface ProjectCurrentCost
+ */
+export interface ProjectCurrentCost {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectCurrentCost
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectCurrentCost
      */
     'name': string;
     /**
      * 
      * @type {number}
-     * @memberof ProjectCurrentCostResponse
+     * @memberof ProjectCurrentCost
      */
     'consumed_time_in_seconds': number;
     /**
      * 
-     * @type {CostResponse}
-     * @memberof ProjectCurrentCostResponse
+     * @type {Cost}
+     * @memberof ProjectCurrentCost
      */
-    'cost': CostResponse;
+    'cost': Cost;
     /**
      * 
-     * @type {Array<GenericObjectCurrentCostResponse>}
-     * @memberof ProjectCurrentCostResponse
+     * @type {Array<GenericObjectCurrentCost>}
+     * @memberof ProjectCurrentCost
      */
-    'environments'?: Array<GenericObjectCurrentCostResponse>;
+    'environments'?: Array<GenericObjectCurrentCost>;
 }
 /**
  * 
  * @export
- * @interface ProjectCurrentCostResponseAllOf
+ * @interface ProjectCurrentCostAllOf
  */
-export interface ProjectCurrentCostResponseAllOf {
+export interface ProjectCurrentCostAllOf {
     /**
      * 
-     * @type {Array<GenericObjectCurrentCostResponse>}
-     * @memberof ProjectCurrentCostResponseAllOf
+     * @type {Array<GenericObjectCurrentCost>}
+     * @memberof ProjectCurrentCostAllOf
      */
-    'environments'?: Array<GenericObjectCurrentCostResponse>;
+    'environments'?: Array<GenericObjectCurrentCost>;
 }
 /**
  * 
@@ -7004,10 +6986,126 @@ export interface ProjectCurrentCostResponseAllOf {
 export interface ProjectCurrentCostResponseList {
     /**
      * 
-     * @type {Array<ProjectCurrentCostResponse>}
+     * @type {Array<ProjectCurrentCost>}
      * @memberof ProjectCurrentCostResponseList
      */
-    'projects'?: Array<ProjectCurrentCostResponse>;
+    'projects'?: Array<ProjectCurrentCost>;
+}
+/**
+ * 
+ * @export
+ * @interface ProjectDeploymentRule
+ */
+export interface ProjectDeploymentRule {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectDeploymentRule
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectDeploymentRule
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectDeploymentRule
+     */
+    'updated_at'?: string;
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof ProjectDeploymentRule
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectDeploymentRule
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {EnvironmentModeEnum}
+     * @memberof ProjectDeploymentRule
+     */
+    'mode': EnvironmentModeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectDeploymentRule
+     */
+    'cluster_id': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProjectDeploymentRule
+     */
+    'auto_deploy'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProjectDeploymentRule
+     */
+    'auto_stop'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProjectDeploymentRule
+     */
+    'auto_delete'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectDeploymentRule
+     */
+    'timezone': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectDeploymentRule
+     */
+    'start_time': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectDeploymentRule
+     */
+    'stop_time': string;
+    /**
+     * 
+     * @type {Array<WeekdayEnum>}
+     * @memberof ProjectDeploymentRule
+     */
+    'weekdays': Array<WeekdayEnum>;
+    /**
+     * wildcard pattern composed of \'?\' and/or \'*\' used to target new created environments
+     * @type {string}
+     * @memberof ProjectDeploymentRule
+     */
+    'wildcard': string;
+    /**
+     * used to select the first deployment rule to match new created environments
+     * @type {number}
+     * @memberof ProjectDeploymentRule
+     */
+    'priority_index'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface ProjectDeploymentRuleAllOf
+ */
+export interface ProjectDeploymentRuleAllOf {
+    /**
+     * used to select the first deployment rule to match new created environments
+     * @type {number}
+     * @memberof ProjectDeploymentRuleAllOf
+     */
+    'priority_index'?: number;
 }
 /**
  * 
@@ -7091,131 +7189,15 @@ export interface ProjectDeploymentRuleRequest {
 /**
  * 
  * @export
- * @interface ProjectDeploymentRuleResponse
- */
-export interface ProjectDeploymentRuleResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectDeploymentRuleResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectDeploymentRuleResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectDeploymentRuleResponse
-     */
-    'updated_at'?: string;
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof ProjectDeploymentRuleResponse
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectDeploymentRuleResponse
-     */
-    'description'?: string | null;
-    /**
-     * 
-     * @type {EnvironmentModeEnum}
-     * @memberof ProjectDeploymentRuleResponse
-     */
-    'mode': EnvironmentModeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectDeploymentRuleResponse
-     */
-    'cluster_id': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProjectDeploymentRuleResponse
-     */
-    'auto_deploy'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProjectDeploymentRuleResponse
-     */
-    'auto_stop'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProjectDeploymentRuleResponse
-     */
-    'auto_delete'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectDeploymentRuleResponse
-     */
-    'timezone': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectDeploymentRuleResponse
-     */
-    'start_time': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectDeploymentRuleResponse
-     */
-    'stop_time': string;
-    /**
-     * 
-     * @type {Array<WeekdayEnum>}
-     * @memberof ProjectDeploymentRuleResponse
-     */
-    'weekdays': Array<WeekdayEnum>;
-    /**
-     * wildcard pattern composed of \'?\' and/or \'*\' used to target new created environments
-     * @type {string}
-     * @memberof ProjectDeploymentRuleResponse
-     */
-    'wildcard': string;
-    /**
-     * used to select the first deployment rule to match new created environments
-     * @type {number}
-     * @memberof ProjectDeploymentRuleResponse
-     */
-    'priority_index'?: number;
-}
-/**
- * 
- * @export
- * @interface ProjectDeploymentRuleResponseAllOf
- */
-export interface ProjectDeploymentRuleResponseAllOf {
-    /**
-     * used to select the first deployment rule to match new created environments
-     * @type {number}
-     * @memberof ProjectDeploymentRuleResponseAllOf
-     */
-    'priority_index'?: number;
-}
-/**
- * 
- * @export
  * @interface ProjectDeploymentRuleResponseList
  */
 export interface ProjectDeploymentRuleResponseList {
     /**
      * 
-     * @type {Array<ProjectDeploymentRuleResponse>}
+     * @type {Array<ProjectDeploymentRule>}
      * @memberof ProjectDeploymentRuleResponseList
      */
-    'results'?: Array<ProjectDeploymentRuleResponse>;
+    'results'?: Array<ProjectDeploymentRule>;
 }
 /**
  * 
@@ -7239,106 +7221,38 @@ export interface ProjectRequest {
 /**
  * 
  * @export
- * @interface ProjectResponse
- */
-export interface ProjectResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectResponse
-     */
-    'updated_at'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectResponse
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectResponse
-     */
-    'description'?: string;
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof ProjectResponse
-     */
-    'organization'?: ReferenceObject;
-}
-/**
- * 
- * @export
- * @interface ProjectResponseAllOf
- */
-export interface ProjectResponseAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectResponseAllOf
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectResponseAllOf
-     */
-    'description'?: string;
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof ProjectResponseAllOf
-     */
-    'organization'?: ReferenceObject;
-}
-/**
- * 
- * @export
  * @interface ProjectResponseList
  */
 export interface ProjectResponseList {
     /**
      * 
-     * @type {Array<ProjectResponse>}
+     * @type {Array<Project>}
      * @memberof ProjectResponseList
      */
-    'results'?: Array<ProjectResponse>;
+    'results'?: Array<Project>;
 }
 /**
  * 
  * @export
- * @interface ProjectStatsResponse
+ * @interface ProjectStats
  */
-export interface ProjectStatsResponse {
+export interface ProjectStats {
     /**
      * 
      * @type {string}
-     * @memberof ProjectStatsResponse
+     * @memberof ProjectStats
      */
     'id': string;
     /**
      * 
      * @type {number}
-     * @memberof ProjectStatsResponse
+     * @memberof ProjectStats
      */
     'service_total_number'?: number;
     /**
      * 
      * @type {number}
-     * @memberof ProjectStatsResponse
+     * @memberof ProjectStats
      */
     'environment_total_number'?: number;
 }
@@ -7350,10 +7264,10 @@ export interface ProjectStatsResponse {
 export interface ProjectStatsResponseList {
     /**
      * 
-     * @type {Array<ProjectStatsResponse>}
+     * @type {Array<ProjectStats>}
      * @memberof ProjectStatsResponseList
      */
-    'results'?: Array<ProjectStatsResponse>;
+    'results'?: Array<ProjectStats>;
 }
 /**
  * 
@@ -7371,31 +7285,31 @@ export interface ReferenceObject {
 /**
  * 
  * @export
- * @interface ReferenceObjectStatusResponse
+ * @interface ReferenceObjectStatus
  */
-export interface ReferenceObjectStatusResponse {
+export interface ReferenceObjectStatus {
     /**
      * 
      * @type {string}
-     * @memberof ReferenceObjectStatusResponse
+     * @memberof ReferenceObjectStatus
      */
     'id': string;
     /**
      * 
      * @type {GlobalDeploymentStatus}
-     * @memberof ReferenceObjectStatusResponse
+     * @memberof ReferenceObjectStatus
      */
     'state': GlobalDeploymentStatus;
     /**
      * message related to the state
      * @type {string}
-     * @memberof ReferenceObjectStatusResponse
+     * @memberof ReferenceObjectStatus
      */
     'message'?: string | null;
     /**
      * 
      * @type {ServiceDeploymentStatusEnum}
-     * @memberof ReferenceObjectStatusResponse
+     * @memberof ReferenceObjectStatus
      */
     'service_deployment_status'?: ServiceDeploymentStatusEnum | null;
 }
@@ -7407,27 +7321,27 @@ export interface ReferenceObjectStatusResponse {
 export interface ReferenceObjectStatusResponseList {
     /**
      * 
-     * @type {Array<ReferenceObjectStatusResponse>}
+     * @type {Array<ReferenceObjectStatus>}
      * @memberof ReferenceObjectStatusResponseList
      */
-    'results'?: Array<ReferenceObjectStatusResponse>;
+    'results'?: Array<ReferenceObjectStatus>;
 }
 /**
  * 
  * @export
- * @interface ReferralResponse
+ * @interface Referral
  */
-export interface ReferralResponse {
+export interface Referral {
     /**
      * 
      * @type {number}
-     * @memberof ReferralResponse
+     * @memberof Referral
      */
     'total_invited'?: number;
     /**
      * 
      * @type {string}
-     * @memberof ReferralResponse
+     * @memberof Referral
      */
     'invitation_link'?: string;
 }
@@ -7459,19 +7373,19 @@ export interface RemainingCredits {
 /**
  * 
  * @export
- * @interface RewardClaimResponse
+ * @interface RewardClaim
  */
-export interface RewardClaimResponse {
+export interface RewardClaim {
     /**
      * 
      * @type {string}
-     * @memberof RewardClaimResponse
+     * @memberof RewardClaim
      */
-    'type'?: RewardClaimResponseTypeEnum;
+    'type'?: RewardClaimTypeEnum;
     /**
      * 
      * @type {string}
-     * @memberof RewardClaimResponse
+     * @memberof RewardClaim
      */
     'code'?: string;
 }
@@ -7480,7 +7394,7 @@ export interface RewardClaimResponse {
     * @export
     * @enum {string}
     */
-export enum RewardClaimResponseTypeEnum {
+export enum RewardClaimTypeEnum {
     INVITATION = 'INVITATION'
 }
 
@@ -7514,6 +7428,86 @@ export interface ScalewayCredentialsRequest {
      * @memberof ScalewayCredentialsRequest
      */
     'scaleway_project_id'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface Secret
+ */
+export interface Secret {
+    /**
+     * 
+     * @type {string}
+     * @memberof Secret
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Secret
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Secret
+     */
+    'updated_at'?: string;
+    /**
+     * key is case sensitive
+     * @type {string}
+     * @memberof Secret
+     */
+    'key'?: string;
+    /**
+     * 
+     * @type {OverriddenSecret}
+     * @memberof Secret
+     */
+    'overridden_secret'?: OverriddenSecret;
+    /**
+     * 
+     * @type {AliasedSecret}
+     * @memberof Secret
+     */
+    'aliased_secret'?: AliasedSecret;
+    /**
+     * 
+     * @type {EnvironmentVariableScopeEnum}
+     * @memberof Secret
+     */
+    'scope': EnvironmentVariableScopeEnum;
+}
+/**
+ * 
+ * @export
+ * @interface SecretAllOf
+ */
+export interface SecretAllOf {
+    /**
+     * key is case sensitive
+     * @type {string}
+     * @memberof SecretAllOf
+     */
+    'key'?: string;
+    /**
+     * 
+     * @type {OverriddenSecret}
+     * @memberof SecretAllOf
+     */
+    'overridden_secret'?: OverriddenSecret;
+    /**
+     * 
+     * @type {AliasedSecret}
+     * @memberof SecretAllOf
+     */
+    'aliased_secret'?: AliasedSecret;
+    /**
+     * 
+     * @type {EnvironmentVariableScopeEnum}
+     * @memberof SecretAllOf
+     */
+    'scope': EnvironmentVariableScopeEnum;
 }
 /**
  * 
@@ -7556,95 +7550,149 @@ export interface SecretRequest {
 /**
  * 
  * @export
- * @interface SecretResponse
- */
-export interface SecretResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof SecretResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SecretResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SecretResponse
-     */
-    'updated_at'?: string;
-    /**
-     * key is case sensitive
-     * @type {string}
-     * @memberof SecretResponse
-     */
-    'key'?: string;
-    /**
-     * 
-     * @type {OverriddenSecret}
-     * @memberof SecretResponse
-     */
-    'overridden_secret'?: OverriddenSecret;
-    /**
-     * 
-     * @type {AliasedSecret}
-     * @memberof SecretResponse
-     */
-    'aliased_secret'?: AliasedSecret;
-    /**
-     * 
-     * @type {EnvironmentVariableScopeEnum}
-     * @memberof SecretResponse
-     */
-    'scope': EnvironmentVariableScopeEnum;
-}
-/**
- * 
- * @export
- * @interface SecretResponseAllOf
- */
-export interface SecretResponseAllOf {
-    /**
-     * key is case sensitive
-     * @type {string}
-     * @memberof SecretResponseAllOf
-     */
-    'key'?: string;
-    /**
-     * 
-     * @type {OverriddenSecret}
-     * @memberof SecretResponseAllOf
-     */
-    'overridden_secret'?: OverriddenSecret;
-    /**
-     * 
-     * @type {AliasedSecret}
-     * @memberof SecretResponseAllOf
-     */
-    'aliased_secret'?: AliasedSecret;
-    /**
-     * 
-     * @type {EnvironmentVariableScopeEnum}
-     * @memberof SecretResponseAllOf
-     */
-    'scope': EnvironmentVariableScopeEnum;
-}
-/**
- * 
- * @export
  * @interface SecretResponseList
  */
 export interface SecretResponseList {
     /**
      * 
-     * @type {Array<SecretResponse>}
+     * @type {Array<Secret>}
      * @memberof SecretResponseList
      */
-    'results'?: Array<SecretResponse>;
+    'results'?: Array<Secret>;
+}
+/**
+ * 
+ * @export
+ * @interface Service
+ */
+export interface Service {
+    /**
+     * uuid of the associated service (application, database, job, gateway...)
+     * @type {string}
+     * @memberof Service
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Service
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Service
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {ServiceTypeEnum}
+     * @memberof Service
+     */
+    'type'?: ServiceTypeEnum;
+    /**
+     * name of the service
+     * @type {string}
+     * @memberof Service
+     */
+    'name'?: string;
+    /**
+     * Git commit ID corresponding to the deployed version of the application
+     * @type {string}
+     * @memberof Service
+     */
+    'deployed_commit_id'?: string;
+    /**
+     * uuid of the user that made the last update
+     * @type {string}
+     * @memberof Service
+     */
+    'last_updated_by'?: string;
+    /**
+     * global overview of resources consumption of the service
+     * @type {number}
+     * @memberof Service
+     */
+    'consumed_resources_in_percent'?: number;
+    /**
+     * describes the typology of service (container, postgresl, redis...)
+     * @type {string}
+     * @memberof Service
+     */
+    'service_typology'?: string;
+    /**
+     * for databases this field exposes the database version
+     * @type {string}
+     * @memberof Service
+     */
+    'service_version'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Service
+     */
+    'to_update'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface ServiceAllOf
+ */
+export interface ServiceAllOf {
+    /**
+     * 
+     * @type {ServiceTypeEnum}
+     * @memberof ServiceAllOf
+     */
+    'type'?: ServiceTypeEnum;
+    /**
+     * name of the service
+     * @type {string}
+     * @memberof ServiceAllOf
+     */
+    'name'?: string;
+    /**
+     * uuid of the associated service (application, database, job, gateway...)
+     * @type {string}
+     * @memberof ServiceAllOf
+     */
+    'id': string;
+    /**
+     * Git commit ID corresponding to the deployed version of the application
+     * @type {string}
+     * @memberof ServiceAllOf
+     */
+    'deployed_commit_id'?: string;
+    /**
+     * uuid of the user that made the last update
+     * @type {string}
+     * @memberof ServiceAllOf
+     */
+    'last_updated_by'?: string;
+    /**
+     * global overview of resources consumption of the service
+     * @type {number}
+     * @memberof ServiceAllOf
+     */
+    'consumed_resources_in_percent'?: number;
+    /**
+     * describes the typology of service (container, postgresl, redis...)
+     * @type {string}
+     * @memberof ServiceAllOf
+     */
+    'service_typology'?: string;
+    /**
+     * for databases this field exposes the database version
+     * @type {string}
+     * @memberof ServiceAllOf
+     */
+    'service_version'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ServiceAllOf
+     */
+    'to_update'?: boolean;
 }
 /**
  * 
@@ -7661,149 +7709,15 @@ export enum ServiceDeploymentStatusEnum {
 /**
  * 
  * @export
- * @interface ServiceResponse
- */
-export interface ServiceResponse {
-    /**
-     * uuid of the associated service (application, database, job, gateway...)
-     * @type {string}
-     * @memberof ServiceResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ServiceResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ServiceResponse
-     */
-    'updated_at'?: string;
-    /**
-     * 
-     * @type {ServiceTypeEnum}
-     * @memberof ServiceResponse
-     */
-    'type'?: ServiceTypeEnum;
-    /**
-     * name of the service
-     * @type {string}
-     * @memberof ServiceResponse
-     */
-    'name'?: string;
-    /**
-     * Git commit ID corresponding to the deployed version of the application
-     * @type {string}
-     * @memberof ServiceResponse
-     */
-    'deployed_commit_id'?: string;
-    /**
-     * uuid of the user that made the last update
-     * @type {string}
-     * @memberof ServiceResponse
-     */
-    'last_updated_by'?: string;
-    /**
-     * global overview of resources consumption of the service
-     * @type {number}
-     * @memberof ServiceResponse
-     */
-    'consumed_resources_in_percent'?: number;
-    /**
-     * describes the typology of service (container, postgresl, redis...)
-     * @type {string}
-     * @memberof ServiceResponse
-     */
-    'service_typology'?: string;
-    /**
-     * for databases this field exposes the database version
-     * @type {string}
-     * @memberof ServiceResponse
-     */
-    'service_version'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ServiceResponse
-     */
-    'to_update'?: boolean;
-}
-/**
- * 
- * @export
- * @interface ServiceResponseAllOf
- */
-export interface ServiceResponseAllOf {
-    /**
-     * 
-     * @type {ServiceTypeEnum}
-     * @memberof ServiceResponseAllOf
-     */
-    'type'?: ServiceTypeEnum;
-    /**
-     * name of the service
-     * @type {string}
-     * @memberof ServiceResponseAllOf
-     */
-    'name'?: string;
-    /**
-     * uuid of the associated service (application, database, job, gateway...)
-     * @type {string}
-     * @memberof ServiceResponseAllOf
-     */
-    'id': string;
-    /**
-     * Git commit ID corresponding to the deployed version of the application
-     * @type {string}
-     * @memberof ServiceResponseAllOf
-     */
-    'deployed_commit_id'?: string;
-    /**
-     * uuid of the user that made the last update
-     * @type {string}
-     * @memberof ServiceResponseAllOf
-     */
-    'last_updated_by'?: string;
-    /**
-     * global overview of resources consumption of the service
-     * @type {number}
-     * @memberof ServiceResponseAllOf
-     */
-    'consumed_resources_in_percent'?: number;
-    /**
-     * describes the typology of service (container, postgresl, redis...)
-     * @type {string}
-     * @memberof ServiceResponseAllOf
-     */
-    'service_typology'?: string;
-    /**
-     * for databases this field exposes the database version
-     * @type {string}
-     * @memberof ServiceResponseAllOf
-     */
-    'service_version'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ServiceResponseAllOf
-     */
-    'to_update'?: boolean;
-}
-/**
- * 
- * @export
  * @interface ServiceResponseList
  */
 export interface ServiceResponseList {
     /**
      * 
-     * @type {Array<ServiceResponse>}
+     * @type {Array<Service>}
      * @memberof ServiceResponseList
      */
-    'results'?: Array<ServiceResponse>;
+    'results'?: Array<Service>;
 }
 /**
  * 
@@ -7863,55 +7777,55 @@ export interface Status {
 /**
  * 
  * @export
- * @interface StorageDiskResponse
+ * @interface StorageDisk
  */
-export interface StorageDiskResponse {
+export interface StorageDisk {
     /**
      * 
      * @type {string}
-     * @memberof StorageDiskResponse
+     * @memberof StorageDisk
      */
     'created_at'?: string;
     /**
      * 
      * @type {string}
-     * @memberof StorageDiskResponse
+     * @memberof StorageDisk
      */
     'storage_id'?: string;
     /**
      * 
      * @type {number}
-     * @memberof StorageDiskResponse
+     * @memberof StorageDisk
      */
     'requested_in_gb'?: number;
     /**
      * 
      * @type {number}
-     * @memberof StorageDiskResponse
+     * @memberof StorageDisk
      */
     'consumed_in_gb'?: number;
     /**
      * 
      * @type {number}
-     * @memberof StorageDiskResponse
+     * @memberof StorageDisk
      */
     'consumed_in_percent'?: number;
     /**
      * 
      * @type {number}
-     * @memberof StorageDiskResponse
+     * @memberof StorageDisk
      */
     'warning_threshold_in_percent'?: number;
     /**
      * 
      * @type {number}
-     * @memberof StorageDiskResponse
+     * @memberof StorageDisk
      */
     'alert_threshold_in_percent'?: number;
     /**
      * 
      * @type {ThresholdMetricStatusEnum}
-     * @memberof StorageDiskResponse
+     * @memberof StorageDisk
      */
     'status'?: ThresholdMetricStatusEnum;
 }
@@ -7923,10 +7837,10 @@ export interface StorageDiskResponse {
 export interface StorageDiskResponseList {
     /**
      * 
-     * @type {Array<StorageDiskResponse>}
+     * @type {Array<StorageDisk>}
      * @memberof StorageDiskResponseList
      */
-    'results'?: Array<StorageDiskResponse>;
+    'results'?: Array<StorageDisk>;
 }
 /**
  * 
@@ -7943,6 +7857,25 @@ export enum StorageTypeEnum {
 /**
  * 
  * @export
+ * @interface Tag
+ */
+export interface Tag {
+    /**
+     * 
+     * @type {string}
+     * @memberof Tag
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Tag
+     */
+    'id'?: string;
+}
+/**
+ * 
+ * @export
  * @interface TagRequest
  */
 export interface TagRequest {
@@ -7956,34 +7889,15 @@ export interface TagRequest {
 /**
  * 
  * @export
- * @interface TagResponse
- */
-export interface TagResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof TagResponse
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TagResponse
-     */
-    'id'?: string;
-}
-/**
- * 
- * @export
  * @interface TagResponseList
  */
 export interface TagResponseList {
     /**
      * 
-     * @type {Array<TagResponse>}
+     * @type {Array<Tag>}
      * @memberof TagResponseList
      */
-    'results'?: Array<TagResponse>;
+    'results'?: Array<Tag>;
 }
 /**
  * 
@@ -8026,49 +7940,49 @@ export interface UnexpectedError {
 /**
  * 
  * @export
- * @interface UserResponse
+ * @interface User
  */
-export interface UserResponse {
+export interface User {
     /**
      * 
      * @type {string}
-     * @memberof UserResponse
+     * @memberof User
      */
     'id'?: string;
     /**
      * 
      * @type {string}
-     * @memberof UserResponse
+     * @memberof User
      */
     'created_at'?: string;
     /**
      * 
      * @type {string}
-     * @memberof UserResponse
+     * @memberof User
      */
     'updated_at'?: string;
     /**
      * 
      * @type {string}
-     * @memberof UserResponse
+     * @memberof User
      */
     'first_name'?: string;
     /**
      * 
      * @type {string}
-     * @memberof UserResponse
+     * @memberof User
      */
     'last_name'?: string;
     /**
      * 
      * @type {string}
-     * @memberof UserResponse
+     * @memberof User
      */
     'email'?: string;
     /**
      * 
      * @type {string}
-     * @memberof UserResponse
+     * @memberof User
      */
     'profile_picture_url'?: string;
 }
@@ -8080,10 +7994,10 @@ export interface UserResponse {
 export interface UserResponseList {
     /**
      * 
-     * @type {Array<UserResponse>}
+     * @type {Array<User>}
      * @memberof UserResponseList
      */
-    'results'?: Array<UserResponse>;
+    'results'?: Array<User>;
 }
 /**
  * 
@@ -8097,6 +8011,25 @@ export interface Value {
      * @memberof Value
      */
     'value': string;
+}
+/**
+ * 
+ * @export
+ * @interface VariableImport
+ */
+export interface VariableImport {
+    /**
+     * 
+     * @type {number}
+     * @memberof VariableImport
+     */
+    'total_variables_to_import': number;
+    /**
+     * 
+     * @type {Array<VariableImportSuccessfulImportedVariables>}
+     * @memberof VariableImport
+     */
+    'successful_imported_variables': Array<VariableImportSuccessfulImportedVariables>;
 }
 /**
  * 
@@ -8151,63 +8084,44 @@ export interface VariableImportRequestVars {
 /**
  * 
  * @export
- * @interface VariableImportResponse
+ * @interface VariableImportSuccessfulImportedVariables
  */
-export interface VariableImportResponse {
-    /**
-     * 
-     * @type {number}
-     * @memberof VariableImportResponse
-     */
-    'total_variables_to_import': number;
-    /**
-     * 
-     * @type {Array<VariableImportResponseSuccessfulImportedVariables>}
-     * @memberof VariableImportResponse
-     */
-    'successful_imported_variables': Array<VariableImportResponseSuccessfulImportedVariables>;
-}
-/**
- * 
- * @export
- * @interface VariableImportResponseSuccessfulImportedVariables
- */
-export interface VariableImportResponseSuccessfulImportedVariables {
+export interface VariableImportSuccessfulImportedVariables {
     /**
      * 
      * @type {string}
-     * @memberof VariableImportResponseSuccessfulImportedVariables
+     * @memberof VariableImportSuccessfulImportedVariables
      */
     'name': string;
     /**
      * Optional if the variable is secret
      * @type {string}
-     * @memberof VariableImportResponseSuccessfulImportedVariables
+     * @memberof VariableImportSuccessfulImportedVariables
      */
     'value'?: string;
     /**
      * 
      * @type {EnvironmentVariableScopeEnum}
-     * @memberof VariableImportResponseSuccessfulImportedVariables
+     * @memberof VariableImportSuccessfulImportedVariables
      */
     'scope': EnvironmentVariableScopeEnum;
     /**
      * 
      * @type {boolean}
-     * @memberof VariableImportResponseSuccessfulImportedVariables
+     * @memberof VariableImportSuccessfulImportedVariables
      */
     'is_secret': boolean;
 }
 /**
  * 
  * @export
- * @interface VersionResponse
+ * @interface Version
  */
-export interface VersionResponse {
+export interface Version {
     /**
      * 
      * @type {string}
-     * @memberof VersionResponse
+     * @memberof Version
      */
     'name': string;
 }
@@ -8219,10 +8133,10 @@ export interface VersionResponse {
 export interface VersionResponseList {
     /**
      * 
-     * @type {Array<VersionResponse>}
+     * @type {Array<Version>}
      * @memberof VersionResponseList
      */
-    'results'?: Array<VersionResponse>;
+    'results'?: Array<Version>;
 }
 /**
  * 
@@ -8297,7 +8211,7 @@ export const AccountInfoApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAccountInformation(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountInfoResponse>> {
+        async getAccountInformation(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountInfo>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAccountInformation(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -8317,7 +8231,7 @@ export const AccountInfoApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccountInformation(options?: any): AxiosPromise<AccountInfoResponse> {
+        getAccountInformation(options?: any): AxiosPromise<AccountInfo> {
             return localVarFp.getAccountInformation(options).then((request) => request(axios, basePath));
         },
     };
@@ -8705,7 +8619,7 @@ export const ApplicationConfigurationApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editApplicationNetwork(applicationId: string, applicationNetworkRequest?: ApplicationNetworkRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationNetworkResponse>> {
+        async editApplicationNetwork(applicationId: string, applicationNetworkRequest?: ApplicationNetworkRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationNetwork>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editApplicationNetwork(applicationId, applicationNetworkRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -8716,7 +8630,7 @@ export const ApplicationConfigurationApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getApplicationNetwork(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationNetworkResponse>> {
+        async getApplicationNetwork(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationNetwork>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getApplicationNetwork(applicationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -8738,7 +8652,7 @@ export const ApplicationConfigurationApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editApplicationNetwork(applicationId: string, applicationNetworkRequest?: ApplicationNetworkRequest, options?: any): AxiosPromise<ApplicationNetworkResponse> {
+        editApplicationNetwork(applicationId: string, applicationNetworkRequest?: ApplicationNetworkRequest, options?: any): AxiosPromise<ApplicationNetwork> {
             return localVarFp.editApplicationNetwork(applicationId, applicationNetworkRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8748,7 +8662,7 @@ export const ApplicationConfigurationApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getApplicationNetwork(applicationId: string, options?: any): AxiosPromise<ApplicationNetworkResponse> {
+        getApplicationNetwork(applicationId: string, options?: any): AxiosPromise<ApplicationNetwork> {
             return localVarFp.getApplicationNetwork(applicationId, options).then((request) => request(axios, basePath));
         },
     };
@@ -9056,7 +8970,7 @@ export const ApplicationDatabaseApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async attachDatabasetoApplication(applicationId: string, targetDatabaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatabaseResponse>> {
+        async attachDatabasetoApplication(applicationId: string, targetDatabaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Database>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.attachDatabasetoApplication(applicationId, targetDatabaseId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -9068,7 +8982,7 @@ export const ApplicationDatabaseApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async attachLogicalDatabasetoApplication(applicationId: string, targetLogicalDatabaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LogicalDatabaseResponse>> {
+        async attachLogicalDatabasetoApplication(applicationId: string, targetLogicalDatabaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LogicalDatabase>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.attachLogicalDatabasetoApplication(applicationId, targetLogicalDatabaseId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -9136,7 +9050,7 @@ export const ApplicationDatabaseApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        attachDatabasetoApplication(applicationId: string, targetDatabaseId: string, options?: any): AxiosPromise<DatabaseResponse> {
+        attachDatabasetoApplication(applicationId: string, targetDatabaseId: string, options?: any): AxiosPromise<Database> {
             return localVarFp.attachDatabasetoApplication(applicationId, targetDatabaseId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9147,7 +9061,7 @@ export const ApplicationDatabaseApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        attachLogicalDatabasetoApplication(applicationId: string, targetLogicalDatabaseId: string, options?: any): AxiosPromise<LogicalDatabaseResponse> {
+        attachLogicalDatabasetoApplication(applicationId: string, targetLogicalDatabaseId: string, options?: any): AxiosPromise<LogicalDatabase> {
             return localVarFp.attachLogicalDatabasetoApplication(applicationId, targetLogicalDatabaseId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9585,7 +9499,7 @@ export const ApplicationDeploymentRestrictionApiFp = function(configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createApplicationDeploymentRestriction(applicationId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseResponse & ApplicationDeploymentRestrictionRequest>> {
+        async createApplicationDeploymentRestriction(applicationId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Base & ApplicationDeploymentRestrictionRequest>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createApplicationDeploymentRestriction(applicationId, applicationDeploymentRestrictionRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -9620,7 +9534,7 @@ export const ApplicationDeploymentRestrictionApiFp = function(configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getApplicationDeploymentRestrictions(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationDeploymentRestrictionResponse>> {
+        async getApplicationDeploymentRestrictions(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationDeploymentRestriction>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getApplicationDeploymentRestrictions(applicationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -9642,7 +9556,7 @@ export const ApplicationDeploymentRestrictionApiFactory = function (configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createApplicationDeploymentRestriction(applicationId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: any): AxiosPromise<BaseResponse & ApplicationDeploymentRestrictionRequest> {
+        createApplicationDeploymentRestriction(applicationId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: any): AxiosPromise<Base & ApplicationDeploymentRestrictionRequest> {
             return localVarFp.createApplicationDeploymentRestriction(applicationId, applicationDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9674,7 +9588,7 @@ export const ApplicationDeploymentRestrictionApiFactory = function (configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getApplicationDeploymentRestrictions(applicationId: string, options?: any): AxiosPromise<ApplicationDeploymentRestrictionResponse> {
+        getApplicationDeploymentRestrictions(applicationId: string, options?: any): AxiosPromise<ApplicationDeploymentRestriction> {
             return localVarFp.getApplicationDeploymentRestrictions(applicationId, options).then((request) => request(axios, basePath));
         },
     };
@@ -10068,7 +9982,7 @@ export const ApplicationEnvironmentVariableApiFp = function(configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createApplicationEnvironmentVariable(applicationId: string, environmentVariableRequest?: EnvironmentVariableRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariableResponse>> {
+        async createApplicationEnvironmentVariable(applicationId: string, environmentVariableRequest?: EnvironmentVariableRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariable>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createApplicationEnvironmentVariable(applicationId, environmentVariableRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -10081,7 +9995,7 @@ export const ApplicationEnvironmentVariableApiFp = function(configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createApplicationEnvironmentVariableAlias(applicationId: string, environmentVariableId: string, key?: Key, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariableResponse>> {
+        async createApplicationEnvironmentVariableAlias(applicationId: string, environmentVariableId: string, key?: Key, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariable>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createApplicationEnvironmentVariableAlias(applicationId, environmentVariableId, key, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -10094,7 +10008,7 @@ export const ApplicationEnvironmentVariableApiFp = function(configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createApplicationEnvironmentVariableOverride(applicationId: string, environmentVariableId: string, value?: Value, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariableResponse>> {
+        async createApplicationEnvironmentVariableOverride(applicationId: string, environmentVariableId: string, value?: Value, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariable>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createApplicationEnvironmentVariableOverride(applicationId, environmentVariableId, value, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -10119,7 +10033,7 @@ export const ApplicationEnvironmentVariableApiFp = function(configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editApplicationEnvironmentVariable(applicationId: string, environmentVariableId: string, environmentVariableEditRequest: EnvironmentVariableEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariableResponse>> {
+        async editApplicationEnvironmentVariable(applicationId: string, environmentVariableId: string, environmentVariableEditRequest: EnvironmentVariableEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariable>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editApplicationEnvironmentVariable(applicationId, environmentVariableId, environmentVariableEditRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -10131,7 +10045,7 @@ export const ApplicationEnvironmentVariableApiFp = function(configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async importEnvironmentVariable(applicationId: string, variableImportRequest?: VariableImportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VariableImportResponse>> {
+        async importEnvironmentVariable(applicationId: string, variableImportRequest?: VariableImportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VariableImport>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.importEnvironmentVariable(applicationId, variableImportRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -10164,7 +10078,7 @@ export const ApplicationEnvironmentVariableApiFactory = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createApplicationEnvironmentVariable(applicationId: string, environmentVariableRequest?: EnvironmentVariableRequest, options?: any): AxiosPromise<EnvironmentVariableResponse> {
+        createApplicationEnvironmentVariable(applicationId: string, environmentVariableRequest?: EnvironmentVariableRequest, options?: any): AxiosPromise<EnvironmentVariable> {
             return localVarFp.createApplicationEnvironmentVariable(applicationId, environmentVariableRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10176,7 +10090,7 @@ export const ApplicationEnvironmentVariableApiFactory = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createApplicationEnvironmentVariableAlias(applicationId: string, environmentVariableId: string, key?: Key, options?: any): AxiosPromise<EnvironmentVariableResponse> {
+        createApplicationEnvironmentVariableAlias(applicationId: string, environmentVariableId: string, key?: Key, options?: any): AxiosPromise<EnvironmentVariable> {
             return localVarFp.createApplicationEnvironmentVariableAlias(applicationId, environmentVariableId, key, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10188,7 +10102,7 @@ export const ApplicationEnvironmentVariableApiFactory = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createApplicationEnvironmentVariableOverride(applicationId: string, environmentVariableId: string, value?: Value, options?: any): AxiosPromise<EnvironmentVariableResponse> {
+        createApplicationEnvironmentVariableOverride(applicationId: string, environmentVariableId: string, value?: Value, options?: any): AxiosPromise<EnvironmentVariable> {
             return localVarFp.createApplicationEnvironmentVariableOverride(applicationId, environmentVariableId, value, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10211,7 +10125,7 @@ export const ApplicationEnvironmentVariableApiFactory = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editApplicationEnvironmentVariable(applicationId: string, environmentVariableId: string, environmentVariableEditRequest: EnvironmentVariableEditRequest, options?: any): AxiosPromise<EnvironmentVariableResponse> {
+        editApplicationEnvironmentVariable(applicationId: string, environmentVariableId: string, environmentVariableEditRequest: EnvironmentVariableEditRequest, options?: any): AxiosPromise<EnvironmentVariable> {
             return localVarFp.editApplicationEnvironmentVariable(applicationId, environmentVariableId, environmentVariableEditRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10222,7 +10136,7 @@ export const ApplicationEnvironmentVariableApiFactory = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        importEnvironmentVariable(applicationId: string, variableImportRequest?: VariableImportRequest, options?: any): AxiosPromise<VariableImportResponse> {
+        importEnvironmentVariable(applicationId: string, variableImportRequest?: VariableImportRequest, options?: any): AxiosPromise<VariableImport> {
             return localVarFp.importEnvironmentVariable(applicationId, variableImportRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -11027,7 +10941,7 @@ export const ApplicationMainCallsApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editApplication(applicationId: string, applicationEditRequest?: ApplicationEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationResponse>> {
+        async editApplication(applicationId: string, applicationEditRequest?: ApplicationEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Application>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editApplication(applicationId, applicationEditRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -11038,7 +10952,7 @@ export const ApplicationMainCallsApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getApplication(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationResponse>> {
+        async getApplication(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Application>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getApplication(applicationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -11149,7 +11063,7 @@ export const ApplicationMainCallsApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editApplication(applicationId: string, applicationEditRequest?: ApplicationEditRequest, options?: any): AxiosPromise<ApplicationResponse> {
+        editApplication(applicationId: string, applicationEditRequest?: ApplicationEditRequest, options?: any): AxiosPromise<Application> {
             return localVarFp.editApplication(applicationId, applicationEditRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -11159,7 +11073,7 @@ export const ApplicationMainCallsApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getApplication(applicationId: string, options?: any): AxiosPromise<ApplicationResponse> {
+        getApplication(applicationId: string, options?: any): AxiosPromise<Application> {
             return localVarFp.getApplication(applicationId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -11724,7 +11638,7 @@ export const ApplicationMetricsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getApplicationCurrentScale(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationCurrentScaleResponse>> {
+        async getApplicationCurrentScale(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationCurrentScale>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getApplicationCurrentScale(applicationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -11783,7 +11697,7 @@ export const ApplicationMetricsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getApplicationMetricRestart(applicationId: string, lastSeconds: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricRestartResponse>> {
+        async getApplicationMetricRestart(applicationId: string, lastSeconds: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricRestart>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getApplicationMetricRestart(applicationId, lastSeconds, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -11826,7 +11740,7 @@ export const ApplicationMetricsApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getApplicationCurrentScale(applicationId: string, options?: any): AxiosPromise<ApplicationCurrentScaleResponse> {
+        getApplicationCurrentScale(applicationId: string, options?: any): AxiosPromise<ApplicationCurrentScale> {
             return localVarFp.getApplicationCurrentScale(applicationId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -11880,7 +11794,7 @@ export const ApplicationMetricsApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getApplicationMetricRestart(applicationId: string, lastSeconds: number, options?: any): AxiosPromise<MetricRestartResponse> {
+        getApplicationMetricRestart(applicationId: string, lastSeconds: number, options?: any): AxiosPromise<MetricRestart> {
             return localVarFp.getApplicationMetricRestart(applicationId, lastSeconds, options).then((request) => request(axios, basePath));
         },
         /**
@@ -12293,7 +12207,7 @@ export const ApplicationSecretApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createApplicationSecret(applicationId: string, secretRequest?: SecretRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SecretResponse>> {
+        async createApplicationSecret(applicationId: string, secretRequest?: SecretRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Secret>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createApplicationSecret(applicationId, secretRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -12306,7 +12220,7 @@ export const ApplicationSecretApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createApplicationSecretAlias(applicationId: string, secretId: string, key?: Key, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SecretResponse>> {
+        async createApplicationSecretAlias(applicationId: string, secretId: string, key?: Key, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Secret>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createApplicationSecretAlias(applicationId, secretId, key, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -12319,7 +12233,7 @@ export const ApplicationSecretApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createApplicationSecretOverride(applicationId: string, secretId: string, value?: Value, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SecretResponse>> {
+        async createApplicationSecretOverride(applicationId: string, secretId: string, value?: Value, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Secret>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createApplicationSecretOverride(applicationId, secretId, value, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -12344,7 +12258,7 @@ export const ApplicationSecretApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editApplicationSecret(applicationId: string, secretId: string, secretEditRequest: SecretEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SecretResponse>> {
+        async editApplicationSecret(applicationId: string, secretId: string, secretEditRequest: SecretEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Secret>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editApplicationSecret(applicationId, secretId, secretEditRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -12377,7 +12291,7 @@ export const ApplicationSecretApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createApplicationSecret(applicationId: string, secretRequest?: SecretRequest, options?: any): AxiosPromise<SecretResponse> {
+        createApplicationSecret(applicationId: string, secretRequest?: SecretRequest, options?: any): AxiosPromise<Secret> {
             return localVarFp.createApplicationSecret(applicationId, secretRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -12389,7 +12303,7 @@ export const ApplicationSecretApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createApplicationSecretAlias(applicationId: string, secretId: string, key?: Key, options?: any): AxiosPromise<SecretResponse> {
+        createApplicationSecretAlias(applicationId: string, secretId: string, key?: Key, options?: any): AxiosPromise<Secret> {
             return localVarFp.createApplicationSecretAlias(applicationId, secretId, key, options).then((request) => request(axios, basePath));
         },
         /**
@@ -12401,7 +12315,7 @@ export const ApplicationSecretApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createApplicationSecretOverride(applicationId: string, secretId: string, value?: Value, options?: any): AxiosPromise<SecretResponse> {
+        createApplicationSecretOverride(applicationId: string, secretId: string, value?: Value, options?: any): AxiosPromise<Secret> {
             return localVarFp.createApplicationSecretOverride(applicationId, secretId, value, options).then((request) => request(axios, basePath));
         },
         /**
@@ -12424,7 +12338,7 @@ export const ApplicationSecretApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editApplicationSecret(applicationId: string, secretId: string, secretEditRequest: SecretEditRequest, options?: any): AxiosPromise<SecretResponse> {
+        editApplicationSecret(applicationId: string, secretId: string, secretEditRequest: SecretEditRequest, options?: any): AxiosPromise<Secret> {
             return localVarFp.editApplicationSecret(applicationId, secretId, secretEditRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -12870,7 +12784,7 @@ export const ApplicationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createApplication(environmentId: string, applicationRequest?: ApplicationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationResponse>> {
+        async createApplication(environmentId: string, applicationRequest?: ApplicationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Application>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createApplication(environmentId, applicationRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -12971,7 +12885,7 @@ export const ApplicationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createApplication(environmentId: string, applicationRequest?: ApplicationRequest, options?: any): AxiosPromise<ApplicationResponse> {
+        createApplication(environmentId: string, applicationRequest?: ApplicationRequest, options?: any): AxiosPromise<Application> {
             return localVarFp.createApplication(environmentId, applicationRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -13308,7 +13222,7 @@ export const BackupsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addBackupDatabase(databaseId: string, backupRequest?: BackupRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BackupResponse>> {
+        async addBackupDatabase(databaseId: string, backupRequest?: BackupRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Backup>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.addBackupDatabase(databaseId, backupRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -13354,7 +13268,7 @@ export const BackupsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addBackupDatabase(databaseId: string, backupRequest?: BackupRequest, options?: any): AxiosPromise<BackupResponse> {
+        addBackupDatabase(databaseId: string, backupRequest?: BackupRequest, options?: any): AxiosPromise<Backup> {
             return localVarFp.addBackupDatabase(databaseId, backupRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -13976,7 +13890,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addCreditCard(organizationId: string, creditCardRequest?: CreditCardRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditCardResponse>> {
+        async addCreditCard(organizationId: string, creditCardRequest?: CreditCardRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditCard>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.addCreditCard(organizationId, creditCardRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -14012,7 +13926,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editOrganizationBillingInfo(organizationId: string, billingInfoRequest?: BillingInfoRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingInfoResponse>> {
+        async editOrganizationBillingInfo(organizationId: string, billingInfoRequest?: BillingInfoRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingInfo>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editOrganizationBillingInfo(organizationId, billingInfoRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -14024,7 +13938,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getClusterCurrentCost(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CostRangeResponse>> {
+        async getClusterCurrentCost(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CostRange>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterCurrentCost(organizationId, clusterId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -14035,7 +13949,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganizationBillingInfo(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingInfoResponse>> {
+        async getOrganizationBillingInfo(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingInfo>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationBillingInfo(organizationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -14057,7 +13971,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganizationCurrentCost(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationCurrentCostResponse>> {
+        async getOrganizationCurrentCost(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationCurrentCost>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationCurrentCost(organizationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -14069,7 +13983,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganizationInvoice(organizationId: string, invoiceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InvoiceResponse>> {
+        async getOrganizationInvoice(organizationId: string, invoiceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Invoice>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationInvoice(organizationId, invoiceId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -14081,7 +13995,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganizationInvoicePDF(organizationId: string, invoiceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkResponse>> {
+        async getOrganizationInvoicePDF(organizationId: string, invoiceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Link>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationInvoicePDF(organizationId, invoiceId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -14136,7 +14050,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addCreditCard(organizationId: string, creditCardRequest?: CreditCardRequest, options?: any): AxiosPromise<CreditCardResponse> {
+        addCreditCard(organizationId: string, creditCardRequest?: CreditCardRequest, options?: any): AxiosPromise<CreditCard> {
             return localVarFp.addCreditCard(organizationId, creditCardRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14169,7 +14083,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editOrganizationBillingInfo(organizationId: string, billingInfoRequest?: BillingInfoRequest, options?: any): AxiosPromise<BillingInfoResponse> {
+        editOrganizationBillingInfo(organizationId: string, billingInfoRequest?: BillingInfoRequest, options?: any): AxiosPromise<BillingInfo> {
             return localVarFp.editOrganizationBillingInfo(organizationId, billingInfoRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14180,7 +14094,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getClusterCurrentCost(organizationId: string, clusterId: string, options?: any): AxiosPromise<CostRangeResponse> {
+        getClusterCurrentCost(organizationId: string, clusterId: string, options?: any): AxiosPromise<CostRange> {
             return localVarFp.getClusterCurrentCost(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14190,7 +14104,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationBillingInfo(organizationId: string, options?: any): AxiosPromise<BillingInfoResponse> {
+        getOrganizationBillingInfo(organizationId: string, options?: any): AxiosPromise<BillingInfo> {
             return localVarFp.getOrganizationBillingInfo(organizationId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14210,7 +14124,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationCurrentCost(organizationId: string, options?: any): AxiosPromise<OrganizationCurrentCostResponse> {
+        getOrganizationCurrentCost(organizationId: string, options?: any): AxiosPromise<OrganizationCurrentCost> {
             return localVarFp.getOrganizationCurrentCost(organizationId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14221,7 +14135,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationInvoice(organizationId: string, invoiceId: string, options?: any): AxiosPromise<InvoiceResponse> {
+        getOrganizationInvoice(organizationId: string, invoiceId: string, options?: any): AxiosPromise<Invoice> {
             return localVarFp.getOrganizationInvoice(organizationId, invoiceId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14232,7 +14146,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationInvoicePDF(organizationId: string, invoiceId: string, options?: any): AxiosPromise<LinkResponse> {
+        getOrganizationInvoicePDF(organizationId: string, invoiceId: string, options?: any): AxiosPromise<Link> {
             return localVarFp.getOrganizationInvoicePDF(organizationId, invoiceId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15454,7 +15368,7 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createAWSCredentials(organizationId: string, awsCredentialsRequest?: AwsCredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentialsResponse>> {
+        async createAWSCredentials(organizationId: string, awsCredentialsRequest?: AwsCredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentials>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createAWSCredentials(organizationId, awsCredentialsRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -15466,7 +15380,7 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createDOCredentials(organizationId: string, doCredentialsRequest?: DoCredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentialsResponse>> {
+        async createDOCredentials(organizationId: string, doCredentialsRequest?: DoCredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentials>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createDOCredentials(organizationId, doCredentialsRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -15478,7 +15392,7 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createScalewayCredentials(organizationId: string, scalewayCredentialsRequest?: ScalewayCredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentialsResponse>> {
+        async createScalewayCredentials(organizationId: string, scalewayCredentialsRequest?: ScalewayCredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentials>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createScalewayCredentials(organizationId, scalewayCredentialsRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -15527,7 +15441,7 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editAWSCredentials(organizationId: string, credentialsId: string, awsCredentialsRequest?: AwsCredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentialsResponse>> {
+        async editAWSCredentials(organizationId: string, credentialsId: string, awsCredentialsRequest?: AwsCredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentials>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editAWSCredentials(organizationId, credentialsId, awsCredentialsRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -15540,7 +15454,7 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editDOCredentials(organizationId: string, credentialsId: string, doCredentialsRequest?: DoCredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentialsResponse>> {
+        async editDOCredentials(organizationId: string, credentialsId: string, doCredentialsRequest?: DoCredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentials>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editDOCredentials(organizationId, credentialsId, doCredentialsRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -15553,7 +15467,7 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editScalewayCredentials(organizationId: string, credentialsId: string, scalewayCredentialsRequest?: ScalewayCredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentialsResponse>> {
+        async editScalewayCredentials(organizationId: string, credentialsId: string, scalewayCredentialsRequest?: ScalewayCredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentials>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editScalewayCredentials(organizationId, credentialsId, scalewayCredentialsRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -15608,7 +15522,7 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createAWSCredentials(organizationId: string, awsCredentialsRequest?: AwsCredentialsRequest, options?: any): AxiosPromise<ClusterCredentialsResponse> {
+        createAWSCredentials(organizationId: string, awsCredentialsRequest?: AwsCredentialsRequest, options?: any): AxiosPromise<ClusterCredentials> {
             return localVarFp.createAWSCredentials(organizationId, awsCredentialsRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15619,7 +15533,7 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createDOCredentials(organizationId: string, doCredentialsRequest?: DoCredentialsRequest, options?: any): AxiosPromise<ClusterCredentialsResponse> {
+        createDOCredentials(organizationId: string, doCredentialsRequest?: DoCredentialsRequest, options?: any): AxiosPromise<ClusterCredentials> {
             return localVarFp.createDOCredentials(organizationId, doCredentialsRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15630,7 +15544,7 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createScalewayCredentials(organizationId: string, scalewayCredentialsRequest?: ScalewayCredentialsRequest, options?: any): AxiosPromise<ClusterCredentialsResponse> {
+        createScalewayCredentials(organizationId: string, scalewayCredentialsRequest?: ScalewayCredentialsRequest, options?: any): AxiosPromise<ClusterCredentials> {
             return localVarFp.createScalewayCredentials(organizationId, scalewayCredentialsRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15675,7 +15589,7 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editAWSCredentials(organizationId: string, credentialsId: string, awsCredentialsRequest?: AwsCredentialsRequest, options?: any): AxiosPromise<ClusterCredentialsResponse> {
+        editAWSCredentials(organizationId: string, credentialsId: string, awsCredentialsRequest?: AwsCredentialsRequest, options?: any): AxiosPromise<ClusterCredentials> {
             return localVarFp.editAWSCredentials(organizationId, credentialsId, awsCredentialsRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15687,7 +15601,7 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editDOCredentials(organizationId: string, credentialsId: string, doCredentialsRequest?: DoCredentialsRequest, options?: any): AxiosPromise<ClusterCredentialsResponse> {
+        editDOCredentials(organizationId: string, credentialsId: string, doCredentialsRequest?: DoCredentialsRequest, options?: any): AxiosPromise<ClusterCredentials> {
             return localVarFp.editDOCredentials(organizationId, credentialsId, doCredentialsRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15699,7 +15613,7 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editScalewayCredentials(organizationId: string, credentialsId: string, scalewayCredentialsRequest?: ScalewayCredentialsRequest, options?: any): AxiosPromise<ClusterCredentialsResponse> {
+        editScalewayCredentials(organizationId: string, credentialsId: string, scalewayCredentialsRequest?: ScalewayCredentialsRequest, options?: any): AxiosPromise<ClusterCredentials> {
             return localVarFp.editScalewayCredentials(organizationId, credentialsId, scalewayCredentialsRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16516,7 +16430,7 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createCluster(organizationId: string, clusterRequest?: ClusterRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterResponse>> {
+        async createCluster(organizationId: string, clusterRequest?: ClusterRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Cluster>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createCluster(organizationId, clusterRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -16540,7 +16454,7 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deployCluster(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatusResponse>> {
+        async deployCluster(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deployCluster(organizationId, clusterId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -16553,7 +16467,7 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editCluster(organizationId: string, clusterId: string, clusterRequest?: ClusterRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterResponse>> {
+        async editCluster(organizationId: string, clusterId: string, clusterRequest?: ClusterRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Cluster>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editCluster(organizationId, clusterId, clusterRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -16566,7 +16480,7 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editRoutingTable(organizationId: string, clusterId: string, clusterRoutingTableRequest?: ClusterRoutingTableRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterRoutingTableResponse>> {
+        async editRoutingTable(organizationId: string, clusterId: string, clusterRoutingTableRequest?: ClusterRoutingTableRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterRoutingTable>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editRoutingTable(organizationId, clusterId, clusterRoutingTableRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -16590,7 +16504,7 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getClusterStatus(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatusResponse>> {
+        async getClusterStatus(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterStatus(organizationId, clusterId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -16602,7 +16516,7 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganizationCloudProviderInfo(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCloudProviderInfoResponse>> {
+        async getOrganizationCloudProviderInfo(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCloudProviderInfo>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationCloudProviderInfo(organizationId, clusterId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -16625,7 +16539,7 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getRoutingTable(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterRoutingTableResponse>> {
+        async getRoutingTable(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterRoutingTable>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getRoutingTable(organizationId, clusterId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -16649,7 +16563,7 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async specifyClusterCloudProviderInfo(organizationId: string, clusterId: string, clusterCloudProviderInfoRequest?: ClusterCloudProviderInfoRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCloudProviderInfoResponse>> {
+        async specifyClusterCloudProviderInfo(organizationId: string, clusterId: string, clusterCloudProviderInfoRequest?: ClusterCloudProviderInfoRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCloudProviderInfo>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.specifyClusterCloudProviderInfo(organizationId, clusterId, clusterCloudProviderInfoRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -16661,7 +16575,7 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async stopCluster(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatusResponse>> {
+        async stopCluster(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.stopCluster(organizationId, clusterId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -16673,7 +16587,7 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateCluster(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatusResponse>> {
+        async updateCluster(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateCluster(organizationId, clusterId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -16695,7 +16609,7 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createCluster(organizationId: string, clusterRequest?: ClusterRequest, options?: any): AxiosPromise<ClusterResponse> {
+        createCluster(organizationId: string, clusterRequest?: ClusterRequest, options?: any): AxiosPromise<Cluster> {
             return localVarFp.createCluster(organizationId, clusterRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16717,7 +16631,7 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployCluster(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterStatusResponse> {
+        deployCluster(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterStatus> {
             return localVarFp.deployCluster(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16729,7 +16643,7 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editCluster(organizationId: string, clusterId: string, clusterRequest?: ClusterRequest, options?: any): AxiosPromise<ClusterResponse> {
+        editCluster(organizationId: string, clusterId: string, clusterRequest?: ClusterRequest, options?: any): AxiosPromise<Cluster> {
             return localVarFp.editCluster(organizationId, clusterId, clusterRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16741,7 +16655,7 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editRoutingTable(organizationId: string, clusterId: string, clusterRoutingTableRequest?: ClusterRoutingTableRequest, options?: any): AxiosPromise<ClusterRoutingTableResponse> {
+        editRoutingTable(organizationId: string, clusterId: string, clusterRoutingTableRequest?: ClusterRoutingTableRequest, options?: any): AxiosPromise<ClusterRoutingTable> {
             return localVarFp.editRoutingTable(organizationId, clusterId, clusterRoutingTableRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16763,7 +16677,7 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getClusterStatus(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterStatusResponse> {
+        getClusterStatus(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterStatus> {
             return localVarFp.getClusterStatus(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16774,7 +16688,7 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationCloudProviderInfo(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterCloudProviderInfoResponse> {
+        getOrganizationCloudProviderInfo(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterCloudProviderInfo> {
             return localVarFp.getOrganizationCloudProviderInfo(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16795,7 +16709,7 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRoutingTable(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterRoutingTableResponse> {
+        getRoutingTable(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterRoutingTable> {
             return localVarFp.getRoutingTable(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16817,7 +16731,7 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        specifyClusterCloudProviderInfo(organizationId: string, clusterId: string, clusterCloudProviderInfoRequest?: ClusterCloudProviderInfoRequest, options?: any): AxiosPromise<ClusterCloudProviderInfoResponse> {
+        specifyClusterCloudProviderInfo(organizationId: string, clusterId: string, clusterCloudProviderInfoRequest?: ClusterCloudProviderInfoRequest, options?: any): AxiosPromise<ClusterCloudProviderInfo> {
             return localVarFp.specifyClusterCloudProviderInfo(organizationId, clusterId, clusterCloudProviderInfoRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16828,7 +16742,7 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopCluster(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterStatusResponse> {
+        stopCluster(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterStatus> {
             return localVarFp.stopCluster(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16839,7 +16753,7 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateCluster(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterStatusResponse> {
+        updateCluster(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterStatus> {
             return localVarFp.updateCluster(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
     };
@@ -17271,7 +17185,7 @@ export const CustomDomainApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createApplicationCustomDomain(applicationId: string, customDomainRequest?: CustomDomainRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CustomDomainResponse>> {
+        async createApplicationCustomDomain(applicationId: string, customDomainRequest?: CustomDomainRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CustomDomain>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createApplicationCustomDomain(applicationId, customDomainRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -17296,7 +17210,7 @@ export const CustomDomainApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editCustomDomain(applicationId: string, customDomainId: string, customDomainRequest?: CustomDomainRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CustomDomainResponse>> {
+        async editCustomDomain(applicationId: string, customDomainId: string, customDomainRequest?: CustomDomainRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CustomDomain>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editCustomDomain(applicationId, customDomainId, customDomainRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -17308,7 +17222,7 @@ export const CustomDomainApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCustomDomainStatus(applicationId: string, customDomainId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CustomDomainResponse>> {
+        async getCustomDomainStatus(applicationId: string, customDomainId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CustomDomain>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCustomDomainStatus(applicationId, customDomainId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -17341,7 +17255,7 @@ export const CustomDomainApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createApplicationCustomDomain(applicationId: string, customDomainRequest?: CustomDomainRequest, options?: any): AxiosPromise<CustomDomainResponse> {
+        createApplicationCustomDomain(applicationId: string, customDomainRequest?: CustomDomainRequest, options?: any): AxiosPromise<CustomDomain> {
             return localVarFp.createApplicationCustomDomain(applicationId, customDomainRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17364,7 +17278,7 @@ export const CustomDomainApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editCustomDomain(applicationId: string, customDomainId: string, customDomainRequest?: CustomDomainRequest, options?: any): AxiosPromise<CustomDomainResponse> {
+        editCustomDomain(applicationId: string, customDomainId: string, customDomainRequest?: CustomDomainRequest, options?: any): AxiosPromise<CustomDomain> {
             return localVarFp.editCustomDomain(applicationId, customDomainId, customDomainRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17375,7 +17289,7 @@ export const CustomDomainApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCustomDomainStatus(applicationId: string, customDomainId: string, options?: any): AxiosPromise<CustomDomainResponse> {
+        getCustomDomainStatus(applicationId: string, customDomainId: string, options?: any): AxiosPromise<CustomDomain> {
             return localVarFp.getCustomDomainStatus(applicationId, customDomainId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -18329,7 +18243,7 @@ export const DatabaseMainCallsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editDatabase(databaseId: string, databaseEditRequest?: DatabaseEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatabaseResponse>> {
+        async editDatabase(databaseId: string, databaseEditRequest?: DatabaseEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Database>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editDatabase(databaseId, databaseEditRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -18341,7 +18255,7 @@ export const DatabaseMainCallsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editDatabaseCredentials(databaseId: string, credentialsRequest?: CredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CredentialsResponse>> {
+        async editDatabaseCredentials(databaseId: string, credentialsRequest?: CredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Credentials>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editDatabaseCredentials(databaseId, credentialsRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -18352,7 +18266,7 @@ export const DatabaseMainCallsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDatabase(databaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatabaseResponse>> {
+        async getDatabase(databaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Database>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDatabase(databaseId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -18363,7 +18277,7 @@ export const DatabaseMainCallsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDatabaseMasterCredentials(databaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CredentialsResponse>> {
+        async getDatabaseMasterCredentials(databaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Credentials>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDatabaseMasterCredentials(databaseId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -18417,7 +18331,7 @@ export const DatabaseMainCallsApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editDatabase(databaseId: string, databaseEditRequest?: DatabaseEditRequest, options?: any): AxiosPromise<DatabaseResponse> {
+        editDatabase(databaseId: string, databaseEditRequest?: DatabaseEditRequest, options?: any): AxiosPromise<Database> {
             return localVarFp.editDatabase(databaseId, databaseEditRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -18428,7 +18342,7 @@ export const DatabaseMainCallsApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editDatabaseCredentials(databaseId: string, credentialsRequest?: CredentialsRequest, options?: any): AxiosPromise<CredentialsResponse> {
+        editDatabaseCredentials(databaseId: string, credentialsRequest?: CredentialsRequest, options?: any): AxiosPromise<Credentials> {
             return localVarFp.editDatabaseCredentials(databaseId, credentialsRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -18438,7 +18352,7 @@ export const DatabaseMainCallsApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDatabase(databaseId: string, options?: any): AxiosPromise<DatabaseResponse> {
+        getDatabase(databaseId: string, options?: any): AxiosPromise<Database> {
             return localVarFp.getDatabase(databaseId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -18448,7 +18362,7 @@ export const DatabaseMainCallsApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDatabaseMasterCredentials(databaseId: string, options?: any): AxiosPromise<CredentialsResponse> {
+        getDatabaseMasterCredentials(databaseId: string, options?: any): AxiosPromise<Credentials> {
             return localVarFp.getDatabaseMasterCredentials(databaseId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -18855,7 +18769,7 @@ export const DatabaseMetricsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDatabaseCurrentMetric(databaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatabaseCurrentMetricResponse>> {
+        async getDatabaseCurrentMetric(databaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatabaseCurrentMetric>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDatabaseCurrentMetric(databaseId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -18903,7 +18817,7 @@ export const DatabaseMetricsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDatabaseMetricRestart(databaseId: string, lastSeconds: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricRestartResponse>> {
+        async getDatabaseMetricRestart(databaseId: string, lastSeconds: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricRestart>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDatabaseMetricRestart(databaseId, lastSeconds, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -18936,7 +18850,7 @@ export const DatabaseMetricsApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDatabaseCurrentMetric(databaseId: string, options?: any): AxiosPromise<DatabaseCurrentMetricResponse> {
+        getDatabaseCurrentMetric(databaseId: string, options?: any): AxiosPromise<DatabaseCurrentMetric> {
             return localVarFp.getDatabaseCurrentMetric(databaseId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -18980,7 +18894,7 @@ export const DatabaseMetricsApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDatabaseMetricRestart(databaseId: string, lastSeconds: number, options?: any): AxiosPromise<MetricRestartResponse> {
+        getDatabaseMetricRestart(databaseId: string, lastSeconds: number, options?: any): AxiosPromise<MetricRestart> {
             return localVarFp.getDatabaseMetricRestart(databaseId, lastSeconds, options).then((request) => request(axios, basePath));
         },
         /**
@@ -19301,7 +19215,7 @@ export const DatabasesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createDatabase(environmentId: string, databaseRequest?: DatabaseRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatabaseResponse>> {
+        async createDatabase(environmentId: string, databaseRequest?: DatabaseRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Database>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createDatabase(environmentId, databaseRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -19367,7 +19281,7 @@ export const DatabasesApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createDatabase(environmentId: string, databaseRequest?: DatabaseRequest, options?: any): AxiosPromise<DatabaseResponse> {
+        createDatabase(environmentId: string, databaseRequest?: DatabaseRequest, options?: any): AxiosPromise<Database> {
             return localVarFp.createDatabase(environmentId, databaseRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -19629,7 +19543,7 @@ export const DependencyApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createApplicationDependency(applicationId: string, targetApplicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationResponse>> {
+        async createApplicationDependency(applicationId: string, targetApplicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Application>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createApplicationDependency(applicationId, targetApplicationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -19674,7 +19588,7 @@ export const DependencyApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createApplicationDependency(applicationId: string, targetApplicationId: string, options?: any): AxiosPromise<ApplicationResponse> {
+        createApplicationDependency(applicationId: string, targetApplicationId: string, options?: any): AxiosPromise<Application> {
             return localVarFp.createApplicationDependency(applicationId, targetApplicationId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -19981,7 +19895,7 @@ export const EnvironmentActionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloneEnvironment(environmentId: string, cloneRequest?: CloneRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentResponse>> {
+        async cloneEnvironment(environmentId: string, cloneRequest?: CloneRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Environment>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloneEnvironment(environmentId, cloneRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -20047,7 +19961,7 @@ export const EnvironmentActionsApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloneEnvironment(environmentId: string, cloneRequest?: CloneRequest, options?: any): AxiosPromise<EnvironmentResponse> {
+        cloneEnvironment(environmentId: string, cloneRequest?: CloneRequest, options?: any): AxiosPromise<Environment> {
             return localVarFp.cloneEnvironment(environmentId, cloneRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -20381,7 +20295,7 @@ export const EnvironmentDeploymentRuleApiFp = function(configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editEnvironmentDeploymentRule(environmentId: string, deploymentRuleId: string, environmentDeploymentRuleEditRequest?: EnvironmentDeploymentRuleEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentDeploymentRuleResponse>> {
+        async editEnvironmentDeploymentRule(environmentId: string, deploymentRuleId: string, environmentDeploymentRuleEditRequest?: EnvironmentDeploymentRuleEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentDeploymentRule>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editEnvironmentDeploymentRule(environmentId, deploymentRuleId, environmentDeploymentRuleEditRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -20392,7 +20306,7 @@ export const EnvironmentDeploymentRuleApiFp = function(configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEnvironmentDeploymentRule(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentDeploymentRuleResponse>> {
+        async getEnvironmentDeploymentRule(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentDeploymentRule>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentDeploymentRule(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -20415,7 +20329,7 @@ export const EnvironmentDeploymentRuleApiFactory = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editEnvironmentDeploymentRule(environmentId: string, deploymentRuleId: string, environmentDeploymentRuleEditRequest?: EnvironmentDeploymentRuleEditRequest, options?: any): AxiosPromise<EnvironmentDeploymentRuleResponse> {
+        editEnvironmentDeploymentRule(environmentId: string, deploymentRuleId: string, environmentDeploymentRuleEditRequest?: EnvironmentDeploymentRuleEditRequest, options?: any): AxiosPromise<EnvironmentDeploymentRule> {
             return localVarFp.editEnvironmentDeploymentRule(environmentId, deploymentRuleId, environmentDeploymentRuleEditRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -20425,7 +20339,7 @@ export const EnvironmentDeploymentRuleApiFactory = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEnvironmentDeploymentRule(environmentId: string, options?: any): AxiosPromise<EnvironmentDeploymentRuleResponse> {
+        getEnvironmentDeploymentRule(environmentId: string, options?: any): AxiosPromise<EnvironmentDeploymentRule> {
             return localVarFp.getEnvironmentDeploymentRule(environmentId, options).then((request) => request(axios, basePath));
         },
     };
@@ -20804,7 +20718,7 @@ export const EnvironmentMainCallsApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editEnvironment(environmentId: string, environmentEditRequest?: EnvironmentEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentResponse>> {
+        async editEnvironment(environmentId: string, environmentEditRequest?: EnvironmentEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Environment>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editEnvironment(environmentId, environmentEditRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -20815,7 +20729,7 @@ export const EnvironmentMainCallsApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEnvironment(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentResponse>> {
+        async getEnvironment(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Environment>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironment(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -20869,7 +20783,7 @@ export const EnvironmentMainCallsApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editEnvironment(environmentId: string, environmentEditRequest?: EnvironmentEditRequest, options?: any): AxiosPromise<EnvironmentResponse> {
+        editEnvironment(environmentId: string, environmentEditRequest?: EnvironmentEditRequest, options?: any): AxiosPromise<Environment> {
             return localVarFp.editEnvironment(environmentId, environmentEditRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -20879,7 +20793,7 @@ export const EnvironmentMainCallsApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEnvironment(environmentId: string, options?: any): AxiosPromise<EnvironmentResponse> {
+        getEnvironment(environmentId: string, options?: any): AxiosPromise<Environment> {
             return localVarFp.getEnvironment(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -21261,7 +21175,7 @@ export const EnvironmentSecretApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createEnvironmentSecret(environmentId: string, secretRequest?: SecretRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SecretResponse>> {
+        async createEnvironmentSecret(environmentId: string, secretRequest?: SecretRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Secret>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createEnvironmentSecret(environmentId, secretRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -21274,7 +21188,7 @@ export const EnvironmentSecretApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createEnvironmentSecretAlias(environmentId: string, secretId: string, key?: Key, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SecretResponse>> {
+        async createEnvironmentSecretAlias(environmentId: string, secretId: string, key?: Key, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Secret>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createEnvironmentSecretAlias(environmentId, secretId, key, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -21287,7 +21201,7 @@ export const EnvironmentSecretApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createEnvironmentSecretOverride(environmentId: string, secretId: string, value?: Value, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SecretResponse>> {
+        async createEnvironmentSecretOverride(environmentId: string, secretId: string, value?: Value, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Secret>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createEnvironmentSecretOverride(environmentId, secretId, value, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -21312,7 +21226,7 @@ export const EnvironmentSecretApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editEnvironmentSecret(environmentId: string, secretId: string, secretEditRequest: SecretEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SecretResponse>> {
+        async editEnvironmentSecret(environmentId: string, secretId: string, secretEditRequest: SecretEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Secret>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editEnvironmentSecret(environmentId, secretId, secretEditRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -21345,7 +21259,7 @@ export const EnvironmentSecretApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createEnvironmentSecret(environmentId: string, secretRequest?: SecretRequest, options?: any): AxiosPromise<SecretResponse> {
+        createEnvironmentSecret(environmentId: string, secretRequest?: SecretRequest, options?: any): AxiosPromise<Secret> {
             return localVarFp.createEnvironmentSecret(environmentId, secretRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -21357,7 +21271,7 @@ export const EnvironmentSecretApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createEnvironmentSecretAlias(environmentId: string, secretId: string, key?: Key, options?: any): AxiosPromise<SecretResponse> {
+        createEnvironmentSecretAlias(environmentId: string, secretId: string, key?: Key, options?: any): AxiosPromise<Secret> {
             return localVarFp.createEnvironmentSecretAlias(environmentId, secretId, key, options).then((request) => request(axios, basePath));
         },
         /**
@@ -21369,7 +21283,7 @@ export const EnvironmentSecretApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createEnvironmentSecretOverride(environmentId: string, secretId: string, value?: Value, options?: any): AxiosPromise<SecretResponse> {
+        createEnvironmentSecretOverride(environmentId: string, secretId: string, value?: Value, options?: any): AxiosPromise<Secret> {
             return localVarFp.createEnvironmentSecretOverride(environmentId, secretId, value, options).then((request) => request(axios, basePath));
         },
         /**
@@ -21392,7 +21306,7 @@ export const EnvironmentSecretApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editEnvironmentSecret(environmentId: string, secretId: string, secretEditRequest: SecretEditRequest, options?: any): AxiosPromise<SecretResponse> {
+        editEnvironmentSecret(environmentId: string, secretId: string, secretEditRequest: SecretEditRequest, options?: any): AxiosPromise<Secret> {
             return localVarFp.editEnvironmentSecret(environmentId, secretId, secretEditRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -21783,7 +21697,7 @@ export const EnvironmentVariableApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createEnvironmentEnvironmentVariable(environmentId: string, environmentVariableRequest?: EnvironmentVariableRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariableResponse>> {
+        async createEnvironmentEnvironmentVariable(environmentId: string, environmentVariableRequest?: EnvironmentVariableRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariable>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createEnvironmentEnvironmentVariable(environmentId, environmentVariableRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -21796,7 +21710,7 @@ export const EnvironmentVariableApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createEnvironmentEnvironmentVariableAlias(environmentId: string, environmentVariableId: string, key?: Key, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariableResponse>> {
+        async createEnvironmentEnvironmentVariableAlias(environmentId: string, environmentVariableId: string, key?: Key, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariable>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createEnvironmentEnvironmentVariableAlias(environmentId, environmentVariableId, key, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -21809,7 +21723,7 @@ export const EnvironmentVariableApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createEnvironmentEnvironmentVariableOverride(environmentId: string, environmentVariableId: string, value?: Value, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariableResponse>> {
+        async createEnvironmentEnvironmentVariableOverride(environmentId: string, environmentVariableId: string, value?: Value, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariable>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createEnvironmentEnvironmentVariableOverride(environmentId, environmentVariableId, value, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -21834,7 +21748,7 @@ export const EnvironmentVariableApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editEnvironmentEnvironmentVariable(environmentId: string, environmentVariableId: string, environmentVariableEditRequest: EnvironmentVariableEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariableResponse>> {
+        async editEnvironmentEnvironmentVariable(environmentId: string, environmentVariableId: string, environmentVariableEditRequest: EnvironmentVariableEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariable>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editEnvironmentEnvironmentVariable(environmentId, environmentVariableId, environmentVariableEditRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -21867,7 +21781,7 @@ export const EnvironmentVariableApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createEnvironmentEnvironmentVariable(environmentId: string, environmentVariableRequest?: EnvironmentVariableRequest, options?: any): AxiosPromise<EnvironmentVariableResponse> {
+        createEnvironmentEnvironmentVariable(environmentId: string, environmentVariableRequest?: EnvironmentVariableRequest, options?: any): AxiosPromise<EnvironmentVariable> {
             return localVarFp.createEnvironmentEnvironmentVariable(environmentId, environmentVariableRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -21879,7 +21793,7 @@ export const EnvironmentVariableApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createEnvironmentEnvironmentVariableAlias(environmentId: string, environmentVariableId: string, key?: Key, options?: any): AxiosPromise<EnvironmentVariableResponse> {
+        createEnvironmentEnvironmentVariableAlias(environmentId: string, environmentVariableId: string, key?: Key, options?: any): AxiosPromise<EnvironmentVariable> {
             return localVarFp.createEnvironmentEnvironmentVariableAlias(environmentId, environmentVariableId, key, options).then((request) => request(axios, basePath));
         },
         /**
@@ -21891,7 +21805,7 @@ export const EnvironmentVariableApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createEnvironmentEnvironmentVariableOverride(environmentId: string, environmentVariableId: string, value?: Value, options?: any): AxiosPromise<EnvironmentVariableResponse> {
+        createEnvironmentEnvironmentVariableOverride(environmentId: string, environmentVariableId: string, value?: Value, options?: any): AxiosPromise<EnvironmentVariable> {
             return localVarFp.createEnvironmentEnvironmentVariableOverride(environmentId, environmentVariableId, value, options).then((request) => request(axios, basePath));
         },
         /**
@@ -21914,7 +21828,7 @@ export const EnvironmentVariableApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editEnvironmentEnvironmentVariable(environmentId: string, environmentVariableId: string, environmentVariableEditRequest: EnvironmentVariableEditRequest, options?: any): AxiosPromise<EnvironmentVariableResponse> {
+        editEnvironmentEnvironmentVariable(environmentId: string, environmentVariableId: string, environmentVariableEditRequest: EnvironmentVariableEditRequest, options?: any): AxiosPromise<EnvironmentVariable> {
             return localVarFp.editEnvironmentEnvironmentVariable(environmentId, environmentVariableId, environmentVariableEditRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -22199,7 +22113,7 @@ export const EnvironmentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createEnvironment(projectId: string, environmentRequest?: EnvironmentRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentResponse>> {
+        async createEnvironment(projectId: string, environmentRequest?: EnvironmentRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Environment>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createEnvironment(projectId, environmentRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -22254,7 +22168,7 @@ export const EnvironmentsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createEnvironment(projectId: string, environmentRequest?: EnvironmentRequest, options?: any): AxiosPromise<EnvironmentResponse> {
+        createEnvironment(projectId: string, environmentRequest?: EnvironmentRequest, options?: any): AxiosPromise<Environment> {
             return localVarFp.createEnvironment(projectId, environmentRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23198,7 +23112,7 @@ export const LogicalDatabaseApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createLogicalDatabaseOnDatabase(databaseId: string, logicalDatabaseRequest?: LogicalDatabaseRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LogicalDatabaseResponse>> {
+        async createLogicalDatabaseOnDatabase(databaseId: string, logicalDatabaseRequest?: LogicalDatabaseRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LogicalDatabase>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createLogicalDatabaseOnDatabase(databaseId, logicalDatabaseRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -23221,7 +23135,7 @@ export const LogicalDatabaseApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editLogicalDatabase(logicalDatabaseId: string, logicalDatabaseRequest?: LogicalDatabaseRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LogicalDatabaseResponse>> {
+        async editLogicalDatabase(logicalDatabaseId: string, logicalDatabaseRequest?: LogicalDatabaseRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LogicalDatabase>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editLogicalDatabase(logicalDatabaseId, logicalDatabaseRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -23233,7 +23147,7 @@ export const LogicalDatabaseApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editLogicalDatabaseCredentials(logicalDatabaseId: string, credentialsRequest?: CredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CredentialsResponse>> {
+        async editLogicalDatabaseCredentials(logicalDatabaseId: string, credentialsRequest?: CredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Credentials>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editLogicalDatabaseCredentials(logicalDatabaseId, credentialsRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -23244,7 +23158,7 @@ export const LogicalDatabaseApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLogicalDatabase(logicalDatabaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LogicalDatabaseResponse>> {
+        async getLogicalDatabase(logicalDatabaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LogicalDatabase>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLogicalDatabase(logicalDatabaseId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -23255,7 +23169,7 @@ export const LogicalDatabaseApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLogicalDatabaseCredentials(logicalDatabaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CredentialsResponse>> {
+        async getLogicalDatabaseCredentials(logicalDatabaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Credentials>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLogicalDatabaseCredentials(logicalDatabaseId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -23299,7 +23213,7 @@ export const LogicalDatabaseApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createLogicalDatabaseOnDatabase(databaseId: string, logicalDatabaseRequest?: LogicalDatabaseRequest, options?: any): AxiosPromise<LogicalDatabaseResponse> {
+        createLogicalDatabaseOnDatabase(databaseId: string, logicalDatabaseRequest?: LogicalDatabaseRequest, options?: any): AxiosPromise<LogicalDatabase> {
             return localVarFp.createLogicalDatabaseOnDatabase(databaseId, logicalDatabaseRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23320,7 +23234,7 @@ export const LogicalDatabaseApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editLogicalDatabase(logicalDatabaseId: string, logicalDatabaseRequest?: LogicalDatabaseRequest, options?: any): AxiosPromise<LogicalDatabaseResponse> {
+        editLogicalDatabase(logicalDatabaseId: string, logicalDatabaseRequest?: LogicalDatabaseRequest, options?: any): AxiosPromise<LogicalDatabase> {
             return localVarFp.editLogicalDatabase(logicalDatabaseId, logicalDatabaseRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23331,7 +23245,7 @@ export const LogicalDatabaseApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editLogicalDatabaseCredentials(logicalDatabaseId: string, credentialsRequest?: CredentialsRequest, options?: any): AxiosPromise<CredentialsResponse> {
+        editLogicalDatabaseCredentials(logicalDatabaseId: string, credentialsRequest?: CredentialsRequest, options?: any): AxiosPromise<Credentials> {
             return localVarFp.editLogicalDatabaseCredentials(logicalDatabaseId, credentialsRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23341,7 +23255,7 @@ export const LogicalDatabaseApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLogicalDatabase(logicalDatabaseId: string, options?: any): AxiosPromise<LogicalDatabaseResponse> {
+        getLogicalDatabase(logicalDatabaseId: string, options?: any): AxiosPromise<LogicalDatabase> {
             return localVarFp.getLogicalDatabase(logicalDatabaseId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23351,7 +23265,7 @@ export const LogicalDatabaseApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLogicalDatabaseCredentials(logicalDatabaseId: string, options?: any): AxiosPromise<CredentialsResponse> {
+        getLogicalDatabaseCredentials(logicalDatabaseId: string, options?: any): AxiosPromise<Credentials> {
             return localVarFp.getLogicalDatabaseCredentials(logicalDatabaseId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23836,7 +23750,7 @@ export const MembersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAcceptInviteMember(organizationId: string, inviteId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InviteMemberResponse>> {
+        async postAcceptInviteMember(organizationId: string, inviteId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InviteMember>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAcceptInviteMember(organizationId, inviteId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -23848,7 +23762,7 @@ export const MembersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postInviteMember(organizationId: string, inviteMemberRequest?: InviteMemberRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InviteMemberResponse>> {
+        async postInviteMember(organizationId: string, inviteMemberRequest?: InviteMemberRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InviteMember>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postInviteMember(organizationId, inviteMemberRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -23923,7 +23837,7 @@ export const MembersApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAcceptInviteMember(organizationId: string, inviteId: string, options?: any): AxiosPromise<InviteMemberResponse> {
+        postAcceptInviteMember(organizationId: string, inviteId: string, options?: any): AxiosPromise<InviteMember> {
             return localVarFp.postAcceptInviteMember(organizationId, inviteId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23934,7 +23848,7 @@ export const MembersApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postInviteMember(organizationId: string, inviteMemberRequest?: InviteMemberRequest, options?: any): AxiosPromise<InviteMemberResponse> {
+        postInviteMember(organizationId: string, inviteMemberRequest?: InviteMemberRequest, options?: any): AxiosPromise<InviteMember> {
             return localVarFp.postInviteMember(organizationId, inviteMemberRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -24194,7 +24108,7 @@ export const OrganizationApiTokenApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createOrganizationApiToken(organizationId: string, organizationApiTokenCreateRequest?: OrganizationApiTokenCreateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationApiTokenCreateResponse>> {
+        async createOrganizationApiToken(organizationId: string, organizationApiTokenCreateRequest?: OrganizationApiTokenCreateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationApiTokenCreate>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createOrganizationApiToken(organizationId, organizationApiTokenCreateRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -24239,7 +24153,7 @@ export const OrganizationApiTokenApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createOrganizationApiToken(organizationId: string, organizationApiTokenCreateRequest?: OrganizationApiTokenCreateRequest, options?: any): AxiosPromise<OrganizationApiTokenCreateResponse> {
+        createOrganizationApiToken(organizationId: string, organizationApiTokenCreateRequest?: OrganizationApiTokenCreateRequest, options?: any): AxiosPromise<OrganizationApiTokenCreate> {
             return localVarFp.createOrganizationApiToken(organizationId, organizationApiTokenCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -24526,7 +24440,7 @@ export const OrganizationMainCallsApiFp = function(configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createOrganization(organizationRequest?: OrganizationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationResponse>> {
+        async createOrganization(organizationRequest?: OrganizationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Organization>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createOrganization(organizationRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -24549,7 +24463,7 @@ export const OrganizationMainCallsApiFp = function(configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editOrganization(organizationId: string, organizationEditRequest?: OrganizationEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationResponse>> {
+        async editOrganization(organizationId: string, organizationEditRequest?: OrganizationEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Organization>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editOrganization(organizationId, organizationEditRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -24560,7 +24474,7 @@ export const OrganizationMainCallsApiFp = function(configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganization(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationResponse>> {
+        async getOrganization(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Organization>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganization(organizationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -24591,7 +24505,7 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createOrganization(organizationRequest?: OrganizationRequest, options?: any): AxiosPromise<OrganizationResponse> {
+        createOrganization(organizationRequest?: OrganizationRequest, options?: any): AxiosPromise<Organization> {
             return localVarFp.createOrganization(organizationRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -24612,7 +24526,7 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editOrganization(organizationId: string, organizationEditRequest?: OrganizationEditRequest, options?: any): AxiosPromise<OrganizationResponse> {
+        editOrganization(organizationId: string, organizationEditRequest?: OrganizationEditRequest, options?: any): AxiosPromise<Organization> {
             return localVarFp.editOrganization(organizationId, organizationEditRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -24622,7 +24536,7 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganization(organizationId: string, options?: any): AxiosPromise<OrganizationResponse> {
+        getOrganization(organizationId: string, options?: any): AxiosPromise<Organization> {
             return localVarFp.getOrganization(organizationId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -24982,7 +24896,7 @@ export const ProjectDeploymentRuleApiFp = function(configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createDeploymentRule(projectId: string, projectDeploymentRuleRequest?: ProjectDeploymentRuleRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectDeploymentRuleResponse>> {
+        async createDeploymentRule(projectId: string, projectDeploymentRuleRequest?: ProjectDeploymentRuleRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectDeploymentRule>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createDeploymentRule(projectId, projectDeploymentRuleRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -25007,7 +24921,7 @@ export const ProjectDeploymentRuleApiFp = function(configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editProjectDeployemtnRule(projectId: string, deploymentRuleId: string, projectDeploymentRuleRequest?: ProjectDeploymentRuleRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectDeploymentRuleResponse>> {
+        async editProjectDeployemtnRule(projectId: string, deploymentRuleId: string, projectDeploymentRuleRequest?: ProjectDeploymentRuleRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectDeploymentRule>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editProjectDeployemtnRule(projectId, deploymentRuleId, projectDeploymentRuleRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -25019,7 +24933,7 @@ export const ProjectDeploymentRuleApiFp = function(configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProjectDeploymentRule(projectId: string, deploymentRuleId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectDeploymentRuleResponse>> {
+        async getProjectDeploymentRule(projectId: string, deploymentRuleId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectDeploymentRule>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProjectDeploymentRule(projectId, deploymentRuleId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -25064,7 +24978,7 @@ export const ProjectDeploymentRuleApiFactory = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createDeploymentRule(projectId: string, projectDeploymentRuleRequest?: ProjectDeploymentRuleRequest, options?: any): AxiosPromise<ProjectDeploymentRuleResponse> {
+        createDeploymentRule(projectId: string, projectDeploymentRuleRequest?: ProjectDeploymentRuleRequest, options?: any): AxiosPromise<ProjectDeploymentRule> {
             return localVarFp.createDeploymentRule(projectId, projectDeploymentRuleRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -25087,7 +25001,7 @@ export const ProjectDeploymentRuleApiFactory = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editProjectDeployemtnRule(projectId: string, deploymentRuleId: string, projectDeploymentRuleRequest?: ProjectDeploymentRuleRequest, options?: any): AxiosPromise<ProjectDeploymentRuleResponse> {
+        editProjectDeployemtnRule(projectId: string, deploymentRuleId: string, projectDeploymentRuleRequest?: ProjectDeploymentRuleRequest, options?: any): AxiosPromise<ProjectDeploymentRule> {
             return localVarFp.editProjectDeployemtnRule(projectId, deploymentRuleId, projectDeploymentRuleRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -25098,7 +25012,7 @@ export const ProjectDeploymentRuleApiFactory = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProjectDeploymentRule(projectId: string, deploymentRuleId: string, options?: any): AxiosPromise<ProjectDeploymentRuleResponse> {
+        getProjectDeploymentRule(projectId: string, deploymentRuleId: string, options?: any): AxiosPromise<ProjectDeploymentRule> {
             return localVarFp.getProjectDeploymentRule(projectId, deploymentRuleId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -25498,7 +25412,7 @@ export const ProjectEnvironmentVariableApiFp = function(configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createProjectEnvironmentVariable(projectId: string, environmentVariableRequest?: EnvironmentVariableRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariableResponse>> {
+        async createProjectEnvironmentVariable(projectId: string, environmentVariableRequest?: EnvironmentVariableRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariable>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createProjectEnvironmentVariable(projectId, environmentVariableRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -25511,7 +25425,7 @@ export const ProjectEnvironmentVariableApiFp = function(configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createProjectEnvironmentVariableAlias(projectId: string, environmentVariableId: string, key?: Key, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariableResponse>> {
+        async createProjectEnvironmentVariableAlias(projectId: string, environmentVariableId: string, key?: Key, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariable>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createProjectEnvironmentVariableAlias(projectId, environmentVariableId, key, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -25524,7 +25438,7 @@ export const ProjectEnvironmentVariableApiFp = function(configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createProjectEnvironmentVariableOverride(projectId: string, environmentVariableId: string, value?: Value, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariableResponse>> {
+        async createProjectEnvironmentVariableOverride(projectId: string, environmentVariableId: string, value?: Value, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariable>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createProjectEnvironmentVariableOverride(projectId, environmentVariableId, value, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -25549,7 +25463,7 @@ export const ProjectEnvironmentVariableApiFp = function(configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editProjectEnvironmentVariable(projectId: string, environmentVariableId: string, environmentVariableEditRequest: EnvironmentVariableEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariableResponse>> {
+        async editProjectEnvironmentVariable(projectId: string, environmentVariableId: string, environmentVariableEditRequest: EnvironmentVariableEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariable>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editProjectEnvironmentVariable(projectId, environmentVariableId, environmentVariableEditRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -25582,7 +25496,7 @@ export const ProjectEnvironmentVariableApiFactory = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createProjectEnvironmentVariable(projectId: string, environmentVariableRequest?: EnvironmentVariableRequest, options?: any): AxiosPromise<EnvironmentVariableResponse> {
+        createProjectEnvironmentVariable(projectId: string, environmentVariableRequest?: EnvironmentVariableRequest, options?: any): AxiosPromise<EnvironmentVariable> {
             return localVarFp.createProjectEnvironmentVariable(projectId, environmentVariableRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -25594,7 +25508,7 @@ export const ProjectEnvironmentVariableApiFactory = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createProjectEnvironmentVariableAlias(projectId: string, environmentVariableId: string, key?: Key, options?: any): AxiosPromise<EnvironmentVariableResponse> {
+        createProjectEnvironmentVariableAlias(projectId: string, environmentVariableId: string, key?: Key, options?: any): AxiosPromise<EnvironmentVariable> {
             return localVarFp.createProjectEnvironmentVariableAlias(projectId, environmentVariableId, key, options).then((request) => request(axios, basePath));
         },
         /**
@@ -25606,7 +25520,7 @@ export const ProjectEnvironmentVariableApiFactory = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createProjectEnvironmentVariableOverride(projectId: string, environmentVariableId: string, value?: Value, options?: any): AxiosPromise<EnvironmentVariableResponse> {
+        createProjectEnvironmentVariableOverride(projectId: string, environmentVariableId: string, value?: Value, options?: any): AxiosPromise<EnvironmentVariable> {
             return localVarFp.createProjectEnvironmentVariableOverride(projectId, environmentVariableId, value, options).then((request) => request(axios, basePath));
         },
         /**
@@ -25629,7 +25543,7 @@ export const ProjectEnvironmentVariableApiFactory = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editProjectEnvironmentVariable(projectId: string, environmentVariableId: string, environmentVariableEditRequest: EnvironmentVariableEditRequest, options?: any): AxiosPromise<EnvironmentVariableResponse> {
+        editProjectEnvironmentVariable(projectId: string, environmentVariableId: string, environmentVariableEditRequest: EnvironmentVariableEditRequest, options?: any): AxiosPromise<EnvironmentVariable> {
             return localVarFp.editProjectEnvironmentVariable(projectId, environmentVariableId, environmentVariableEditRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -25887,7 +25801,7 @@ export const ProjectMainCallsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editProject(projectId: string, projectRequest?: ProjectRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectResponse>> {
+        async editProject(projectId: string, projectRequest?: ProjectRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Project>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editProject(projectId, projectRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -25898,7 +25812,7 @@ export const ProjectMainCallsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProject(projectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectResponse>> {
+        async getProject(projectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Project>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProject(projectId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -25930,7 +25844,7 @@ export const ProjectMainCallsApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editProject(projectId: string, projectRequest?: ProjectRequest, options?: any): AxiosPromise<ProjectResponse> {
+        editProject(projectId: string, projectRequest?: ProjectRequest, options?: any): AxiosPromise<Project> {
             return localVarFp.editProject(projectId, projectRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -25940,7 +25854,7 @@ export const ProjectMainCallsApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProject(projectId: string, options?: any): AxiosPromise<ProjectResponse> {
+        getProject(projectId: string, options?: any): AxiosPromise<Project> {
             return localVarFp.getProject(projectId, options).then((request) => request(axios, basePath));
         },
     };
@@ -26278,7 +26192,7 @@ export const ProjectSecretApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createProjectSecret(projectId: string, secretRequest?: SecretRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SecretResponse>> {
+        async createProjectSecret(projectId: string, secretRequest?: SecretRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Secret>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createProjectSecret(projectId, secretRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -26291,7 +26205,7 @@ export const ProjectSecretApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createProjectSecretAlias(projectId: string, secretId: string, key?: Key, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SecretResponse>> {
+        async createProjectSecretAlias(projectId: string, secretId: string, key?: Key, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Secret>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createProjectSecretAlias(projectId, secretId, key, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -26304,7 +26218,7 @@ export const ProjectSecretApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createProjectSecretOverride(projectId: string, secretId: string, value?: Value, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SecretResponse>> {
+        async createProjectSecretOverride(projectId: string, secretId: string, value?: Value, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Secret>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createProjectSecretOverride(projectId, secretId, value, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -26329,7 +26243,7 @@ export const ProjectSecretApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editProjectSecret(projectId: string, secretId: string, secretEditRequest: SecretEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SecretResponse>> {
+        async editProjectSecret(projectId: string, secretId: string, secretEditRequest: SecretEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Secret>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editProjectSecret(projectId, secretId, secretEditRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -26362,7 +26276,7 @@ export const ProjectSecretApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createProjectSecret(projectId: string, secretRequest?: SecretRequest, options?: any): AxiosPromise<SecretResponse> {
+        createProjectSecret(projectId: string, secretRequest?: SecretRequest, options?: any): AxiosPromise<Secret> {
             return localVarFp.createProjectSecret(projectId, secretRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26374,7 +26288,7 @@ export const ProjectSecretApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createProjectSecretAlias(projectId: string, secretId: string, key?: Key, options?: any): AxiosPromise<SecretResponse> {
+        createProjectSecretAlias(projectId: string, secretId: string, key?: Key, options?: any): AxiosPromise<Secret> {
             return localVarFp.createProjectSecretAlias(projectId, secretId, key, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26386,7 +26300,7 @@ export const ProjectSecretApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createProjectSecretOverride(projectId: string, secretId: string, value?: Value, options?: any): AxiosPromise<SecretResponse> {
+        createProjectSecretOverride(projectId: string, secretId: string, value?: Value, options?: any): AxiosPromise<Secret> {
             return localVarFp.createProjectSecretOverride(projectId, secretId, value, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26409,7 +26323,7 @@ export const ProjectSecretApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editProjectSecret(projectId: string, secretId: string, secretEditRequest: SecretEditRequest, options?: any): AxiosPromise<SecretResponse> {
+        editProjectSecret(projectId: string, secretId: string, secretEditRequest: SecretEditRequest, options?: any): AxiosPromise<Secret> {
             return localVarFp.editProjectSecret(projectId, secretId, secretEditRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26656,7 +26570,7 @@ export const ProjectsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createProject(organizationId: string, projectRequest?: ProjectRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectResponse>> {
+        async createProject(organizationId: string, projectRequest?: ProjectRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Project>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createProject(organizationId, projectRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -26700,7 +26614,7 @@ export const ProjectsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createProject(organizationId: string, projectRequest?: ProjectRequest, options?: any): AxiosPromise<ProjectResponse> {
+        createProject(organizationId: string, projectRequest?: ProjectRequest, options?: any): AxiosPromise<Project> {
             return localVarFp.createProject(organizationId, projectRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -26815,11 +26729,11 @@ export const ReferralRewardsApiAxiosParamCreator = function (configuration?: Con
         /**
          * A same code can be claimed only 3 times at max
          * @summary Claim a reward
-         * @param {RewardClaimResponse} [rewardClaimResponse] 
+         * @param {RewardClaim} [rewardClaim] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAccountRewardClaim: async (rewardClaimResponse?: RewardClaimResponse, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAccountRewardClaim: async (rewardClaim?: RewardClaim, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/account/rewardClaim`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -26843,7 +26757,7 @@ export const ReferralRewardsApiAxiosParamCreator = function (configuration?: Con
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(rewardClaimResponse, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(rewardClaim, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -26866,19 +26780,19 @@ export const ReferralRewardsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAccountReferral(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReferralResponse>> {
+        async getAccountReferral(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Referral>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAccountReferral(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * A same code can be claimed only 3 times at max
          * @summary Claim a reward
-         * @param {RewardClaimResponse} [rewardClaimResponse] 
+         * @param {RewardClaim} [rewardClaim] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAccountRewardClaim(rewardClaimResponse?: RewardClaimResponse, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postAccountRewardClaim(rewardClaimResponse, options);
+        async postAccountRewardClaim(rewardClaim?: RewardClaim, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAccountRewardClaim(rewardClaim, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -26897,18 +26811,18 @@ export const ReferralRewardsApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccountReferral(options?: any): AxiosPromise<ReferralResponse> {
+        getAccountReferral(options?: any): AxiosPromise<Referral> {
             return localVarFp.getAccountReferral(options).then((request) => request(axios, basePath));
         },
         /**
          * A same code can be claimed only 3 times at max
          * @summary Claim a reward
-         * @param {RewardClaimResponse} [rewardClaimResponse] 
+         * @param {RewardClaim} [rewardClaim] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAccountRewardClaim(rewardClaimResponse?: RewardClaimResponse, options?: any): AxiosPromise<void> {
-            return localVarFp.postAccountRewardClaim(rewardClaimResponse, options).then((request) => request(axios, basePath));
+        postAccountRewardClaim(rewardClaim?: RewardClaim, options?: any): AxiosPromise<void> {
+            return localVarFp.postAccountRewardClaim(rewardClaim, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -26934,13 +26848,13 @@ export class ReferralRewardsApi extends BaseAPI {
     /**
      * A same code can be claimed only 3 times at max
      * @summary Claim a reward
-     * @param {RewardClaimResponse} [rewardClaimResponse] 
+     * @param {RewardClaim} [rewardClaim] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ReferralRewardsApi
      */
-    public postAccountRewardClaim(rewardClaimResponse?: RewardClaimResponse, options?: AxiosRequestConfig) {
-        return ReferralRewardsApiFp(this.configuration).postAccountRewardClaim(rewardClaimResponse, options).then((request) => request(this.axios, this.basePath));
+    public postAccountRewardClaim(rewardClaim?: RewardClaim, options?: AxiosRequestConfig) {
+        return ReferralRewardsApiFp(this.configuration).postAccountRewardClaim(rewardClaim, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -27050,7 +26964,7 @@ export const UserSignUpApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUserSignUp(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseResponse & object>> {
+        async getUserSignUp(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Base & object>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUserSignUp(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -27080,7 +26994,7 @@ export const UserSignUpApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserSignUp(options?: any): AxiosPromise<BaseResponse & object> {
+        getUserSignUp(options?: any): AxiosPromise<Base & object> {
             return localVarFp.getUserSignUp(options).then((request) => request(axios, basePath));
         },
     };
