@@ -2531,6 +2531,20 @@ export interface CommunityUsage {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export enum CompanySizeEnum {
+    _1_10 = '1-10',
+    _11_50 = '11-50',
+    _51_200 = '51-200',
+    _201_500 = '201-500',
+    _500 = '500+'
+}
+
+/**
+ * 
+ * @export
  * @interface Cost
  */
 export interface Cost {
@@ -3231,6 +3245,38 @@ export interface DatabaseVersionMode {
      * @memberof DatabaseVersionMode
      */
     'supported_mode'?: DatabaseModeEnum;
+}
+/**
+ * 
+ * @export
+ * @interface DeployAllRequest
+ */
+export interface DeployAllRequest {
+    /**
+     * 
+     * @type {Array<DeployAllRequestApplications>}
+     * @memberof DeployAllRequest
+     */
+    'applications'?: Array<DeployAllRequestApplications>;
+}
+/**
+ * 
+ * @export
+ * @interface DeployAllRequestApplications
+ */
+export interface DeployAllRequestApplications {
+    /**
+     * id of the application to be deployed.
+     * @type {string}
+     * @memberof DeployAllRequestApplications
+     */
+    'application_id': string;
+    /**
+     * Commit ID to deploy.
+     * @type {string}
+     * @memberof DeployAllRequestApplications
+     */
+    'git_commit_id': string;
 }
 /**
  * 
@@ -4371,25 +4417,6 @@ export interface EnvironmentEditRequest {
 /**
  * 
  * @export
- * @interface EnvironmentEnvironmentIdApplicationDeployApplications
- */
-export interface EnvironmentEnvironmentIdApplicationDeployApplications {
-    /**
-     * id of the application to be deployed.
-     * @type {string}
-     * @memberof EnvironmentEnvironmentIdApplicationDeployApplications
-     */
-    'application_id': string;
-    /**
-     * Commit ID to deploy.
-     * @type {string}
-     * @memberof EnvironmentEnvironmentIdApplicationDeployApplications
-     */
-    'git_commit_id': string;
-}
-/**
- * 
- * @export
  * @interface EnvironmentLog
  */
 export interface EnvironmentLog {
@@ -5205,133 +5232,6 @@ export enum HealthcheckProtocolEnum {
     TCP = 'TCP',
     HTTP = 'HTTP',
     NONE = 'None'
-}
-
-/**
- * 
- * @export
- * @interface InlineObject
- */
-export interface InlineObject {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof InlineObject
-     */
-    'project_deployment_rule_ids_in_order'?: Array<string>;
-}
-/**
- * 
- * @export
- * @interface InlineObject1
- */
-export interface InlineObject1 {
-    /**
-     * 
-     * @type {Array<EnvironmentEnvironmentIdApplicationDeployApplications>}
-     * @memberof InlineObject1
-     */
-    'applications'?: Array<EnvironmentEnvironmentIdApplicationDeployApplications>;
-}
-/**
- * 
- * @export
- * @interface InlineObject2
- */
-export interface InlineObject2 {
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineObject2
-     */
-    'first_name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineObject2
-     */
-    'last_name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineObject2
-     */
-    'user_email': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineObject2
-     */
-    'type_of_use': InlineObject2TypeOfUseEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineObject2
-     */
-    'qovery_usage': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineObject2
-     */
-    'company_name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineObject2
-     */
-    'company_size'?: InlineObject2CompanySizeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineObject2
-     */
-    'user_role'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineObject2
-     */
-    'qovery_usage_other'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineObject2
-     */
-    'user_questions'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineObject2
-     */
-    'current_step'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof InlineObject2
-     */
-    'dx_auth'?: boolean | null;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum InlineObject2TypeOfUseEnum {
-    PERSONAL = 'PERSONAL',
-    WORK = 'WORK',
-    SCHOOL = 'SCHOOL'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum InlineObject2CompanySizeEnum {
-    _1_10 = '1-10',
-    _11_50 = '11-50',
-    _51_200 = '51-200',
-    _201_500 = '201-500',
-    _500 = '500+'
 }
 
 /**
@@ -7202,6 +7102,19 @@ export interface ProjectDeploymentRuleResponseList {
 /**
  * 
  * @export
+ * @interface ProjectDeploymentRulesPriorityOrderRequest
+ */
+export interface ProjectDeploymentRulesPriorityOrderRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ProjectDeploymentRulesPriorityOrderRequest
+     */
+    'project_deployment_rule_ids_in_order'?: Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface ProjectRequest
  */
 export interface ProjectRequest {
@@ -7746,6 +7659,182 @@ export enum ServiceTypeEnum {
 /**
  * 
  * @export
+ * @interface SignUp
+ */
+export interface SignUp {
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUp
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUp
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUp
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUp
+     */
+    'first_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUp
+     */
+    'last_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUp
+     */
+    'user_email': string;
+    /**
+     * 
+     * @type {TypeOfUseEnum}
+     * @memberof SignUp
+     */
+    'type_of_use': TypeOfUseEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUp
+     */
+    'qovery_usage': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUp
+     */
+    'company_name'?: string | null;
+    /**
+     * 
+     * @type {CompanySizeEnum}
+     * @memberof SignUp
+     */
+    'company_size'?: CompanySizeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUp
+     */
+    'user_role'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUp
+     */
+    'qovery_usage_other'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUp
+     */
+    'user_questions'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUp
+     */
+    'current_step'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SignUp
+     */
+    'dx_auth'?: boolean | null;
+}
+/**
+ * 
+ * @export
+ * @interface SignUpRequest
+ */
+export interface SignUpRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUpRequest
+     */
+    'first_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUpRequest
+     */
+    'last_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUpRequest
+     */
+    'user_email': string;
+    /**
+     * 
+     * @type {TypeOfUseEnum}
+     * @memberof SignUpRequest
+     */
+    'type_of_use': TypeOfUseEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUpRequest
+     */
+    'qovery_usage': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUpRequest
+     */
+    'company_name'?: string | null;
+    /**
+     * 
+     * @type {CompanySizeEnum}
+     * @memberof SignUpRequest
+     */
+    'company_size'?: CompanySizeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUpRequest
+     */
+    'user_role'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUpRequest
+     */
+    'qovery_usage_other'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUpRequest
+     */
+    'user_questions'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUpRequest
+     */
+    'current_step'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SignUpRequest
+     */
+    'dx_auth'?: boolean | null;
+}
+/**
+ * 
+ * @export
  * @interface Status
  */
 export interface Status {
@@ -7924,6 +8013,18 @@ export interface TransferOwnershipRequest {
      */
     'user_id': string;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum TypeOfUseEnum {
+    PERSONAL = 'PERSONAL',
+    WORK = 'WORK',
+    SCHOOL = 'SCHOOL'
+}
+
 /**
  * 
  * @export
@@ -12495,11 +12596,11 @@ export const ApplicationsApiAxiosParamCreator = function (configuration?: Config
          * Deploy to the last commit the applications you specified.
          * @summary Deploy applications
          * @param {string} environmentId Environment ID
-         * @param {InlineObject1} [inlineObject1] 
+         * @param {DeployAllRequest} [deployAllRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployAllApplications: async (environmentId: string, inlineObject1?: InlineObject1, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deployAllApplications: async (environmentId: string, deployAllRequest?: DeployAllRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'environmentId' is not null or undefined
             assertParamExists('deployAllApplications', 'environmentId', environmentId)
             const localVarPath = `/environment/{environmentId}/application/deploy`
@@ -12526,7 +12627,7 @@ export const ApplicationsApiAxiosParamCreator = function (configuration?: Config
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject1, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(deployAllRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -12792,12 +12893,12 @@ export const ApplicationsApiFp = function(configuration?: Configuration) {
          * Deploy to the last commit the applications you specified.
          * @summary Deploy applications
          * @param {string} environmentId Environment ID
-         * @param {InlineObject1} [inlineObject1] 
+         * @param {DeployAllRequest} [deployAllRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deployAllApplications(environmentId: string, inlineObject1?: InlineObject1, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deployAllApplications(environmentId, inlineObject1, options);
+        async deployAllApplications(environmentId: string, deployAllRequest?: DeployAllRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deployAllApplications(environmentId, deployAllRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -12892,12 +12993,12 @@ export const ApplicationsApiFactory = function (configuration?: Configuration, b
          * Deploy to the last commit the applications you specified.
          * @summary Deploy applications
          * @param {string} environmentId Environment ID
-         * @param {InlineObject1} [inlineObject1] 
+         * @param {DeployAllRequest} [deployAllRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployAllApplications(environmentId: string, inlineObject1?: InlineObject1, options?: any): AxiosPromise<Status> {
-            return localVarFp.deployAllApplications(environmentId, inlineObject1, options).then((request) => request(axios, basePath));
+        deployAllApplications(environmentId: string, deployAllRequest?: DeployAllRequest, options?: any): AxiosPromise<Status> {
+            return localVarFp.deployAllApplications(environmentId, deployAllRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -12987,13 +13088,13 @@ export class ApplicationsApi extends BaseAPI {
      * Deploy to the last commit the applications you specified.
      * @summary Deploy applications
      * @param {string} environmentId Environment ID
-     * @param {InlineObject1} [inlineObject1] 
+     * @param {DeployAllRequest} [deployAllRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApplicationsApi
      */
-    public deployAllApplications(environmentId: string, inlineObject1?: InlineObject1, options?: AxiosRequestConfig) {
-        return ApplicationsApiFp(this.configuration).deployAllApplications(environmentId, inlineObject1, options).then((request) => request(this.axios, this.basePath));
+    public deployAllApplications(environmentId: string, deployAllRequest?: DeployAllRequest, options?: AxiosRequestConfig) {
+        return ApplicationsApiFp(this.configuration).deployAllApplications(environmentId, deployAllRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -24840,11 +24941,11 @@ export const ProjectDeploymentRuleApiAxiosParamCreator = function (configuration
          * Update deployment rules priority order
          * @summary Update deployment rules priority order
          * @param {string} projectId Project ID
-         * @param {InlineObject} [inlineObject] 
+         * @param {ProjectDeploymentRulesPriorityOrderRequest} [projectDeploymentRulesPriorityOrderRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateDeploymentRulesPriorityOrder: async (projectId: string, inlineObject?: InlineObject, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateDeploymentRulesPriorityOrder: async (projectId: string, projectDeploymentRulesPriorityOrderRequest?: ProjectDeploymentRulesPriorityOrderRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'projectId' is not null or undefined
             assertParamExists('updateDeploymentRulesPriorityOrder', 'projectId', projectId)
             const localVarPath = `/project/{projectId}/deploymentRule/order`
@@ -24871,7 +24972,7 @@ export const ProjectDeploymentRuleApiAxiosParamCreator = function (configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(projectDeploymentRulesPriorityOrderRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -24952,12 +25053,12 @@ export const ProjectDeploymentRuleApiFp = function(configuration?: Configuration
          * Update deployment rules priority order
          * @summary Update deployment rules priority order
          * @param {string} projectId Project ID
-         * @param {InlineObject} [inlineObject] 
+         * @param {ProjectDeploymentRulesPriorityOrderRequest} [projectDeploymentRulesPriorityOrderRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateDeploymentRulesPriorityOrder(projectId: string, inlineObject?: InlineObject, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateDeploymentRulesPriorityOrder(projectId, inlineObject, options);
+        async updateDeploymentRulesPriorityOrder(projectId: string, projectDeploymentRulesPriorityOrderRequest?: ProjectDeploymentRulesPriorityOrderRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateDeploymentRulesPriorityOrder(projectId, projectDeploymentRulesPriorityOrderRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -25029,12 +25130,12 @@ export const ProjectDeploymentRuleApiFactory = function (configuration?: Configu
          * Update deployment rules priority order
          * @summary Update deployment rules priority order
          * @param {string} projectId Project ID
-         * @param {InlineObject} [inlineObject] 
+         * @param {ProjectDeploymentRulesPriorityOrderRequest} [projectDeploymentRulesPriorityOrderRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateDeploymentRulesPriorityOrder(projectId: string, inlineObject?: InlineObject, options?: any): AxiosPromise<void> {
-            return localVarFp.updateDeploymentRulesPriorityOrder(projectId, inlineObject, options).then((request) => request(axios, basePath));
+        updateDeploymentRulesPriorityOrder(projectId: string, projectDeploymentRulesPriorityOrderRequest?: ProjectDeploymentRulesPriorityOrderRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.updateDeploymentRulesPriorityOrder(projectId, projectDeploymentRulesPriorityOrderRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -25115,13 +25216,13 @@ export class ProjectDeploymentRuleApi extends BaseAPI {
      * Update deployment rules priority order
      * @summary Update deployment rules priority order
      * @param {string} projectId Project ID
-     * @param {InlineObject} [inlineObject] 
+     * @param {ProjectDeploymentRulesPriorityOrderRequest} [projectDeploymentRulesPriorityOrderRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectDeploymentRuleApi
      */
-    public updateDeploymentRulesPriorityOrder(projectId: string, inlineObject?: InlineObject, options?: AxiosRequestConfig) {
-        return ProjectDeploymentRuleApiFp(this.configuration).updateDeploymentRulesPriorityOrder(projectId, inlineObject, options).then((request) => request(this.axios, this.basePath));
+    public updateDeploymentRulesPriorityOrder(projectId: string, projectDeploymentRulesPriorityOrderRequest?: ProjectDeploymentRulesPriorityOrderRequest, options?: AxiosRequestConfig) {
+        return ProjectDeploymentRuleApiFp(this.configuration).updateDeploymentRulesPriorityOrder(projectId, projectDeploymentRulesPriorityOrderRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -26868,11 +26969,11 @@ export const UserSignUpApiAxiosParamCreator = function (configuration?: Configur
         /**
          * Send a Sign Up request containing the user information
          * @summary Send Sign Up request
-         * @param {InlineObject2} [inlineObject2] 
+         * @param {SignUpRequest} [signUpRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createUserSignUp: async (inlineObject2?: InlineObject2, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createUserSignUp: async (signUpRequest?: SignUpRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/admin/userSignUp`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -26896,7 +26997,7 @@ export const UserSignUpApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject2, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(signUpRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -26950,12 +27051,12 @@ export const UserSignUpApiFp = function(configuration?: Configuration) {
         /**
          * Send a Sign Up request containing the user information
          * @summary Send Sign Up request
-         * @param {InlineObject2} [inlineObject2] 
+         * @param {SignUpRequest} [signUpRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createUserSignUp(inlineObject2?: InlineObject2, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createUserSignUp(inlineObject2, options);
+        async createUserSignUp(signUpRequest?: SignUpRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createUserSignUp(signUpRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -26964,7 +27065,7 @@ export const UserSignUpApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUserSignUp(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Base & object>> {
+        async getUserSignUp(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SignUp>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUserSignUp(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -26981,12 +27082,12 @@ export const UserSignUpApiFactory = function (configuration?: Configuration, bas
         /**
          * Send a Sign Up request containing the user information
          * @summary Send Sign Up request
-         * @param {InlineObject2} [inlineObject2] 
+         * @param {SignUpRequest} [signUpRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createUserSignUp(inlineObject2?: InlineObject2, options?: any): AxiosPromise<void> {
-            return localVarFp.createUserSignUp(inlineObject2, options).then((request) => request(axios, basePath));
+        createUserSignUp(signUpRequest?: SignUpRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.createUserSignUp(signUpRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Retrieve the Sign Up information of the user
@@ -26994,7 +27095,7 @@ export const UserSignUpApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserSignUp(options?: any): AxiosPromise<Base & object> {
+        getUserSignUp(options?: any): AxiosPromise<SignUp> {
             return localVarFp.getUserSignUp(options).then((request) => request(axios, basePath));
         },
     };
@@ -27010,13 +27111,13 @@ export class UserSignUpApi extends BaseAPI {
     /**
      * Send a Sign Up request containing the user information
      * @summary Send Sign Up request
-     * @param {InlineObject2} [inlineObject2] 
+     * @param {SignUpRequest} [signUpRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserSignUpApi
      */
-    public createUserSignUp(inlineObject2?: InlineObject2, options?: AxiosRequestConfig) {
-        return UserSignUpApiFp(this.configuration).createUserSignUp(inlineObject2, options).then((request) => request(this.axios, this.basePath));
+    public createUserSignUp(signUpRequest?: SignUpRequest, options?: AxiosRequestConfig) {
+        return UserSignUpApiFp(this.configuration).createUserSignUp(signUpRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
