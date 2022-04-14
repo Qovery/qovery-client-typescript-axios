@@ -5237,6 +5237,50 @@ export enum HealthcheckProtocolEnum {
 /**
  * 
  * @export
+ * @interface InlineResponse200
+ */
+export interface InlineResponse200 {
+    /**
+     * 
+     * @type {Array<InlineResponse200Results>}
+     * @memberof InlineResponse200
+     */
+    'results'?: Array<InlineResponse200Results>;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse200Results
+ */
+export interface InlineResponse200Results {
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineResponse200Results
+     */
+    'type': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineResponse200Results
+     */
+    'name': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlineResponse200Results
+     */
+    'cpu': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlineResponse200Results
+     */
+    'ram_in_gb': number;
+}
+/**
+ * 
+ * @export
  * @interface Instance
  */
 export interface Instance {
@@ -14498,6 +14542,40 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
+         * @summary List AWS available instance types
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAWSInstanceType: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/aws/instanceType`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary List AWS regions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -14600,6 +14678,40 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
+         * @summary List DO available instance types
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listDOInstanceType: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/digitalOcean/instanceType`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary List DO regions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -14640,6 +14752,40 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
          */
         listScalewayFeatures: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/scaleway/clusterFeature`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List Scaleway available instance types
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listScalewayInstanceType: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/scaleway/instanceType`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -14722,6 +14868,16 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List AWS available instance types
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listAWSInstanceType(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAWSInstanceType(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary List AWS regions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -14752,6 +14908,16 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List DO available instance types
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listDOInstanceType(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listDOInstanceType(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary List DO regions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -14768,6 +14934,16 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
          */
         async listScalewayFeatures(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterFeatureResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listScalewayFeatures(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary List Scaleway available instance types
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listScalewayInstanceType(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listScalewayInstanceType(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -14801,6 +14977,15 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
         },
         /**
          * 
+         * @summary List AWS available instance types
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAWSInstanceType(options?: any): AxiosPromise<InlineResponse200> {
+            return localVarFp.listAWSInstanceType(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary List AWS regions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -14828,6 +15013,15 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
         },
         /**
          * 
+         * @summary List DO available instance types
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listDOInstanceType(options?: any): AxiosPromise<object> {
+            return localVarFp.listDOInstanceType(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary List DO regions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -14843,6 +15037,15 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
          */
         listScalewayFeatures(options?: any): AxiosPromise<ClusterFeatureResponseList> {
             return localVarFp.listScalewayFeatures(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List Scaleway available instance types
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listScalewayInstanceType(options?: any): AxiosPromise<object> {
+            return localVarFp.listScalewayInstanceType(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -14872,6 +15075,17 @@ export class CloudProviderApi extends BaseAPI {
      */
     public listAWSFeatures(options?: AxiosRequestConfig) {
         return CloudProviderApiFp(this.configuration).listAWSFeatures(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List AWS available instance types
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderApi
+     */
+    public listAWSInstanceType(options?: AxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listAWSInstanceType(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -14909,6 +15123,17 @@ export class CloudProviderApi extends BaseAPI {
 
     /**
      * 
+     * @summary List DO available instance types
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderApi
+     */
+    public listDOInstanceType(options?: AxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listDOInstanceType(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary List DO regions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -14927,6 +15152,17 @@ export class CloudProviderApi extends BaseAPI {
      */
     public listScalewayFeatures(options?: AxiosRequestConfig) {
         return CloudProviderApiFp(this.configuration).listScalewayFeatures(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List Scaleway available instance types
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderApi
+     */
+    public listScalewayInstanceType(options?: AxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listScalewayInstanceType(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
