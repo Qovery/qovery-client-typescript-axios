@@ -1757,6 +1757,12 @@ export interface Cluster {
      */
     'max_running_nodes'?: number;
     /**
+     * the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType
+     * @type {string}
+     * @memberof Cluster
+     */
+    'instance_type'?: string;
+    /**
      * 
      * @type {string}
      * @memberof Cluster
@@ -1904,6 +1910,12 @@ export interface ClusterAllOf {
      * @memberof ClusterAllOf
      */
     'max_running_nodes'?: number;
+    /**
+     * the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType
+     * @type {string}
+     * @memberof ClusterAllOf
+     */
+    'instance_type'?: string;
 }
 /**
  * 
