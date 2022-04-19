@@ -5088,6 +5088,12 @@ export interface GitAuthProvider {
      * @memberof GitAuthProvider
      */
     'owner': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof GitAuthProvider
+     */
+    'use_bot'?: boolean;
 }
 /**
  * 
@@ -22622,6 +22628,7 @@ export const GitRepositoriesApiAxiosParamCreator = function (configuration?: Con
          * 
          * @summary Get bitbucket repositories of the connected user
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getBitbucketRepositories: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -22657,6 +22664,7 @@ export const GitRepositoriesApiAxiosParamCreator = function (configuration?: Con
          * @summary Get bitbucket branches of the specified repository
          * @param {string} [name] The name of the repository where to retrieve the branches
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getBitbucketRepositoryBranches: async (name?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -22695,6 +22703,7 @@ export const GitRepositoriesApiAxiosParamCreator = function (configuration?: Con
          * 
          * @summary Get git provider accounts
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getGitProviderAccount: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -22729,6 +22738,7 @@ export const GitRepositoriesApiAxiosParamCreator = function (configuration?: Con
          * 
          * @summary Get github repositories of the connected user
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getGithubRepositories: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -22764,6 +22774,7 @@ export const GitRepositoriesApiAxiosParamCreator = function (configuration?: Con
          * @summary Get github branches of the specified repository
          * @param {string} [name] The name of the repository where to retrieve the branches
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getGithubRepositoryBranches: async (name?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -22802,6 +22813,7 @@ export const GitRepositoriesApiAxiosParamCreator = function (configuration?: Con
          * 
          * @summary Get gitlab repositories of the connected user
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getGitlabRepositories: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -22837,6 +22849,7 @@ export const GitRepositoriesApiAxiosParamCreator = function (configuration?: Con
          * @summary Get gitlab branches of the specified repository
          * @param {string} [name] The name of the repository to retrieve the branches
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getGitlabRepositoryBranches: async (name?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -22885,6 +22898,7 @@ export const GitRepositoriesApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get bitbucket repositories of the connected user
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async getBitbucketRepositories(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryResponseList>> {
@@ -22896,6 +22910,7 @@ export const GitRepositoriesApiFp = function(configuration?: Configuration) {
          * @summary Get bitbucket branches of the specified repository
          * @param {string} [name] The name of the repository where to retrieve the branches
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async getBitbucketRepositoryBranches(name?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryBranchResponseList>> {
@@ -22906,6 +22921,7 @@ export const GitRepositoriesApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get git provider accounts
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async getGitProviderAccount(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitAuthProviderResponseList>> {
@@ -22916,6 +22932,7 @@ export const GitRepositoriesApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get github repositories of the connected user
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async getGithubRepositories(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryResponseList>> {
@@ -22927,6 +22944,7 @@ export const GitRepositoriesApiFp = function(configuration?: Configuration) {
          * @summary Get github branches of the specified repository
          * @param {string} [name] The name of the repository where to retrieve the branches
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async getGithubRepositoryBranches(name?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryBranchResponseList>> {
@@ -22937,6 +22955,7 @@ export const GitRepositoriesApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get gitlab repositories of the connected user
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async getGitlabRepositories(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryResponseList>> {
@@ -22948,6 +22967,7 @@ export const GitRepositoriesApiFp = function(configuration?: Configuration) {
          * @summary Get gitlab branches of the specified repository
          * @param {string} [name] The name of the repository to retrieve the branches
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async getGitlabRepositoryBranches(name?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryBranchResponseList>> {
@@ -22968,6 +22988,7 @@ export const GitRepositoriesApiFactory = function (configuration?: Configuration
          * 
          * @summary Get bitbucket repositories of the connected user
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getBitbucketRepositories(options?: any): AxiosPromise<GitRepositoryResponseList> {
@@ -22978,6 +22999,7 @@ export const GitRepositoriesApiFactory = function (configuration?: Configuration
          * @summary Get bitbucket branches of the specified repository
          * @param {string} [name] The name of the repository where to retrieve the branches
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getBitbucketRepositoryBranches(name?: string, options?: any): AxiosPromise<GitRepositoryBranchResponseList> {
@@ -22987,6 +23009,7 @@ export const GitRepositoriesApiFactory = function (configuration?: Configuration
          * 
          * @summary Get git provider accounts
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getGitProviderAccount(options?: any): AxiosPromise<GitAuthProviderResponseList> {
@@ -22996,6 +23019,7 @@ export const GitRepositoriesApiFactory = function (configuration?: Configuration
          * 
          * @summary Get github repositories of the connected user
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getGithubRepositories(options?: any): AxiosPromise<GitRepositoryResponseList> {
@@ -23006,6 +23030,7 @@ export const GitRepositoriesApiFactory = function (configuration?: Configuration
          * @summary Get github branches of the specified repository
          * @param {string} [name] The name of the repository where to retrieve the branches
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getGithubRepositoryBranches(name?: string, options?: any): AxiosPromise<GitRepositoryBranchResponseList> {
@@ -23015,6 +23040,7 @@ export const GitRepositoriesApiFactory = function (configuration?: Configuration
          * 
          * @summary Get gitlab repositories of the connected user
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getGitlabRepositories(options?: any): AxiosPromise<GitRepositoryResponseList> {
@@ -23025,6 +23051,7 @@ export const GitRepositoriesApiFactory = function (configuration?: Configuration
          * @summary Get gitlab branches of the specified repository
          * @param {string} [name] The name of the repository to retrieve the branches
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getGitlabRepositoryBranches(name?: string, options?: any): AxiosPromise<GitRepositoryBranchResponseList> {
@@ -23044,6 +23071,7 @@ export class GitRepositoriesApi extends BaseAPI {
      * 
      * @summary Get bitbucket repositories of the connected user
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof GitRepositoriesApi
      */
@@ -23056,6 +23084,7 @@ export class GitRepositoriesApi extends BaseAPI {
      * @summary Get bitbucket branches of the specified repository
      * @param {string} [name] The name of the repository where to retrieve the branches
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof GitRepositoriesApi
      */
@@ -23067,6 +23096,7 @@ export class GitRepositoriesApi extends BaseAPI {
      * 
      * @summary Get git provider accounts
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof GitRepositoriesApi
      */
@@ -23078,6 +23108,7 @@ export class GitRepositoriesApi extends BaseAPI {
      * 
      * @summary Get github repositories of the connected user
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof GitRepositoriesApi
      */
@@ -23090,6 +23121,7 @@ export class GitRepositoriesApi extends BaseAPI {
      * @summary Get github branches of the specified repository
      * @param {string} [name] The name of the repository where to retrieve the branches
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof GitRepositoriesApi
      */
@@ -23101,6 +23133,7 @@ export class GitRepositoriesApi extends BaseAPI {
      * 
      * @summary Get gitlab repositories of the connected user
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof GitRepositoriesApi
      */
@@ -23113,6 +23146,7 @@ export class GitRepositoriesApi extends BaseAPI {
      * @summary Get gitlab branches of the specified repository
      * @param {string} [name] The name of the repository to retrieve the branches
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof GitRepositoriesApi
      */
@@ -24308,6 +24342,565 @@ export class MembersApi extends BaseAPI {
      */
     public postOrganizationTransferOwnership(organizationId: string, transferOwnershipRequest?: TransferOwnershipRequest, options?: AxiosRequestConfig) {
         return MembersApiFp(this.configuration).postOrganizationTransferOwnership(organizationId, transferOwnershipRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * OrganizationAccountGitRepositoriesApi - axios parameter creator
+ * @export
+ */
+export const OrganizationAccountGitRepositoriesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get bitbucket repositories of the connected user
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationBitbucketRepositories: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOrganizationBitbucketRepositories', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/account/bitbucket/repository`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get bitbucket branches of the specified repository
+         * @param {string} organizationId Organization ID
+         * @param {string} [name] The name of the repository where to retrieve the branches
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationBitbucketRepositoryBranches: async (organizationId: string, name?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOrganizationBitbucketRepositoryBranches', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/account/bitbucket/repository/branch`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get git provider accounts
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationGitProviderAccount: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOrganizationGitProviderAccount', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/account/gitAuthProvider`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get github repositories of the connected user
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationGithubRepositories: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOrganizationGithubRepositories', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/account/github/repository`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get github branches of the specified repository
+         * @param {string} organizationId Organization ID
+         * @param {string} [name] The name of the repository where to retrieve the branches
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationGithubRepositoryBranches: async (organizationId: string, name?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOrganizationGithubRepositoryBranches', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/account/github/repository/branch`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get gitlab repositories of the connected user
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationGitlabRepositories: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOrganizationGitlabRepositories', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/account/gitlab/repository`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get gitlab branches of the specified repository
+         * @param {string} organizationId Organization ID
+         * @param {string} [name] The name of the repository to retrieve the branches
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationGitlabRepositoryBranches: async (organizationId: string, name?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOrganizationGitlabRepositoryBranches', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/account/gitlab/repository/branch`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * OrganizationAccountGitRepositoriesApi - functional programming interface
+ * @export
+ */
+export const OrganizationAccountGitRepositoriesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = OrganizationAccountGitRepositoriesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get bitbucket repositories of the connected user
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationBitbucketRepositories(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationBitbucketRepositories(organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get bitbucket branches of the specified repository
+         * @param {string} organizationId Organization ID
+         * @param {string} [name] The name of the repository where to retrieve the branches
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationBitbucketRepositoryBranches(organizationId: string, name?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryBranchResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationBitbucketRepositoryBranches(organizationId, name, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get git provider accounts
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationGitProviderAccount(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitAuthProviderResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationGitProviderAccount(organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get github repositories of the connected user
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationGithubRepositories(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationGithubRepositories(organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get github branches of the specified repository
+         * @param {string} organizationId Organization ID
+         * @param {string} [name] The name of the repository where to retrieve the branches
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationGithubRepositoryBranches(organizationId: string, name?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryBranchResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationGithubRepositoryBranches(organizationId, name, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get gitlab repositories of the connected user
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationGitlabRepositories(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationGitlabRepositories(organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get gitlab branches of the specified repository
+         * @param {string} organizationId Organization ID
+         * @param {string} [name] The name of the repository to retrieve the branches
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationGitlabRepositoryBranches(organizationId: string, name?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryBranchResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationGitlabRepositoryBranches(organizationId, name, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * OrganizationAccountGitRepositoriesApi - factory interface
+ * @export
+ */
+export const OrganizationAccountGitRepositoriesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = OrganizationAccountGitRepositoriesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get bitbucket repositories of the connected user
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationBitbucketRepositories(organizationId: string, options?: any): AxiosPromise<GitRepositoryResponseList> {
+            return localVarFp.getOrganizationBitbucketRepositories(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get bitbucket branches of the specified repository
+         * @param {string} organizationId Organization ID
+         * @param {string} [name] The name of the repository where to retrieve the branches
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationBitbucketRepositoryBranches(organizationId: string, name?: string, options?: any): AxiosPromise<GitRepositoryBranchResponseList> {
+            return localVarFp.getOrganizationBitbucketRepositoryBranches(organizationId, name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get git provider accounts
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationGitProviderAccount(organizationId: string, options?: any): AxiosPromise<GitAuthProviderResponseList> {
+            return localVarFp.getOrganizationGitProviderAccount(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get github repositories of the connected user
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationGithubRepositories(organizationId: string, options?: any): AxiosPromise<GitRepositoryResponseList> {
+            return localVarFp.getOrganizationGithubRepositories(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get github branches of the specified repository
+         * @param {string} organizationId Organization ID
+         * @param {string} [name] The name of the repository where to retrieve the branches
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationGithubRepositoryBranches(organizationId: string, name?: string, options?: any): AxiosPromise<GitRepositoryBranchResponseList> {
+            return localVarFp.getOrganizationGithubRepositoryBranches(organizationId, name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get gitlab repositories of the connected user
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationGitlabRepositories(organizationId: string, options?: any): AxiosPromise<GitRepositoryResponseList> {
+            return localVarFp.getOrganizationGitlabRepositories(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get gitlab branches of the specified repository
+         * @param {string} organizationId Organization ID
+         * @param {string} [name] The name of the repository to retrieve the branches
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationGitlabRepositoryBranches(organizationId: string, name?: string, options?: any): AxiosPromise<GitRepositoryBranchResponseList> {
+            return localVarFp.getOrganizationGitlabRepositoryBranches(organizationId, name, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * OrganizationAccountGitRepositoriesApi - object-oriented interface
+ * @export
+ * @class OrganizationAccountGitRepositoriesApi
+ * @extends {BaseAPI}
+ */
+export class OrganizationAccountGitRepositoriesApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get bitbucket repositories of the connected user
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationAccountGitRepositoriesApi
+     */
+    public getOrganizationBitbucketRepositories(organizationId: string, options?: AxiosRequestConfig) {
+        return OrganizationAccountGitRepositoriesApiFp(this.configuration).getOrganizationBitbucketRepositories(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get bitbucket branches of the specified repository
+     * @param {string} organizationId Organization ID
+     * @param {string} [name] The name of the repository where to retrieve the branches
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationAccountGitRepositoriesApi
+     */
+    public getOrganizationBitbucketRepositoryBranches(organizationId: string, name?: string, options?: AxiosRequestConfig) {
+        return OrganizationAccountGitRepositoriesApiFp(this.configuration).getOrganizationBitbucketRepositoryBranches(organizationId, name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get git provider accounts
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationAccountGitRepositoriesApi
+     */
+    public getOrganizationGitProviderAccount(organizationId: string, options?: AxiosRequestConfig) {
+        return OrganizationAccountGitRepositoriesApiFp(this.configuration).getOrganizationGitProviderAccount(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get github repositories of the connected user
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationAccountGitRepositoriesApi
+     */
+    public getOrganizationGithubRepositories(organizationId: string, options?: AxiosRequestConfig) {
+        return OrganizationAccountGitRepositoriesApiFp(this.configuration).getOrganizationGithubRepositories(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get github branches of the specified repository
+     * @param {string} organizationId Organization ID
+     * @param {string} [name] The name of the repository where to retrieve the branches
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationAccountGitRepositoriesApi
+     */
+    public getOrganizationGithubRepositoryBranches(organizationId: string, name?: string, options?: AxiosRequestConfig) {
+        return OrganizationAccountGitRepositoriesApiFp(this.configuration).getOrganizationGithubRepositoryBranches(organizationId, name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get gitlab repositories of the connected user
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationAccountGitRepositoriesApi
+     */
+    public getOrganizationGitlabRepositories(organizationId: string, options?: AxiosRequestConfig) {
+        return OrganizationAccountGitRepositoriesApiFp(this.configuration).getOrganizationGitlabRepositories(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get gitlab branches of the specified repository
+     * @param {string} organizationId Organization ID
+     * @param {string} [name] The name of the repository to retrieve the branches
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationAccountGitRepositoriesApi
+     */
+    public getOrganizationGitlabRepositoryBranches(organizationId: string, name?: string, options?: AxiosRequestConfig) {
+        return OrganizationAccountGitRepositoriesApiFp(this.configuration).getOrganizationGitlabRepositoryBranches(organizationId, name, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
