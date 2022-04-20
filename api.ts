@@ -5660,6 +5660,18 @@ export interface Log {
      * @memberof Log
      */
     'message': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Log
+     */
+    'pod_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Log
+     */
+    'application_commit_id'?: string;
 }
 /**
  * 
