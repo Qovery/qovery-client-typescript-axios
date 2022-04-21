@@ -24924,7 +24924,7 @@ export class OrganizationAccountGitRepositoriesApi extends BaseAPI {
 export const OrganizationApiTokenApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Create an organization api token
+         * Create an organization api token. You can use the generated token to interact in a programmatic way with our API.
          * @summary Create an organization api token
          * @param {string} organizationId Organization ID
          * @param {OrganizationApiTokenCreateRequest} [organizationApiTokenCreateRequest] 
@@ -25056,7 +25056,7 @@ export const OrganizationApiTokenApiFp = function(configuration?: Configuration)
     const localVarAxiosParamCreator = OrganizationApiTokenApiAxiosParamCreator(configuration)
     return {
         /**
-         * Create an organization api token
+         * Create an organization api token. You can use the generated token to interact in a programmatic way with our API.
          * @summary Create an organization api token
          * @param {string} organizationId Organization ID
          * @param {OrganizationApiTokenCreateRequest} [organizationApiTokenCreateRequest] 
@@ -25101,7 +25101,7 @@ export const OrganizationApiTokenApiFactory = function (configuration?: Configur
     const localVarFp = OrganizationApiTokenApiFp(configuration)
     return {
         /**
-         * Create an organization api token
+         * Create an organization api token. You can use the generated token to interact in a programmatic way with our API.
          * @summary Create an organization api token
          * @param {string} organizationId Organization ID
          * @param {OrganizationApiTokenCreateRequest} [organizationApiTokenCreateRequest] 
@@ -25143,7 +25143,7 @@ export const OrganizationApiTokenApiFactory = function (configuration?: Configur
  */
 export class OrganizationApiTokenApi extends BaseAPI {
     /**
-     * Create an organization api token
+     * Create an organization api token. You can use the generated token to interact in a programmatic way with our API.
      * @summary Create an organization api token
      * @param {string} organizationId Organization ID
      * @param {OrganizationApiTokenCreateRequest} [organizationApiTokenCreateRequest] 
