@@ -4662,6 +4662,19 @@ export interface EnvironmentStatsResponseList {
 /**
  * 
  * @export
+ * @interface EnvironmentStatusList
+ */
+export interface EnvironmentStatusList {
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof EnvironmentStatusList
+     */
+    'results'?: Array<Status>;
+}
+/**
+ * 
+ * @export
  * @interface EnvironmentTotalNumber
  */
 export interface EnvironmentTotalNumber {
@@ -22394,9 +22407,9 @@ export const EnvironmentsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProjectEnvironmentStatus: async (projectId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getProjectEnvironmentsStatus: async (projectId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'projectId' is not null or undefined
-            assertParamExists('getProjectEnvironmentStatus', 'projectId', projectId)
+            assertParamExists('getProjectEnvironmentsStatus', 'projectId', projectId)
             const localVarPath = `/project/{projectId}/environment/status`
                 .replace(`{${"projectId"}}`, encodeURIComponent(String(projectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -22503,8 +22516,8 @@ export const EnvironmentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProjectEnvironmentStatus(projectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getProjectEnvironmentStatus(projectId, options);
+        async getProjectEnvironmentsStatus(projectId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentStatusList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getProjectEnvironmentsStatus(projectId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -22556,8 +22569,8 @@ export const EnvironmentsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProjectEnvironmentStatus(projectId: string, options?: any): AxiosPromise<Status> {
-            return localVarFp.getProjectEnvironmentStatus(projectId, options).then((request) => request(axios, basePath));
+        getProjectEnvironmentsStatus(projectId: string, options?: any): AxiosPromise<EnvironmentStatusList> {
+            return localVarFp.getProjectEnvironmentsStatus(projectId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -22612,8 +22625,8 @@ export class EnvironmentsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EnvironmentsApi
      */
-    public getProjectEnvironmentStatus(projectId: string, options?: AxiosRequestConfig) {
-        return EnvironmentsApiFp(this.configuration).getProjectEnvironmentStatus(projectId, options).then((request) => request(this.axios, this.basePath));
+    public getProjectEnvironmentsStatus(projectId: string, options?: AxiosRequestConfig) {
+        return EnvironmentsApiFp(this.configuration).getProjectEnvironmentsStatus(projectId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
