@@ -1116,10 +1116,10 @@ export interface ApplicationStorageRequest {
 export interface ApplicationStorageRequestStorage {
     /**
      * 
-     * @type {string}
+     * @type {StorageTypeEnum}
      * @memberof ApplicationStorageRequestStorage
      */
-    'type': ApplicationStorageRequestStorageTypeEnum;
+    'type': StorageTypeEnum;
     /**
      * unit is GB
      * @type {number}
@@ -1133,15 +1133,6 @@ export interface ApplicationStorageRequestStorage {
      */
     'mount_point': string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ApplicationStorageRequestStorageTypeEnum {
-    FAST_SSD = 'FAST_SSD'
-}
-
 /**
  * 
  * @export
@@ -8069,9 +8060,7 @@ export interface StorageDiskResponseList {
  */
 
 export enum StorageTypeEnum {
-    AWS = 'AWS',
-    DIGITAL_OCEAN = 'DIGITAL_OCEAN',
-    SCALEWAY = 'SCALEWAY'
+    FAST_SSD = 'FAST_SSD'
 }
 
 /**
