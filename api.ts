@@ -414,10 +414,40 @@ export interface ApplicationDependencyRequest {
 export interface ApplicationDeploymentRestriction {
     /**
      * 
-     * @type {Array<object>}
+     * @type {string}
      * @memberof ApplicationDeploymentRestriction
      */
-    'deployment_restrictions'?: Array<object>;
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplicationDeploymentRestriction
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplicationDeploymentRestriction
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {DeploymentRestrictionModeEnum}
+     * @memberof ApplicationDeploymentRestriction
+     */
+    'mode': DeploymentRestrictionModeEnum;
+    /**
+     * 
+     * @type {DeploymentRestrictionTypeEnum}
+     * @memberof ApplicationDeploymentRestriction
+     */
+    'type': DeploymentRestrictionTypeEnum;
+    /**
+     * For `PATH` restrictions, the value must not start with `/`
+     * @type {string}
+     * @memberof ApplicationDeploymentRestriction
+     */
+    'value': string;
 }
 /**
  * 
@@ -443,6 +473,19 @@ export interface ApplicationDeploymentRestrictionRequest {
      * @memberof ApplicationDeploymentRestrictionRequest
      */
     'value': string;
+}
+/**
+ * 
+ * @export
+ * @interface ApplicationDeploymentRestrictionResponseList
+ */
+export interface ApplicationDeploymentRestrictionResponseList {
+    /**
+     * 
+     * @type {Array<ApplicationDeploymentRestriction>}
+     * @memberof ApplicationDeploymentRestrictionResponseList
+     */
+    'deployment_restrictions'?: Array<ApplicationDeploymentRestriction>;
 }
 /**
  * 
@@ -2202,6 +2245,50 @@ export interface ClusterFeatureResponseList {
      * @memberof ClusterFeatureResponseList
      */
     'results'?: Array<ClusterFeature>;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterInstanceTypeResponseList
+ */
+export interface ClusterInstanceTypeResponseList {
+    /**
+     * 
+     * @type {Array<ClusterInstanceTypeResponseListResults>}
+     * @memberof ClusterInstanceTypeResponseList
+     */
+    'results'?: Array<ClusterInstanceTypeResponseListResults>;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterInstanceTypeResponseListResults
+ */
+export interface ClusterInstanceTypeResponseListResults {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterInstanceTypeResponseListResults
+     */
+    'type': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterInstanceTypeResponseListResults
+     */
+    'name': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterInstanceTypeResponseListResults
+     */
+    'cpu': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterInstanceTypeResponseListResults
+     */
+    'ram_in_gb': number;
 }
 /**
  * 
@@ -5265,50 +5352,6 @@ export enum HealthcheckProtocolEnum {
     NONE = 'None'
 }
 
-/**
- * 
- * @export
- * @interface InlineResponse200
- */
-export interface InlineResponse200 {
-    /**
-     * 
-     * @type {Array<InlineResponse200Results>}
-     * @memberof InlineResponse200
-     */
-    'results'?: Array<InlineResponse200Results>;
-}
-/**
- * 
- * @export
- * @interface InlineResponse200Results
- */
-export interface InlineResponse200Results {
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse200Results
-     */
-    'type': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse200Results
-     */
-    'name': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof InlineResponse200Results
-     */
-    'cpu': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof InlineResponse200Results
-     */
-    'ram_in_gb': number;
-}
 /**
  * 
  * @export
@@ -9688,7 +9731,7 @@ export const ApplicationDeploymentRestrictionApiFp = function(configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createApplicationDeploymentRestriction(applicationId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Base & ApplicationDeploymentRestrictionRequest>> {
+        async createApplicationDeploymentRestriction(applicationId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationDeploymentRestriction>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createApplicationDeploymentRestriction(applicationId, applicationDeploymentRestrictionRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -9712,7 +9755,7 @@ export const ApplicationDeploymentRestrictionApiFp = function(configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editApplicationDeploymentRestriction(applicationId: string, deploymentRestrictionId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async editApplicationDeploymentRestriction(applicationId: string, deploymentRestrictionId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationDeploymentRestriction>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editApplicationDeploymentRestriction(applicationId, deploymentRestrictionId, applicationDeploymentRestrictionRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -9723,7 +9766,7 @@ export const ApplicationDeploymentRestrictionApiFp = function(configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getApplicationDeploymentRestrictions(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationDeploymentRestriction>> {
+        async getApplicationDeploymentRestrictions(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationDeploymentRestrictionResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getApplicationDeploymentRestrictions(applicationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -9745,7 +9788,7 @@ export const ApplicationDeploymentRestrictionApiFactory = function (configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createApplicationDeploymentRestriction(applicationId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: any): AxiosPromise<Base & ApplicationDeploymentRestrictionRequest> {
+        createApplicationDeploymentRestriction(applicationId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: any): AxiosPromise<ApplicationDeploymentRestriction> {
             return localVarFp.createApplicationDeploymentRestriction(applicationId, applicationDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9767,7 +9810,7 @@ export const ApplicationDeploymentRestrictionApiFactory = function (configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editApplicationDeploymentRestriction(applicationId: string, deploymentRestrictionId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: any): AxiosPromise<object> {
+        editApplicationDeploymentRestriction(applicationId: string, deploymentRestrictionId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: any): AxiosPromise<ApplicationDeploymentRestriction> {
             return localVarFp.editApplicationDeploymentRestriction(applicationId, deploymentRestrictionId, applicationDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9777,7 +9820,7 @@ export const ApplicationDeploymentRestrictionApiFactory = function (configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getApplicationDeploymentRestrictions(applicationId: string, options?: any): AxiosPromise<ApplicationDeploymentRestriction> {
+        getApplicationDeploymentRestrictions(applicationId: string, options?: any): AxiosPromise<ApplicationDeploymentRestrictionResponseList> {
             return localVarFp.getApplicationDeploymentRestrictions(applicationId, options).then((request) => request(axios, basePath));
         },
     };
@@ -14915,7 +14958,7 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listAWSInstanceType(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
+        async listAWSInstanceType(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterInstanceTypeResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listAWSInstanceType(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -14955,7 +14998,7 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listDOInstanceType(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async listDOInstanceType(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterInstanceTypeResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listDOInstanceType(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -14985,7 +15028,7 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listScalewayInstanceType(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async listScalewayInstanceType(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterInstanceTypeResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listScalewayInstanceType(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -15024,7 +15067,7 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAWSInstanceType(options?: any): AxiosPromise<InlineResponse200> {
+        listAWSInstanceType(options?: any): AxiosPromise<ClusterInstanceTypeResponseList> {
             return localVarFp.listAWSInstanceType(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15060,7 +15103,7 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listDOInstanceType(options?: any): AxiosPromise<object> {
+        listDOInstanceType(options?: any): AxiosPromise<ClusterInstanceTypeResponseList> {
             return localVarFp.listDOInstanceType(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15087,7 +15130,7 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listScalewayInstanceType(options?: any): AxiosPromise<object> {
+        listScalewayInstanceType(options?: any): AxiosPromise<ClusterInstanceTypeResponseList> {
             return localVarFp.listScalewayInstanceType(options).then((request) => request(axios, basePath));
         },
         /**
