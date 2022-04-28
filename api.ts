@@ -2094,10 +2094,10 @@ export interface ClusterFeature {
     'value_type'?: ClusterFeatureValueTypeEnum;
     /**
      * 
-     * @type {string}
+     * @type {string | boolean}
      * @memberof ClusterFeature
      */
-    'value'?: string | null;
+    'value'?: string | boolean | null;
     /**
      * 
      * @type {boolean}
