@@ -1582,8 +1582,8 @@ export interface BudgetThreshold {
  */
 
 export enum BuildModeEnum {
-    DOCKER = 'DOCKER',
-    BUILDPACKS = 'BUILDPACKS'
+    BUILDPACKS = 'BUILDPACKS',
+    DOCKER = 'DOCKER'
 }
 
 /**
@@ -1804,10 +1804,10 @@ export interface Cluster {
     'estimated_cloud_provider_cost'?: number;
     /**
      * 
-     * @type {ClusterStatusEnum}
+     * @type {StateEnum}
      * @memberof Cluster
      */
-    'status'?: ClusterStatusEnum;
+    'status'?: StateEnum;
     /**
      * 
      * @type {ClusterFeature}
@@ -1847,10 +1847,10 @@ export interface ClusterAllOf {
     'estimated_cloud_provider_cost'?: number;
     /**
      * 
-     * @type {ClusterStatusEnum}
+     * @type {StateEnum}
      * @memberof ClusterAllOf
      */
-    'status'?: ClusterStatusEnum;
+    'status'?: StateEnum;
     /**
      * 
      * @type {ClusterFeature}
@@ -2044,33 +2044,6 @@ export interface ClusterCredentialsResponseList {
      */
     'results'?: Array<ClusterCredentials>;
 }
-/**
- * 
- * @export
- * @enum {string}
- */
-
-export enum ClusterDeploymentStatusEnum {
-    READY = 'READY',
-    QUEUED = 'QUEUED',
-    STOP_QUEUED = 'STOP_QUEUED',
-    DELETE_QUEUED = 'DELETE_QUEUED',
-    BUILDING = 'BUILDING',
-    BUILD_ERROR = 'BUILD_ERROR',
-    BUILT = 'BUILT',
-    DEPLOYING = 'DEPLOYING',
-    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
-    DEPLOYED = 'DEPLOYED',
-    STOPPING = 'STOPPING',
-    STOP_ERROR = 'STOP_ERROR',
-    STOPPED = 'STOPPED',
-    DELETING = 'DELETING',
-    DELETE_ERROR = 'DELETE_ERROR',
-    DELETED = 'DELETED',
-    RUNNING = 'RUNNING',
-    RUNNING_ERROR = 'RUNNING_ERROR'
-}
-
 /**
  * 
  * @export
@@ -2469,10 +2442,10 @@ export interface ClusterStatus {
     'cluster_id'?: string;
     /**
      * 
-     * @type {ClusterDeploymentStatusEnum}
+     * @type {StateEnum}
      * @memberof ClusterStatus
      */
-    'status'?: ClusterDeploymentStatusEnum;
+    'status'?: StateEnum;
     /**
      * 
      * @type {boolean}
@@ -2480,33 +2453,6 @@ export interface ClusterStatus {
      */
     'is_deployed'?: boolean;
 }
-/**
- * 
- * @export
- * @enum {string}
- */
-
-export enum ClusterStatusEnum {
-    READY = 'READY',
-    QUEUED = 'QUEUED',
-    STOP_QUEUED = 'STOP_QUEUED',
-    DELETE_QUEUED = 'DELETE_QUEUED',
-    BUILDING = 'BUILDING',
-    BUILD_ERROR = 'BUILD_ERROR',
-    BUILT = 'BUILT',
-    DEPLOYING = 'DEPLOYING',
-    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
-    DEPLOYED = 'DEPLOYED',
-    STOPPING = 'STOPPING',
-    STOP_ERROR = 'STOP_ERROR',
-    STOPPED = 'STOPPED',
-    DELETING = 'DELETING',
-    DELETE_ERROR = 'DELETE_ERROR',
-    DELETED = 'DELETED',
-    RUNNING = 'RUNNING',
-    RUNNING_ERROR = 'RUNNING_ERROR'
-}
-
 /**
  * 
  * @export
@@ -3093,8 +3039,8 @@ export interface Database {
  */
 
 export enum DatabaseAccessibilityEnum {
-    PUBLIC = 'PUBLIC',
-    PRIVATE = 'PRIVATE'
+    PRIVATE = 'PRIVATE',
+    PUBLIC = 'PUBLIC'
 }
 
 /**
@@ -3247,8 +3193,8 @@ export interface DatabaseEditRequest {
  */
 
 export enum DatabaseModeEnum {
-    MANAGED = 'MANAGED',
-    CONTAINER = 'CONTAINER'
+    CONTAINER = 'CONTAINER',
+    MANAGED = 'MANAGED'
 }
 
 /**
@@ -3326,9 +3272,9 @@ export interface DatabaseResponseList {
  */
 
 export enum DatabaseTypeEnum {
-    POSTGRESQL = 'POSTGRESQL',
-    MYSQL = 'MYSQL',
     MONGODB = 'MONGODB',
+    MYSQL = 'MYSQL',
+    POSTGRESQL = 'POSTGRESQL',
     REDIS = 'REDIS'
 }
 
@@ -3490,10 +3436,10 @@ export interface DeploymentHistoryApplication {
     'commit'?: Commit;
     /**
      * 
-     * @type {GlobalDeploymentStatus}
+     * @type {StateEnum}
      * @memberof DeploymentHistoryApplication
      */
-    'status'?: GlobalDeploymentStatus;
+    'status'?: StateEnum;
 }
 /**
  * 
@@ -3515,10 +3461,10 @@ export interface DeploymentHistoryApplicationAllOf {
     'commit'?: Commit;
     /**
      * 
-     * @type {GlobalDeploymentStatus}
+     * @type {StateEnum}
      * @memberof DeploymentHistoryApplicationAllOf
      */
-    'status'?: GlobalDeploymentStatus;
+    'status'?: StateEnum;
 }
 /**
  * 
@@ -3552,10 +3498,10 @@ export interface DeploymentHistoryDatabase {
     'name'?: string;
     /**
      * 
-     * @type {GlobalDeploymentStatus}
+     * @type {StateEnum}
      * @memberof DeploymentHistoryDatabase
      */
-    'status'?: GlobalDeploymentStatus;
+    'status'?: StateEnum;
 }
 /**
  * 
@@ -3571,10 +3517,10 @@ export interface DeploymentHistoryDatabaseAllOf {
     'name'?: string;
     /**
      * 
-     * @type {GlobalDeploymentStatus}
+     * @type {StateEnum}
      * @memberof DeploymentHistoryDatabaseAllOf
      */
-    'status'?: GlobalDeploymentStatus;
+    'status'?: StateEnum;
 }
 /**
  * 
@@ -3602,10 +3548,10 @@ export interface DeploymentHistoryEnvironment {
     'updated_at'?: string;
     /**
      * 
-     * @type {GlobalDeploymentStatus}
+     * @type {StateEnum}
      * @memberof DeploymentHistoryEnvironment
      */
-    'status'?: GlobalDeploymentStatus;
+    'status'?: StateEnum;
     /**
      * 
      * @type {Array<DeploymentHistoryApplication>}
@@ -3627,10 +3573,10 @@ export interface DeploymentHistoryEnvironment {
 export interface DeploymentHistoryEnvironmentAllOf {
     /**
      * 
-     * @type {GlobalDeploymentStatus}
+     * @type {StateEnum}
      * @memberof DeploymentHistoryEnvironmentAllOf
      */
-    'status'?: GlobalDeploymentStatus;
+    'status'?: StateEnum;
     /**
      * 
      * @type {Array<DeploymentHistoryApplication>}
@@ -3740,8 +3686,8 @@ export interface DeploymentHistoryResponseList {
  */
 
 export enum DeploymentHistoryStatusEnum {
-    SUCCESS = 'SUCCESS',
-    FAILED = 'FAILED'
+    FAILED = 'FAILED',
+    SUCCESS = 'SUCCESS'
 }
 
 /**
@@ -3751,8 +3697,8 @@ export enum DeploymentHistoryStatusEnum {
  */
 
 export enum DeploymentRestrictionModeEnum {
-    MATCH = 'MATCH',
-    EXCLUDE = 'EXCLUDE'
+    EXCLUDE = 'EXCLUDE',
+    MATCH = 'MATCH'
 }
 
 /**
@@ -4545,10 +4491,10 @@ export interface EnvironmentLog {
     'scope'?: EnvironmentLogScope;
     /**
      * 
-     * @type {GlobalDeploymentStatus}
+     * @type {StatusKindEnum}
      * @memberof EnvironmentLog
      */
-    'state'?: GlobalDeploymentStatus;
+    'state'?: StatusKindEnum;
     /**
      * Log message
      * @type {string}
@@ -4663,10 +4609,10 @@ export enum EnvironmentLogTypeEnum {
  */
 
 export enum EnvironmentModeEnum {
-    PRODUCTION = 'PRODUCTION',
     DEVELOPMENT = 'DEVELOPMENT',
-    STAGING = 'STAGING',
-    PREVIEW = 'PREVIEW'
+    PREVIEW = 'PREVIEW',
+    PRODUCTION = 'PRODUCTION',
+    STAGING = 'STAGING'
 }
 
 /**
@@ -4990,10 +4936,10 @@ export interface EnvironmentVariableResponseList {
  */
 
 export enum EnvironmentVariableScopeEnum {
+    APPLICATION = 'APPLICATION',
     BUILT_IN = 'BUILT_IN',
     ENVIRONMENT = 'ENVIRONMENT',
-    PROJECT = 'PROJECT',
-    APPLICATION = 'APPLICATION'
+    PROJECT = 'PROJECT'
 }
 
 /**
@@ -5221,6 +5167,7 @@ export interface GitAuthProviderResponseList {
  */
 
 export enum GitProviderEnum {
+    BITBUCKET = 'BITBUCKET',
     GITHUB = 'GITHUB',
     GITLAB = 'GITLAB'
 }
@@ -5301,33 +5248,6 @@ export interface GitRepositoryResponseList {
      */
     'results'?: Array<GitRepository>;
 }
-/**
- * 
- * @export
- * @enum {string}
- */
-
-export enum GlobalDeploymentStatus {
-    READY = 'READY',
-    QUEUED = 'QUEUED',
-    STOP_QUEUED = 'STOP_QUEUED',
-    DELETE_QUEUED = 'DELETE_QUEUED',
-    BUILDING = 'BUILDING',
-    BUILD_ERROR = 'BUILD_ERROR',
-    BUILT = 'BUILT',
-    DEPLOYING = 'DEPLOYING',
-    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
-    DEPLOYED = 'DEPLOYED',
-    STOPPING = 'STOPPING',
-    STOP_ERROR = 'STOP_ERROR',
-    STOPPED = 'STOPPED',
-    DELETING = 'DELETING',
-    DELETE_ERROR = 'DELETE_ERROR',
-    DELETED = 'DELETED',
-    RUNNING = 'RUNNING',
-    RUNNING_ERROR = 'RUNNING_ERROR'
-}
-
 /**
  * 
  * @export
@@ -5545,9 +5465,9 @@ export interface InviteMemberResponseList {
  */
 
 export enum InviteMemberRoleEnum {
-    OWNER = 'OWNER',
     ADMIN = 'ADMIN',
     DEVELOPER = 'DEVELOPER',
+    OWNER = 'OWNER',
     VIEWER = 'VIEWER'
 }
 
@@ -5558,8 +5478,8 @@ export enum InviteMemberRoleEnum {
  */
 
 export enum InviteStatusEnum {
-    PENDING = 'PENDING',
-    EXPIRED = 'EXPIRED'
+    EXPIRED = 'EXPIRED',
+    PENDING = 'PENDING'
 }
 
 /**
@@ -5650,13 +5570,13 @@ export interface InvoiceResponseList {
  */
 
 export enum InvoiceStatusEnum {
-    PAID = 'PAID',
-    POSTED = 'POSTED',
-    PAYMENT_DUE = 'PAYMENT_DUE',
     NOT_PAID = 'NOT_PAID',
-    VOIDED = 'VOIDED',
+    PAID = 'PAID',
+    PAYMENT_DUE = 'PAYMENT_DUE',
     PENDING = 'PENDING',
-    UNKNOWN = 'UNKNOWN'
+    POSTED = 'POSTED',
+    UNKNOWN = 'UNKNOWN',
+    VOIDED = 'VOIDED'
 }
 
 /**
@@ -6877,11 +6797,11 @@ export interface PaidUsage {
  */
 
 export enum PlanEnum {
-    COMMUNITY = 'COMMUNITY',
-    FREE = 'FREE',
-    PROFESSIONAL = 'PROFESSIONAL',
     BUSINESS = 'BUSINESS',
-    ENTERPRISE = 'ENTERPRISE'
+    COMMUNITY = 'COMMUNITY',
+    ENTERPRISE = 'ENTERPRISE',
+    FREE = 'FREE',
+    PROFESSIONAL = 'PROFESSIONAL'
 }
 
 /**
@@ -6891,8 +6811,8 @@ export enum PlanEnum {
  */
 
 export enum PortProtocolEnum {
-    HTTPS = 'HTTPS',
     HTTP = 'HTTP',
+    HTTPS = 'HTTPS',
     TCP = 'TCP',
     UDP = 'UDP'
 }
@@ -7346,10 +7266,10 @@ export interface ReferenceObjectStatus {
     'id': string;
     /**
      * 
-     * @type {GlobalDeploymentStatus}
+     * @type {StateEnum}
      * @memberof ReferenceObjectStatus
      */
-    'state': GlobalDeploymentStatus;
+    'state': StateEnum;
     /**
      * message related to the state
      * @type {string}
@@ -7752,8 +7672,8 @@ export interface ServiceAllOf {
 
 export enum ServiceDeploymentStatusEnum {
     NEVER_DEPLOYED = 'NEVER_DEPLOYED',
-    UP_TO_DATE = 'UP_TO_DATE',
-    OUT_OF_DATE = 'OUT_OF_DATE'
+    OUT_OF_DATE = 'OUT_OF_DATE',
+    UP_TO_DATE = 'UP_TO_DATE'
 }
 
 /**
@@ -7972,6 +7892,33 @@ export interface SignUpRequest {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export enum StateEnum {
+    BUILDING = 'BUILDING',
+    BUILD_ERROR = 'BUILD_ERROR',
+    BUILT = 'BUILT',
+    DELETED = 'DELETED',
+    DELETE_ERROR = 'DELETE_ERROR',
+    DELETE_QUEUED = 'DELETE_QUEUED',
+    DELETING = 'DELETING',
+    DEPLOYED = 'DEPLOYED',
+    DEPLOYING = 'DEPLOYING',
+    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
+    QUEUED = 'QUEUED',
+    READY = 'READY',
+    RUNNING = 'RUNNING',
+    RUNNING_ERROR = 'RUNNING_ERROR',
+    STOPPED = 'STOPPED',
+    STOPPING = 'STOPPING',
+    STOP_ERROR = 'STOP_ERROR',
+    STOP_QUEUED = 'STOP_QUEUED'
+}
+
+/**
+ * 
+ * @export
  * @interface Status
  */
 export interface Status {
@@ -7983,10 +7930,10 @@ export interface Status {
     'id'?: string;
     /**
      * 
-     * @type {GlobalDeploymentStatus}
+     * @type {StateEnum}
      * @memberof Status
      */
-    'state': GlobalDeploymentStatus;
+    'state': StateEnum;
     /**
      * message related to the state
      * @type {string}
@@ -8000,6 +7947,28 @@ export interface Status {
      */
     'service_deployment_status'?: ServiceDeploymentStatusEnum | null;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum StatusKindEnum {
+    CANCELED = 'CANCELED',
+    CANCELING = 'CANCELING',
+    DELETED = 'DELETED',
+    DELETE_ERROR = 'DELETE_ERROR',
+    DELETE_IN_PROGRESS = 'DELETE_IN_PROGRESS',
+    DEPLOYED = 'DEPLOYED',
+    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
+    DEPLOYMENT_IN_PROGRESS = 'DEPLOYMENT_IN_PROGRESS',
+    ERROR = 'ERROR',
+    PAUSED = 'PAUSED',
+    PAUSE_ERROR = 'PAUSE_ERROR',
+    PAUSE_IN_PROGRESS = 'PAUSE_IN_PROGRESS',
+    WAITING = 'WAITING'
+}
+
 /**
  * 
  * @export
@@ -8130,9 +8099,9 @@ export interface TagResponseList {
  */
 
 export enum ThresholdMetricStatusEnum {
+    ALERT = 'Alert',
     OK = 'OK',
-    WARNING = 'Warning',
-    ALERT = 'Alert'
+    WARNING = 'Warning'
 }
 
 /**
@@ -8156,8 +8125,8 @@ export interface TransferOwnershipRequest {
 
 export enum TypeOfUseEnum {
     PERSONAL = 'PERSONAL',
-    WORK = 'WORK',
-    SCHOOL = 'SCHOOL'
+    SCHOOL = 'SCHOOL',
+    WORK = 'WORK'
 }
 
 /**
