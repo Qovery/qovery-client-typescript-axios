@@ -1810,10 +1810,10 @@ export interface Cluster {
     'status'?: StateEnum;
     /**
      * 
-     * @type {ClusterFeature}
+     * @type {Array<ClusterFeature>}
      * @memberof Cluster
      */
-    'features'?: ClusterFeature;
+    'features'?: Array<ClusterFeature>;
     /**
      * 
      * @type {boolean}
@@ -1853,10 +1853,10 @@ export interface ClusterAllOf {
     'status'?: StateEnum;
     /**
      * 
-     * @type {ClusterFeature}
+     * @type {Array<ClusterFeature>}
      * @memberof ClusterAllOf
      */
-    'features'?: ClusterFeature;
+    'features'?: Array<ClusterFeature>;
     /**
      * 
      * @type {boolean}
