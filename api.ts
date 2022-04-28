@@ -1747,7 +1747,7 @@ export interface Cluster {
      * @type {string}
      * @memberof Cluster
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {CloudProviderEnum}
@@ -1797,54 +1797,6 @@ export interface Cluster {
      */
     'instance_type'?: string;
     /**
-     * 
-     * @type {string}
-     * @memberof Cluster
-     */
-    'title'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Cluster
-     */
-    'cost_per_month_in_cents'?: number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof Cluster
-     */
-    'cost_per_month'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Cluster
-     */
-    'currency_code'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Cluster
-     */
-    'value_type'?: ClusterValueTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof Cluster
-     */
-    'value'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Cluster
-     */
-    'is_value_updatable'?: boolean;
-    /**
-     * 
-     * @type {Array<string | boolean>}
-     * @memberof Cluster
-     */
-    'accepted_values'?: Array<string | boolean>;
-    /**
      * This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration
      * @type {number}
      * @memberof Cluster
@@ -1856,6 +1808,12 @@ export interface Cluster {
      * @memberof Cluster
      */
     'status'?: ClusterStatusEnum;
+    /**
+     * 
+     * @type {ClusterFeature}
+     * @memberof Cluster
+     */
+    'features'?: ClusterFeature;
     /**
      * 
      * @type {boolean}
@@ -1875,15 +1833,6 @@ export interface Cluster {
      */
     'is_default'?: boolean;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ClusterValueTypeEnum {
-    BOOLEAN = 'BOOLEAN'
-}
-
 /**
  * 
  * @export
@@ -1891,102 +1840,108 @@ export enum ClusterValueTypeEnum {
  */
 export interface ClusterAllOf {
     /**
-     * name is case-insensitive
-     * @type {string}
-     * @memberof ClusterAllOf
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterAllOf
-     */
-    'description'?: string;
-    /**
-     * 
-     * @type {CloudProviderEnum}
-     * @memberof ClusterAllOf
-     */
-    'cloud_provider': CloudProviderEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterAllOf
-     */
-    'region': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ClusterAllOf
-     */
-    'auto_update'?: boolean;
-    /**
-     * unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof ClusterAllOf
-     */
-    'cpu'?: number;
-    /**
-     * unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof ClusterAllOf
-     */
-    'memory'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ClusterAllOf
-     */
-    'min_running_nodes'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ClusterAllOf
-     */
-    'max_running_nodes'?: number;
-    /**
-     * the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType
-     * @type {string}
-     * @memberof ClusterAllOf
-     */
-    'instance_type'?: string;
-}
-/**
- * 
- * @export
- * @interface ClusterAllOf1
- */
-export interface ClusterAllOf1 {
-    /**
      * This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration
      * @type {number}
-     * @memberof ClusterAllOf1
+     * @memberof ClusterAllOf
      */
     'estimated_cloud_provider_cost'?: number;
     /**
      * 
      * @type {ClusterStatusEnum}
-     * @memberof ClusterAllOf1
+     * @memberof ClusterAllOf
      */
     'status'?: ClusterStatusEnum;
     /**
      * 
+     * @type {ClusterFeature}
+     * @memberof ClusterAllOf
+     */
+    'features'?: ClusterFeature;
+    /**
+     * 
      * @type {boolean}
-     * @memberof ClusterAllOf1
+     * @memberof ClusterAllOf
      */
     'has_access'?: boolean;
     /**
      * 
      * @type {string}
-     * @memberof ClusterAllOf1
+     * @memberof ClusterAllOf
      */
     'version'?: string;
     /**
      * 
      * @type {boolean}
-     * @memberof ClusterAllOf1
+     * @memberof ClusterAllOf
      */
     'is_default'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterBase
+ */
+export interface ClusterBase {
+    /**
+     * name is case-insensitive
+     * @type {string}
+     * @memberof ClusterBase
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterBase
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {CloudProviderEnum}
+     * @memberof ClusterBase
+     */
+    'cloud_provider': CloudProviderEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterBase
+     */
+    'region': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterBase
+     */
+    'auto_update'?: boolean;
+    /**
+     * unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof ClusterBase
+     */
+    'cpu'?: number;
+    /**
+     * unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof ClusterBase
+     */
+    'memory'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterBase
+     */
+    'min_running_nodes'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterBase
+     */
+    'max_running_nodes'?: number;
+    /**
+     * the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType
+     * @type {string}
+     * @memberof ClusterBase
+     */
+    'instance_type'?: string;
 }
 /**
  * 
@@ -2344,6 +2299,66 @@ export interface ClusterRegionResponseList {
  * @interface ClusterRequest
  */
 export interface ClusterRequest {
+    /**
+     * name is case-insensitive
+     * @type {string}
+     * @memberof ClusterRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterRequest
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {CloudProviderEnum}
+     * @memberof ClusterRequest
+     */
+    'cloud_provider': CloudProviderEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterRequest
+     */
+    'region': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterRequest
+     */
+    'auto_update'?: boolean;
+    /**
+     * unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof ClusterRequest
+     */
+    'cpu'?: number;
+    /**
+     * unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof ClusterRequest
+     */
+    'memory'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterRequest
+     */
+    'min_running_nodes'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterRequest
+     */
+    'max_running_nodes'?: number;
+    /**
+     * the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType
+     * @type {string}
+     * @memberof ClusterRequest
+     */
+    'instance_type'?: string;
     /**
      * 
      * @type {Array<ClusterFeatureRequestFeatures>}
