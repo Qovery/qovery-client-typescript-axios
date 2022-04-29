@@ -1797,6 +1797,12 @@ export interface Cluster {
      */
     'instance_type'?: string;
     /**
+     * the disk size to be used for the node configuration
+     * @type {number}
+     * @memberof Cluster
+     */
+    'disk_size'?: number;
+    /**
      * This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration
      * @type {number}
      * @memberof Cluster
@@ -1942,6 +1948,12 @@ export interface ClusterBase {
      * @memberof ClusterBase
      */
     'instance_type'?: string;
+    /**
+     * the disk size to be used for the node configuration
+     * @type {number}
+     * @memberof ClusterBase
+     */
+    'disk_size'?: number;
 }
 /**
  * 
@@ -2332,6 +2344,12 @@ export interface ClusterRequest {
      * @memberof ClusterRequest
      */
     'instance_type'?: string;
+    /**
+     * the disk size to be used for the node configuration
+     * @type {number}
+     * @memberof ClusterRequest
+     */
+    'disk_size'?: number;
     /**
      * 
      * @type {Array<ClusterFeatureRequestFeatures>}
