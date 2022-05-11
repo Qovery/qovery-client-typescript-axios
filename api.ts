@@ -5299,6 +5299,25 @@ export enum HealthcheckProtocolEnum {
 /**
  * 
  * @export
+ * @interface InlineResponse200
+ */
+export interface InlineResponse200 {
+    /**
+     * 
+     * @type {number}
+     * @memberof InlineResponse200
+     */
+    'deployment.delay_start_time_sec'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlineResponse200
+     */
+    'build.timeout_max_sec'?: number;
+}
+/**
+ * 
+ * @export
  * @interface Instance
  */
 export interface Instance {
@@ -8745,6 +8764,48 @@ export class ApplicationActionsApi extends BaseAPI {
 export const ApplicationConfigurationApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Edit advanced settings by returning table of advanced settings.
+         * @summary Edit advanced settings
+         * @param {string} applicationId Application ID
+         * @param {Array<InlineResponse200>} [inlineResponse200] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editAdvancedSettings: async (applicationId: string, inlineResponse200?: Array<InlineResponse200>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'applicationId' is not null or undefined
+            assertParamExists('editAdvancedSettings', 'applicationId', applicationId)
+            const localVarPath = `/application/{applicationId}/advancedSettings`
+                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(inlineResponse200, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Edit the Network settings of the application.
          * @summary Edit Application Network
          * @param {string} applicationId Application ID
@@ -8780,6 +8841,44 @@ export const ApplicationConfigurationApiAxiosParamCreator = function (configurat
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(applicationNetworkRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get list and values of the advanced settings of the application.
+         * @summary Get advanced settings
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAdvancedSettings: async (applicationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'applicationId' is not null or undefined
+            assertParamExists('getAdvancedSettings', 'applicationId', applicationId)
+            const localVarPath = `/application/{applicationId}/advancedSettings`
+                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -8835,6 +8934,18 @@ export const ApplicationConfigurationApiFp = function(configuration?: Configurat
     const localVarAxiosParamCreator = ApplicationConfigurationApiAxiosParamCreator(configuration)
     return {
         /**
+         * Edit advanced settings by returning table of advanced settings.
+         * @summary Edit advanced settings
+         * @param {string} applicationId Application ID
+         * @param {Array<InlineResponse200>} [inlineResponse200] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editAdvancedSettings(applicationId: string, inlineResponse200?: Array<InlineResponse200>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editAdvancedSettings(applicationId, inlineResponse200, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Edit the Network settings of the application.
          * @summary Edit Application Network
          * @param {string} applicationId Application ID
@@ -8844,6 +8955,17 @@ export const ApplicationConfigurationApiFp = function(configuration?: Configurat
          */
         async editApplicationNetwork(applicationId: string, applicationNetworkRequest?: ApplicationNetworkRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationNetwork>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editApplicationNetwork(applicationId, applicationNetworkRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get list and values of the advanced settings of the application.
+         * @summary Get advanced settings
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAdvancedSettings(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<InlineResponse200>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAdvancedSettings(applicationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -8868,6 +8990,17 @@ export const ApplicationConfigurationApiFactory = function (configuration?: Conf
     const localVarFp = ApplicationConfigurationApiFp(configuration)
     return {
         /**
+         * Edit advanced settings by returning table of advanced settings.
+         * @summary Edit advanced settings
+         * @param {string} applicationId Application ID
+         * @param {Array<InlineResponse200>} [inlineResponse200] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editAdvancedSettings(applicationId: string, inlineResponse200?: Array<InlineResponse200>, options?: any): AxiosPromise<object> {
+            return localVarFp.editAdvancedSettings(applicationId, inlineResponse200, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Edit the Network settings of the application.
          * @summary Edit Application Network
          * @param {string} applicationId Application ID
@@ -8877,6 +9010,16 @@ export const ApplicationConfigurationApiFactory = function (configuration?: Conf
          */
         editApplicationNetwork(applicationId: string, applicationNetworkRequest?: ApplicationNetworkRequest, options?: any): AxiosPromise<ApplicationNetwork> {
             return localVarFp.editApplicationNetwork(applicationId, applicationNetworkRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get list and values of the advanced settings of the application.
+         * @summary Get advanced settings
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAdvancedSettings(applicationId: string, options?: any): AxiosPromise<Array<InlineResponse200>> {
+            return localVarFp.getAdvancedSettings(applicationId, options).then((request) => request(axios, basePath));
         },
         /**
          * Get status of the application network settings.
@@ -8899,6 +9042,19 @@ export const ApplicationConfigurationApiFactory = function (configuration?: Conf
  */
 export class ApplicationConfigurationApi extends BaseAPI {
     /**
+     * Edit advanced settings by returning table of advanced settings.
+     * @summary Edit advanced settings
+     * @param {string} applicationId Application ID
+     * @param {Array<InlineResponse200>} [inlineResponse200] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApplicationConfigurationApi
+     */
+    public editAdvancedSettings(applicationId: string, inlineResponse200?: Array<InlineResponse200>, options?: AxiosRequestConfig) {
+        return ApplicationConfigurationApiFp(this.configuration).editAdvancedSettings(applicationId, inlineResponse200, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Edit the Network settings of the application.
      * @summary Edit Application Network
      * @param {string} applicationId Application ID
@@ -8909,6 +9065,18 @@ export class ApplicationConfigurationApi extends BaseAPI {
      */
     public editApplicationNetwork(applicationId: string, applicationNetworkRequest?: ApplicationNetworkRequest, options?: AxiosRequestConfig) {
         return ApplicationConfigurationApiFp(this.configuration).editApplicationNetwork(applicationId, applicationNetworkRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get list and values of the advanced settings of the application.
+     * @summary Get advanced settings
+     * @param {string} applicationId Application ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApplicationConfigurationApi
+     */
+    public getAdvancedSettings(applicationId: string, options?: AxiosRequestConfig) {
+        return ApplicationConfigurationApiFp(this.configuration).getAdvancedSettings(applicationId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
