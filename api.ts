@@ -140,10 +140,10 @@ export interface Application {
     'updated_at'?: string;
     /**
      * 
-     * @type {Array<ContainerStorageStorage>}
+     * @type {Array<ApplicationStorageStorage>}
      * @memberof Application
      */
-    'storage'?: Array<ContainerStorageStorage>;
+    'storage'?: Array<ApplicationStorageStorage>;
     /**
      * 
      * @type {Array<ApplicationPortPorts>}
@@ -501,10 +501,10 @@ export interface ApplicationDeploymentRestrictionResponseList {
 export interface ApplicationEditRequest {
     /**
      * 
-     * @type {Array<ContainerStorageStorage>}
+     * @type {Array<ApplicationStorageStorage>}
      * @memberof ApplicationEditRequest
      */
-    'storage'?: Array<ContainerStorageStorage>;
+    'storage'?: Array<ApplicationStorageStorage>;
     /**
      * 
      * @type {Array<ApplicationPortPorts>}
@@ -1091,6 +1091,19 @@ export interface ApplicationResponseList {
 /**
  * 
  * @export
+ * @interface ApplicationStorage
+ */
+export interface ApplicationStorage {
+    /**
+     * 
+     * @type {Array<ApplicationStorageStorage>}
+     * @memberof ApplicationStorage
+     */
+    'storage'?: Array<ApplicationStorageStorage>;
+}
+/**
+ * 
+ * @export
  * @interface ApplicationStorageRequest
  */
 export interface ApplicationStorageRequest {
@@ -1123,6 +1136,37 @@ export interface ApplicationStorageRequestStorage {
      * 
      * @type {string}
      * @memberof ApplicationStorageRequestStorage
+     */
+    'mount_point': string;
+}
+/**
+ * 
+ * @export
+ * @interface ApplicationStorageStorage
+ */
+export interface ApplicationStorageStorage {
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplicationStorageStorage
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {StorageTypeEnum}
+     * @memberof ApplicationStorageStorage
+     */
+    'type': StorageTypeEnum;
+    /**
+     * unit is GB
+     * @type {number}
+     * @memberof ApplicationStorageStorage
+     */
+    'size': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplicationStorageStorage
      */
     'mount_point': string;
 }
@@ -2800,10 +2844,10 @@ export interface ContainerDeploymentRestrictionResponseList {
 export interface ContainerEditRequest {
     /**
      * 
-     * @type {Array<ContainerStorageStorage>}
+     * @type {Array<ApplicationStorageStorage>}
      * @memberof ContainerEditRequest
      */
-    'storage'?: Array<ContainerStorageStorage>;
+    'storage'?: Array<ApplicationStorageStorage>;
     /**
      * 
      * @type {Array<ApplicationPortPorts>}
@@ -3236,10 +3280,10 @@ export interface ContainerResponse {
     'updated_at'?: string;
     /**
      * 
-     * @type {Array<ContainerStorageStorage>}
+     * @type {Array<ApplicationStorageStorage>}
      * @memberof ContainerResponse
      */
-    'storage'?: Array<ContainerStorageStorage>;
+    'storage'?: Array<ApplicationStorageStorage>;
     /**
      * 
      * @type {Array<ApplicationPortPorts>}
@@ -3431,41 +3475,10 @@ export interface ContainerResponseList {
 export interface ContainerStorage {
     /**
      * 
-     * @type {Array<ContainerStorageStorage>}
+     * @type {Array<ApplicationStorageStorage>}
      * @memberof ContainerStorage
      */
-    'storage'?: Array<ContainerStorageStorage>;
-}
-/**
- * 
- * @export
- * @interface ContainerStorageStorage
- */
-export interface ContainerStorageStorage {
-    /**
-     * 
-     * @type {string}
-     * @memberof ContainerStorageStorage
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {StorageTypeEnum}
-     * @memberof ContainerStorageStorage
-     */
-    'type': StorageTypeEnum;
-    /**
-     * unit is GB
-     * @type {number}
-     * @memberof ContainerStorageStorage
-     */
-    'size': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContainerStorageStorage
-     */
-    'mount_point': string;
+    'storage'?: Array<ApplicationStorageStorage>;
 }
 /**
  * 
