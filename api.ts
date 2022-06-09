@@ -7338,7 +7338,7 @@ export interface Organization {
      * @type {Array<string>}
      * @memberof Organization
      */
-    'admin_emails'?: Array<string> | null;
+    'admin_emails'?: Array<string>;
     /**
      * uuid of the user owning the organization
      * @type {string}
@@ -7677,7 +7677,7 @@ export interface OrganizationEditRequest {
      * @type {Array<string>}
      * @memberof OrganizationEditRequest
      */
-    'admin_emails'?: Array<string> | null;
+    'admin_emails'?: Array<string>;
 }
 /**
  * 
@@ -7751,7 +7751,7 @@ export interface OrganizationRequest {
      * @type {Array<string>}
      * @memberof OrganizationRequest
      */
-    'admin_emails'?: Array<string> | null;
+    'admin_emails'?: Array<string>;
 }
 /**
  * 
