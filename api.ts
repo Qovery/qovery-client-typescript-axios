@@ -254,12 +254,152 @@ export interface ApplicationAdvancedSettings {
      */
     'deployment.delay_start_time_sec'?: number;
     /**
+     * disable custom domain check when deploying an application
+     * @type {boolean}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'deployment.custom_domain_check_enabled'?: boolean;
+    /**
      * 
      * @type {number}
      * @memberof ApplicationAdvancedSettings
      */
     'build.timeout_max_sec'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.ingress.proxy_body_size_mb'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.ingress.enable_cors'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.ingress.cors_allow_origin'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.ingress.cors_allow_methods'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.ingress.cors_allow_headers'?: string;
+    /**
+     * `NONE` disable readiness probe `TCP` enable TCP readiness probe `HTTP` enable HTTP readiness probe 
+     * @type {string}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'readiness_probe.type'?: ApplicationAdvancedSettingsReadinessProbeTypeEnum;
+    /**
+     * HTTP GET path to check status (must returns 2xx E.g \"/healtz\") - only usable with TYPE = HTTP
+     * @type {string}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'readiness_probe.http_get.path'?: string;
+    /**
+     * Delay before liveness probe is initiated
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'readiness_probe.initial_delay_seconds'?: number;
+    /**
+     * How often to perform the probe
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'readiness_probe.period_seconds'?: number;
+    /**
+     * When the probe times out
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'readiness_probe.timeout_seconds'?: number;
+    /**
+     * Minimum consecutive successes for the probe to be considered successful after having failed.
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'readiness_probe.success_threshold'?: number;
+    /**
+     * Minimum consecutive failures for the probe to be considered failed after having succeeded.
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'readiness_probe.failure_threshold'?: number;
+    /**
+     * `NONE` disable liveness probe `TCP` enable TCP liveness probe `HTTP` enable HTTP liveness probe 
+     * @type {string}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'liveness_probe.type'?: ApplicationAdvancedSettingsLivenessProbeTypeEnum;
+    /**
+     * HTTP GET path to check status (must returns 2xx E.g \"/healtz\") - only usable with TYPE = HTTP
+     * @type {string}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'liveness_probe.http_get.path'?: string;
+    /**
+     * Delay before liveness probe is initiated
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'liveness_probe.initial_delay_seconds'?: number;
+    /**
+     * How often to perform the probe
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'liveness_probe.period_seconds'?: number;
+    /**
+     * When the probe times out
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'liveness_probe.timeout_seconds'?: number;
+    /**
+     * Minimum consecutive successes for the probe to be considered successful after having failed.
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'liveness_probe.success_threshold'?: number;
+    /**
+     * Minimum consecutive failures for the probe to be considered failed after having succeeded.
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'liveness_probe.failure_threshold'?: number;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ApplicationAdvancedSettingsReadinessProbeTypeEnum {
+    NONE = 'NONE',
+    TCP = 'TCP',
+    HTTP = 'HTTP'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ApplicationAdvancedSettingsLivenessProbeTypeEnum {
+    NONE = 'NONE',
+    TCP = 'TCP',
+    HTTP = 'HTTP'
+}
+
 /**
  * 
  * @export
@@ -2649,12 +2789,152 @@ export interface ContainerAdvancedSettings {
      */
     'deployment.delay_start_time_sec'?: number;
     /**
+     * disable custom domain check when deploying an application
+     * @type {boolean}
+     * @memberof ContainerAdvancedSettings
+     */
+    'deployment.custom_domain_check_enabled'?: boolean;
+    /**
      * 
      * @type {number}
      * @memberof ContainerAdvancedSettings
      */
     'build.timeout_max_sec'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'network.ingress.proxy_body_size_mb'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ContainerAdvancedSettings
+     */
+    'network.ingress.enable_cors'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerAdvancedSettings
+     */
+    'network.ingress.cors_allow_origin'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerAdvancedSettings
+     */
+    'network.ingress.cors_allow_methods'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerAdvancedSettings
+     */
+    'network.ingress.cors_allow_headers'?: string;
+    /**
+     * `NONE` disable readiness probe `TCP` enable TCP readiness probe `HTTP` enable HTTP readiness probe 
+     * @type {string}
+     * @memberof ContainerAdvancedSettings
+     */
+    'readiness_probe.type'?: ContainerAdvancedSettingsReadinessProbeTypeEnum;
+    /**
+     * HTTP GET path to check status (must returns 2xx E.g \"/healtz\") - only usable with TYPE = HTTP
+     * @type {string}
+     * @memberof ContainerAdvancedSettings
+     */
+    'readiness_probe.http_get.path'?: string;
+    /**
+     * Delay before liveness probe is initiated
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'readiness_probe.initial_delay_seconds'?: number;
+    /**
+     * How often to perform the probe
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'readiness_probe.period_seconds'?: number;
+    /**
+     * When the probe times out
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'readiness_probe.timeout_seconds'?: number;
+    /**
+     * Minimum consecutive successes for the probe to be considered successful after having failed.
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'readiness_probe.success_threshold'?: number;
+    /**
+     * Minimum consecutive failures for the probe to be considered failed after having succeeded.
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'readiness_probe.failure_threshold'?: number;
+    /**
+     * `NONE` disable liveness probe `TCP` enable TCP liveness probe `HTTP` enable HTTP liveness probe 
+     * @type {string}
+     * @memberof ContainerAdvancedSettings
+     */
+    'liveness_probe.type'?: ContainerAdvancedSettingsLivenessProbeTypeEnum;
+    /**
+     * HTTP GET path to check status (must returns 2xx E.g \"/healtz\") - only usable with TYPE = HTTP
+     * @type {string}
+     * @memberof ContainerAdvancedSettings
+     */
+    'liveness_probe.http_get.path'?: string;
+    /**
+     * Delay before liveness probe is initiated
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'liveness_probe.initial_delay_seconds'?: number;
+    /**
+     * How often to perform the probe
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'liveness_probe.period_seconds'?: number;
+    /**
+     * When the probe times out
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'liveness_probe.timeout_seconds'?: number;
+    /**
+     * Minimum consecutive successes for the probe to be considered successful after having failed.
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'liveness_probe.success_threshold'?: number;
+    /**
+     * Minimum consecutive failures for the probe to be considered failed after having succeeded.
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'liveness_probe.failure_threshold'?: number;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ContainerAdvancedSettingsReadinessProbeTypeEnum {
+    NONE = 'NONE',
+    TCP = 'TCP',
+    HTTP = 'HTTP'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ContainerAdvancedSettingsLivenessProbeTypeEnum {
+    NONE = 'NONE',
+    TCP = 'TCP',
+    HTTP = 'HTTP'
+}
+
 /**
  * 
  * @export
@@ -2668,12 +2948,152 @@ export interface ContainerAdvancedSettingsResponse {
      */
     'deployment.delay_start_time_sec'?: number;
     /**
+     * disable custom domain check when deploying an application
+     * @type {boolean}
+     * @memberof ContainerAdvancedSettingsResponse
+     */
+    'deployment.custom_domain_check_enabled'?: boolean;
+    /**
      * 
      * @type {number}
      * @memberof ContainerAdvancedSettingsResponse
      */
     'build.timeout_max_sec'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ContainerAdvancedSettingsResponse
+     */
+    'network.ingress.proxy_body_size_mb'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ContainerAdvancedSettingsResponse
+     */
+    'network.ingress.enable_cors'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerAdvancedSettingsResponse
+     */
+    'network.ingress.cors_allow_origin'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerAdvancedSettingsResponse
+     */
+    'network.ingress.cors_allow_methods'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerAdvancedSettingsResponse
+     */
+    'network.ingress.cors_allow_headers'?: string;
+    /**
+     * `NONE` disable readiness probe `TCP` enable TCP readiness probe `HTTP` enable HTTP readiness probe 
+     * @type {string}
+     * @memberof ContainerAdvancedSettingsResponse
+     */
+    'readiness_probe.type'?: ContainerAdvancedSettingsResponseReadinessProbeTypeEnum;
+    /**
+     * HTTP GET path to check status (must returns 2xx E.g \"/healtz\") - only usable with TYPE = HTTP
+     * @type {string}
+     * @memberof ContainerAdvancedSettingsResponse
+     */
+    'readiness_probe.http_get.path'?: string;
+    /**
+     * Delay before liveness probe is initiated
+     * @type {number}
+     * @memberof ContainerAdvancedSettingsResponse
+     */
+    'readiness_probe.initial_delay_seconds'?: number;
+    /**
+     * How often to perform the probe
+     * @type {number}
+     * @memberof ContainerAdvancedSettingsResponse
+     */
+    'readiness_probe.period_seconds'?: number;
+    /**
+     * When the probe times out
+     * @type {number}
+     * @memberof ContainerAdvancedSettingsResponse
+     */
+    'readiness_probe.timeout_seconds'?: number;
+    /**
+     * Minimum consecutive successes for the probe to be considered successful after having failed.
+     * @type {number}
+     * @memberof ContainerAdvancedSettingsResponse
+     */
+    'readiness_probe.success_threshold'?: number;
+    /**
+     * Minimum consecutive failures for the probe to be considered failed after having succeeded.
+     * @type {number}
+     * @memberof ContainerAdvancedSettingsResponse
+     */
+    'readiness_probe.failure_threshold'?: number;
+    /**
+     * `NONE` disable liveness probe `TCP` enable TCP liveness probe `HTTP` enable HTTP liveness probe 
+     * @type {string}
+     * @memberof ContainerAdvancedSettingsResponse
+     */
+    'liveness_probe.type'?: ContainerAdvancedSettingsResponseLivenessProbeTypeEnum;
+    /**
+     * HTTP GET path to check status (must returns 2xx E.g \"/healtz\") - only usable with TYPE = HTTP
+     * @type {string}
+     * @memberof ContainerAdvancedSettingsResponse
+     */
+    'liveness_probe.http_get.path'?: string;
+    /**
+     * Delay before liveness probe is initiated
+     * @type {number}
+     * @memberof ContainerAdvancedSettingsResponse
+     */
+    'liveness_probe.initial_delay_seconds'?: number;
+    /**
+     * How often to perform the probe
+     * @type {number}
+     * @memberof ContainerAdvancedSettingsResponse
+     */
+    'liveness_probe.period_seconds'?: number;
+    /**
+     * When the probe times out
+     * @type {number}
+     * @memberof ContainerAdvancedSettingsResponse
+     */
+    'liveness_probe.timeout_seconds'?: number;
+    /**
+     * Minimum consecutive successes for the probe to be considered successful after having failed.
+     * @type {number}
+     * @memberof ContainerAdvancedSettingsResponse
+     */
+    'liveness_probe.success_threshold'?: number;
+    /**
+     * Minimum consecutive failures for the probe to be considered failed after having succeeded.
+     * @type {number}
+     * @memberof ContainerAdvancedSettingsResponse
+     */
+    'liveness_probe.failure_threshold'?: number;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ContainerAdvancedSettingsResponseReadinessProbeTypeEnum {
+    NONE = 'NONE',
+    TCP = 'TCP',
+    HTTP = 'HTTP'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ContainerAdvancedSettingsResponseLivenessProbeTypeEnum {
+    NONE = 'NONE',
+    TCP = 'TCP',
+    HTTP = 'HTTP'
+}
+
 /**
  * 
  * @export
