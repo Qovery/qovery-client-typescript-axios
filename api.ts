@@ -7334,6 +7334,12 @@ export interface Organization {
      */
     'icon_url'?: string | null;
     /**
+     * 
+     * @type {Array<string>}
+     * @memberof Organization
+     */
+    'admin_emails'?: Array<string> | null;
+    /**
      * uuid of the user owning the organization
      * @type {string}
      * @memberof Organization
@@ -7666,6 +7672,12 @@ export interface OrganizationEditRequest {
      * @memberof OrganizationEditRequest
      */
     'icon_url'?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof OrganizationEditRequest
+     */
+    'admin_emails'?: Array<string> | null;
 }
 /**
  * 
@@ -7734,6 +7746,12 @@ export interface OrganizationRequest {
      * @memberof OrganizationRequest
      */
     'icon_url'?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof OrganizationRequest
+     */
+    'admin_emails'?: Array<string> | null;
 }
 /**
  * 
