@@ -380,6 +380,12 @@ export interface ApplicationAdvancedSettings {
      * @memberof ApplicationAdvancedSettings
      */
     'liveness_probe.failure_threshold'?: number;
+    /**
+     * Percentage value of cpu usage at which point pods should scale up.
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'hpa.cpu.average_utilization_percent'?: number;
 }
 
 /**
