@@ -248,9 +248,10 @@ export interface Application {
  */
 export interface ApplicationAdvancedSettings {
     /**
-     * 
+     * please use `readiness_probe.initial_delay_seconds` and `liveness_probe.initial_delay_seconds` instead
      * @type {number}
      * @memberof ApplicationAdvancedSettings
+     * @deprecated
      */
     'deployment.delay_start_time_sec'?: number;
     /**
@@ -2783,9 +2784,10 @@ export enum CompanySizeEnum {
  */
 export interface ContainerAdvancedSettings {
     /**
-     * 
+     * please use `readiness_probe.initial_delay_seconds` and `liveness_probe.initial_delay_seconds` instead
      * @type {number}
      * @memberof ContainerAdvancedSettings
+     * @deprecated
      */
     'deployment.delay_start_time_sec'?: number;
     /**
@@ -2942,9 +2944,10 @@ export enum ContainerAdvancedSettingsLivenessProbeTypeEnum {
  */
 export interface ContainerAdvancedSettingsResponse {
     /**
-     * 
+     * please use `readiness_probe.initial_delay_seconds` and `liveness_probe.initial_delay_seconds` instead
      * @type {number}
      * @memberof ContainerAdvancedSettingsResponse
+     * @deprecated
      */
     'deployment.delay_start_time_sec'?: number;
     /**
