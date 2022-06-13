@@ -4306,7 +4306,7 @@ export interface Database {
      */
     'memory'?: number;
     /**
-     * unit is MB
+     * unit is GB
      * @type {number}
      * @memberof Database
      */
@@ -4691,7 +4691,7 @@ export interface DatabaseRequest {
      */
     'memory'?: number;
     /**
-     * unit is MB
+     * unit is GB
      * @type {number}
      * @memberof DatabaseRequest
      */
