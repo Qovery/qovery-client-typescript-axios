@@ -5459,10 +5459,10 @@ export interface EnvironmentApplicationsCurrentScaleResponseList {
 export interface EnvironmentApplicationsInstanceResponseList {
     /**
      * 
-     * @type {Array<InlineResponse2001Results>}
+     * @type {Array<InlineResponse2002Results>}
      * @memberof EnvironmentApplicationsInstanceResponseList
      */
-    'results'?: Array<InlineResponse2001Results>;
+    'results'?: Array<InlineResponse2002Results>;
 }
 /**
  * 
@@ -6684,15 +6684,78 @@ export enum HealthcheckProtocolEnum {
 /**
  * 
  * @export
+ * @interface InlineObject
+ */
+export interface InlineObject {
+    /**
+     * Define the type of the webhook. `SLACK` is a special webhook type to push notifications directly to slack. The `target_url` must be a Slack compatible endpoint.
+     * @type {string}
+     * @memberof InlineObject
+     */
+    'kind': InlineObjectKindEnum;
+    /**
+     * Set the public HTTP or HTTPS endpoint that will receive the specified events. The target URL must starts with `http://` or `https://` 
+     * @type {string}
+     * @memberof InlineObject
+     */
+    'target_url': string;
+    /**
+     * Make sure you receive a payload to sign the Qovery request with your secret. Qovery will add a HTTP header `Qovery-Signature: <Your Secret>` to every webhook requests sent to your target URL. 
+     * @type {string}
+     * @memberof InlineObject
+     */
+    'target_secret'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineObject
+     */
+    'description'?: string;
+    /**
+     * Turn on or off your endpoint.
+     * @type {boolean}
+     * @memberof InlineObject
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof InlineObject
+     */
+    'events': Array<InlineObjectEventsEnum>;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum InlineObjectKindEnum {
+    STANDARD = 'STANDARD',
+    SLACK = 'SLACK'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum InlineObjectEventsEnum {
+    STARTED = 'DEPLOYMENT_STARTED',
+    CANCELLED = 'DEPLOYMENT_CANCELLED',
+    FAILURE = 'DEPLOYMENT_FAILURE',
+    SUCCESSFUL = 'DEPLOYMENT_SUCCESSFUL'
+}
+
+/**
+ * 
+ * @export
  * @interface InlineResponse200
  */
 export interface InlineResponse200 {
     /**
      * 
-     * @type {Array<ContainerRegistryResponse>}
+     * @type {Array<object>}
      * @memberof InlineResponse200
      */
-    'results'?: Array<ContainerRegistryResponse>;
+    'results'?: Array<object>;
 }
 /**
  * 
@@ -6702,29 +6765,10 @@ export interface InlineResponse200 {
 export interface InlineResponse2001 {
     /**
      * 
-     * @type {Array<InlineResponse2001Results>}
+     * @type {Array<ContainerRegistryResponse>}
      * @memberof InlineResponse2001
      */
-    'results'?: Array<InlineResponse2001Results>;
-}
-/**
- * 
- * @export
- * @interface InlineResponse2001Results
- */
-export interface InlineResponse2001Results {
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse2001Results
-     */
-    'application': string;
-    /**
-     * 
-     * @type {Array<Instance>}
-     * @memberof InlineResponse2001Results
-     */
-    'instances': Array<Instance>;
+    'results'?: Array<ContainerRegistryResponse>;
 }
 /**
  * 
@@ -6734,8 +6778,40 @@ export interface InlineResponse2001Results {
 export interface InlineResponse2002 {
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<InlineResponse2002Results>}
      * @memberof InlineResponse2002
+     */
+    'results'?: Array<InlineResponse2002Results>;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2002Results
+ */
+export interface InlineResponse2002Results {
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineResponse2002Results
+     */
+    'application': string;
+    /**
+     * 
+     * @type {Array<Instance>}
+     * @memberof InlineResponse2002Results
+     */
+    'instances': Array<Instance>;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2003
+ */
+export interface InlineResponse2003 {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof InlineResponse2003
      */
     'results'?: Array<string>;
 }
@@ -22561,7 +22637,7 @@ export const ContainerMainCallsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getContainerTags(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2002>> {
+        async getContainerTags(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2003>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getContainerTags(containerId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -22678,7 +22754,7 @@ export const ContainerMainCallsApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getContainerTags(containerId: string, options?: any): AxiosPromise<InlineResponse2002> {
+        getContainerTags(containerId: string, options?: any): AxiosPromise<InlineResponse2003> {
             return localVarFp.getContainerTags(containerId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23715,7 +23791,7 @@ export const ContainerRegistriesApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listContainerRegistry(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
+        async listContainerRegistry(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2001>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listContainerRegistry(organizationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -23767,7 +23843,7 @@ export const ContainerRegistriesApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listContainerRegistry(organizationId: string, options?: any): AxiosPromise<InlineResponse200> {
+        listContainerRegistry(organizationId: string, options?: any): AxiosPromise<InlineResponse2001> {
             return localVarFp.listContainerRegistry(organizationId, options).then((request) => request(axios, basePath));
         },
     };
@@ -24717,7 +24793,7 @@ export const ContainersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEnvironmentContainerCurrentInstance(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2001>> {
+        async getEnvironmentContainerCurrentInstance(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2002>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentContainerCurrentInstance(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -24805,7 +24881,7 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEnvironmentContainerCurrentInstance(environmentId: string, options?: any): AxiosPromise<InlineResponse2001> {
+        getEnvironmentContainerCurrentInstance(environmentId: string, options?: any): AxiosPromise<InlineResponse2002> {
             return localVarFp.getEnvironmentContainerCurrentInstance(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -33645,6 +33721,420 @@ export class OrganizationMainCallsApi extends BaseAPI {
      */
     public listOrganization(options?: AxiosRequestConfig) {
         return OrganizationMainCallsApiFp(this.configuration).listOrganization(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * OrganizationWebhookApi - axios parameter creator
+ * @export
+ */
+export const OrganizationWebhookApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Create an organization webhook.
+         * @summary Create an organization webhook
+         * @param {string} organizationId Organization ID
+         * @param {InlineObject} [inlineObject] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrganizationWebhook: async (organizationId: string, inlineObject?: InlineObject, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('createOrganizationWebhook', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/webhook`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete organization webhook
+         * @summary Delete organization webhook
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteOrganizationWebhook: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('deleteOrganizationWebhook', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/webhook/{webhookId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Edit an organization webhook
+         * @summary Edit an organization webhook
+         * @param {string} projectId Project ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editOrganizationWebhook: async (projectId: string, body?: object, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'projectId' is not null or undefined
+            assertParamExists('editOrganizationWebhook', 'projectId', projectId)
+            const localVarPath = `/organization/{organizationId}/webhook/{webhookId}`
+                .replace(`{${"projectId"}}`, encodeURIComponent(String(projectId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get an Organization webhook
+         * @summary Get an Organization webhook
+         * @param {string} projectId Project ID
+         * @param {string} webhookId Webhook ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationWebhook: async (projectId: string, webhookId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'projectId' is not null or undefined
+            assertParamExists('getOrganizationWebhook', 'projectId', projectId)
+            // verify required parameter 'webhookId' is not null or undefined
+            assertParamExists('getOrganizationWebhook', 'webhookId', webhookId)
+            const localVarPath = `/organization/{organizationId}/webhook/{webhookId}`
+                .replace(`{${"projectId"}}`, encodeURIComponent(String(projectId)))
+                .replace(`{${"webhookId"}}`, encodeURIComponent(String(webhookId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List organization webhooks
+         * @summary List organization webhooks
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationWebHooks: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listOrganizationWebHooks', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/webhook`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * OrganizationWebhookApi - functional programming interface
+ * @export
+ */
+export const OrganizationWebhookApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = OrganizationWebhookApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Create an organization webhook.
+         * @summary Create an organization webhook
+         * @param {string} organizationId Organization ID
+         * @param {InlineObject} [inlineObject] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createOrganizationWebhook(organizationId: string, inlineObject?: InlineObject, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Base & object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createOrganizationWebhook(organizationId, inlineObject, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Delete organization webhook
+         * @summary Delete organization webhook
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteOrganizationWebhook(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOrganizationWebhook(organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Edit an organization webhook
+         * @summary Edit an organization webhook
+         * @param {string} projectId Project ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editOrganizationWebhook(projectId: string, body?: object, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editOrganizationWebhook(projectId, body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get an Organization webhook
+         * @summary Get an Organization webhook
+         * @param {string} projectId Project ID
+         * @param {string} webhookId Webhook ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationWebhook(projectId: string, webhookId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Base & object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationWebhook(projectId, webhookId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * List organization webhooks
+         * @summary List organization webhooks
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listOrganizationWebHooks(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizationWebHooks(organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * OrganizationWebhookApi - factory interface
+ * @export
+ */
+export const OrganizationWebhookApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = OrganizationWebhookApiFp(configuration)
+    return {
+        /**
+         * Create an organization webhook.
+         * @summary Create an organization webhook
+         * @param {string} organizationId Organization ID
+         * @param {InlineObject} [inlineObject] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrganizationWebhook(organizationId: string, inlineObject?: InlineObject, options?: any): AxiosPromise<Base & object> {
+            return localVarFp.createOrganizationWebhook(organizationId, inlineObject, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete organization webhook
+         * @summary Delete organization webhook
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteOrganizationWebhook(organizationId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteOrganizationWebhook(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Edit an organization webhook
+         * @summary Edit an organization webhook
+         * @param {string} projectId Project ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editOrganizationWebhook(projectId: string, body?: object, options?: any): AxiosPromise<object> {
+            return localVarFp.editOrganizationWebhook(projectId, body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get an Organization webhook
+         * @summary Get an Organization webhook
+         * @param {string} projectId Project ID
+         * @param {string} webhookId Webhook ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationWebhook(projectId: string, webhookId: string, options?: any): AxiosPromise<Base & object> {
+            return localVarFp.getOrganizationWebhook(projectId, webhookId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List organization webhooks
+         * @summary List organization webhooks
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationWebHooks(organizationId: string, options?: any): AxiosPromise<InlineResponse200> {
+            return localVarFp.listOrganizationWebHooks(organizationId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * OrganizationWebhookApi - object-oriented interface
+ * @export
+ * @class OrganizationWebhookApi
+ * @extends {BaseAPI}
+ */
+export class OrganizationWebhookApi extends BaseAPI {
+    /**
+     * Create an organization webhook.
+     * @summary Create an organization webhook
+     * @param {string} organizationId Organization ID
+     * @param {InlineObject} [inlineObject] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationWebhookApi
+     */
+    public createOrganizationWebhook(organizationId: string, inlineObject?: InlineObject, options?: AxiosRequestConfig) {
+        return OrganizationWebhookApiFp(this.configuration).createOrganizationWebhook(organizationId, inlineObject, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete organization webhook
+     * @summary Delete organization webhook
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationWebhookApi
+     */
+    public deleteOrganizationWebhook(organizationId: string, options?: AxiosRequestConfig) {
+        return OrganizationWebhookApiFp(this.configuration).deleteOrganizationWebhook(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Edit an organization webhook
+     * @summary Edit an organization webhook
+     * @param {string} projectId Project ID
+     * @param {object} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationWebhookApi
+     */
+    public editOrganizationWebhook(projectId: string, body?: object, options?: AxiosRequestConfig) {
+        return OrganizationWebhookApiFp(this.configuration).editOrganizationWebhook(projectId, body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get an Organization webhook
+     * @summary Get an Organization webhook
+     * @param {string} projectId Project ID
+     * @param {string} webhookId Webhook ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationWebhookApi
+     */
+    public getOrganizationWebhook(projectId: string, webhookId: string, options?: AxiosRequestConfig) {
+        return OrganizationWebhookApiFp(this.configuration).getOrganizationWebhook(projectId, webhookId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List organization webhooks
+     * @summary List organization webhooks
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationWebhookApi
+     */
+    public listOrganizationWebHooks(organizationId: string, options?: AxiosRequestConfig) {
+        return OrganizationWebhookApiFp(this.configuration).listOrganizationWebHooks(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
