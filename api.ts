@@ -4461,10 +4461,7 @@ export interface CustomDomainResponseList {
  */
 
 export enum CustomDomainStatusEnum {
-    DEPLOYING = 'deploying',
-    CHECKING = 'checking',
-    READY = 'ready',
-    ERROR = 'error'
+    VALIDATION_PENDING = 'VALIDATION_PENDING'
 }
 
 /**
