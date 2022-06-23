@@ -1325,10 +1325,10 @@ export interface ApplicationStorageStorage {
 export interface AvailableContainerRegistryResponse {
     /**
      * 
-     * @type {ContainerRegistryKind}
+     * @type {ContainerRegistryKindEnum}
      * @memberof AvailableContainerRegistryResponse
      */
-    'kind'?: ContainerRegistryKind;
+    'kind'?: ContainerRegistryKindEnum;
     /**
      * 
      * @type {{ [key: string]: object; }}
@@ -1922,34 +1922,16 @@ export interface Cluster {
     'description'?: string;
     /**
      * 
-     * @type {CloudProviderEnum}
-     * @memberof Cluster
-     */
-    'cloud_provider': CloudProviderEnum;
-    /**
-     * 
      * @type {string}
      * @memberof Cluster
      */
     'region': string;
     /**
      * 
-     * @type {boolean}
+     * @type {CloudProviderEnum}
      * @memberof Cluster
      */
-    'auto_update'?: boolean;
-    /**
-     * unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof Cluster
-     */
-    'cpu'?: number;
-    /**
-     * unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof Cluster
-     */
-    'memory'?: number;
+    'cloud_provider': CloudProviderEnum;
     /**
      * 
      * @type {number}
@@ -1963,17 +1945,35 @@ export interface Cluster {
      */
     'max_running_nodes'?: number;
     /**
+     * Unit is in GB. The disk size to be used for the node configuration
+     * @type {number}
+     * @memberof Cluster
+     */
+    'disk_size'?: number;
+    /**
      * the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType
      * @type {string}
      * @memberof Cluster
      */
     'instance_type'?: string;
     /**
-     * the disk size to be used for the node configuration
+     * 
+     * @type {KubernetesEnum}
+     * @memberof Cluster
+     */
+    'kubernetes'?: KubernetesEnum;
+    /**
+     * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
      * @memberof Cluster
      */
-    'disk_size'?: number;
+    'cpu'?: number;
+    /**
+     * unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof Cluster
+     */
+    'memory'?: number;
     /**
      * This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration
      * @type {number}
@@ -1986,12 +1986,6 @@ export interface Cluster {
      * @memberof Cluster
      */
     'status'?: StateEnum;
-    /**
-     * 
-     * @type {Array<ClusterFeature>}
-     * @memberof Cluster
-     */
-    'features'?: Array<ClusterFeature>;
     /**
      * 
      * @type {boolean}
@@ -2010,6 +2004,24 @@ export interface Cluster {
      * @memberof Cluster
      */
     'is_default'?: boolean;
+    /**
+     * specific flag to indicate that this cluster is a production one
+     * @type {boolean}
+     * @memberof Cluster
+     */
+    'production'?: boolean;
+    /**
+     * 
+     * @type {ClusterAllOfSshKeys}
+     * @memberof Cluster
+     */
+    'ssh_keys'?: ClusterAllOfSshKeys;
+    /**
+     * 
+     * @type {Array<ClusterAllOfFeatures>}
+     * @memberof Cluster
+     */
+    'features'?: Array<ClusterAllOfFeatures>;
 }
 /**
  * 
@@ -2018,6 +2030,72 @@ export interface Cluster {
  */
 export interface ClusterAllOf {
     /**
+     * name is case-insensitive
+     * @type {string}
+     * @memberof ClusterAllOf
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterAllOf
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterAllOf
+     */
+    'region': string;
+    /**
+     * 
+     * @type {CloudProviderEnum}
+     * @memberof ClusterAllOf
+     */
+    'cloud_provider': CloudProviderEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterAllOf
+     */
+    'min_running_nodes'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterAllOf
+     */
+    'max_running_nodes'?: number;
+    /**
+     * Unit is in GB. The disk size to be used for the node configuration
+     * @type {number}
+     * @memberof ClusterAllOf
+     */
+    'disk_size'?: number;
+    /**
+     * the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType
+     * @type {string}
+     * @memberof ClusterAllOf
+     */
+    'instance_type'?: string;
+    /**
+     * 
+     * @type {KubernetesEnum}
+     * @memberof ClusterAllOf
+     */
+    'kubernetes'?: KubernetesEnum;
+    /**
+     * unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof ClusterAllOf
+     */
+    'cpu'?: number;
+    /**
+     * unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof ClusterAllOf
+     */
+    'memory'?: number;
+    /**
      * This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration
      * @type {number}
      * @memberof ClusterAllOf
@@ -2029,12 +2107,6 @@ export interface ClusterAllOf {
      * @memberof ClusterAllOf
      */
     'status'?: StateEnum;
-    /**
-     * 
-     * @type {Array<ClusterFeature>}
-     * @memberof ClusterAllOf
-     */
-    'features'?: Array<ClusterFeature>;
     /**
      * 
      * @type {boolean}
@@ -2053,79 +2125,107 @@ export interface ClusterAllOf {
      * @memberof ClusterAllOf
      */
     'is_default'?: boolean;
+    /**
+     * specific flag to indicate that this cluster is a production one
+     * @type {boolean}
+     * @memberof ClusterAllOf
+     */
+    'production'?: boolean;
+    /**
+     * 
+     * @type {ClusterAllOfSshKeys}
+     * @memberof ClusterAllOf
+     */
+    'ssh_keys'?: ClusterAllOfSshKeys;
+    /**
+     * 
+     * @type {Array<ClusterAllOfFeatures>}
+     * @memberof ClusterAllOf
+     */
+    'features'?: Array<ClusterAllOfFeatures>;
 }
 /**
  * 
  * @export
- * @interface ClusterBase
+ * @interface ClusterAllOfFeatures
  */
-export interface ClusterBase {
-    /**
-     * name is case-insensitive
-     * @type {string}
-     * @memberof ClusterBase
-     */
-    'name': string;
+export interface ClusterAllOfFeatures {
     /**
      * 
      * @type {string}
-     * @memberof ClusterBase
+     * @memberof ClusterAllOfFeatures
      */
-    'description'?: string;
-    /**
-     * 
-     * @type {CloudProviderEnum}
-     * @memberof ClusterBase
-     */
-    'cloud_provider': CloudProviderEnum;
+    'id'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ClusterBase
+     * @memberof ClusterAllOfFeatures
      */
-    'region': string;
+    'title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterAllOfFeatures
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterAllOfFeatures
+     */
+    'cost_per_month_in_cents'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterAllOfFeatures
+     */
+    'cost_per_month'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterAllOfFeatures
+     */
+    'value_type'?: ClusterAllOfFeaturesValueTypeEnum;
+    /**
+     * 
+     * @type {string | boolean}
+     * @memberof ClusterAllOfFeatures
+     */
+    'value'?: string | boolean | null;
     /**
      * 
      * @type {boolean}
-     * @memberof ClusterBase
+     * @memberof ClusterAllOfFeatures
      */
-    'auto_update'?: boolean;
-    /**
-     * unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof ClusterBase
-     */
-    'cpu'?: number;
-    /**
-     * unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof ClusterBase
-     */
-    'memory'?: number;
+    'is_value_updatable'?: boolean;
     /**
      * 
-     * @type {number}
-     * @memberof ClusterBase
+     * @type {Array<string | boolean>}
+     * @memberof ClusterAllOfFeatures
      */
-    'min_running_nodes'?: number;
+    'accepted_values'?: Array<string | boolean>;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ClusterAllOfFeaturesValueTypeEnum {
+    BOOLEAN = 'BOOLEAN'
+}
+
+/**
+ * Indicate your public ssh_key to remotely connect to your EC2 instance.
+ * @export
+ * @interface ClusterAllOfSshKeys
+ */
+export interface ClusterAllOfSshKeys {
     /**
      * 
-     * @type {number}
-     * @memberof ClusterBase
+     * @type {Array<string>}
+     * @memberof ClusterAllOfSshKeys
      */
-    'max_running_nodes'?: number;
-    /**
-     * the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType
-     * @type {string}
-     * @memberof ClusterBase
-     */
-    'instance_type'?: string;
-    /**
-     * the disk size to be used for the node configuration
-     * @type {number}
-     * @memberof ClusterBase
-     */
-    'disk_size'?: number;
+    'results'?: Array<string>;
 }
 /**
  * 
@@ -2307,38 +2407,6 @@ export enum ClusterFeatureValueTypeEnum {
 /**
  * 
  * @export
- * @interface ClusterFeatureRequest
- */
-export interface ClusterFeatureRequest {
-    /**
-     * 
-     * @type {Array<ClusterFeatureRequestFeatures>}
-     * @memberof ClusterFeatureRequest
-     */
-    'features'?: Array<ClusterFeatureRequestFeatures>;
-}
-/**
- * 
- * @export
- * @interface ClusterFeatureRequestFeatures
- */
-export interface ClusterFeatureRequestFeatures {
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterFeatureRequestFeatures
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterFeatureRequestFeatures
-     */
-    'value'?: string | null;
-}
-/**
- * 
- * @export
  * @interface ClusterFeatureResponseList
  */
 export interface ClusterFeatureResponseList {
@@ -2392,6 +2460,216 @@ export interface ClusterInstanceTypeResponseListResults {
      * @memberof ClusterInstanceTypeResponseListResults
      */
     'ram_in_gb': number;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterLogs
+ */
+export interface ClusterLogs {
+    /**
+     * log level
+     * @type {string}
+     * @memberof ClusterLogs
+     */
+    'type'?: string;
+    /**
+     * log date creation
+     * @type {string}
+     * @memberof ClusterLogs
+     */
+    'timestamp'?: string;
+    /**
+     * log step
+     * @type {string}
+     * @memberof ClusterLogs
+     */
+    'step'?: ClusterLogsStepEnum;
+    /**
+     * 
+     * @type {ClusterLogsMessage}
+     * @memberof ClusterLogs
+     */
+    'message'?: ClusterLogsMessage;
+    /**
+     * 
+     * @type {ClusterLogsError}
+     * @memberof ClusterLogs
+     */
+    'error'?: ClusterLogsError;
+    /**
+     * 
+     * @type {ClusterLogsDetails}
+     * @memberof ClusterLogs
+     */
+    'details'?: ClusterLogsDetails;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ClusterLogsStepEnum {
+    LOAD_CONFIGURATION = 'LoadConfiguration',
+    CREATE = 'Create',
+    CREATED = 'Created',
+    CREATE_ERROR = 'CreateError',
+    PAUSE = 'Pause',
+    PAUSED = 'Paused',
+    PAUSE_ERROR = 'PauseError',
+    DELETE = 'Delete',
+    DELETED = 'Deleted',
+    DELETE_ERROR = 'DeleteError',
+    RETRIEVE_CLUSTER_CONFIG = 'RetrieveClusterConfig',
+    RETRIEVE_CLUSTER_RESOURCES = 'RetrieveClusterResources',
+    VALIDATE_SYSTEM_REQUIREMENTS = 'ValidateSystemRequirements',
+    UNDER_MIGRATION = 'UnderMigration',
+    UNKNOWN = 'Unknown'
+}
+
+/**
+ * Present only for `info`, `warning` and `debug` logs
+ * @export
+ * @interface ClusterLogsDetails
+ */
+export interface ClusterLogsDetails {
+    /**
+     * cloud provider used
+     * @type {string}
+     * @memberof ClusterLogsDetails
+     */
+    'provider_kind'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterLogsDetails
+     */
+    'region'?: string;
+    /**
+     * 
+     * @type {ClusterLogsErrorEventDetailsTransmitter}
+     * @memberof ClusterLogsDetails
+     */
+    'transmitter'?: ClusterLogsErrorEventDetailsTransmitter;
+}
+/**
+ * Present only for `error` log
+ * @export
+ * @interface ClusterLogsError
+ */
+export interface ClusterLogsError {
+    /**
+     * log error tag
+     * @type {string}
+     * @memberof ClusterLogsError
+     */
+    'tag'?: string;
+    /**
+     * log details about the error
+     * @type {string}
+     * @memberof ClusterLogsError
+     */
+    'user_log_message'?: string;
+    /**
+     * link to our documentation
+     * @type {string}
+     * @memberof ClusterLogsError
+     */
+    'link'?: string;
+    /**
+     * hint the user can follow
+     * @type {string}
+     * @memberof ClusterLogsError
+     */
+    'hint_message'?: string;
+    /**
+     * 
+     * @type {ClusterLogsErrorEventDetails}
+     * @memberof ClusterLogsError
+     */
+    'event_details'?: ClusterLogsErrorEventDetails;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterLogsErrorEventDetails
+ */
+export interface ClusterLogsErrorEventDetails {
+    /**
+     * cloud provider used
+     * @type {string}
+     * @memberof ClusterLogsErrorEventDetails
+     */
+    'provider_kind'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterLogsErrorEventDetails
+     */
+    'region'?: string;
+    /**
+     * 
+     * @type {ClusterLogsErrorEventDetailsTransmitter}
+     * @memberof ClusterLogsErrorEventDetails
+     */
+    'transmitter'?: ClusterLogsErrorEventDetailsTransmitter;
+    /**
+     * 
+     * @type {ClusterLogsErrorEventDetailsUnderlyingError}
+     * @memberof ClusterLogsErrorEventDetails
+     */
+    'underlying_error'?: ClusterLogsErrorEventDetailsUnderlyingError;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterLogsErrorEventDetailsTransmitter
+ */
+export interface ClusterLogsErrorEventDetailsTransmitter {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterLogsErrorEventDetailsTransmitter
+     */
+    'type'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterLogsErrorEventDetailsTransmitter
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterLogsErrorEventDetailsTransmitter
+     */
+    'name'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterLogsErrorEventDetailsUnderlyingError
+ */
+export interface ClusterLogsErrorEventDetailsUnderlyingError {
+    /**
+     * technical details about the error
+     * @type {string}
+     * @memberof ClusterLogsErrorEventDetailsUnderlyingError
+     */
+    'message'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterLogsMessage
+ */
+export interface ClusterLogsMessage {
+    /**
+     * log global message
+     * @type {string}
+     * @memberof ClusterLogsMessage
+     */
+    'safe_message'?: string;
 }
 /**
  * 
@@ -2470,34 +2748,16 @@ export interface ClusterRequest {
     'description'?: string;
     /**
      * 
-     * @type {CloudProviderEnum}
-     * @memberof ClusterRequest
-     */
-    'cloud_provider': CloudProviderEnum;
-    /**
-     * 
      * @type {string}
      * @memberof ClusterRequest
      */
     'region': string;
     /**
      * 
-     * @type {boolean}
+     * @type {CloudProviderEnum}
      * @memberof ClusterRequest
      */
-    'auto_update'?: boolean;
-    /**
-     * unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof ClusterRequest
-     */
-    'cpu'?: number;
-    /**
-     * unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof ClusterRequest
-     */
-    'memory'?: number;
+    'cloud_provider': CloudProviderEnum;
     /**
      * 
      * @type {number}
@@ -2511,23 +2771,73 @@ export interface ClusterRequest {
      */
     'max_running_nodes'?: number;
     /**
+     * Unit is in GB. The disk size to be used for the node configuration
+     * @type {number}
+     * @memberof ClusterRequest
+     */
+    'disk_size'?: number;
+    /**
      * the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType
      * @type {string}
      * @memberof ClusterRequest
      */
     'instance_type'?: string;
     /**
-     * the disk size to be used for the node configuration
-     * @type {number}
+     * 
+     * @type {KubernetesEnum}
      * @memberof ClusterRequest
      */
-    'disk_size'?: number;
+    'kubernetes'?: KubernetesEnum;
+    /**
+     * specific flag to indicate that this cluster is a production one
+     * @type {boolean}
+     * @memberof ClusterRequest
+     */
+    'production'?: boolean;
     /**
      * 
-     * @type {Array<ClusterFeatureRequestFeatures>}
+     * @type {ClusterAllOfSshKeys}
      * @memberof ClusterRequest
      */
-    'features'?: Array<ClusterFeatureRequestFeatures>;
+    'ssh_keys'?: ClusterAllOfSshKeys;
+    /**
+     * 
+     * @type {ClusterRequestFeatures}
+     * @memberof ClusterRequest
+     */
+    'features'?: ClusterRequestFeatures;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterRequestFeatures
+ */
+export interface ClusterRequestFeatures {
+    /**
+     * 
+     * @type {Array<ClusterRequestFeaturesFeatures>}
+     * @memberof ClusterRequestFeatures
+     */
+    'features'?: Array<ClusterRequestFeaturesFeatures>;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterRequestFeaturesFeatures
+ */
+export interface ClusterRequestFeaturesFeatures {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterRequestFeaturesFeatures
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterRequestFeaturesFeatures
+     */
+    'value'?: string | null;
 }
 /**
  * 
@@ -3455,7 +3765,7 @@ export interface ContainerNetworkRequest {
  * @enum {string}
  */
 
-export enum ContainerRegistryKind {
+export enum ContainerRegistryKindEnum {
     ECR = 'ECR',
     DOCR = 'DOCR',
     SCALEWAY_CR = 'SCALEWAY_CR',
@@ -3477,10 +3787,10 @@ export interface ContainerRegistryRequest {
     'name': string;
     /**
      * 
-     * @type {ContainerRegistryKind}
+     * @type {ContainerRegistryKindEnum}
      * @memberof ContainerRegistryRequest
      */
-    'kind': ContainerRegistryKind;
+    'kind': ContainerRegistryKindEnum;
     /**
      * 
      * @type {string}
@@ -3514,10 +3824,10 @@ export interface ContainerRegistryResponse {
     'name'?: string;
     /**
      * 
-     * @type {ContainerRegistryKind}
+     * @type {ContainerRegistryKindEnum}
      * @memberof ContainerRegistryResponse
      */
-    'kind'?: ContainerRegistryKind;
+    'kind'?: ContainerRegistryKindEnum;
     /**
      * 
      * @type {string}
@@ -3982,6 +4292,18 @@ export interface Credentials {
      * @type {string}
      * @memberof Credentials
      */
+    'host': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Credentials
+     */
+    'port': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Credentials
+     */
     'login': string;
     /**
      * 
@@ -4165,23 +4487,11 @@ export interface CustomDomain {
     'validation_domain'?: string;
     /**
      * 
-     * @type {string}
+     * @type {CustomDomainStatusEnum}
      * @memberof CustomDomain
      */
     'status'?: CustomDomainStatusEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum CustomDomainStatusEnum {
-    DEPLOYING = 'deploying',
-    CHECKING = 'checking',
-    READY = 'ready',
-    ERROR = 'error'
-}
-
 /**
  * 
  * @export
@@ -4196,23 +4506,11 @@ export interface CustomDomainAllOf {
     'validation_domain'?: string;
     /**
      * 
-     * @type {string}
+     * @type {CustomDomainStatusEnum}
      * @memberof CustomDomainAllOf
      */
-    'status'?: CustomDomainAllOfStatusEnum;
+    'status'?: CustomDomainStatusEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum CustomDomainAllOfStatusEnum {
-    DEPLOYING = 'deploying',
-    CHECKING = 'checking',
-    READY = 'ready',
-    ERROR = 'error'
-}
-
 /**
  * 
  * @export
@@ -4239,6 +4537,19 @@ export interface CustomDomainResponseList {
      */
     'results'?: Array<CustomDomain>;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum CustomDomainStatusEnum {
+    DEPLOYING = 'deploying',
+    CHECKING = 'checking',
+    READY = 'ready',
+    ERROR = 'error'
+}
+
 /**
  * 
  * @export
@@ -5642,22 +5953,108 @@ export interface EnvironmentDatabasesCurrentMetric {
     'database'?: string;
     /**
      * 
-     * @type {DatabaseCurrentMetricCpu}
+     * @type {EnvironmentDatabasesCurrentMetricCpu}
      * @memberof EnvironmentDatabasesCurrentMetric
      */
-    'cpu'?: DatabaseCurrentMetricCpu;
+    'cpu'?: EnvironmentDatabasesCurrentMetricCpu;
     /**
      * 
-     * @type {DatabaseCurrentMetricMemory}
+     * @type {EnvironmentDatabasesCurrentMetricMemory}
      * @memberof EnvironmentDatabasesCurrentMetric
      */
-    'memory'?: DatabaseCurrentMetricMemory;
+    'memory'?: EnvironmentDatabasesCurrentMetricMemory;
     /**
      * 
-     * @type {DatabaseCurrentMetricStorage}
+     * @type {EnvironmentDatabasesCurrentMetricStorage}
      * @memberof EnvironmentDatabasesCurrentMetric
      */
-    'storage'?: DatabaseCurrentMetricStorage;
+    'storage'?: EnvironmentDatabasesCurrentMetricStorage;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentDatabasesCurrentMetricCpu
+ */
+export interface EnvironmentDatabasesCurrentMetricCpu {
+    /**
+     * unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof EnvironmentDatabasesCurrentMetricCpu
+     */
+    'requested_in_float'?: number;
+    /**
+     * unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof EnvironmentDatabasesCurrentMetricCpu
+     */
+    'consumed_in_number'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof EnvironmentDatabasesCurrentMetricCpu
+     */
+    'consumed_in_percent'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof EnvironmentDatabasesCurrentMetricCpu
+     */
+    'warning_threshold_in_percent'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof EnvironmentDatabasesCurrentMetricCpu
+     */
+    'alert_threshold_in_percent'?: number;
+    /**
+     * 
+     * @type {ThresholdMetricStatusEnum}
+     * @memberof EnvironmentDatabasesCurrentMetricCpu
+     */
+    'status'?: ThresholdMetricStatusEnum;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentDatabasesCurrentMetricMemory
+ */
+export interface EnvironmentDatabasesCurrentMetricMemory {
+    /**
+     * unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof EnvironmentDatabasesCurrentMetricMemory
+     */
+    'requested_in_mb'?: number;
+    /**
+     * unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof EnvironmentDatabasesCurrentMetricMemory
+     */
+    'consumed_in_mb'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof EnvironmentDatabasesCurrentMetricMemory
+     */
+    'consumed_in_percent'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof EnvironmentDatabasesCurrentMetricMemory
+     */
+    'warning_threshold_in_percent'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof EnvironmentDatabasesCurrentMetricMemory
+     */
+    'alert_threshold_in_percent'?: number;
+    /**
+     * 
+     * @type {ThresholdMetricStatusEnum}
+     * @memberof EnvironmentDatabasesCurrentMetricMemory
+     */
+    'status'?: ThresholdMetricStatusEnum;
 }
 /**
  * 
@@ -5671,6 +6068,49 @@ export interface EnvironmentDatabasesCurrentMetricResponseList {
      * @memberof EnvironmentDatabasesCurrentMetricResponseList
      */
     'results'?: Array<EnvironmentDatabasesCurrentMetric>;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentDatabasesCurrentMetricStorage
+ */
+export interface EnvironmentDatabasesCurrentMetricStorage {
+    /**
+     * Unit is in GB.
+     * @type {number}
+     * @memberof EnvironmentDatabasesCurrentMetricStorage
+     */
+    'requested_in_gb'?: number;
+    /**
+     * Unit is in GB.
+     * @type {number}
+     * @memberof EnvironmentDatabasesCurrentMetricStorage
+     */
+    'consumed_in_gb'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof EnvironmentDatabasesCurrentMetricStorage
+     */
+    'consumed_in_percent'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof EnvironmentDatabasesCurrentMetricStorage
+     */
+    'warning_threshold_in_percent'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof EnvironmentDatabasesCurrentMetricStorage
+     */
+    'alert_threshold_in_percent'?: number;
+    /**
+     * 
+     * @type {ThresholdMetricStatusEnum}
+     * @memberof EnvironmentDatabasesCurrentMetricStorage
+     */
+    'status'?: ThresholdMetricStatusEnum;
 }
 /**
  * 
@@ -6684,78 +7124,15 @@ export enum HealthcheckProtocolEnum {
 /**
  * 
  * @export
- * @interface InlineObject
- */
-export interface InlineObject {
-    /**
-     * Define the type of the webhook. `SLACK` is a special webhook type to push notifications directly to slack. The `target_url` must be a Slack compatible endpoint.
-     * @type {string}
-     * @memberof InlineObject
-     */
-    'kind': InlineObjectKindEnum;
-    /**
-     * Set the public HTTP or HTTPS endpoint that will receive the specified events. The target URL must starts with `http://` or `https://` 
-     * @type {string}
-     * @memberof InlineObject
-     */
-    'target_url': string;
-    /**
-     * Make sure you receive a payload to sign the Qovery request with your secret. Qovery will add a HTTP header `Qovery-Signature: <Your Secret>` to every webhook requests sent to your target URL. 
-     * @type {string}
-     * @memberof InlineObject
-     */
-    'target_secret'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineObject
-     */
-    'description'?: string;
-    /**
-     * Turn on or off your endpoint.
-     * @type {boolean}
-     * @memberof InlineObject
-     */
-    'enabled'?: boolean;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof InlineObject
-     */
-    'events': Array<InlineObjectEventsEnum>;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum InlineObjectKindEnum {
-    STANDARD = 'STANDARD',
-    SLACK = 'SLACK'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum InlineObjectEventsEnum {
-    STARTED = 'DEPLOYMENT_STARTED',
-    CANCELLED = 'DEPLOYMENT_CANCELLED',
-    FAILURE = 'DEPLOYMENT_FAILURE',
-    SUCCESSFUL = 'DEPLOYMENT_SUCCESSFUL'
-}
-
-/**
- * 
- * @export
  * @interface InlineResponse200
  */
 export interface InlineResponse200 {
     /**
      * 
-     * @type {Array<object>}
+     * @type {Array<ClusterLogs>}
      * @memberof InlineResponse200
      */
-    'results'?: Array<object>;
+    'results'?: Array<ClusterLogs>;
 }
 /**
  * 
@@ -6835,16 +7212,59 @@ export interface Instance {
     'name'?: string;
     /**
      * 
-     * @type {DatabaseCurrentMetricCpu}
+     * @type {EnvironmentDatabasesCurrentMetricCpu}
      * @memberof Instance
      */
-    'cpu'?: DatabaseCurrentMetricCpu;
+    'cpu'?: EnvironmentDatabasesCurrentMetricCpu;
     /**
      * 
-     * @type {DatabaseCurrentMetricMemory}
+     * @type {InstanceMemory}
      * @memberof Instance
      */
-    'memory'?: DatabaseCurrentMetricMemory;
+    'memory'?: InstanceMemory;
+}
+/**
+ * 
+ * @export
+ * @interface InstanceMemory
+ */
+export interface InstanceMemory {
+    /**
+     * unit is MB. 1024 MB = 1GB.
+     * @type {number}
+     * @memberof InstanceMemory
+     */
+    'requested_in_mb'?: number;
+    /**
+     * unit is MB. 1024 MB = 1GB.
+     * @type {number}
+     * @memberof InstanceMemory
+     */
+    'consumed_in_mb'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof InstanceMemory
+     */
+    'consumed_in_percent'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof InstanceMemory
+     */
+    'warning_threshold_in_percent'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof InstanceMemory
+     */
+    'alert_threshold_in_percent'?: number;
+    /**
+     * 
+     * @type {ThresholdMetricStatusEnum}
+     * @memberof InstanceMemory
+     */
+    'status'?: ThresholdMetricStatusEnum;
 }
 /**
  * 
@@ -7129,6 +7549,17 @@ export interface Key {
      */
     'key': string;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum KubernetesEnum {
+    K3_S = 'K3S',
+    MANAGED = 'MANAGED'
+}
+
 /**
  * 
  * @export
@@ -7480,13 +7911,13 @@ export interface MetricCPUDatapoint {
      */
     'created_at': string;
     /**
-     * 
+     * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
      * @memberof MetricCPUDatapoint
      */
     'requested_in_number'?: number;
     /**
-     * 
+     * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
      * @memberof MetricCPUDatapoint
      */
@@ -7607,13 +8038,13 @@ export interface MetricMemoryDatapoint {
      */
     'created_at': string;
     /**
-     * 
+     * unit is MB. 1024 MB = 1GB
      * @type {number}
      * @memberof MetricMemoryDatapoint
      */
     'requested_in_mb': number;
     /**
-     * 
+     * unit is MB. 1024 MB = 1GB
      * @type {number}
      * @memberof MetricMemoryDatapoint
      */
@@ -7715,13 +8146,13 @@ export interface MetricStorageDatapoint {
      */
     'created_at': string;
     /**
-     * 
+     * Unit is in GB.
      * @type {number}
      * @memberof MetricStorageDatapoint
      */
     'requested_in_gb'?: number;
     /**
-     * 
+     * Unit is in GB.
      * @type {number}
      * @memberof MetricStorageDatapoint
      */
@@ -8270,6 +8701,354 @@ export interface OrganizationResponseList {
      * @memberof OrganizationResponseList
      */
     'results'?: Array<Organization>;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationWebhookCreateRequest
+ */
+export interface OrganizationWebhookCreateRequest {
+    /**
+     * 
+     * @type {OrganizationWebhookKindEnum}
+     * @memberof OrganizationWebhookCreateRequest
+     */
+    'kind': OrganizationWebhookKindEnum;
+    /**
+     * Set the public HTTP or HTTPS endpoint that will receive the specified events. The target URL must starts with `http://` or `https://` 
+     * @type {string}
+     * @memberof OrganizationWebhookCreateRequest
+     */
+    'target_url': string;
+    /**
+     * Make sure you receive a payload to sign the Qovery request with your secret. Qovery will add a HTTP header `Qovery-Signature: <Your Secret>` to every webhook requests sent to your target URL. 
+     * @type {string}
+     * @memberof OrganizationWebhookCreateRequest
+     */
+    'target_secret'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationWebhookCreateRequest
+     */
+    'description'?: string;
+    /**
+     * Turn on or off your endpoint.
+     * @type {boolean}
+     * @memberof OrganizationWebhookCreateRequest
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {Array<OrganizationWebhookEventEnum>}
+     * @memberof OrganizationWebhookCreateRequest
+     */
+    'events': Array<OrganizationWebhookEventEnum>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof OrganizationWebhookCreateRequest
+     */
+    'project_id_filter'?: Array<string>;
+    /**
+     * Specify the environment modes you want to filter to. This webhook will be triggered only if the event is coming from an environment with the specified mode. 
+     * @type {Array<EnvironmentModeEnum>}
+     * @memberof OrganizationWebhookCreateRequest
+     */
+    'environment_types_filter'?: Array<EnvironmentModeEnum>;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationWebhookCreateResponse
+ */
+export interface OrganizationWebhookCreateResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationWebhookCreateResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationWebhookCreateResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationWebhookCreateResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {OrganizationWebhookKindEnum}
+     * @memberof OrganizationWebhookCreateResponse
+     */
+    'kind'?: OrganizationWebhookKindEnum;
+    /**
+     * Set the public HTTP or HTTPS endpoint that will receive the specified events. The target URL must starts with `http://` or `https://` 
+     * @type {string}
+     * @memberof OrganizationWebhookCreateResponse
+     */
+    'target_url'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OrganizationWebhookCreateResponse
+     */
+    'target_secret_set'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationWebhookCreateResponse
+     */
+    'description'?: string;
+    /**
+     * Turn on or off your endpoint.
+     * @type {boolean}
+     * @memberof OrganizationWebhookCreateResponse
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {Array<OrganizationWebhookEventEnum>}
+     * @memberof OrganizationWebhookCreateResponse
+     */
+    'events'?: Array<OrganizationWebhookEventEnum>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof OrganizationWebhookCreateResponse
+     */
+    'project_id_filter'?: Array<string>;
+    /**
+     * Specify the environment modes you want to filter to. This webhook will be triggered only if the event is coming from an environment with the specified mode. 
+     * @type {Array<EnvironmentModeEnum>}
+     * @memberof OrganizationWebhookCreateResponse
+     */
+    'environment_types_filter'?: Array<EnvironmentModeEnum>;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationWebhookCreateResponseAllOf
+ */
+export interface OrganizationWebhookCreateResponseAllOf {
+    /**
+     * 
+     * @type {OrganizationWebhookKindEnum}
+     * @memberof OrganizationWebhookCreateResponseAllOf
+     */
+    'kind'?: OrganizationWebhookKindEnum;
+    /**
+     * Set the public HTTP or HTTPS endpoint that will receive the specified events. The target URL must starts with `http://` or `https://` 
+     * @type {string}
+     * @memberof OrganizationWebhookCreateResponseAllOf
+     */
+    'target_url'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OrganizationWebhookCreateResponseAllOf
+     */
+    'target_secret_set'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationWebhookCreateResponseAllOf
+     */
+    'description'?: string;
+    /**
+     * Turn on or off your endpoint.
+     * @type {boolean}
+     * @memberof OrganizationWebhookCreateResponseAllOf
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {Array<OrganizationWebhookEventEnum>}
+     * @memberof OrganizationWebhookCreateResponseAllOf
+     */
+    'events'?: Array<OrganizationWebhookEventEnum>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof OrganizationWebhookCreateResponseAllOf
+     */
+    'project_id_filter'?: Array<string>;
+    /**
+     * Specify the environment modes you want to filter to. This webhook will be triggered only if the event is coming from an environment with the specified mode. 
+     * @type {Array<EnvironmentModeEnum>}
+     * @memberof OrganizationWebhookCreateResponseAllOf
+     */
+    'environment_types_filter'?: Array<EnvironmentModeEnum>;
+}
+/**
+ * Events to subscribe to and send to the `target_url`. - `DEPLOYMENT_STARTED` send an event when a deployment is started and going to be executed - `DEPLOYMENT_CANCELLED` send an event when a deployment is cancelled - `DEPLOYMENT_FAILURE` send an event when a deployment failed - `DEPLOYMENT_SUCCESSFUL` send an event when a deployment is successful 
+ * @export
+ * @enum {string}
+ */
+
+export enum OrganizationWebhookEventEnum {
+    STARTED = 'DEPLOYMENT_STARTED',
+    CANCELLED = 'DEPLOYMENT_CANCELLED',
+    FAILURE = 'DEPLOYMENT_FAILURE',
+    SUCCESSFUL = 'DEPLOYMENT_SUCCESSFUL'
+}
+
+/**
+ * Define the type of the webhook. `SLACK` is a special webhook type to push notifications directly to slack. The `target_url` must be a Slack compatible endpoint.
+ * @export
+ * @enum {string}
+ */
+
+export enum OrganizationWebhookKindEnum {
+    STANDARD = 'STANDARD',
+    SLACK = 'SLACK'
+}
+
+/**
+ * 
+ * @export
+ * @interface OrganizationWebhookResponse
+ */
+export interface OrganizationWebhookResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationWebhookResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationWebhookResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationWebhookResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {OrganizationWebhookKindEnum}
+     * @memberof OrganizationWebhookResponse
+     */
+    'kind'?: OrganizationWebhookKindEnum;
+    /**
+     * Set the public HTTP or HTTPS endpoint that will receive the specified events. The target URL must starts with `http://` or `https://` 
+     * @type {string}
+     * @memberof OrganizationWebhookResponse
+     */
+    'target_url'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OrganizationWebhookResponse
+     */
+    'target_secret_set'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationWebhookResponse
+     */
+    'description'?: string;
+    /**
+     * Turn on or off your endpoint.
+     * @type {boolean}
+     * @memberof OrganizationWebhookResponse
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {Array<OrganizationWebhookEventEnum>}
+     * @memberof OrganizationWebhookResponse
+     */
+    'events'?: Array<OrganizationWebhookEventEnum>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof OrganizationWebhookResponse
+     */
+    'project_id_filter'?: Array<string>;
+    /**
+     * Specify the environment modes you want to filter to. This webhook will be triggered only if the event is coming from an environment with the specified mode. 
+     * @type {Array<EnvironmentModeEnum>}
+     * @memberof OrganizationWebhookResponse
+     */
+    'environment_types_filter'?: Array<EnvironmentModeEnum>;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationWebhookResponseAllOf
+ */
+export interface OrganizationWebhookResponseAllOf {
+    /**
+     * 
+     * @type {OrganizationWebhookKindEnum}
+     * @memberof OrganizationWebhookResponseAllOf
+     */
+    'kind'?: OrganizationWebhookKindEnum;
+    /**
+     * Set the public HTTP or HTTPS endpoint that will receive the specified events. The target URL must starts with `http://` or `https://` 
+     * @type {string}
+     * @memberof OrganizationWebhookResponseAllOf
+     */
+    'target_url'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OrganizationWebhookResponseAllOf
+     */
+    'target_secret_set'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationWebhookResponseAllOf
+     */
+    'description'?: string;
+    /**
+     * Turn on or off your endpoint.
+     * @type {boolean}
+     * @memberof OrganizationWebhookResponseAllOf
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {Array<OrganizationWebhookEventEnum>}
+     * @memberof OrganizationWebhookResponseAllOf
+     */
+    'events'?: Array<OrganizationWebhookEventEnum>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof OrganizationWebhookResponseAllOf
+     */
+    'project_id_filter'?: Array<string>;
+    /**
+     * Specify the environment modes you want to filter to. This webhook will be triggered only if the event is coming from an environment with the specified mode. 
+     * @type {Array<EnvironmentModeEnum>}
+     * @memberof OrganizationWebhookResponseAllOf
+     */
+    'environment_types_filter'?: Array<EnvironmentModeEnum>;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationWebhookResponseList
+ */
+export interface OrganizationWebhookResponseList {
+    /**
+     * 
+     * @type {Array<OrganizationWebhookResponse>}
+     * @memberof OrganizationWebhookResponseList
+     */
+    'results'?: Array<OrganizationWebhookResponse>;
 }
 /**
  * 
@@ -9562,13 +10341,13 @@ export interface StorageDisk {
      */
     'storage_id'?: string;
     /**
-     * 
+     * Unit is in GB.
      * @type {number}
      * @memberof StorageDisk
      */
     'requested_in_gb'?: number;
     /**
-     * 
+     * Unit is in GB.
      * @type {number}
      * @memberof StorageDisk
      */
@@ -10304,11 +11083,11 @@ export const ApplicationConfigurationApiAxiosParamCreator = function (configurat
          * Edit advanced settings by returning table of advanced settings.
          * @summary Edit advanced settings
          * @param {string} applicationId Application ID
-         * @param {Array<ApplicationAdvancedSettings>} [applicationAdvancedSettings] 
+         * @param {ApplicationAdvancedSettings} [applicationAdvancedSettings] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editAdvancedSettings: async (applicationId: string, applicationAdvancedSettings?: Array<ApplicationAdvancedSettings>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        editAdvancedSettings: async (applicationId: string, applicationAdvancedSettings?: ApplicationAdvancedSettings, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'applicationId' is not null or undefined
             assertParamExists('editAdvancedSettings', 'applicationId', applicationId)
             const localVarPath = `/application/{applicationId}/advancedSettings`
@@ -10474,11 +11253,11 @@ export const ApplicationConfigurationApiFp = function(configuration?: Configurat
          * Edit advanced settings by returning table of advanced settings.
          * @summary Edit advanced settings
          * @param {string} applicationId Application ID
-         * @param {Array<ApplicationAdvancedSettings>} [applicationAdvancedSettings] 
+         * @param {ApplicationAdvancedSettings} [applicationAdvancedSettings] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editAdvancedSettings(applicationId: string, applicationAdvancedSettings?: Array<ApplicationAdvancedSettings>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ApplicationAdvancedSettings>>> {
+        async editAdvancedSettings(applicationId: string, applicationAdvancedSettings?: ApplicationAdvancedSettings, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationAdvancedSettings>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editAdvancedSettings(applicationId, applicationAdvancedSettings, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -10501,7 +11280,7 @@ export const ApplicationConfigurationApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAdvancedSettings(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ApplicationAdvancedSettings>>> {
+        async getAdvancedSettings(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationAdvancedSettings>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAdvancedSettings(applicationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -10530,11 +11309,11 @@ export const ApplicationConfigurationApiFactory = function (configuration?: Conf
          * Edit advanced settings by returning table of advanced settings.
          * @summary Edit advanced settings
          * @param {string} applicationId Application ID
-         * @param {Array<ApplicationAdvancedSettings>} [applicationAdvancedSettings] 
+         * @param {ApplicationAdvancedSettings} [applicationAdvancedSettings] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editAdvancedSettings(applicationId: string, applicationAdvancedSettings?: Array<ApplicationAdvancedSettings>, options?: any): AxiosPromise<Array<ApplicationAdvancedSettings>> {
+        editAdvancedSettings(applicationId: string, applicationAdvancedSettings?: ApplicationAdvancedSettings, options?: any): AxiosPromise<ApplicationAdvancedSettings> {
             return localVarFp.editAdvancedSettings(applicationId, applicationAdvancedSettings, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10555,7 +11334,7 @@ export const ApplicationConfigurationApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAdvancedSettings(applicationId: string, options?: any): AxiosPromise<Array<ApplicationAdvancedSettings>> {
+        getAdvancedSettings(applicationId: string, options?: any): AxiosPromise<ApplicationAdvancedSettings> {
             return localVarFp.getAdvancedSettings(applicationId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10582,12 +11361,12 @@ export class ApplicationConfigurationApi extends BaseAPI {
      * Edit advanced settings by returning table of advanced settings.
      * @summary Edit advanced settings
      * @param {string} applicationId Application ID
-     * @param {Array<ApplicationAdvancedSettings>} [applicationAdvancedSettings] 
+     * @param {ApplicationAdvancedSettings} [applicationAdvancedSettings] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApplicationConfigurationApi
      */
-    public editAdvancedSettings(applicationId: string, applicationAdvancedSettings?: Array<ApplicationAdvancedSettings>, options?: AxiosRequestConfig) {
+    public editAdvancedSettings(applicationId: string, applicationAdvancedSettings?: ApplicationAdvancedSettings, options?: AxiosRequestConfig) {
         return ApplicationConfigurationApiFp(this.configuration).editAdvancedSettings(applicationId, applicationAdvancedSettings, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -18435,6 +19214,48 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * List Cluster Logs
+         * @summary List Cluster Logs
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listClusterLogs: async (organizationId: string, clusterId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listClusterLogs', 'organizationId', organizationId)
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('listClusterLogs', 'clusterId', clusterId)
+            const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/logs`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary List organization clusters
          * @param {string} organizationId Organization ID
@@ -18734,6 +19555,18 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * List Cluster Logs
+         * @summary List Cluster Logs
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listClusterLogs(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listClusterLogs(organizationId, clusterId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * 
          * @summary List organization clusters
          * @param {string} organizationId Organization ID
@@ -18901,6 +19734,17 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          */
         getRoutingTable(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterRoutingTable> {
             return localVarFp.getRoutingTable(organizationId, clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List Cluster Logs
+         * @summary List Cluster Logs
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listClusterLogs(organizationId: string, clusterId: string, options?: any): AxiosPromise<InlineResponse200> {
+            return localVarFp.listClusterLogs(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -19085,6 +19929,19 @@ export class ClustersApi extends BaseAPI {
      */
     public getRoutingTable(organizationId: string, clusterId: string, options?: AxiosRequestConfig) {
         return ClustersApiFp(this.configuration).getRoutingTable(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List Cluster Logs
+     * @summary List Cluster Logs
+     * @param {string} organizationId Organization ID
+     * @param {string} clusterId Cluster ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClustersApi
+     */
+    public listClusterLogs(organizationId: string, clusterId: string, options?: AxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).listClusterLogs(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -31112,10 +31969,11 @@ export const GithubAppApiAxiosParamCreator = function (configuration?: Configura
          * 
          * @summary Disconnect a github account from an organization
          * @param {string} organizationId Organization ID
+         * @param {boolean} [force] Indicates if the github app should be disconnected despite github applications linked to organization
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        organizationGithubAppDisconnect: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        organizationGithubAppDisconnect: async (organizationId: string, force?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('organizationGithubAppDisconnect', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/github/disconnect`
@@ -31134,6 +31992,10 @@ export const GithubAppApiAxiosParamCreator = function (configuration?: Configura
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (force !== undefined) {
+                localVarQueryParameter['force'] = force;
+            }
 
 
     
@@ -31172,11 +32034,12 @@ export const GithubAppApiFp = function(configuration?: Configuration) {
          * 
          * @summary Disconnect a github account from an organization
          * @param {string} organizationId Organization ID
+         * @param {boolean} [force] Indicates if the github app should be disconnected despite github applications linked to organization
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async organizationGithubAppDisconnect(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.organizationGithubAppDisconnect(organizationId, options);
+        async organizationGithubAppDisconnect(organizationId: string, force?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.organizationGithubAppDisconnect(organizationId, force, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -31204,11 +32067,12 @@ export const GithubAppApiFactory = function (configuration?: Configuration, base
          * 
          * @summary Disconnect a github account from an organization
          * @param {string} organizationId Organization ID
+         * @param {boolean} [force] Indicates if the github app should be disconnected despite github applications linked to organization
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        organizationGithubAppDisconnect(organizationId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.organizationGithubAppDisconnect(organizationId, options).then((request) => request(axios, basePath));
+        organizationGithubAppDisconnect(organizationId: string, force?: boolean, options?: any): AxiosPromise<void> {
+            return localVarFp.organizationGithubAppDisconnect(organizationId, force, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -31237,12 +32101,13 @@ export class GithubAppApi extends BaseAPI {
      * 
      * @summary Disconnect a github account from an organization
      * @param {string} organizationId Organization ID
+     * @param {boolean} [force] Indicates if the github app should be disconnected despite github applications linked to organization
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GithubAppApi
      */
-    public organizationGithubAppDisconnect(organizationId: string, options?: AxiosRequestConfig) {
-        return GithubAppApiFp(this.configuration).organizationGithubAppDisconnect(organizationId, options).then((request) => request(this.axios, this.basePath));
+    public organizationGithubAppDisconnect(organizationId: string, force?: boolean, options?: AxiosRequestConfig) {
+        return GithubAppApiFp(this.configuration).organizationGithubAppDisconnect(organizationId, force, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -33735,11 +34600,11 @@ export const OrganizationWebhookApiAxiosParamCreator = function (configuration?:
          * Create an organization webhook.
          * @summary Create an organization webhook
          * @param {string} organizationId Organization ID
-         * @param {InlineObject} [inlineObject] 
+         * @param {OrganizationWebhookCreateRequest} [organizationWebhookCreateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createOrganizationWebhook: async (organizationId: string, inlineObject?: InlineObject, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createOrganizationWebhook: async (organizationId: string, organizationWebhookCreateRequest?: OrganizationWebhookCreateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('createOrganizationWebhook', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/webhook`
@@ -33766,7 +34631,7 @@ export const OrganizationWebhookApiAxiosParamCreator = function (configuration?:
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organizationWebhookCreateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -33814,16 +34679,16 @@ export const OrganizationWebhookApiAxiosParamCreator = function (configuration?:
         /**
          * Edit an organization webhook
          * @summary Edit an organization webhook
-         * @param {string} projectId Project ID
-         * @param {object} [body] 
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationWebhookCreateRequest} [organizationWebhookCreateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editOrganizationWebhook: async (projectId: string, body?: object, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'projectId' is not null or undefined
-            assertParamExists('editOrganizationWebhook', 'projectId', projectId)
+        editOrganizationWebhook: async (organizationId: string, organizationWebhookCreateRequest?: OrganizationWebhookCreateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('editOrganizationWebhook', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/webhook/{webhookId}`
-                .replace(`{${"projectId"}}`, encodeURIComponent(String(projectId)));
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -33846,7 +34711,7 @@ export const OrganizationWebhookApiAxiosParamCreator = function (configuration?:
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organizationWebhookCreateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -33856,18 +34721,18 @@ export const OrganizationWebhookApiAxiosParamCreator = function (configuration?:
         /**
          * Get an Organization webhook
          * @summary Get an Organization webhook
-         * @param {string} projectId Project ID
+         * @param {string} organizationId Organization ID
          * @param {string} webhookId Webhook ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationWebhook: async (projectId: string, webhookId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'projectId' is not null or undefined
-            assertParamExists('getOrganizationWebhook', 'projectId', projectId)
+        getOrganizationWebhook: async (organizationId: string, webhookId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOrganizationWebhook', 'organizationId', organizationId)
             // verify required parameter 'webhookId' is not null or undefined
             assertParamExists('getOrganizationWebhook', 'webhookId', webhookId)
             const localVarPath = `/organization/{organizationId}/webhook/{webhookId}`
-                .replace(`{${"projectId"}}`, encodeURIComponent(String(projectId)))
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
                 .replace(`{${"webhookId"}}`, encodeURIComponent(String(webhookId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -33947,12 +34812,12 @@ export const OrganizationWebhookApiFp = function(configuration?: Configuration) 
          * Create an organization webhook.
          * @summary Create an organization webhook
          * @param {string} organizationId Organization ID
-         * @param {InlineObject} [inlineObject] 
+         * @param {OrganizationWebhookCreateRequest} [organizationWebhookCreateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createOrganizationWebhook(organizationId: string, inlineObject?: InlineObject, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Base & object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createOrganizationWebhook(organizationId, inlineObject, options);
+        async createOrganizationWebhook(organizationId: string, organizationWebhookCreateRequest?: OrganizationWebhookCreateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationWebhookCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createOrganizationWebhook(organizationId, organizationWebhookCreateRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -33969,25 +34834,25 @@ export const OrganizationWebhookApiFp = function(configuration?: Configuration) 
         /**
          * Edit an organization webhook
          * @summary Edit an organization webhook
-         * @param {string} projectId Project ID
-         * @param {object} [body] 
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationWebhookCreateRequest} [organizationWebhookCreateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editOrganizationWebhook(projectId: string, body?: object, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.editOrganizationWebhook(projectId, body, options);
+        async editOrganizationWebhook(organizationId: string, organizationWebhookCreateRequest?: OrganizationWebhookCreateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationWebhookCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editOrganizationWebhook(organizationId, organizationWebhookCreateRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Get an Organization webhook
          * @summary Get an Organization webhook
-         * @param {string} projectId Project ID
+         * @param {string} organizationId Organization ID
          * @param {string} webhookId Webhook ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganizationWebhook(projectId: string, webhookId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Base & object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationWebhook(projectId, webhookId, options);
+        async getOrganizationWebhook(organizationId: string, webhookId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationWebhookResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationWebhook(organizationId, webhookId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -33997,7 +34862,7 @@ export const OrganizationWebhookApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listOrganizationWebHooks(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
+        async listOrganizationWebHooks(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationWebhookResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizationWebHooks(organizationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -34015,12 +34880,12 @@ export const OrganizationWebhookApiFactory = function (configuration?: Configura
          * Create an organization webhook.
          * @summary Create an organization webhook
          * @param {string} organizationId Organization ID
-         * @param {InlineObject} [inlineObject] 
+         * @param {OrganizationWebhookCreateRequest} [organizationWebhookCreateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createOrganizationWebhook(organizationId: string, inlineObject?: InlineObject, options?: any): AxiosPromise<Base & object> {
-            return localVarFp.createOrganizationWebhook(organizationId, inlineObject, options).then((request) => request(axios, basePath));
+        createOrganizationWebhook(organizationId: string, organizationWebhookCreateRequest?: OrganizationWebhookCreateRequest, options?: any): AxiosPromise<OrganizationWebhookCreateResponse> {
+            return localVarFp.createOrganizationWebhook(organizationId, organizationWebhookCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Delete organization webhook
@@ -34035,24 +34900,24 @@ export const OrganizationWebhookApiFactory = function (configuration?: Configura
         /**
          * Edit an organization webhook
          * @summary Edit an organization webhook
-         * @param {string} projectId Project ID
-         * @param {object} [body] 
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationWebhookCreateRequest} [organizationWebhookCreateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editOrganizationWebhook(projectId: string, body?: object, options?: any): AxiosPromise<object> {
-            return localVarFp.editOrganizationWebhook(projectId, body, options).then((request) => request(axios, basePath));
+        editOrganizationWebhook(organizationId: string, organizationWebhookCreateRequest?: OrganizationWebhookCreateRequest, options?: any): AxiosPromise<OrganizationWebhookCreateResponse> {
+            return localVarFp.editOrganizationWebhook(organizationId, organizationWebhookCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Get an Organization webhook
          * @summary Get an Organization webhook
-         * @param {string} projectId Project ID
+         * @param {string} organizationId Organization ID
          * @param {string} webhookId Webhook ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationWebhook(projectId: string, webhookId: string, options?: any): AxiosPromise<Base & object> {
-            return localVarFp.getOrganizationWebhook(projectId, webhookId, options).then((request) => request(axios, basePath));
+        getOrganizationWebhook(organizationId: string, webhookId: string, options?: any): AxiosPromise<OrganizationWebhookResponse> {
+            return localVarFp.getOrganizationWebhook(organizationId, webhookId, options).then((request) => request(axios, basePath));
         },
         /**
          * List organization webhooks
@@ -34061,7 +34926,7 @@ export const OrganizationWebhookApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listOrganizationWebHooks(organizationId: string, options?: any): AxiosPromise<InlineResponse200> {
+        listOrganizationWebHooks(organizationId: string, options?: any): AxiosPromise<OrganizationWebhookResponseList> {
             return localVarFp.listOrganizationWebHooks(organizationId, options).then((request) => request(axios, basePath));
         },
     };
@@ -34078,13 +34943,13 @@ export class OrganizationWebhookApi extends BaseAPI {
      * Create an organization webhook.
      * @summary Create an organization webhook
      * @param {string} organizationId Organization ID
-     * @param {InlineObject} [inlineObject] 
+     * @param {OrganizationWebhookCreateRequest} [organizationWebhookCreateRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationWebhookApi
      */
-    public createOrganizationWebhook(organizationId: string, inlineObject?: InlineObject, options?: AxiosRequestConfig) {
-        return OrganizationWebhookApiFp(this.configuration).createOrganizationWebhook(organizationId, inlineObject, options).then((request) => request(this.axios, this.basePath));
+    public createOrganizationWebhook(organizationId: string, organizationWebhookCreateRequest?: OrganizationWebhookCreateRequest, options?: AxiosRequestConfig) {
+        return OrganizationWebhookApiFp(this.configuration).createOrganizationWebhook(organizationId, organizationWebhookCreateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -34102,27 +34967,27 @@ export class OrganizationWebhookApi extends BaseAPI {
     /**
      * Edit an organization webhook
      * @summary Edit an organization webhook
-     * @param {string} projectId Project ID
-     * @param {object} [body] 
+     * @param {string} organizationId Organization ID
+     * @param {OrganizationWebhookCreateRequest} [organizationWebhookCreateRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationWebhookApi
      */
-    public editOrganizationWebhook(projectId: string, body?: object, options?: AxiosRequestConfig) {
-        return OrganizationWebhookApiFp(this.configuration).editOrganizationWebhook(projectId, body, options).then((request) => request(this.axios, this.basePath));
+    public editOrganizationWebhook(organizationId: string, organizationWebhookCreateRequest?: OrganizationWebhookCreateRequest, options?: AxiosRequestConfig) {
+        return OrganizationWebhookApiFp(this.configuration).editOrganizationWebhook(organizationId, organizationWebhookCreateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get an Organization webhook
      * @summary Get an Organization webhook
-     * @param {string} projectId Project ID
+     * @param {string} organizationId Organization ID
      * @param {string} webhookId Webhook ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationWebhookApi
      */
-    public getOrganizationWebhook(projectId: string, webhookId: string, options?: AxiosRequestConfig) {
-        return OrganizationWebhookApiFp(this.configuration).getOrganizationWebhook(projectId, webhookId, options).then((request) => request(this.axios, this.basePath));
+    public getOrganizationWebhook(organizationId: string, webhookId: string, options?: AxiosRequestConfig) {
+        return OrganizationWebhookApiFp(this.configuration).getOrganizationWebhook(organizationId, webhookId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
