@@ -2018,10 +2018,10 @@ export interface Cluster {
     'ssh_keys'?: ClusterAllOfSshKeys;
     /**
      * 
-     * @type {Array<ClusterAllOfFeatures>}
+     * @type {Array<ClusterFeature>}
      * @memberof Cluster
      */
-    'features'?: Array<ClusterAllOfFeatures>;
+    'features'?: Array<ClusterFeature>;
 }
 /**
  * 
@@ -2139,81 +2139,11 @@ export interface ClusterAllOf {
     'ssh_keys'?: ClusterAllOfSshKeys;
     /**
      * 
-     * @type {Array<ClusterAllOfFeatures>}
+     * @type {Array<ClusterFeature>}
      * @memberof ClusterAllOf
      */
-    'features'?: Array<ClusterAllOfFeatures>;
+    'features'?: Array<ClusterFeature>;
 }
-/**
- * 
- * @export
- * @interface ClusterAllOfFeatures
- */
-export interface ClusterAllOfFeatures {
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterAllOfFeatures
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterAllOfFeatures
-     */
-    'title'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterAllOfFeatures
-     */
-    'description'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof ClusterAllOfFeatures
-     */
-    'cost_per_month_in_cents'?: number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof ClusterAllOfFeatures
-     */
-    'cost_per_month'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterAllOfFeatures
-     */
-    'value_type'?: ClusterAllOfFeaturesValueTypeEnum;
-    /**
-     * 
-     * @type {string | boolean}
-     * @memberof ClusterAllOfFeatures
-     */
-    'value'?: string | boolean | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ClusterAllOfFeatures
-     */
-    'is_value_updatable'?: boolean;
-    /**
-     * 
-     * @type {Array<string | boolean>}
-     * @memberof ClusterAllOfFeatures
-     */
-    'accepted_values'?: Array<string | boolean>;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ClusterAllOfFeaturesValueTypeEnum {
-    BOOLEAN = 'BOOLEAN'
-}
-
 /**
  * Indicate your public ssh_key to remotely connect to your EC2 instance.
  * @export
