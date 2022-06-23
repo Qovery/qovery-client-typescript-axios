@@ -2011,11 +2011,11 @@ export interface Cluster {
      */
     'production'?: boolean;
     /**
-     * 
-     * @type {ClusterAllOfSshKeys}
+     * Indicate your public ssh_key to remotely connect to your EC2 instance.
+     * @type {Array<string>}
      * @memberof Cluster
      */
-    'ssh_keys'?: ClusterAllOfSshKeys;
+    'ssh_keys'?: Array<string>;
     /**
      * 
      * @type {Array<ClusterFeature>}
@@ -2132,30 +2132,17 @@ export interface ClusterAllOf {
      */
     'production'?: boolean;
     /**
-     * 
-     * @type {ClusterAllOfSshKeys}
+     * Indicate your public ssh_key to remotely connect to your EC2 instance.
+     * @type {Array<string>}
      * @memberof ClusterAllOf
      */
-    'ssh_keys'?: ClusterAllOfSshKeys;
+    'ssh_keys'?: Array<string>;
     /**
      * 
      * @type {Array<ClusterFeature>}
      * @memberof ClusterAllOf
      */
     'features'?: Array<ClusterFeature>;
-}
-/**
- * Indicate your public ssh_key to remotely connect to your EC2 instance.
- * @export
- * @interface ClusterAllOfSshKeys
- */
-export interface ClusterAllOfSshKeys {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ClusterAllOfSshKeys
-     */
-    'results'?: Array<string>;
 }
 /**
  * 
@@ -2725,11 +2712,11 @@ export interface ClusterRequest {
      */
     'production'?: boolean;
     /**
-     * 
-     * @type {ClusterAllOfSshKeys}
+     * Indicate your public ssh_key to remotely connect to your EC2 instance.
+     * @type {Array<string>}
      * @memberof ClusterRequest
      */
-    'ssh_keys'?: ClusterAllOfSshKeys;
+    'ssh_keys'?: Array<string>;
     /**
      * 
      * @type {ClusterRequestFeatures}
