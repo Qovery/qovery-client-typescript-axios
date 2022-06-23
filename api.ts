@@ -8666,7 +8666,7 @@ export interface OrganizationWebhookCreateRequest {
      * @type {Array<string>}
      * @memberof OrganizationWebhookCreateRequest
      */
-    'project_id_filter'?: Array<string>;
+    'project_names_filter'?: Array<string>;
     /**
      * Specify the environment modes you want to filter to. This webhook will be triggered only if the event is coming from an environment with the specified mode. 
      * @type {Array<EnvironmentModeEnum>}
@@ -8739,7 +8739,7 @@ export interface OrganizationWebhookCreateResponse {
      * @type {Array<string>}
      * @memberof OrganizationWebhookCreateResponse
      */
-    'project_id_filter'?: Array<string>;
+    'project_names_filter'?: Array<string>;
     /**
      * Specify the environment modes you want to filter to. This webhook will be triggered only if the event is coming from an environment with the specified mode. 
      * @type {Array<EnvironmentModeEnum>}
@@ -8794,7 +8794,7 @@ export interface OrganizationWebhookCreateResponseAllOf {
      * @type {Array<string>}
      * @memberof OrganizationWebhookCreateResponseAllOf
      */
-    'project_id_filter'?: Array<string>;
+    'project_names_filter'?: Array<string>;
     /**
      * Specify the environment modes you want to filter to. This webhook will be triggered only if the event is coming from an environment with the specified mode. 
      * @type {Array<EnvironmentModeEnum>}
@@ -8891,66 +8891,11 @@ export interface OrganizationWebhookResponse {
      * @type {Array<string>}
      * @memberof OrganizationWebhookResponse
      */
-    'project_id_filter'?: Array<string>;
+    'project_names_filter'?: Array<string>;
     /**
      * Specify the environment modes you want to filter to. This webhook will be triggered only if the event is coming from an environment with the specified mode. 
      * @type {Array<EnvironmentModeEnum>}
      * @memberof OrganizationWebhookResponse
-     */
-    'environment_types_filter'?: Array<EnvironmentModeEnum>;
-}
-/**
- * 
- * @export
- * @interface OrganizationWebhookResponseAllOf
- */
-export interface OrganizationWebhookResponseAllOf {
-    /**
-     * 
-     * @type {OrganizationWebhookKindEnum}
-     * @memberof OrganizationWebhookResponseAllOf
-     */
-    'kind'?: OrganizationWebhookKindEnum;
-    /**
-     * Set the public HTTP or HTTPS endpoint that will receive the specified events. The target URL must starts with `http://` or `https://` 
-     * @type {string}
-     * @memberof OrganizationWebhookResponseAllOf
-     */
-    'target_url'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof OrganizationWebhookResponseAllOf
-     */
-    'target_secret_set'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationWebhookResponseAllOf
-     */
-    'description'?: string;
-    /**
-     * Turn on or off your endpoint.
-     * @type {boolean}
-     * @memberof OrganizationWebhookResponseAllOf
-     */
-    'enabled'?: boolean;
-    /**
-     * 
-     * @type {Array<OrganizationWebhookEventEnum>}
-     * @memberof OrganizationWebhookResponseAllOf
-     */
-    'events'?: Array<OrganizationWebhookEventEnum>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof OrganizationWebhookResponseAllOf
-     */
-    'project_id_filter'?: Array<string>;
-    /**
-     * Specify the environment modes you want to filter to. This webhook will be triggered only if the event is coming from an environment with the specified mode. 
-     * @type {Array<EnvironmentModeEnum>}
-     * @memberof OrganizationWebhookResponseAllOf
      */
     'environment_types_filter'?: Array<EnvironmentModeEnum>;
 }
