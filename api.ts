@@ -26866,7 +26866,7 @@ export const DatabaseDeploymentHistoryApiFp = function(configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listDatabaseDeploymentHistory(databaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryPaginatedResponseList>> {
+        async listDatabaseDeploymentHistory(databaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationData & object>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listDatabaseDeploymentHistory(databaseId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -26887,7 +26887,7 @@ export const DatabaseDeploymentHistoryApiFactory = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listDatabaseDeploymentHistory(databaseId: string, options?: any): AxiosPromise<DeploymentHistoryPaginatedResponseList> {
+        listDatabaseDeploymentHistory(databaseId: string, options?: any): AxiosPromise<PaginationData & object> {
             return localVarFp.listDatabaseDeploymentHistory(databaseId, options).then((request) => request(axios, basePath));
         },
     };
