@@ -5037,6 +5037,12 @@ export interface DeploymentHistory {
      */
     'updated_at'?: string;
     /**
+     * name of the service
+     * @type {string}
+     * @memberof DeploymentHistory
+     */
+    'name'?: string;
+    /**
      * 
      * @type {Commit}
      * @memberof DeploymentHistory
@@ -5055,6 +5061,12 @@ export interface DeploymentHistory {
  * @interface DeploymentHistoryAllOf
  */
 export interface DeploymentHistoryAllOf {
+    /**
+     * name of the service
+     * @type {string}
+     * @memberof DeploymentHistoryAllOf
+     */
+    'name'?: string;
     /**
      * 
      * @type {Commit}
@@ -5161,17 +5173,17 @@ export interface DeploymentHistoryDatabase {
      */
     'updated_at'?: string;
     /**
-     * 
+     * name of the service
      * @type {string}
      * @memberof DeploymentHistoryDatabase
      */
     'name'?: string;
     /**
      * 
-     * @type {StateEnum}
+     * @type {DeploymentHistoryStatusEnum}
      * @memberof DeploymentHistoryDatabase
      */
-    'status'?: StateEnum;
+    'status'?: DeploymentHistoryStatusEnum;
 }
 /**
  * 
@@ -5180,17 +5192,17 @@ export interface DeploymentHistoryDatabase {
  */
 export interface DeploymentHistoryDatabaseAllOf {
     /**
-     * 
+     * name of the service
      * @type {string}
      * @memberof DeploymentHistoryDatabaseAllOf
      */
     'name'?: string;
     /**
      * 
-     * @type {StateEnum}
+     * @type {DeploymentHistoryStatusEnum}
      * @memberof DeploymentHistoryDatabaseAllOf
      */
-    'status'?: StateEnum;
+    'status'?: DeploymentHistoryStatusEnum;
 }
 /**
  * 
@@ -26789,6 +26801,115 @@ export class DatabaseContainerApi extends BaseAPI {
      */
     public removeContainerFromDatabase(databaseId: string, targetContainerId: string, options?: AxiosRequestConfig) {
         return DatabaseContainerApiFp(this.configuration).removeContainerFromDatabase(databaseId, targetContainerId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * DatabaseDeploymentHistoryApi - axios parameter creator
+ * @export
+ */
+export const DatabaseDeploymentHistoryApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * By default it returns the 20 last results. The response is paginated.
+         * @summary List database deploys
+         * @param {string} databaseId Database ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listDatabaseDeploymentHistory: async (databaseId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'databaseId' is not null or undefined
+            assertParamExists('listDatabaseDeploymentHistory', 'databaseId', databaseId)
+            const localVarPath = `/database/{databaseId}/deploymentHistory`
+                .replace(`{${"databaseId"}}`, encodeURIComponent(String(databaseId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * DatabaseDeploymentHistoryApi - functional programming interface
+ * @export
+ */
+export const DatabaseDeploymentHistoryApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = DatabaseDeploymentHistoryApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * By default it returns the 20 last results. The response is paginated.
+         * @summary List database deploys
+         * @param {string} databaseId Database ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listDatabaseDeploymentHistory(databaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryPaginatedResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listDatabaseDeploymentHistory(databaseId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * DatabaseDeploymentHistoryApi - factory interface
+ * @export
+ */
+export const DatabaseDeploymentHistoryApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = DatabaseDeploymentHistoryApiFp(configuration)
+    return {
+        /**
+         * By default it returns the 20 last results. The response is paginated.
+         * @summary List database deploys
+         * @param {string} databaseId Database ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listDatabaseDeploymentHistory(databaseId: string, options?: any): AxiosPromise<DeploymentHistoryPaginatedResponseList> {
+            return localVarFp.listDatabaseDeploymentHistory(databaseId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * DatabaseDeploymentHistoryApi - object-oriented interface
+ * @export
+ * @class DatabaseDeploymentHistoryApi
+ * @extends {BaseAPI}
+ */
+export class DatabaseDeploymentHistoryApi extends BaseAPI {
+    /**
+     * By default it returns the 20 last results. The response is paginated.
+     * @summary List database deploys
+     * @param {string} databaseId Database ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DatabaseDeploymentHistoryApi
+     */
+    public listDatabaseDeploymentHistory(databaseId: string, options?: AxiosRequestConfig) {
+        return DatabaseDeploymentHistoryApiFp(this.configuration).listDatabaseDeploymentHistory(databaseId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
