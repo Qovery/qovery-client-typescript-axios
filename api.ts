@@ -8659,7 +8659,7 @@ export interface OrganizationWebhookCreateRequest {
      */
     'events': Array<OrganizationWebhookEventEnum>;
     /**
-     * 
+     * Specify the project names you want to filter to.  This webhook will be triggered only if the event is coming from the specified Project IDs. Notes: 1. Wildcard is accepted E.g. `product*`. 2. Name is case insensitive. 
      * @type {Array<string>}
      * @memberof OrganizationWebhookCreateRequest
      */
@@ -8732,7 +8732,7 @@ export interface OrganizationWebhookCreateResponse {
      */
     'events'?: Array<OrganizationWebhookEventEnum>;
     /**
-     * 
+     * Specify the project names you want to filter to.  This webhook will be triggered only if the event is coming from the specified Project IDs. Notes: 1. Wildcard is accepted E.g. `product*`. 2. Name is case insensitive. 
      * @type {Array<string>}
      * @memberof OrganizationWebhookCreateResponse
      */
@@ -8787,7 +8787,7 @@ export interface OrganizationWebhookCreateResponseAllOf {
      */
     'events'?: Array<OrganizationWebhookEventEnum>;
     /**
-     * 
+     * Specify the project names you want to filter to.  This webhook will be triggered only if the event is coming from the specified Project IDs. Notes: 1. Wildcard is accepted E.g. `product*`. 2. Name is case insensitive. 
      * @type {Array<string>}
      * @memberof OrganizationWebhookCreateResponseAllOf
      */
@@ -8884,7 +8884,7 @@ export interface OrganizationWebhookResponse {
      */
     'events'?: Array<OrganizationWebhookEventEnum>;
     /**
-     * 
+     * Specify the project names you want to filter to.  This webhook will be triggered only if the event is coming from the specified Project IDs. Notes: 1. Wildcard is accepted E.g. `product*`. 2. Name is case insensitive. 
      * @type {Array<string>}
      * @memberof OrganizationWebhookResponse
      */
