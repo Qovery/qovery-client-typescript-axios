@@ -8466,12 +8466,6 @@ export interface OrganizationCurrentCost {
      * @memberof OrganizationCurrentCost
      */
     'paid_usage'?: PaidUsage;
-    /**
-     * 
-     * @type {CommunityUsage}
-     * @memberof OrganizationCurrentCost
-     */
-    'community_usage'?: CommunityUsage;
 }
 /**
  * 
@@ -8485,12 +8479,6 @@ export interface OrganizationCurrentCostAllOf {
      * @memberof OrganizationCurrentCostAllOf
      */
     'paid_usage'?: PaidUsage;
-    /**
-     * 
-     * @type {CommunityUsage}
-     * @memberof OrganizationCurrentCostAllOf
-     */
-    'community_usage'?: CommunityUsage;
 }
 /**
  * 
@@ -9021,11 +9009,10 @@ export interface PaidUsage {
  */
 
 export enum PlanEnum {
-    BUSINESS = 'BUSINESS',
-    COMMUNITY = 'COMMUNITY',
-    ENTERPRISE = 'ENTERPRISE',
     FREE = 'FREE',
-    PROFESSIONAL = 'PROFESSIONAL'
+    PROFESSIONAL = 'PROFESSIONAL',
+    BUSINESS = 'BUSINESS',
+    ENTERPRISE = 'ENTERPRISE'
 }
 
 /**
