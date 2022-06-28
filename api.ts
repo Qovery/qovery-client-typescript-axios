@@ -2869,6 +2869,12 @@ export interface ClusterStatus {
      * @memberof ClusterStatus
      */
     'is_deployed'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterStatus
+     */
+    'last_execution_id'?: string;
 }
 /**
  * 
