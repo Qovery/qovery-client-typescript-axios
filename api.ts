@@ -2505,6 +2505,12 @@ export interface ClusterLogsError {
      * @memberof ClusterLogsError
      */
     'event_details'?: ClusterLogsErrorEventDetails;
+    /**
+     * 
+     * @type {ClusterLogsErrorUnderlyingError}
+     * @memberof ClusterLogsError
+     */
+    'underlying_error'?: ClusterLogsErrorUnderlyingError;
 }
 /**
  * 
@@ -2530,12 +2536,6 @@ export interface ClusterLogsErrorEventDetails {
      * @memberof ClusterLogsErrorEventDetails
      */
     'transmitter'?: ClusterLogsErrorEventDetailsTransmitter;
-    /**
-     * 
-     * @type {ClusterLogsErrorEventDetailsUnderlyingError}
-     * @memberof ClusterLogsErrorEventDetails
-     */
-    'underlying_error'?: ClusterLogsErrorEventDetailsUnderlyingError;
 }
 /**
  * 
@@ -2565,13 +2565,13 @@ export interface ClusterLogsErrorEventDetailsTransmitter {
 /**
  * 
  * @export
- * @interface ClusterLogsErrorEventDetailsUnderlyingError
+ * @interface ClusterLogsErrorUnderlyingError
  */
-export interface ClusterLogsErrorEventDetailsUnderlyingError {
+export interface ClusterLogsErrorUnderlyingError {
     /**
      * technical details about the error
      * @type {string}
-     * @memberof ClusterLogsErrorEventDetailsUnderlyingError
+     * @memberof ClusterLogsErrorUnderlyingError
      */
     'message'?: string;
 }
