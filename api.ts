@@ -2870,7 +2870,7 @@ export interface ClusterStatus {
      */
     'is_deployed'?: boolean;
     /**
-     * 
+     * Only set for /organization/{organizationId}/cluster/status
      * @type {string}
      * @memberof ClusterStatus
      */
