@@ -9493,6 +9493,12 @@ export interface ReferenceObjectStatus {
      * @memberof ReferenceObjectStatus
      */
     'service_deployment_status'?: ServiceDeploymentStatusEnum | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReferenceObjectStatus
+     */
+    'last_deployment_date'?: string;
 }
 /**
  * 
@@ -10157,6 +10163,12 @@ export interface Status {
      * @memberof Status
      */
     'service_deployment_status'?: ServiceDeploymentStatusEnum | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Status
+     */
+    'last_deployment_date'?: string;
 }
 /**
  * 
