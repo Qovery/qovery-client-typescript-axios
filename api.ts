@@ -2869,10 +2869,35 @@ export interface ClusterStatus {
      * @memberof ClusterStatus
      */
     'is_deployed'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterStatusGet
+ */
+export interface ClusterStatusGet {
     /**
-     * Only set for /organization/{organizationId}/cluster/status
+     * 
      * @type {string}
-     * @memberof ClusterStatus
+     * @memberof ClusterStatusGet
+     */
+    'cluster_id'?: string;
+    /**
+     * 
+     * @type {StateEnum}
+     * @memberof ClusterStatusGet
+     */
+    'status'?: StateEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterStatusGet
+     */
+    'is_deployed'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterStatusGet
      */
     'last_execution_id'?: string;
 }
@@ -2884,10 +2909,10 @@ export interface ClusterStatus {
 export interface ClusterStatusResponseList {
     /**
      * 
-     * @type {Array<ClusterStatus>}
+     * @type {Array<ClusterStatusGet>}
      * @memberof ClusterStatusResponseList
      */
-    'results'?: Array<ClusterStatus>;
+    'results'?: Array<ClusterStatusGet>;
 }
 /**
  * 
@@ -19391,7 +19416,7 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getClusterStatus(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatus>> {
+        async getClusterStatus(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatusGet>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterStatus(organizationId, clusterId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -19576,7 +19601,7 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getClusterStatus(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterStatus> {
+        getClusterStatus(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterStatusGet> {
             return localVarFp.getClusterStatus(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
         /**
