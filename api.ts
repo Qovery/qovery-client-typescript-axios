@@ -2719,10 +2719,10 @@ export interface ClusterRequest {
     'ssh_keys'?: Array<string>;
     /**
      * 
-     * @type {ClusterRequestFeatures}
+     * @type {Array<ClusterRequestFeatures>}
      * @memberof ClusterRequest
      */
-    'features'?: ClusterRequestFeatures;
+    'features'?: Array<ClusterRequestFeatures>;
 }
 /**
  * 
@@ -2732,27 +2732,14 @@ export interface ClusterRequest {
 export interface ClusterRequestFeatures {
     /**
      * 
-     * @type {Array<ClusterRequestFeaturesFeatures>}
-     * @memberof ClusterRequestFeatures
-     */
-    'features'?: Array<ClusterRequestFeaturesFeatures>;
-}
-/**
- * 
- * @export
- * @interface ClusterRequestFeaturesFeatures
- */
-export interface ClusterRequestFeaturesFeatures {
-    /**
-     * 
      * @type {string}
-     * @memberof ClusterRequestFeaturesFeatures
+     * @memberof ClusterRequestFeatures
      */
     'id'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ClusterRequestFeaturesFeatures
+     * @memberof ClusterRequestFeatures
      */
     'value'?: string | null;
 }
