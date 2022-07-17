@@ -7068,6 +7068,19 @@ export enum HealthcheckProtocolEnum {
 /**
  * 
  * @export
+ * @interface InlineObject
+ */
+export interface InlineObject {
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineObject
+     */
+    'plan'?: string;
+}
+/**
+ * 
+ * @export
  * @interface InlineResponse200
  */
 export interface InlineResponse200 {
@@ -16101,6 +16114,48 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Change organization plan
+         * @param {string} organizationId Organization ID
+         * @param {InlineObject} [inlineObject] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        changePlan: async (organizationId: string, inlineObject?: InlineObject, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('changePlan', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/changePlan`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Delete credit card
          * @param {string} organizationId Organization ID
          * @param {string} creditCardId Credit Card ID
@@ -16573,6 +16628,18 @@ export const BillingApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Change organization plan
+         * @param {string} organizationId Organization ID
+         * @param {InlineObject} [inlineObject] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async changePlan(organizationId: string, inlineObject?: InlineObject, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Organization>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.changePlan(organizationId, inlineObject, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Delete credit card
          * @param {string} organizationId Organization ID
          * @param {string} creditCardId Credit Card ID
@@ -16731,6 +16798,17 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Change organization plan
+         * @param {string} organizationId Organization ID
+         * @param {InlineObject} [inlineObject] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        changePlan(organizationId: string, inlineObject?: InlineObject, options?: any): AxiosPromise<Organization> {
+            return localVarFp.changePlan(organizationId, inlineObject, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Delete credit card
          * @param {string} organizationId Organization ID
          * @param {string} creditCardId Credit Card ID
@@ -16878,6 +16956,19 @@ export class BillingApi extends BaseAPI {
      */
     public addCreditCode(organizationId: string, organizationCreditCodeRequest?: OrganizationCreditCodeRequest, options?: AxiosRequestConfig) {
         return BillingApiFp(this.configuration).addCreditCode(organizationId, organizationCreditCodeRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Change organization plan
+     * @param {string} organizationId Organization ID
+     * @param {InlineObject} [inlineObject] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public changePlan(organizationId: string, inlineObject?: InlineObject, options?: AxiosRequestConfig) {
+        return BillingApiFp(this.configuration).changePlan(organizationId, inlineObject, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
