@@ -6566,12 +6566,34 @@ export interface EnvironmentVariable {
      */
     'scope': EnvironmentVariableScopeEnum;
     /**
-     * 
+     * present only for `BUILT_IN` variable
+     * @type {string}
+     * @memberof EnvironmentVariable
+     */
+    'service_id'?: string;
+    /**
+     * present only for `BUILT_IN` variable
      * @type {string}
      * @memberof EnvironmentVariable
      */
     'service_name'?: string;
+    /**
+     * present only for `BUILT_IN` variable
+     * @type {string}
+     * @memberof EnvironmentVariable
+     */
+    'service_type'?: EnvironmentVariableServiceTypeEnum;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum EnvironmentVariableServiceTypeEnum {
+    APPLICATION = 'APPLICATION',
+    DATABASE = 'DATABASE'
+}
+
 /**
  * 
  * @export
@@ -6597,12 +6619,34 @@ export interface EnvironmentVariableAllOf {
      */
     'scope': EnvironmentVariableScopeEnum;
     /**
-     * 
+     * present only for `BUILT_IN` variable
+     * @type {string}
+     * @memberof EnvironmentVariableAllOf
+     */
+    'service_id'?: string;
+    /**
+     * present only for `BUILT_IN` variable
      * @type {string}
      * @memberof EnvironmentVariableAllOf
      */
     'service_name'?: string;
+    /**
+     * present only for `BUILT_IN` variable
+     * @type {string}
+     * @memberof EnvironmentVariableAllOf
+     */
+    'service_type'?: EnvironmentVariableAllOfServiceTypeEnum;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum EnvironmentVariableAllOfServiceTypeEnum {
+    APPLICATION = 'APPLICATION',
+    DATABASE = 'DATABASE'
+}
+
 /**
  * 
  * @export
