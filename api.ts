@@ -3756,6 +3756,24 @@ export interface ContainerRegistryResponse {
      * @type {string}
      * @memberof ContainerRegistryResponse
      */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponse
+     */
     'name'?: string;
     /**
      * 
@@ -3779,6 +3797,43 @@ export interface ContainerRegistryResponse {
      * authentification configuration
      * @type {string}
      * @memberof ContainerRegistryResponse
+     */
+    'config'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ContainerRegistryResponseAllOf
+ */
+export interface ContainerRegistryResponseAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOf
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {ContainerRegistryKindEnum}
+     * @memberof ContainerRegistryResponseAllOf
+     */
+    'kind'?: ContainerRegistryKindEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOf
+     */
+    'description'?: string;
+    /**
+     * URL of the container registry
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOf
+     */
+    'url'?: string;
+    /**
+     * authentification configuration
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOf
      */
     'config'?: string;
 }
