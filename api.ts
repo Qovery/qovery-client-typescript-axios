@@ -3793,12 +3793,6 @@ export interface ContainerRegistryResponse {
      * @memberof ContainerRegistryResponse
      */
     'url'?: string;
-    /**
-     * authentification configuration
-     * @type {string}
-     * @memberof ContainerRegistryResponse
-     */
-    'config'?: string;
 }
 /**
  * 
@@ -3830,12 +3824,6 @@ export interface ContainerRegistryResponseAllOf {
      * @memberof ContainerRegistryResponseAllOf
      */
     'url'?: string;
-    /**
-     * authentification configuration
-     * @type {string}
-     * @memberof ContainerRegistryResponseAllOf
-     */
-    'config'?: string;
 }
 /**
  * 
