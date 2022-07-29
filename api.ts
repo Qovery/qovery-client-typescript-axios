@@ -146,10 +146,10 @@ export interface Application {
     'storage'?: Array<ApplicationStorageStorage>;
     /**
      * 
-     * @type {Array<ApplicationPortPorts>}
+     * @type {Array<ServicePortPorts>}
      * @memberof Application
      */
-    'ports'?: Array<ApplicationPortPorts>;
+    'ports'?: Array<ServicePortPorts>;
     /**
      * 
      * @type {ReferenceObject}
@@ -654,10 +654,10 @@ export interface ApplicationEditRequest {
     'storage'?: Array<ApplicationStorageStorage>;
     /**
      * 
-     * @type {Array<ApplicationPortPorts>}
+     * @type {Array<ServicePortPorts>}
      * @memberof ApplicationEditRequest
      */
-    'ports'?: Array<ApplicationPortPorts>;
+    'ports'?: Array<ServicePortPorts>;
     /**
      * name is case insensitive
      * @type {string}
@@ -949,127 +949,21 @@ export interface ApplicationNetworkRequest {
 /**
  * 
  * @export
- * @interface ApplicationPort
- */
-export interface ApplicationPort {
-    /**
-     * 
-     * @type {Array<ApplicationPortPorts>}
-     * @memberof ApplicationPort
-     */
-    'ports'?: Array<ApplicationPortPorts>;
-}
-/**
- * 
- * @export
- * @interface ApplicationPortPorts
- */
-export interface ApplicationPortPorts {
-    /**
-     * 
-     * @type {string}
-     * @memberof ApplicationPortPorts
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApplicationPortPorts
-     */
-    'name'?: string | null;
-    /**
-     * The listening port of your application
-     * @type {number}
-     * @memberof ApplicationPortPorts
-     */
-    'internal_port': number;
-    /**
-     * The exposed port for your application. This is optional. If not set a default port will be used.
-     * @type {number}
-     * @memberof ApplicationPortPorts
-     */
-    'external_port'?: number;
-    /**
-     * Expose the port to the world
-     * @type {boolean}
-     * @memberof ApplicationPortPorts
-     */
-    'publicly_accessible': boolean;
-    /**
-     * 
-     * @type {PortProtocolEnum}
-     * @memberof ApplicationPortPorts
-     */
-    'protocol'?: PortProtocolEnum;
-}
-/**
- * 
- * @export
- * @interface ApplicationPortRequest
- */
-export interface ApplicationPortRequest {
-    /**
-     * 
-     * @type {Array<ApplicationPortRequestPorts>}
-     * @memberof ApplicationPortRequest
-     */
-    'ports'?: Array<ApplicationPortRequestPorts>;
-}
-/**
- * 
- * @export
- * @interface ApplicationPortRequestPorts
- */
-export interface ApplicationPortRequestPorts {
-    /**
-     * 
-     * @type {string}
-     * @memberof ApplicationPortRequestPorts
-     */
-    'name'?: string | null;
-    /**
-     * The listening port of your application
-     * @type {number}
-     * @memberof ApplicationPortRequestPorts
-     */
-    'internal_port': number;
-    /**
-     * The exposed port for your application. This is optional. If not set a default port will be used.
-     * @type {number}
-     * @memberof ApplicationPortRequestPorts
-     */
-    'external_port'?: number;
-    /**
-     * Expose the port to the world
-     * @type {boolean}
-     * @memberof ApplicationPortRequestPorts
-     */
-    'publicly_accessible': boolean;
-    /**
-     * 
-     * @type {PortProtocolEnum}
-     * @memberof ApplicationPortRequestPorts
-     */
-    'protocol'?: PortProtocolEnum;
-}
-/**
- * 
- * @export
  * @interface ApplicationRequest
  */
 export interface ApplicationRequest {
     /**
      * 
-     * @type {Array<ApplicationStorageRequestStorage>}
+     * @type {Array<ServiceStorageRequestStorage>}
      * @memberof ApplicationRequest
      */
-    'storage'?: Array<ApplicationStorageRequestStorage>;
+    'storage'?: Array<ServiceStorageRequestStorage>;
     /**
      * 
-     * @type {Array<ApplicationPortRequestPorts>}
+     * @type {Array<ServicePortRequestPorts>}
      * @memberof ApplicationRequest
      */
-    'ports'?: Array<ApplicationPortRequestPorts>;
+    'ports'?: Array<ServicePortRequestPorts>;
     /**
      * name is case insensitive
      * @type {string}
@@ -1247,44 +1141,6 @@ export interface ApplicationStorage {
      * @memberof ApplicationStorage
      */
     'storage'?: Array<ApplicationStorageStorage>;
-}
-/**
- * 
- * @export
- * @interface ApplicationStorageRequest
- */
-export interface ApplicationStorageRequest {
-    /**
-     * 
-     * @type {Array<ApplicationStorageRequestStorage>}
-     * @memberof ApplicationStorageRequest
-     */
-    'storage'?: Array<ApplicationStorageRequestStorage>;
-}
-/**
- * 
- * @export
- * @interface ApplicationStorageRequestStorage
- */
-export interface ApplicationStorageRequestStorage {
-    /**
-     * 
-     * @type {StorageTypeEnum}
-     * @memberof ApplicationStorageRequestStorage
-     */
-    'type': StorageTypeEnum;
-    /**
-     * unit is GB
-     * @type {number}
-     * @memberof ApplicationStorageRequestStorage
-     */
-    'size': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApplicationStorageRequestStorage
-     */
-    'mount_point': string;
 }
 /**
  * 
@@ -3035,24 +2891,11 @@ export enum CompanySizeEnum {
  */
 export interface ContainerAdvancedSettings {
     /**
-     * please use `readiness_probe.initial_delay_seconds` and `liveness_probe.initial_delay_seconds` instead
-     * @type {number}
-     * @memberof ContainerAdvancedSettings
-     * @deprecated
-     */
-    'deployment.delay_start_time_sec'?: number;
-    /**
      * disable custom domain check when deploying an application
      * @type {boolean}
      * @memberof ContainerAdvancedSettings
      */
     'deployment.custom_domain_check_enabled'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ContainerAdvancedSettings
-     */
-    'build.timeout_max_sec'?: number;
     /**
      * 
      * @type {number}
@@ -3183,166 +3026,6 @@ export enum ContainerAdvancedSettingsReadinessProbeTypeEnum {
     * @enum {string}
     */
 export enum ContainerAdvancedSettingsLivenessProbeTypeEnum {
-    NONE = 'NONE',
-    TCP = 'TCP',
-    HTTP = 'HTTP'
-}
-
-/**
- * 
- * @export
- * @interface ContainerAdvancedSettingsResponse
- */
-export interface ContainerAdvancedSettingsResponse {
-    /**
-     * please use `readiness_probe.initial_delay_seconds` and `liveness_probe.initial_delay_seconds` instead
-     * @type {number}
-     * @memberof ContainerAdvancedSettingsResponse
-     * @deprecated
-     */
-    'deployment.delay_start_time_sec'?: number;
-    /**
-     * disable custom domain check when deploying an application
-     * @type {boolean}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'deployment.custom_domain_check_enabled'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'build.timeout_max_sec'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'network.ingress.proxy_body_size_mb'?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'network.ingress.enable_cors'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'network.ingress.cors_allow_origin'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'network.ingress.cors_allow_methods'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'network.ingress.cors_allow_headers'?: string;
-    /**
-     * `NONE` disable readiness probe `TCP` enable TCP readiness probe `HTTP` enable HTTP readiness probe 
-     * @type {string}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'readiness_probe.type'?: ContainerAdvancedSettingsResponseReadinessProbeTypeEnum;
-    /**
-     * HTTP GET path to check status (must returns 2xx E.g \"/healtz\") - only usable with TYPE = HTTP
-     * @type {string}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'readiness_probe.http_get.path'?: string;
-    /**
-     * Delay before liveness probe is initiated
-     * @type {number}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'readiness_probe.initial_delay_seconds'?: number;
-    /**
-     * How often to perform the probe
-     * @type {number}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'readiness_probe.period_seconds'?: number;
-    /**
-     * When the probe times out
-     * @type {number}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'readiness_probe.timeout_seconds'?: number;
-    /**
-     * Minimum consecutive successes for the probe to be considered successful after having failed.
-     * @type {number}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'readiness_probe.success_threshold'?: number;
-    /**
-     * Minimum consecutive failures for the probe to be considered failed after having succeeded.
-     * @type {number}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'readiness_probe.failure_threshold'?: number;
-    /**
-     * `NONE` disable liveness probe `TCP` enable TCP liveness probe `HTTP` enable HTTP liveness probe 
-     * @type {string}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'liveness_probe.type'?: ContainerAdvancedSettingsResponseLivenessProbeTypeEnum;
-    /**
-     * HTTP GET path to check status (must returns 2xx E.g \"/healtz\") - only usable with TYPE = HTTP
-     * @type {string}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'liveness_probe.http_get.path'?: string;
-    /**
-     * Delay before liveness probe is initiated
-     * @type {number}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'liveness_probe.initial_delay_seconds'?: number;
-    /**
-     * How often to perform the probe
-     * @type {number}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'liveness_probe.period_seconds'?: number;
-    /**
-     * When the probe times out
-     * @type {number}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'liveness_probe.timeout_seconds'?: number;
-    /**
-     * Minimum consecutive successes for the probe to be considered successful after having failed.
-     * @type {number}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'liveness_probe.success_threshold'?: number;
-    /**
-     * Minimum consecutive failures for the probe to be considered failed after having succeeded.
-     * @type {number}
-     * @memberof ContainerAdvancedSettingsResponse
-     */
-    'liveness_probe.failure_threshold'?: number;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ContainerAdvancedSettingsResponseReadinessProbeTypeEnum {
-    NONE = 'NONE',
-    TCP = 'TCP',
-    HTTP = 'HTTP'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ContainerAdvancedSettingsResponseLivenessProbeTypeEnum {
     NONE = 'NONE',
     TCP = 'TCP',
     HTTP = 'HTTP'
@@ -3524,40 +3207,46 @@ export interface ContainerEditRequest {
     'storage'?: Array<ApplicationStorageStorage>;
     /**
      * 
-     * @type {Array<ApplicationPortPorts>}
+     * @type {Array<ServicePortPorts>}
      * @memberof ContainerEditRequest
      */
-    'ports'?: Array<ApplicationPortPorts>;
+    'ports'?: Array<ServicePortPorts>;
     /**
      * name is case insensitive
      * @type {string}
      * @memberof ContainerEditRequest
      */
-    'name'?: string;
-    /**
-     * give a description to this application
-     * @type {string}
-     * @memberof ContainerEditRequest
-     */
-    'description'?: string;
+    'name': string;
     /**
      * id of the linked registry
      * @type {string}
      * @memberof ContainerEditRequest
      */
-    'registry_id'?: string;
+    'registry_id': string;
     /**
      * name of the image container
      * @type {string}
      * @memberof ContainerEditRequest
      */
-    'image_name'?: string;
+    'image_name': string;
     /**
-     * 
+     * tag of the image container
      * @type {string}
      * @memberof ContainerEditRequest
      */
-    'arguments'?: string;
+    'tag': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ContainerEditRequest
+     */
+    'arguments'?: Array<string>;
+    /**
+     * optional entrypoint when launching container
+     * @type {string}
+     * @memberof ContainerEditRequest
+     */
+    'entrypoint'?: string;
     /**
      * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -3582,18 +3271,6 @@ export interface ContainerEditRequest {
      * @memberof ContainerEditRequest
      */
     'max_running_instances'?: number;
-    /**
-     * 
-     * @type {Healthcheck}
-     * @memberof ContainerEditRequest
-     */
-    'healthcheck'?: Healthcheck;
-    /**
-     * Specify if the sticky session option (also called persistant session) is activated or not for this application. If activated, user will be redirected by the load balancer to the same instance each time he access to the application. 
-     * @type {boolean}
-     * @memberof ContainerEditRequest
-     */
-    'sticky_session'?: boolean;
 }
 /**
  * 
@@ -3606,31 +3283,37 @@ export interface ContainerEditRequestAllOf {
      * @type {string}
      * @memberof ContainerEditRequestAllOf
      */
-    'name'?: string;
-    /**
-     * give a description to this application
-     * @type {string}
-     * @memberof ContainerEditRequestAllOf
-     */
-    'description'?: string;
+    'name': string;
     /**
      * id of the linked registry
      * @type {string}
      * @memberof ContainerEditRequestAllOf
      */
-    'registry_id'?: string;
+    'registry_id': string;
     /**
      * name of the image container
      * @type {string}
      * @memberof ContainerEditRequestAllOf
      */
-    'image_name'?: string;
+    'image_name': string;
     /**
-     * 
+     * tag of the image container
      * @type {string}
      * @memberof ContainerEditRequestAllOf
      */
-    'arguments'?: string;
+    'tag': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ContainerEditRequestAllOf
+     */
+    'arguments'?: Array<string>;
+    /**
+     * optional entrypoint when launching container
+     * @type {string}
+     * @memberof ContainerEditRequestAllOf
+     */
+    'entrypoint'?: string;
     /**
      * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -3655,18 +3338,6 @@ export interface ContainerEditRequestAllOf {
      * @memberof ContainerEditRequestAllOf
      */
     'max_running_instances'?: number;
-    /**
-     * 
-     * @type {Healthcheck}
-     * @memberof ContainerEditRequestAllOf
-     */
-    'healthcheck'?: Healthcheck;
-    /**
-     * Specify if the sticky session option (also called persistant session) is activated or not for this application. If activated, user will be redirected by the load balancer to the same instance each time he access to the application. 
-     * @type {boolean}
-     * @memberof ContainerEditRequestAllOf
-     */
-    'sticky_session'?: boolean;
 }
 /**
  * 
@@ -3833,28 +3504,22 @@ export interface ContainerRegistryResponseAllOf {
 export interface ContainerRequest {
     /**
      * 
-     * @type {Array<ApplicationStorageRequestStorage>}
+     * @type {Array<ServiceStorageRequestStorage>}
      * @memberof ContainerRequest
      */
-    'storage'?: Array<ApplicationStorageRequestStorage>;
+    'storage'?: Array<ServiceStorageRequestStorage>;
     /**
      * 
-     * @type {Array<ApplicationPortRequestPorts>}
+     * @type {Array<ServicePortRequestPorts>}
      * @memberof ContainerRequest
      */
-    'ports'?: Array<ApplicationPortRequestPorts>;
+    'ports'?: Array<ServicePortRequestPorts>;
     /**
      * name is case insensitive
      * @type {string}
      * @memberof ContainerRequest
      */
     'name': string;
-    /**
-     * give a description to this container
-     * @type {string}
-     * @memberof ContainerRequest
-     */
-    'description'?: string | null;
     /**
      * id of the linked registry
      * @type {string}
@@ -3868,11 +3533,23 @@ export interface ContainerRequest {
      */
     'image_name': string;
     /**
-     * 
+     * tag of the image container
      * @type {string}
      * @memberof ContainerRequest
      */
-    'arguments'?: string;
+    'tag': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ContainerRequest
+     */
+    'arguments'?: Array<string>;
+    /**
+     * optional entrypoint when launching container
+     * @type {string}
+     * @memberof ContainerRequest
+     */
+    'entrypoint'?: string;
     /**
      * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -3897,12 +3574,6 @@ export interface ContainerRequest {
      * @memberof ContainerRequest
      */
     'max_running_instances'?: number;
-    /**
-     * 
-     * @type {Healthcheck}
-     * @memberof ContainerRequest
-     */
-    'healthcheck'?: Healthcheck;
 }
 /**
  * 
@@ -3917,12 +3588,6 @@ export interface ContainerRequestAllOf {
      */
     'name': string;
     /**
-     * give a description to this container
-     * @type {string}
-     * @memberof ContainerRequestAllOf
-     */
-    'description'?: string | null;
-    /**
      * id of the linked registry
      * @type {string}
      * @memberof ContainerRequestAllOf
@@ -3935,11 +3600,23 @@ export interface ContainerRequestAllOf {
      */
     'image_name': string;
     /**
-     * 
+     * tag of the image container
      * @type {string}
      * @memberof ContainerRequestAllOf
      */
-    'arguments'?: string;
+    'tag': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ContainerRequestAllOf
+     */
+    'arguments'?: Array<string>;
+    /**
+     * optional entrypoint when launching container
+     * @type {string}
+     * @memberof ContainerRequestAllOf
+     */
+    'entrypoint'?: string;
     /**
      * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -3964,12 +3641,6 @@ export interface ContainerRequestAllOf {
      * @memberof ContainerRequestAllOf
      */
     'max_running_instances'?: number;
-    /**
-     * 
-     * @type {Healthcheck}
-     * @memberof ContainerRequestAllOf
-     */
-    'healthcheck'?: Healthcheck;
 }
 /**
  * 
@@ -4003,16 +3674,22 @@ export interface ContainerResponse {
     'storage'?: Array<ApplicationStorageStorage>;
     /**
      * 
-     * @type {Array<ApplicationPortPorts>}
+     * @type {Array<ServicePortPorts>}
      * @memberof ContainerResponse
      */
-    'ports'?: Array<ApplicationPortPorts>;
+    'ports'?: Array<ServicePortPorts>;
     /**
      * 
      * @type {ReferenceObject}
      * @memberof ContainerResponse
      */
     'environment'?: ReferenceObject;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof ContainerResponse
+     */
+    'registry'?: ReferenceObject;
     /**
      * Maximum cpu that can be allocated to the container based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -4032,29 +3709,29 @@ export interface ContainerResponse {
      */
     'name'?: string;
     /**
-     * give a description to this container
-     * @type {string}
-     * @memberof ContainerResponse
-     */
-    'description'?: string | null;
-    /**
-     * id of the linked registry
-     * @type {string}
-     * @memberof ContainerResponse
-     */
-    'registry_id'?: string;
-    /**
      * name of the image container
      * @type {string}
      * @memberof ContainerResponse
      */
     'image_name'?: string;
     /**
-     * 
+     * tag of the image container
      * @type {string}
      * @memberof ContainerResponse
      */
-    'arguments'?: string;
+    'tag'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ContainerResponse
+     */
+    'arguments'?: Array<string>;
+    /**
+     * optional entrypoint when launching container
+     * @type {string}
+     * @memberof ContainerResponse
+     */
+    'entrypoint'?: string;
     /**
      * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -4079,12 +3756,6 @@ export interface ContainerResponse {
      * @memberof ContainerResponse
      */
     'max_running_instances'?: number;
-    /**
-     * 
-     * @type {Healthcheck}
-     * @memberof ContainerResponse
-     */
-    'healthcheck'?: Healthcheck;
 }
 /**
  * 
@@ -4099,6 +3770,12 @@ export interface ContainerResponseAllOf {
      */
     'environment'?: ReferenceObject;
     /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof ContainerResponseAllOf
+     */
+    'registry'?: ReferenceObject;
+    /**
      * Maximum cpu that can be allocated to the container based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
      * @type {number}
      * @memberof ContainerResponseAllOf
@@ -4117,29 +3794,29 @@ export interface ContainerResponseAllOf {
      */
     'name'?: string;
     /**
-     * give a description to this container
-     * @type {string}
-     * @memberof ContainerResponseAllOf
-     */
-    'description'?: string | null;
-    /**
-     * id of the linked registry
-     * @type {string}
-     * @memberof ContainerResponseAllOf
-     */
-    'registry_id'?: string;
-    /**
      * name of the image container
      * @type {string}
      * @memberof ContainerResponseAllOf
      */
     'image_name'?: string;
     /**
-     * 
+     * tag of the image container
      * @type {string}
      * @memberof ContainerResponseAllOf
      */
-    'arguments'?: string;
+    'tag'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ContainerResponseAllOf
+     */
+    'arguments'?: Array<string>;
+    /**
+     * optional entrypoint when launching container
+     * @type {string}
+     * @memberof ContainerResponseAllOf
+     */
+    'entrypoint'?: string;
     /**
      * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -4164,12 +3841,6 @@ export interface ContainerResponseAllOf {
      * @memberof ContainerResponseAllOf
      */
     'max_running_instances'?: number;
-    /**
-     * 
-     * @type {Healthcheck}
-     * @memberof ContainerResponseAllOf
-     */
-    'healthcheck'?: Healthcheck;
 }
 /**
  * 
@@ -10014,6 +9685,112 @@ export enum ServiceDeploymentStatusEnum {
 /**
  * 
  * @export
+ * @interface ServicePort
+ */
+export interface ServicePort {
+    /**
+     * 
+     * @type {Array<ServicePortPorts>}
+     * @memberof ServicePort
+     */
+    'ports'?: Array<ServicePortPorts>;
+}
+/**
+ * 
+ * @export
+ * @interface ServicePortPorts
+ */
+export interface ServicePortPorts {
+    /**
+     * 
+     * @type {string}
+     * @memberof ServicePortPorts
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ServicePortPorts
+     */
+    'name'?: string | null;
+    /**
+     * The listening port of your service.
+     * @type {number}
+     * @memberof ServicePortPorts
+     */
+    'internal_port': number;
+    /**
+     * The exposed port for your service. This is optional. If not set a default port will be used.
+     * @type {number}
+     * @memberof ServicePortPorts
+     */
+    'external_port'?: number;
+    /**
+     * Expose the port to the world
+     * @type {boolean}
+     * @memberof ServicePortPorts
+     */
+    'publicly_accessible': boolean;
+    /**
+     * 
+     * @type {PortProtocolEnum}
+     * @memberof ServicePortPorts
+     */
+    'protocol'?: PortProtocolEnum;
+}
+/**
+ * 
+ * @export
+ * @interface ServicePortRequest
+ */
+export interface ServicePortRequest {
+    /**
+     * 
+     * @type {Array<ServicePortRequestPorts>}
+     * @memberof ServicePortRequest
+     */
+    'ports'?: Array<ServicePortRequestPorts>;
+}
+/**
+ * 
+ * @export
+ * @interface ServicePortRequestPorts
+ */
+export interface ServicePortRequestPorts {
+    /**
+     * 
+     * @type {string}
+     * @memberof ServicePortRequestPorts
+     */
+    'name'?: string | null;
+    /**
+     * The listening port of your service.
+     * @type {number}
+     * @memberof ServicePortRequestPorts
+     */
+    'internal_port': number;
+    /**
+     * The exposed port for your service. This is optional. If not set a default port will be used.
+     * @type {number}
+     * @memberof ServicePortRequestPorts
+     */
+    'external_port'?: number;
+    /**
+     * Expose the port to the world
+     * @type {boolean}
+     * @memberof ServicePortRequestPorts
+     */
+    'publicly_accessible': boolean;
+    /**
+     * 
+     * @type {PortProtocolEnum}
+     * @memberof ServicePortRequestPorts
+     */
+    'protocol'?: PortProtocolEnum;
+}
+/**
+ * 
+ * @export
  * @interface ServiceResponseList
  */
 export interface ServiceResponseList {
@@ -10023,6 +9800,44 @@ export interface ServiceResponseList {
      * @memberof ServiceResponseList
      */
     'results'?: Array<Service>;
+}
+/**
+ * 
+ * @export
+ * @interface ServiceStorageRequest
+ */
+export interface ServiceStorageRequest {
+    /**
+     * 
+     * @type {Array<ServiceStorageRequestStorage>}
+     * @memberof ServiceStorageRequest
+     */
+    'storage'?: Array<ServiceStorageRequestStorage>;
+}
+/**
+ * 
+ * @export
+ * @interface ServiceStorageRequestStorage
+ */
+export interface ServiceStorageRequestStorage {
+    /**
+     * 
+     * @type {StorageTypeEnum}
+     * @memberof ServiceStorageRequestStorage
+     */
+    'type': StorageTypeEnum;
+    /**
+     * unit is GB
+     * @type {number}
+     * @memberof ServiceStorageRequestStorage
+     */
+    'size': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ServiceStorageRequestStorage
+     */
+    'mount_point': string;
 }
 /**
  * 
@@ -20584,7 +20399,7 @@ export const ContainerConfigurationApiFp = function(configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editContainerAdvancedSettings(containerId: string, containerAdvancedSettings?: Array<ContainerAdvancedSettings>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerAdvancedSettingsResponse>> {
+        async editContainerAdvancedSettings(containerId: string, containerAdvancedSettings?: Array<ContainerAdvancedSettings>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ContainerAdvancedSettings>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editContainerAdvancedSettings(containerId, containerAdvancedSettings, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -20607,7 +20422,7 @@ export const ContainerConfigurationApiFp = function(configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getContainerAdvancedSettings(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerAdvancedSettingsResponse>> {
+        async getContainerAdvancedSettings(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ContainerAdvancedSettings>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getContainerAdvancedSettings(containerId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -20640,7 +20455,7 @@ export const ContainerConfigurationApiFactory = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editContainerAdvancedSettings(containerId: string, containerAdvancedSettings?: Array<ContainerAdvancedSettings>, options?: any): AxiosPromise<ContainerAdvancedSettingsResponse> {
+        editContainerAdvancedSettings(containerId: string, containerAdvancedSettings?: Array<ContainerAdvancedSettings>, options?: any): AxiosPromise<Array<ContainerAdvancedSettings>> {
             return localVarFp.editContainerAdvancedSettings(containerId, containerAdvancedSettings, options).then((request) => request(axios, basePath));
         },
         /**
@@ -20661,7 +20476,7 @@ export const ContainerConfigurationApiFactory = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getContainerAdvancedSettings(containerId: string, options?: any): AxiosPromise<ContainerAdvancedSettingsResponse> {
+        getContainerAdvancedSettings(containerId: string, options?: any): AxiosPromise<Array<ContainerAdvancedSettings>> {
             return localVarFp.getContainerAdvancedSettings(containerId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -21666,14 +21481,18 @@ export const ContainerDependencyApiAxiosParamCreator = function (configuration?:
          * Add container dependency to this container to prevent this container starting before the linked dependencies
          * @summary NOT YET IMPLEMENTED - Add container dependency to this application.
          * @param {string} containerId Container ID
+         * @param {string} targetContainerId Target container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createContainerDependency: async (containerId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createContainerDependency: async (containerId: string, targetContainerId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'containerId' is not null or undefined
             assertParamExists('createContainerDependency', 'containerId', containerId)
+            // verify required parameter 'targetContainerId' is not null or undefined
+            assertParamExists('createContainerDependency', 'targetContainerId', targetContainerId)
             const localVarPath = `/container/{containerId}/dependency/{targetContainerId}`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
+                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)))
+                .replace(`{${"targetContainerId"}}`, encodeURIComponent(String(targetContainerId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -21790,11 +21609,12 @@ export const ContainerDependencyApiFp = function(configuration?: Configuration) 
          * Add container dependency to this container to prevent this container starting before the linked dependencies
          * @summary NOT YET IMPLEMENTED - Add container dependency to this application.
          * @param {string} containerId Container ID
+         * @param {string} targetContainerId Target container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createContainerDependency(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createContainerDependency(containerId, options);
+        async createContainerDependency(containerId: string, targetContainerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createContainerDependency(containerId, targetContainerId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -21833,11 +21653,12 @@ export const ContainerDependencyApiFactory = function (configuration?: Configura
          * Add container dependency to this container to prevent this container starting before the linked dependencies
          * @summary NOT YET IMPLEMENTED - Add container dependency to this application.
          * @param {string} containerId Container ID
+         * @param {string} targetContainerId Target container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createContainerDependency(containerId: string, options?: any): AxiosPromise<ContainerResponse> {
-            return localVarFp.createContainerDependency(containerId, options).then((request) => request(axios, basePath));
+        createContainerDependency(containerId: string, targetContainerId: string, options?: any): AxiosPromise<ContainerResponse> {
+            return localVarFp.createContainerDependency(containerId, targetContainerId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -21873,12 +21694,13 @@ export class ContainerDependencyApi extends BaseAPI {
      * Add container dependency to this container to prevent this container starting before the linked dependencies
      * @summary NOT YET IMPLEMENTED - Add container dependency to this application.
      * @param {string} containerId Container ID
+     * @param {string} targetContainerId Target container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContainerDependencyApi
      */
-    public createContainerDependency(containerId: string, options?: AxiosRequestConfig) {
-        return ContainerDependencyApiFp(this.configuration).createContainerDependency(containerId, options).then((request) => request(this.axios, this.basePath));
+    public createContainerDependency(containerId: string, targetContainerId: string, options?: AxiosRequestConfig) {
+        return ContainerDependencyApiFp(this.configuration).createContainerDependency(containerId, targetContainerId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -26809,193 +26631,6 @@ export class DatabaseApplicationApi extends BaseAPI {
      */
     public removeApplicationFromDatabase(databaseId: string, targetApplicationId: string, options?: AxiosRequestConfig) {
         return DatabaseApplicationApiFp(this.configuration).removeApplicationFromDatabase(databaseId, targetApplicationId, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
- * DatabaseContainerApi - axios parameter creator
- * @export
- */
-export const DatabaseContainerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary List container using the database
-         * @param {string} databaseId Database ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listDatabaseContainer: async (databaseId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'databaseId' is not null or undefined
-            assertParamExists('listDatabaseContainer', 'databaseId', databaseId)
-            const localVarPath = `/database/{databaseId}/container`
-                .replace(`{${"databaseId"}}`, encodeURIComponent(String(databaseId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Remove an container from this database 
-         * @param {string} databaseId Database ID
-         * @param {string} targetContainerId Target container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        removeContainerFromDatabase: async (databaseId: string, targetContainerId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'databaseId' is not null or undefined
-            assertParamExists('removeContainerFromDatabase', 'databaseId', databaseId)
-            // verify required parameter 'targetContainerId' is not null or undefined
-            assertParamExists('removeContainerFromDatabase', 'targetContainerId', targetContainerId)
-            const localVarPath = `/database/{databaseId}/container/{targetContainerId}`
-                .replace(`{${"databaseId"}}`, encodeURIComponent(String(databaseId)))
-                .replace(`{${"targetContainerId"}}`, encodeURIComponent(String(targetContainerId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * DatabaseContainerApi - functional programming interface
- * @export
- */
-export const DatabaseContainerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = DatabaseContainerApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @summary List container using the database
-         * @param {string} databaseId Database ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listDatabaseContainer(databaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listDatabaseContainer(databaseId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Remove an container from this database 
-         * @param {string} databaseId Database ID
-         * @param {string} targetContainerId Target container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async removeContainerFromDatabase(databaseId: string, targetContainerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.removeContainerFromDatabase(databaseId, targetContainerId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * DatabaseContainerApi - factory interface
- * @export
- */
-export const DatabaseContainerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = DatabaseContainerApiFp(configuration)
-    return {
-        /**
-         * 
-         * @summary List container using the database
-         * @param {string} databaseId Database ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listDatabaseContainer(databaseId: string, options?: any): AxiosPromise<ContainerResponseList> {
-            return localVarFp.listDatabaseContainer(databaseId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Remove an container from this database 
-         * @param {string} databaseId Database ID
-         * @param {string} targetContainerId Target container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        removeContainerFromDatabase(databaseId: string, targetContainerId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.removeContainerFromDatabase(databaseId, targetContainerId, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * DatabaseContainerApi - object-oriented interface
- * @export
- * @class DatabaseContainerApi
- * @extends {BaseAPI}
- */
-export class DatabaseContainerApi extends BaseAPI {
-    /**
-     * 
-     * @summary List container using the database
-     * @param {string} databaseId Database ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DatabaseContainerApi
-     */
-    public listDatabaseContainer(databaseId: string, options?: AxiosRequestConfig) {
-        return DatabaseContainerApiFp(this.configuration).listDatabaseContainer(databaseId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Remove an container from this database 
-     * @param {string} databaseId Database ID
-     * @param {string} targetContainerId Target container ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DatabaseContainerApi
-     */
-    public removeContainerFromDatabase(databaseId: string, targetContainerId: string, options?: AxiosRequestConfig) {
-        return DatabaseContainerApiFp(this.configuration).removeContainerFromDatabase(databaseId, targetContainerId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
