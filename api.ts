@@ -6292,22 +6292,12 @@ export interface EnvironmentVariable {
      */
     'service_name'?: string;
     /**
-     * present only for `BUILT_IN` variable
-     * @type {string}
+     * 
+     * @type {LinkedServiceTypeEnum}
      * @memberof EnvironmentVariable
      */
-    'service_type'?: EnvironmentVariableServiceTypeEnum;
+    'service_type'?: LinkedServiceTypeEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum EnvironmentVariableServiceTypeEnum {
-    APPLICATION = 'APPLICATION',
-    DATABASE = 'DATABASE'
-}
-
 /**
  * 
  * @export
@@ -6345,22 +6335,12 @@ export interface EnvironmentVariableAllOf {
      */
     'service_name'?: string;
     /**
-     * present only for `BUILT_IN` variable
-     * @type {string}
+     * 
+     * @type {LinkedServiceTypeEnum}
      * @memberof EnvironmentVariableAllOf
      */
-    'service_type'?: EnvironmentVariableAllOfServiceTypeEnum;
+    'service_type'?: LinkedServiceTypeEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum EnvironmentVariableAllOfServiceTypeEnum {
-    APPLICATION = 'APPLICATION',
-    DATABASE = 'DATABASE'
-}
-
 /**
  * 
  * @export
@@ -7301,6 +7281,17 @@ export interface LinkResponseList {
      */
     'results'?: Array<Link>;
 }
+/**
+ * type of the service (application, database, job, gateway...)   present only for `BUILT_IN` variable 
+ * @export
+ * @enum {string}
+ */
+
+export enum LinkedServiceTypeEnum {
+    APPLICATION = 'APPLICATION',
+    DATABASE = 'DATABASE'
+}
+
 /**
  * 
  * @export
@@ -9453,6 +9444,24 @@ export interface Secret {
      * @memberof Secret
      */
     'scope': EnvironmentVariableScopeEnum;
+    /**
+     * present only for `BUILT_IN` variable
+     * @type {string}
+     * @memberof Secret
+     */
+    'service_id'?: string;
+    /**
+     * present only for `BUILT_IN` variable
+     * @type {string}
+     * @memberof Secret
+     */
+    'service_name'?: string;
+    /**
+     * 
+     * @type {LinkedServiceTypeEnum}
+     * @memberof Secret
+     */
+    'service_type'?: LinkedServiceTypeEnum;
 }
 /**
  * 
@@ -9484,6 +9493,24 @@ export interface SecretAllOf {
      * @memberof SecretAllOf
      */
     'scope': EnvironmentVariableScopeEnum;
+    /**
+     * present only for `BUILT_IN` variable
+     * @type {string}
+     * @memberof SecretAllOf
+     */
+    'service_id'?: string;
+    /**
+     * present only for `BUILT_IN` variable
+     * @type {string}
+     * @memberof SecretAllOf
+     */
+    'service_name'?: string;
+    /**
+     * 
+     * @type {LinkedServiceTypeEnum}
+     * @memberof SecretAllOf
+     */
+    'service_type'?: LinkedServiceTypeEnum;
 }
 /**
  * 
