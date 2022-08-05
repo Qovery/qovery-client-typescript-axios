@@ -1209,13 +1209,13 @@ export interface AwsCredentialsRequest {
      * @type {string}
      * @memberof AwsCredentialsRequest
      */
-    'access_key_id'?: string;
+    'access_key_id': string;
     /**
      * 
      * @type {string}
      * @memberof AwsCredentialsRequest
      */
-    'secret_access_key'?: string;
+    'secret_access_key': string;
 }
 /**
  * 
