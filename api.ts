@@ -5283,6 +5283,12 @@ export interface Environment {
      * @memberof Environment
      */
     'cluster_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'cluster_name'?: string;
 }
 /**
  * 
@@ -5326,6 +5332,12 @@ export interface EnvironmentAllOf {
      * @memberof EnvironmentAllOf
      */
     'cluster_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentAllOf
+     */
+    'cluster_name'?: string;
 }
 /**
  * 
