@@ -18127,6 +18127,132 @@ export const CloudProviderCredentialsApiAxiosParamCreator = function (configurat
         },
         /**
          * 
+         * @summary Get a set of AWS credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAWSCredentials: async (organizationId: string, credentialsId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getAWSCredentials', 'organizationId', organizationId)
+            // verify required parameter 'credentialsId' is not null or undefined
+            assertParamExists('getAWSCredentials', 'credentialsId', credentialsId)
+            const localVarPath = `/organization/{organizationId}/aws/credentials/{credentialsId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"credentialsId"}}`, encodeURIComponent(String(credentialsId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a set of Digital Ocean credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDOCredentials: async (organizationId: string, credentialsId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getDOCredentials', 'organizationId', organizationId)
+            // verify required parameter 'credentialsId' is not null or undefined
+            assertParamExists('getDOCredentials', 'credentialsId', credentialsId)
+            const localVarPath = `/organization/{organizationId}/digitalOcean/credentials/{credentialsId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"credentialsId"}}`, encodeURIComponent(String(credentialsId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a set of Scaleway credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getScalewayCredentials: async (organizationId: string, credentialsId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getScalewayCredentials', 'organizationId', organizationId)
+            // verify required parameter 'credentialsId' is not null or undefined
+            assertParamExists('getScalewayCredentials', 'credentialsId', credentialsId)
+            const localVarPath = `/organization/{organizationId}/scaleway/credentials/{credentialsId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"credentialsId"}}`, encodeURIComponent(String(credentialsId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary List AWS credentials
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
@@ -18362,6 +18488,42 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
         },
         /**
          * 
+         * @summary Get a set of AWS credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAWSCredentials(organizationId: string, credentialsId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentials>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAWSCredentials(organizationId, credentialsId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get a set of Digital Ocean credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDOCredentials(organizationId: string, credentialsId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentials>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDOCredentials(organizationId, credentialsId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get a set of Scaleway credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getScalewayCredentials(organizationId: string, credentialsId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentials>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getScalewayCredentials(organizationId, credentialsId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary List AWS credentials
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
@@ -18504,6 +18666,39 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
          */
         editScalewayCredentials(organizationId: string, credentialsId: string, scalewayCredentialsRequest?: ScalewayCredentialsRequest, options?: any): AxiosPromise<ClusterCredentials> {
             return localVarFp.editScalewayCredentials(organizationId, credentialsId, scalewayCredentialsRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get a set of AWS credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAWSCredentials(organizationId: string, credentialsId: string, options?: any): AxiosPromise<ClusterCredentials> {
+            return localVarFp.getAWSCredentials(organizationId, credentialsId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get a set of Digital Ocean credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDOCredentials(organizationId: string, credentialsId: string, options?: any): AxiosPromise<ClusterCredentials> {
+            return localVarFp.getDOCredentials(organizationId, credentialsId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get a set of Scaleway credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getScalewayCredentials(organizationId: string, credentialsId: string, options?: any): AxiosPromise<ClusterCredentials> {
+            return localVarFp.getScalewayCredentials(organizationId, credentialsId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -18663,6 +18858,45 @@ export class CloudProviderCredentialsApi extends BaseAPI {
      */
     public editScalewayCredentials(organizationId: string, credentialsId: string, scalewayCredentialsRequest?: ScalewayCredentialsRequest, options?: AxiosRequestConfig) {
         return CloudProviderCredentialsApiFp(this.configuration).editScalewayCredentials(organizationId, credentialsId, scalewayCredentialsRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get a set of AWS credentials
+     * @param {string} organizationId Organization ID
+     * @param {string} credentialsId Credentials ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderCredentialsApi
+     */
+    public getAWSCredentials(organizationId: string, credentialsId: string, options?: AxiosRequestConfig) {
+        return CloudProviderCredentialsApiFp(this.configuration).getAWSCredentials(organizationId, credentialsId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get a set of Digital Ocean credentials
+     * @param {string} organizationId Organization ID
+     * @param {string} credentialsId Credentials ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderCredentialsApi
+     */
+    public getDOCredentials(organizationId: string, credentialsId: string, options?: AxiosRequestConfig) {
+        return CloudProviderCredentialsApiFp(this.configuration).getDOCredentials(organizationId, credentialsId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get a set of Scaleway credentials
+     * @param {string} organizationId Organization ID
+     * @param {string} credentialsId Credentials ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderCredentialsApi
+     */
+    public getScalewayCredentials(organizationId: string, credentialsId: string, options?: AxiosRequestConfig) {
+        return CloudProviderCredentialsApiFp(this.configuration).getScalewayCredentials(organizationId, credentialsId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
