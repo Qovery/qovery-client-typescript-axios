@@ -297,6 +297,12 @@ export interface ApplicationAdvancedSettings {
      */
     'network.ingress.cors_allow_headers'?: string;
     /**
+     * header buffer size used while reading response header from upstream
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.ingress.proxy_buffer_size_kb'?: number;
+    /**
      * `NONE` disable readiness probe `TCP` enable TCP readiness probe `HTTP` enable HTTP readiness probe 
      * @type {string}
      * @memberof ApplicationAdvancedSettings
@@ -2926,6 +2932,12 @@ export interface ContainerAdvancedSettings {
      * @memberof ContainerAdvancedSettings
      */
     'network.ingress.cors_allow_headers'?: string;
+    /**
+     * header buffer size used while reading response header from upstream
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'network.ingress.proxy_buffer_size_kb'?: number;
     /**
      * `NONE` disable readiness probe `TCP` enable TCP readiness probe `HTTP` enable HTTP readiness probe 
      * @type {string}
