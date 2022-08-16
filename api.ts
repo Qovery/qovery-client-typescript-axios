@@ -3127,87 +3127,6 @@ export interface ContainerDeployRequest {
 /**
  * 
  * @export
- * @interface ContainerDeploymentRestriction
- */
-export interface ContainerDeploymentRestriction {
-    /**
-     * 
-     * @type {string}
-     * @memberof ContainerDeploymentRestriction
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContainerDeploymentRestriction
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContainerDeploymentRestriction
-     */
-    'updated_at'?: string;
-    /**
-     * 
-     * @type {DeploymentRestrictionModeEnum}
-     * @memberof ContainerDeploymentRestriction
-     */
-    'mode': DeploymentRestrictionModeEnum;
-    /**
-     * 
-     * @type {DeploymentRestrictionTypeEnum}
-     * @memberof ContainerDeploymentRestriction
-     */
-    'type': DeploymentRestrictionTypeEnum;
-    /**
-     * For `PATH` restrictions, the value must not start with `/`
-     * @type {string}
-     * @memberof ContainerDeploymentRestriction
-     */
-    'value': string;
-}
-/**
- * 
- * @export
- * @interface ContainerDeploymentRestrictionRequest
- */
-export interface ContainerDeploymentRestrictionRequest {
-    /**
-     * 
-     * @type {DeploymentRestrictionModeEnum}
-     * @memberof ContainerDeploymentRestrictionRequest
-     */
-    'mode': DeploymentRestrictionModeEnum;
-    /**
-     * 
-     * @type {DeploymentRestrictionTypeEnum}
-     * @memberof ContainerDeploymentRestrictionRequest
-     */
-    'type': DeploymentRestrictionTypeEnum;
-    /**
-     * For `PATH` restrictions, the value must not start with `/`
-     * @type {string}
-     * @memberof ContainerDeploymentRestrictionRequest
-     */
-    'value': string;
-}
-/**
- * 
- * @export
- * @interface ContainerDeploymentRestrictionResponseList
- */
-export interface ContainerDeploymentRestrictionResponseList {
-    /**
-     * 
-     * @type {Array<ContainerDeploymentRestriction>}
-     * @memberof ContainerDeploymentRestrictionResponseList
-     */
-    'deployment_restrictions'?: Array<ContainerDeploymentRestriction>;
-}
-/**
- * 
- * @export
  * @interface ContainerEditRequest
  */
 export interface ContainerEditRequest {
@@ -5452,10 +5371,29 @@ export interface EnvironmentApplicationsCurrentScaleResponseList {
 export interface EnvironmentApplicationsInstanceResponseList {
     /**
      * 
-     * @type {Array<InlineResponse2002Results>}
+     * @type {Array<EnvironmentApplicationsInstanceResponseListResults>}
      * @memberof EnvironmentApplicationsInstanceResponseList
      */
-    'results'?: Array<InlineResponse2002Results>;
+    'results'?: Array<EnvironmentApplicationsInstanceResponseListResults>;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentApplicationsInstanceResponseListResults
+ */
+export interface EnvironmentApplicationsInstanceResponseListResults {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentApplicationsInstanceResponseListResults
+     */
+    'application': string;
+    /**
+     * 
+     * @type {Array<Instance>}
+     * @memberof EnvironmentApplicationsInstanceResponseListResults
+     */
+    'instances': Array<Instance>;
 }
 /**
  * 
@@ -6488,7 +6426,8 @@ export enum EnvironmentVariableScopeEnum {
     APPLICATION = 'APPLICATION',
     BUILT_IN = 'BUILT_IN',
     ENVIRONMENT = 'ENVIRONMENT',
-    PROJECT = 'PROJECT'
+    PROJECT = 'PROJECT',
+    CONTAINER = 'CONTAINER'
 }
 
 /**
@@ -6843,6 +6782,44 @@ export interface InlineObject {
 /**
  * 
  * @export
+ * @interface InlineObject1
+ */
+export interface InlineObject1 {
+    /**
+     * the container image name to deploy
+     * @type {string}
+     * @memberof InlineObject1
+     */
+    'image_name'?: string;
+    /**
+     * the new tag to deploy
+     * @type {string}
+     * @memberof InlineObject1
+     */
+    'tag'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface InlineObject2
+ */
+export interface InlineObject2 {
+    /**
+     * the container image name to trigger preview environment
+     * @type {string}
+     * @memberof InlineObject2
+     */
+    'image_name'?: string;
+    /**
+     * the tag to be used in the preview environment
+     * @type {string}
+     * @memberof InlineObject2
+     */
+    'tag'?: string;
+}
+/**
+ * 
+ * @export
  * @interface InlineResponse200
  */
 export interface InlineResponse200 {
@@ -6865,51 +6842,6 @@ export interface InlineResponse2001 {
      * @memberof InlineResponse2001
      */
     'results'?: Array<ContainerRegistryResponse>;
-}
-/**
- * 
- * @export
- * @interface InlineResponse2002
- */
-export interface InlineResponse2002 {
-    /**
-     * 
-     * @type {Array<InlineResponse2002Results>}
-     * @memberof InlineResponse2002
-     */
-    'results'?: Array<InlineResponse2002Results>;
-}
-/**
- * 
- * @export
- * @interface InlineResponse2002Results
- */
-export interface InlineResponse2002Results {
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse2002Results
-     */
-    'application': string;
-    /**
-     * 
-     * @type {Array<Instance>}
-     * @memberof InlineResponse2002Results
-     */
-    'instances': Array<Instance>;
-}
-/**
- * 
- * @export
- * @interface InlineResponse2003
- */
-export interface InlineResponse2003 {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof InlineResponse2003
-     */
-    'results'?: Array<string>;
 }
 /**
  * 
@@ -11962,15 +11894,19 @@ export const ApplicationDeploymentRestrictionApiAxiosParamCreator = function (co
          * Edit an application deployment restriction
          * @summary Edit an application deployment restriction
          * @param {string} applicationId Application ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {ApplicationDeploymentRestrictionRequest} [applicationDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editApplicationDeploymentRestriction: async (applicationId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        editApplicationDeploymentRestriction: async (applicationId: string, deploymentRestrictionId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'applicationId' is not null or undefined
             assertParamExists('editApplicationDeploymentRestriction', 'applicationId', applicationId)
+            // verify required parameter 'deploymentRestrictionId' is not null or undefined
+            assertParamExists('editApplicationDeploymentRestriction', 'deploymentRestrictionId', deploymentRestrictionId)
             const localVarPath = `/application/{applicationId}/deploymentRestriction/{deploymentRestrictionId}`
-                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
+                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)))
+                .replace(`{${"deploymentRestrictionId"}}`, encodeURIComponent(String(deploymentRestrictionId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -12075,12 +12011,13 @@ export const ApplicationDeploymentRestrictionApiFp = function(configuration?: Co
          * Edit an application deployment restriction
          * @summary Edit an application deployment restriction
          * @param {string} applicationId Application ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {ApplicationDeploymentRestrictionRequest} [applicationDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editApplicationDeploymentRestriction(applicationId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationDeploymentRestriction>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.editApplicationDeploymentRestriction(applicationId, applicationDeploymentRestrictionRequest, options);
+        async editApplicationDeploymentRestriction(applicationId: string, deploymentRestrictionId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationDeploymentRestriction>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editApplicationDeploymentRestriction(applicationId, deploymentRestrictionId, applicationDeploymentRestrictionRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -12129,12 +12066,13 @@ export const ApplicationDeploymentRestrictionApiFactory = function (configuratio
          * Edit an application deployment restriction
          * @summary Edit an application deployment restriction
          * @param {string} applicationId Application ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {ApplicationDeploymentRestrictionRequest} [applicationDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editApplicationDeploymentRestriction(applicationId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: any): AxiosPromise<ApplicationDeploymentRestriction> {
-            return localVarFp.editApplicationDeploymentRestriction(applicationId, applicationDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
+        editApplicationDeploymentRestriction(applicationId: string, deploymentRestrictionId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: any): AxiosPromise<ApplicationDeploymentRestriction> {
+            return localVarFp.editApplicationDeploymentRestriction(applicationId, deploymentRestrictionId, applicationDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Get application deployment restrictions
@@ -12185,13 +12123,14 @@ export class ApplicationDeploymentRestrictionApi extends BaseAPI {
      * Edit an application deployment restriction
      * @summary Edit an application deployment restriction
      * @param {string} applicationId Application ID
+     * @param {string} deploymentRestrictionId Deployment Restriction ID
      * @param {ApplicationDeploymentRestrictionRequest} [applicationDeploymentRestrictionRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApplicationDeploymentRestrictionApi
      */
-    public editApplicationDeploymentRestriction(applicationId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: AxiosRequestConfig) {
-        return ApplicationDeploymentRestrictionApiFp(this.configuration).editApplicationDeploymentRestriction(applicationId, applicationDeploymentRestrictionRequest, options).then((request) => request(this.axios, this.basePath));
+    public editApplicationDeploymentRestriction(applicationId: string, deploymentRestrictionId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: AxiosRequestConfig) {
+        return ApplicationDeploymentRestrictionApiFp(this.configuration).editApplicationDeploymentRestriction(applicationId, deploymentRestrictionId, applicationDeploymentRestrictionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15173,44 +15112,6 @@ export const ApplicationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
-         * @summary List running instances with CPU and RAM usage for each application
-         * @param {string} environmentId Environment ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getEnvironmentApplicationCurrentInstance: async (environmentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'environmentId' is not null or undefined
-            assertParamExists('getEnvironmentApplicationCurrentInstance', 'environmentId', environmentId)
-            const localVarPath = `/environment/{environmentId}/application/instance`
-                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Returns min, max, and running number of instances for each application
          * @summary List current scaling information for each application
          * @param {string} environmentId Environment ID
@@ -15435,17 +15336,6 @@ export const ApplicationsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
-         * @summary List running instances with CPU and RAM usage for each application
-         * @param {string} environmentId Environment ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getEnvironmentApplicationCurrentInstance(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentApplicationsInstanceResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentApplicationCurrentInstance(environmentId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * Returns min, max, and running number of instances for each application
          * @summary List current scaling information for each application
          * @param {string} environmentId Environment ID
@@ -15533,16 +15423,6 @@ export const ApplicationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.deployAllApplications(environmentId, deployAllRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary List running instances with CPU and RAM usage for each application
-         * @param {string} environmentId Environment ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getEnvironmentApplicationCurrentInstance(environmentId: string, options?: any): AxiosPromise<EnvironmentApplicationsInstanceResponseList> {
-            return localVarFp.getEnvironmentApplicationCurrentInstance(environmentId, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Returns min, max, and running number of instances for each application
          * @summary List current scaling information for each application
          * @param {string} environmentId Environment ID
@@ -15626,18 +15506,6 @@ export class ApplicationsApi extends BaseAPI {
      */
     public deployAllApplications(environmentId: string, deployAllRequest?: DeployAllRequest, options?: AxiosRequestConfig) {
         return ApplicationsApiFp(this.configuration).deployAllApplications(environmentId, deployAllRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary List running instances with CPU and RAM usage for each application
-     * @param {string} environmentId Environment ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApplicationsApi
-     */
-    public getEnvironmentApplicationCurrentInstance(environmentId: string, options?: AxiosRequestConfig) {
-        return ApplicationsApiFp(this.configuration).getEnvironmentApplicationCurrentInstance(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -20213,48 +20081,6 @@ export const ContainerActionsApiAxiosParamCreator = function (configuration?: Co
             };
         },
         /**
-         * You must provide the image tag.
-         * @summary NOT YET IMPLEMENTED - Deploy a preview environment with your container application
-         * @param {string} containerId Container ID
-         * @param {ContainerDeployRequest} [containerDeployRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        previewEnvironmentContainer: async (containerId: string, containerDeployRequest?: ContainerDeployRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('previewEnvironmentContainer', 'containerId', containerId)
-            const localVarPath = `/container/{containerId}/previewEnvironment`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(containerDeployRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * 
          * @summary NOT YET IMPLEMENTED - Restart container
          * @param {string} containerId Container ID
@@ -20353,18 +20179,6 @@ export const ContainerActionsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * You must provide the image tag.
-         * @summary NOT YET IMPLEMENTED - Deploy a preview environment with your container application
-         * @param {string} containerId Container ID
-         * @param {ContainerDeployRequest} [containerDeployRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async previewEnvironmentContainer(containerId: string, containerDeployRequest?: ContainerDeployRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.previewEnvironmentContainer(containerId, containerDeployRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * 
          * @summary NOT YET IMPLEMENTED - Restart container
          * @param {string} containerId Container ID
@@ -20408,17 +20222,6 @@ export const ContainerActionsApiFactory = function (configuration?: Configuratio
             return localVarFp.deployContainer(containerId, containerDeployRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * You must provide the image tag.
-         * @summary NOT YET IMPLEMENTED - Deploy a preview environment with your container application
-         * @param {string} containerId Container ID
-         * @param {ContainerDeployRequest} [containerDeployRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        previewEnvironmentContainer(containerId: string, containerDeployRequest?: ContainerDeployRequest, options?: any): AxiosPromise<Status> {
-            return localVarFp.previewEnvironmentContainer(containerId, containerDeployRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
          * 
          * @summary NOT YET IMPLEMENTED - Restart container
          * @param {string} containerId Container ID
@@ -20459,19 +20262,6 @@ export class ContainerActionsApi extends BaseAPI {
      */
     public deployContainer(containerId: string, containerDeployRequest?: ContainerDeployRequest, options?: AxiosRequestConfig) {
         return ContainerActionsApiFp(this.configuration).deployContainer(containerId, containerDeployRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * You must provide the image tag.
-     * @summary NOT YET IMPLEMENTED - Deploy a preview environment with your container application
-     * @param {string} containerId Container ID
-     * @param {ContainerDeployRequest} [containerDeployRequest] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerActionsApi
-     */
-    public previewEnvironmentContainer(containerId: string, containerDeployRequest?: ContainerDeployRequest, options?: AxiosRequestConfig) {
-        return ContainerActionsApiFp(this.configuration).previewEnvironmentContainer(containerId, containerDeployRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -21272,48 +21062,6 @@ export const ContainerDatabaseApiAxiosParamCreator = function (configuration?: C
     return {
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Link a database to the container
-         * @param {string} containerId Container ID
-         * @param {string} targetDatabaseId Target database ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attachDatabaseToContainer: async (containerId: string, targetDatabaseId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('attachDatabaseToContainer', 'containerId', containerId)
-            // verify required parameter 'targetDatabaseId' is not null or undefined
-            assertParamExists('attachDatabaseToContainer', 'targetDatabaseId', targetDatabaseId)
-            const localVarPath = `/container/{containerId}/database/{targetDatabaseId}`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)))
-                .replace(`{${"targetDatabaseId"}}`, encodeURIComponent(String(targetDatabaseId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary NOT YET IMPLEMENTED - Link a logical database to the container
          * @param {string} containerId Container ID
          * @param {string} targetLogicalDatabaseId Target database ID
@@ -21356,44 +21104,6 @@ export const ContainerDatabaseApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List linked databases
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listContainerDatabase: async (containerId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('listContainerDatabase', 'containerId', containerId)
-            const localVarPath = `/container/{containerId}/database`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary NOT YET IMPLEMENTED - List linked logical databases
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
@@ -21412,48 +21122,6 @@ export const ContainerDatabaseApiAxiosParamCreator = function (configuration?: C
             }
 
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED - Remove database link to this container.
-         * @param {string} containerId Container ID
-         * @param {string} targetDatabaseId Target database ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        removeDatabaseFromContainer: async (containerId: string, targetDatabaseId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('removeDatabaseFromContainer', 'containerId', containerId)
-            // verify required parameter 'targetDatabaseId' is not null or undefined
-            assertParamExists('removeDatabaseFromContainer', 'targetDatabaseId', targetDatabaseId)
-            const localVarPath = `/container/{containerId}/database/{targetDatabaseId}`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)))
-                .replace(`{${"targetDatabaseId"}}`, encodeURIComponent(String(targetDatabaseId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -21526,18 +21194,6 @@ export const ContainerDatabaseApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Link a database to the container
-         * @param {string} containerId Container ID
-         * @param {string} targetDatabaseId Target database ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async attachDatabaseToContainer(containerId: string, targetDatabaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Database>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.attachDatabaseToContainer(containerId, targetDatabaseId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary NOT YET IMPLEMENTED - Link a logical database to the container
          * @param {string} containerId Container ID
          * @param {string} targetLogicalDatabaseId Target database ID
@@ -21550,17 +21206,6 @@ export const ContainerDatabaseApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List linked databases
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listContainerDatabase(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatabaseResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listContainerDatabase(containerId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary NOT YET IMPLEMENTED - List linked logical databases
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
@@ -21568,18 +21213,6 @@ export const ContainerDatabaseApiFp = function(configuration?: Configuration) {
          */
         async listContainerLogicalDatabase(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LogicalDatabaseResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listContainerLogicalDatabase(containerId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED - Remove database link to this container.
-         * @param {string} containerId Container ID
-         * @param {string} targetDatabaseId Target database ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async removeDatabaseFromContainer(containerId: string, targetDatabaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.removeDatabaseFromContainer(containerId, targetDatabaseId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -21606,17 +21239,6 @@ export const ContainerDatabaseApiFactory = function (configuration?: Configurati
     return {
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Link a database to the container
-         * @param {string} containerId Container ID
-         * @param {string} targetDatabaseId Target database ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attachDatabaseToContainer(containerId: string, targetDatabaseId: string, options?: any): AxiosPromise<Database> {
-            return localVarFp.attachDatabaseToContainer(containerId, targetDatabaseId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary NOT YET IMPLEMENTED - Link a logical database to the container
          * @param {string} containerId Container ID
          * @param {string} targetLogicalDatabaseId Target database ID
@@ -21628,16 +21250,6 @@ export const ContainerDatabaseApiFactory = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List linked databases
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listContainerDatabase(containerId: string, options?: any): AxiosPromise<DatabaseResponseList> {
-            return localVarFp.listContainerDatabase(containerId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary NOT YET IMPLEMENTED - List linked logical databases
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
@@ -21645,17 +21257,6 @@ export const ContainerDatabaseApiFactory = function (configuration?: Configurati
          */
         listContainerLogicalDatabase(containerId: string, options?: any): AxiosPromise<LogicalDatabaseResponseList> {
             return localVarFp.listContainerLogicalDatabase(containerId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED - Remove database link to this container.
-         * @param {string} containerId Container ID
-         * @param {string} targetDatabaseId Target database ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        removeDatabaseFromContainer(containerId: string, targetDatabaseId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.removeDatabaseFromContainer(containerId, targetDatabaseId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -21680,19 +21281,6 @@ export const ContainerDatabaseApiFactory = function (configuration?: Configurati
 export class ContainerDatabaseApi extends BaseAPI {
     /**
      * 
-     * @summary NOT YET IMPLEMENTED - Link a database to the container
-     * @param {string} containerId Container ID
-     * @param {string} targetDatabaseId Target database ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerDatabaseApi
-     */
-    public attachDatabaseToContainer(containerId: string, targetDatabaseId: string, options?: AxiosRequestConfig) {
-        return ContainerDatabaseApiFp(this.configuration).attachDatabaseToContainer(containerId, targetDatabaseId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary NOT YET IMPLEMENTED - Link a logical database to the container
      * @param {string} containerId Container ID
      * @param {string} targetLogicalDatabaseId Target database ID
@@ -21706,18 +21294,6 @@ export class ContainerDatabaseApi extends BaseAPI {
 
     /**
      * 
-     * @summary NOT YET IMPLEMENTED - List linked databases
-     * @param {string} containerId Container ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerDatabaseApi
-     */
-    public listContainerDatabase(containerId: string, options?: AxiosRequestConfig) {
-        return ContainerDatabaseApiFp(this.configuration).listContainerDatabase(containerId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary NOT YET IMPLEMENTED - List linked logical databases
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
@@ -21726,19 +21302,6 @@ export class ContainerDatabaseApi extends BaseAPI {
      */
     public listContainerLogicalDatabase(containerId: string, options?: AxiosRequestConfig) {
         return ContainerDatabaseApiFp(this.configuration).listContainerLogicalDatabase(containerId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary NOT YET IMPLEMENTED - Remove database link to this container.
-     * @param {string} containerId Container ID
-     * @param {string} targetDatabaseId Target database ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerDatabaseApi
-     */
-    public removeDatabaseFromContainer(containerId: string, targetDatabaseId: string, options?: AxiosRequestConfig) {
-        return ContainerDatabaseApiFp(this.configuration).removeDatabaseFromContainer(containerId, targetDatabaseId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -22015,148 +21578,22 @@ export class ContainerDependencyApi extends BaseAPI {
 
 
 /**
- * ContainerDeploymentRestrictionApi - axios parameter creator
+ * ContainerDeploymentHistoryApi - axios parameter creator
  * @export
  */
-export const ContainerDeploymentRestrictionApiAxiosParamCreator = function (configuration?: Configuration) {
+export const ContainerDeploymentHistoryApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Create an container deployment restriction
-         * @summary NOT YET IMPLEMENTED - Create an container deployment restriction
-         * @param {string} containerId Container ID
-         * @param {ContainerDeploymentRestrictionRequest} [containerDeploymentRestrictionRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createContainerDeploymentRestriction: async (containerId: string, containerDeploymentRestrictionRequest?: ContainerDeploymentRestrictionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('createContainerDeploymentRestriction', 'containerId', containerId)
-            const localVarPath = `/container/{containerId}/deploymentRestriction`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(containerDeploymentRestrictionRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete a container deployment restriction
-         * @summary NOT YET IMPLEMENTED - Delete a container deployment restriction
+         * Returns the 20 last container deployments
+         * @summary NOT YET IMPLEMENTED - List container deployments
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteContainerDeploymentRestriction: async (containerId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listContainerDeploymentHistory: async (containerId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('deleteContainerDeploymentRestriction', 'containerId', containerId)
-            const localVarPath = `/container/{containerId}/deploymentRestriction/{deploymentRestrictionId}`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Edit a container deployment restriction
-         * @summary NOT YET IMPLEMENTED - Edit a container deployment restriction
-         * @param {string} containerId Container ID
-         * @param {string} deploymentRestrictionId Deployment Restriction ID
-         * @param {ContainerDeploymentRestrictionRequest} [containerDeploymentRestrictionRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        editContainerDeploymentRestriction: async (containerId: string, deploymentRestrictionId: string, containerDeploymentRestrictionRequest?: ContainerDeploymentRestrictionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('editContainerDeploymentRestriction', 'containerId', containerId)
-            // verify required parameter 'deploymentRestrictionId' is not null or undefined
-            assertParamExists('editContainerDeploymentRestriction', 'deploymentRestrictionId', deploymentRestrictionId)
-            const localVarPath = `/container/{containerId}/deploymentRestriction/{deploymentRestrictionId}`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)))
-                .replace(`{${"deploymentRestrictionId"}}`, encodeURIComponent(String(deploymentRestrictionId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(containerDeploymentRestrictionRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get container deployment restrictions
-         * @summary NOT YET IMPLEMENTED - Get container deployment restrictions
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getContainerDeploymentRestrictions: async (containerId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('getContainerDeploymentRestrictions', 'containerId', containerId)
-            const localVarPath = `/container/{containerId}/deploymentRestriction`
+            assertParamExists('listContainerDeploymentHistory', 'containerId', containerId)
+            const localVarPath = `/container/{containerId}/deploymentHistory`
                 .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -22188,171 +21625,63 @@ export const ContainerDeploymentRestrictionApiAxiosParamCreator = function (conf
 };
 
 /**
- * ContainerDeploymentRestrictionApi - functional programming interface
+ * ContainerDeploymentHistoryApi - functional programming interface
  * @export
  */
-export const ContainerDeploymentRestrictionApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = ContainerDeploymentRestrictionApiAxiosParamCreator(configuration)
+export const ContainerDeploymentHistoryApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ContainerDeploymentHistoryApiAxiosParamCreator(configuration)
     return {
         /**
-         * Create an container deployment restriction
-         * @summary NOT YET IMPLEMENTED - Create an container deployment restriction
-         * @param {string} containerId Container ID
-         * @param {ContainerDeploymentRestrictionRequest} [containerDeploymentRestrictionRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createContainerDeploymentRestriction(containerId: string, containerDeploymentRestrictionRequest?: ContainerDeploymentRestrictionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerDeploymentRestriction>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createContainerDeploymentRestriction(containerId, containerDeploymentRestrictionRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Delete a container deployment restriction
-         * @summary NOT YET IMPLEMENTED - Delete a container deployment restriction
+         * Returns the 20 last container deployments
+         * @summary NOT YET IMPLEMENTED - List container deployments
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteContainerDeploymentRestriction(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteContainerDeploymentRestriction(containerId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Edit a container deployment restriction
-         * @summary NOT YET IMPLEMENTED - Edit a container deployment restriction
-         * @param {string} containerId Container ID
-         * @param {string} deploymentRestrictionId Deployment Restriction ID
-         * @param {ContainerDeploymentRestrictionRequest} [containerDeploymentRestrictionRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async editContainerDeploymentRestriction(containerId: string, deploymentRestrictionId: string, containerDeploymentRestrictionRequest?: ContainerDeploymentRestrictionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerDeploymentRestriction>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.editContainerDeploymentRestriction(containerId, deploymentRestrictionId, containerDeploymentRestrictionRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Get container deployment restrictions
-         * @summary NOT YET IMPLEMENTED - Get container deployment restrictions
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getContainerDeploymentRestrictions(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerDeploymentRestrictionResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getContainerDeploymentRestrictions(containerId, options);
+        async listContainerDeploymentHistory(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationData & object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listContainerDeploymentHistory(containerId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
 
 /**
- * ContainerDeploymentRestrictionApi - factory interface
+ * ContainerDeploymentHistoryApi - factory interface
  * @export
  */
-export const ContainerDeploymentRestrictionApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = ContainerDeploymentRestrictionApiFp(configuration)
+export const ContainerDeploymentHistoryApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ContainerDeploymentHistoryApiFp(configuration)
     return {
         /**
-         * Create an container deployment restriction
-         * @summary NOT YET IMPLEMENTED - Create an container deployment restriction
-         * @param {string} containerId Container ID
-         * @param {ContainerDeploymentRestrictionRequest} [containerDeploymentRestrictionRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createContainerDeploymentRestriction(containerId: string, containerDeploymentRestrictionRequest?: ContainerDeploymentRestrictionRequest, options?: any): AxiosPromise<ContainerDeploymentRestriction> {
-            return localVarFp.createContainerDeploymentRestriction(containerId, containerDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Delete a container deployment restriction
-         * @summary NOT YET IMPLEMENTED - Delete a container deployment restriction
+         * Returns the 20 last container deployments
+         * @summary NOT YET IMPLEMENTED - List container deployments
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteContainerDeploymentRestriction(containerId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteContainerDeploymentRestriction(containerId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Edit a container deployment restriction
-         * @summary NOT YET IMPLEMENTED - Edit a container deployment restriction
-         * @param {string} containerId Container ID
-         * @param {string} deploymentRestrictionId Deployment Restriction ID
-         * @param {ContainerDeploymentRestrictionRequest} [containerDeploymentRestrictionRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        editContainerDeploymentRestriction(containerId: string, deploymentRestrictionId: string, containerDeploymentRestrictionRequest?: ContainerDeploymentRestrictionRequest, options?: any): AxiosPromise<ContainerDeploymentRestriction> {
-            return localVarFp.editContainerDeploymentRestriction(containerId, deploymentRestrictionId, containerDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Get container deployment restrictions
-         * @summary NOT YET IMPLEMENTED - Get container deployment restrictions
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getContainerDeploymentRestrictions(containerId: string, options?: any): AxiosPromise<ContainerDeploymentRestrictionResponseList> {
-            return localVarFp.getContainerDeploymentRestrictions(containerId, options).then((request) => request(axios, basePath));
+        listContainerDeploymentHistory(containerId: string, options?: any): AxiosPromise<PaginationData & object> {
+            return localVarFp.listContainerDeploymentHistory(containerId, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * ContainerDeploymentRestrictionApi - object-oriented interface
+ * ContainerDeploymentHistoryApi - object-oriented interface
  * @export
- * @class ContainerDeploymentRestrictionApi
+ * @class ContainerDeploymentHistoryApi
  * @extends {BaseAPI}
  */
-export class ContainerDeploymentRestrictionApi extends BaseAPI {
+export class ContainerDeploymentHistoryApi extends BaseAPI {
     /**
-     * Create an container deployment restriction
-     * @summary NOT YET IMPLEMENTED - Create an container deployment restriction
-     * @param {string} containerId Container ID
-     * @param {ContainerDeploymentRestrictionRequest} [containerDeploymentRestrictionRequest] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerDeploymentRestrictionApi
-     */
-    public createContainerDeploymentRestriction(containerId: string, containerDeploymentRestrictionRequest?: ContainerDeploymentRestrictionRequest, options?: AxiosRequestConfig) {
-        return ContainerDeploymentRestrictionApiFp(this.configuration).createContainerDeploymentRestriction(containerId, containerDeploymentRestrictionRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Delete a container deployment restriction
-     * @summary NOT YET IMPLEMENTED - Delete a container deployment restriction
+     * Returns the 20 last container deployments
+     * @summary NOT YET IMPLEMENTED - List container deployments
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ContainerDeploymentRestrictionApi
+     * @memberof ContainerDeploymentHistoryApi
      */
-    public deleteContainerDeploymentRestriction(containerId: string, options?: AxiosRequestConfig) {
-        return ContainerDeploymentRestrictionApiFp(this.configuration).deleteContainerDeploymentRestriction(containerId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Edit a container deployment restriction
-     * @summary NOT YET IMPLEMENTED - Edit a container deployment restriction
-     * @param {string} containerId Container ID
-     * @param {string} deploymentRestrictionId Deployment Restriction ID
-     * @param {ContainerDeploymentRestrictionRequest} [containerDeploymentRestrictionRequest] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerDeploymentRestrictionApi
-     */
-    public editContainerDeploymentRestriction(containerId: string, deploymentRestrictionId: string, containerDeploymentRestrictionRequest?: ContainerDeploymentRestrictionRequest, options?: AxiosRequestConfig) {
-        return ContainerDeploymentRestrictionApiFp(this.configuration).editContainerDeploymentRestriction(containerId, deploymentRestrictionId, containerDeploymentRestrictionRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get container deployment restrictions
-     * @summary NOT YET IMPLEMENTED - Get container deployment restrictions
-     * @param {string} containerId Container ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerDeploymentRestrictionApi
-     */
-    public getContainerDeploymentRestrictions(containerId: string, options?: AxiosRequestConfig) {
-        return ContainerDeploymentRestrictionApiFp(this.configuration).getContainerDeploymentRestrictions(containerId, options).then((request) => request(this.axios, this.basePath));
+    public listContainerDeploymentHistory(containerId: string, options?: AxiosRequestConfig) {
+        return ContainerDeploymentHistoryApiFp(this.configuration).listContainerDeploymentHistory(containerId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -22958,123 +22287,6 @@ export class ContainerEnvironmentVariableApi extends BaseAPI {
 
 
 /**
- * ContainerEventApi - axios parameter creator
- * @export
- */
-export const ContainerEventApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
-         * @summary NOT YET IMPLEMENTED - List container events
-         * @param {string} containerId Container ID
-         * @param {string} [startId] Starting point after which to return results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listContainerEvent: async (containerId: string, startId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('listContainerEvent', 'containerId', containerId)
-            const localVarPath = `/container/{containerId}/event`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (startId !== undefined) {
-                localVarQueryParameter['startId'] = startId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * ContainerEventApi - functional programming interface
- * @export
- */
-export const ContainerEventApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = ContainerEventApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
-         * @summary NOT YET IMPLEMENTED - List container events
-         * @param {string} containerId Container ID
-         * @param {string} [startId] Starting point after which to return results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listContainerEvent(containerId: string, startId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventPaginatedResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listContainerEvent(containerId, startId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * ContainerEventApi - factory interface
- * @export
- */
-export const ContainerEventApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = ContainerEventApiFp(configuration)
-    return {
-        /**
-         * By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
-         * @summary NOT YET IMPLEMENTED - List container events
-         * @param {string} containerId Container ID
-         * @param {string} [startId] Starting point after which to return results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listContainerEvent(containerId: string, startId?: string, options?: any): AxiosPromise<EventPaginatedResponseList> {
-            return localVarFp.listContainerEvent(containerId, startId, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * ContainerEventApi - object-oriented interface
- * @export
- * @class ContainerEventApi
- * @extends {BaseAPI}
- */
-export class ContainerEventApi extends BaseAPI {
-    /**
-     * By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
-     * @summary NOT YET IMPLEMENTED - List container events
-     * @param {string} containerId Container ID
-     * @param {string} [startId] Starting point after which to return results
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerEventApi
-     */
-    public listContainerEvent(containerId: string, startId?: string, options?: AxiosRequestConfig) {
-        return ContainerEventApiFp(this.configuration).listContainerEvent(containerId, startId, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
  * ContainerLogsApi - axios parameter creator
  * @export
  */
@@ -23190,48 +22402,6 @@ export class ContainerLogsApi extends BaseAPI {
 export const ContainerMainCallsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
-         * @summary NOT YET IMPLEMENTED - Add container tag
-         * @param {string} containerId Container ID
-         * @param {TagRequest} [tagRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createContainerTag: async (containerId: string, tagRequest?: TagRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('createContainerTag', 'containerId', containerId)
-            const localVarPath = `/container/{containerId}/tag`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(tagRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * To delete the container you must have the admin permission
          * @summary NOT YET IMPLEMENTED - Delete container
          * @param {string} containerId Container ID
@@ -23243,48 +22413,6 @@ export const ContainerMainCallsApiAxiosParamCreator = function (configuration?: 
             assertParamExists('deleteContainer', 'containerId', containerId)
             const localVarPath = `/container/{containerId}`
                 .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED - Delete container tag
-         * @param {string} containerId Container ID
-         * @param {string} tagId Tag ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteContainerTag: async (containerId: string, tagId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('deleteContainerTag', 'containerId', containerId)
-            // verify required parameter 'tagId' is not null or undefined
-            assertParamExists('deleteContainerTag', 'tagId', tagId)
-            const localVarPath = `/container/{containerId}/tag/{tagId}`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)))
-                .replace(`{${"tagId"}}`, encodeURIComponent(String(tagId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -23430,83 +22558,7 @@ export const ContainerMainCallsApiAxiosParamCreator = function (configuration?: 
             };
         },
         /**
-         * List all image container tags already deployed in the Qovery environment.
-         * @summary NOT YET IMPLEMENTED - List image tags
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getContainerTags: async (containerId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('getContainerTags', 'containerId', containerId)
-            const localVarPath = `/container/{containerId}/tagHistory`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED -List contributors
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listContainerContributor: async (containerId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('listContainerContributor', 'containerId', containerId)
-            const localVarPath = `/container/{containerId}/contributor`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * This will return all the custom domains and Qovery autogenerated domain for the given application
+         * This will return all the custom domains and Qovery autogenerated domain for the given container
          * @summary NOT YET IMPLEMENTED - List all URLs of the container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
@@ -23516,44 +22568,6 @@ export const ContainerMainCallsApiAxiosParamCreator = function (configuration?: 
             // verify required parameter 'containerId' is not null or undefined
             assertParamExists('listContainerLinks', 'containerId', containerId)
             const localVarPath = `/container/{containerId}/link`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED - List tags
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listContainerTag: async (containerId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('listContainerTag', 'containerId', containerId)
-            const localVarPath = `/container/{containerId}/tag`
                 .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -23592,18 +22606,6 @@ export const ContainerMainCallsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ContainerMainCallsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
-         * @summary NOT YET IMPLEMENTED - Add container tag
-         * @param {string} containerId Container ID
-         * @param {TagRequest} [tagRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createContainerTag(containerId: string, tagRequest?: TagRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createContainerTag(containerId, tagRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * To delete the container you must have the admin permission
          * @summary NOT YET IMPLEMENTED - Delete container
          * @param {string} containerId Container ID
@@ -23612,18 +22614,6 @@ export const ContainerMainCallsApiFp = function(configuration?: Configuration) {
          */
         async deleteContainer(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteContainer(containerId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED - Delete container tag
-         * @param {string} containerId Container ID
-         * @param {string} tagId Tag ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteContainerTag(containerId: string, tagId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteContainerTag(containerId, tagId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -23661,29 +22651,7 @@ export const ContainerMainCallsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * List all image container tags already deployed in the Qovery environment.
-         * @summary NOT YET IMPLEMENTED - List image tags
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getContainerTags(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2003>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getContainerTags(containerId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED -List contributors
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listContainerContributor(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listContainerContributor(containerId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * This will return all the custom domains and Qovery autogenerated domain for the given application
+         * This will return all the custom domains and Qovery autogenerated domain for the given container
          * @summary NOT YET IMPLEMENTED - List all URLs of the container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
@@ -23691,17 +22659,6 @@ export const ContainerMainCallsApiFp = function(configuration?: Configuration) {
          */
         async listContainerLinks(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listContainerLinks(containerId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED - List tags
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listContainerTag(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listContainerTag(containerId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -23715,17 +22672,6 @@ export const ContainerMainCallsApiFactory = function (configuration?: Configurat
     const localVarFp = ContainerMainCallsApiFp(configuration)
     return {
         /**
-         * 
-         * @summary NOT YET IMPLEMENTED - Add container tag
-         * @param {string} containerId Container ID
-         * @param {TagRequest} [tagRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createContainerTag(containerId: string, tagRequest?: TagRequest, options?: any): AxiosPromise<TagResponseList> {
-            return localVarFp.createContainerTag(containerId, tagRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
          * To delete the container you must have the admin permission
          * @summary NOT YET IMPLEMENTED - Delete container
          * @param {string} containerId Container ID
@@ -23734,17 +22680,6 @@ export const ContainerMainCallsApiFactory = function (configuration?: Configurat
          */
         deleteContainer(containerId: string, options?: any): AxiosPromise<void> {
             return localVarFp.deleteContainer(containerId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED - Delete container tag
-         * @param {string} containerId Container ID
-         * @param {string} tagId Tag ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteContainerTag(containerId: string, tagId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteContainerTag(containerId, tagId, options).then((request) => request(axios, basePath));
         },
         /**
          * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. 
@@ -23778,27 +22713,7 @@ export const ContainerMainCallsApiFactory = function (configuration?: Configurat
             return localVarFp.getContainerStatus(containerId, options).then((request) => request(axios, basePath));
         },
         /**
-         * List all image container tags already deployed in the Qovery environment.
-         * @summary NOT YET IMPLEMENTED - List image tags
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getContainerTags(containerId: string, options?: any): AxiosPromise<InlineResponse2003> {
-            return localVarFp.getContainerTags(containerId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED -List contributors
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listContainerContributor(containerId: string, options?: any): AxiosPromise<UserResponseList> {
-            return localVarFp.listContainerContributor(containerId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * This will return all the custom domains and Qovery autogenerated domain for the given application
+         * This will return all the custom domains and Qovery autogenerated domain for the given container
          * @summary NOT YET IMPLEMENTED - List all URLs of the container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
@@ -23806,16 +22721,6 @@ export const ContainerMainCallsApiFactory = function (configuration?: Configurat
          */
         listContainerLinks(containerId: string, options?: any): AxiosPromise<LinkResponseList> {
             return localVarFp.listContainerLinks(containerId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED - List tags
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listContainerTag(containerId: string, options?: any): AxiosPromise<TagResponseList> {
-            return localVarFp.listContainerTag(containerId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -23828,19 +22733,6 @@ export const ContainerMainCallsApiFactory = function (configuration?: Configurat
  */
 export class ContainerMainCallsApi extends BaseAPI {
     /**
-     * 
-     * @summary NOT YET IMPLEMENTED - Add container tag
-     * @param {string} containerId Container ID
-     * @param {TagRequest} [tagRequest] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerMainCallsApi
-     */
-    public createContainerTag(containerId: string, tagRequest?: TagRequest, options?: AxiosRequestConfig) {
-        return ContainerMainCallsApiFp(this.configuration).createContainerTag(containerId, tagRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * To delete the container you must have the admin permission
      * @summary NOT YET IMPLEMENTED - Delete container
      * @param {string} containerId Container ID
@@ -23850,19 +22742,6 @@ export class ContainerMainCallsApi extends BaseAPI {
      */
     public deleteContainer(containerId: string, options?: AxiosRequestConfig) {
         return ContainerMainCallsApiFp(this.configuration).deleteContainer(containerId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary NOT YET IMPLEMENTED - Delete container tag
-     * @param {string} containerId Container ID
-     * @param {string} tagId Tag ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerMainCallsApi
-     */
-    public deleteContainerTag(containerId: string, tagId: string, options?: AxiosRequestConfig) {
-        return ContainerMainCallsApiFp(this.configuration).deleteContainerTag(containerId, tagId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -23903,31 +22782,7 @@ export class ContainerMainCallsApi extends BaseAPI {
     }
 
     /**
-     * List all image container tags already deployed in the Qovery environment.
-     * @summary NOT YET IMPLEMENTED - List image tags
-     * @param {string} containerId Container ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerMainCallsApi
-     */
-    public getContainerTags(containerId: string, options?: AxiosRequestConfig) {
-        return ContainerMainCallsApiFp(this.configuration).getContainerTags(containerId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary NOT YET IMPLEMENTED -List contributors
-     * @param {string} containerId Container ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerMainCallsApi
-     */
-    public listContainerContributor(containerId: string, options?: AxiosRequestConfig) {
-        return ContainerMainCallsApiFp(this.configuration).listContainerContributor(containerId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * This will return all the custom domains and Qovery autogenerated domain for the given application
+     * This will return all the custom domains and Qovery autogenerated domain for the given container
      * @summary NOT YET IMPLEMENTED - List all URLs of the container
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
@@ -23936,18 +22791,6 @@ export class ContainerMainCallsApi extends BaseAPI {
      */
     public listContainerLinks(containerId: string, options?: AxiosRequestConfig) {
         return ContainerMainCallsApiFp(this.configuration).listContainerLinks(containerId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary NOT YET IMPLEMENTED - List tags
-     * @param {string} containerId Container ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerMainCallsApi
-     */
-    public listContainerTag(containerId: string, options?: AxiosRequestConfig) {
-        return ContainerMainCallsApiFp(this.configuration).listContainerTag(containerId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -24072,231 +22915,6 @@ export const ContainerMetricsApiAxiosParamCreator = function (configuration?: Co
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED - Get CPU consumption metric over time for the container
-         * @param {string} containerId Container ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getContainerMetricCpu: async (containerId: string, lastSeconds: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('getContainerMetricCpu', 'containerId', containerId)
-            // verify required parameter 'lastSeconds' is not null or undefined
-            assertParamExists('getContainerMetricCpu', 'lastSeconds', lastSeconds)
-            const localVarPath = `/container/{containerId}/metric/cpu`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (lastSeconds !== undefined) {
-                localVarQueryParameter['lastSeconds'] = lastSeconds;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * The value returned corresponds to the 95th centile
-         * @summary NOT YET IMPLEMENTED - Get Health Check latency  metric over time for the container
-         * @param {string} containerId Container ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getContainerMetricHealthCheck: async (containerId: string, lastSeconds: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('getContainerMetricHealthCheck', 'containerId', containerId)
-            // verify required parameter 'lastSeconds' is not null or undefined
-            assertParamExists('getContainerMetricHealthCheck', 'lastSeconds', lastSeconds)
-            const localVarPath = `/container/{containerId}/metric/healthCheck`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (lastSeconds !== undefined) {
-                localVarQueryParameter['lastSeconds'] = lastSeconds;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED - Get Memory consumption metric over time for the container
-         * @param {string} containerId Container ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getContainerMetricMemory: async (containerId: string, lastSeconds: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('getContainerMetricMemory', 'containerId', containerId)
-            // verify required parameter 'lastSeconds' is not null or undefined
-            assertParamExists('getContainerMetricMemory', 'lastSeconds', lastSeconds)
-            const localVarPath = `/container/{containerId}/metric/memory`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (lastSeconds !== undefined) {
-                localVarQueryParameter['lastSeconds'] = lastSeconds;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get container restart message and timestamp.
-         * @summary NOT YET IMPLEMENTED - List container restarts
-         * @param {string} containerId Container ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getContainerMetricRestart: async (containerId: string, lastSeconds: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('getContainerMetricRestart', 'containerId', containerId)
-            // verify required parameter 'lastSeconds' is not null or undefined
-            assertParamExists('getContainerMetricRestart', 'lastSeconds', lastSeconds)
-            const localVarPath = `/container/{containerId}/metric/restart`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (lastSeconds !== undefined) {
-                localVarQueryParameter['lastSeconds'] = lastSeconds;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED - Get Storage consumption metric over time for the container 
-         * @param {string} containerId Container ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getContainerMetricStorage: async (containerId: string, lastSeconds: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('getContainerMetricStorage', 'containerId', containerId)
-            // verify required parameter 'lastSeconds' is not null or undefined
-            assertParamExists('getContainerMetricStorage', 'lastSeconds', lastSeconds)
-            const localVarPath = `/container/{containerId}/metric/storage`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (lastSeconds !== undefined) {
-                localVarQueryParameter['lastSeconds'] = lastSeconds;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -24340,66 +22958,6 @@ export const ContainerMetricsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getContainerCurrentStorageDisk(containerId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED - Get CPU consumption metric over time for the container
-         * @param {string} containerId Container ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getContainerMetricCpu(containerId: string, lastSeconds: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricCPUResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getContainerMetricCpu(containerId, lastSeconds, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * The value returned corresponds to the 95th centile
-         * @summary NOT YET IMPLEMENTED - Get Health Check latency  metric over time for the container
-         * @param {string} containerId Container ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getContainerMetricHealthCheck(containerId: string, lastSeconds: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricGenericResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getContainerMetricHealthCheck(containerId, lastSeconds, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED - Get Memory consumption metric over time for the container
-         * @param {string} containerId Container ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getContainerMetricMemory(containerId: string, lastSeconds: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricMemoryResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getContainerMetricMemory(containerId, lastSeconds, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Get container restart message and timestamp.
-         * @summary NOT YET IMPLEMENTED - List container restarts
-         * @param {string} containerId Container ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getContainerMetricRestart(containerId: string, lastSeconds: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricRestart>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getContainerMetricRestart(containerId, lastSeconds, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED - Get Storage consumption metric over time for the container 
-         * @param {string} containerId Container ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getContainerMetricStorage(containerId: string, lastSeconds: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricStorageResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getContainerMetricStorage(containerId, lastSeconds, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
     }
 };
 
@@ -24439,61 +22997,6 @@ export const ContainerMetricsApiFactory = function (configuration?: Configuratio
          */
         getContainerCurrentStorageDisk(containerId: string, options?: any): AxiosPromise<StorageDiskResponseList> {
             return localVarFp.getContainerCurrentStorageDisk(containerId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED - Get CPU consumption metric over time for the container
-         * @param {string} containerId Container ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getContainerMetricCpu(containerId: string, lastSeconds: number, options?: any): AxiosPromise<MetricCPUResponseList> {
-            return localVarFp.getContainerMetricCpu(containerId, lastSeconds, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * The value returned corresponds to the 95th centile
-         * @summary NOT YET IMPLEMENTED - Get Health Check latency  metric over time for the container
-         * @param {string} containerId Container ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getContainerMetricHealthCheck(containerId: string, lastSeconds: number, options?: any): AxiosPromise<MetricGenericResponseList> {
-            return localVarFp.getContainerMetricHealthCheck(containerId, lastSeconds, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED - Get Memory consumption metric over time for the container
-         * @param {string} containerId Container ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getContainerMetricMemory(containerId: string, lastSeconds: number, options?: any): AxiosPromise<MetricMemoryResponseList> {
-            return localVarFp.getContainerMetricMemory(containerId, lastSeconds, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Get container restart message and timestamp.
-         * @summary NOT YET IMPLEMENTED - List container restarts
-         * @param {string} containerId Container ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getContainerMetricRestart(containerId: string, lastSeconds: number, options?: any): AxiosPromise<MetricRestart> {
-            return localVarFp.getContainerMetricRestart(containerId, lastSeconds, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary NOT YET IMPLEMENTED - Get Storage consumption metric over time for the container 
-         * @param {string} containerId Container ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getContainerMetricStorage(containerId: string, lastSeconds: number, options?: any): AxiosPromise<MetricStorageResponseList> {
-            return localVarFp.getContainerMetricStorage(containerId, lastSeconds, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -24539,71 +23042,6 @@ export class ContainerMetricsApi extends BaseAPI {
      */
     public getContainerCurrentStorageDisk(containerId: string, options?: AxiosRequestConfig) {
         return ContainerMetricsApiFp(this.configuration).getContainerCurrentStorageDisk(containerId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary NOT YET IMPLEMENTED - Get CPU consumption metric over time for the container
-     * @param {string} containerId Container ID
-     * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerMetricsApi
-     */
-    public getContainerMetricCpu(containerId: string, lastSeconds: number, options?: AxiosRequestConfig) {
-        return ContainerMetricsApiFp(this.configuration).getContainerMetricCpu(containerId, lastSeconds, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * The value returned corresponds to the 95th centile
-     * @summary NOT YET IMPLEMENTED - Get Health Check latency  metric over time for the container
-     * @param {string} containerId Container ID
-     * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerMetricsApi
-     */
-    public getContainerMetricHealthCheck(containerId: string, lastSeconds: number, options?: AxiosRequestConfig) {
-        return ContainerMetricsApiFp(this.configuration).getContainerMetricHealthCheck(containerId, lastSeconds, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary NOT YET IMPLEMENTED - Get Memory consumption metric over time for the container
-     * @param {string} containerId Container ID
-     * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerMetricsApi
-     */
-    public getContainerMetricMemory(containerId: string, lastSeconds: number, options?: AxiosRequestConfig) {
-        return ContainerMetricsApiFp(this.configuration).getContainerMetricMemory(containerId, lastSeconds, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get container restart message and timestamp.
-     * @summary NOT YET IMPLEMENTED - List container restarts
-     * @param {string} containerId Container ID
-     * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerMetricsApi
-     */
-    public getContainerMetricRestart(containerId: string, lastSeconds: number, options?: AxiosRequestConfig) {
-        return ContainerMetricsApiFp(this.configuration).getContainerMetricRestart(containerId, lastSeconds, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary NOT YET IMPLEMENTED - Get Storage consumption metric over time for the container 
-     * @param {string} containerId Container ID
-     * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerMetricsApi
-     */
-    public getContainerMetricStorage(containerId: string, lastSeconds: number, options?: AxiosRequestConfig) {
-        return ContainerMetricsApiFp(this.configuration).getContainerMetricStorage(containerId, lastSeconds, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -24658,7 +23096,7 @@ export const ContainerRegistriesApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
-         * @summary Delete a container registry
+         * @summary NOT YET IMPLEMENTED - Delete a container registry
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -24734,7 +23172,7 @@ export const ContainerRegistriesApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
-         * @summary List organization container registries
+         * @summary NOT YET IMPLEMENTED - List organization container registries
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -24794,7 +23232,7 @@ export const ContainerRegistriesApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
-         * @summary Delete a container registry
+         * @summary NOT YET IMPLEMENTED - Delete a container registry
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -24816,7 +23254,7 @@ export const ContainerRegistriesApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
-         * @summary List organization container registries
+         * @summary NOT YET IMPLEMENTED - List organization container registries
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -24848,7 +23286,7 @@ export const ContainerRegistriesApiFactory = function (configuration?: Configura
         },
         /**
          * 
-         * @summary Delete a container registry
+         * @summary NOT YET IMPLEMENTED - Delete a container registry
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -24868,7 +23306,7 @@ export const ContainerRegistriesApiFactory = function (configuration?: Configura
         },
         /**
          * 
-         * @summary List organization container registries
+         * @summary NOT YET IMPLEMENTED - List organization container registries
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -24901,7 +23339,7 @@ export class ContainerRegistriesApi extends BaseAPI {
 
     /**
      * 
-     * @summary Delete a container registry
+     * @summary NOT YET IMPLEMENTED - Delete a container registry
      * @param {string} organizationId Organization ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -24925,7 +23363,7 @@ export class ContainerRegistriesApi extends BaseAPI {
 
     /**
      * 
-     * @summary List organization container registries
+     * @summary NOT YET IMPLEMENTED - List organization container registries
      * @param {string} organizationId Organization ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -25504,6 +23942,48 @@ export class ContainerSecretApi extends BaseAPI {
 export const ContainersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Triggers a new container deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the container should have the same image name and a different tag 
+         * @summary NOT YET IMPLEMENTED - Auto deploy containers
+         * @param {string} organizationId Organization ID
+         * @param {InlineObject1} [inlineObject1] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoDeployContainerEnvironments: async (organizationId: string, inlineObject1?: InlineObject1, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('autoDeployContainerEnvironments', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/container/deploy`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject1, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Create a container
          * @param {string} environmentId Environment ID
@@ -25581,44 +24061,6 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(deployAllRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List running instances with CPU and RAM usage for each container
-         * @param {string} environmentId Environment ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getEnvironmentContainerCurrentInstance: async (environmentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'environmentId' is not null or undefined
-            assertParamExists('getEnvironmentContainerCurrentInstance', 'environmentId', environmentId)
-            const localVarPath = `/environment/{environmentId}/container/instance`
-                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -25782,6 +24224,48 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag 
+         * @summary NOT YET IMPLEMENTED - Preview container environments
+         * @param {string} organizationId Organization ID
+         * @param {InlineObject2} [inlineObject2] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        previewContainerEnvironments: async (organizationId: string, inlineObject2?: InlineObject2, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('previewContainerEnvironments', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/container/preview`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject2, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -25792,6 +24276,18 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
 export const ContainersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ContainersApiAxiosParamCreator(configuration)
     return {
+        /**
+         * Triggers a new container deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the container should have the same image name and a different tag 
+         * @summary NOT YET IMPLEMENTED - Auto deploy containers
+         * @param {string} organizationId Organization ID
+         * @param {InlineObject1} [inlineObject1] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async autoDeployContainerEnvironments(organizationId: string, inlineObject1?: InlineObject1, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.autoDeployContainerEnvironments(organizationId, inlineObject1, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
         /**
          * 
          * @summary Create a container
@@ -25814,17 +24310,6 @@ export const ContainersApiFp = function(configuration?: Configuration) {
          */
         async deployAllContainers(environmentId: string, deployAllRequest?: DeployAllRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deployAllContainers(environmentId, deployAllRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary List running instances with CPU and RAM usage for each container
-         * @param {string} environmentId Environment ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getEnvironmentContainerCurrentInstance(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2002>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentContainerCurrentInstance(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -25872,6 +24357,18 @@ export const ContainersApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listContainer(environmentId, toUpdate, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag 
+         * @summary NOT YET IMPLEMENTED - Preview container environments
+         * @param {string} organizationId Organization ID
+         * @param {InlineObject2} [inlineObject2] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async previewContainerEnvironments(organizationId: string, inlineObject2?: InlineObject2, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.previewContainerEnvironments(organizationId, inlineObject2, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -25882,6 +24379,17 @@ export const ContainersApiFp = function(configuration?: Configuration) {
 export const ContainersApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ContainersApiFp(configuration)
     return {
+        /**
+         * Triggers a new container deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the container should have the same image name and a different tag 
+         * @summary NOT YET IMPLEMENTED - Auto deploy containers
+         * @param {string} organizationId Organization ID
+         * @param {InlineObject1} [inlineObject1] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoDeployContainerEnvironments(organizationId: string, inlineObject1?: InlineObject1, options?: any): AxiosPromise<Status> {
+            return localVarFp.autoDeployContainerEnvironments(organizationId, inlineObject1, options).then((request) => request(axios, basePath));
+        },
         /**
          * 
          * @summary Create a container
@@ -25903,16 +24411,6 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
          */
         deployAllContainers(environmentId: string, deployAllRequest?: DeployAllRequest, options?: any): AxiosPromise<Status> {
             return localVarFp.deployAllContainers(environmentId, deployAllRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary List running instances with CPU and RAM usage for each container
-         * @param {string} environmentId Environment ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getEnvironmentContainerCurrentInstance(environmentId: string, options?: any): AxiosPromise<InlineResponse2002> {
-            return localVarFp.getEnvironmentContainerCurrentInstance(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns min, max, and running number of instances for each container
@@ -25955,6 +24453,17 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
         listContainer(environmentId: string, toUpdate?: boolean, options?: any): AxiosPromise<ContainerResponseList> {
             return localVarFp.listContainer(environmentId, toUpdate, options).then((request) => request(axios, basePath));
         },
+        /**
+         * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag 
+         * @summary NOT YET IMPLEMENTED - Preview container environments
+         * @param {string} organizationId Organization ID
+         * @param {InlineObject2} [inlineObject2] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        previewContainerEnvironments(organizationId: string, inlineObject2?: InlineObject2, options?: any): AxiosPromise<Status> {
+            return localVarFp.previewContainerEnvironments(organizationId, inlineObject2, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -25965,6 +24474,19 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
  * @extends {BaseAPI}
  */
 export class ContainersApi extends BaseAPI {
+    /**
+     * Triggers a new container deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the container should have the same image name and a different tag 
+     * @summary NOT YET IMPLEMENTED - Auto deploy containers
+     * @param {string} organizationId Organization ID
+     * @param {InlineObject1} [inlineObject1] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContainersApi
+     */
+    public autoDeployContainerEnvironments(organizationId: string, inlineObject1?: InlineObject1, options?: AxiosRequestConfig) {
+        return ContainersApiFp(this.configuration).autoDeployContainerEnvironments(organizationId, inlineObject1, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Create a container
@@ -25989,18 +24511,6 @@ export class ContainersApi extends BaseAPI {
      */
     public deployAllContainers(environmentId: string, deployAllRequest?: DeployAllRequest, options?: AxiosRequestConfig) {
         return ContainersApiFp(this.configuration).deployAllContainers(environmentId, deployAllRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary List running instances with CPU and RAM usage for each container
-     * @param {string} environmentId Environment ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainersApi
-     */
-    public getEnvironmentContainerCurrentInstance(environmentId: string, options?: AxiosRequestConfig) {
-        return ContainersApiFp(this.configuration).getEnvironmentContainerCurrentInstance(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -26050,6 +24560,19 @@ export class ContainersApi extends BaseAPI {
      */
     public listContainer(environmentId: string, toUpdate?: boolean, options?: AxiosRequestConfig) {
         return ContainersApiFp(this.configuration).listContainer(environmentId, toUpdate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag 
+     * @summary NOT YET IMPLEMENTED - Preview container environments
+     * @param {string} organizationId Organization ID
+     * @param {InlineObject2} [inlineObject2] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContainersApi
+     */
+    public previewContainerEnvironments(organizationId: string, inlineObject2?: InlineObject2, options?: AxiosRequestConfig) {
+        return ContainersApiFp(this.configuration).previewContainerEnvironments(organizationId, inlineObject2, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
