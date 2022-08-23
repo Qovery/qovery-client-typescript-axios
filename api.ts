@@ -3335,7 +3335,7 @@ export interface ContainerRegistryRequest {
      */
     'description'?: string;
     /**
-     * URL of the container registry
+     * URL of the container registry.  Must start by \'https://\' and for docker_hub should be \'https://docker.io\' 
      * @type {string}
      * @memberof ContainerRegistryRequest
      */
