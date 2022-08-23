@@ -14588,7 +14588,7 @@ export const ApplicationSecretApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * - Allows you to override at container level a secret that has a higher scope. - You only have to specify a value in the request body - The system will create a new secret at container level with the same key as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the overridden_secret will be exposed in the \"overridden_secret\" field of the newly created secret 
-         * @summary NOT YET IMPLEMENTED - Create a secret override at the container level
+         * @summary Create a secret override at the container level
          * @param {string} containerId Container ID
          * @param {string} secretId Secret ID
          * @param {Value} [value] 
@@ -14810,7 +14810,7 @@ export const ApplicationSecretApiFp = function(configuration?: Configuration) {
         },
         /**
          * - Allows you to override at container level a secret that has a higher scope. - You only have to specify a value in the request body - The system will create a new secret at container level with the same key as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the overridden_secret will be exposed in the \"overridden_secret\" field of the newly created secret 
-         * @summary NOT YET IMPLEMENTED - Create a secret override at the container level
+         * @summary Create a secret override at the container level
          * @param {string} containerId Container ID
          * @param {string} secretId Secret ID
          * @param {Value} [value] 
@@ -14904,7 +14904,7 @@ export const ApplicationSecretApiFactory = function (configuration?: Configurati
         },
         /**
          * - Allows you to override at container level a secret that has a higher scope. - You only have to specify a value in the request body - The system will create a new secret at container level with the same key as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the overridden_secret will be exposed in the \"overridden_secret\" field of the newly created secret 
-         * @summary NOT YET IMPLEMENTED - Create a secret override at the container level
+         * @summary Create a secret override at the container level
          * @param {string} containerId Container ID
          * @param {string} secretId Secret ID
          * @param {Value} [value] 
@@ -15000,7 +15000,7 @@ export class ApplicationSecretApi extends BaseAPI {
 
     /**
      * - Allows you to override at container level a secret that has a higher scope. - You only have to specify a value in the request body - The system will create a new secret at container level with the same key as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the overridden_secret will be exposed in the \"overridden_secret\" field of the newly created secret 
-     * @summary NOT YET IMPLEMENTED - Create a secret override at the container level
+     * @summary Create a secret override at the container level
      * @param {string} containerId Container ID
      * @param {string} secretId Secret ID
      * @param {Value} [value] 
@@ -20235,7 +20235,7 @@ export const ContainerActionsApiAxiosParamCreator = function (configuration?: Co
     return {
         /**
          * You must provide a git commit id
-         * @summary NOT YET IMPLEMENTED - Deploy container
+         * @summary Deploy container
          * @param {string} containerId Container ID
          * @param {ContainerDeployRequest} [containerDeployRequest] 
          * @param {*} [options] Override http request option.
@@ -20277,7 +20277,7 @@ export const ContainerActionsApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Restart container
+         * @summary Restart container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -20315,7 +20315,7 @@ export const ContainerActionsApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Stop container
+         * @summary Stop container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -20363,7 +20363,7 @@ export const ContainerActionsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * You must provide a git commit id
-         * @summary NOT YET IMPLEMENTED - Deploy container
+         * @summary Deploy container
          * @param {string} containerId Container ID
          * @param {ContainerDeployRequest} [containerDeployRequest] 
          * @param {*} [options] Override http request option.
@@ -20375,7 +20375,7 @@ export const ContainerActionsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Restart container
+         * @summary Restart container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -20386,7 +20386,7 @@ export const ContainerActionsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Stop container
+         * @summary Stop container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -20407,7 +20407,7 @@ export const ContainerActionsApiFactory = function (configuration?: Configuratio
     return {
         /**
          * You must provide a git commit id
-         * @summary NOT YET IMPLEMENTED - Deploy container
+         * @summary Deploy container
          * @param {string} containerId Container ID
          * @param {ContainerDeployRequest} [containerDeployRequest] 
          * @param {*} [options] Override http request option.
@@ -20418,7 +20418,7 @@ export const ContainerActionsApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Restart container
+         * @summary Restart container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -20428,7 +20428,7 @@ export const ContainerActionsApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Stop container
+         * @summary Stop container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -20448,7 +20448,7 @@ export const ContainerActionsApiFactory = function (configuration?: Configuratio
 export class ContainerActionsApi extends BaseAPI {
     /**
      * You must provide a git commit id
-     * @summary NOT YET IMPLEMENTED - Deploy container
+     * @summary Deploy container
      * @param {string} containerId Container ID
      * @param {ContainerDeployRequest} [containerDeployRequest] 
      * @param {*} [options] Override http request option.
@@ -20461,7 +20461,7 @@ export class ContainerActionsApi extends BaseAPI {
 
     /**
      * 
-     * @summary NOT YET IMPLEMENTED - Restart container
+     * @summary Restart container
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -20473,7 +20473,7 @@ export class ContainerActionsApi extends BaseAPI {
 
     /**
      * 
-     * @summary NOT YET IMPLEMENTED - Stop container
+     * @summary Stop container
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -20493,7 +20493,7 @@ export const ContainerConfigurationApiAxiosParamCreator = function (configuratio
     return {
         /**
          * Edit advanced settings by returning table of advanced settings.
-         * @summary NOT YET IMPLEMENTED - Edit advanced settings
+         * @summary Edit advanced settings
          * @param {string} containerId Container ID
          * @param {Array<ContainerAdvancedSettings>} [containerAdvancedSettings] 
          * @param {*} [options] Override http request option.
@@ -20535,7 +20535,7 @@ export const ContainerConfigurationApiAxiosParamCreator = function (configuratio
         },
         /**
          * Edit the Network settings of the container.
-         * @summary NOT YET IMPLEMENTED - Edit Container Network
+         * @summary Edit Container Network
          * @param {string} containerId Container ID
          * @param {ContainerNetworkRequest} [containerNetworkRequest] 
          * @param {*} [options] Override http request option.
@@ -20577,7 +20577,7 @@ export const ContainerConfigurationApiAxiosParamCreator = function (configuratio
         },
         /**
          * Get list and values of the advanced settings of the container.
-         * @summary NOT YET IMPLEMENTED - Get advanced settings
+         * @summary Get advanced settings
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -20615,7 +20615,7 @@ export const ContainerConfigurationApiAxiosParamCreator = function (configuratio
         },
         /**
          * Get status of the container network settings.
-         * @summary NOT YET IMPLEMENTED - Get Container Network information
+         * @summary Get Container Network information
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -20663,7 +20663,7 @@ export const ContainerConfigurationApiFp = function(configuration?: Configuratio
     return {
         /**
          * Edit advanced settings by returning table of advanced settings.
-         * @summary NOT YET IMPLEMENTED - Edit advanced settings
+         * @summary Edit advanced settings
          * @param {string} containerId Container ID
          * @param {Array<ContainerAdvancedSettings>} [containerAdvancedSettings] 
          * @param {*} [options] Override http request option.
@@ -20675,7 +20675,7 @@ export const ContainerConfigurationApiFp = function(configuration?: Configuratio
         },
         /**
          * Edit the Network settings of the container.
-         * @summary NOT YET IMPLEMENTED - Edit Container Network
+         * @summary Edit Container Network
          * @param {string} containerId Container ID
          * @param {ContainerNetworkRequest} [containerNetworkRequest] 
          * @param {*} [options] Override http request option.
@@ -20687,7 +20687,7 @@ export const ContainerConfigurationApiFp = function(configuration?: Configuratio
         },
         /**
          * Get list and values of the advanced settings of the container.
-         * @summary NOT YET IMPLEMENTED - Get advanced settings
+         * @summary Get advanced settings
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -20698,7 +20698,7 @@ export const ContainerConfigurationApiFp = function(configuration?: Configuratio
         },
         /**
          * Get status of the container network settings.
-         * @summary NOT YET IMPLEMENTED - Get Container Network information
+         * @summary Get Container Network information
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -20719,7 +20719,7 @@ export const ContainerConfigurationApiFactory = function (configuration?: Config
     return {
         /**
          * Edit advanced settings by returning table of advanced settings.
-         * @summary NOT YET IMPLEMENTED - Edit advanced settings
+         * @summary Edit advanced settings
          * @param {string} containerId Container ID
          * @param {Array<ContainerAdvancedSettings>} [containerAdvancedSettings] 
          * @param {*} [options] Override http request option.
@@ -20730,7 +20730,7 @@ export const ContainerConfigurationApiFactory = function (configuration?: Config
         },
         /**
          * Edit the Network settings of the container.
-         * @summary NOT YET IMPLEMENTED - Edit Container Network
+         * @summary Edit Container Network
          * @param {string} containerId Container ID
          * @param {ContainerNetworkRequest} [containerNetworkRequest] 
          * @param {*} [options] Override http request option.
@@ -20741,7 +20741,7 @@ export const ContainerConfigurationApiFactory = function (configuration?: Config
         },
         /**
          * Get list and values of the advanced settings of the container.
-         * @summary NOT YET IMPLEMENTED - Get advanced settings
+         * @summary Get advanced settings
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -20751,7 +20751,7 @@ export const ContainerConfigurationApiFactory = function (configuration?: Config
         },
         /**
          * Get status of the container network settings.
-         * @summary NOT YET IMPLEMENTED - Get Container Network information
+         * @summary Get Container Network information
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -20771,7 +20771,7 @@ export const ContainerConfigurationApiFactory = function (configuration?: Config
 export class ContainerConfigurationApi extends BaseAPI {
     /**
      * Edit advanced settings by returning table of advanced settings.
-     * @summary NOT YET IMPLEMENTED - Edit advanced settings
+     * @summary Edit advanced settings
      * @param {string} containerId Container ID
      * @param {Array<ContainerAdvancedSettings>} [containerAdvancedSettings] 
      * @param {*} [options] Override http request option.
@@ -20784,7 +20784,7 @@ export class ContainerConfigurationApi extends BaseAPI {
 
     /**
      * Edit the Network settings of the container.
-     * @summary NOT YET IMPLEMENTED - Edit Container Network
+     * @summary Edit Container Network
      * @param {string} containerId Container ID
      * @param {ContainerNetworkRequest} [containerNetworkRequest] 
      * @param {*} [options] Override http request option.
@@ -20797,7 +20797,7 @@ export class ContainerConfigurationApi extends BaseAPI {
 
     /**
      * Get list and values of the advanced settings of the container.
-     * @summary NOT YET IMPLEMENTED - Get advanced settings
+     * @summary Get advanced settings
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -20809,7 +20809,7 @@ export class ContainerConfigurationApi extends BaseAPI {
 
     /**
      * Get status of the container network settings.
-     * @summary NOT YET IMPLEMENTED - Get Container Network information
+     * @summary Get Container Network information
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -20829,7 +20829,7 @@ export const ContainerCustomDomainApiAxiosParamCreator = function (configuration
     return {
         /**
          * Add a custom domain to this container in order not to use qovery autogenerated domain
-         * @summary NOT YET IMPLEMENTED - Add custom domain to the container.
+         * @summary Add custom domain to the container.
          * @param {string} containerId Container ID
          * @param {CustomDomainRequest} [customDomainRequest] 
          * @param {*} [options] Override http request option.
@@ -20871,7 +20871,7 @@ export const ContainerCustomDomainApiAxiosParamCreator = function (configuration
         },
         /**
          * To delete an CustomDomain you must have the project user permission
-         * @summary NOT YET IMPLEMENTED - Delete a Custom Domain
+         * @summary Delete a Custom Domain
          * @param {string} containerId Container ID
          * @param {string} customDomainId Custom Domain ID
          * @param {*} [options] Override http request option.
@@ -20913,7 +20913,7 @@ export const ContainerCustomDomainApiAxiosParamCreator = function (configuration
         },
         /**
          * To edit a Custom Domain  you must have the project user permission
-         * @summary NOT YET IMPLEMENTED - Edit a Custom Domain
+         * @summary Edit a Custom Domain
          * @param {string} containerId Container ID
          * @param {string} customDomainId Custom Domain ID
          * @param {CustomDomainRequest} [customDomainRequest] 
@@ -20959,7 +20959,7 @@ export const ContainerCustomDomainApiAxiosParamCreator = function (configuration
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Get Custom Domain status
+         * @summary Get Custom Domain status
          * @param {string} containerId Container ID
          * @param {string} customDomainId Custom Domain ID
          * @param {*} [options] Override http request option.
@@ -21001,7 +21001,7 @@ export const ContainerCustomDomainApiAxiosParamCreator = function (configuration
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List container custom domains
+         * @summary List container custom domains
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21049,7 +21049,7 @@ export const ContainerCustomDomainApiFp = function(configuration?: Configuration
     return {
         /**
          * Add a custom domain to this container in order not to use qovery autogenerated domain
-         * @summary NOT YET IMPLEMENTED - Add custom domain to the container.
+         * @summary Add custom domain to the container.
          * @param {string} containerId Container ID
          * @param {CustomDomainRequest} [customDomainRequest] 
          * @param {*} [options] Override http request option.
@@ -21061,7 +21061,7 @@ export const ContainerCustomDomainApiFp = function(configuration?: Configuration
         },
         /**
          * To delete an CustomDomain you must have the project user permission
-         * @summary NOT YET IMPLEMENTED - Delete a Custom Domain
+         * @summary Delete a Custom Domain
          * @param {string} containerId Container ID
          * @param {string} customDomainId Custom Domain ID
          * @param {*} [options] Override http request option.
@@ -21073,7 +21073,7 @@ export const ContainerCustomDomainApiFp = function(configuration?: Configuration
         },
         /**
          * To edit a Custom Domain  you must have the project user permission
-         * @summary NOT YET IMPLEMENTED - Edit a Custom Domain
+         * @summary Edit a Custom Domain
          * @param {string} containerId Container ID
          * @param {string} customDomainId Custom Domain ID
          * @param {CustomDomainRequest} [customDomainRequest] 
@@ -21086,7 +21086,7 @@ export const ContainerCustomDomainApiFp = function(configuration?: Configuration
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Get Custom Domain status
+         * @summary Get Custom Domain status
          * @param {string} containerId Container ID
          * @param {string} customDomainId Custom Domain ID
          * @param {*} [options] Override http request option.
@@ -21098,7 +21098,7 @@ export const ContainerCustomDomainApiFp = function(configuration?: Configuration
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List container custom domains
+         * @summary List container custom domains
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21119,7 +21119,7 @@ export const ContainerCustomDomainApiFactory = function (configuration?: Configu
     return {
         /**
          * Add a custom domain to this container in order not to use qovery autogenerated domain
-         * @summary NOT YET IMPLEMENTED - Add custom domain to the container.
+         * @summary Add custom domain to the container.
          * @param {string} containerId Container ID
          * @param {CustomDomainRequest} [customDomainRequest] 
          * @param {*} [options] Override http request option.
@@ -21130,7 +21130,7 @@ export const ContainerCustomDomainApiFactory = function (configuration?: Configu
         },
         /**
          * To delete an CustomDomain you must have the project user permission
-         * @summary NOT YET IMPLEMENTED - Delete a Custom Domain
+         * @summary Delete a Custom Domain
          * @param {string} containerId Container ID
          * @param {string} customDomainId Custom Domain ID
          * @param {*} [options] Override http request option.
@@ -21141,7 +21141,7 @@ export const ContainerCustomDomainApiFactory = function (configuration?: Configu
         },
         /**
          * To edit a Custom Domain  you must have the project user permission
-         * @summary NOT YET IMPLEMENTED - Edit a Custom Domain
+         * @summary Edit a Custom Domain
          * @param {string} containerId Container ID
          * @param {string} customDomainId Custom Domain ID
          * @param {CustomDomainRequest} [customDomainRequest] 
@@ -21153,7 +21153,7 @@ export const ContainerCustomDomainApiFactory = function (configuration?: Configu
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Get Custom Domain status
+         * @summary Get Custom Domain status
          * @param {string} containerId Container ID
          * @param {string} customDomainId Custom Domain ID
          * @param {*} [options] Override http request option.
@@ -21164,7 +21164,7 @@ export const ContainerCustomDomainApiFactory = function (configuration?: Configu
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List container custom domains
+         * @summary List container custom domains
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21184,7 +21184,7 @@ export const ContainerCustomDomainApiFactory = function (configuration?: Configu
 export class ContainerCustomDomainApi extends BaseAPI {
     /**
      * Add a custom domain to this container in order not to use qovery autogenerated domain
-     * @summary NOT YET IMPLEMENTED - Add custom domain to the container.
+     * @summary Add custom domain to the container.
      * @param {string} containerId Container ID
      * @param {CustomDomainRequest} [customDomainRequest] 
      * @param {*} [options] Override http request option.
@@ -21197,7 +21197,7 @@ export class ContainerCustomDomainApi extends BaseAPI {
 
     /**
      * To delete an CustomDomain you must have the project user permission
-     * @summary NOT YET IMPLEMENTED - Delete a Custom Domain
+     * @summary Delete a Custom Domain
      * @param {string} containerId Container ID
      * @param {string} customDomainId Custom Domain ID
      * @param {*} [options] Override http request option.
@@ -21210,7 +21210,7 @@ export class ContainerCustomDomainApi extends BaseAPI {
 
     /**
      * To edit a Custom Domain  you must have the project user permission
-     * @summary NOT YET IMPLEMENTED - Edit a Custom Domain
+     * @summary Edit a Custom Domain
      * @param {string} containerId Container ID
      * @param {string} customDomainId Custom Domain ID
      * @param {CustomDomainRequest} [customDomainRequest] 
@@ -21224,7 +21224,7 @@ export class ContainerCustomDomainApi extends BaseAPI {
 
     /**
      * 
-     * @summary NOT YET IMPLEMENTED - Get Custom Domain status
+     * @summary Get Custom Domain status
      * @param {string} containerId Container ID
      * @param {string} customDomainId Custom Domain ID
      * @param {*} [options] Override http request option.
@@ -21237,7 +21237,7 @@ export class ContainerCustomDomainApi extends BaseAPI {
 
     /**
      * 
-     * @summary NOT YET IMPLEMENTED - List container custom domains
+     * @summary List container custom domains
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -21257,7 +21257,7 @@ export const ContainerDatabaseApiAxiosParamCreator = function (configuration?: C
     return {
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Link a logical database to the container
+         * @summary Link a logical database to the container
          * @param {string} containerId Container ID
          * @param {string} targetLogicalDatabaseId Target database ID
          * @param {*} [options] Override http request option.
@@ -21299,7 +21299,7 @@ export const ContainerDatabaseApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List linked logical databases
+         * @summary List linked logical databases
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21337,7 +21337,7 @@ export const ContainerDatabaseApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Remove logical database link to this container.
+         * @summary Remove logical database link to this container.
          * @param {string} containerId Container ID
          * @param {string} targetLogicalDatabaseId Target database ID
          * @param {*} [options] Override http request option.
@@ -21389,7 +21389,7 @@ export const ContainerDatabaseApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Link a logical database to the container
+         * @summary Link a logical database to the container
          * @param {string} containerId Container ID
          * @param {string} targetLogicalDatabaseId Target database ID
          * @param {*} [options] Override http request option.
@@ -21401,7 +21401,7 @@ export const ContainerDatabaseApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List linked logical databases
+         * @summary List linked logical databases
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21412,7 +21412,7 @@ export const ContainerDatabaseApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Remove logical database link to this container.
+         * @summary Remove logical database link to this container.
          * @param {string} containerId Container ID
          * @param {string} targetLogicalDatabaseId Target database ID
          * @param {*} [options] Override http request option.
@@ -21434,7 +21434,7 @@ export const ContainerDatabaseApiFactory = function (configuration?: Configurati
     return {
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Link a logical database to the container
+         * @summary Link a logical database to the container
          * @param {string} containerId Container ID
          * @param {string} targetLogicalDatabaseId Target database ID
          * @param {*} [options] Override http request option.
@@ -21445,7 +21445,7 @@ export const ContainerDatabaseApiFactory = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List linked logical databases
+         * @summary List linked logical databases
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21455,7 +21455,7 @@ export const ContainerDatabaseApiFactory = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Remove logical database link to this container.
+         * @summary Remove logical database link to this container.
          * @param {string} containerId Container ID
          * @param {string} targetLogicalDatabaseId Target database ID
          * @param {*} [options] Override http request option.
@@ -21476,7 +21476,7 @@ export const ContainerDatabaseApiFactory = function (configuration?: Configurati
 export class ContainerDatabaseApi extends BaseAPI {
     /**
      * 
-     * @summary NOT YET IMPLEMENTED - Link a logical database to the container
+     * @summary Link a logical database to the container
      * @param {string} containerId Container ID
      * @param {string} targetLogicalDatabaseId Target database ID
      * @param {*} [options] Override http request option.
@@ -21489,7 +21489,7 @@ export class ContainerDatabaseApi extends BaseAPI {
 
     /**
      * 
-     * @summary NOT YET IMPLEMENTED - List linked logical databases
+     * @summary List linked logical databases
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -21501,7 +21501,7 @@ export class ContainerDatabaseApi extends BaseAPI {
 
     /**
      * 
-     * @summary NOT YET IMPLEMENTED - Remove logical database link to this container.
+     * @summary Remove logical database link to this container.
      * @param {string} containerId Container ID
      * @param {string} targetLogicalDatabaseId Target database ID
      * @param {*} [options] Override http request option.
@@ -21522,7 +21522,7 @@ export const ContainerDependencyApiAxiosParamCreator = function (configuration?:
     return {
         /**
          * Add container dependency to this container to prevent this container starting before the linked dependencies
-         * @summary NOT YET IMPLEMENTED - Add container dependency to this application.
+         * @summary Add container dependency to this application.
          * @param {string} containerId Container ID
          * @param {string} targetContainerId Target container ID
          * @param {*} [options] Override http request option.
@@ -21564,7 +21564,7 @@ export const ContainerDependencyApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List container dependencies
+         * @summary List container dependencies
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21602,7 +21602,7 @@ export const ContainerDependencyApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Remove container dependency to this container.
+         * @summary Remove container dependency to this container.
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21650,7 +21650,7 @@ export const ContainerDependencyApiFp = function(configuration?: Configuration) 
     return {
         /**
          * Add container dependency to this container to prevent this container starting before the linked dependencies
-         * @summary NOT YET IMPLEMENTED - Add container dependency to this application.
+         * @summary Add container dependency to this application.
          * @param {string} containerId Container ID
          * @param {string} targetContainerId Target container ID
          * @param {*} [options] Override http request option.
@@ -21662,7 +21662,7 @@ export const ContainerDependencyApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List container dependencies
+         * @summary List container dependencies
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21673,7 +21673,7 @@ export const ContainerDependencyApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Remove container dependency to this container.
+         * @summary Remove container dependency to this container.
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21694,7 +21694,7 @@ export const ContainerDependencyApiFactory = function (configuration?: Configura
     return {
         /**
          * Add container dependency to this container to prevent this container starting before the linked dependencies
-         * @summary NOT YET IMPLEMENTED - Add container dependency to this application.
+         * @summary Add container dependency to this application.
          * @param {string} containerId Container ID
          * @param {string} targetContainerId Target container ID
          * @param {*} [options] Override http request option.
@@ -21705,7 +21705,7 @@ export const ContainerDependencyApiFactory = function (configuration?: Configura
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List container dependencies
+         * @summary List container dependencies
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21715,7 +21715,7 @@ export const ContainerDependencyApiFactory = function (configuration?: Configura
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Remove container dependency to this container.
+         * @summary Remove container dependency to this container.
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21735,7 +21735,7 @@ export const ContainerDependencyApiFactory = function (configuration?: Configura
 export class ContainerDependencyApi extends BaseAPI {
     /**
      * Add container dependency to this container to prevent this container starting before the linked dependencies
-     * @summary NOT YET IMPLEMENTED - Add container dependency to this application.
+     * @summary Add container dependency to this application.
      * @param {string} containerId Container ID
      * @param {string} targetContainerId Target container ID
      * @param {*} [options] Override http request option.
@@ -21748,7 +21748,7 @@ export class ContainerDependencyApi extends BaseAPI {
 
     /**
      * 
-     * @summary NOT YET IMPLEMENTED - List container dependencies
+     * @summary List container dependencies
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -21760,7 +21760,7 @@ export class ContainerDependencyApi extends BaseAPI {
 
     /**
      * 
-     * @summary NOT YET IMPLEMENTED - Remove container dependency to this container.
+     * @summary Remove container dependency to this container.
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -21780,7 +21780,7 @@ export const ContainerDeploymentHistoryApiAxiosParamCreator = function (configur
     return {
         /**
          * Returns the 20 last container deployments
-         * @summary NOT YET IMPLEMENTED - List container deployments
+         * @summary List container deployments
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21828,7 +21828,7 @@ export const ContainerDeploymentHistoryApiFp = function(configuration?: Configur
     return {
         /**
          * Returns the 20 last container deployments
-         * @summary NOT YET IMPLEMENTED - List container deployments
+         * @summary List container deployments
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21849,7 +21849,7 @@ export const ContainerDeploymentHistoryApiFactory = function (configuration?: Co
     return {
         /**
          * Returns the 20 last container deployments
-         * @summary NOT YET IMPLEMENTED - List container deployments
+         * @summary List container deployments
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21869,7 +21869,7 @@ export const ContainerDeploymentHistoryApiFactory = function (configuration?: Co
 export class ContainerDeploymentHistoryApi extends BaseAPI {
     /**
      * Returns the 20 last container deployments
-     * @summary NOT YET IMPLEMENTED - List container deployments
+     * @summary List container deployments
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -21931,7 +21931,7 @@ export const ContainerEnvironmentVariableApiAxiosParamCreator = function (config
         },
         /**
          * - Allows you to add an alias at container level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at container level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
-         * @summary NOT YET IMPLEMENTED - Create an environment variable alias at the container level
+         * @summary Create an environment variable alias at the container level
          * @param {string} containerId Container ID
          * @param {string} environmentVariableId Environment Variable ID
          * @param {Key} [key] 
@@ -21977,7 +21977,7 @@ export const ContainerEnvironmentVariableApiAxiosParamCreator = function (config
         },
         /**
          * - Allows you to override at container level an environment variable that has a higher scope. - You only have to specify a value in the request body - The system will create a new environment variable at container level with the same key as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the overridden_variable will be exposed in the \"overridden_variable\" field of the newly created variable 
-         * @summary NOT YET IMPLEMENTED - Create an environment variable override at the container level
+         * @summary Create an environment variable override at the container level
          * @param {string} containerId Container ID
          * @param {string} environmentVariableId Environment Variable ID
          * @param {Value} [value] 
@@ -22023,7 +22023,7 @@ export const ContainerEnvironmentVariableApiAxiosParamCreator = function (config
         },
         /**
          * - To delete an environment variable from an container you must have the project user permission - You can\'t delete a BUILT_IN variable - If you delete a variable having override or alias, the associated override/alias will be deleted as well 
-         * @summary NOT YET IMPLEMENTED - Delete an environment variable from a container
+         * @summary Delete an environment variable from a container
          * @param {string} containerId Container ID
          * @param {string} environmentVariableId Environment Variable ID
          * @param {*} [options] Override http request option.
@@ -22065,7 +22065,7 @@ export const ContainerEnvironmentVariableApiAxiosParamCreator = function (config
         },
         /**
          * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
-         * @summary NOT YET IMPLEMENTED - Edit an environment variable belonging to the container
+         * @summary Edit an environment variable belonging to the container
          * @param {string} containerId Container ID
          * @param {string} environmentVariableId Environment Variable ID
          * @param {EnvironmentVariableEditRequest} environmentVariableEditRequest 
@@ -22113,7 +22113,7 @@ export const ContainerEnvironmentVariableApiAxiosParamCreator = function (config
         },
         /**
          * Import environment variables in a defined scope, with a defined visibility.
-         * @summary NOT YET IMPLEMENTED - Import variables
+         * @summary Import variables
          * @param {string} containerId Container ID
          * @param {VariableImportRequest} [variableImportRequest] 
          * @param {*} [options] Override http request option.
@@ -22155,7 +22155,7 @@ export const ContainerEnvironmentVariableApiAxiosParamCreator = function (config
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List environment variables
+         * @summary List environment variables
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -22215,7 +22215,7 @@ export const ContainerEnvironmentVariableApiFp = function(configuration?: Config
         },
         /**
          * - Allows you to add an alias at container level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at container level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
-         * @summary NOT YET IMPLEMENTED - Create an environment variable alias at the container level
+         * @summary Create an environment variable alias at the container level
          * @param {string} containerId Container ID
          * @param {string} environmentVariableId Environment Variable ID
          * @param {Key} [key] 
@@ -22228,7 +22228,7 @@ export const ContainerEnvironmentVariableApiFp = function(configuration?: Config
         },
         /**
          * - Allows you to override at container level an environment variable that has a higher scope. - You only have to specify a value in the request body - The system will create a new environment variable at container level with the same key as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the overridden_variable will be exposed in the \"overridden_variable\" field of the newly created variable 
-         * @summary NOT YET IMPLEMENTED - Create an environment variable override at the container level
+         * @summary Create an environment variable override at the container level
          * @param {string} containerId Container ID
          * @param {string} environmentVariableId Environment Variable ID
          * @param {Value} [value] 
@@ -22241,7 +22241,7 @@ export const ContainerEnvironmentVariableApiFp = function(configuration?: Config
         },
         /**
          * - To delete an environment variable from an container you must have the project user permission - You can\'t delete a BUILT_IN variable - If you delete a variable having override or alias, the associated override/alias will be deleted as well 
-         * @summary NOT YET IMPLEMENTED - Delete an environment variable from a container
+         * @summary Delete an environment variable from a container
          * @param {string} containerId Container ID
          * @param {string} environmentVariableId Environment Variable ID
          * @param {*} [options] Override http request option.
@@ -22253,7 +22253,7 @@ export const ContainerEnvironmentVariableApiFp = function(configuration?: Config
         },
         /**
          * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
-         * @summary NOT YET IMPLEMENTED - Edit an environment variable belonging to the container
+         * @summary Edit an environment variable belonging to the container
          * @param {string} containerId Container ID
          * @param {string} environmentVariableId Environment Variable ID
          * @param {EnvironmentVariableEditRequest} environmentVariableEditRequest 
@@ -22266,7 +22266,7 @@ export const ContainerEnvironmentVariableApiFp = function(configuration?: Config
         },
         /**
          * Import environment variables in a defined scope, with a defined visibility.
-         * @summary NOT YET IMPLEMENTED - Import variables
+         * @summary Import variables
          * @param {string} containerId Container ID
          * @param {VariableImportRequest} [variableImportRequest] 
          * @param {*} [options] Override http request option.
@@ -22278,7 +22278,7 @@ export const ContainerEnvironmentVariableApiFp = function(configuration?: Config
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List environment variables
+         * @summary List environment variables
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -22310,7 +22310,7 @@ export const ContainerEnvironmentVariableApiFactory = function (configuration?: 
         },
         /**
          * - Allows you to add an alias at container level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at container level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
-         * @summary NOT YET IMPLEMENTED - Create an environment variable alias at the container level
+         * @summary Create an environment variable alias at the container level
          * @param {string} containerId Container ID
          * @param {string} environmentVariableId Environment Variable ID
          * @param {Key} [key] 
@@ -22322,7 +22322,7 @@ export const ContainerEnvironmentVariableApiFactory = function (configuration?: 
         },
         /**
          * - Allows you to override at container level an environment variable that has a higher scope. - You only have to specify a value in the request body - The system will create a new environment variable at container level with the same key as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the overridden_variable will be exposed in the \"overridden_variable\" field of the newly created variable 
-         * @summary NOT YET IMPLEMENTED - Create an environment variable override at the container level
+         * @summary Create an environment variable override at the container level
          * @param {string} containerId Container ID
          * @param {string} environmentVariableId Environment Variable ID
          * @param {Value} [value] 
@@ -22334,7 +22334,7 @@ export const ContainerEnvironmentVariableApiFactory = function (configuration?: 
         },
         /**
          * - To delete an environment variable from an container you must have the project user permission - You can\'t delete a BUILT_IN variable - If you delete a variable having override or alias, the associated override/alias will be deleted as well 
-         * @summary NOT YET IMPLEMENTED - Delete an environment variable from a container
+         * @summary Delete an environment variable from a container
          * @param {string} containerId Container ID
          * @param {string} environmentVariableId Environment Variable ID
          * @param {*} [options] Override http request option.
@@ -22345,7 +22345,7 @@ export const ContainerEnvironmentVariableApiFactory = function (configuration?: 
         },
         /**
          * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
-         * @summary NOT YET IMPLEMENTED - Edit an environment variable belonging to the container
+         * @summary Edit an environment variable belonging to the container
          * @param {string} containerId Container ID
          * @param {string} environmentVariableId Environment Variable ID
          * @param {EnvironmentVariableEditRequest} environmentVariableEditRequest 
@@ -22357,7 +22357,7 @@ export const ContainerEnvironmentVariableApiFactory = function (configuration?: 
         },
         /**
          * Import environment variables in a defined scope, with a defined visibility.
-         * @summary NOT YET IMPLEMENTED - Import variables
+         * @summary Import variables
          * @param {string} containerId Container ID
          * @param {VariableImportRequest} [variableImportRequest] 
          * @param {*} [options] Override http request option.
@@ -22368,7 +22368,7 @@ export const ContainerEnvironmentVariableApiFactory = function (configuration?: 
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List environment variables
+         * @summary List environment variables
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -22401,7 +22401,7 @@ export class ContainerEnvironmentVariableApi extends BaseAPI {
 
     /**
      * - Allows you to add an alias at container level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at container level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
-     * @summary NOT YET IMPLEMENTED - Create an environment variable alias at the container level
+     * @summary Create an environment variable alias at the container level
      * @param {string} containerId Container ID
      * @param {string} environmentVariableId Environment Variable ID
      * @param {Key} [key] 
@@ -22415,7 +22415,7 @@ export class ContainerEnvironmentVariableApi extends BaseAPI {
 
     /**
      * - Allows you to override at container level an environment variable that has a higher scope. - You only have to specify a value in the request body - The system will create a new environment variable at container level with the same key as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the overridden_variable will be exposed in the \"overridden_variable\" field of the newly created variable 
-     * @summary NOT YET IMPLEMENTED - Create an environment variable override at the container level
+     * @summary Create an environment variable override at the container level
      * @param {string} containerId Container ID
      * @param {string} environmentVariableId Environment Variable ID
      * @param {Value} [value] 
@@ -22429,7 +22429,7 @@ export class ContainerEnvironmentVariableApi extends BaseAPI {
 
     /**
      * - To delete an environment variable from an container you must have the project user permission - You can\'t delete a BUILT_IN variable - If you delete a variable having override or alias, the associated override/alias will be deleted as well 
-     * @summary NOT YET IMPLEMENTED - Delete an environment variable from a container
+     * @summary Delete an environment variable from a container
      * @param {string} containerId Container ID
      * @param {string} environmentVariableId Environment Variable ID
      * @param {*} [options] Override http request option.
@@ -22442,7 +22442,7 @@ export class ContainerEnvironmentVariableApi extends BaseAPI {
 
     /**
      * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
-     * @summary NOT YET IMPLEMENTED - Edit an environment variable belonging to the container
+     * @summary Edit an environment variable belonging to the container
      * @param {string} containerId Container ID
      * @param {string} environmentVariableId Environment Variable ID
      * @param {EnvironmentVariableEditRequest} environmentVariableEditRequest 
@@ -22456,7 +22456,7 @@ export class ContainerEnvironmentVariableApi extends BaseAPI {
 
     /**
      * Import environment variables in a defined scope, with a defined visibility.
-     * @summary NOT YET IMPLEMENTED - Import variables
+     * @summary Import variables
      * @param {string} containerId Container ID
      * @param {VariableImportRequest} [variableImportRequest] 
      * @param {*} [options] Override http request option.
@@ -22469,7 +22469,7 @@ export class ContainerEnvironmentVariableApi extends BaseAPI {
 
     /**
      * 
-     * @summary NOT YET IMPLEMENTED - List environment variables
+     * @summary List environment variables
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -22489,7 +22489,7 @@ export const ContainerLogsApiAxiosParamCreator = function (configuration?: Confi
     return {
         /**
          * This will list the last 1000 logs of the container
-         * @summary NOT YET IMPLEMENTED - List logs
+         * @summary List logs
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -22537,7 +22537,7 @@ export const ContainerLogsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * This will list the last 1000 logs of the container
-         * @summary NOT YET IMPLEMENTED - List logs
+         * @summary List logs
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -22558,7 +22558,7 @@ export const ContainerLogsApiFactory = function (configuration?: Configuration, 
     return {
         /**
          * This will list the last 1000 logs of the container
-         * @summary NOT YET IMPLEMENTED - List logs
+         * @summary List logs
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -22578,7 +22578,7 @@ export const ContainerLogsApiFactory = function (configuration?: Configuration, 
 export class ContainerLogsApi extends BaseAPI {
     /**
      * This will list the last 1000 logs of the container
-     * @summary NOT YET IMPLEMENTED - List logs
+     * @summary List logs
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -22598,7 +22598,7 @@ export const ContainerMainCallsApiAxiosParamCreator = function (configuration?: 
     return {
         /**
          * To delete the container you must have the admin permission
-         * @summary NOT YET IMPLEMENTED - Delete container
+         * @summary Delete container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -22636,7 +22636,7 @@ export const ContainerMainCallsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. 
-         * @summary NOT YET IMPLEMENTED - Edit container
+         * @summary Edit container
          * @param {string} containerId Container ID
          * @param {ContainerEditRequest} [containerEditRequest] 
          * @param {*} [options] Override http request option.
@@ -22678,7 +22678,7 @@ export const ContainerMainCallsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Get container by ID
+         * @summary Get container by ID
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -22716,7 +22716,7 @@ export const ContainerMainCallsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Get container status
+         * @summary Get container status
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -22754,7 +22754,7 @@ export const ContainerMainCallsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * This will return all the custom domains and Qovery autogenerated domain for the given container
-         * @summary NOT YET IMPLEMENTED - List all URLs of the container
+         * @summary List all URLs of the container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -22802,7 +22802,7 @@ export const ContainerMainCallsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * To delete the container you must have the admin permission
-         * @summary NOT YET IMPLEMENTED - Delete container
+         * @summary Delete container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -22813,7 +22813,7 @@ export const ContainerMainCallsApiFp = function(configuration?: Configuration) {
         },
         /**
          * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. 
-         * @summary NOT YET IMPLEMENTED - Edit container
+         * @summary Edit container
          * @param {string} containerId Container ID
          * @param {ContainerEditRequest} [containerEditRequest] 
          * @param {*} [options] Override http request option.
@@ -22825,7 +22825,7 @@ export const ContainerMainCallsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Get container by ID
+         * @summary Get container by ID
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -22836,7 +22836,7 @@ export const ContainerMainCallsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Get container status
+         * @summary Get container status
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -22847,7 +22847,7 @@ export const ContainerMainCallsApiFp = function(configuration?: Configuration) {
         },
         /**
          * This will return all the custom domains and Qovery autogenerated domain for the given container
-         * @summary NOT YET IMPLEMENTED - List all URLs of the container
+         * @summary List all URLs of the container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -22868,7 +22868,7 @@ export const ContainerMainCallsApiFactory = function (configuration?: Configurat
     return {
         /**
          * To delete the container you must have the admin permission
-         * @summary NOT YET IMPLEMENTED - Delete container
+         * @summary Delete container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -22878,7 +22878,7 @@ export const ContainerMainCallsApiFactory = function (configuration?: Configurat
         },
         /**
          * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. 
-         * @summary NOT YET IMPLEMENTED - Edit container
+         * @summary Edit container
          * @param {string} containerId Container ID
          * @param {ContainerEditRequest} [containerEditRequest] 
          * @param {*} [options] Override http request option.
@@ -22889,7 +22889,7 @@ export const ContainerMainCallsApiFactory = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Get container by ID
+         * @summary Get container by ID
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -22899,7 +22899,7 @@ export const ContainerMainCallsApiFactory = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Get container status
+         * @summary Get container status
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -22909,7 +22909,7 @@ export const ContainerMainCallsApiFactory = function (configuration?: Configurat
         },
         /**
          * This will return all the custom domains and Qovery autogenerated domain for the given container
-         * @summary NOT YET IMPLEMENTED - List all URLs of the container
+         * @summary List all URLs of the container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -22929,7 +22929,7 @@ export const ContainerMainCallsApiFactory = function (configuration?: Configurat
 export class ContainerMainCallsApi extends BaseAPI {
     /**
      * To delete the container you must have the admin permission
-     * @summary NOT YET IMPLEMENTED - Delete container
+     * @summary Delete container
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -22941,7 +22941,7 @@ export class ContainerMainCallsApi extends BaseAPI {
 
     /**
      * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. 
-     * @summary NOT YET IMPLEMENTED - Edit container
+     * @summary Edit container
      * @param {string} containerId Container ID
      * @param {ContainerEditRequest} [containerEditRequest] 
      * @param {*} [options] Override http request option.
@@ -22954,7 +22954,7 @@ export class ContainerMainCallsApi extends BaseAPI {
 
     /**
      * 
-     * @summary NOT YET IMPLEMENTED - Get container by ID
+     * @summary Get container by ID
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -22966,7 +22966,7 @@ export class ContainerMainCallsApi extends BaseAPI {
 
     /**
      * 
-     * @summary NOT YET IMPLEMENTED - Get container status
+     * @summary Get container status
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -22978,7 +22978,7 @@ export class ContainerMainCallsApi extends BaseAPI {
 
     /**
      * This will return all the custom domains and Qovery autogenerated domain for the given container
-     * @summary NOT YET IMPLEMENTED - List all URLs of the container
+     * @summary List all URLs of the container
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -22998,7 +22998,7 @@ export const ContainerMetricsApiAxiosParamCreator = function (configuration?: Co
     return {
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List currently running instances of the container with their CPU and RAM metrics
+         * @summary List currently running instances of the container with their CPU and RAM metrics
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23036,7 +23036,7 @@ export const ContainerMetricsApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * Returns min, max, and running number of instances of the application
-         * @summary NOT YET IMPLEMENTED - Get current scaling of the container
+         * @summary Get current scaling of the container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23074,7 +23074,7 @@ export const ContainerMetricsApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List current storage disk usage
+         * @summary List current storage disk usage
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23122,7 +23122,7 @@ export const ContainerMetricsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List currently running instances of the container with their CPU and RAM metrics
+         * @summary List currently running instances of the container with their CPU and RAM metrics
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23133,7 +23133,7 @@ export const ContainerMetricsApiFp = function(configuration?: Configuration) {
         },
         /**
          * Returns min, max, and running number of instances of the application
-         * @summary NOT YET IMPLEMENTED - Get current scaling of the container
+         * @summary Get current scaling of the container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23144,7 +23144,7 @@ export const ContainerMetricsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List current storage disk usage
+         * @summary List current storage disk usage
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23165,7 +23165,7 @@ export const ContainerMetricsApiFactory = function (configuration?: Configuratio
     return {
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List currently running instances of the container with their CPU and RAM metrics
+         * @summary List currently running instances of the container with their CPU and RAM metrics
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23175,7 +23175,7 @@ export const ContainerMetricsApiFactory = function (configuration?: Configuratio
         },
         /**
          * Returns min, max, and running number of instances of the application
-         * @summary NOT YET IMPLEMENTED - Get current scaling of the container
+         * @summary Get current scaling of the container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23185,7 +23185,7 @@ export const ContainerMetricsApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List current storage disk usage
+         * @summary List current storage disk usage
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23205,7 +23205,7 @@ export const ContainerMetricsApiFactory = function (configuration?: Configuratio
 export class ContainerMetricsApi extends BaseAPI {
     /**
      * 
-     * @summary NOT YET IMPLEMENTED - List currently running instances of the container with their CPU and RAM metrics
+     * @summary List currently running instances of the container with their CPU and RAM metrics
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -23217,7 +23217,7 @@ export class ContainerMetricsApi extends BaseAPI {
 
     /**
      * Returns min, max, and running number of instances of the application
-     * @summary NOT YET IMPLEMENTED - Get current scaling of the container
+     * @summary Get current scaling of the container
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -23229,7 +23229,7 @@ export class ContainerMetricsApi extends BaseAPI {
 
     /**
      * 
-     * @summary NOT YET IMPLEMENTED - List current storage disk usage
+     * @summary List current storage disk usage
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -23291,7 +23291,7 @@ export const ContainerRegistriesApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Delete a container registry
+         * @summary Delete a container registry
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23363,7 +23363,7 @@ export const ContainerRegistriesApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List organization container registries
+         * @summary List organization container registries
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23423,7 +23423,7 @@ export const ContainerRegistriesApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Delete a container registry
+         * @summary Delete a container registry
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23444,7 +23444,7 @@ export const ContainerRegistriesApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List organization container registries
+         * @summary List organization container registries
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23476,7 +23476,7 @@ export const ContainerRegistriesApiFactory = function (configuration?: Configura
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - Delete a container registry
+         * @summary Delete a container registry
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23495,7 +23495,7 @@ export const ContainerRegistriesApiFactory = function (configuration?: Configura
         },
         /**
          * 
-         * @summary NOT YET IMPLEMENTED - List organization container registries
+         * @summary List organization container registries
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23528,7 +23528,7 @@ export class ContainerRegistriesApi extends BaseAPI {
 
     /**
      * 
-     * @summary NOT YET IMPLEMENTED - Delete a container registry
+     * @summary Delete a container registry
      * @param {string} organizationId Organization ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -23551,7 +23551,7 @@ export class ContainerRegistriesApi extends BaseAPI {
 
     /**
      * 
-     * @summary NOT YET IMPLEMENTED - List organization container registries
+     * @summary List organization container registries
      * @param {string} organizationId Organization ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -23694,7 +23694,7 @@ export const ContainerSecretApiAxiosParamCreator = function (configuration?: Con
     return {
         /**
          * - Add a secret to the container. 
-         * @summary NOT YET IMPLEMENTED - Add a secret to the container
+         * @summary Add a secret to the container
          * @param {string} containerId Container ID
          * @param {SecretRequest} [secretRequest] 
          * @param {*} [options] Override http request option.
@@ -23736,7 +23736,7 @@ export const ContainerSecretApiAxiosParamCreator = function (configuration?: Con
         },
         /**
          * - Allows you to add an alias at container level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at container level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
-         * @summary NOT YET IMPLEMENTED - Create a secret alias at the container level
+         * @summary Create a secret alias at the container level
          * @param {string} containerId Container ID
          * @param {string} secretId Secret ID
          * @param {Key} [key] 
@@ -23782,7 +23782,7 @@ export const ContainerSecretApiAxiosParamCreator = function (configuration?: Con
         },
         /**
          * - To delete a secret you must have the project user permission - You can\'t delete a BUILT_IN secret - If you delete a secret having override or alias, the associated override/alias will be deleted as well 
-         * @summary NOT YET IMPLEMENTED - Delete a secret from an container
+         * @summary Delete a secret from an container
          * @param {string} containerId Container ID
          * @param {string} secretId Secret ID
          * @param {*} [options] Override http request option.
@@ -23824,7 +23824,7 @@ export const ContainerSecretApiAxiosParamCreator = function (configuration?: Con
         },
         /**
          * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
-         * @summary NOT YET IMPLEMENTED - Edit a secret belonging to the container
+         * @summary Edit a secret belonging to the container
          * @param {string} containerId Container ID
          * @param {string} secretId Secret ID
          * @param {SecretEditRequest} secretEditRequest 
@@ -23872,7 +23872,7 @@ export const ContainerSecretApiAxiosParamCreator = function (configuration?: Con
         },
         /**
          * Secrets are like environment variables, but they are secured and can\'t be revealed.
-         * @summary NOT YET IMPLEMENTED - List container secrets
+         * @summary List container secrets
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23920,7 +23920,7 @@ export const ContainerSecretApiFp = function(configuration?: Configuration) {
     return {
         /**
          * - Add a secret to the container. 
-         * @summary NOT YET IMPLEMENTED - Add a secret to the container
+         * @summary Add a secret to the container
          * @param {string} containerId Container ID
          * @param {SecretRequest} [secretRequest] 
          * @param {*} [options] Override http request option.
@@ -23932,7 +23932,7 @@ export const ContainerSecretApiFp = function(configuration?: Configuration) {
         },
         /**
          * - Allows you to add an alias at container level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at container level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
-         * @summary NOT YET IMPLEMENTED - Create a secret alias at the container level
+         * @summary Create a secret alias at the container level
          * @param {string} containerId Container ID
          * @param {string} secretId Secret ID
          * @param {Key} [key] 
@@ -23945,7 +23945,7 @@ export const ContainerSecretApiFp = function(configuration?: Configuration) {
         },
         /**
          * - To delete a secret you must have the project user permission - You can\'t delete a BUILT_IN secret - If you delete a secret having override or alias, the associated override/alias will be deleted as well 
-         * @summary NOT YET IMPLEMENTED - Delete a secret from an container
+         * @summary Delete a secret from an container
          * @param {string} containerId Container ID
          * @param {string} secretId Secret ID
          * @param {*} [options] Override http request option.
@@ -23957,7 +23957,7 @@ export const ContainerSecretApiFp = function(configuration?: Configuration) {
         },
         /**
          * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
-         * @summary NOT YET IMPLEMENTED - Edit a secret belonging to the container
+         * @summary Edit a secret belonging to the container
          * @param {string} containerId Container ID
          * @param {string} secretId Secret ID
          * @param {SecretEditRequest} secretEditRequest 
@@ -23970,7 +23970,7 @@ export const ContainerSecretApiFp = function(configuration?: Configuration) {
         },
         /**
          * Secrets are like environment variables, but they are secured and can\'t be revealed.
-         * @summary NOT YET IMPLEMENTED - List container secrets
+         * @summary List container secrets
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23991,7 +23991,7 @@ export const ContainerSecretApiFactory = function (configuration?: Configuration
     return {
         /**
          * - Add a secret to the container. 
-         * @summary NOT YET IMPLEMENTED - Add a secret to the container
+         * @summary Add a secret to the container
          * @param {string} containerId Container ID
          * @param {SecretRequest} [secretRequest] 
          * @param {*} [options] Override http request option.
@@ -24002,7 +24002,7 @@ export const ContainerSecretApiFactory = function (configuration?: Configuration
         },
         /**
          * - Allows you to add an alias at container level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at container level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
-         * @summary NOT YET IMPLEMENTED - Create a secret alias at the container level
+         * @summary Create a secret alias at the container level
          * @param {string} containerId Container ID
          * @param {string} secretId Secret ID
          * @param {Key} [key] 
@@ -24014,7 +24014,7 @@ export const ContainerSecretApiFactory = function (configuration?: Configuration
         },
         /**
          * - To delete a secret you must have the project user permission - You can\'t delete a BUILT_IN secret - If you delete a secret having override or alias, the associated override/alias will be deleted as well 
-         * @summary NOT YET IMPLEMENTED - Delete a secret from an container
+         * @summary Delete a secret from an container
          * @param {string} containerId Container ID
          * @param {string} secretId Secret ID
          * @param {*} [options] Override http request option.
@@ -24025,7 +24025,7 @@ export const ContainerSecretApiFactory = function (configuration?: Configuration
         },
         /**
          * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
-         * @summary NOT YET IMPLEMENTED - Edit a secret belonging to the container
+         * @summary Edit a secret belonging to the container
          * @param {string} containerId Container ID
          * @param {string} secretId Secret ID
          * @param {SecretEditRequest} secretEditRequest 
@@ -24037,7 +24037,7 @@ export const ContainerSecretApiFactory = function (configuration?: Configuration
         },
         /**
          * Secrets are like environment variables, but they are secured and can\'t be revealed.
-         * @summary NOT YET IMPLEMENTED - List container secrets
+         * @summary List container secrets
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -24057,7 +24057,7 @@ export const ContainerSecretApiFactory = function (configuration?: Configuration
 export class ContainerSecretApi extends BaseAPI {
     /**
      * - Add a secret to the container. 
-     * @summary NOT YET IMPLEMENTED - Add a secret to the container
+     * @summary Add a secret to the container
      * @param {string} containerId Container ID
      * @param {SecretRequest} [secretRequest] 
      * @param {*} [options] Override http request option.
@@ -24070,7 +24070,7 @@ export class ContainerSecretApi extends BaseAPI {
 
     /**
      * - Allows you to add an alias at container level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at container level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
-     * @summary NOT YET IMPLEMENTED - Create a secret alias at the container level
+     * @summary Create a secret alias at the container level
      * @param {string} containerId Container ID
      * @param {string} secretId Secret ID
      * @param {Key} [key] 
@@ -24084,7 +24084,7 @@ export class ContainerSecretApi extends BaseAPI {
 
     /**
      * - To delete a secret you must have the project user permission - You can\'t delete a BUILT_IN secret - If you delete a secret having override or alias, the associated override/alias will be deleted as well 
-     * @summary NOT YET IMPLEMENTED - Delete a secret from an container
+     * @summary Delete a secret from an container
      * @param {string} containerId Container ID
      * @param {string} secretId Secret ID
      * @param {*} [options] Override http request option.
@@ -24097,7 +24097,7 @@ export class ContainerSecretApi extends BaseAPI {
 
     /**
      * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
-     * @summary NOT YET IMPLEMENTED - Edit a secret belonging to the container
+     * @summary Edit a secret belonging to the container
      * @param {string} containerId Container ID
      * @param {string} secretId Secret ID
      * @param {SecretEditRequest} secretEditRequest 
@@ -24111,7 +24111,7 @@ export class ContainerSecretApi extends BaseAPI {
 
     /**
      * Secrets are like environment variables, but they are secured and can\'t be revealed.
-     * @summary NOT YET IMPLEMENTED - List container secrets
+     * @summary List container secrets
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -24131,7 +24131,7 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
     return {
         /**
          * Triggers a new container deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the container should have the same image name and a different tag 
-         * @summary NOT YET IMPLEMENTED - Auto deploy containers
+         * @summary Auto deploy containers
          * @param {string} organizationId Organization ID
          * @param {InlineObject2} [inlineObject2] 
          * @param {*} [options] Override http request option.
@@ -24414,7 +24414,7 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag 
-         * @summary NOT YET IMPLEMENTED - Preview container environments
+         * @summary Preview container environments
          * @param {string} organizationId Organization ID
          * @param {InlineObject3} [inlineObject3] 
          * @param {*} [options] Override http request option.
@@ -24466,7 +24466,7 @@ export const ContainersApiFp = function(configuration?: Configuration) {
     return {
         /**
          * Triggers a new container deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the container should have the same image name and a different tag 
-         * @summary NOT YET IMPLEMENTED - Auto deploy containers
+         * @summary Auto deploy containers
          * @param {string} organizationId Organization ID
          * @param {InlineObject2} [inlineObject2] 
          * @param {*} [options] Override http request option.
@@ -24547,7 +24547,7 @@ export const ContainersApiFp = function(configuration?: Configuration) {
         },
         /**
          * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag 
-         * @summary NOT YET IMPLEMENTED - Preview container environments
+         * @summary Preview container environments
          * @param {string} organizationId Organization ID
          * @param {InlineObject3} [inlineObject3] 
          * @param {*} [options] Override http request option.
@@ -24569,7 +24569,7 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
     return {
         /**
          * Triggers a new container deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the container should have the same image name and a different tag 
-         * @summary NOT YET IMPLEMENTED - Auto deploy containers
+         * @summary Auto deploy containers
          * @param {string} organizationId Organization ID
          * @param {InlineObject2} [inlineObject2] 
          * @param {*} [options] Override http request option.
@@ -24643,7 +24643,7 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
         },
         /**
          * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag 
-         * @summary NOT YET IMPLEMENTED - Preview container environments
+         * @summary Preview container environments
          * @param {string} organizationId Organization ID
          * @param {InlineObject3} [inlineObject3] 
          * @param {*} [options] Override http request option.
@@ -24664,7 +24664,7 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
 export class ContainersApi extends BaseAPI {
     /**
      * Triggers a new container deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the container should have the same image name and a different tag 
-     * @summary NOT YET IMPLEMENTED - Auto deploy containers
+     * @summary Auto deploy containers
      * @param {string} organizationId Organization ID
      * @param {InlineObject2} [inlineObject2] 
      * @param {*} [options] Override http request option.
@@ -24752,7 +24752,7 @@ export class ContainersApi extends BaseAPI {
 
     /**
      * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag 
-     * @summary NOT YET IMPLEMENTED - Preview container environments
+     * @summary Preview container environments
      * @param {string} organizationId Organization ID
      * @param {InlineObject3} [inlineObject3] 
      * @param {*} [options] Override http request option.
