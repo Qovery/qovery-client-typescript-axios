@@ -23330,15 +23330,11 @@ export const ContainerRegistriesApiAxiosParamCreator = function (configuration?:
         /**
          * List supported container registries by Qovery and get the mandatory authentification configuration.
          * @summary List supported container registries
-         * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAvailableContainerRegistry: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            assertParamExists('listAvailableContainerRegistry', 'organizationId', organizationId)
-            const localVarPath = `/organization/{organizationId}/availableContainerRegistry`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+        listAvailableContainerRegistry: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/availableContainerRegistry`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -23439,12 +23435,11 @@ export const ContainerRegistriesApiFp = function(configuration?: Configuration) 
         /**
          * List supported container registries by Qovery and get the mandatory authentification configuration.
          * @summary List supported container registries
-         * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listAvailableContainerRegistry(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AvailableContainerRegistryResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listAvailableContainerRegistry(organizationId, options);
+        async listAvailableContainerRegistry(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AvailableContainerRegistryResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAvailableContainerRegistry(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -23492,12 +23487,11 @@ export const ContainerRegistriesApiFactory = function (configuration?: Configura
         /**
          * List supported container registries by Qovery and get the mandatory authentification configuration.
          * @summary List supported container registries
-         * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAvailableContainerRegistry(organizationId: string, options?: any): AxiosPromise<AvailableContainerRegistryResponse> {
-            return localVarFp.listAvailableContainerRegistry(organizationId, options).then((request) => request(axios, basePath));
+        listAvailableContainerRegistry(options?: any): AxiosPromise<AvailableContainerRegistryResponse> {
+            return localVarFp.listAvailableContainerRegistry(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -23547,13 +23541,12 @@ export class ContainerRegistriesApi extends BaseAPI {
     /**
      * List supported container registries by Qovery and get the mandatory authentification configuration.
      * @summary List supported container registries
-     * @param {string} organizationId Organization ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContainerRegistriesApi
      */
-    public listAvailableContainerRegistry(organizationId: string, options?: AxiosRequestConfig) {
-        return ContainerRegistriesApiFp(this.configuration).listAvailableContainerRegistry(organizationId, options).then((request) => request(this.axios, this.basePath));
+    public listAvailableContainerRegistry(options?: AxiosRequestConfig) {
+        return ContainerRegistriesApiFp(this.configuration).listAvailableContainerRegistry(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
