@@ -9842,7 +9842,7 @@ export interface ServiceStorageRequestStorage {
      */
     'type': StorageTypeEnum;
     /**
-     * unit is GB
+     * unit is GB Minimum size is 4 GB 
      * @type {number}
      * @memberof ServiceStorageRequestStorage
      */
