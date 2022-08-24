@@ -15144,6 +15144,40 @@ export const ApplicationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
+         * 
+         * @summary List default application advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDefaultApplicationAdvancedSettings: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/defaultApplicationAdvancedSettings`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns min, max, and running number of instances for each application
          * @summary List current scaling information for each application
          * @param {string} environmentId Environment ID
@@ -15368,6 +15402,16 @@ export const ApplicationsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @summary List default application advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDefaultApplicationAdvancedSettings(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationAdvancedSettings>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDefaultApplicationAdvancedSettings(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Returns min, max, and running number of instances for each application
          * @summary List current scaling information for each application
          * @param {string} environmentId Environment ID
@@ -15455,6 +15499,15 @@ export const ApplicationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.deployAllApplications(environmentId, deployAllRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * 
+         * @summary List default application advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDefaultApplicationAdvancedSettings(options?: any): AxiosPromise<ApplicationAdvancedSettings> {
+            return localVarFp.getDefaultApplicationAdvancedSettings(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns min, max, and running number of instances for each application
          * @summary List current scaling information for each application
          * @param {string} environmentId Environment ID
@@ -15538,6 +15591,17 @@ export class ApplicationsApi extends BaseAPI {
      */
     public deployAllApplications(environmentId: string, deployAllRequest?: DeployAllRequest, options?: AxiosRequestConfig) {
         return ApplicationsApiFp(this.configuration).deployAllApplications(environmentId, deployAllRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List default application advanced settings
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApplicationsApi
+     */
+    public getDefaultApplicationAdvancedSettings(options?: AxiosRequestConfig) {
+        return ApplicationsApiFp(this.configuration).getDefaultApplicationAdvancedSettings(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
