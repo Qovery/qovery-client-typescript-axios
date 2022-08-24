@@ -4642,6 +4642,12 @@ export interface DeployAllRequest {
      * @memberof DeployAllRequest
      */
     'applications'?: Array<DeployAllRequestApplications>;
+    /**
+     * 
+     * @type {Array<DeployAllRequestContainers>}
+     * @memberof DeployAllRequest
+     */
+    'containers'?: Array<DeployAllRequestContainers>;
 }
 /**
  * 
@@ -4661,6 +4667,25 @@ export interface DeployAllRequestApplications {
      * @memberof DeployAllRequestApplications
      */
     'git_commit_id': string;
+}
+/**
+ * 
+ * @export
+ * @interface DeployAllRequestContainers
+ */
+export interface DeployAllRequestContainers {
+    /**
+     * id of the container to be updated.
+     * @type {string}
+     * @memberof DeployAllRequestContainers
+     */
+    'id': string;
+    /**
+     * new tag for the container.
+     * @type {string}
+     * @memberof DeployAllRequestContainers
+     */
+    'image_tag': string;
 }
 /**
  * 
@@ -15144,6 +15169,48 @@ export const ApplicationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
+         * Update and deploy the selected services
+         * @summary Deploy services
+         * @param {string} environmentId Environment ID
+         * @param {DeployAllRequest} [deployAllRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deployAllServices: async (environmentId: string, deployAllRequest?: DeployAllRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('deployAllServices', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/container/deploy`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(deployAllRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary List default application advanced settings
          * @param {*} [options] Override http request option.
@@ -15402,6 +15469,18 @@ export const ApplicationsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Update and deploy the selected services
+         * @summary Deploy services
+         * @param {string} environmentId Environment ID
+         * @param {DeployAllRequest} [deployAllRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deployAllServices(environmentId: string, deployAllRequest?: DeployAllRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deployAllServices(environmentId, deployAllRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * 
          * @summary List default application advanced settings
          * @param {*} [options] Override http request option.
@@ -15499,6 +15578,17 @@ export const ApplicationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.deployAllApplications(environmentId, deployAllRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * Update and deploy the selected services
+         * @summary Deploy services
+         * @param {string} environmentId Environment ID
+         * @param {DeployAllRequest} [deployAllRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deployAllServices(environmentId: string, deployAllRequest?: DeployAllRequest, options?: any): AxiosPromise<Status> {
+            return localVarFp.deployAllServices(environmentId, deployAllRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary List default application advanced settings
          * @param {*} [options] Override http request option.
@@ -15591,6 +15681,19 @@ export class ApplicationsApi extends BaseAPI {
      */
     public deployAllApplications(environmentId: string, deployAllRequest?: DeployAllRequest, options?: AxiosRequestConfig) {
         return ApplicationsApiFp(this.configuration).deployAllApplications(environmentId, deployAllRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Update and deploy the selected services
+     * @summary Deploy services
+     * @param {string} environmentId Environment ID
+     * @param {DeployAllRequest} [deployAllRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApplicationsApi
+     */
+    public deployAllServices(environmentId: string, deployAllRequest?: DeployAllRequest, options?: AxiosRequestConfig) {
+        return ApplicationsApiFp(this.configuration).deployAllServices(environmentId, deployAllRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -24278,16 +24381,16 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * Deploy to the last commit the containers you specified.
-         * @summary Deploy containers
+         * Update and deploy the selected services
+         * @summary Deploy services
          * @param {string} environmentId Environment ID
          * @param {DeployAllRequest} [deployAllRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployAllContainers: async (environmentId: string, deployAllRequest?: DeployAllRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deployAllServices: async (environmentId: string, deployAllRequest?: DeployAllRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'environmentId' is not null or undefined
-            assertParamExists('deployAllContainers', 'environmentId', environmentId)
+            assertParamExists('deployAllServices', 'environmentId', environmentId)
             const localVarPath = `/environment/{environmentId}/container/deploy`
                 .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -24553,15 +24656,15 @@ export const ContainersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Deploy to the last commit the containers you specified.
-         * @summary Deploy containers
+         * Update and deploy the selected services
+         * @summary Deploy services
          * @param {string} environmentId Environment ID
          * @param {DeployAllRequest} [deployAllRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deployAllContainers(environmentId: string, deployAllRequest?: DeployAllRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deployAllContainers(environmentId, deployAllRequest, options);
+        async deployAllServices(environmentId: string, deployAllRequest?: DeployAllRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deployAllServices(environmentId, deployAllRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -24654,15 +24757,15 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
             return localVarFp.createContainer(environmentId, containerRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Deploy to the last commit the containers you specified.
-         * @summary Deploy containers
+         * Update and deploy the selected services
+         * @summary Deploy services
          * @param {string} environmentId Environment ID
          * @param {DeployAllRequest} [deployAllRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployAllContainers(environmentId: string, deployAllRequest?: DeployAllRequest, options?: any): AxiosPromise<Status> {
-            return localVarFp.deployAllContainers(environmentId, deployAllRequest, options).then((request) => request(axios, basePath));
+        deployAllServices(environmentId: string, deployAllRequest?: DeployAllRequest, options?: any): AxiosPromise<Status> {
+            return localVarFp.deployAllServices(environmentId, deployAllRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns min, max, and running number of instances for each container
@@ -24753,16 +24856,16 @@ export class ContainersApi extends BaseAPI {
     }
 
     /**
-     * Deploy to the last commit the containers you specified.
-     * @summary Deploy containers
+     * Update and deploy the selected services
+     * @summary Deploy services
      * @param {string} environmentId Environment ID
      * @param {DeployAllRequest} [deployAllRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContainersApi
      */
-    public deployAllContainers(environmentId: string, deployAllRequest?: DeployAllRequest, options?: AxiosRequestConfig) {
-        return ContainersApiFp(this.configuration).deployAllContainers(environmentId, deployAllRequest, options).then((request) => request(this.axios, this.basePath));
+    public deployAllServices(environmentId: string, deployAllRequest?: DeployAllRequest, options?: AxiosRequestConfig) {
+        return ContainersApiFp(this.configuration).deployAllServices(environmentId, deployAllRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
