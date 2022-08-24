@@ -4188,7 +4188,7 @@ export interface Database {
      */
     'cpu'?: number;
     /**
-     * unit is MB. 1024 MB = 1GB
+     * unit is MB. 1024 MB = 1GB   Default value is linked to the database type: - MANAGED: `100` - CONTAINER   - POSTGRES: `100`   - REDIS: `100`   - MYSQL: `512`   - MONGODB: `256` 
      * @type {number}
      * @memberof Database
      */
@@ -4507,7 +4507,7 @@ export interface DatabaseEditRequest {
      */
     'cpu'?: number;
     /**
-     * unit is MB. 1024 MB = 1GB
+     * unit is MB. 1024 MB = 1GB   Default value is linked to the database type: - MANAGED: 100 - CONTAINER   - POSTGRES: 100   - REDIS: 100   - MYSQL: 512   - MONGODB: 256 
      * @type {number}
      * @memberof DatabaseEditRequest
      */
@@ -4573,7 +4573,7 @@ export interface DatabaseRequest {
      */
     'cpu'?: number;
     /**
-     * unit is MB. 1024 MB = 1GB
+     * unit is MB. 1024 MB = 1GB   Default value is linked to the database type: - MANAGED: `100` - CONTAINER   - POSTGRES: `100`   - REDIS: `100`   - MYSQL: `512`   - MONGODB: `256` 
      * @type {number}
      * @memberof DatabaseRequest
      */
