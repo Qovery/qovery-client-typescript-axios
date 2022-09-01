@@ -3187,7 +3187,7 @@ export interface ContainerEditRequest {
      */
     'registry_id': string;
     /**
-     * name of the image container
+     * The image name pattern differs according to chosen container registry provider:   * `ECR`: `repository` * `SCALEWAY_CR`: `namespace/image` * `DOCKER_HUB`: `namespace/image` * `PUBLIC_ECR`: `registry_alias/repository` 
      * @type {string}
      * @memberof ContainerEditRequest
      */
@@ -3254,7 +3254,7 @@ export interface ContainerEditRequestAllOf {
      */
     'registry_id': string;
     /**
-     * name of the image container
+     * The image name pattern differs according to chosen container registry provider:   * `ECR`: `repository` * `SCALEWAY_CR`: `namespace/image` * `DOCKER_HUB`: `namespace/image` * `PUBLIC_ECR`: `registry_alias/repository` 
      * @type {string}
      * @memberof ContainerEditRequestAllOf
      */
@@ -3329,17 +3329,17 @@ export interface ContainerNetworkRequest {
     'sticky_session'?: boolean;
 }
 /**
- * ECR needs the following parameters - region, access_key_id, secret_access_key DOCR needs the following parameters - token  SCALEWAY_CR needs the following parameters - scaleway_access_key, scaleway_secret_key DOCKER_HUB needs the following parameters - username, password  PUBLIC_ECR needs the followinf parameters - access_key_id, secret_access_key 
+ * The type of your container registry
  * @export
  * @enum {string}
  */
 
 export enum ContainerRegistryKindEnum {
     ECR = 'ECR',
-    DOCR = 'DOCR',
     SCALEWAY_CR = 'SCALEWAY_CR',
     DOCKER_HUB = 'DOCKER_HUB',
-    PUBLIC_ECR = 'PUBLIC_ECR'
+    PUBLIC_ECR = 'PUBLIC_ECR',
+    DOCR = 'DOCR'
 }
 
 /**
@@ -3367,13 +3367,13 @@ export interface ContainerRegistryRequest {
      */
     'description'?: string;
     /**
-     * URL of the container registry.  Must start by \'https://\' and for docker_hub should be \'https://docker.io\' 
+     * URL of the container registry: * For `DOCKER_HUB`: should be `https://docker.io` * For others: must start by `https://` 
      * @type {string}
      * @memberof ContainerRegistryRequest
      */
     'url': string;
     /**
-     * authentification configuration
+     * This field is dependent of the container registry kind: * `ECR` needs in the config: region, access_key_id, secret_access_key * `SCALEWAY_CR` needs in the config: region, scaleway_access_key, scaleway_secret_key * `DOCKER_HUB` needs in the config: username, password * `PUBLIC_ECR` needs in the config: access_key_id, secret_access_key * `DOCR` is not supported anymore 
      * @type {{ [key: string]: object; }}
      * @memberof ContainerRegistryRequest
      */
@@ -3490,7 +3490,7 @@ export interface ContainerRequest {
      */
     'registry_id': string;
     /**
-     * name of the image container
+     * The image name pattern differs according to chosen container registry provider:   * `ECR`: `repository` * `SCALEWAY_CR`: `namespace/image` * `DOCKER_HUB`: `namespace/image` * `PUBLIC_ECR`: `registry_alias/repository` 
      * @type {string}
      * @memberof ContainerRequest
      */
@@ -3557,7 +3557,7 @@ export interface ContainerRequestAllOf {
      */
     'registry_id': string;
     /**
-     * name of the image container
+     * The image name pattern differs according to chosen container registry provider:   * `ECR`: `repository` * `SCALEWAY_CR`: `namespace/image` * `DOCKER_HUB`: `namespace/image` * `PUBLIC_ECR`: `registry_alias/repository` 
      * @type {string}
      * @memberof ContainerRequestAllOf
      */
