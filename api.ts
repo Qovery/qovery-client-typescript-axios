@@ -23418,6 +23418,48 @@ export const ContainerRegistriesApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
+         * @summary Edit a container registry
+         * @param {string} organizationId Organization ID
+         * @param {ContainerRegistryRequest} [containerRegistryRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editContainerRegistry: async (organizationId: string, containerRegistryRequest?: ContainerRegistryRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('editContainerRegistry', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/containerRegistry/{containerRegistryId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(containerRegistryRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get a container registry
          * @param {string} organizationId Organization ID
          * @param {string} containerRegistryId Container Registry ID
@@ -23565,6 +23607,18 @@ export const ContainerRegistriesApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
+         * @summary Edit a container registry
+         * @param {string} organizationId Organization ID
+         * @param {ContainerRegistryRequest} [containerRegistryRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editContainerRegistry(organizationId: string, containerRegistryRequest?: ContainerRegistryRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerRegistryResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editContainerRegistry(organizationId, containerRegistryRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get a container registry
          * @param {string} organizationId Organization ID
          * @param {string} containerRegistryId Container Registry ID
@@ -23626,6 +23680,17 @@ export const ContainerRegistriesApiFactory = function (configuration?: Configura
          */
         deleteContainerRegistry(organizationId: string, options?: any): AxiosPromise<void> {
             return localVarFp.deleteContainerRegistry(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Edit a container registry
+         * @param {string} organizationId Organization ID
+         * @param {ContainerRegistryRequest} [containerRegistryRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editContainerRegistry(organizationId: string, containerRegistryRequest?: ContainerRegistryRequest, options?: any): AxiosPromise<ContainerRegistryResponse> {
+            return localVarFp.editContainerRegistry(organizationId, containerRegistryRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -23694,6 +23759,19 @@ export class ContainerRegistriesApi extends BaseAPI {
 
     /**
      * 
+     * @summary Edit a container registry
+     * @param {string} organizationId Organization ID
+     * @param {ContainerRegistryRequest} [containerRegistryRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContainerRegistriesApi
+     */
+    public editContainerRegistry(organizationId: string, containerRegistryRequest?: ContainerRegistryRequest, options?: AxiosRequestConfig) {
+        return ContainerRegistriesApiFp(this.configuration).editContainerRegistry(organizationId, containerRegistryRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Get a container registry
      * @param {string} organizationId Organization ID
      * @param {string} containerRegistryId Container Registry ID
@@ -23726,122 +23804,6 @@ export class ContainerRegistriesApi extends BaseAPI {
      */
     public listContainerRegistry(organizationId: string, options?: AxiosRequestConfig) {
         return ContainerRegistriesApiFp(this.configuration).listContainerRegistry(organizationId, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
- * ContainerRegistryApi - axios parameter creator
- * @export
- */
-export const ContainerRegistryApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary Edit a container registry
-         * @param {string} organizationId Organization ID
-         * @param {ContainerRegistryRequest} [containerRegistryRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        editContainerRegistry: async (organizationId: string, containerRegistryRequest?: ContainerRegistryRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            assertParamExists('editContainerRegistry', 'organizationId', organizationId)
-            const localVarPath = `/organization/{organizationId}/containerRegistry/{containerRegistryId}`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(containerRegistryRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * ContainerRegistryApi - functional programming interface
- * @export
- */
-export const ContainerRegistryApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = ContainerRegistryApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @summary Edit a container registry
-         * @param {string} organizationId Organization ID
-         * @param {ContainerRegistryRequest} [containerRegistryRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async editContainerRegistry(organizationId: string, containerRegistryRequest?: ContainerRegistryRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerRegistryResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.editContainerRegistry(organizationId, containerRegistryRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * ContainerRegistryApi - factory interface
- * @export
- */
-export const ContainerRegistryApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = ContainerRegistryApiFp(configuration)
-    return {
-        /**
-         * 
-         * @summary Edit a container registry
-         * @param {string} organizationId Organization ID
-         * @param {ContainerRegistryRequest} [containerRegistryRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        editContainerRegistry(organizationId: string, containerRegistryRequest?: ContainerRegistryRequest, options?: any): AxiosPromise<ContainerRegistryResponse> {
-            return localVarFp.editContainerRegistry(organizationId, containerRegistryRequest, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * ContainerRegistryApi - object-oriented interface
- * @export
- * @class ContainerRegistryApi
- * @extends {BaseAPI}
- */
-export class ContainerRegistryApi extends BaseAPI {
-    /**
-     * 
-     * @summary Edit a container registry
-     * @param {string} organizationId Organization ID
-     * @param {ContainerRegistryRequest} [containerRegistryRequest] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerRegistryApi
-     */
-    public editContainerRegistry(organizationId: string, containerRegistryRequest?: ContainerRegistryRequest, options?: AxiosRequestConfig) {
-        return ContainerRegistryApiFp(this.configuration).editContainerRegistry(organizationId, containerRegistryRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
