@@ -303,6 +303,12 @@ export interface ApplicationAdvancedSettings {
      */
     'network.ingress.proxy_buffer_size_kb'?: number;
     /**
+     * list of source ranges to allow access to ingress proxy.  This property can be used to whitelist source IP ranges for ingress proxy. The value is a comma separated list of CIDRs, e.g. 10.0.0.0/24,172.10.0.1 To allow all source ranges, set 0.0.0.0/0. 
+     * @type {string}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.ingress.whitelist_source_range'?: string;
+    /**
      * `NONE` disable readiness probe `TCP` enable TCP readiness probe `HTTP` enable HTTP readiness probe 
      * @type {string}
      * @memberof ApplicationAdvancedSettings
@@ -2970,6 +2976,12 @@ export interface ContainerAdvancedSettings {
      * @memberof ContainerAdvancedSettings
      */
     'network.ingress.proxy_buffer_size_kb'?: number;
+    /**
+     * list of source ranges to allow access to ingress proxy.  This property can be used to whitelist source IP ranges for ingress proxy. The value is a comma separated list of CIDRs, e.g. 10.0.0.0/24,172.10.0.1 To allow all source ranges, set 0.0.0.0/0. 
+     * @type {string}
+     * @memberof ContainerAdvancedSettings
+     */
+    'network.ingress.whitelist_source_range'?: string;
     /**
      * `NONE` disable readiness probe `TCP` enable TCP readiness probe `HTTP` enable HTTP readiness probe 
      * @type {string}
