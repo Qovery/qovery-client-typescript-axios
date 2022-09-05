@@ -3386,10 +3386,10 @@ export interface ContainerRegistryRequest {
     'url': string;
     /**
      * This field is dependent of the container registry kind: * `ECR` needs in the config: region, access_key_id, secret_access_key * `SCALEWAY_CR` needs in the config: region, scaleway_access_key, scaleway_secret_key * `DOCKER_HUB` needs in the config: username, password * `PUBLIC_ECR` needs in the config: access_key_id, secret_access_key * `DOCR` is not supported anymore 
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: string; }}
      * @memberof ContainerRegistryRequest
      */
-    'config': { [key: string]: object; };
+    'config': { [key: string]: string; };
 }
 /**
  * 
