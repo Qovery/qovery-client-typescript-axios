@@ -3908,6 +3908,43 @@ export interface CostRange {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export enum CreateEnvironmentModeEnum {
+    DEVELOPMENT = 'DEVELOPMENT',
+    PRODUCTION = 'PRODUCTION',
+    STAGING = 'STAGING'
+}
+
+/**
+ * 
+ * @export
+ * @interface CreateEnvironmentRequest
+ */
+export interface CreateEnvironmentRequest {
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof CreateEnvironmentRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateEnvironmentRequest
+     */
+    'cluster'?: string;
+    /**
+     * 
+     * @type {CreateEnvironmentModeEnum}
+     * @memberof CreateEnvironmentRequest
+     */
+    'mode'?: CreateEnvironmentModeEnum;
+}
+/**
+ * 
+ * @export
  * @interface Credentials
  */
 export interface Credentials {
@@ -5992,10 +6029,10 @@ export interface EnvironmentEditRequest {
     'name'?: string;
     /**
      * 
-     * @type {EnvironmentModeEnum}
+     * @type {CreateEnvironmentModeEnum}
      * @memberof EnvironmentEditRequest
      */
-    'mode'?: EnvironmentModeEnum;
+    'mode'?: CreateEnvironmentModeEnum;
 }
 /**
  * 
@@ -6147,31 +6184,6 @@ export enum EnvironmentModeEnum {
     STAGING = 'STAGING'
 }
 
-/**
- * 
- * @export
- * @interface EnvironmentRequest
- */
-export interface EnvironmentRequest {
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof EnvironmentRequest
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentRequest
-     */
-    'cluster'?: string;
-    /**
-     * 
-     * @type {EnvironmentModeEnum}
-     * @memberof EnvironmentRequest
-     */
-    'mode'?: EnvironmentModeEnum;
-}
 /**
  * 
  * @export
@@ -30008,11 +30020,11 @@ export const EnvironmentsApiAxiosParamCreator = function (configuration?: Config
          * 
          * @summary Create an environment
          * @param {string} projectId Project ID
-         * @param {EnvironmentRequest} [environmentRequest] 
+         * @param {CreateEnvironmentRequest} [createEnvironmentRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createEnvironment: async (projectId: string, environmentRequest?: EnvironmentRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createEnvironment: async (projectId: string, createEnvironmentRequest?: CreateEnvironmentRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'projectId' is not null or undefined
             assertParamExists('createEnvironment', 'projectId', projectId)
             const localVarPath = `/project/{projectId}/environment`
@@ -30039,7 +30051,7 @@ export const EnvironmentsApiAxiosParamCreator = function (configuration?: Config
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(environmentRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(createEnvironmentRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -30174,12 +30186,12 @@ export const EnvironmentsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Create an environment
          * @param {string} projectId Project ID
-         * @param {EnvironmentRequest} [environmentRequest] 
+         * @param {CreateEnvironmentRequest} [createEnvironmentRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createEnvironment(projectId: string, environmentRequest?: EnvironmentRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Environment>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createEnvironment(projectId, environmentRequest, options);
+        async createEnvironment(projectId: string, createEnvironmentRequest?: CreateEnvironmentRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Environment>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createEnvironment(projectId, createEnvironmentRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -30229,12 +30241,12 @@ export const EnvironmentsApiFactory = function (configuration?: Configuration, b
          * 
          * @summary Create an environment
          * @param {string} projectId Project ID
-         * @param {EnvironmentRequest} [environmentRequest] 
+         * @param {CreateEnvironmentRequest} [createEnvironmentRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createEnvironment(projectId: string, environmentRequest?: EnvironmentRequest, options?: any): AxiosPromise<Environment> {
-            return localVarFp.createEnvironment(projectId, environmentRequest, options).then((request) => request(axios, basePath));
+        createEnvironment(projectId: string, createEnvironmentRequest?: CreateEnvironmentRequest, options?: any): AxiosPromise<Environment> {
+            return localVarFp.createEnvironment(projectId, createEnvironmentRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a list of environment ids, and for each its total numberof services
@@ -30280,13 +30292,13 @@ export class EnvironmentsApi extends BaseAPI {
      * 
      * @summary Create an environment
      * @param {string} projectId Project ID
-     * @param {EnvironmentRequest} [environmentRequest] 
+     * @param {CreateEnvironmentRequest} [createEnvironmentRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EnvironmentsApi
      */
-    public createEnvironment(projectId: string, environmentRequest?: EnvironmentRequest, options?: AxiosRequestConfig) {
-        return EnvironmentsApiFp(this.configuration).createEnvironment(projectId, environmentRequest, options).then((request) => request(this.axios, this.basePath));
+    public createEnvironment(projectId: string, createEnvironmentRequest?: CreateEnvironmentRequest, options?: AxiosRequestConfig) {
+        return EnvironmentsApiFp(this.configuration).createEnvironment(projectId, createEnvironmentRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
