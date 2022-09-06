@@ -23455,14 +23455,18 @@ export const ContainerRegistriesApiAxiosParamCreator = function (configuration?:
          * 
          * @summary Delete a container registry
          * @param {string} organizationId Organization ID
+         * @param {string} containerRegistryId Container Registry ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteContainerRegistry: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteContainerRegistry: async (organizationId: string, containerRegistryId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('deleteContainerRegistry', 'organizationId', organizationId)
+            // verify required parameter 'containerRegistryId' is not null or undefined
+            assertParamExists('deleteContainerRegistry', 'containerRegistryId', containerRegistryId)
             const localVarPath = `/organization/{organizationId}/containerRegistry/{containerRegistryId}`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"containerRegistryId"}}`, encodeURIComponent(String(containerRegistryId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -23493,15 +23497,19 @@ export const ContainerRegistriesApiAxiosParamCreator = function (configuration?:
          * 
          * @summary Edit a container registry
          * @param {string} organizationId Organization ID
+         * @param {string} containerRegistryId Container Registry ID
          * @param {ContainerRegistryRequest} [containerRegistryRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editContainerRegistry: async (organizationId: string, containerRegistryRequest?: ContainerRegistryRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        editContainerRegistry: async (organizationId: string, containerRegistryId: string, containerRegistryRequest?: ContainerRegistryRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('editContainerRegistry', 'organizationId', organizationId)
+            // verify required parameter 'containerRegistryId' is not null or undefined
+            assertParamExists('editContainerRegistry', 'containerRegistryId', containerRegistryId)
             const localVarPath = `/organization/{organizationId}/containerRegistry/{containerRegistryId}`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"containerRegistryId"}}`, encodeURIComponent(String(containerRegistryId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -23671,23 +23679,25 @@ export const ContainerRegistriesApiFp = function(configuration?: Configuration) 
          * 
          * @summary Delete a container registry
          * @param {string} organizationId Organization ID
+         * @param {string} containerRegistryId Container Registry ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteContainerRegistry(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteContainerRegistry(organizationId, options);
+        async deleteContainerRegistry(organizationId: string, containerRegistryId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteContainerRegistry(organizationId, containerRegistryId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Edit a container registry
          * @param {string} organizationId Organization ID
+         * @param {string} containerRegistryId Container Registry ID
          * @param {ContainerRegistryRequest} [containerRegistryRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editContainerRegistry(organizationId: string, containerRegistryRequest?: ContainerRegistryRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerRegistryResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.editContainerRegistry(organizationId, containerRegistryRequest, options);
+        async editContainerRegistry(organizationId: string, containerRegistryId: string, containerRegistryRequest?: ContainerRegistryRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerRegistryResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editContainerRegistry(organizationId, containerRegistryId, containerRegistryRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -23748,22 +23758,24 @@ export const ContainerRegistriesApiFactory = function (configuration?: Configura
          * 
          * @summary Delete a container registry
          * @param {string} organizationId Organization ID
+         * @param {string} containerRegistryId Container Registry ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteContainerRegistry(organizationId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteContainerRegistry(organizationId, options).then((request) => request(axios, basePath));
+        deleteContainerRegistry(organizationId: string, containerRegistryId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteContainerRegistry(organizationId, containerRegistryId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Edit a container registry
          * @param {string} organizationId Organization ID
+         * @param {string} containerRegistryId Container Registry ID
          * @param {ContainerRegistryRequest} [containerRegistryRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editContainerRegistry(organizationId: string, containerRegistryRequest?: ContainerRegistryRequest, options?: any): AxiosPromise<ContainerRegistryResponse> {
-            return localVarFp.editContainerRegistry(organizationId, containerRegistryRequest, options).then((request) => request(axios, basePath));
+        editContainerRegistry(organizationId: string, containerRegistryId: string, containerRegistryRequest?: ContainerRegistryRequest, options?: any): AxiosPromise<ContainerRegistryResponse> {
+            return localVarFp.editContainerRegistry(organizationId, containerRegistryId, containerRegistryRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -23822,25 +23834,27 @@ export class ContainerRegistriesApi extends BaseAPI {
      * 
      * @summary Delete a container registry
      * @param {string} organizationId Organization ID
+     * @param {string} containerRegistryId Container Registry ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContainerRegistriesApi
      */
-    public deleteContainerRegistry(organizationId: string, options?: AxiosRequestConfig) {
-        return ContainerRegistriesApiFp(this.configuration).deleteContainerRegistry(organizationId, options).then((request) => request(this.axios, this.basePath));
+    public deleteContainerRegistry(organizationId: string, containerRegistryId: string, options?: AxiosRequestConfig) {
+        return ContainerRegistriesApiFp(this.configuration).deleteContainerRegistry(organizationId, containerRegistryId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Edit a container registry
      * @param {string} organizationId Organization ID
+     * @param {string} containerRegistryId Container Registry ID
      * @param {ContainerRegistryRequest} [containerRegistryRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContainerRegistriesApi
      */
-    public editContainerRegistry(organizationId: string, containerRegistryRequest?: ContainerRegistryRequest, options?: AxiosRequestConfig) {
-        return ContainerRegistriesApiFp(this.configuration).editContainerRegistry(organizationId, containerRegistryRequest, options).then((request) => request(this.axios, this.basePath));
+    public editContainerRegistry(organizationId: string, containerRegistryId: string, containerRegistryRequest?: ContainerRegistryRequest, options?: AxiosRequestConfig) {
+        return ContainerRegistriesApiFp(this.configuration).editContainerRegistry(organizationId, containerRegistryId, containerRegistryRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
