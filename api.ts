@@ -3385,11 +3385,60 @@ export interface ContainerRegistryRequest {
      */
     'url': string;
     /**
-     * This field is dependent of the container registry kind: * `ECR` needs in the config: region, access_key_id, secret_access_key * `SCALEWAY_CR` needs in the config: region, scaleway_access_key, scaleway_secret_key * `DOCKER_HUB` needs in the config: username, password * `PUBLIC_ECR` needs in the config: access_key_id, secret_access_key * `DOCR` is not supported anymore 
-     * @type {{ [key: string]: string; }}
+     * 
+     * @type {ContainerRegistryRequestConfig}
      * @memberof ContainerRegistryRequest
      */
-    'config': { [key: string]: string; };
+    'config': ContainerRegistryRequestConfig;
+}
+/**
+ * This field is dependent of the container registry kind: * `ECR` needs in the config: region, access_key_id, secret_access_key * `SCALEWAY_CR` needs in the config: region, scaleway_access_key, scaleway_secret_key * `DOCKER_HUB` needs in the config: username, password * `PUBLIC_ECR` needs in the config: access_key_id, secret_access_key * `DOCR` is not supported anymore 
+ * @export
+ * @interface ContainerRegistryRequestConfig
+ */
+export interface ContainerRegistryRequestConfig {
+    /**
+     * Required if kind is `ECR` or `PUBLIC_ECR`
+     * @type {string}
+     * @memberof ContainerRegistryRequestConfig
+     */
+    'access_key_id'?: string;
+    /**
+     * Required if kind is `ECR` or `PUBLIC_ECR`
+     * @type {string}
+     * @memberof ContainerRegistryRequestConfig
+     */
+    'secret_access_key'?: string;
+    /**
+     * Required if kind is `ECR` or `SCALEWAY_CR`
+     * @type {string}
+     * @memberof ContainerRegistryRequestConfig
+     */
+    'region'?: string;
+    /**
+     * Required if kind is `SCALEWAY_CR`
+     * @type {string}
+     * @memberof ContainerRegistryRequestConfig
+     */
+    'scaleway_access_key'?: string;
+    /**
+     * Required if kind is `SCALEWAY_CR`
+     * @type {string}
+     * @memberof ContainerRegistryRequestConfig
+     */
+    'scaleway_secret_key'?: string;
+    /**
+     * Required if kind is `DOCKER_HUB`
+     * @type {string}
+     * @memberof ContainerRegistryRequestConfig
+     */
+    'username'?: string;
+    /**
+     * Required if kind is `DOCKER_HUB`
+     * @type {string}
+     * @memberof ContainerRegistryRequestConfig
+     */
+    'password'?: string;
 }
 /**
  * 
