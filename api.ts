@@ -9224,7 +9224,7 @@ export interface ReferenceObjectStatus {
      * @type {ServiceDeploymentStatusEnum}
      * @memberof ReferenceObjectStatus
      */
-    'service_deployment_status'?: ServiceDeploymentStatusEnum | null;
+    'service_deployment_status': ServiceDeploymentStatusEnum | null;
     /**
      * 
      * @type {string}
@@ -10056,7 +10056,7 @@ export interface Status {
      * @type {string}
      * @memberof Status
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {StateEnum}
@@ -10074,7 +10074,7 @@ export interface Status {
      * @type {ServiceDeploymentStatusEnum}
      * @memberof Status
      */
-    'service_deployment_status'?: ServiceDeploymentStatusEnum | null;
+    'service_deployment_status': ServiceDeploymentStatusEnum | null;
     /**
      * 
      * @type {string}
