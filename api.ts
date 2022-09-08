@@ -3561,13 +3561,13 @@ export interface ContainerResponse {
      * @type {ReferenceObject}
      * @memberof ContainerResponse
      */
-    'environment'?: ReferenceObject;
+    'environment': ReferenceObject;
     /**
      * 
      * @type {ReferenceObject}
      * @memberof ContainerResponse
      */
-    'registry'?: ReferenceObject;
+    'registry': ReferenceObject;
     /**
      * Maximum cpu that can be allocated to the container based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -3652,13 +3652,13 @@ export interface ContainerResponseAllOf {
      * @type {ReferenceObject}
      * @memberof ContainerResponseAllOf
      */
-    'environment'?: ReferenceObject;
+    'environment': ReferenceObject;
     /**
      * 
      * @type {ReferenceObject}
      * @memberof ContainerResponseAllOf
      */
-    'registry'?: ReferenceObject;
+    'registry': ReferenceObject;
     /**
      * Maximum cpu that can be allocated to the container based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
      * @type {number}
