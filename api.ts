@@ -9861,7 +9861,7 @@ export interface ServicePortPorts {
      * @type {PortProtocolEnum}
      * @memberof ServicePortPorts
      */
-    'protocol'?: PortProtocolEnum;
+    'protocol': PortProtocolEnum;
 }
 /**
  * 
