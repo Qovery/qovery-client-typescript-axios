@@ -9667,12 +9667,6 @@ export interface ServicePortPorts {
      */
     'publicly_accessible': boolean;
     /**
-     * is the default port to use for domain & probes check
-     * @type {boolean}
-     * @memberof ServicePortPorts
-     */
-    'is_default'?: boolean;
-    /**
      * 
      * @type {PortProtocolEnum}
      * @memberof ServicePortPorts
