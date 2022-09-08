@@ -3719,31 +3719,31 @@ export interface ContainerResponse {
      * @type {number}
      * @memberof ContainerResponse
      */
-    'maximum_cpu'?: number;
+    'maximum_cpu': number;
     /**
      * Maximum memory that can be allocated to the container based on organization cluster configuration. unit is MB. 1024 MB = 1GB
      * @type {number}
      * @memberof ContainerResponse
      */
-    'maximum_memory'?: number;
+    'maximum_memory': number;
     /**
      * name is case insensitive
      * @type {string}
      * @memberof ContainerResponse
      */
-    'name'?: string;
+    'name': string;
     /**
      * name of the image container
      * @type {string}
      * @memberof ContainerResponse
      */
-    'image_name'?: string;
+    'image_name': string;
     /**
      * tag of the image container
      * @type {string}
      * @memberof ContainerResponse
      */
-    'tag'?: string;
+    'tag': string;
     /**
      * 
      * @type {Array<string>}
@@ -3761,25 +3761,31 @@ export interface ContainerResponse {
      * @type {number}
      * @memberof ContainerResponse
      */
-    'cpu'?: number;
+    'cpu': number;
     /**
      * unit is MB. 1024 MB = 1GB
      * @type {number}
      * @memberof ContainerResponse
      */
-    'memory'?: number;
+    'memory': number;
     /**
      * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no container running. 
      * @type {number}
      * @memberof ContainerResponse
      */
-    'min_running_instances'?: number;
+    'min_running_instances': number;
     /**
      * Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: -1 means that there is no limit. 
      * @type {number}
      * @memberof ContainerResponse
      */
-    'max_running_instances'?: number;
+    'max_running_instances': number;
+    /**
+     * Specify if the environment preview option is activated or not for this container. If activated, a preview environment will be automatically cloned at each pull request. 
+     * @type {boolean}
+     * @memberof ContainerResponse
+     */
+    'auto_preview': boolean;
 }
 /**
  * 
@@ -3804,31 +3810,31 @@ export interface ContainerResponseAllOf {
      * @type {number}
      * @memberof ContainerResponseAllOf
      */
-    'maximum_cpu'?: number;
+    'maximum_cpu': number;
     /**
      * Maximum memory that can be allocated to the container based on organization cluster configuration. unit is MB. 1024 MB = 1GB
      * @type {number}
      * @memberof ContainerResponseAllOf
      */
-    'maximum_memory'?: number;
+    'maximum_memory': number;
     /**
      * name is case insensitive
      * @type {string}
      * @memberof ContainerResponseAllOf
      */
-    'name'?: string;
+    'name': string;
     /**
      * name of the image container
      * @type {string}
      * @memberof ContainerResponseAllOf
      */
-    'image_name'?: string;
+    'image_name': string;
     /**
      * tag of the image container
      * @type {string}
      * @memberof ContainerResponseAllOf
      */
-    'tag'?: string;
+    'tag': string;
     /**
      * 
      * @type {Array<string>}
@@ -3846,25 +3852,31 @@ export interface ContainerResponseAllOf {
      * @type {number}
      * @memberof ContainerResponseAllOf
      */
-    'cpu'?: number;
+    'cpu': number;
     /**
      * unit is MB. 1024 MB = 1GB
      * @type {number}
      * @memberof ContainerResponseAllOf
      */
-    'memory'?: number;
+    'memory': number;
     /**
      * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no container running. 
      * @type {number}
      * @memberof ContainerResponseAllOf
      */
-    'min_running_instances'?: number;
+    'min_running_instances': number;
     /**
      * Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: -1 means that there is no limit. 
      * @type {number}
      * @memberof ContainerResponseAllOf
      */
-    'max_running_instances'?: number;
+    'max_running_instances': number;
+    /**
+     * Specify if the environment preview option is activated or not for this container. If activated, a preview environment will be automatically cloned at each pull request. 
+     * @type {boolean}
+     * @memberof ContainerResponseAllOf
+     */
+    'auto_preview': boolean;
 }
 /**
  * 
