@@ -660,10 +660,10 @@ export interface ApplicationDeploymentRestrictionResponseList {
 export interface ApplicationEditRequest {
     /**
      * 
-     * @type {Array<ApplicationStorageStorage>}
+     * @type {Array<ServiceStorageRequestStorage>}
      * @memberof ApplicationEditRequest
      */
-    'storage'?: Array<ApplicationStorageStorage>;
+    'storage'?: Array<ServiceStorageRequestStorage>;
     /**
      * 
      * @type {Array<ServicePortPorts>}
@@ -1165,7 +1165,7 @@ export interface ApplicationStorageStorage {
      * @type {string}
      * @memberof ApplicationStorageStorage
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {StorageTypeEnum}
