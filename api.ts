@@ -9218,7 +9218,7 @@ export interface ReferenceObjectStatus {
      * @type {string}
      * @memberof ReferenceObjectStatus
      */
-    'message'?: string | null;
+    'message'?: string;
     /**
      * 
      * @type {ServiceDeploymentStatusEnum}
@@ -10068,7 +10068,7 @@ export interface Status {
      * @type {string}
      * @memberof Status
      */
-    'message'?: string | null;
+    'message'?: string;
     /**
      * 
      * @type {ServiceDeploymentStatusEnum}
