@@ -9647,7 +9647,7 @@ export interface ServicePortPorts {
      * @type {string}
      * @memberof ServicePortPorts
      */
-    'name'?: string | null;
+    'name'?: string;
     /**
      * The listening port of your service.
      * @type {number}
