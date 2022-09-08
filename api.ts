@@ -9801,6 +9801,12 @@ export interface ServiceStorageRequest {
 export interface ServiceStorageRequestStorage {
     /**
      * 
+     * @type {string}
+     * @memberof ServiceStorageRequestStorage
+     */
+    'id'?: string;
+    /**
+     * 
      * @type {StorageTypeEnum}
      * @memberof ServiceStorageRequestStorage
      */
