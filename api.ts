@@ -140,10 +140,10 @@ export interface Application {
     'updated_at'?: string;
     /**
      * 
-     * @type {Array<ApplicationStorageStorage>}
+     * @type {Array<ServiceStorageStorage>}
      * @memberof Application
      */
-    'storage'?: Array<ApplicationStorageStorage>;
+    'storage'?: Array<ServiceStorageStorage>;
     /**
      * 
      * @type {Array<ServicePortPorts>}
@@ -1140,50 +1140,6 @@ export interface ApplicationResponseList {
      * @memberof ApplicationResponseList
      */
     'results'?: Array<Application>;
-}
-/**
- * 
- * @export
- * @interface ApplicationStorage
- */
-export interface ApplicationStorage {
-    /**
-     * 
-     * @type {Array<ApplicationStorageStorage>}
-     * @memberof ApplicationStorage
-     */
-    'storage'?: Array<ApplicationStorageStorage>;
-}
-/**
- * 
- * @export
- * @interface ApplicationStorageStorage
- */
-export interface ApplicationStorageStorage {
-    /**
-     * 
-     * @type {string}
-     * @memberof ApplicationStorageStorage
-     */
-    'id': string;
-    /**
-     * 
-     * @type {StorageTypeEnum}
-     * @memberof ApplicationStorageStorage
-     */
-    'type': StorageTypeEnum;
-    /**
-     * unit is GB
-     * @type {number}
-     * @memberof ApplicationStorageStorage
-     */
-    'size': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApplicationStorageStorage
-     */
-    'mount_point': string;
 }
 /**
  * 
@@ -3546,10 +3502,10 @@ export interface ContainerResponse {
     'updated_at'?: string;
     /**
      * 
-     * @type {Array<ApplicationStorageStorage>}
+     * @type {Array<ServiceStorageStorage>}
      * @memberof ContainerResponse
      */
-    'storage'?: Array<ApplicationStorageStorage>;
+    'storage'?: Array<ServiceStorageStorage>;
     /**
      * 
      * @type {Array<ServicePortPorts>}
@@ -3753,10 +3709,10 @@ export interface ContainerResponseList {
 export interface ContainerStorage {
     /**
      * 
-     * @type {Array<ApplicationStorageStorage>}
+     * @type {Array<ServiceStorageStorage>}
      * @memberof ContainerStorage
      */
-    'storage'?: Array<ApplicationStorageStorage>;
+    'storage'?: Array<ServiceStorageStorage>;
 }
 /**
  * 
@@ -9783,6 +9739,19 @@ export interface ServiceResponseList {
 /**
  * 
  * @export
+ * @interface ServiceStorage
+ */
+export interface ServiceStorage {
+    /**
+     * 
+     * @type {Array<ServiceStorageStorage>}
+     * @memberof ServiceStorage
+     */
+    'storage'?: Array<ServiceStorageStorage>;
+}
+/**
+ * 
+ * @export
  * @interface ServiceStorageRequest
  */
 export interface ServiceStorageRequest {
@@ -9821,6 +9790,37 @@ export interface ServiceStorageRequestStorage {
      * 
      * @type {string}
      * @memberof ServiceStorageRequestStorage
+     */
+    'mount_point': string;
+}
+/**
+ * 
+ * @export
+ * @interface ServiceStorageStorage
+ */
+export interface ServiceStorageStorage {
+    /**
+     * 
+     * @type {string}
+     * @memberof ServiceStorageStorage
+     */
+    'id': string;
+    /**
+     * 
+     * @type {StorageTypeEnum}
+     * @memberof ServiceStorageStorage
+     */
+    'type': StorageTypeEnum;
+    /**
+     * unit is GB
+     * @type {number}
+     * @memberof ServiceStorageStorage
+     */
+    'size': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ServiceStorageStorage
      */
     'mount_point': string;
 }
