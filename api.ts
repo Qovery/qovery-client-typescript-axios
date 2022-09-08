@@ -3171,152 +3171,6 @@ export interface ContainerDeployRequest {
 /**
  * 
  * @export
- * @interface ContainerEditRequest
- */
-export interface ContainerEditRequest {
-    /**
-     * 
-     * @type {Array<ApplicationStorageStorage>}
-     * @memberof ContainerEditRequest
-     */
-    'storage'?: Array<ApplicationStorageStorage>;
-    /**
-     * 
-     * @type {Array<ServicePortPorts>}
-     * @memberof ContainerEditRequest
-     */
-    'ports'?: Array<ServicePortPorts>;
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof ContainerEditRequest
-     */
-    'name': string;
-    /**
-     * id of the linked registry
-     * @type {string}
-     * @memberof ContainerEditRequest
-     */
-    'registry_id': string;
-    /**
-     * The image name pattern differs according to chosen container registry provider:   * `ECR`: `repository` * `SCALEWAY_CR`: `namespace/image` * `DOCKER_HUB`: `namespace/image` * `PUBLIC_ECR`: `registry_alias/repository` 
-     * @type {string}
-     * @memberof ContainerEditRequest
-     */
-    'image_name': string;
-    /**
-     * tag of the image container
-     * @type {string}
-     * @memberof ContainerEditRequest
-     */
-    'tag': string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ContainerEditRequest
-     */
-    'arguments'?: Array<string>;
-    /**
-     * optional entrypoint when launching container
-     * @type {string}
-     * @memberof ContainerEditRequest
-     */
-    'entrypoint'?: string;
-    /**
-     * unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof ContainerEditRequest
-     */
-    'cpu'?: number;
-    /**
-     * unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof ContainerEditRequest
-     */
-    'memory'?: number;
-    /**
-     * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no application running. 
-     * @type {number}
-     * @memberof ContainerEditRequest
-     */
-    'min_running_instances'?: number;
-    /**
-     * Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: -1 means that there is no limit. 
-     * @type {number}
-     * @memberof ContainerEditRequest
-     */
-    'max_running_instances'?: number;
-}
-/**
- * 
- * @export
- * @interface ContainerEditRequestAllOf
- */
-export interface ContainerEditRequestAllOf {
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof ContainerEditRequestAllOf
-     */
-    'name': string;
-    /**
-     * id of the linked registry
-     * @type {string}
-     * @memberof ContainerEditRequestAllOf
-     */
-    'registry_id': string;
-    /**
-     * The image name pattern differs according to chosen container registry provider:   * `ECR`: `repository` * `SCALEWAY_CR`: `namespace/image` * `DOCKER_HUB`: `namespace/image` * `PUBLIC_ECR`: `registry_alias/repository` 
-     * @type {string}
-     * @memberof ContainerEditRequestAllOf
-     */
-    'image_name': string;
-    /**
-     * tag of the image container
-     * @type {string}
-     * @memberof ContainerEditRequestAllOf
-     */
-    'tag': string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ContainerEditRequestAllOf
-     */
-    'arguments'?: Array<string>;
-    /**
-     * optional entrypoint when launching container
-     * @type {string}
-     * @memberof ContainerEditRequestAllOf
-     */
-    'entrypoint'?: string;
-    /**
-     * unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof ContainerEditRequestAllOf
-     */
-    'cpu'?: number;
-    /**
-     * unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof ContainerEditRequestAllOf
-     */
-    'memory'?: number;
-    /**
-     * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no application running. 
-     * @type {number}
-     * @memberof ContainerEditRequestAllOf
-     */
-    'min_running_instances'?: number;
-    /**
-     * Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: -1 means that there is no limit. 
-     * @type {number}
-     * @memberof ContainerEditRequestAllOf
-     */
-    'max_running_instances'?: number;
-}
-/**
- * 
- * @export
  * @interface ContainerNetwork
  */
 export interface ContainerNetwork {
@@ -22812,11 +22666,11 @@ export const ContainerMainCallsApiAxiosParamCreator = function (configuration?: 
          * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. 
          * @summary Edit container
          * @param {string} containerId Container ID
-         * @param {ContainerEditRequest} [containerEditRequest] 
+         * @param {ContainerRequest} [containerRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editContainer: async (containerId: string, containerEditRequest?: ContainerEditRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        editContainer: async (containerId: string, containerRequest?: ContainerRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'containerId' is not null or undefined
             assertParamExists('editContainer', 'containerId', containerId)
             const localVarPath = `/container/{containerId}`
@@ -22843,7 +22697,7 @@ export const ContainerMainCallsApiAxiosParamCreator = function (configuration?: 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(containerEditRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(containerRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -22989,12 +22843,12 @@ export const ContainerMainCallsApiFp = function(configuration?: Configuration) {
          * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. 
          * @summary Edit container
          * @param {string} containerId Container ID
-         * @param {ContainerEditRequest} [containerEditRequest] 
+         * @param {ContainerRequest} [containerRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editContainer(containerId: string, containerEditRequest?: ContainerEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.editContainer(containerId, containerEditRequest, options);
+        async editContainer(containerId: string, containerRequest?: ContainerRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editContainer(containerId, containerRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -23054,12 +22908,12 @@ export const ContainerMainCallsApiFactory = function (configuration?: Configurat
          * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. 
          * @summary Edit container
          * @param {string} containerId Container ID
-         * @param {ContainerEditRequest} [containerEditRequest] 
+         * @param {ContainerRequest} [containerRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editContainer(containerId: string, containerEditRequest?: ContainerEditRequest, options?: any): AxiosPromise<ContainerResponse> {
-            return localVarFp.editContainer(containerId, containerEditRequest, options).then((request) => request(axios, basePath));
+        editContainer(containerId: string, containerRequest?: ContainerRequest, options?: any): AxiosPromise<ContainerResponse> {
+            return localVarFp.editContainer(containerId, containerRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -23117,13 +22971,13 @@ export class ContainerMainCallsApi extends BaseAPI {
      * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. 
      * @summary Edit container
      * @param {string} containerId Container ID
-     * @param {ContainerEditRequest} [containerEditRequest] 
+     * @param {ContainerRequest} [containerRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContainerMainCallsApi
      */
-    public editContainer(containerId: string, containerEditRequest?: ContainerEditRequest, options?: AxiosRequestConfig) {
-        return ContainerMainCallsApiFp(this.configuration).editContainer(containerId, containerEditRequest, options).then((request) => request(this.axios, this.basePath));
+    public editContainer(containerId: string, containerRequest?: ContainerRequest, options?: AxiosRequestConfig) {
+        return ContainerMainCallsApiFp(this.configuration).editContainer(containerId, containerRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
