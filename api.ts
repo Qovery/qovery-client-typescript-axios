@@ -135,12 +135,6 @@ export interface Application {
     'storage'?: Array<ServiceStorageStorage>;
     /**
      * 
-     * @type {Array<ServicePort>}
-     * @memberof Application
-     */
-    'results'?: Array<ServicePort>;
-    /**
-     * 
      * @type {ReferenceObject}
      * @memberof Application
      */
@@ -229,6 +223,12 @@ export interface Application {
      * @memberof Application
      */
     'auto_preview'?: boolean;
+    /**
+     * 
+     * @type {ServicePortResponseList}
+     * @memberof Application
+     */
+    'ports'?: ServicePortResponseList;
 }
 /**
  * 
@@ -504,6 +504,12 @@ export interface ApplicationAllOf {
      * @memberof ApplicationAllOf
      */
     'auto_preview'?: boolean;
+    /**
+     * 
+     * @type {ServicePortResponseList}
+     * @memberof ApplicationAllOf
+     */
+    'ports'?: ServicePortResponseList;
 }
 /**
  * 
@@ -654,12 +660,6 @@ export interface ApplicationEditRequest {
      */
     'storage'?: Array<ServiceStorageRequestStorage>;
     /**
-     * 
-     * @type {Array<ServicePort>}
-     * @memberof ApplicationEditRequest
-     */
-    'results'?: Array<ServicePort>;
-    /**
      * name is case insensitive
      * @type {string}
      * @memberof ApplicationEditRequest
@@ -737,6 +737,12 @@ export interface ApplicationEditRequest {
      * @memberof ApplicationEditRequest
      */
     'sticky_session'?: boolean;
+    /**
+     * 
+     * @type {ServicePortResponseList}
+     * @memberof ApplicationEditRequest
+     */
+    'ports'?: ServicePortResponseList;
 }
 /**
  * 
@@ -822,6 +828,12 @@ export interface ApplicationEditRequestAllOf {
      * @memberof ApplicationEditRequestAllOf
      */
     'sticky_session'?: boolean;
+    /**
+     * 
+     * @type {ServicePortResponseList}
+     * @memberof ApplicationEditRequestAllOf
+     */
+    'ports'?: ServicePortResponseList;
 }
 /**
  * 
@@ -3472,12 +3484,6 @@ export interface ContainerResponse {
     'storage'?: Array<ServiceStorageStorage>;
     /**
      * 
-     * @type {Array<ServicePort>}
-     * @memberof ContainerResponse
-     */
-    'results'?: Array<ServicePort>;
-    /**
-     * 
      * @type {ReferenceObject}
      * @memberof ContainerResponse
      */
@@ -3560,6 +3566,12 @@ export interface ContainerResponse {
      * @memberof ContainerResponse
      */
     'auto_preview': boolean;
+    /**
+     * 
+     * @type {ServicePortResponseList}
+     * @memberof ContainerResponse
+     */
+    'ports'?: ServicePortResponseList;
 }
 /**
  * 
@@ -3651,6 +3663,12 @@ export interface ContainerResponseAllOf {
      * @memberof ContainerResponseAllOf
      */
     'auto_preview': boolean;
+    /**
+     * 
+     * @type {ServicePortResponseList}
+     * @memberof ContainerResponseAllOf
+     */
+    'ports'?: ServicePortResponseList;
 }
 /**
  * 
