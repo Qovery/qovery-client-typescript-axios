@@ -24,6 +24,20 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export enum APIVariableScopeEnum {
+    APPLICATION = 'APPLICATION',
+    BUILT_IN = 'BUILT_IN',
+    ENVIRONMENT = 'ENVIRONMENT',
+    PROJECT = 'PROJECT',
+    CONTAINER = 'CONTAINER'
+}
+
+/**
+ * 
+ * @export
  * @interface AccountInfo
  */
 export interface AccountInfo {
@@ -88,31 +102,6 @@ export interface AccountInfoEditRequest {
      * @memberof AccountInfoEditRequest
      */
     'profile_picture_url'?: string;
-}
-/**
- * 
- * @export
- * @interface AliasedSecret
- */
-export interface AliasedSecret {
-    /**
-     * 
-     * @type {string}
-     * @memberof AliasedSecret
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AliasedSecret
-     */
-    'key'?: string;
-    /**
-     * 
-     * @type {EnvironmentVariableScopeEnum}
-     * @memberof AliasedSecret
-     */
-    'scope'?: EnvironmentVariableScopeEnum;
 }
 /**
  * 
@@ -6189,10 +6178,10 @@ export interface EnvironmentVariable {
     'aliased_variable'?: EnvironmentVariableAllOfAliasedVariable;
     /**
      * 
-     * @type {EnvironmentVariableScopeEnum}
+     * @type {APIVariableScopeEnum}
      * @memberof EnvironmentVariable
      */
-    'scope': EnvironmentVariableScopeEnum;
+    'scope': APIVariableScopeEnum;
     /**
      * present only for `BUILT_IN` variable
      * @type {string}
@@ -6232,10 +6221,10 @@ export interface EnvironmentVariableAllOf {
     'aliased_variable'?: EnvironmentVariableAllOfAliasedVariable;
     /**
      * 
-     * @type {EnvironmentVariableScopeEnum}
+     * @type {APIVariableScopeEnum}
      * @memberof EnvironmentVariableAllOf
      */
-    'scope': EnvironmentVariableScopeEnum;
+    'scope': APIVariableScopeEnum;
     /**
      * present only for `BUILT_IN` variable
      * @type {string}
@@ -6281,10 +6270,10 @@ export interface EnvironmentVariableAllOfAliasedVariable {
     'value'?: string;
     /**
      * 
-     * @type {EnvironmentVariableScopeEnum}
+     * @type {APIVariableScopeEnum}
      * @memberof EnvironmentVariableAllOfAliasedVariable
      */
-    'scope'?: EnvironmentVariableScopeEnum;
+    'scope'?: APIVariableScopeEnum;
 }
 /**
  * 
@@ -6312,10 +6301,10 @@ export interface EnvironmentVariableAllOfOverriddenVariable {
     'value'?: string;
     /**
      * 
-     * @type {EnvironmentVariableScopeEnum}
+     * @type {APIVariableScopeEnum}
      * @memberof EnvironmentVariableAllOfOverriddenVariable
      */
-    'scope'?: EnvironmentVariableScopeEnum;
+    'scope'?: APIVariableScopeEnum;
 }
 /**
  * 
@@ -6368,20 +6357,6 @@ export interface EnvironmentVariableResponseList {
      */
     'results'?: Array<EnvironmentVariable>;
 }
-/**
- * 
- * @export
- * @enum {string}
- */
-
-export enum EnvironmentVariableScopeEnum {
-    APPLICATION = 'APPLICATION',
-    BUILT_IN = 'BUILT_IN',
-    ENVIRONMENT = 'ENVIRONMENT',
-    PROJECT = 'PROJECT',
-    CONTAINER = 'CONTAINER'
-}
-
 /**
  * 
  * @export
@@ -8600,31 +8575,6 @@ export interface OrganizationWebhookResponseList {
 /**
  * 
  * @export
- * @interface OverriddenSecret
- */
-export interface OverriddenSecret {
-    /**
-     * 
-     * @type {string}
-     * @memberof OverriddenSecret
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OverriddenSecret
-     */
-    'key'?: string;
-    /**
-     * 
-     * @type {EnvironmentVariableScopeEnum}
-     * @memberof OverriddenSecret
-     */
-    'scope'?: EnvironmentVariableScopeEnum;
-}
-/**
- * 
- * @export
  * @interface PaginationData
  */
 export interface PaginationData {
@@ -9333,25 +9283,25 @@ export interface Secret {
      * @type {string}
      * @memberof Secret
      */
-    'key'?: string;
+    'key': string;
     /**
      * 
-     * @type {OverriddenSecret}
+     * @type {SecretOverride}
      * @memberof Secret
      */
-    'overridden_secret'?: OverriddenSecret;
+    'overridden_secret'?: SecretOverride;
     /**
      * 
-     * @type {AliasedSecret}
+     * @type {SecretAlias}
      * @memberof Secret
      */
-    'aliased_secret'?: AliasedSecret;
+    'aliased_secret'?: SecretAlias;
     /**
      * 
-     * @type {EnvironmentVariableScopeEnum}
+     * @type {APIVariableScopeEnum}
      * @memberof Secret
      */
-    'scope': EnvironmentVariableScopeEnum;
+    'scope': APIVariableScopeEnum;
     /**
      * present only for `BUILT_IN` variable
      * @type {string}
@@ -9374,6 +9324,31 @@ export interface Secret {
 /**
  * 
  * @export
+ * @interface SecretAlias
+ */
+export interface SecretAlias {
+    /**
+     * 
+     * @type {string}
+     * @memberof SecretAlias
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SecretAlias
+     */
+    'key': string;
+    /**
+     * 
+     * @type {APIVariableScopeEnum}
+     * @memberof SecretAlias
+     */
+    'scope': APIVariableScopeEnum;
+}
+/**
+ * 
+ * @export
  * @interface SecretAllOf
  */
 export interface SecretAllOf {
@@ -9382,25 +9357,25 @@ export interface SecretAllOf {
      * @type {string}
      * @memberof SecretAllOf
      */
-    'key'?: string;
+    'key': string;
     /**
      * 
-     * @type {OverriddenSecret}
+     * @type {SecretOverride}
      * @memberof SecretAllOf
      */
-    'overridden_secret'?: OverriddenSecret;
+    'overridden_secret'?: SecretOverride;
     /**
      * 
-     * @type {AliasedSecret}
+     * @type {SecretAlias}
      * @memberof SecretAllOf
      */
-    'aliased_secret'?: AliasedSecret;
+    'aliased_secret'?: SecretAlias;
     /**
      * 
-     * @type {EnvironmentVariableScopeEnum}
+     * @type {APIVariableScopeEnum}
      * @memberof SecretAllOf
      */
-    'scope': EnvironmentVariableScopeEnum;
+    'scope': APIVariableScopeEnum;
     /**
      * present only for `BUILT_IN` variable
      * @type {string}
@@ -9431,13 +9406,38 @@ export interface SecretEditRequest {
      * @type {string}
      * @memberof SecretEditRequest
      */
-    'value'?: string;
+    'value': string;
     /**
      * 
      * @type {string}
      * @memberof SecretEditRequest
      */
-    'key'?: string;
+    'key': string;
+}
+/**
+ * 
+ * @export
+ * @interface SecretOverride
+ */
+export interface SecretOverride {
+    /**
+     * 
+     * @type {string}
+     * @memberof SecretOverride
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SecretOverride
+     */
+    'key': string;
+    /**
+     * 
+     * @type {APIVariableScopeEnum}
+     * @memberof SecretOverride
+     */
+    'scope': APIVariableScopeEnum;
 }
 /**
  * 
@@ -9666,6 +9666,12 @@ export interface ServicePortPorts {
      * @memberof ServicePortPorts
      */
     'publicly_accessible': boolean;
+    /**
+     * is the default port to use for domain & probes check
+     * @type {boolean}
+     * @memberof ServicePortPorts
+     */
+    'is_default'?: boolean;
     /**
      * 
      * @type {PortProtocolEnum}
@@ -10422,10 +10428,10 @@ export interface VariableImportRequestVars {
     'value': string;
     /**
      * 
-     * @type {EnvironmentVariableScopeEnum}
+     * @type {APIVariableScopeEnum}
      * @memberof VariableImportRequestVars
      */
-    'scope': EnvironmentVariableScopeEnum;
+    'scope': APIVariableScopeEnum;
     /**
      * 
      * @type {boolean}
@@ -10453,10 +10459,10 @@ export interface VariableImportSuccessfulImportedVariables {
     'value'?: string;
     /**
      * 
-     * @type {EnvironmentVariableScopeEnum}
+     * @type {APIVariableScopeEnum}
      * @memberof VariableImportSuccessfulImportedVariables
      */
-    'scope': EnvironmentVariableScopeEnum;
+    'scope': APIVariableScopeEnum;
     /**
      * 
      * @type {boolean}
