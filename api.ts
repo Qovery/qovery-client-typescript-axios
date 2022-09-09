@@ -135,10 +135,10 @@ export interface Application {
     'storage'?: Array<ServiceStorageStorage>;
     /**
      * 
-     * @type {Array<ServicePortPorts>}
+     * @type {Array<ServicePort>}
      * @memberof Application
      */
-    'ports'?: Array<ServicePortPorts>;
+    'results'?: Array<ServicePort>;
     /**
      * 
      * @type {ReferenceObject}
@@ -655,10 +655,10 @@ export interface ApplicationEditRequest {
     'storage'?: Array<ServiceStorageRequestStorage>;
     /**
      * 
-     * @type {Array<ServicePortPorts>}
+     * @type {Array<ServicePort>}
      * @memberof ApplicationEditRequest
      */
-    'ports'?: Array<ServicePortPorts>;
+    'results'?: Array<ServicePort>;
     /**
      * name is case insensitive
      * @type {string}
@@ -1675,31 +1675,6 @@ export interface CloudProviderResponseList {
 /**
  * 
  * @export
- * @interface CluserCredentials
- */
-export interface CluserCredentials {
-    /**
-     * 
-     * @type {string}
-     * @memberof CluserCredentials
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CluserCredentials
-     */
-    'access_key_id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CluserCredentials
-     */
-    'secret_access_key'?: string;
-}
-/**
- * 
- * @export
  * @interface Cluster
  */
 export interface Cluster {
@@ -2069,13 +2044,13 @@ export interface ClusterCredentials {
      * @type {string}
      * @memberof ClusterCredentials
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
      * @memberof ClusterCredentials
      */
-    'name'?: string;
+    'name': string;
 }
 /**
  * 
@@ -3497,10 +3472,10 @@ export interface ContainerResponse {
     'storage'?: Array<ServiceStorageStorage>;
     /**
      * 
-     * @type {Array<ServicePortPorts>}
+     * @type {Array<ServicePort>}
      * @memberof ContainerResponse
      */
-    'ports'?: Array<ServicePortPorts>;
+    'results'?: Array<ServicePort>;
     /**
      * 
      * @type {ReferenceObject}
@@ -3689,19 +3664,6 @@ export interface ContainerResponseList {
      * @memberof ContainerResponseList
      */
     'results'?: Array<ContainerResponse>;
-}
-/**
- * 
- * @export
- * @interface ContainerStorage
- */
-export interface ContainerStorage {
-    /**
-     * 
-     * @type {Array<ServiceStorageStorage>}
-     * @memberof ContainerStorage
-     */
-    'storage'?: Array<ServiceStorageStorage>;
 }
 /**
  * 
@@ -6166,16 +6128,16 @@ export interface EnvironmentVariable {
     'value': string;
     /**
      * 
-     * @type {EnvironmentVariableAllOfOverriddenVariable}
+     * @type {EnvironmentVariableOverride}
      * @memberof EnvironmentVariable
      */
-    'overridden_variable'?: EnvironmentVariableAllOfOverriddenVariable;
+    'overridden_variable'?: EnvironmentVariableOverride;
     /**
      * 
-     * @type {EnvironmentVariableAllOfAliasedVariable}
+     * @type {EnvironmentVariableAlias}
      * @memberof EnvironmentVariable
      */
-    'aliased_variable'?: EnvironmentVariableAllOfAliasedVariable;
+    'aliased_variable'?: EnvironmentVariableAlias;
     /**
      * 
      * @type {APIVariableScopeEnum}
@@ -6200,6 +6162,37 @@ export interface EnvironmentVariable {
      * @memberof EnvironmentVariable
      */
     'service_type'?: LinkedServiceTypeEnum;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentVariableAlias
+ */
+export interface EnvironmentVariableAlias {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentVariableAlias
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentVariableAlias
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentVariableAlias
+     */
+    'value': string;
+    /**
+     * 
+     * @type {APIVariableScopeEnum}
+     * @memberof EnvironmentVariableAlias
+     */
+    'scope': APIVariableScopeEnum;
 }
 /**
  * 
@@ -6209,16 +6202,16 @@ export interface EnvironmentVariable {
 export interface EnvironmentVariableAllOf {
     /**
      * 
-     * @type {EnvironmentVariableAllOfOverriddenVariable}
+     * @type {EnvironmentVariableOverride}
      * @memberof EnvironmentVariableAllOf
      */
-    'overridden_variable'?: EnvironmentVariableAllOfOverriddenVariable;
+    'overridden_variable'?: EnvironmentVariableOverride;
     /**
      * 
-     * @type {EnvironmentVariableAllOfAliasedVariable}
+     * @type {EnvironmentVariableAlias}
      * @memberof EnvironmentVariableAllOf
      */
-    'aliased_variable'?: EnvironmentVariableAllOfAliasedVariable;
+    'aliased_variable'?: EnvironmentVariableAlias;
     /**
      * 
      * @type {APIVariableScopeEnum}
@@ -6243,68 +6236,6 @@ export interface EnvironmentVariableAllOf {
      * @memberof EnvironmentVariableAllOf
      */
     'service_type'?: LinkedServiceTypeEnum;
-}
-/**
- * 
- * @export
- * @interface EnvironmentVariableAllOfAliasedVariable
- */
-export interface EnvironmentVariableAllOfAliasedVariable {
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentVariableAllOfAliasedVariable
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentVariableAllOfAliasedVariable
-     */
-    'key'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentVariableAllOfAliasedVariable
-     */
-    'value'?: string;
-    /**
-     * 
-     * @type {APIVariableScopeEnum}
-     * @memberof EnvironmentVariableAllOfAliasedVariable
-     */
-    'scope'?: APIVariableScopeEnum;
-}
-/**
- * 
- * @export
- * @interface EnvironmentVariableAllOfOverriddenVariable
- */
-export interface EnvironmentVariableAllOfOverriddenVariable {
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentVariableAllOfOverriddenVariable
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentVariableAllOfOverriddenVariable
-     */
-    'key'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentVariableAllOfOverriddenVariable
-     */
-    'value'?: string;
-    /**
-     * 
-     * @type {APIVariableScopeEnum}
-     * @memberof EnvironmentVariableAllOfOverriddenVariable
-     */
-    'scope'?: APIVariableScopeEnum;
 }
 /**
  * 
@@ -6324,6 +6255,37 @@ export interface EnvironmentVariableEditRequest {
      * @memberof EnvironmentVariableEditRequest
      */
     'value': string;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentVariableOverride
+ */
+export interface EnvironmentVariableOverride {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentVariableOverride
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentVariableOverride
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentVariableOverride
+     */
+    'value': string;
+    /**
+     * 
+     * @type {APIVariableScopeEnum}
+     * @memberof EnvironmentVariableOverride
+     */
+    'scope': APIVariableScopeEnum;
 }
 /**
  * 
@@ -9625,57 +9587,44 @@ export enum ServiceDeploymentStatusEnum {
 export interface ServicePort {
     /**
      * 
-     * @type {Array<ServicePortPorts>}
-     * @memberof ServicePort
-     */
-    'ports'?: Array<ServicePortPorts>;
-}
-/**
- * 
- * @export
- * @interface ServicePortPorts
- */
-export interface ServicePortPorts {
-    /**
-     * 
      * @type {string}
-     * @memberof ServicePortPorts
+     * @memberof ServicePort
      */
     'id': string;
     /**
      * 
      * @type {string}
-     * @memberof ServicePortPorts
+     * @memberof ServicePort
      */
     'name'?: string;
     /**
      * The listening port of your service.
      * @type {number}
-     * @memberof ServicePortPorts
+     * @memberof ServicePort
      */
     'internal_port': number;
     /**
      * The exposed port for your service. This is optional. If not set a default port will be used.
      * @type {number}
-     * @memberof ServicePortPorts
+     * @memberof ServicePort
      */
     'external_port'?: number;
     /**
      * Expose the port to the world
      * @type {boolean}
-     * @memberof ServicePortPorts
+     * @memberof ServicePort
      */
     'publicly_accessible': boolean;
     /**
      * is the default port to use for domain & probes check
      * @type {boolean}
-     * @memberof ServicePortPorts
+     * @memberof ServicePort
      */
     'is_default'?: boolean;
     /**
      * 
      * @type {PortProtocolEnum}
-     * @memberof ServicePortPorts
+     * @memberof ServicePort
      */
     'protocol': PortProtocolEnum;
 }
@@ -9734,6 +9683,19 @@ export interface ServicePortRequestPorts {
      * @memberof ServicePortRequestPorts
      */
     'protocol'?: PortProtocolEnum;
+}
+/**
+ * 
+ * @export
+ * @interface ServicePortResponseList
+ */
+export interface ServicePortResponseList {
+    /**
+     * 
+     * @type {Array<ServicePort>}
+     * @memberof ServicePortResponseList
+     */
+    'results'?: Array<ServicePort>;
 }
 /**
  * 
