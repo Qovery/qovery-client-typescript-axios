@@ -2570,10 +2570,10 @@ export interface ClusterRequestFeatures {
     'id'?: string;
     /**
      * 
-     * @type {string}
+     * @type {string | boolean}
      * @memberof ClusterRequestFeatures
      */
-    'value'?: string | null;
+    'value'?: string | boolean | null;
 }
 /**
  * 
