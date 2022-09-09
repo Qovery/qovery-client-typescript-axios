@@ -4760,6 +4760,110 @@ export interface DeploymentHistoryApplicationAllOf {
 /**
  * 
  * @export
+ * @interface DeploymentHistoryContainer
+ */
+export interface DeploymentHistoryContainer {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryContainer
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryContainer
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryContainer
+     */
+    'updated_at'?: string;
+    /**
+     * name of the container
+     * @type {string}
+     * @memberof DeploymentHistoryContainer
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {DeploymentHistoryStatusEnum}
+     * @memberof DeploymentHistoryContainer
+     */
+    'status'?: DeploymentHistoryStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryContainer
+     */
+    'image_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryContainer
+     */
+    'tag'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof DeploymentHistoryContainer
+     */
+    'arguments'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryContainer
+     */
+    'entrypoint'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentHistoryContainerAllOf
+ */
+export interface DeploymentHistoryContainerAllOf {
+    /**
+     * name of the container
+     * @type {string}
+     * @memberof DeploymentHistoryContainerAllOf
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {DeploymentHistoryStatusEnum}
+     * @memberof DeploymentHistoryContainerAllOf
+     */
+    'status'?: DeploymentHistoryStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryContainerAllOf
+     */
+    'image_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryContainerAllOf
+     */
+    'tag'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof DeploymentHistoryContainerAllOf
+     */
+    'arguments'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryContainerAllOf
+     */
+    'entrypoint'?: string;
+}
+/**
+ * 
+ * @export
  * @interface DeploymentHistoryDatabase
  */
 export interface DeploymentHistoryDatabase {
@@ -14549,52 +14653,6 @@ export const ApplicationSecretApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         * - Allows you to override at container level a secret that has a higher scope. - You only have to specify a value in the request body - The system will create a new secret at container level with the same key as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the overridden_secret will be exposed in the \"overridden_secret\" field of the newly created secret 
-         * @summary Create a secret override at the container level
-         * @param {string} containerId Container ID
-         * @param {string} secretId Secret ID
-         * @param {Value} [value] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createContainerSecretOverride: async (containerId: string, secretId: string, value?: Value, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('createContainerSecretOverride', 'containerId', containerId)
-            // verify required parameter 'secretId' is not null or undefined
-            assertParamExists('createContainerSecretOverride', 'secretId', secretId)
-            const localVarPath = `/container/{containerId}/secret/{secretId}/override`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)))
-                .replace(`{${"secretId"}}`, encodeURIComponent(String(secretId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(value, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * - To delete a secret you must have the project user permission - You can\'t delete a BUILT_IN secret - If you delete a secret having override or alias, the associated override/alias will be deleted as well 
          * @summary Delete a secret from an application
          * @param {string} applicationId Application ID
@@ -14771,19 +14829,6 @@ export const ApplicationSecretApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * - Allows you to override at container level a secret that has a higher scope. - You only have to specify a value in the request body - The system will create a new secret at container level with the same key as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the overridden_secret will be exposed in the \"overridden_secret\" field of the newly created secret 
-         * @summary Create a secret override at the container level
-         * @param {string} containerId Container ID
-         * @param {string} secretId Secret ID
-         * @param {Value} [value] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createContainerSecretOverride(containerId: string, secretId: string, value?: Value, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Secret>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createContainerSecretOverride(containerId, secretId, value, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * - To delete a secret you must have the project user permission - You can\'t delete a BUILT_IN secret - If you delete a secret having override or alias, the associated override/alias will be deleted as well 
          * @summary Delete a secret from an application
          * @param {string} applicationId Application ID
@@ -14863,18 +14908,6 @@ export const ApplicationSecretApiFactory = function (configuration?: Configurati
          */
         createApplicationSecretOverride(applicationId: string, secretId: string, value?: Value, options?: any): AxiosPromise<Secret> {
             return localVarFp.createApplicationSecretOverride(applicationId, secretId, value, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * - Allows you to override at container level a secret that has a higher scope. - You only have to specify a value in the request body - The system will create a new secret at container level with the same key as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the overridden_secret will be exposed in the \"overridden_secret\" field of the newly created secret 
-         * @summary Create a secret override at the container level
-         * @param {string} containerId Container ID
-         * @param {string} secretId Secret ID
-         * @param {Value} [value] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createContainerSecretOverride(containerId: string, secretId: string, value?: Value, options?: any): AxiosPromise<Secret> {
-            return localVarFp.createContainerSecretOverride(containerId, secretId, value, options).then((request) => request(axios, basePath));
         },
         /**
          * - To delete a secret you must have the project user permission - You can\'t delete a BUILT_IN secret - If you delete a secret having override or alias, the associated override/alias will be deleted as well 
@@ -14958,20 +14991,6 @@ export class ApplicationSecretApi extends BaseAPI {
      */
     public createApplicationSecretOverride(applicationId: string, secretId: string, value?: Value, options?: AxiosRequestConfig) {
         return ApplicationSecretApiFp(this.configuration).createApplicationSecretOverride(applicationId, secretId, value, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * - Allows you to override at container level a secret that has a higher scope. - You only have to specify a value in the request body - The system will create a new secret at container level with the same key as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the overridden_secret will be exposed in the \"overridden_secret\" field of the newly created secret 
-     * @summary Create a secret override at the container level
-     * @param {string} containerId Container ID
-     * @param {string} secretId Secret ID
-     * @param {Value} [value] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApplicationSecretApi
-     */
-    public createContainerSecretOverride(containerId: string, secretId: string, value?: Value, options?: AxiosRequestConfig) {
-        return ApplicationSecretApiFp(this.configuration).createContainerSecretOverride(containerId, secretId, value, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -23854,6 +23873,52 @@ export const ContainerSecretApiAxiosParamCreator = function (configuration?: Con
             };
         },
         /**
+         * - Allows you to override at container level a secret that has a higher scope. - You only have to specify a value in the request body - The system will create a new secret at container level with the same key as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the overridden_secret will be exposed in the \"overridden_secret\" field of the newly created secret 
+         * @summary Create a secret override at the container level
+         * @param {string} containerId Container ID
+         * @param {string} secretId Secret ID
+         * @param {Value} [value] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createContainerSecretOverride: async (containerId: string, secretId: string, value?: Value, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'containerId' is not null or undefined
+            assertParamExists('createContainerSecretOverride', 'containerId', containerId)
+            // verify required parameter 'secretId' is not null or undefined
+            assertParamExists('createContainerSecretOverride', 'secretId', secretId)
+            const localVarPath = `/container/{containerId}/secret/{secretId}/override`
+                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)))
+                .replace(`{${"secretId"}}`, encodeURIComponent(String(secretId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(value, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * - To delete a secret you must have the project user permission - You can\'t delete a BUILT_IN secret - If you delete a secret having override or alias, the associated override/alias will be deleted as well 
          * @summary Delete a secret from an container
          * @param {string} containerId Container ID
@@ -24017,6 +24082,19 @@ export const ContainerSecretApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * - Allows you to override at container level a secret that has a higher scope. - You only have to specify a value in the request body - The system will create a new secret at container level with the same key as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the overridden_secret will be exposed in the \"overridden_secret\" field of the newly created secret 
+         * @summary Create a secret override at the container level
+         * @param {string} containerId Container ID
+         * @param {string} secretId Secret ID
+         * @param {Value} [value] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createContainerSecretOverride(containerId: string, secretId: string, value?: Value, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Secret>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createContainerSecretOverride(containerId, secretId, value, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * - To delete a secret you must have the project user permission - You can\'t delete a BUILT_IN secret - If you delete a secret having override or alias, the associated override/alias will be deleted as well 
          * @summary Delete a secret from an container
          * @param {string} containerId Container ID
@@ -24086,6 +24164,18 @@ export const ContainerSecretApiFactory = function (configuration?: Configuration
             return localVarFp.createContainerSecretAlias(containerId, secretId, key, options).then((request) => request(axios, basePath));
         },
         /**
+         * - Allows you to override at container level a secret that has a higher scope. - You only have to specify a value in the request body - The system will create a new secret at container level with the same key as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the overridden_secret will be exposed in the \"overridden_secret\" field of the newly created secret 
+         * @summary Create a secret override at the container level
+         * @param {string} containerId Container ID
+         * @param {string} secretId Secret ID
+         * @param {Value} [value] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createContainerSecretOverride(containerId: string, secretId: string, value?: Value, options?: any): AxiosPromise<Secret> {
+            return localVarFp.createContainerSecretOverride(containerId, secretId, value, options).then((request) => request(axios, basePath));
+        },
+        /**
          * - To delete a secret you must have the project user permission - You can\'t delete a BUILT_IN secret - If you delete a secret having override or alias, the associated override/alias will be deleted as well 
          * @summary Delete a secret from an container
          * @param {string} containerId Container ID
@@ -24153,6 +24243,20 @@ export class ContainerSecretApi extends BaseAPI {
      */
     public createContainerSecretAlias(containerId: string, secretId: string, key?: Key, options?: AxiosRequestConfig) {
         return ContainerSecretApiFp(this.configuration).createContainerSecretAlias(containerId, secretId, key, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * - Allows you to override at container level a secret that has a higher scope. - You only have to specify a value in the request body - The system will create a new secret at container level with the same key as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the overridden_secret will be exposed in the \"overridden_secret\" field of the newly created secret 
+     * @summary Create a secret override at the container level
+     * @param {string} containerId Container ID
+     * @param {string} secretId Secret ID
+     * @param {Value} [value] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContainerSecretApi
+     */
+    public createContainerSecretOverride(containerId: string, secretId: string, value?: Value, options?: AxiosRequestConfig) {
+        return ContainerSecretApiFp(this.configuration).createContainerSecretOverride(containerId, secretId, value, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
