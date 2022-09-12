@@ -4760,6 +4760,110 @@ export interface DeploymentHistoryApplicationAllOf {
 /**
  * 
  * @export
+ * @interface DeploymentHistoryContainer
+ */
+export interface DeploymentHistoryContainer {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryContainer
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryContainer
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryContainer
+     */
+    'updated_at'?: string;
+    /**
+     * name of the container
+     * @type {string}
+     * @memberof DeploymentHistoryContainer
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {DeploymentHistoryStatusEnum}
+     * @memberof DeploymentHistoryContainer
+     */
+    'status'?: DeploymentHistoryStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryContainer
+     */
+    'image_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryContainer
+     */
+    'tag'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof DeploymentHistoryContainer
+     */
+    'arguments'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryContainer
+     */
+    'entrypoint'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentHistoryContainerAllOf
+ */
+export interface DeploymentHistoryContainerAllOf {
+    /**
+     * name of the container
+     * @type {string}
+     * @memberof DeploymentHistoryContainerAllOf
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {DeploymentHistoryStatusEnum}
+     * @memberof DeploymentHistoryContainerAllOf
+     */
+    'status'?: DeploymentHistoryStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryContainerAllOf
+     */
+    'image_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryContainerAllOf
+     */
+    'tag'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof DeploymentHistoryContainerAllOf
+     */
+    'arguments'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryContainerAllOf
+     */
+    'entrypoint'?: string;
+}
+/**
+ * 
+ * @export
  * @interface DeploymentHistoryDatabase
  */
 export interface DeploymentHistoryDatabase {
@@ -4851,6 +4955,12 @@ export interface DeploymentHistoryEnvironment {
     'applications'?: Array<DeploymentHistoryApplication>;
     /**
      * 
+     * @type {Array<DeploymentHistoryContainer>}
+     * @memberof DeploymentHistoryEnvironment
+     */
+    'containers'?: Array<DeploymentHistoryContainer>;
+    /**
+     * 
      * @type {Array<DeploymentHistoryDatabase>}
      * @memberof DeploymentHistoryEnvironment
      */
@@ -4874,6 +4984,12 @@ export interface DeploymentHistoryEnvironmentAllOf {
      * @memberof DeploymentHistoryEnvironmentAllOf
      */
     'applications'?: Array<DeploymentHistoryApplication>;
+    /**
+     * 
+     * @type {Array<DeploymentHistoryContainer>}
+     * @memberof DeploymentHistoryEnvironmentAllOf
+     */
+    'containers'?: Array<DeploymentHistoryContainer>;
     /**
      * 
      * @type {Array<DeploymentHistoryDatabase>}
