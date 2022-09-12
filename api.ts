@@ -660,6 +660,12 @@ export interface ApplicationEditRequest {
      */
     'storage'?: Array<ServiceStorageRequestStorage>;
     /**
+     * 
+     * @type {Array<ServicePortRequestPorts>}
+     * @memberof ApplicationEditRequest
+     */
+    'ports'?: Array<ServicePortRequestPorts>;
+    /**
      * name is case insensitive
      * @type {string}
      * @memberof ApplicationEditRequest
@@ -737,12 +743,6 @@ export interface ApplicationEditRequest {
      * @memberof ApplicationEditRequest
      */
     'sticky_session'?: boolean;
-    /**
-     * 
-     * @type {ServicePortResponseList}
-     * @memberof ApplicationEditRequest
-     */
-    'ports'?: ServicePortResponseList;
 }
 /**
  * 
@@ -828,12 +828,6 @@ export interface ApplicationEditRequestAllOf {
      * @memberof ApplicationEditRequestAllOf
      */
     'sticky_session'?: boolean;
-    /**
-     * 
-     * @type {ServicePortResponseList}
-     * @memberof ApplicationEditRequestAllOf
-     */
-    'ports'?: ServicePortResponseList;
 }
 /**
  * 
