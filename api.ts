@@ -6875,6 +6875,19 @@ export interface InlineResponse2001 {
 /**
  * 
  * @export
+ * @interface InlineResponse2002
+ */
+export interface InlineResponse2002 {
+    /**
+     * 
+     * @type {Array<AvailableContainerRegistryResponse>}
+     * @memberof InlineResponse2002
+     */
+    'results'?: Array<AvailableContainerRegistryResponse>;
+}
+/**
+ * 
+ * @export
  * @interface Instance
  */
 export interface Instance {
@@ -23606,7 +23619,7 @@ export const ContainerRegistriesApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listAvailableContainerRegistry(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AvailableContainerRegistryResponse>> {
+        async listAvailableContainerRegistry(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2002>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listAvailableContainerRegistry(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -23682,7 +23695,7 @@ export const ContainerRegistriesApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAvailableContainerRegistry(options?: any): AxiosPromise<AvailableContainerRegistryResponse> {
+        listAvailableContainerRegistry(options?: any): AxiosPromise<InlineResponse2002> {
             return localVarFp.listAvailableContainerRegistry(options).then((request) => request(axios, basePath));
         },
         /**
