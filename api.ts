@@ -134,42 +134,6 @@ export interface Application {
      */
     'storage'?: Array<ServiceStorageStorage>;
     /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof Application
-     */
-    'name'?: string;
-    /**
-     * The listening port of your service.
-     * @type {number}
-     * @memberof Application
-     */
-    'internal_port': number;
-    /**
-     * The exposed port for your service. This is optional. If not set a default port will be used.
-     * @type {number}
-     * @memberof Application
-     */
-    'external_port'?: number;
-    /**
-     * Expose the port to the world
-     * @type {boolean}
-     * @memberof Application
-     */
-    'publicly_accessible': boolean;
-    /**
-     * is the default port to use for domain & probes check
-     * @type {boolean}
-     * @memberof Application
-     */
-    'is_default'?: boolean;
-    /**
-     * 
-     * @type {PortProtocolEnum}
-     * @memberof Application
-     */
-    'protocol': PortProtocolEnum;
-    /**
      * 
      * @type {ReferenceObject}
      * @memberof Application
@@ -193,6 +157,12 @@ export interface Application {
      * @memberof Application
      */
     'maximum_memory'?: number;
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof Application
+     */
+    'name'?: string;
     /**
      * give a description to this application
      * @type {string}
@@ -253,6 +223,12 @@ export interface Application {
      * @memberof Application
      */
     'auto_preview'?: boolean;
+    /**
+     * 
+     * @type {ServicePortResponseList}
+     * @memberof Application
+     */
+    'ports'?: ServicePortResponseList;
 }
 /**
  * 
@@ -528,6 +504,12 @@ export interface ApplicationAllOf {
      * @memberof ApplicationAllOf
      */
     'auto_preview'?: boolean;
+    /**
+     * 
+     * @type {ServicePortResponseList}
+     * @memberof ApplicationAllOf
+     */
+    'ports'?: ServicePortResponseList;
 }
 /**
  * 
