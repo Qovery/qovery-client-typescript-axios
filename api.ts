@@ -225,10 +225,10 @@ export interface Application {
     'auto_preview'?: boolean;
     /**
      * 
-     * @type {ServicePortResponseList}
+     * @type {Array<ServicePort>}
      * @memberof Application
      */
-    'ports'?: ServicePortResponseList;
+    'ports'?: Array<ServicePort>;
 }
 /**
  * 
@@ -506,10 +506,10 @@ export interface ApplicationAllOf {
     'auto_preview'?: boolean;
     /**
      * 
-     * @type {ServicePortResponseList}
+     * @type {Array<ServicePort>}
      * @memberof ApplicationAllOf
      */
-    'ports'?: ServicePortResponseList;
+    'ports'?: Array<ServicePort>;
 }
 /**
  * 
@@ -660,12 +660,6 @@ export interface ApplicationEditRequest {
      */
     'storage'?: Array<ServiceStorageRequestStorage>;
     /**
-     * 
-     * @type {Array<ServicePortRequestPorts>}
-     * @memberof ApplicationEditRequest
-     */
-    'ports'?: Array<ServicePortRequestPorts>;
-    /**
      * name is case insensitive
      * @type {string}
      * @memberof ApplicationEditRequest
@@ -743,6 +737,12 @@ export interface ApplicationEditRequest {
      * @memberof ApplicationEditRequest
      */
     'sticky_session'?: boolean;
+    /**
+     * 
+     * @type {Array<ServicePort>}
+     * @memberof ApplicationEditRequest
+     */
+    'ports'?: Array<ServicePort>;
 }
 /**
  * 
@@ -828,6 +828,12 @@ export interface ApplicationEditRequestAllOf {
      * @memberof ApplicationEditRequestAllOf
      */
     'sticky_session'?: boolean;
+    /**
+     * 
+     * @type {Array<ServicePort>}
+     * @memberof ApplicationEditRequestAllOf
+     */
+    'ports'?: Array<ServicePort>;
 }
 /**
  * 
@@ -966,12 +972,6 @@ export interface ApplicationRequest {
      */
     'storage'?: Array<ServiceStorageRequestStorage>;
     /**
-     * 
-     * @type {Array<ServicePortRequestPorts>}
-     * @memberof ApplicationRequest
-     */
-    'ports'?: Array<ServicePortRequestPorts>;
-    /**
      * name is case insensitive
      * @type {string}
      * @memberof ApplicationRequest
@@ -1043,6 +1043,12 @@ export interface ApplicationRequest {
      * @memberof ApplicationRequest
      */
     'auto_preview'?: boolean;
+    /**
+     * 
+     * @type {Array<ServicePort>}
+     * @memberof ApplicationRequest
+     */
+    'ports'?: Array<ServicePort>;
 }
 /**
  * 
@@ -1122,6 +1128,12 @@ export interface ApplicationRequestAllOf {
      * @memberof ApplicationRequestAllOf
      */
     'auto_preview'?: boolean;
+    /**
+     * 
+     * @type {Array<ServicePort>}
+     * @memberof ApplicationRequestAllOf
+     */
+    'ports'?: Array<ServicePort>;
 }
 /**
  * 
@@ -3562,10 +3574,10 @@ export interface ContainerResponse {
     'auto_preview': boolean;
     /**
      * 
-     * @type {ServicePortResponseList}
+     * @type {Array<ServicePort>}
      * @memberof ContainerResponse
      */
-    'ports'?: ServicePortResponseList;
+    'ports'?: Array<ServicePort>;
 }
 /**
  * 
@@ -3659,10 +3671,10 @@ export interface ContainerResponseAllOf {
     'auto_preview': boolean;
     /**
      * 
-     * @type {ServicePortResponseList}
+     * @type {Array<ServicePort>}
      * @memberof ContainerResponseAllOf
      */
-    'ports'?: ServicePortResponseList;
+    'ports'?: Array<ServicePort>;
 }
 /**
  * 
@@ -9811,19 +9823,6 @@ export interface ServicePortRequestPorts {
      * @memberof ServicePortRequestPorts
      */
     'protocol'?: PortProtocolEnum;
-}
-/**
- * 
- * @export
- * @interface ServicePortResponseList
- */
-export interface ServicePortResponseList {
-    /**
-     * 
-     * @type {Array<ServicePort>}
-     * @memberof ServicePortResponseList
-     */
-    'results'?: Array<ServicePort>;
 }
 /**
  * 
