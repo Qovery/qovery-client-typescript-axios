@@ -1170,6 +1170,19 @@ export interface AvailableContainerRegistryResponse {
 /**
  * 
  * @export
+ * @interface AvailableContainerRegistryResponseList
+ */
+export interface AvailableContainerRegistryResponseList {
+    /**
+     * 
+     * @type {Array<AvailableContainerRegistryResponse>}
+     * @memberof AvailableContainerRegistryResponseList
+     */
+    'results'?: Array<AvailableContainerRegistryResponse>;
+}
+/**
+ * 
+ * @export
  * @interface AwsCredentialsRequest
  */
 export interface AwsCredentialsRequest {
@@ -2429,6 +2442,19 @@ export interface ClusterLogsMessage {
 /**
  * 
  * @export
+ * @interface ClusterLogsResponseList
+ */
+export interface ClusterLogsResponseList {
+    /**
+     * 
+     * @type {Array<ClusterLogs>}
+     * @memberof ClusterLogsResponseList
+     */
+    'results'?: Array<ClusterLogs>;
+}
+/**
+ * 
+ * @export
  * @interface ClusterReadinessStatus
  */
 export interface ClusterReadinessStatus {
@@ -3311,6 +3337,19 @@ export interface ContainerRegistryResponseAllOf {
      * @memberof ContainerRegistryResponseAllOf
      */
     'url'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ContainerRegistryResponseList
+ */
+export interface ContainerRegistryResponseList {
+    /**
+     * 
+     * @type {Array<ContainerRegistryResponse>}
+     * @memberof ContainerRegistryResponseList
+     */
+    'results'?: Array<ContainerRegistryResponse>;
 }
 /**
  * 
@@ -6798,96 +6837,6 @@ export enum HealthcheckProtocolEnum {
 /**
  * 
  * @export
- * @interface InlineObject
- */
-export interface InlineObject {
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineObject
-     */
-    'plan'?: string;
-}
-/**
- * 
- * @export
- * @interface InlineObject1
- */
-export interface InlineObject1 {
-    /**
-     * the container image name to deploy
-     * @type {string}
-     * @memberof InlineObject1
-     */
-    'image_name'?: string;
-    /**
-     * the new tag to deploy
-     * @type {string}
-     * @memberof InlineObject1
-     */
-    'tag'?: string;
-}
-/**
- * 
- * @export
- * @interface InlineObject2
- */
-export interface InlineObject2 {
-    /**
-     * the container image name to trigger preview environment
-     * @type {string}
-     * @memberof InlineObject2
-     */
-    'image_name'?: string;
-    /**
-     * the tag to be used in the preview environment
-     * @type {string}
-     * @memberof InlineObject2
-     */
-    'tag'?: string;
-}
-/**
- * 
- * @export
- * @interface InlineResponse200
- */
-export interface InlineResponse200 {
-    /**
-     * 
-     * @type {Array<ClusterLogs>}
-     * @memberof InlineResponse200
-     */
-    'results'?: Array<ClusterLogs>;
-}
-/**
- * 
- * @export
- * @interface InlineResponse2001
- */
-export interface InlineResponse2001 {
-    /**
-     * 
-     * @type {Array<ContainerRegistryResponse>}
-     * @memberof InlineResponse2001
-     */
-    'results'?: Array<ContainerRegistryResponse>;
-}
-/**
- * 
- * @export
- * @interface InlineResponse2002
- */
-export interface InlineResponse2002 {
-    /**
-     * 
-     * @type {Array<AvailableContainerRegistryResponse>}
-     * @memberof InlineResponse2002
-     */
-    'results'?: Array<AvailableContainerRegistryResponse>;
-}
-/**
- * 
- * @export
  * @interface Instance
  */
 export interface Instance {
@@ -8195,6 +8144,57 @@ export enum OrganizationApiTokenScope {
     ADMIN = 'ADMIN'
 }
 
+/**
+ * 
+ * @export
+ * @interface OrganizationChangePlanRequest
+ */
+export interface OrganizationChangePlanRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationChangePlanRequest
+     */
+    'plan'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationContainerAutoDeployRequest
+ */
+export interface OrganizationContainerAutoDeployRequest {
+    /**
+     * the container image name to deploy
+     * @type {string}
+     * @memberof OrganizationContainerAutoDeployRequest
+     */
+    'image_name'?: string;
+    /**
+     * the new tag to deploy
+     * @type {string}
+     * @memberof OrganizationContainerAutoDeployRequest
+     */
+    'tag'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationContainerPreviewRequest
+ */
+export interface OrganizationContainerPreviewRequest {
+    /**
+     * the container image name to trigger preview environment
+     * @type {string}
+     * @memberof OrganizationContainerPreviewRequest
+     */
+    'image_name'?: string;
+    /**
+     * the tag to be used in the preview environment
+     * @type {string}
+     * @memberof OrganizationContainerPreviewRequest
+     */
+    'tag'?: string;
+}
 /**
  * 
  * @export
@@ -16032,11 +16032,11 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary Change organization plan
          * @param {string} organizationId Organization ID
-         * @param {InlineObject} [inlineObject] 
+         * @param {OrganizationChangePlanRequest} [organizationChangePlanRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        changePlan: async (organizationId: string, inlineObject?: InlineObject, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        changePlan: async (organizationId: string, organizationChangePlanRequest?: OrganizationChangePlanRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('changePlan', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/changePlan`
@@ -16063,7 +16063,7 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organizationChangePlanRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -16546,12 +16546,12 @@ export const BillingApiFp = function(configuration?: Configuration) {
          * 
          * @summary Change organization plan
          * @param {string} organizationId Organization ID
-         * @param {InlineObject} [inlineObject] 
+         * @param {OrganizationChangePlanRequest} [organizationChangePlanRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async changePlan(organizationId: string, inlineObject?: InlineObject, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Organization>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.changePlan(organizationId, inlineObject, options);
+        async changePlan(organizationId: string, organizationChangePlanRequest?: OrganizationChangePlanRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Organization>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.changePlan(organizationId, organizationChangePlanRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -16716,12 +16716,12 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          * 
          * @summary Change organization plan
          * @param {string} organizationId Organization ID
-         * @param {InlineObject} [inlineObject] 
+         * @param {OrganizationChangePlanRequest} [organizationChangePlanRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        changePlan(organizationId: string, inlineObject?: InlineObject, options?: any): AxiosPromise<Organization> {
-            return localVarFp.changePlan(organizationId, inlineObject, options).then((request) => request(axios, basePath));
+        changePlan(organizationId: string, organizationChangePlanRequest?: OrganizationChangePlanRequest, options?: any): AxiosPromise<Organization> {
+            return localVarFp.changePlan(organizationId, organizationChangePlanRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -16878,13 +16878,13 @@ export class BillingApi extends BaseAPI {
      * 
      * @summary Change organization plan
      * @param {string} organizationId Organization ID
-     * @param {InlineObject} [inlineObject] 
+     * @param {OrganizationChangePlanRequest} [organizationChangePlanRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
      */
-    public changePlan(organizationId: string, inlineObject?: InlineObject, options?: AxiosRequestConfig) {
-        return BillingApiFp(this.configuration).changePlan(organizationId, inlineObject, options).then((request) => request(this.axios, this.basePath));
+    public changePlan(organizationId: string, organizationChangePlanRequest?: OrganizationChangePlanRequest, options?: AxiosRequestConfig) {
+        return BillingApiFp(this.configuration).changePlan(organizationId, organizationChangePlanRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -19804,7 +19804,7 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listClusterLogs(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
+        async listClusterLogs(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterLogsResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listClusterLogs(organizationId, clusterId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -20008,7 +20008,7 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listClusterLogs(organizationId: string, clusterId: string, options?: any): AxiosPromise<InlineResponse200> {
+        listClusterLogs(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterLogsResponseList> {
             return localVarFp.listClusterLogs(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23619,7 +23619,7 @@ export const ContainerRegistriesApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listAvailableContainerRegistry(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2002>> {
+        async listAvailableContainerRegistry(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AvailableContainerRegistryResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listAvailableContainerRegistry(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -23630,7 +23630,7 @@ export const ContainerRegistriesApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listContainerRegistry(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2001>> {
+        async listContainerRegistry(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerRegistryResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listContainerRegistry(organizationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -23695,7 +23695,7 @@ export const ContainerRegistriesApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAvailableContainerRegistry(options?: any): AxiosPromise<InlineResponse2002> {
+        listAvailableContainerRegistry(options?: any): AxiosPromise<AvailableContainerRegistryResponseList> {
             return localVarFp.listAvailableContainerRegistry(options).then((request) => request(axios, basePath));
         },
         /**
@@ -23705,7 +23705,7 @@ export const ContainerRegistriesApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listContainerRegistry(organizationId: string, options?: any): AxiosPromise<InlineResponse2001> {
+        listContainerRegistry(organizationId: string, options?: any): AxiosPromise<ContainerRegistryResponseList> {
             return localVarFp.listContainerRegistry(organizationId, options).then((request) => request(axios, basePath));
         },
     };
@@ -24328,11 +24328,11 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
          * Triggers a new container deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the container should have the same image name and a different tag 
          * @summary Auto deploy containers
          * @param {string} organizationId Organization ID
-         * @param {InlineObject1} [inlineObject1] 
+         * @param {OrganizationContainerAutoDeployRequest} [organizationContainerAutoDeployRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autoDeployContainerEnvironments: async (organizationId: string, inlineObject1?: InlineObject1, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        autoDeployContainerEnvironments: async (organizationId: string, organizationContainerAutoDeployRequest?: OrganizationContainerAutoDeployRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('autoDeployContainerEnvironments', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/container/deploy`
@@ -24359,7 +24359,7 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject1, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organizationContainerAutoDeployRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -24611,11 +24611,11 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
          * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag 
          * @summary Preview container environments
          * @param {string} organizationId Organization ID
-         * @param {InlineObject2} [inlineObject2] 
+         * @param {OrganizationContainerPreviewRequest} [organizationContainerPreviewRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        previewContainerEnvironments: async (organizationId: string, inlineObject2?: InlineObject2, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        previewContainerEnvironments: async (organizationId: string, organizationContainerPreviewRequest?: OrganizationContainerPreviewRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('previewContainerEnvironments', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/container/preview`
@@ -24642,7 +24642,7 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject2, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organizationContainerPreviewRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -24663,12 +24663,12 @@ export const ContainersApiFp = function(configuration?: Configuration) {
          * Triggers a new container deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the container should have the same image name and a different tag 
          * @summary Auto deploy containers
          * @param {string} organizationId Organization ID
-         * @param {InlineObject1} [inlineObject1] 
+         * @param {OrganizationContainerAutoDeployRequest} [organizationContainerAutoDeployRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async autoDeployContainerEnvironments(organizationId: string, inlineObject1?: InlineObject1, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.autoDeployContainerEnvironments(organizationId, inlineObject1, options);
+        async autoDeployContainerEnvironments(organizationId: string, organizationContainerAutoDeployRequest?: OrganizationContainerAutoDeployRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.autoDeployContainerEnvironments(organizationId, organizationContainerAutoDeployRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -24744,12 +24744,12 @@ export const ContainersApiFp = function(configuration?: Configuration) {
          * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag 
          * @summary Preview container environments
          * @param {string} organizationId Organization ID
-         * @param {InlineObject2} [inlineObject2] 
+         * @param {OrganizationContainerPreviewRequest} [organizationContainerPreviewRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async previewContainerEnvironments(organizationId: string, inlineObject2?: InlineObject2, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.previewContainerEnvironments(organizationId, inlineObject2, options);
+        async previewContainerEnvironments(organizationId: string, organizationContainerPreviewRequest?: OrganizationContainerPreviewRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.previewContainerEnvironments(organizationId, organizationContainerPreviewRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -24766,12 +24766,12 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
          * Triggers a new container deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the container should have the same image name and a different tag 
          * @summary Auto deploy containers
          * @param {string} organizationId Organization ID
-         * @param {InlineObject1} [inlineObject1] 
+         * @param {OrganizationContainerAutoDeployRequest} [organizationContainerAutoDeployRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autoDeployContainerEnvironments(organizationId: string, inlineObject1?: InlineObject1, options?: any): AxiosPromise<Status> {
-            return localVarFp.autoDeployContainerEnvironments(organizationId, inlineObject1, options).then((request) => request(axios, basePath));
+        autoDeployContainerEnvironments(organizationId: string, organizationContainerAutoDeployRequest?: OrganizationContainerAutoDeployRequest, options?: any): AxiosPromise<Status> {
+            return localVarFp.autoDeployContainerEnvironments(organizationId, organizationContainerAutoDeployRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -24840,12 +24840,12 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
          * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag 
          * @summary Preview container environments
          * @param {string} organizationId Organization ID
-         * @param {InlineObject2} [inlineObject2] 
+         * @param {OrganizationContainerPreviewRequest} [organizationContainerPreviewRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        previewContainerEnvironments(organizationId: string, inlineObject2?: InlineObject2, options?: any): AxiosPromise<Status> {
-            return localVarFp.previewContainerEnvironments(organizationId, inlineObject2, options).then((request) => request(axios, basePath));
+        previewContainerEnvironments(organizationId: string, organizationContainerPreviewRequest?: OrganizationContainerPreviewRequest, options?: any): AxiosPromise<Status> {
+            return localVarFp.previewContainerEnvironments(organizationId, organizationContainerPreviewRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -24861,13 +24861,13 @@ export class ContainersApi extends BaseAPI {
      * Triggers a new container deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the container should have the same image name and a different tag 
      * @summary Auto deploy containers
      * @param {string} organizationId Organization ID
-     * @param {InlineObject1} [inlineObject1] 
+     * @param {OrganizationContainerAutoDeployRequest} [organizationContainerAutoDeployRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContainersApi
      */
-    public autoDeployContainerEnvironments(organizationId: string, inlineObject1?: InlineObject1, options?: AxiosRequestConfig) {
-        return ContainersApiFp(this.configuration).autoDeployContainerEnvironments(organizationId, inlineObject1, options).then((request) => request(this.axios, this.basePath));
+    public autoDeployContainerEnvironments(organizationId: string, organizationContainerAutoDeployRequest?: OrganizationContainerAutoDeployRequest, options?: AxiosRequestConfig) {
+        return ContainersApiFp(this.configuration).autoDeployContainerEnvironments(organizationId, organizationContainerAutoDeployRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -24949,13 +24949,13 @@ export class ContainersApi extends BaseAPI {
      * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag 
      * @summary Preview container environments
      * @param {string} organizationId Organization ID
-     * @param {InlineObject2} [inlineObject2] 
+     * @param {OrganizationContainerPreviewRequest} [organizationContainerPreviewRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContainersApi
      */
-    public previewContainerEnvironments(organizationId: string, inlineObject2?: InlineObject2, options?: AxiosRequestConfig) {
-        return ContainersApiFp(this.configuration).previewContainerEnvironments(organizationId, inlineObject2, options).then((request) => request(this.axios, this.basePath));
+    public previewContainerEnvironments(organizationId: string, organizationContainerPreviewRequest?: OrganizationContainerPreviewRequest, options?: AxiosRequestConfig) {
+        return ContainersApiFp(this.configuration).previewContainerEnvironments(organizationId, organizationContainerPreviewRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
