@@ -972,6 +972,12 @@ export interface ApplicationRequest {
      */
     'storage'?: Array<ServiceStorageRequestStorage>;
     /**
+     * 
+     * @type {Array<ServicePortRequestPorts>}
+     * @memberof ApplicationRequest
+     */
+    'ports'?: Array<ServicePortRequestPorts>;
+    /**
      * name is case insensitive
      * @type {string}
      * @memberof ApplicationRequest
@@ -1043,12 +1049,6 @@ export interface ApplicationRequest {
      * @memberof ApplicationRequest
      */
     'auto_preview'?: boolean;
-    /**
-     * 
-     * @type {Array<ServicePortRequest>}
-     * @memberof ApplicationRequest
-     */
-    'ports'?: Array<ServicePortRequest>;
 }
 /**
  * 
@@ -1128,12 +1128,6 @@ export interface ApplicationRequestAllOf {
      * @memberof ApplicationRequestAllOf
      */
     'auto_preview'?: boolean;
-    /**
-     * 
-     * @type {Array<ServicePortRequest>}
-     * @memberof ApplicationRequestAllOf
-     */
-    'ports'?: Array<ServicePortRequest>;
 }
 /**
  * 
