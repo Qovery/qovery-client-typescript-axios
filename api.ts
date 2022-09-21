@@ -1045,10 +1045,10 @@ export interface ApplicationRequest {
     'auto_preview'?: boolean;
     /**
      * 
-     * @type {Array<ServicePort>}
+     * @type {Array<ServicePortRequest>}
      * @memberof ApplicationRequest
      */
-    'ports'?: Array<ServicePort>;
+    'ports'?: Array<ServicePortRequest>;
 }
 /**
  * 
@@ -1130,10 +1130,10 @@ export interface ApplicationRequestAllOf {
     'auto_preview'?: boolean;
     /**
      * 
-     * @type {Array<ServicePort>}
+     * @type {Array<ServicePortRequest>}
      * @memberof ApplicationRequestAllOf
      */
-    'ports'?: Array<ServicePort>;
+    'ports'?: Array<ServicePortRequest>;
 }
 /**
  * 
@@ -8775,10 +8775,7 @@ export enum PlanEnum {
  */
 
 export enum PortProtocolEnum {
-    HTTP = 'HTTP',
-    HTTPS = 'HTTPS',
-    TCP = 'TCP',
-    UDP = 'UDP'
+    HTTP = 'HTTP'
 }
 
 /**
