@@ -8411,6 +8411,25 @@ export interface OrganizationCustomRoleClusterPermissions {
 /**
  * 
  * @export
+ * @interface OrganizationCustomRoleCreateRequest
+ */
+export interface OrganizationCustomRoleCreateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationCustomRoleCreateRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationCustomRoleCreateRequest
+     */
+    'description'?: string;
+}
+/**
+ * 
+ * @export
  * @interface OrganizationCustomRoleList
  */
 export interface OrganizationCustomRoleList {
@@ -8460,104 +8479,104 @@ export interface OrganizationCustomRoleProjectPermissions {
     'is_admin'?: boolean;
     /**
      * 
-     * @type {Array<OrganizationCustomRoleRequestPermissions>}
+     * @type {Array<OrganizationCustomRoleUpdateRequestPermissions>}
      * @memberof OrganizationCustomRoleProjectPermissions
      */
-    'permissions'?: Array<OrganizationCustomRoleRequestPermissions>;
+    'permissions'?: Array<OrganizationCustomRoleUpdateRequestPermissions>;
 }
 /**
  * 
  * @export
- * @interface OrganizationCustomRoleRequest
+ * @interface OrganizationCustomRoleUpdateRequest
  */
-export interface OrganizationCustomRoleRequest {
+export interface OrganizationCustomRoleUpdateRequest {
     /**
      * 
      * @type {string}
-     * @memberof OrganizationCustomRoleRequest
+     * @memberof OrganizationCustomRoleUpdateRequest
      */
     'name': string;
     /**
      * 
      * @type {string}
-     * @memberof OrganizationCustomRoleRequest
+     * @memberof OrganizationCustomRoleUpdateRequest
      */
     'description'?: string;
     /**
      * Should contain an entry for every existing cluster
-     * @type {Array<OrganizationCustomRoleRequestClusterPermissions>}
-     * @memberof OrganizationCustomRoleRequest
+     * @type {Array<OrganizationCustomRoleUpdateRequestClusterPermissions>}
+     * @memberof OrganizationCustomRoleUpdateRequest
      */
-    'cluster_permissions': Array<OrganizationCustomRoleRequestClusterPermissions>;
+    'cluster_permissions': Array<OrganizationCustomRoleUpdateRequestClusterPermissions>;
     /**
      * Should contain an entry for every existing project
-     * @type {Array<OrganizationCustomRoleRequestProjectPermissions>}
-     * @memberof OrganizationCustomRoleRequest
+     * @type {Array<OrganizationCustomRoleUpdateRequestProjectPermissions>}
+     * @memberof OrganizationCustomRoleUpdateRequest
      */
-    'project_permissions': Array<OrganizationCustomRoleRequestProjectPermissions>;
+    'project_permissions': Array<OrganizationCustomRoleUpdateRequestProjectPermissions>;
 }
 /**
  * 
  * @export
- * @interface OrganizationCustomRoleRequestClusterPermissions
+ * @interface OrganizationCustomRoleUpdateRequestClusterPermissions
  */
-export interface OrganizationCustomRoleRequestClusterPermissions {
+export interface OrganizationCustomRoleUpdateRequestClusterPermissions {
     /**
      * 
      * @type {string}
-     * @memberof OrganizationCustomRoleRequestClusterPermissions
+     * @memberof OrganizationCustomRoleUpdateRequestClusterPermissions
      */
     'cluster_id'?: string;
     /**
      * 
      * @type {OrganizationCustomRoleClusterPermission}
-     * @memberof OrganizationCustomRoleRequestClusterPermissions
+     * @memberof OrganizationCustomRoleUpdateRequestClusterPermissions
      */
     'permission'?: OrganizationCustomRoleClusterPermission;
 }
 /**
  * 
  * @export
- * @interface OrganizationCustomRoleRequestPermissions
+ * @interface OrganizationCustomRoleUpdateRequestPermissions
  */
-export interface OrganizationCustomRoleRequestPermissions {
+export interface OrganizationCustomRoleUpdateRequestPermissions {
     /**
      * 
      * @type {EnvironmentModeEnum}
-     * @memberof OrganizationCustomRoleRequestPermissions
+     * @memberof OrganizationCustomRoleUpdateRequestPermissions
      */
     'environment_type'?: EnvironmentModeEnum;
     /**
      * 
      * @type {OrganizationCustomRoleProjectPermission}
-     * @memberof OrganizationCustomRoleRequestPermissions
+     * @memberof OrganizationCustomRoleUpdateRequestPermissions
      */
     'permission'?: OrganizationCustomRoleProjectPermission;
 }
 /**
  * 
  * @export
- * @interface OrganizationCustomRoleRequestProjectPermissions
+ * @interface OrganizationCustomRoleUpdateRequestProjectPermissions
  */
-export interface OrganizationCustomRoleRequestProjectPermissions {
+export interface OrganizationCustomRoleUpdateRequestProjectPermissions {
     /**
      * 
      * @type {string}
-     * @memberof OrganizationCustomRoleRequestProjectPermissions
+     * @memberof OrganizationCustomRoleUpdateRequestProjectPermissions
      */
     'project_id'?: string;
     /**
      * If `is_admin` is `true`, the user is: - automatically `MANAGER` for each environment type - allowed to manage project deployment rules - able to delete the project Note that `permissions` can then be ignored for this project 
      * @type {boolean}
-     * @memberof OrganizationCustomRoleRequestProjectPermissions
+     * @memberof OrganizationCustomRoleUpdateRequestProjectPermissions
      */
     'is_admin'?: boolean;
     /**
      * Mandatory if `is_admin` is `false`   Should contain an entry for every environment type: - `DEVELOPMENT` - `PREVIEW` - `STAGING` - `PRODUCTION` 
-     * @type {Array<OrganizationCustomRoleRequestPermissions>}
-     * @memberof OrganizationCustomRoleRequestProjectPermissions
+     * @type {Array<OrganizationCustomRoleUpdateRequestPermissions>}
+     * @memberof OrganizationCustomRoleUpdateRequestProjectPermissions
      */
-    'permissions'?: Array<OrganizationCustomRoleRequestPermissions>;
+    'permissions'?: Array<OrganizationCustomRoleUpdateRequestPermissions>;
 }
 /**
  * 
@@ -33559,11 +33578,11 @@ export const OrganizationCustomRoleApiAxiosParamCreator = function (configuratio
          * Create an organization custom role
          * @summary Create an organization custom role
          * @param {string} organizationId Organization ID
-         * @param {OrganizationCustomRoleRequest} [organizationCustomRoleRequest] 
+         * @param {OrganizationCustomRoleCreateRequest} [organizationCustomRoleCreateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createOrganizationCustomRole: async (organizationId: string, organizationCustomRoleRequest?: OrganizationCustomRoleRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createOrganizationCustomRole: async (organizationId: string, organizationCustomRoleCreateRequest?: OrganizationCustomRoleCreateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('createOrganizationCustomRole', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/customRole`
@@ -33590,7 +33609,7 @@ export const OrganizationCustomRoleApiAxiosParamCreator = function (configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(organizationCustomRoleRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organizationCustomRoleCreateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -33639,11 +33658,11 @@ export const OrganizationCustomRoleApiAxiosParamCreator = function (configuratio
          * Edit an organization custom role
          * @summary Edit an organization custom role
          * @param {string} organizationId Organization ID
-         * @param {OrganizationCustomRoleRequest} [organizationCustomRoleRequest] 
+         * @param {OrganizationCustomRoleUpdateRequest} [organizationCustomRoleUpdateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editOrganizationCustomRole: async (organizationId: string, organizationCustomRoleRequest?: OrganizationCustomRoleRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        editOrganizationCustomRole: async (organizationId: string, organizationCustomRoleUpdateRequest?: OrganizationCustomRoleUpdateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('editOrganizationCustomRole', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/customRole/{customRoleId}`
@@ -33670,7 +33689,7 @@ export const OrganizationCustomRoleApiAxiosParamCreator = function (configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(organizationCustomRoleRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organizationCustomRoleUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -33771,12 +33790,12 @@ export const OrganizationCustomRoleApiFp = function(configuration?: Configuratio
          * Create an organization custom role
          * @summary Create an organization custom role
          * @param {string} organizationId Organization ID
-         * @param {OrganizationCustomRoleRequest} [organizationCustomRoleRequest] 
+         * @param {OrganizationCustomRoleCreateRequest} [organizationCustomRoleCreateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createOrganizationCustomRole(organizationId: string, organizationCustomRoleRequest?: OrganizationCustomRoleRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationCustomRole>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createOrganizationCustomRole(organizationId, organizationCustomRoleRequest, options);
+        async createOrganizationCustomRole(organizationId: string, organizationCustomRoleCreateRequest?: OrganizationCustomRoleCreateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationCustomRole>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createOrganizationCustomRole(organizationId, organizationCustomRoleCreateRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -33794,12 +33813,12 @@ export const OrganizationCustomRoleApiFp = function(configuration?: Configuratio
          * Edit an organization custom role
          * @summary Edit an organization custom role
          * @param {string} organizationId Organization ID
-         * @param {OrganizationCustomRoleRequest} [organizationCustomRoleRequest] 
+         * @param {OrganizationCustomRoleUpdateRequest} [organizationCustomRoleUpdateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editOrganizationCustomRole(organizationId: string, organizationCustomRoleRequest?: OrganizationCustomRoleRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationCustomRole>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.editOrganizationCustomRole(organizationId, organizationCustomRoleRequest, options);
+        async editOrganizationCustomRole(organizationId: string, organizationCustomRoleUpdateRequest?: OrganizationCustomRoleUpdateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationCustomRole>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editOrganizationCustomRole(organizationId, organizationCustomRoleUpdateRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -33839,12 +33858,12 @@ export const OrganizationCustomRoleApiFactory = function (configuration?: Config
          * Create an organization custom role
          * @summary Create an organization custom role
          * @param {string} organizationId Organization ID
-         * @param {OrganizationCustomRoleRequest} [organizationCustomRoleRequest] 
+         * @param {OrganizationCustomRoleCreateRequest} [organizationCustomRoleCreateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createOrganizationCustomRole(organizationId: string, organizationCustomRoleRequest?: OrganizationCustomRoleRequest, options?: any): AxiosPromise<OrganizationCustomRole> {
-            return localVarFp.createOrganizationCustomRole(organizationId, organizationCustomRoleRequest, options).then((request) => request(axios, basePath));
+        createOrganizationCustomRole(organizationId: string, organizationCustomRoleCreateRequest?: OrganizationCustomRoleCreateRequest, options?: any): AxiosPromise<OrganizationCustomRole> {
+            return localVarFp.createOrganizationCustomRole(organizationId, organizationCustomRoleCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Delete organization custom role
@@ -33860,12 +33879,12 @@ export const OrganizationCustomRoleApiFactory = function (configuration?: Config
          * Edit an organization custom role
          * @summary Edit an organization custom role
          * @param {string} organizationId Organization ID
-         * @param {OrganizationCustomRoleRequest} [organizationCustomRoleRequest] 
+         * @param {OrganizationCustomRoleUpdateRequest} [organizationCustomRoleUpdateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editOrganizationCustomRole(organizationId: string, organizationCustomRoleRequest?: OrganizationCustomRoleRequest, options?: any): AxiosPromise<OrganizationCustomRole> {
-            return localVarFp.editOrganizationCustomRole(organizationId, organizationCustomRoleRequest, options).then((request) => request(axios, basePath));
+        editOrganizationCustomRole(organizationId: string, organizationCustomRoleUpdateRequest?: OrganizationCustomRoleUpdateRequest, options?: any): AxiosPromise<OrganizationCustomRole> {
+            return localVarFp.editOrganizationCustomRole(organizationId, organizationCustomRoleUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Get an organization custom role 
@@ -33902,13 +33921,13 @@ export class OrganizationCustomRoleApi extends BaseAPI {
      * Create an organization custom role
      * @summary Create an organization custom role
      * @param {string} organizationId Organization ID
-     * @param {OrganizationCustomRoleRequest} [organizationCustomRoleRequest] 
+     * @param {OrganizationCustomRoleCreateRequest} [organizationCustomRoleCreateRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationCustomRoleApi
      */
-    public createOrganizationCustomRole(organizationId: string, organizationCustomRoleRequest?: OrganizationCustomRoleRequest, options?: AxiosRequestConfig) {
-        return OrganizationCustomRoleApiFp(this.configuration).createOrganizationCustomRole(organizationId, organizationCustomRoleRequest, options).then((request) => request(this.axios, this.basePath));
+    public createOrganizationCustomRole(organizationId: string, organizationCustomRoleCreateRequest?: OrganizationCustomRoleCreateRequest, options?: AxiosRequestConfig) {
+        return OrganizationCustomRoleApiFp(this.configuration).createOrganizationCustomRole(organizationId, organizationCustomRoleCreateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -33927,13 +33946,13 @@ export class OrganizationCustomRoleApi extends BaseAPI {
      * Edit an organization custom role
      * @summary Edit an organization custom role
      * @param {string} organizationId Organization ID
-     * @param {OrganizationCustomRoleRequest} [organizationCustomRoleRequest] 
+     * @param {OrganizationCustomRoleUpdateRequest} [organizationCustomRoleUpdateRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationCustomRoleApi
      */
-    public editOrganizationCustomRole(organizationId: string, organizationCustomRoleRequest?: OrganizationCustomRoleRequest, options?: AxiosRequestConfig) {
-        return OrganizationCustomRoleApiFp(this.configuration).editOrganizationCustomRole(organizationId, organizationCustomRoleRequest, options).then((request) => request(this.axios, this.basePath));
+    public editOrganizationCustomRole(organizationId: string, organizationCustomRoleUpdateRequest?: OrganizationCustomRoleUpdateRequest, options?: AxiosRequestConfig) {
+        return OrganizationCustomRoleApiFp(this.configuration).editOrganizationCustomRole(organizationId, organizationCustomRoleUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
