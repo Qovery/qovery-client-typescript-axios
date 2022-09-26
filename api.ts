@@ -4591,6 +4591,19 @@ export interface DatabaseVersionMode {
     'supported_mode'?: DatabaseModeEnum;
 }
 /**
+ * used to specify a default role, otherwise `null`
+ * @export
+ * @enum {string}
+ */
+
+export enum DefaultMemberRole {
+    VIEWER = 'VIEWER',
+    BILLING = 'BILLING',
+    DEVOPS = 'DEVOPS',
+    ADMIN = 'ADMIN'
+}
+
+/**
  * 
  * @export
  * @interface DeployAllRequest
@@ -7052,7 +7065,7 @@ export interface InviteMemberResponseList {
     'results'?: Array<InviteMember>;
 }
 /**
- * 
+ * deprecated
  * @export
  * @enum {string}
  */
@@ -7469,6 +7482,12 @@ export interface Member {
      * @memberof Member
      */
     'role'?: InviteMemberRoleEnum;
+    /**
+     * the role linked to the user
+     * @type {string}
+     * @memberof Member
+     */
+    'role_name'?: string;
 }
 /**
  * 
@@ -7512,6 +7531,12 @@ export interface MemberAllOf {
      * @memberof MemberAllOf
      */
     'role'?: InviteMemberRoleEnum;
+    /**
+     * the role linked to the user
+     * @type {string}
+     * @memberof MemberAllOf
+     */
+    'role_name'?: string;
 }
 /**
  * 
@@ -7525,6 +7550,31 @@ export interface MemberResponseList {
      * @memberof MemberResponseList
      */
     'results'?: Array<Member>;
+}
+/**
+ * 
+ * @export
+ * @interface MemberRoleUpdateRequest
+ */
+export interface MemberRoleUpdateRequest {
+    /**
+     * specify the git provider user id
+     * @type {string}
+     * @memberof MemberRoleUpdateRequest
+     */
+    'user_id'?: string;
+    /**
+     * used to specify an organization custom role, otherwise `null`
+     * @type {string}
+     * @memberof MemberRoleUpdateRequest
+     */
+    'custom_role_id'?: string;
+    /**
+     * 
+     * @type {DefaultMemberRole}
+     * @memberof MemberRoleUpdateRequest
+     */
+    'default_role_name'?: DefaultMemberRole;
 }
 /**
  * 
@@ -8141,6 +8191,44 @@ export enum OrganizationApiTokenScope {
 /**
  * 
  * @export
+ * @interface OrganizationAvailableRole
+ */
+export interface OrganizationAvailableRole {
+    /**
+     * Filled only for an organization custom role
+     * @type {string}
+     * @memberof OrganizationAvailableRole
+     */
+    'id'?: string;
+    /**
+     * It can be either a custom role name or a default role name
+     * @type {string}
+     * @memberof OrganizationAvailableRole
+     */
+    'name'?: string;
+    /**
+     * - `true` if it is a Qovery role - `false` if it is a custom role 
+     * @type {boolean}
+     * @memberof OrganizationAvailableRole
+     */
+    'is_default'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationAvailableRoleList
+ */
+export interface OrganizationAvailableRoleList {
+    /**
+     * 
+     * @type {Array<OrganizationAvailableRole>}
+     * @memberof OrganizationAvailableRoleList
+     */
+    'results'?: Array<OrganizationAvailableRole>;
+}
+/**
+ * 
+ * @export
  * @interface OrganizationChangePlanRequest
  */
 export interface OrganizationChangePlanRequest {
@@ -8251,6 +8339,225 @@ export interface OrganizationCurrentCostAllOf {
      * @memberof OrganizationCurrentCostAllOf
      */
     'paid_usage'?: PaidUsage;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationCustomRole
+ */
+export interface OrganizationCustomRole {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationCustomRole
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationCustomRole
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {Array<OrganizationCustomRoleClusterPermissions>}
+     * @memberof OrganizationCustomRole
+     */
+    'cluster_permissions'?: Array<OrganizationCustomRoleClusterPermissions>;
+    /**
+     * 
+     * @type {Array<OrganizationCustomRoleProjectPermissions>}
+     * @memberof OrganizationCustomRole
+     */
+    'project_permissions'?: Array<OrganizationCustomRoleProjectPermissions>;
+}
+/**
+ * Indicates the permission for a target cluster, from the lowest to the highest: - `VIEWER` user has only read access on target cluster - `ENV_CREATOR` user can deploy on the cluster - `ADMIN` user can modify the cluster settings 
+ * @export
+ * @enum {string}
+ */
+
+export enum OrganizationCustomRoleClusterPermission {
+    VIEWER = 'VIEWER',
+    ENV_CREATOR = 'ENV_CREATOR',
+    ADMIN = 'ADMIN'
+}
+
+/**
+ * 
+ * @export
+ * @interface OrganizationCustomRoleClusterPermissions
+ */
+export interface OrganizationCustomRoleClusterPermissions {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationCustomRoleClusterPermissions
+     */
+    'cluster_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationCustomRoleClusterPermissions
+     */
+    'cluster_name'?: string;
+    /**
+     * 
+     * @type {OrganizationCustomRoleClusterPermission}
+     * @memberof OrganizationCustomRoleClusterPermissions
+     */
+    'permission'?: OrganizationCustomRoleClusterPermission;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationCustomRoleList
+ */
+export interface OrganizationCustomRoleList {
+    /**
+     * 
+     * @type {Array<OrganizationCustomRole>}
+     * @memberof OrganizationCustomRoleList
+     */
+    'results'?: Array<OrganizationCustomRole>;
+}
+/**
+ * Indicates the permission for a target project and a given environment type, from the lowest to the highest: - `NO_ACCESS` user has no access - `VIEWER` user can access the environment (and applications / containers / databases / variables) - `DEPLOYER` user can deploy the environment (dependent on the required cluster permission `ENV_CREATOR`) - `MANAGER` user can create an environment (and applications / containers / databases / variables) 
+ * @export
+ * @enum {string}
+ */
+
+export enum OrganizationCustomRoleProjectPermission {
+    NO_ACCESS = 'NO_ACCESS',
+    VIEWER = 'VIEWER',
+    DEPLOYER = 'DEPLOYER',
+    MANAGER = 'MANAGER'
+}
+
+/**
+ * 
+ * @export
+ * @interface OrganizationCustomRoleProjectPermissions
+ */
+export interface OrganizationCustomRoleProjectPermissions {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationCustomRoleProjectPermissions
+     */
+    'project_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationCustomRoleProjectPermissions
+     */
+    'project_name'?: string;
+    /**
+     * If `is_admin` is `true`, the user is: - automatically `MANAGER` for each environment type - allowed to manage project deployment rules - able to delete the project Note that `permissions` can then be ignored for this project 
+     * @type {boolean}
+     * @memberof OrganizationCustomRoleProjectPermissions
+     */
+    'is_admin'?: boolean;
+    /**
+     * 
+     * @type {Array<OrganizationCustomRoleRequestPermissions>}
+     * @memberof OrganizationCustomRoleProjectPermissions
+     */
+    'permissions'?: Array<OrganizationCustomRoleRequestPermissions>;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationCustomRoleRequest
+ */
+export interface OrganizationCustomRoleRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationCustomRoleRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationCustomRoleRequest
+     */
+    'description'?: string;
+    /**
+     * Should contain an entry for every existing cluster
+     * @type {Array<OrganizationCustomRoleRequestClusterPermissions>}
+     * @memberof OrganizationCustomRoleRequest
+     */
+    'cluster_permissions': Array<OrganizationCustomRoleRequestClusterPermissions>;
+    /**
+     * Should contain an entry for every existing project
+     * @type {Array<OrganizationCustomRoleRequestProjectPermissions>}
+     * @memberof OrganizationCustomRoleRequest
+     */
+    'project_permissions': Array<OrganizationCustomRoleRequestProjectPermissions>;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationCustomRoleRequestClusterPermissions
+ */
+export interface OrganizationCustomRoleRequestClusterPermissions {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationCustomRoleRequestClusterPermissions
+     */
+    'cluster_id'?: string;
+    /**
+     * 
+     * @type {OrganizationCustomRoleClusterPermission}
+     * @memberof OrganizationCustomRoleRequestClusterPermissions
+     */
+    'permission'?: OrganizationCustomRoleClusterPermission;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationCustomRoleRequestPermissions
+ */
+export interface OrganizationCustomRoleRequestPermissions {
+    /**
+     * 
+     * @type {EnvironmentModeEnum}
+     * @memberof OrganizationCustomRoleRequestPermissions
+     */
+    'environment_type'?: EnvironmentModeEnum;
+    /**
+     * 
+     * @type {OrganizationCustomRoleProjectPermission}
+     * @memberof OrganizationCustomRoleRequestPermissions
+     */
+    'permission'?: OrganizationCustomRoleProjectPermission;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationCustomRoleRequestProjectPermissions
+ */
+export interface OrganizationCustomRoleRequestProjectPermissions {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationCustomRoleRequestProjectPermissions
+     */
+    'project_id'?: string;
+    /**
+     * If `is_admin` is `true`, the user is: - automatically `MANAGER` for each environment type - allowed to manage project deployment rules - able to delete the project Note that `permissions` can then be ignored for this project 
+     * @type {boolean}
+     * @memberof OrganizationCustomRoleRequestProjectPermissions
+     */
+    'is_admin'?: boolean;
+    /**
+     * Mandatory if `is_admin` is `false`   Should contain an entry for every environment type: - `DEVELOPMENT` - `PREVIEW` - `STAGING` - `PRODUCTION` 
+     * @type {Array<OrganizationCustomRoleRequestPermissions>}
+     * @memberof OrganizationCustomRoleRequestProjectPermissions
+     */
+    'permissions'?: Array<OrganizationCustomRoleRequestPermissions>;
 }
 /**
  * 
@@ -31864,6 +32171,48 @@ export const MembersApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Edit an organization member role
+         * @summary Edit an organization member role
+         * @param {string} organizationId Organization ID
+         * @param {MemberRoleUpdateRequest} [memberRoleUpdateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editOrganizationMemberRole: async (organizationId: string, memberRoleUpdateRequest?: MemberRoleUpdateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('editOrganizationMemberRole', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/member`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(memberRoleUpdateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Get invited members
          * @param {string} organizationId Organization ID
@@ -32099,6 +32448,18 @@ export const MembersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Edit an organization member role
+         * @summary Edit an organization member role
+         * @param {string} organizationId Organization ID
+         * @param {MemberRoleUpdateRequest} [memberRoleUpdateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editOrganizationMemberRole(organizationId: string, memberRoleUpdateRequest?: MemberRoleUpdateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editOrganizationMemberRole(organizationId, memberRoleUpdateRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * 
          * @summary Get invited members
          * @param {string} organizationId Organization ID
@@ -32188,6 +32549,17 @@ export const MembersApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.deleteMember(organizationId, userId, options).then((request) => request(axios, basePath));
         },
         /**
+         * Edit an organization member role
+         * @summary Edit an organization member role
+         * @param {string} organizationId Organization ID
+         * @param {MemberRoleUpdateRequest} [memberRoleUpdateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editOrganizationMemberRole(organizationId: string, memberRoleUpdateRequest?: MemberRoleUpdateRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.editOrganizationMemberRole(organizationId, memberRoleUpdateRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Get invited members
          * @param {string} organizationId Organization ID
@@ -32273,6 +32645,19 @@ export class MembersApi extends BaseAPI {
      */
     public deleteMember(organizationId: string, userId: string, options?: AxiosRequestConfig) {
         return MembersApiFp(this.configuration).deleteMember(organizationId, userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Edit an organization member role
+     * @summary Edit an organization member role
+     * @param {string} organizationId Organization ID
+     * @param {MemberRoleUpdateRequest} [memberRoleUpdateRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MembersApi
+     */
+    public editOrganizationMemberRole(organizationId: string, memberRoleUpdateRequest?: MemberRoleUpdateRequest, options?: AxiosRequestConfig) {
+        return MembersApiFp(this.configuration).editOrganizationMemberRole(organizationId, memberRoleUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -33165,6 +33550,420 @@ export class OrganizationApiTokenApi extends BaseAPI {
 
 
 /**
+ * OrganizationCustomRoleApi - axios parameter creator
+ * @export
+ */
+export const OrganizationCustomRoleApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Create an organization custom role
+         * @summary Create an organization custom role
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationCustomRoleRequest} [organizationCustomRoleRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrganizationCustomRole: async (organizationId: string, organizationCustomRoleRequest?: OrganizationCustomRoleRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('createOrganizationCustomRole', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/customRole`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organizationCustomRoleRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete organization custom role
+         * @summary Delete organization custom role
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteOrganizationCustomRole: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('deleteOrganizationCustomRole', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/customRole/{customRoleId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Edit an organization custom role
+         * @summary Edit an organization custom role
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationCustomRoleRequest} [organizationCustomRoleRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editOrganizationCustomRole: async (organizationId: string, organizationCustomRoleRequest?: OrganizationCustomRoleRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('editOrganizationCustomRole', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/customRole/{customRoleId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organizationCustomRoleRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get an organization custom role 
+         * @summary Get an organization custom role 
+         * @param {string} organizationId Organization ID
+         * @param {string} customRoleId Custom Role ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationCustomRole: async (organizationId: string, customRoleId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOrganizationCustomRole', 'organizationId', organizationId)
+            // verify required parameter 'customRoleId' is not null or undefined
+            assertParamExists('getOrganizationCustomRole', 'customRoleId', customRoleId)
+            const localVarPath = `/organization/{organizationId}/customRole/{customRoleId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"customRoleId"}}`, encodeURIComponent(String(customRoleId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List organization custom roles
+         * @summary List organization custom roles
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationCustomRoles: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listOrganizationCustomRoles', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/customRole`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * OrganizationCustomRoleApi - functional programming interface
+ * @export
+ */
+export const OrganizationCustomRoleApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = OrganizationCustomRoleApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Create an organization custom role
+         * @summary Create an organization custom role
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationCustomRoleRequest} [organizationCustomRoleRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createOrganizationCustomRole(organizationId: string, organizationCustomRoleRequest?: OrganizationCustomRoleRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationCustomRole>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createOrganizationCustomRole(organizationId, organizationCustomRoleRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Delete organization custom role
+         * @summary Delete organization custom role
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteOrganizationCustomRole(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOrganizationCustomRole(organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Edit an organization custom role
+         * @summary Edit an organization custom role
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationCustomRoleRequest} [organizationCustomRoleRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editOrganizationCustomRole(organizationId: string, organizationCustomRoleRequest?: OrganizationCustomRoleRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationCustomRole>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editOrganizationCustomRole(organizationId, organizationCustomRoleRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get an organization custom role 
+         * @summary Get an organization custom role 
+         * @param {string} organizationId Organization ID
+         * @param {string} customRoleId Custom Role ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationCustomRole(organizationId: string, customRoleId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationCustomRole>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationCustomRole(organizationId, customRoleId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * List organization custom roles
+         * @summary List organization custom roles
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listOrganizationCustomRoles(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationCustomRoleList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizationCustomRoles(organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * OrganizationCustomRoleApi - factory interface
+ * @export
+ */
+export const OrganizationCustomRoleApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = OrganizationCustomRoleApiFp(configuration)
+    return {
+        /**
+         * Create an organization custom role
+         * @summary Create an organization custom role
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationCustomRoleRequest} [organizationCustomRoleRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrganizationCustomRole(organizationId: string, organizationCustomRoleRequest?: OrganizationCustomRoleRequest, options?: any): AxiosPromise<OrganizationCustomRole> {
+            return localVarFp.createOrganizationCustomRole(organizationId, organizationCustomRoleRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete organization custom role
+         * @summary Delete organization custom role
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteOrganizationCustomRole(organizationId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteOrganizationCustomRole(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Edit an organization custom role
+         * @summary Edit an organization custom role
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationCustomRoleRequest} [organizationCustomRoleRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editOrganizationCustomRole(organizationId: string, organizationCustomRoleRequest?: OrganizationCustomRoleRequest, options?: any): AxiosPromise<OrganizationCustomRole> {
+            return localVarFp.editOrganizationCustomRole(organizationId, organizationCustomRoleRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get an organization custom role 
+         * @summary Get an organization custom role 
+         * @param {string} organizationId Organization ID
+         * @param {string} customRoleId Custom Role ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationCustomRole(organizationId: string, customRoleId: string, options?: any): AxiosPromise<OrganizationCustomRole> {
+            return localVarFp.getOrganizationCustomRole(organizationId, customRoleId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List organization custom roles
+         * @summary List organization custom roles
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationCustomRoles(organizationId: string, options?: any): AxiosPromise<OrganizationCustomRoleList> {
+            return localVarFp.listOrganizationCustomRoles(organizationId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * OrganizationCustomRoleApi - object-oriented interface
+ * @export
+ * @class OrganizationCustomRoleApi
+ * @extends {BaseAPI}
+ */
+export class OrganizationCustomRoleApi extends BaseAPI {
+    /**
+     * Create an organization custom role
+     * @summary Create an organization custom role
+     * @param {string} organizationId Organization ID
+     * @param {OrganizationCustomRoleRequest} [organizationCustomRoleRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationCustomRoleApi
+     */
+    public createOrganizationCustomRole(organizationId: string, organizationCustomRoleRequest?: OrganizationCustomRoleRequest, options?: AxiosRequestConfig) {
+        return OrganizationCustomRoleApiFp(this.configuration).createOrganizationCustomRole(organizationId, organizationCustomRoleRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete organization custom role
+     * @summary Delete organization custom role
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationCustomRoleApi
+     */
+    public deleteOrganizationCustomRole(organizationId: string, options?: AxiosRequestConfig) {
+        return OrganizationCustomRoleApiFp(this.configuration).deleteOrganizationCustomRole(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Edit an organization custom role
+     * @summary Edit an organization custom role
+     * @param {string} organizationId Organization ID
+     * @param {OrganizationCustomRoleRequest} [organizationCustomRoleRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationCustomRoleApi
+     */
+    public editOrganizationCustomRole(organizationId: string, organizationCustomRoleRequest?: OrganizationCustomRoleRequest, options?: AxiosRequestConfig) {
+        return OrganizationCustomRoleApiFp(this.configuration).editOrganizationCustomRole(organizationId, organizationCustomRoleRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get an organization custom role 
+     * @summary Get an organization custom role 
+     * @param {string} organizationId Organization ID
+     * @param {string} customRoleId Custom Role ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationCustomRoleApi
+     */
+    public getOrganizationCustomRole(organizationId: string, customRoleId: string, options?: AxiosRequestConfig) {
+        return OrganizationCustomRoleApiFp(this.configuration).getOrganizationCustomRole(organizationId, customRoleId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List organization custom roles
+     * @summary List organization custom roles
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationCustomRoleApi
+     */
+    public listOrganizationCustomRoles(organizationId: string, options?: AxiosRequestConfig) {
+        return OrganizationCustomRoleApiFp(this.configuration).listOrganizationCustomRoles(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * OrganizationMainCallsApi - axios parameter creator
  * @export
  */
@@ -33360,6 +34159,44 @@ export const OrganizationMainCallsApiAxiosParamCreator = function (configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * List organization available roles
+         * @summary List organization available roles
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationAvailableRoles: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listOrganizationAvailableRoles', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/availableRole`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -33425,6 +34262,17 @@ export const OrganizationMainCallsApiFp = function(configuration?: Configuration
             const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganization(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * List organization available roles
+         * @summary List organization available roles
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listOrganizationAvailableRoles(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationAvailableRoleList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizationAvailableRoles(organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -33484,6 +34332,16 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
          */
         listOrganization(options?: any): AxiosPromise<OrganizationResponseList> {
             return localVarFp.listOrganization(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List organization available roles
+         * @summary List organization available roles
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationAvailableRoles(organizationId: string, options?: any): AxiosPromise<OrganizationAvailableRoleList> {
+            return localVarFp.listOrganizationAvailableRoles(organizationId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -33553,6 +34411,18 @@ export class OrganizationMainCallsApi extends BaseAPI {
      */
     public listOrganization(options?: AxiosRequestConfig) {
         return OrganizationMainCallsApiFp(this.configuration).listOrganization(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List organization available roles
+     * @summary List organization available roles
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationMainCallsApi
+     */
+    public listOrganizationAvailableRoles(organizationId: string, options?: AxiosRequestConfig) {
+        return OrganizationMainCallsApiFp(this.configuration).listOrganizationAvailableRoles(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
