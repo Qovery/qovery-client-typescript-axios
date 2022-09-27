@@ -292,6 +292,42 @@ export interface ApplicationAdvancedSettings {
      */
     'network.ingress.proxy_buffer_size_kb'?: number;
     /**
+     * Limits the maximum time (in seconds) during which requests can be processed through one keepalive connection
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.ingress.keepalive_time_seconds'?: number;
+    /**
+     * Sets a timeout (in seconds) during which an idle keepalive connection to an upstream server will stay open.
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.ingress.keepalive_timeout_seconds'?: number;
+    /**
+     * Sets a timeout (in seconds) for transmitting a response to the client
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.ingress.send_timeout_seconds'?: number;
+    /**
+     * Sets a timeout (in seconds) for establishing a connection to a proxied server
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.ingress.proxy_connect_timeout_seconds'?: number;
+    /**
+     * Sets a timeout (in seconds) for transmitting a request to the proxied server
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.ingress.proxy_send_timeout_seconds'?: number;
+    /**
+     * Sets a timeout (in seconds) for reading a response from the proxied server
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.ingress.proxy_read_timeout_seconds'?: number;
+    /**
      * list of source ranges to allow access to ingress proxy.  This property can be used to whitelist source IP ranges for ingress proxy. The value is a comma separated list of CIDRs, e.g. 10.0.0.0/24,172.10.0.1 To allow all source ranges, set 0.0.0.0/0. 
      * @type {string}
      * @memberof ApplicationAdvancedSettings
