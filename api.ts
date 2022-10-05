@@ -4681,19 +4681,6 @@ export interface DatabaseVersionMode {
     'supported_mode'?: DatabaseModeEnum;
 }
 /**
- * used to specify a default role, otherwise `null`
- * @export
- * @enum {string}
- */
-
-export enum DefaultMemberRole {
-    VIEWER = 'VIEWER',
-    BILLING = 'BILLING',
-    DEVOPS = 'DEVOPS',
-    ADMIN = 'ADMIN'
-}
-
-/**
  * 
  * @export
  * @interface DeployAllRequest
