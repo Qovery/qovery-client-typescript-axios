@@ -7065,6 +7065,18 @@ export interface InviteMember {
      * @memberof InviteMember
      */
     'logo_url'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InviteMember
+     */
+    'role_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InviteMember
+     */
+    'role_name'?: string;
 }
 /**
  * 
@@ -7108,6 +7120,18 @@ export interface InviteMemberAllOf {
      * @memberof InviteMemberAllOf
      */
     'logo_url'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InviteMemberAllOf
+     */
+    'role_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InviteMemberAllOf
+     */
+    'role_name'?: string;
 }
 /**
  * 
@@ -7571,6 +7595,12 @@ export interface Member {
      * @memberof Member
      */
     'role_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Member
+     */
+    'role_id'?: string;
 }
 /**
  * 
@@ -7620,6 +7650,12 @@ export interface MemberAllOf {
      * @memberof MemberAllOf
      */
     'role_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MemberAllOf
+     */
+    'role_id'?: string;
 }
 /**
  * 
@@ -7645,13 +7681,13 @@ export interface MemberRoleUpdateRequest {
      * @type {string}
      * @memberof MemberRoleUpdateRequest
      */
-    'user_id'?: string;
+    'user_id': string;
     /**
      * 
      * @type {string}
      * @memberof MemberRoleUpdateRequest
      */
-    'role_id'?: string;
+    'role_id': string;
 }
 /**
  * 
