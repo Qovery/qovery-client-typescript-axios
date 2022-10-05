@@ -1196,6 +1196,12 @@ export interface AvailableContainerRegistryResponse {
      * @memberof AvailableContainerRegistryResponse
      */
     'required_config'?: { [key: string]: object; };
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AvailableContainerRegistryResponse
+     */
+    'is_mandatory'?: boolean;
 }
 /**
  * 
@@ -3263,11 +3269,11 @@ export interface ContainerRegistryRequest {
      */
     'description'?: string;
     /**
-     * URL of the container registry: * For `DOCKER_HUB`: should be `https://docker.io` * For others: must start by `https://` 
+     * URL of the container registry: * For `DOCKER_HUB`: it must be `https://docker.io` (default with \'https://docker.io\' if no url provided for DOCKER_HUB) * For others: it\'s required and must start by `https://` 
      * @type {string}
      * @memberof ContainerRegistryRequest
      */
-    'url': string;
+    'url'?: string;
     /**
      * 
      * @type {ContainerRegistryRequestConfig}
@@ -3276,7 +3282,7 @@ export interface ContainerRegistryRequest {
     'config': ContainerRegistryRequestConfig;
 }
 /**
- * This field is dependent of the container registry kind: * `ECR` needs in the config: region, access_key_id, secret_access_key * `SCALEWAY_CR` needs in the config: region, scaleway_access_key, scaleway_secret_key * `DOCKER_HUB` needs in the config: username, password * `PUBLIC_ECR` needs in the config: access_key_id, secret_access_key * `DOCR` is not supported anymore 
+ * This field is dependent of the container registry kind: * `ECR` needs in the config: region, access_key_id, secret_access_key * `SCALEWAY_CR` needs in the config: region, scaleway_access_key, scaleway_secret_key * `DOCKER_HUB` needs in the config (optional): username, password * `PUBLIC_ECR` doesn\'t need credentials info * `DOCR` is not supported anymore 
  * @export
  * @interface ContainerRegistryRequestConfig
  */
@@ -3312,13 +3318,13 @@ export interface ContainerRegistryRequestConfig {
      */
     'scaleway_secret_key'?: string;
     /**
-     * Required if kind is `DOCKER_HUB`
+     * optional, for kind `DOCKER_HUB`   We encourage you to set credentials for Docker Hub due to the limits on the pull rate 
      * @type {string}
      * @memberof ContainerRegistryRequestConfig
      */
     'username'?: string;
     /**
-     * Required if kind is `DOCKER_HUB`
+     * optional, for kind `DOCKER_HUB`   We encourage you to set credentials for Docker Hub due to the limits on the pull rate 
      * @type {string}
      * @memberof ContainerRegistryRequestConfig
      */
@@ -3448,7 +3454,7 @@ export interface ContainerRequest {
      */
     'registry_id': string;
     /**
-     * The image name pattern differs according to chosen container registry provider:   * `ECR`: `repository` * `SCALEWAY_CR`: `namespace/image` * `DOCKER_HUB`: `namespace/image` * `PUBLIC_ECR`: `registry_alias/repository` 
+     * The image name pattern differs according to chosen container registry provider:   * `ECR`: `repository` * `SCALEWAY_CR`: `namespace/image` * `DOCKER_HUB`: `image` or `repository/image` * `PUBLIC_ECR`: `registry_alias/repository` 
      * @type {string}
      * @memberof ContainerRequest
      */
@@ -3515,7 +3521,7 @@ export interface ContainerRequestAllOf {
      */
     'registry_id': string;
     /**
-     * The image name pattern differs according to chosen container registry provider:   * `ECR`: `repository` * `SCALEWAY_CR`: `namespace/image` * `DOCKER_HUB`: `namespace/image` * `PUBLIC_ECR`: `registry_alias/repository` 
+     * The image name pattern differs according to chosen container registry provider:   * `ECR`: `repository` * `SCALEWAY_CR`: `namespace/image` * `DOCKER_HUB`: `image` or `repository/image` * `PUBLIC_ECR`: `registry_alias/repository` 
      * @type {string}
      * @memberof ContainerRequestAllOf
      */
@@ -7636,17 +7642,11 @@ export interface MemberRoleUpdateRequest {
      */
     'user_id'?: string;
     /**
-     * used to specify an organization custom role, otherwise `null`
+     * 
      * @type {string}
      * @memberof MemberRoleUpdateRequest
      */
-    'custom_role_id'?: string;
-    /**
-     * 
-     * @type {DefaultMemberRole}
-     * @memberof MemberRoleUpdateRequest
-     */
-    'default_role_name'?: DefaultMemberRole;
+    'role_id'?: string;
 }
 /**
  * 
@@ -8267,23 +8267,17 @@ export enum OrganizationApiTokenScope {
  */
 export interface OrganizationAvailableRole {
     /**
-     * Filled only for an organization custom role
+     * 
      * @type {string}
      * @memberof OrganizationAvailableRole
      */
     'id'?: string;
     /**
-     * It can be either a custom role name or a default role name
+     * 
      * @type {string}
      * @memberof OrganizationAvailableRole
      */
     'name'?: string;
-    /**
-     * - `true` if it is a Qovery role - `false` if it is a custom role 
-     * @type {boolean}
-     * @memberof OrganizationAvailableRole
-     */
-    'is_default'?: boolean;
 }
 /**
  * 
