@@ -7126,7 +7126,13 @@ export interface InviteMemberRequest {
      * @type {InviteMemberRoleEnum}
      * @memberof InviteMemberRequest
      */
-    'role': InviteMemberRoleEnum;
+    'role'?: InviteMemberRoleEnum;
+    /**
+     * the target role to attribute to the new member
+     * @type {string}
+     * @memberof InviteMemberRequest
+     */
+    'role_id'?: string;
 }
 /**
  * 
