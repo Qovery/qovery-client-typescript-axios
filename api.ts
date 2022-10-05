@@ -218,7 +218,7 @@ export interface Application {
      */
     'healthcheck'?: Healthcheck;
     /**
-     * Specify if the environment preview option is activated or not for this application. If activated, a preview environment will be automatically cloned at each pull request. 
+     * Specify if the environment preview option is activated or not for this application.   If activated, a preview environment will be automatically cloned at each pull request.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
      * @memberof Application
      */
@@ -535,7 +535,7 @@ export interface ApplicationAllOf {
      */
     'healthcheck'?: Healthcheck;
     /**
-     * Specify if the environment preview option is activated or not for this application. If activated, a preview environment will be automatically cloned at each pull request. 
+     * Specify if the environment preview option is activated or not for this application.   If activated, a preview environment will be automatically cloned at each pull request.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
      * @memberof ApplicationAllOf
      */
@@ -762,7 +762,7 @@ export interface ApplicationEditRequest {
      */
     'healthcheck'?: Healthcheck;
     /**
-     * Specify if the environment preview option is activated or not for this application. If activated, a preview environment will be automatically cloned at each pull request. 
+     * Specify if the environment preview option is activated or not for this application.   If activated, a preview environment will be automatically cloned at each pull request.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
      * @memberof ApplicationEditRequest
      */
@@ -853,7 +853,7 @@ export interface ApplicationEditRequestAllOf {
      */
     'healthcheck'?: Healthcheck;
     /**
-     * Specify if the environment preview option is activated or not for this application. If activated, a preview environment will be automatically cloned at each pull request. 
+     * Specify if the environment preview option is activated or not for this application.   If activated, a preview environment will be automatically cloned at each pull request.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
      * @memberof ApplicationEditRequestAllOf
      */
@@ -1080,7 +1080,7 @@ export interface ApplicationRequest {
      */
     'healthcheck'?: Healthcheck;
     /**
-     * Specify if the environment preview option is activated or not for this application. If activated, a preview environment will be automatically cloned at each pull request. 
+     * Specify if the environment preview option is activated or not for this application.   If activated, a preview environment will be automatically cloned at each pull request.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
      * @memberof ApplicationRequest
      */
@@ -1159,7 +1159,7 @@ export interface ApplicationRequestAllOf {
      */
     'healthcheck'?: Healthcheck;
     /**
-     * Specify if the environment preview option is activated or not for this application. If activated, a preview environment will be automatically cloned at each pull request. 
+     * Specify if the environment preview option is activated or not for this application.   If activated, a preview environment will be automatically cloned at each pull request.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
      * @memberof ApplicationRequestAllOf
      */
@@ -3501,6 +3501,12 @@ export interface ContainerRequest {
      * @memberof ContainerRequest
      */
     'max_running_instances'?: number;
+    /**
+     * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
+     * @type {boolean}
+     * @memberof ContainerRequest
+     */
+    'auto_preview'?: boolean;
 }
 /**
  * 
@@ -3568,6 +3574,12 @@ export interface ContainerRequestAllOf {
      * @memberof ContainerRequestAllOf
      */
     'max_running_instances'?: number;
+    /**
+     * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
+     * @type {boolean}
+     * @memberof ContainerRequestAllOf
+     */
+    'auto_preview'?: boolean;
 }
 /**
  * 
@@ -3678,7 +3690,7 @@ export interface ContainerResponse {
      */
     'max_running_instances': number;
     /**
-     * Specify if the environment preview option is activated or not for this container. If activated, a preview environment will be automatically cloned at each pull request. 
+     * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
      * @memberof ContainerResponse
      */
@@ -3775,7 +3787,7 @@ export interface ContainerResponseAllOf {
      */
     'max_running_instances': number;
     /**
-     * Specify if the environment preview option is activated or not for this container. If activated, a preview environment will be automatically cloned at each pull request. 
+     * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
      * @memberof ContainerResponseAllOf
      */
