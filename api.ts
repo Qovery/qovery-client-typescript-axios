@@ -8537,7 +8537,7 @@ export interface OrganizationCustomRoleProjectPermissions {
      */
     'project_name'?: string;
     /**
-     * If `is_admin` is `true`, the user is: - automatically `MANAGER` for each environment type - allowed to manage project deployment rules - able to delete the project Note that `permissions` can then be ignored for this project 
+     * If `is_admin` is `true`, the user is: - automatically `MANAGER` for each environment type - allowed to manage project deployment rules - able to delete the project    Note that `permissions` can then be ignored for this project 
      * @type {boolean}
      * @memberof OrganizationCustomRoleProjectPermissions
      */
@@ -8631,7 +8631,7 @@ export interface OrganizationCustomRoleUpdateRequestProjectPermissions {
      */
     'project_id'?: string;
     /**
-     * If `is_admin` is `true`, the user is: - automatically `MANAGER` for each environment type - allowed to manage project deployment rules - able to delete the project Note that `permissions` can then be ignored for this project 
+     * If `is_admin` is `true`, the user is: - automatically `MANAGER` for each environment type - allowed to manage project deployment rules - able to delete the project    Note that `permissions` can then be ignored for this project 
      * @type {boolean}
      * @memberof OrganizationCustomRoleUpdateRequestProjectPermissions
      */
