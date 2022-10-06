@@ -8458,6 +8458,12 @@ export interface OrganizationCustomRole {
      * @type {string}
      * @memberof OrganizationCustomRole
      */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationCustomRole
+     */
     'name'?: string;
     /**
      * 
