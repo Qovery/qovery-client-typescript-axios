@@ -33727,14 +33727,18 @@ export const OrganizationCustomRoleApiAxiosParamCreator = function (configuratio
          * Delete organization custom role
          * @summary Delete organization custom role
          * @param {string} organizationId Organization ID
+         * @param {string} customRoleId Custom Role ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteOrganizationCustomRole: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteOrganizationCustomRole: async (organizationId: string, customRoleId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('deleteOrganizationCustomRole', 'organizationId', organizationId)
+            // verify required parameter 'customRoleId' is not null or undefined
+            assertParamExists('deleteOrganizationCustomRole', 'customRoleId', customRoleId)
             const localVarPath = `/organization/{organizationId}/customRole/{customRoleId}`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"customRoleId"}}`, encodeURIComponent(String(customRoleId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -33765,15 +33769,19 @@ export const OrganizationCustomRoleApiAxiosParamCreator = function (configuratio
          * Edit an organization custom role
          * @summary Edit an organization custom role
          * @param {string} organizationId Organization ID
+         * @param {string} customRoleId Custom Role ID
          * @param {OrganizationCustomRoleUpdateRequest} [organizationCustomRoleUpdateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editOrganizationCustomRole: async (organizationId: string, organizationCustomRoleUpdateRequest?: OrganizationCustomRoleUpdateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        editOrganizationCustomRole: async (organizationId: string, customRoleId: string, organizationCustomRoleUpdateRequest?: OrganizationCustomRoleUpdateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('editOrganizationCustomRole', 'organizationId', organizationId)
+            // verify required parameter 'customRoleId' is not null or undefined
+            assertParamExists('editOrganizationCustomRole', 'customRoleId', customRoleId)
             const localVarPath = `/organization/{organizationId}/customRole/{customRoleId}`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"customRoleId"}}`, encodeURIComponent(String(customRoleId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -33909,23 +33917,25 @@ export const OrganizationCustomRoleApiFp = function(configuration?: Configuratio
          * Delete organization custom role
          * @summary Delete organization custom role
          * @param {string} organizationId Organization ID
+         * @param {string} customRoleId Custom Role ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteOrganizationCustomRole(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOrganizationCustomRole(organizationId, options);
+        async deleteOrganizationCustomRole(organizationId: string, customRoleId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOrganizationCustomRole(organizationId, customRoleId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Edit an organization custom role
          * @summary Edit an organization custom role
          * @param {string} organizationId Organization ID
+         * @param {string} customRoleId Custom Role ID
          * @param {OrganizationCustomRoleUpdateRequest} [organizationCustomRoleUpdateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editOrganizationCustomRole(organizationId: string, organizationCustomRoleUpdateRequest?: OrganizationCustomRoleUpdateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationCustomRole>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.editOrganizationCustomRole(organizationId, organizationCustomRoleUpdateRequest, options);
+        async editOrganizationCustomRole(organizationId: string, customRoleId: string, organizationCustomRoleUpdateRequest?: OrganizationCustomRoleUpdateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationCustomRole>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editOrganizationCustomRole(organizationId, customRoleId, organizationCustomRoleUpdateRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -33976,22 +33986,24 @@ export const OrganizationCustomRoleApiFactory = function (configuration?: Config
          * Delete organization custom role
          * @summary Delete organization custom role
          * @param {string} organizationId Organization ID
+         * @param {string} customRoleId Custom Role ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteOrganizationCustomRole(organizationId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteOrganizationCustomRole(organizationId, options).then((request) => request(axios, basePath));
+        deleteOrganizationCustomRole(organizationId: string, customRoleId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteOrganizationCustomRole(organizationId, customRoleId, options).then((request) => request(axios, basePath));
         },
         /**
          * Edit an organization custom role
          * @summary Edit an organization custom role
          * @param {string} organizationId Organization ID
+         * @param {string} customRoleId Custom Role ID
          * @param {OrganizationCustomRoleUpdateRequest} [organizationCustomRoleUpdateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editOrganizationCustomRole(organizationId: string, organizationCustomRoleUpdateRequest?: OrganizationCustomRoleUpdateRequest, options?: any): AxiosPromise<OrganizationCustomRole> {
-            return localVarFp.editOrganizationCustomRole(organizationId, organizationCustomRoleUpdateRequest, options).then((request) => request(axios, basePath));
+        editOrganizationCustomRole(organizationId: string, customRoleId: string, organizationCustomRoleUpdateRequest?: OrganizationCustomRoleUpdateRequest, options?: any): AxiosPromise<OrganizationCustomRole> {
+            return localVarFp.editOrganizationCustomRole(organizationId, customRoleId, organizationCustomRoleUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Get an organization custom role 
@@ -34041,25 +34053,27 @@ export class OrganizationCustomRoleApi extends BaseAPI {
      * Delete organization custom role
      * @summary Delete organization custom role
      * @param {string} organizationId Organization ID
+     * @param {string} customRoleId Custom Role ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationCustomRoleApi
      */
-    public deleteOrganizationCustomRole(organizationId: string, options?: AxiosRequestConfig) {
-        return OrganizationCustomRoleApiFp(this.configuration).deleteOrganizationCustomRole(organizationId, options).then((request) => request(this.axios, this.basePath));
+    public deleteOrganizationCustomRole(organizationId: string, customRoleId: string, options?: AxiosRequestConfig) {
+        return OrganizationCustomRoleApiFp(this.configuration).deleteOrganizationCustomRole(organizationId, customRoleId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Edit an organization custom role
      * @summary Edit an organization custom role
      * @param {string} organizationId Organization ID
+     * @param {string} customRoleId Custom Role ID
      * @param {OrganizationCustomRoleUpdateRequest} [organizationCustomRoleUpdateRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationCustomRoleApi
      */
-    public editOrganizationCustomRole(organizationId: string, organizationCustomRoleUpdateRequest?: OrganizationCustomRoleUpdateRequest, options?: AxiosRequestConfig) {
-        return OrganizationCustomRoleApiFp(this.configuration).editOrganizationCustomRole(organizationId, organizationCustomRoleUpdateRequest, options).then((request) => request(this.axios, this.basePath));
+    public editOrganizationCustomRole(organizationId: string, customRoleId: string, organizationCustomRoleUpdateRequest?: OrganizationCustomRoleUpdateRequest, options?: AxiosRequestConfig) {
+        return OrganizationCustomRoleApiFp(this.configuration).editOrganizationCustomRole(organizationId, customRoleId, organizationCustomRoleUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
