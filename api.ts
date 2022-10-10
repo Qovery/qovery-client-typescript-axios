@@ -3380,10 +3380,10 @@ export interface ContainerRegistryResponse {
     'url'?: string;
     /**
      * 
-     * @type {object}
+     * @type {Base & object}
      * @memberof ContainerRegistryResponse
      */
-    'cluster'?: object;
+    'cluster'?: Base & object;
 }
 /**
  * 
@@ -3417,10 +3417,10 @@ export interface ContainerRegistryResponseAllOf {
     'url'?: string;
     /**
      * 
-     * @type {object}
+     * @type {Base & object}
      * @memberof ContainerRegistryResponseAllOf
      */
-    'cluster'?: object;
+    'cluster'?: Base & object;
 }
 /**
  * 
