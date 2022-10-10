@@ -3378,6 +3378,12 @@ export interface ContainerRegistryResponse {
      * @memberof ContainerRegistryResponse
      */
     'url'?: string;
+    /**
+     * If this registry is used by a cluster
+     * @type {boolean}
+     * @memberof ContainerRegistryResponse
+     */
+    'belongs_to_cluster'?: boolean;
 }
 /**
  * 
@@ -3409,6 +3415,12 @@ export interface ContainerRegistryResponseAllOf {
      * @memberof ContainerRegistryResponseAllOf
      */
     'url'?: string;
+    /**
+     * If this registry is used by a cluster
+     * @type {boolean}
+     * @memberof ContainerRegistryResponseAllOf
+     */
+    'belongs_to_cluster'?: boolean;
 }
 /**
  * 
