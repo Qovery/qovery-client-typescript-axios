@@ -3379,11 +3379,11 @@ export interface ContainerRegistryResponse {
      */
     'url'?: string;
     /**
-     * If this registry is used by a cluster
-     * @type {boolean}
+     * 
+     * @type {Base & object}
      * @memberof ContainerRegistryResponse
      */
-    'belongs_to_cluster'?: boolean;
+    'cluster'?: Base & object;
 }
 /**
  * 
@@ -3416,11 +3416,11 @@ export interface ContainerRegistryResponseAllOf {
      */
     'url'?: string;
     /**
-     * If this registry is used by a cluster
-     * @type {boolean}
+     * 
+     * @type {Base & object}
      * @memberof ContainerRegistryResponseAllOf
      */
-    'belongs_to_cluster'?: boolean;
+    'cluster'?: Base & object;
 }
 /**
  * 
