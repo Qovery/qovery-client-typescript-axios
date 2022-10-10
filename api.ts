@@ -9208,9 +9208,10 @@ export interface PaidUsage {
 
 export enum PlanEnum {
     FREE = 'FREE',
-    PROFESSIONAL = 'PROFESSIONAL',
-    BUSINESS = 'BUSINESS',
-    ENTERPRISE = 'ENTERPRISE'
+    TEAM = 'TEAM',
+    TEAM_YEARLY = 'TEAM_YEARLY',
+    ENTERPRISE = 'ENTERPRISE',
+    ENTERPRISE_YEARLY = 'ENTERPRISE_YEARLY'
 }
 
 /**
