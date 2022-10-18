@@ -6945,6 +6945,19 @@ export enum HealthcheckProtocolEnum {
 /**
  * 
  * @export
+ * @interface InlineObject
+ */
+export interface InlineObject {
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineObject
+     */
+    'user_id': string;
+}
+/**
+ * 
+ * @export
  * @interface Instance
  */
 export interface Instance {
@@ -32496,18 +32509,15 @@ export const MembersApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary Remove a member
          * @param {string} organizationId Organization ID
-         * @param {string} userId User ID
+         * @param {InlineObject} [inlineObject] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteMember: async (organizationId: string, userId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteMember: async (organizationId: string, inlineObject?: InlineObject, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('deleteMember', 'organizationId', organizationId)
-            // verify required parameter 'userId' is not null or undefined
-            assertParamExists('deleteMember', 'userId', userId)
-            const localVarPath = `/organization/{organizationId}/member/{userId}`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
-                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            const localVarPath = `/organization/{organizationId}/member`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -32525,9 +32535,12 @@ export const MembersApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -32803,12 +32816,12 @@ export const MembersApiFp = function(configuration?: Configuration) {
          * 
          * @summary Remove a member
          * @param {string} organizationId Organization ID
-         * @param {string} userId User ID
+         * @param {InlineObject} [inlineObject] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteMember(organizationId: string, userId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMember(organizationId, userId, options);
+        async deleteMember(organizationId: string, inlineObject?: InlineObject, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMember(organizationId, inlineObject, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -32905,12 +32918,12 @@ export const MembersApiFactory = function (configuration?: Configuration, basePa
          * 
          * @summary Remove a member
          * @param {string} organizationId Organization ID
-         * @param {string} userId User ID
+         * @param {InlineObject} [inlineObject] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteMember(organizationId: string, userId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteMember(organizationId, userId, options).then((request) => request(axios, basePath));
+        deleteMember(organizationId: string, inlineObject?: InlineObject, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteMember(organizationId, inlineObject, options).then((request) => request(axios, basePath));
         },
         /**
          * Edit an organization member role
@@ -33002,13 +33015,13 @@ export class MembersApi extends BaseAPI {
      * 
      * @summary Remove a member
      * @param {string} organizationId Organization ID
-     * @param {string} userId User ID
+     * @param {InlineObject} [inlineObject] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MembersApi
      */
-    public deleteMember(organizationId: string, userId: string, options?: AxiosRequestConfig) {
-        return MembersApiFp(this.configuration).deleteMember(organizationId, userId, options).then((request) => request(this.axios, this.basePath));
+    public deleteMember(organizationId: string, inlineObject?: InlineObject, options?: AxiosRequestConfig) {
+        return MembersApiFp(this.configuration).deleteMember(organizationId, inlineObject, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
