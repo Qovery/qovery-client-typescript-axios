@@ -9227,7 +9227,7 @@ export interface PaidUsage {
     'renewal_at'?: string;
 }
 /**
- * 
+ * BUSINESS & PROFESSIONAL are deprecated
  * @export
  * @enum {string}
  */
@@ -9237,7 +9237,9 @@ export enum PlanEnum {
     TEAM = 'TEAM',
     TEAM_YEARLY = 'TEAM_YEARLY',
     ENTERPRISE = 'ENTERPRISE',
-    ENTERPRISE_YEARLY = 'ENTERPRISE_YEARLY'
+    ENTERPRISE_YEARLY = 'ENTERPRISE_YEARLY',
+    PROFESSIONAL = 'PROFESSIONAL',
+    BUSINESS = 'BUSINESS'
 }
 
 /**
@@ -25048,6 +25050,48 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
+         * Returns a list of containers with only their id and status.
+         * @summary List all container registry container statuses
+         * @param {string} organizationId Organization ID
+         * @param {string} containerRegistryId Container Registry ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getContainerRegistryContainerStatus: async (organizationId: string, containerRegistryId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getContainerRegistryContainerStatus', 'organizationId', organizationId)
+            // verify required parameter 'containerRegistryId' is not null or undefined
+            assertParamExists('getContainerRegistryContainerStatus', 'containerRegistryId', containerRegistryId)
+            const localVarPath = `/organization/{organizationId}/containerRegistry/{containerRegistryId}/container/status`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"containerRegistryId"}}`, encodeURIComponent(String(containerRegistryId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns min, max, and running number of instances for each container
          * @summary List current scaling information for each container
          * @param {string} environmentId Environment ID
@@ -25293,6 +25337,18 @@ export const ContainersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Returns a list of containers with only their id and status.
+         * @summary List all container registry container statuses
+         * @param {string} organizationId Organization ID
+         * @param {string} containerRegistryId Container Registry ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getContainerRegistryContainerStatus(organizationId: string, containerRegistryId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReferenceObjectStatusResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getContainerRegistryContainerStatus(organizationId, containerRegistryId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Returns min, max, and running number of instances for each container
          * @summary List current scaling information for each container
          * @param {string} environmentId Environment ID
@@ -25393,6 +25449,17 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
             return localVarFp.deployAllServices(environmentId, deployAllRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns a list of containers with only their id and status.
+         * @summary List all container registry container statuses
+         * @param {string} organizationId Organization ID
+         * @param {string} containerRegistryId Container Registry ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getContainerRegistryContainerStatus(organizationId: string, containerRegistryId: string, options?: any): AxiosPromise<ReferenceObjectStatusResponseList> {
+            return localVarFp.getContainerRegistryContainerStatus(organizationId, containerRegistryId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns min, max, and running number of instances for each container
          * @summary List current scaling information for each container
          * @param {string} environmentId Environment ID
@@ -25491,6 +25558,19 @@ export class ContainersApi extends BaseAPI {
      */
     public deployAllServices(environmentId: string, deployAllRequest?: DeployAllRequest, options?: AxiosRequestConfig) {
         return ContainersApiFp(this.configuration).deployAllServices(environmentId, deployAllRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns a list of containers with only their id and status.
+     * @summary List all container registry container statuses
+     * @param {string} organizationId Organization ID
+     * @param {string} containerRegistryId Container Registry ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContainersApi
+     */
+    public getContainerRegistryContainerStatus(organizationId: string, containerRegistryId: string, options?: AxiosRequestConfig) {
+        return ContainersApiFp(this.configuration).getContainerRegistryContainerStatus(organizationId, containerRegistryId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
