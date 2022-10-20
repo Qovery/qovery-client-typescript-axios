@@ -32551,14 +32551,18 @@ export const MembersApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary Remove an invited member
          * @param {string} organizationId Organization ID
+         * @param {string} inviteId Invite ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteInviteMember: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteInviteMember: async (organizationId: string, inviteId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('deleteInviteMember', 'organizationId', organizationId)
+            // verify required parameter 'inviteId' is not null or undefined
+            assertParamExists('deleteInviteMember', 'inviteId', inviteId)
             const localVarPath = `/organization/{organizationId}/inviteMember/{inviteId}`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"inviteId"}}`, encodeURIComponent(String(inviteId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -32885,11 +32889,12 @@ export const MembersApiFp = function(configuration?: Configuration) {
          * 
          * @summary Remove an invited member
          * @param {string} organizationId Organization ID
+         * @param {string} inviteId Invite ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteInviteMember(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteInviteMember(organizationId, options);
+        async deleteInviteMember(organizationId: string, inviteId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteInviteMember(organizationId, inviteId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -32988,11 +32993,12 @@ export const MembersApiFactory = function (configuration?: Configuration, basePa
          * 
          * @summary Remove an invited member
          * @param {string} organizationId Organization ID
+         * @param {string} inviteId Invite ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteInviteMember(organizationId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteInviteMember(organizationId, options).then((request) => request(axios, basePath));
+        deleteInviteMember(organizationId: string, inviteId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteInviteMember(organizationId, inviteId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -33083,12 +33089,13 @@ export class MembersApi extends BaseAPI {
      * 
      * @summary Remove an invited member
      * @param {string} organizationId Organization ID
+     * @param {string} inviteId Invite ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MembersApi
      */
-    public deleteInviteMember(organizationId: string, options?: AxiosRequestConfig) {
-        return MembersApiFp(this.configuration).deleteInviteMember(organizationId, options).then((request) => request(this.axios, this.basePath));
+    public deleteInviteMember(organizationId: string, inviteId: string, options?: AxiosRequestConfig) {
+        return MembersApiFp(this.configuration).deleteInviteMember(organizationId, inviteId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
