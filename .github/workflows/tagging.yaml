@@ -28,7 +28,7 @@ jobs:
       - name: Replace tag in package.json and commit it the changes
         run: |
           sed -i "s/\"version\": \".*\"/\"version\": \"$LAST_TAG\"/g" package.json
-          git config --local user.email "
+          git config --local user.email
           git config --local user.name "GitHub Actions"
           git add package.json
           git commit -m "Bump version to $LAST_TAG"
