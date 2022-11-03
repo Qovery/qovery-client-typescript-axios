@@ -20,3 +20,11 @@ jobs:
           prev_tag: 'v'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Save last tag to file
+        run: |
+          echo "LAST_TAG=$(git describe --abbrev=0 --tags)" >> $GITHUB_ENV
+
+      - name: Replace tag in package.json
+        run: |
+          sed -i "s/\"version\": \".*\"/\"version\": \"$LAST_TAG\"/g" package.json
