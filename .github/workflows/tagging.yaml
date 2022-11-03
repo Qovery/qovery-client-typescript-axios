@@ -18,6 +18,5 @@ jobs:
           flag_branch: false
           message: Bump version
           prev_tag: 'v'
-          update_odoo_module_version: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
