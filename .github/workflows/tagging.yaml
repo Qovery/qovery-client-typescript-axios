@@ -28,10 +28,16 @@ jobs:
       - name: Replace tag in package.json and commit it the changes
         run: |
           sed -i "s/\"version\": \".*\"/\"version\": \"$LAST_TAG\"/g" package.json
-          git config --local user.email
-          git config --local user.name "GitHub Actions"
+
+      - name: Setup Git
+        run: |
+          git config user.name 'Qovery Bot'
+          git config user.email 'github@qovery.com'
+
+      - name: commit changes
+        run: |
           git add package.json
-          git commit -m "Bump version to $LAST_TAG"
-          git push
+          git commit -m "chore: bump version to $LAST_TAG"
+          git push origin main
         
         
