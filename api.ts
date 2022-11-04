@@ -7426,7 +7426,7 @@ export interface Log {
      * @type {string}
      * @memberof Log
      */
-    'application_commit_id'?: string;
+    'version'?: string;
 }
 /**
  * 
