@@ -6146,156 +6146,6 @@ export interface EnvironmentEditRequest {
 /**
  * 
  * @export
- * @interface EnvironmentEnvironmentIdLogsDetails
- */
-export interface EnvironmentEnvironmentIdLogsDetails {
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentEnvironmentIdLogsDetails
-     */
-    'organization_id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentEnvironmentIdLogsDetails
-     */
-    'cluster_id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentEnvironmentIdLogsDetails
-     */
-    'execution_id'?: string;
-    /**
-     * 
-     * @type {EnvironmentEnvironmentIdLogsDetailsTransmitter}
-     * @memberof EnvironmentEnvironmentIdLogsDetails
-     */
-    'transmitter'?: EnvironmentEnvironmentIdLogsDetailsTransmitter;
-    /**
-     * 
-     * @type {EnvironmentEnvironmentIdLogsDetailsStage}
-     * @memberof EnvironmentEnvironmentIdLogsDetails
-     */
-    'stage'?: EnvironmentEnvironmentIdLogsDetailsStage;
-}
-/**
- * 
- * @export
- * @interface EnvironmentEnvironmentIdLogsDetailsStage
- */
-export interface EnvironmentEnvironmentIdLogsDetailsStage {
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentEnvironmentIdLogsDetailsStage
-     */
-    'step'?: string;
-}
-/**
- * 
- * @export
- * @interface EnvironmentEnvironmentIdLogsDetailsTransmitter
- */
-export interface EnvironmentEnvironmentIdLogsDetailsTransmitter {
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentEnvironmentIdLogsDetailsTransmitter
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentEnvironmentIdLogsDetailsTransmitter
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentEnvironmentIdLogsDetailsTransmitter
-     */
-    'type'?: string;
-}
-/**
- * 
- * @export
- * @interface EnvironmentEnvironmentIdLogsError
- */
-export interface EnvironmentEnvironmentIdLogsError {
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentEnvironmentIdLogsError
-     */
-    'tag'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentEnvironmentIdLogsError
-     */
-    'user_log_message'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentEnvironmentIdLogsError
-     */
-    'link'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentEnvironmentIdLogsError
-     */
-    'hint_message'?: string;
-    /**
-     * 
-     * @type {EnvironmentEnvironmentIdLogsErrorUnderlyingError}
-     * @memberof EnvironmentEnvironmentIdLogsError
-     */
-    'underlying_error'?: EnvironmentEnvironmentIdLogsErrorUnderlyingError;
-}
-/**
- * 
- * @export
- * @interface EnvironmentEnvironmentIdLogsErrorUnderlyingError
- */
-export interface EnvironmentEnvironmentIdLogsErrorUnderlyingError {
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentEnvironmentIdLogsErrorUnderlyingError
-     */
-    'message'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentEnvironmentIdLogsErrorUnderlyingError
-     */
-    'full_details'?: string;
-}
-/**
- * 
- * @export
- * @interface EnvironmentEnvironmentIdLogsMessage
- */
-export interface EnvironmentEnvironmentIdLogsMessage {
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentEnvironmentIdLogsMessage
-     */
-    'safe_message'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentEnvironmentIdLogsMessage
-     */
-    'full_details'?: string;
-}
-/**
- * 
- * @export
  * @interface EnvironmentLog
  */
 export interface EnvironmentLog {
@@ -6430,6 +6280,193 @@ export enum EnvironmentLogTypeEnum {
     ENVIRONMENT = 'ENVIRONMENT'
 }
 
+/**
+ * 
+ * @export
+ * @interface EnvironmentLogs
+ */
+export interface EnvironmentLogs {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLogs
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLogs
+     */
+    'timestamp': string;
+    /**
+     * 
+     * @type {EnvironmentLogsDetails}
+     * @memberof EnvironmentLogs
+     */
+    'details': EnvironmentLogsDetails;
+    /**
+     * 
+     * @type {EnvironmentLogsError}
+     * @memberof EnvironmentLogs
+     */
+    'error'?: EnvironmentLogsError | null;
+    /**
+     * 
+     * @type {EnvironmentLogsMessage}
+     * @memberof EnvironmentLogs
+     */
+    'message'?: EnvironmentLogsMessage | null;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentLogsDetails
+ */
+export interface EnvironmentLogsDetails {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLogsDetails
+     */
+    'organization_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLogsDetails
+     */
+    'cluster_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLogsDetails
+     */
+    'execution_id'?: string;
+    /**
+     * 
+     * @type {EnvironmentLogsDetailsTransmitter}
+     * @memberof EnvironmentLogsDetails
+     */
+    'transmitter'?: EnvironmentLogsDetailsTransmitter;
+    /**
+     * 
+     * @type {EnvironmentLogsDetailsStage}
+     * @memberof EnvironmentLogsDetails
+     */
+    'stage'?: EnvironmentLogsDetailsStage;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentLogsDetailsStage
+ */
+export interface EnvironmentLogsDetailsStage {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLogsDetailsStage
+     */
+    'step'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentLogsDetailsTransmitter
+ */
+export interface EnvironmentLogsDetailsTransmitter {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLogsDetailsTransmitter
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLogsDetailsTransmitter
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLogsDetailsTransmitter
+     */
+    'type'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentLogsError
+ */
+export interface EnvironmentLogsError {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLogsError
+     */
+    'tag'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLogsError
+     */
+    'user_log_message'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLogsError
+     */
+    'link'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLogsError
+     */
+    'hint_message'?: string;
+    /**
+     * 
+     * @type {EnvironmentLogsErrorUnderlyingError}
+     * @memberof EnvironmentLogsError
+     */
+    'underlying_error'?: EnvironmentLogsErrorUnderlyingError;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentLogsErrorUnderlyingError
+ */
+export interface EnvironmentLogsErrorUnderlyingError {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLogsErrorUnderlyingError
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLogsErrorUnderlyingError
+     */
+    'full_details'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentLogsMessage
+ */
+export interface EnvironmentLogsMessage {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLogsMessage
+     */
+    'safe_message'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLogsMessage
+     */
+    'full_details'?: string;
+}
 /**
  * 
  * @export
@@ -7104,43 +7141,6 @@ export interface InlineObject {
      * @memberof InlineObject
      */
     'user_id': string;
-}
-/**
- * 
- * @export
- * @interface InlineResponse200
- */
-export interface InlineResponse200 {
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse200
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse200
-     */
-    'timestamp': string;
-    /**
-     * 
-     * @type {EnvironmentEnvironmentIdLogsDetails}
-     * @memberof InlineResponse200
-     */
-    'details': EnvironmentEnvironmentIdLogsDetails;
-    /**
-     * 
-     * @type {EnvironmentEnvironmentIdLogsError}
-     * @memberof InlineResponse200
-     */
-    'error'?: EnvironmentEnvironmentIdLogsError | null;
-    /**
-     * 
-     * @type {EnvironmentEnvironmentIdLogsMessage}
-     * @memberof InlineResponse200
-     */
-    'message'?: EnvironmentEnvironmentIdLogsMessage | null;
 }
 /**
  * 
@@ -28839,7 +28839,7 @@ export const EnvironmentLogsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listEnvironmentLogs(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<InlineResponse200>>> {
+        async listEnvironmentLogs(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<EnvironmentLogs>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listEnvironmentLogs(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -28870,7 +28870,7 @@ export const EnvironmentLogsApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listEnvironmentLogs(environmentId: string, options?: any): AxiosPromise<Array<InlineResponse200>> {
+        listEnvironmentLogs(environmentId: string, options?: any): AxiosPromise<Array<EnvironmentLogs>> {
             return localVarFp.listEnvironmentLogs(environmentId, options).then((request) => request(axios, basePath));
         },
     };
