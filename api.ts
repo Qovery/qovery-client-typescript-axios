@@ -5191,6 +5191,110 @@ export interface DeploymentHistoryEnvironmentPaginatedResponseListAllOf {
 /**
  * 
  * @export
+ * @interface DeploymentHistoryJobResponse
+ */
+export interface DeploymentHistoryJobResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryJobResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryJobResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryJobResponse
+     */
+    'updated_at'?: string;
+    /**
+     * name of the job
+     * @type {string}
+     * @memberof DeploymentHistoryJobResponse
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {DeploymentHistoryStatusEnum}
+     * @memberof DeploymentHistoryJobResponse
+     */
+    'status'?: DeploymentHistoryStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryJobResponse
+     */
+    'image_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryJobResponse
+     */
+    'tag'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof DeploymentHistoryJobResponse
+     */
+    'arguments'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryJobResponse
+     */
+    'entrypoint'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentHistoryJobResponseAllOf
+ */
+export interface DeploymentHistoryJobResponseAllOf {
+    /**
+     * name of the job
+     * @type {string}
+     * @memberof DeploymentHistoryJobResponseAllOf
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {DeploymentHistoryStatusEnum}
+     * @memberof DeploymentHistoryJobResponseAllOf
+     */
+    'status'?: DeploymentHistoryStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryJobResponseAllOf
+     */
+    'image_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryJobResponseAllOf
+     */
+    'tag'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof DeploymentHistoryJobResponseAllOf
+     */
+    'arguments'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryJobResponseAllOf
+     */
+    'entrypoint'?: string;
+}
+/**
+ * 
+ * @export
  * @interface DeploymentHistoryPaginatedResponseList
  */
 export interface DeploymentHistoryPaginatedResponseList {
@@ -7514,6 +7618,658 @@ export enum InvoiceStatusEnum {
     POSTED = 'POSTED',
     UNKNOWN = 'UNKNOWN',
     VOIDED = 'VOIDED'
+}
+
+/**
+ * 
+ * @export
+ * @interface JobAdvancedSettings
+ */
+export interface JobAdvancedSettings {
+    /**
+     * 
+     * @type {number}
+     * @memberof JobAdvancedSettings
+     */
+    'job.delete_ttl_seconds_after_finished'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof JobAdvancedSettings
+     */
+    'cronjob.concurrency_policy'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof JobAdvancedSettings
+     */
+    'cronjob.failed_jobs_history_limit'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof JobAdvancedSettings
+     */
+    'cronjob.success_jobs_history_limit'?: number;
+    /**
+     * `NONE` disable readiness probe `TCP` enable TCP readiness probe `HTTP` enable HTTP readiness probe 
+     * @type {string}
+     * @memberof JobAdvancedSettings
+     */
+    'readiness_probe.type'?: JobAdvancedSettingsReadinessProbeTypeEnum;
+    /**
+     * HTTP GET path to check status (must returns 2xx E.g \"/healtz\") - only usable with TYPE = HTTP
+     * @type {string}
+     * @memberof JobAdvancedSettings
+     */
+    'readiness_probe.http_get.path'?: string;
+    /**
+     * Delay before liveness probe is initiated
+     * @type {number}
+     * @memberof JobAdvancedSettings
+     */
+    'readiness_probe.initial_delay_seconds'?: number;
+    /**
+     * How often to perform the probe
+     * @type {number}
+     * @memberof JobAdvancedSettings
+     */
+    'readiness_probe.period_seconds'?: number;
+    /**
+     * When the probe times out
+     * @type {number}
+     * @memberof JobAdvancedSettings
+     */
+    'readiness_probe.timeout_seconds'?: number;
+    /**
+     * Minimum consecutive successes for the probe to be considered successful after having failed.
+     * @type {number}
+     * @memberof JobAdvancedSettings
+     */
+    'readiness_probe.success_threshold'?: number;
+    /**
+     * Minimum consecutive failures for the probe to be considered failed after having succeeded.
+     * @type {number}
+     * @memberof JobAdvancedSettings
+     */
+    'readiness_probe.failure_threshold'?: number;
+    /**
+     * `NONE` disable liveness probe `TCP` enable TCP liveness probe `HTTP` enable HTTP liveness probe 
+     * @type {string}
+     * @memberof JobAdvancedSettings
+     */
+    'liveness_probe.type'?: JobAdvancedSettingsLivenessProbeTypeEnum;
+    /**
+     * HTTP GET path to check status (must returns 2xx E.g \"/healtz\") - only usable with TYPE = HTTP
+     * @type {string}
+     * @memberof JobAdvancedSettings
+     */
+    'liveness_probe.http_get.path'?: string;
+    /**
+     * Delay before liveness probe is initiated
+     * @type {number}
+     * @memberof JobAdvancedSettings
+     */
+    'liveness_probe.initial_delay_seconds'?: number;
+    /**
+     * How often to perform the probe
+     * @type {number}
+     * @memberof JobAdvancedSettings
+     */
+    'liveness_probe.period_seconds'?: number;
+    /**
+     * When the probe times out
+     * @type {number}
+     * @memberof JobAdvancedSettings
+     */
+    'liveness_probe.timeout_seconds'?: number;
+    /**
+     * Minimum consecutive successes for the probe to be considered successful after having failed.
+     * @type {number}
+     * @memberof JobAdvancedSettings
+     */
+    'liveness_probe.success_threshold'?: number;
+    /**
+     * Minimum consecutive failures for the probe to be considered failed after having succeeded.
+     * @type {number}
+     * @memberof JobAdvancedSettings
+     */
+    'liveness_probe.failure_threshold'?: number;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum JobAdvancedSettingsReadinessProbeTypeEnum {
+    NONE = 'NONE',
+    TCP = 'TCP',
+    HTTP = 'HTTP'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum JobAdvancedSettingsLivenessProbeTypeEnum {
+    NONE = 'NONE',
+    TCP = 'TCP',
+    HTTP = 'HTTP'
+}
+
+/**
+ * 
+ * @export
+ * @interface JobDeployRequest
+ */
+export interface JobDeployRequest {
+    /**
+     * Image tag to deploy
+     * @type {string}
+     * @memberof JobDeployRequest
+     */
+    'image_tag': string;
+}
+/**
+ * 
+ * @export
+ * @interface JobRequest
+ */
+export interface JobRequest {
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof JobRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof JobRequest
+     */
+    'arguments'?: Array<string>;
+    /**
+     * optional entrypoint when launching container
+     * @type {string}
+     * @memberof JobRequest
+     */
+    'entrypoint'?: string;
+    /**
+     * unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof JobRequest
+     */
+    'cpu'?: number;
+    /**
+     * unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof JobRequest
+     */
+    'memory'?: number;
+    /**
+     * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
+     * @type {number}
+     * @memberof JobRequest
+     */
+    'max_nb_restart'?: number;
+    /**
+     * Maximum number of seconds allowed for the job to run before killing it and mark it as failed 
+     * @type {number}
+     * @memberof JobRequest
+     */
+    'max_duration_seconds'?: number;
+    /**
+     * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
+     * @type {boolean}
+     * @memberof JobRequest
+     */
+    'auto_preview'?: boolean;
+    /**
+     * Port where to run readiness and liveliness probes checks. The port will not be exposed externally
+     * @type {number}
+     * @memberof JobRequest
+     */
+    'port'?: number | null;
+    /**
+     * 
+     * @type {JobRequestAllOfSource}
+     * @memberof JobRequest
+     */
+    'source'?: JobRequestAllOfSource;
+    /**
+     * 
+     * @type {JobRequestAllOfSchedule}
+     * @memberof JobRequest
+     */
+    'schedule'?: JobRequestAllOfSchedule;
+}
+/**
+ * 
+ * @export
+ * @interface JobRequestAllOf
+ */
+export interface JobRequestAllOf {
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof JobRequestAllOf
+     */
+    'name': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof JobRequestAllOf
+     */
+    'arguments'?: Array<string>;
+    /**
+     * optional entrypoint when launching container
+     * @type {string}
+     * @memberof JobRequestAllOf
+     */
+    'entrypoint'?: string;
+    /**
+     * unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof JobRequestAllOf
+     */
+    'cpu'?: number;
+    /**
+     * unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof JobRequestAllOf
+     */
+    'memory'?: number;
+    /**
+     * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
+     * @type {number}
+     * @memberof JobRequestAllOf
+     */
+    'max_nb_restart'?: number;
+    /**
+     * Maximum number of seconds allowed for the job to run before killing it and mark it as failed 
+     * @type {number}
+     * @memberof JobRequestAllOf
+     */
+    'max_duration_seconds'?: number;
+    /**
+     * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
+     * @type {boolean}
+     * @memberof JobRequestAllOf
+     */
+    'auto_preview'?: boolean;
+    /**
+     * Port where to run readiness and liveliness probes checks. The port will not be exposed externally
+     * @type {number}
+     * @memberof JobRequestAllOf
+     */
+    'port'?: number | null;
+    /**
+     * 
+     * @type {JobRequestAllOfSource}
+     * @memberof JobRequestAllOf
+     */
+    'source'?: JobRequestAllOfSource;
+    /**
+     * 
+     * @type {JobRequestAllOfSchedule}
+     * @memberof JobRequestAllOf
+     */
+    'schedule'?: JobRequestAllOfSchedule;
+}
+/**
+ * 
+ * @export
+ * @interface JobRequestAllOfSchedule
+ */
+export interface JobRequestAllOfSchedule {
+    /**
+     * 
+     * @type {JobScheduleEvent}
+     * @memberof JobRequestAllOfSchedule
+     */
+    'event'?: JobScheduleEvent;
+    /**
+     * Can only be set if the event is CRON. Represent the cron format for the job schedule without seconds. For example: `* * * * *` represent the cron to launch the job every minute. See https://crontab.guru/ to WISIWIG interface. Timezone is UTC 
+     * @type {string}
+     * @memberof JobRequestAllOfSchedule
+     */
+    'schedule_at'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface JobRequestAllOfSource
+ */
+export interface JobRequestAllOfSource {
+    /**
+     * 
+     * @type {JobRequestAllOfSourceImage}
+     * @memberof JobRequestAllOfSource
+     */
+    'image'?: JobRequestAllOfSourceImage | null;
+    /**
+     * 
+     * @type {JobRequestAllOfSourceDocker}
+     * @memberof JobRequestAllOfSource
+     */
+    'docker'?: JobRequestAllOfSourceDocker | null;
+}
+/**
+ * 
+ * @export
+ * @interface JobRequestAllOfSourceDocker
+ */
+export interface JobRequestAllOfSourceDocker {
+    /**
+     * The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+     * @type {string}
+     * @memberof JobRequestAllOfSourceDocker
+     */
+    'dockerfile_path'?: string | null;
+    /**
+     * 
+     * @type {ApplicationGitRepositoryRequest}
+     * @memberof JobRequestAllOfSourceDocker
+     */
+    'git_repository'?: ApplicationGitRepositoryRequest;
+}
+/**
+ * 
+ * @export
+ * @interface JobRequestAllOfSourceImage
+ */
+export interface JobRequestAllOfSourceImage {
+    /**
+     * The image name pattern differs according to chosen container registry provider:   * `ECR`: `repository` * `SCALEWAY_CR`: `namespace/image` * `DOCKER_HUB`: `image` or `repository/image` * `PUBLIC_ECR`: `registry_alias/repository` 
+     * @type {string}
+     * @memberof JobRequestAllOfSourceImage
+     */
+    'image_name'?: string;
+    /**
+     * tag of the image container
+     * @type {string}
+     * @memberof JobRequestAllOfSourceImage
+     */
+    'tag'?: string;
+    /**
+     * tag of the image container
+     * @type {string}
+     * @memberof JobRequestAllOfSourceImage
+     */
+    'registry_id'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface JobResponse
+ */
+export interface JobResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof JobResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JobResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JobResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof JobResponse
+     */
+    'environment': ReferenceObject;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof JobResponse
+     */
+    'registry': ReferenceObject;
+    /**
+     * Maximum cpu that can be allocated to the job based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof JobResponse
+     */
+    'maximum_cpu': number;
+    /**
+     * Maximum memory that can be allocated to the job based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof JobResponse
+     */
+    'maximum_memory': number;
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof JobResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof JobResponse
+     */
+    'arguments'?: Array<string>;
+    /**
+     * optional entrypoint when launching container
+     * @type {string}
+     * @memberof JobResponse
+     */
+    'entrypoint'?: string;
+    /**
+     * unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof JobResponse
+     */
+    'cpu': number;
+    /**
+     * unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof JobResponse
+     */
+    'memory': number;
+    /**
+     * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
+     * @type {number}
+     * @memberof JobResponse
+     */
+    'max_nb_restart'?: number;
+    /**
+     * Maximum number of seconds allowed for the job to run before killing it and mark it as failed 
+     * @type {number}
+     * @memberof JobResponse
+     */
+    'max_duration_seconds'?: number;
+    /**
+     * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
+     * @type {boolean}
+     * @memberof JobResponse
+     */
+    'auto_preview': boolean;
+    /**
+     * Port where to run readiness and liveliness probes checks. The port will not be exposed externally
+     * @type {number}
+     * @memberof JobResponse
+     */
+    'port'?: number | null;
+    /**
+     * 
+     * @type {JobResponseAllOfSource}
+     * @memberof JobResponse
+     */
+    'source'?: JobResponseAllOfSource;
+    /**
+     * 
+     * @type {JobRequestAllOfSchedule}
+     * @memberof JobResponse
+     */
+    'schedule'?: JobRequestAllOfSchedule;
+}
+/**
+ * 
+ * @export
+ * @interface JobResponseAllOf
+ */
+export interface JobResponseAllOf {
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof JobResponseAllOf
+     */
+    'environment': ReferenceObject;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof JobResponseAllOf
+     */
+    'registry': ReferenceObject;
+    /**
+     * Maximum cpu that can be allocated to the job based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof JobResponseAllOf
+     */
+    'maximum_cpu': number;
+    /**
+     * Maximum memory that can be allocated to the job based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof JobResponseAllOf
+     */
+    'maximum_memory': number;
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof JobResponseAllOf
+     */
+    'name': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof JobResponseAllOf
+     */
+    'arguments'?: Array<string>;
+    /**
+     * optional entrypoint when launching container
+     * @type {string}
+     * @memberof JobResponseAllOf
+     */
+    'entrypoint'?: string;
+    /**
+     * unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof JobResponseAllOf
+     */
+    'cpu': number;
+    /**
+     * unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof JobResponseAllOf
+     */
+    'memory': number;
+    /**
+     * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
+     * @type {number}
+     * @memberof JobResponseAllOf
+     */
+    'max_nb_restart'?: number;
+    /**
+     * Maximum number of seconds allowed for the job to run before killing it and mark it as failed 
+     * @type {number}
+     * @memberof JobResponseAllOf
+     */
+    'max_duration_seconds'?: number;
+    /**
+     * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
+     * @type {boolean}
+     * @memberof JobResponseAllOf
+     */
+    'auto_preview': boolean;
+    /**
+     * Port where to run readiness and liveliness probes checks. The port will not be exposed externally
+     * @type {number}
+     * @memberof JobResponseAllOf
+     */
+    'port'?: number | null;
+    /**
+     * 
+     * @type {JobResponseAllOfSource}
+     * @memberof JobResponseAllOf
+     */
+    'source'?: JobResponseAllOfSource;
+    /**
+     * 
+     * @type {JobRequestAllOfSchedule}
+     * @memberof JobResponseAllOf
+     */
+    'schedule'?: JobRequestAllOfSchedule;
+}
+/**
+ * 
+ * @export
+ * @interface JobResponseAllOfSource
+ */
+export interface JobResponseAllOfSource {
+    /**
+     * 
+     * @type {JobRequestAllOfSourceImage}
+     * @memberof JobResponseAllOfSource
+     */
+    'image'?: JobRequestAllOfSourceImage | null;
+    /**
+     * 
+     * @type {JobResponseAllOfSourceDocker}
+     * @memberof JobResponseAllOfSource
+     */
+    'docker'?: JobResponseAllOfSourceDocker | null;
+}
+/**
+ * 
+ * @export
+ * @interface JobResponseAllOfSourceDocker
+ */
+export interface JobResponseAllOfSourceDocker {
+    /**
+     * The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+     * @type {string}
+     * @memberof JobResponseAllOfSourceDocker
+     */
+    'dockerfile_path'?: string | null;
+    /**
+     * 
+     * @type {ApplicationGitRepository}
+     * @memberof JobResponseAllOfSourceDocker
+     */
+    'git_repository'?: ApplicationGitRepository;
+}
+/**
+ * 
+ * @export
+ * @interface JobResponseList
+ */
+export interface JobResponseList {
+    /**
+     * 
+     * @type {Array<JobResponse>}
+     * @memberof JobResponseList
+     */
+    'results'?: Array<JobResponse>;
+}
+/**
+ * On which event the job is going to run. ON_START means when a deployment is requested for the environment ON_STOP means when a stop of the environment is requested CRON means at a scheduled interval 
+ * @export
+ * @enum {string}
+ */
+
+export enum JobScheduleEvent {
+    ON_START = 'ON_START',
+    ON_STOP = 'ON_STOP',
+    ON_DELETE = 'ON_DELETE',
+    CRON = 'CRON'
 }
 
 /**
@@ -24639,11 +25395,10 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
          * 
          * @summary List containers
          * @param {string} environmentId Environment ID
-         * @param {boolean} [toUpdate] return (or not) results that must be updated
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listContainer: async (environmentId: string, toUpdate?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listContainer: async (environmentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'environmentId' is not null or undefined
             assertParamExists('listContainer', 'environmentId', environmentId)
             const localVarPath = `/environment/{environmentId}/container`
@@ -24662,10 +25417,6 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (toUpdate !== undefined) {
-                localVarQueryParameter['toUpdate'] = toUpdate;
-            }
 
 
     
@@ -24815,12 +25566,11 @@ export const ContainersApiFp = function(configuration?: Configuration) {
          * 
          * @summary List containers
          * @param {string} environmentId Environment ID
-         * @param {boolean} [toUpdate] return (or not) results that must be updated
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listContainer(environmentId: string, toUpdate?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listContainer(environmentId, toUpdate, options);
+        async listContainer(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listContainer(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -24923,12 +25673,11 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
          * 
          * @summary List containers
          * @param {string} environmentId Environment ID
-         * @param {boolean} [toUpdate] return (or not) results that must be updated
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listContainer(environmentId: string, toUpdate?: boolean, options?: any): AxiosPromise<ContainerResponseList> {
-            return localVarFp.listContainer(environmentId, toUpdate, options).then((request) => request(axios, basePath));
+        listContainer(environmentId: string, options?: any): AxiosPromise<ContainerResponseList> {
+            return localVarFp.listContainer(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
          * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag 
@@ -25043,13 +25792,12 @@ export class ContainersApi extends BaseAPI {
      * 
      * @summary List containers
      * @param {string} environmentId Environment ID
-     * @param {boolean} [toUpdate] return (or not) results that must be updated
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContainersApi
      */
-    public listContainer(environmentId: string, toUpdate?: boolean, options?: AxiosRequestConfig) {
-        return ContainersApiFp(this.configuration).listContainer(environmentId, toUpdate, options).then((request) => request(this.axios, this.basePath));
+    public listContainer(environmentId: string, options?: AxiosRequestConfig) {
+        return ContainersApiFp(this.configuration).listContainer(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -31340,6 +32088,2241 @@ export class GithubAppApi extends BaseAPI {
      */
     public organizationGithubAppDisconnect(organizationId: string, force?: boolean, options?: AxiosRequestConfig) {
         return GithubAppApiFp(this.configuration).organizationGithubAppDisconnect(organizationId, force, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * JobActionsApi - axios parameter creator
+ * @export
+ */
+export const JobActionsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * You must provide a git commit id
+         * @summary Deploy job
+         * @param {boolean} [force] Enable or Disable the force trigger of the job
+         * @param {JobDeployRequest} [jobDeployRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deployJob: async (force?: boolean, jobDeployRequest?: JobDeployRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/job/{jobId}/deploy`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (force !== undefined) {
+                localVarQueryParameter['force'] = force;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(jobDeployRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Restart job
+         * @param {boolean} [force] Enable or Disable the force trigger of the job
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restartJob: async (force?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/job/{jobId}/restart`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (force !== undefined) {
+                localVarQueryParameter['force'] = force;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Stop job
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stopJob: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/job/{jobId}/stop`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * JobActionsApi - functional programming interface
+ * @export
+ */
+export const JobActionsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = JobActionsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * You must provide a git commit id
+         * @summary Deploy job
+         * @param {boolean} [force] Enable or Disable the force trigger of the job
+         * @param {JobDeployRequest} [jobDeployRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deployJob(force?: boolean, jobDeployRequest?: JobDeployRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deployJob(force, jobDeployRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Restart job
+         * @param {boolean} [force] Enable or Disable the force trigger of the job
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async restartJob(force?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.restartJob(force, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Stop job
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async stopJob(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.stopJob(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * JobActionsApi - factory interface
+ * @export
+ */
+export const JobActionsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = JobActionsApiFp(configuration)
+    return {
+        /**
+         * You must provide a git commit id
+         * @summary Deploy job
+         * @param {boolean} [force] Enable or Disable the force trigger of the job
+         * @param {JobDeployRequest} [jobDeployRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deployJob(force?: boolean, jobDeployRequest?: JobDeployRequest, options?: any): AxiosPromise<Status> {
+            return localVarFp.deployJob(force, jobDeployRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Restart job
+         * @param {boolean} [force] Enable or Disable the force trigger of the job
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restartJob(force?: boolean, options?: any): AxiosPromise<Status> {
+            return localVarFp.restartJob(force, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Stop job
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stopJob(options?: any): AxiosPromise<Status> {
+            return localVarFp.stopJob(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * JobActionsApi - object-oriented interface
+ * @export
+ * @class JobActionsApi
+ * @extends {BaseAPI}
+ */
+export class JobActionsApi extends BaseAPI {
+    /**
+     * You must provide a git commit id
+     * @summary Deploy job
+     * @param {boolean} [force] Enable or Disable the force trigger of the job
+     * @param {JobDeployRequest} [jobDeployRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobActionsApi
+     */
+    public deployJob(force?: boolean, jobDeployRequest?: JobDeployRequest, options?: AxiosRequestConfig) {
+        return JobActionsApiFp(this.configuration).deployJob(force, jobDeployRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Restart job
+     * @param {boolean} [force] Enable or Disable the force trigger of the job
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobActionsApi
+     */
+    public restartJob(force?: boolean, options?: AxiosRequestConfig) {
+        return JobActionsApiFp(this.configuration).restartJob(force, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Stop job
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobActionsApi
+     */
+    public stopJob(options?: AxiosRequestConfig) {
+        return JobActionsApiFp(this.configuration).stopJob(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * JobConfigurationApi - axios parameter creator
+ * @export
+ */
+export const JobConfigurationApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Edit advanced settings by returning table of advanced settings.
+         * @summary Edit advanced settings
+         * @param {JobAdvancedSettings} [jobAdvancedSettings] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editJobAdvancedSettings: async (jobAdvancedSettings?: JobAdvancedSettings, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/job/{jobId}/advancedSettings`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(jobAdvancedSettings, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get list and values of the advanced settings of the job.
+         * @summary Get advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getJobAdvancedSettings: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/job/{jobId}/advancedSettings`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * JobConfigurationApi - functional programming interface
+ * @export
+ */
+export const JobConfigurationApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = JobConfigurationApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Edit advanced settings by returning table of advanced settings.
+         * @summary Edit advanced settings
+         * @param {JobAdvancedSettings} [jobAdvancedSettings] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editJobAdvancedSettings(jobAdvancedSettings?: JobAdvancedSettings, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JobAdvancedSettings>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editJobAdvancedSettings(jobAdvancedSettings, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get list and values of the advanced settings of the job.
+         * @summary Get advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getJobAdvancedSettings(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JobAdvancedSettings>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getJobAdvancedSettings(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * JobConfigurationApi - factory interface
+ * @export
+ */
+export const JobConfigurationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = JobConfigurationApiFp(configuration)
+    return {
+        /**
+         * Edit advanced settings by returning table of advanced settings.
+         * @summary Edit advanced settings
+         * @param {JobAdvancedSettings} [jobAdvancedSettings] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editJobAdvancedSettings(jobAdvancedSettings?: JobAdvancedSettings, options?: any): AxiosPromise<JobAdvancedSettings> {
+            return localVarFp.editJobAdvancedSettings(jobAdvancedSettings, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get list and values of the advanced settings of the job.
+         * @summary Get advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getJobAdvancedSettings(options?: any): AxiosPromise<JobAdvancedSettings> {
+            return localVarFp.getJobAdvancedSettings(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * JobConfigurationApi - object-oriented interface
+ * @export
+ * @class JobConfigurationApi
+ * @extends {BaseAPI}
+ */
+export class JobConfigurationApi extends BaseAPI {
+    /**
+     * Edit advanced settings by returning table of advanced settings.
+     * @summary Edit advanced settings
+     * @param {JobAdvancedSettings} [jobAdvancedSettings] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobConfigurationApi
+     */
+    public editJobAdvancedSettings(jobAdvancedSettings?: JobAdvancedSettings, options?: AxiosRequestConfig) {
+        return JobConfigurationApiFp(this.configuration).editJobAdvancedSettings(jobAdvancedSettings, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get list and values of the advanced settings of the job.
+     * @summary Get advanced settings
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobConfigurationApi
+     */
+    public getJobAdvancedSettings(options?: AxiosRequestConfig) {
+        return JobConfigurationApiFp(this.configuration).getJobAdvancedSettings(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * JobDeploymentHistoryApi - axios parameter creator
+ * @export
+ */
+export const JobDeploymentHistoryApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Returns the 20 last job deployments
+         * @summary List job deployments
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listJobDeploymentHistory: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/job/{jobId}/deploymentHistory`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * JobDeploymentHistoryApi - functional programming interface
+ * @export
+ */
+export const JobDeploymentHistoryApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = JobDeploymentHistoryApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Returns the 20 last job deployments
+         * @summary List job deployments
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listJobDeploymentHistory(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationData & object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listJobDeploymentHistory(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * JobDeploymentHistoryApi - factory interface
+ * @export
+ */
+export const JobDeploymentHistoryApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = JobDeploymentHistoryApiFp(configuration)
+    return {
+        /**
+         * Returns the 20 last job deployments
+         * @summary List job deployments
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listJobDeploymentHistory(options?: any): AxiosPromise<PaginationData & object> {
+            return localVarFp.listJobDeploymentHistory(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * JobDeploymentHistoryApi - object-oriented interface
+ * @export
+ * @class JobDeploymentHistoryApi
+ * @extends {BaseAPI}
+ */
+export class JobDeploymentHistoryApi extends BaseAPI {
+    /**
+     * Returns the 20 last job deployments
+     * @summary List job deployments
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobDeploymentHistoryApi
+     */
+    public listJobDeploymentHistory(options?: AxiosRequestConfig) {
+        return JobDeploymentHistoryApiFp(this.configuration).listJobDeploymentHistory(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * JobEnvironmentVariableApi - axios parameter creator
+ * @export
+ */
+export const JobEnvironmentVariableApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * - Add an environment variable to the job. 
+         * @summary Add an environment variable to the job
+         * @param {EnvironmentVariableRequest} [environmentVariableRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createJobEnvironmentVariable: async (environmentVariableRequest?: EnvironmentVariableRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/job/{jobId}/environmentVariable`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(environmentVariableRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * - Allows you to add an alias at job level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at job level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * @summary Create an environment variable alias at the job level
+         * @param {string} environmentVariableId Environment Variable ID
+         * @param {Key} [key] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createJobEnvironmentVariableAlias: async (environmentVariableId: string, key?: Key, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentVariableId' is not null or undefined
+            assertParamExists('createJobEnvironmentVariableAlias', 'environmentVariableId', environmentVariableId)
+            const localVarPath = `/job/{jobId}/environmentVariable/{environmentVariableId}/alias`
+                .replace(`{${"environmentVariableId"}}`, encodeURIComponent(String(environmentVariableId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(key, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * - Allows you to override at job level an environment variable that has a higher scope. - You only have to specify a value in the request body - The system will create a new environment variable at job level with the same key as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the overridden_variable will be exposed in the \"overridden_variable\" field of the newly created variable 
+         * @summary Create an environment variable override at the job level
+         * @param {string} environmentVariableId Environment Variable ID
+         * @param {Value} [value] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createJobEnvironmentVariableOverride: async (environmentVariableId: string, value?: Value, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentVariableId' is not null or undefined
+            assertParamExists('createJobEnvironmentVariableOverride', 'environmentVariableId', environmentVariableId)
+            const localVarPath = `/job/{jobId}/environmentVariable/{environmentVariableId}/override`
+                .replace(`{${"environmentVariableId"}}`, encodeURIComponent(String(environmentVariableId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(value, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * - To delete an environment variable from an job you must have the project user permission - You can\'t delete a BUILT_IN variable - If you delete a variable having override or alias, the associated override/alias will be deleted as well 
+         * @summary Delete an environment variable from a job
+         * @param {string} environmentVariableId Environment Variable ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteJobEnvironmentVariable: async (environmentVariableId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentVariableId' is not null or undefined
+            assertParamExists('deleteJobEnvironmentVariable', 'environmentVariableId', environmentVariableId)
+            const localVarPath = `/job/{jobId}/environmentVariable/{environmentVariableId}`
+                .replace(`{${"environmentVariableId"}}`, encodeURIComponent(String(environmentVariableId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+         * @summary Edit an environment variable belonging to the job
+         * @param {string} environmentVariableId Environment Variable ID
+         * @param {EnvironmentVariableEditRequest} environmentVariableEditRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editJobEnvironmentVariable: async (environmentVariableId: string, environmentVariableEditRequest: EnvironmentVariableEditRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentVariableId' is not null or undefined
+            assertParamExists('editJobEnvironmentVariable', 'environmentVariableId', environmentVariableId)
+            // verify required parameter 'environmentVariableEditRequest' is not null or undefined
+            assertParamExists('editJobEnvironmentVariable', 'environmentVariableEditRequest', environmentVariableEditRequest)
+            const localVarPath = `/job/{jobId}/environmentVariable/{environmentVariableId}`
+                .replace(`{${"environmentVariableId"}}`, encodeURIComponent(String(environmentVariableId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(environmentVariableEditRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Import environment variables in a defined scope, with a defined visibility.
+         * @summary Import variables
+         * @param {VariableImportRequest} [variableImportRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        importJobEnvironmentVariable: async (variableImportRequest?: VariableImportRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/job/{jobId}/environmentVariable/import`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(variableImportRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List environment variables
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listJobEnvironmentVariable: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/job/{jobId}/environmentVariable`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * JobEnvironmentVariableApi - functional programming interface
+ * @export
+ */
+export const JobEnvironmentVariableApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = JobEnvironmentVariableApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * - Add an environment variable to the job. 
+         * @summary Add an environment variable to the job
+         * @param {EnvironmentVariableRequest} [environmentVariableRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createJobEnvironmentVariable(environmentVariableRequest?: EnvironmentVariableRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariable>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createJobEnvironmentVariable(environmentVariableRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * - Allows you to add an alias at job level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at job level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * @summary Create an environment variable alias at the job level
+         * @param {string} environmentVariableId Environment Variable ID
+         * @param {Key} [key] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createJobEnvironmentVariableAlias(environmentVariableId: string, key?: Key, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariable>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createJobEnvironmentVariableAlias(environmentVariableId, key, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * - Allows you to override at job level an environment variable that has a higher scope. - You only have to specify a value in the request body - The system will create a new environment variable at job level with the same key as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the overridden_variable will be exposed in the \"overridden_variable\" field of the newly created variable 
+         * @summary Create an environment variable override at the job level
+         * @param {string} environmentVariableId Environment Variable ID
+         * @param {Value} [value] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createJobEnvironmentVariableOverride(environmentVariableId: string, value?: Value, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariable>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createJobEnvironmentVariableOverride(environmentVariableId, value, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * - To delete an environment variable from an job you must have the project user permission - You can\'t delete a BUILT_IN variable - If you delete a variable having override or alias, the associated override/alias will be deleted as well 
+         * @summary Delete an environment variable from a job
+         * @param {string} environmentVariableId Environment Variable ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteJobEnvironmentVariable(environmentVariableId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteJobEnvironmentVariable(environmentVariableId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+         * @summary Edit an environment variable belonging to the job
+         * @param {string} environmentVariableId Environment Variable ID
+         * @param {EnvironmentVariableEditRequest} environmentVariableEditRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editJobEnvironmentVariable(environmentVariableId: string, environmentVariableEditRequest: EnvironmentVariableEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariable>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editJobEnvironmentVariable(environmentVariableId, environmentVariableEditRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Import environment variables in a defined scope, with a defined visibility.
+         * @summary Import variables
+         * @param {VariableImportRequest} [variableImportRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async importJobEnvironmentVariable(variableImportRequest?: VariableImportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VariableImport>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.importJobEnvironmentVariable(variableImportRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary List environment variables
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listJobEnvironmentVariable(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentVariableResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listJobEnvironmentVariable(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * JobEnvironmentVariableApi - factory interface
+ * @export
+ */
+export const JobEnvironmentVariableApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = JobEnvironmentVariableApiFp(configuration)
+    return {
+        /**
+         * - Add an environment variable to the job. 
+         * @summary Add an environment variable to the job
+         * @param {EnvironmentVariableRequest} [environmentVariableRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createJobEnvironmentVariable(environmentVariableRequest?: EnvironmentVariableRequest, options?: any): AxiosPromise<EnvironmentVariable> {
+            return localVarFp.createJobEnvironmentVariable(environmentVariableRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * - Allows you to add an alias at job level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at job level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * @summary Create an environment variable alias at the job level
+         * @param {string} environmentVariableId Environment Variable ID
+         * @param {Key} [key] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createJobEnvironmentVariableAlias(environmentVariableId: string, key?: Key, options?: any): AxiosPromise<EnvironmentVariable> {
+            return localVarFp.createJobEnvironmentVariableAlias(environmentVariableId, key, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * - Allows you to override at job level an environment variable that has a higher scope. - You only have to specify a value in the request body - The system will create a new environment variable at job level with the same key as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the overridden_variable will be exposed in the \"overridden_variable\" field of the newly created variable 
+         * @summary Create an environment variable override at the job level
+         * @param {string} environmentVariableId Environment Variable ID
+         * @param {Value} [value] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createJobEnvironmentVariableOverride(environmentVariableId: string, value?: Value, options?: any): AxiosPromise<EnvironmentVariable> {
+            return localVarFp.createJobEnvironmentVariableOverride(environmentVariableId, value, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * - To delete an environment variable from an job you must have the project user permission - You can\'t delete a BUILT_IN variable - If you delete a variable having override or alias, the associated override/alias will be deleted as well 
+         * @summary Delete an environment variable from a job
+         * @param {string} environmentVariableId Environment Variable ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteJobEnvironmentVariable(environmentVariableId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteJobEnvironmentVariable(environmentVariableId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+         * @summary Edit an environment variable belonging to the job
+         * @param {string} environmentVariableId Environment Variable ID
+         * @param {EnvironmentVariableEditRequest} environmentVariableEditRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editJobEnvironmentVariable(environmentVariableId: string, environmentVariableEditRequest: EnvironmentVariableEditRequest, options?: any): AxiosPromise<EnvironmentVariable> {
+            return localVarFp.editJobEnvironmentVariable(environmentVariableId, environmentVariableEditRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Import environment variables in a defined scope, with a defined visibility.
+         * @summary Import variables
+         * @param {VariableImportRequest} [variableImportRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        importJobEnvironmentVariable(variableImportRequest?: VariableImportRequest, options?: any): AxiosPromise<VariableImport> {
+            return localVarFp.importJobEnvironmentVariable(variableImportRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List environment variables
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listJobEnvironmentVariable(options?: any): AxiosPromise<EnvironmentVariableResponseList> {
+            return localVarFp.listJobEnvironmentVariable(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * JobEnvironmentVariableApi - object-oriented interface
+ * @export
+ * @class JobEnvironmentVariableApi
+ * @extends {BaseAPI}
+ */
+export class JobEnvironmentVariableApi extends BaseAPI {
+    /**
+     * - Add an environment variable to the job. 
+     * @summary Add an environment variable to the job
+     * @param {EnvironmentVariableRequest} [environmentVariableRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobEnvironmentVariableApi
+     */
+    public createJobEnvironmentVariable(environmentVariableRequest?: EnvironmentVariableRequest, options?: AxiosRequestConfig) {
+        return JobEnvironmentVariableApiFp(this.configuration).createJobEnvironmentVariable(environmentVariableRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * - Allows you to add an alias at job level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at job level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+     * @summary Create an environment variable alias at the job level
+     * @param {string} environmentVariableId Environment Variable ID
+     * @param {Key} [key] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobEnvironmentVariableApi
+     */
+    public createJobEnvironmentVariableAlias(environmentVariableId: string, key?: Key, options?: AxiosRequestConfig) {
+        return JobEnvironmentVariableApiFp(this.configuration).createJobEnvironmentVariableAlias(environmentVariableId, key, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * - Allows you to override at job level an environment variable that has a higher scope. - You only have to specify a value in the request body - The system will create a new environment variable at job level with the same key as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the overridden_variable will be exposed in the \"overridden_variable\" field of the newly created variable 
+     * @summary Create an environment variable override at the job level
+     * @param {string} environmentVariableId Environment Variable ID
+     * @param {Value} [value] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobEnvironmentVariableApi
+     */
+    public createJobEnvironmentVariableOverride(environmentVariableId: string, value?: Value, options?: AxiosRequestConfig) {
+        return JobEnvironmentVariableApiFp(this.configuration).createJobEnvironmentVariableOverride(environmentVariableId, value, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * - To delete an environment variable from an job you must have the project user permission - You can\'t delete a BUILT_IN variable - If you delete a variable having override or alias, the associated override/alias will be deleted as well 
+     * @summary Delete an environment variable from a job
+     * @param {string} environmentVariableId Environment Variable ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobEnvironmentVariableApi
+     */
+    public deleteJobEnvironmentVariable(environmentVariableId: string, options?: AxiosRequestConfig) {
+        return JobEnvironmentVariableApiFp(this.configuration).deleteJobEnvironmentVariable(environmentVariableId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+     * @summary Edit an environment variable belonging to the job
+     * @param {string} environmentVariableId Environment Variable ID
+     * @param {EnvironmentVariableEditRequest} environmentVariableEditRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobEnvironmentVariableApi
+     */
+    public editJobEnvironmentVariable(environmentVariableId: string, environmentVariableEditRequest: EnvironmentVariableEditRequest, options?: AxiosRequestConfig) {
+        return JobEnvironmentVariableApiFp(this.configuration).editJobEnvironmentVariable(environmentVariableId, environmentVariableEditRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Import environment variables in a defined scope, with a defined visibility.
+     * @summary Import variables
+     * @param {VariableImportRequest} [variableImportRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobEnvironmentVariableApi
+     */
+    public importJobEnvironmentVariable(variableImportRequest?: VariableImportRequest, options?: AxiosRequestConfig) {
+        return JobEnvironmentVariableApiFp(this.configuration).importJobEnvironmentVariable(variableImportRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List environment variables
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobEnvironmentVariableApi
+     */
+    public listJobEnvironmentVariable(options?: AxiosRequestConfig) {
+        return JobEnvironmentVariableApiFp(this.configuration).listJobEnvironmentVariable(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * JobMainCallsApi - axios parameter creator
+ * @export
+ */
+export const JobMainCallsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * To delete the job you must have the admin permission
+         * @summary Delete job
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteJob: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/job/{jobId}`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * - To edit the job you must have the admin permission. 
+         * @summary Edit job
+         * @param {JobRequest} [jobRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editJob: async (jobRequest?: JobRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/job/{jobId}`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(jobRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get job by ID
+         * @param {string} jobId Job ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getJob: async (jobId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'jobId' is not null or undefined
+            assertParamExists('getJob', 'jobId', jobId)
+            const localVarPath = `/job/{jobId}`
+                .replace(`{${"jobId"}}`, encodeURIComponent(String(jobId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get job status
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getJobStatus: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/job/{jobId}/status`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * JobMainCallsApi - functional programming interface
+ * @export
+ */
+export const JobMainCallsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = JobMainCallsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * To delete the job you must have the admin permission
+         * @summary Delete job
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteJob(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteJob(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * - To edit the job you must have the admin permission. 
+         * @summary Edit job
+         * @param {JobRequest} [jobRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editJob(jobRequest?: JobRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JobResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editJob(jobRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get job by ID
+         * @param {string} jobId Job ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getJob(jobId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JobResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getJob(jobId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get job status
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getJobStatus(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getJobStatus(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * JobMainCallsApi - factory interface
+ * @export
+ */
+export const JobMainCallsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = JobMainCallsApiFp(configuration)
+    return {
+        /**
+         * To delete the job you must have the admin permission
+         * @summary Delete job
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteJob(options?: any): AxiosPromise<void> {
+            return localVarFp.deleteJob(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * - To edit the job you must have the admin permission. 
+         * @summary Edit job
+         * @param {JobRequest} [jobRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editJob(jobRequest?: JobRequest, options?: any): AxiosPromise<JobResponse> {
+            return localVarFp.editJob(jobRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get job by ID
+         * @param {string} jobId Job ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getJob(jobId: string, options?: any): AxiosPromise<JobResponse> {
+            return localVarFp.getJob(jobId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get job status
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getJobStatus(options?: any): AxiosPromise<Status> {
+            return localVarFp.getJobStatus(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * JobMainCallsApi - object-oriented interface
+ * @export
+ * @class JobMainCallsApi
+ * @extends {BaseAPI}
+ */
+export class JobMainCallsApi extends BaseAPI {
+    /**
+     * To delete the job you must have the admin permission
+     * @summary Delete job
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobMainCallsApi
+     */
+    public deleteJob(options?: AxiosRequestConfig) {
+        return JobMainCallsApiFp(this.configuration).deleteJob(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * - To edit the job you must have the admin permission. 
+     * @summary Edit job
+     * @param {JobRequest} [jobRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobMainCallsApi
+     */
+    public editJob(jobRequest?: JobRequest, options?: AxiosRequestConfig) {
+        return JobMainCallsApiFp(this.configuration).editJob(jobRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get job by ID
+     * @param {string} jobId Job ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobMainCallsApi
+     */
+    public getJob(jobId: string, options?: AxiosRequestConfig) {
+        return JobMainCallsApiFp(this.configuration).getJob(jobId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get job status
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobMainCallsApi
+     */
+    public getJobStatus(options?: AxiosRequestConfig) {
+        return JobMainCallsApiFp(this.configuration).getJobStatus(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * JobMetricsApi - axios parameter creator
+ * @export
+ */
+export const JobMetricsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List currently running instances of the job with their CPU and RAM metrics
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getJobCurrentInstance: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/job/{jobId}/instance`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * JobMetricsApi - functional programming interface
+ * @export
+ */
+export const JobMetricsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = JobMetricsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary List currently running instances of the job with their CPU and RAM metrics
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getJobCurrentInstance(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstanceResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getJobCurrentInstance(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * JobMetricsApi - factory interface
+ * @export
+ */
+export const JobMetricsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = JobMetricsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary List currently running instances of the job with their CPU and RAM metrics
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getJobCurrentInstance(options?: any): AxiosPromise<InstanceResponseList> {
+            return localVarFp.getJobCurrentInstance(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * JobMetricsApi - object-oriented interface
+ * @export
+ * @class JobMetricsApi
+ * @extends {BaseAPI}
+ */
+export class JobMetricsApi extends BaseAPI {
+    /**
+     * 
+     * @summary List currently running instances of the job with their CPU and RAM metrics
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobMetricsApi
+     */
+    public getJobCurrentInstance(options?: AxiosRequestConfig) {
+        return JobMetricsApiFp(this.configuration).getJobCurrentInstance(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * JobSecretApi - axios parameter creator
+ * @export
+ */
+export const JobSecretApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * - Add a secret to the job. 
+         * @summary Add a secret to the job
+         * @param {SecretRequest} [secretRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createJobSecret: async (secretRequest?: SecretRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/job/{jobId}/secret`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(secretRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * - Allows you to add an alias at job level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at job level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * @summary Create a secret alias at the job level
+         * @param {string} secretId Secret ID
+         * @param {Key} [key] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createJobSecretAlias: async (secretId: string, key?: Key, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'secretId' is not null or undefined
+            assertParamExists('createJobSecretAlias', 'secretId', secretId)
+            const localVarPath = `/job/{jobId}/secret/{secretId}/alias`
+                .replace(`{${"secretId"}}`, encodeURIComponent(String(secretId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(key, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * - Allows you to override at job level a secret that has a higher scope. - You only have to specify a value in the request body - The system will create a new secret at job level with the same key as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the overridden_secret will be exposed in the \"overridden_secret\" field of the newly created secret 
+         * @summary Create a secret override at the job level
+         * @param {string} secretId Secret ID
+         * @param {Value} [value] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createJobSecretOverride: async (secretId: string, value?: Value, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'secretId' is not null or undefined
+            assertParamExists('createJobSecretOverride', 'secretId', secretId)
+            const localVarPath = `/job/{jobId}/secret/{secretId}/override`
+                .replace(`{${"secretId"}}`, encodeURIComponent(String(secretId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(value, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * - To delete a secret you must have the project user permission - You can\'t delete a BUILT_IN secret - If you delete a secret having override or alias, the associated override/alias will be deleted as well 
+         * @summary Delete a secret from an job
+         * @param {string} secretId Secret ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteJobSecret: async (secretId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'secretId' is not null or undefined
+            assertParamExists('deleteJobSecret', 'secretId', secretId)
+            const localVarPath = `/job/{jobId}/secret/{secretId}`
+                .replace(`{${"secretId"}}`, encodeURIComponent(String(secretId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+         * @summary Edit a secret belonging to the job
+         * @param {string} secretId Secret ID
+         * @param {SecretEditRequest} secretEditRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editJobSecret: async (secretId: string, secretEditRequest: SecretEditRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'secretId' is not null or undefined
+            assertParamExists('editJobSecret', 'secretId', secretId)
+            // verify required parameter 'secretEditRequest' is not null or undefined
+            assertParamExists('editJobSecret', 'secretEditRequest', secretEditRequest)
+            const localVarPath = `/job/{jobId}/secret/{secretId}`
+                .replace(`{${"secretId"}}`, encodeURIComponent(String(secretId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(secretEditRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Secrets are like environment variables, but they are secured and can\'t be revealed.
+         * @summary List job secrets
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listJobSecrets: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/job/{jobId}/secret`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * JobSecretApi - functional programming interface
+ * @export
+ */
+export const JobSecretApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = JobSecretApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * - Add a secret to the job. 
+         * @summary Add a secret to the job
+         * @param {SecretRequest} [secretRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createJobSecret(secretRequest?: SecretRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Secret>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createJobSecret(secretRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * - Allows you to add an alias at job level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at job level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * @summary Create a secret alias at the job level
+         * @param {string} secretId Secret ID
+         * @param {Key} [key] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createJobSecretAlias(secretId: string, key?: Key, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Secret>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createJobSecretAlias(secretId, key, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * - Allows you to override at job level a secret that has a higher scope. - You only have to specify a value in the request body - The system will create a new secret at job level with the same key as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the overridden_secret will be exposed in the \"overridden_secret\" field of the newly created secret 
+         * @summary Create a secret override at the job level
+         * @param {string} secretId Secret ID
+         * @param {Value} [value] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createJobSecretOverride(secretId: string, value?: Value, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Secret>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createJobSecretOverride(secretId, value, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * - To delete a secret you must have the project user permission - You can\'t delete a BUILT_IN secret - If you delete a secret having override or alias, the associated override/alias will be deleted as well 
+         * @summary Delete a secret from an job
+         * @param {string} secretId Secret ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteJobSecret(secretId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteJobSecret(secretId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+         * @summary Edit a secret belonging to the job
+         * @param {string} secretId Secret ID
+         * @param {SecretEditRequest} secretEditRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editJobSecret(secretId: string, secretEditRequest: SecretEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Secret>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editJobSecret(secretId, secretEditRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Secrets are like environment variables, but they are secured and can\'t be revealed.
+         * @summary List job secrets
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listJobSecrets(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SecretResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listJobSecrets(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * JobSecretApi - factory interface
+ * @export
+ */
+export const JobSecretApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = JobSecretApiFp(configuration)
+    return {
+        /**
+         * - Add a secret to the job. 
+         * @summary Add a secret to the job
+         * @param {SecretRequest} [secretRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createJobSecret(secretRequest?: SecretRequest, options?: any): AxiosPromise<Secret> {
+            return localVarFp.createJobSecret(secretRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * - Allows you to add an alias at job level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at job level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * @summary Create a secret alias at the job level
+         * @param {string} secretId Secret ID
+         * @param {Key} [key] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createJobSecretAlias(secretId: string, key?: Key, options?: any): AxiosPromise<Secret> {
+            return localVarFp.createJobSecretAlias(secretId, key, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * - Allows you to override at job level a secret that has a higher scope. - You only have to specify a value in the request body - The system will create a new secret at job level with the same key as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the overridden_secret will be exposed in the \"overridden_secret\" field of the newly created secret 
+         * @summary Create a secret override at the job level
+         * @param {string} secretId Secret ID
+         * @param {Value} [value] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createJobSecretOverride(secretId: string, value?: Value, options?: any): AxiosPromise<Secret> {
+            return localVarFp.createJobSecretOverride(secretId, value, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * - To delete a secret you must have the project user permission - You can\'t delete a BUILT_IN secret - If you delete a secret having override or alias, the associated override/alias will be deleted as well 
+         * @summary Delete a secret from an job
+         * @param {string} secretId Secret ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteJobSecret(secretId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteJobSecret(secretId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+         * @summary Edit a secret belonging to the job
+         * @param {string} secretId Secret ID
+         * @param {SecretEditRequest} secretEditRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editJobSecret(secretId: string, secretEditRequest: SecretEditRequest, options?: any): AxiosPromise<Secret> {
+            return localVarFp.editJobSecret(secretId, secretEditRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Secrets are like environment variables, but they are secured and can\'t be revealed.
+         * @summary List job secrets
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listJobSecrets(options?: any): AxiosPromise<SecretResponseList> {
+            return localVarFp.listJobSecrets(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * JobSecretApi - object-oriented interface
+ * @export
+ * @class JobSecretApi
+ * @extends {BaseAPI}
+ */
+export class JobSecretApi extends BaseAPI {
+    /**
+     * - Add a secret to the job. 
+     * @summary Add a secret to the job
+     * @param {SecretRequest} [secretRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobSecretApi
+     */
+    public createJobSecret(secretRequest?: SecretRequest, options?: AxiosRequestConfig) {
+        return JobSecretApiFp(this.configuration).createJobSecret(secretRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * - Allows you to add an alias at job level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at job level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+     * @summary Create a secret alias at the job level
+     * @param {string} secretId Secret ID
+     * @param {Key} [key] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobSecretApi
+     */
+    public createJobSecretAlias(secretId: string, key?: Key, options?: AxiosRequestConfig) {
+        return JobSecretApiFp(this.configuration).createJobSecretAlias(secretId, key, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * - Allows you to override at job level a secret that has a higher scope. - You only have to specify a value in the request body - The system will create a new secret at job level with the same key as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the overridden_secret will be exposed in the \"overridden_secret\" field of the newly created secret 
+     * @summary Create a secret override at the job level
+     * @param {string} secretId Secret ID
+     * @param {Value} [value] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobSecretApi
+     */
+    public createJobSecretOverride(secretId: string, value?: Value, options?: AxiosRequestConfig) {
+        return JobSecretApiFp(this.configuration).createJobSecretOverride(secretId, value, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * - To delete a secret you must have the project user permission - You can\'t delete a BUILT_IN secret - If you delete a secret having override or alias, the associated override/alias will be deleted as well 
+     * @summary Delete a secret from an job
+     * @param {string} secretId Secret ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobSecretApi
+     */
+    public deleteJobSecret(secretId: string, options?: AxiosRequestConfig) {
+        return JobSecretApiFp(this.configuration).deleteJobSecret(secretId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+     * @summary Edit a secret belonging to the job
+     * @param {string} secretId Secret ID
+     * @param {SecretEditRequest} secretEditRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobSecretApi
+     */
+    public editJobSecret(secretId: string, secretEditRequest: SecretEditRequest, options?: AxiosRequestConfig) {
+        return JobSecretApiFp(this.configuration).editJobSecret(secretId, secretEditRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Secrets are like environment variables, but they are secured and can\'t be revealed.
+     * @summary List job secrets
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobSecretApi
+     */
+    public listJobSecrets(options?: AxiosRequestConfig) {
+        return JobSecretApiFp(this.configuration).listJobSecrets(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * JobsApi - axios parameter creator
+ * @export
+ */
+export const JobsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Create a job
+         * @param {string} environmentId Environment ID
+         * @param {JobRequest} [jobRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createJob: async (environmentId: string, jobRequest?: JobRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('createJob', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/job`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(jobRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns a list of jobs with only their id and status.
+         * @summary List all environment job statuses
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentJobStatus: async (environmentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('getEnvironmentJobStatus', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/job/status`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List jobs
+         * @param {string} environmentId Environment ID
+         * @param {boolean} [toUpdate] return (or not) results that must be updated
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listJobs: async (environmentId: string, toUpdate?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('listJobs', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/job`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (toUpdate !== undefined) {
+                localVarQueryParameter['toUpdate'] = toUpdate;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * JobsApi - functional programming interface
+ * @export
+ */
+export const JobsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = JobsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Create a job
+         * @param {string} environmentId Environment ID
+         * @param {JobRequest} [jobRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createJob(environmentId: string, jobRequest?: JobRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JobResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createJob(environmentId, jobRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Returns a list of jobs with only their id and status.
+         * @summary List all environment job statuses
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEnvironmentJobStatus(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReferenceObjectStatusResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentJobStatus(environmentId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary List jobs
+         * @param {string} environmentId Environment ID
+         * @param {boolean} [toUpdate] return (or not) results that must be updated
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listJobs(environmentId: string, toUpdate?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JobResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listJobs(environmentId, toUpdate, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * JobsApi - factory interface
+ * @export
+ */
+export const JobsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = JobsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Create a job
+         * @param {string} environmentId Environment ID
+         * @param {JobRequest} [jobRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createJob(environmentId: string, jobRequest?: JobRequest, options?: any): AxiosPromise<JobResponse> {
+            return localVarFp.createJob(environmentId, jobRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns a list of jobs with only their id and status.
+         * @summary List all environment job statuses
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentJobStatus(environmentId: string, options?: any): AxiosPromise<ReferenceObjectStatusResponseList> {
+            return localVarFp.getEnvironmentJobStatus(environmentId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List jobs
+         * @param {string} environmentId Environment ID
+         * @param {boolean} [toUpdate] return (or not) results that must be updated
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listJobs(environmentId: string, toUpdate?: boolean, options?: any): AxiosPromise<JobResponseList> {
+            return localVarFp.listJobs(environmentId, toUpdate, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * JobsApi - object-oriented interface
+ * @export
+ * @class JobsApi
+ * @extends {BaseAPI}
+ */
+export class JobsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create a job
+     * @param {string} environmentId Environment ID
+     * @param {JobRequest} [jobRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobsApi
+     */
+    public createJob(environmentId: string, jobRequest?: JobRequest, options?: AxiosRequestConfig) {
+        return JobsApiFp(this.configuration).createJob(environmentId, jobRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns a list of jobs with only their id and status.
+     * @summary List all environment job statuses
+     * @param {string} environmentId Environment ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobsApi
+     */
+    public getEnvironmentJobStatus(environmentId: string, options?: AxiosRequestConfig) {
+        return JobsApiFp(this.configuration).getEnvironmentJobStatus(environmentId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List jobs
+     * @param {string} environmentId Environment ID
+     * @param {boolean} [toUpdate] return (or not) results that must be updated
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobsApi
+     */
+    public listJobs(environmentId: string, toUpdate?: boolean, options?: AxiosRequestConfig) {
+        return JobsApiFp(this.configuration).listJobs(environmentId, toUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
