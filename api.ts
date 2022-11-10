@@ -6146,6 +6146,156 @@ export interface EnvironmentEditRequest {
 /**
  * 
  * @export
+ * @interface EnvironmentEnvironmentIdLogsDetails
+ */
+export interface EnvironmentEnvironmentIdLogsDetails {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentEnvironmentIdLogsDetails
+     */
+    'organization_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentEnvironmentIdLogsDetails
+     */
+    'cluster_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentEnvironmentIdLogsDetails
+     */
+    'execution_id'?: string;
+    /**
+     * 
+     * @type {EnvironmentEnvironmentIdLogsDetailsTransmitter}
+     * @memberof EnvironmentEnvironmentIdLogsDetails
+     */
+    'transmitter'?: EnvironmentEnvironmentIdLogsDetailsTransmitter;
+    /**
+     * 
+     * @type {EnvironmentEnvironmentIdLogsDetailsStage}
+     * @memberof EnvironmentEnvironmentIdLogsDetails
+     */
+    'stage'?: EnvironmentEnvironmentIdLogsDetailsStage;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentEnvironmentIdLogsDetailsStage
+ */
+export interface EnvironmentEnvironmentIdLogsDetailsStage {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentEnvironmentIdLogsDetailsStage
+     */
+    'step'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentEnvironmentIdLogsDetailsTransmitter
+ */
+export interface EnvironmentEnvironmentIdLogsDetailsTransmitter {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentEnvironmentIdLogsDetailsTransmitter
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentEnvironmentIdLogsDetailsTransmitter
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentEnvironmentIdLogsDetailsTransmitter
+     */
+    'type'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentEnvironmentIdLogsError
+ */
+export interface EnvironmentEnvironmentIdLogsError {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentEnvironmentIdLogsError
+     */
+    'tag'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentEnvironmentIdLogsError
+     */
+    'user_log_message'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentEnvironmentIdLogsError
+     */
+    'link'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentEnvironmentIdLogsError
+     */
+    'hint_message'?: string;
+    /**
+     * 
+     * @type {EnvironmentEnvironmentIdLogsErrorUnderlyingError}
+     * @memberof EnvironmentEnvironmentIdLogsError
+     */
+    'underlying_error'?: EnvironmentEnvironmentIdLogsErrorUnderlyingError;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentEnvironmentIdLogsErrorUnderlyingError
+ */
+export interface EnvironmentEnvironmentIdLogsErrorUnderlyingError {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentEnvironmentIdLogsErrorUnderlyingError
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentEnvironmentIdLogsErrorUnderlyingError
+     */
+    'full_details'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentEnvironmentIdLogsMessage
+ */
+export interface EnvironmentEnvironmentIdLogsMessage {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentEnvironmentIdLogsMessage
+     */
+    'safe_message'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentEnvironmentIdLogsMessage
+     */
+    'full_details'?: string;
+}
+/**
+ * 
+ * @export
  * @interface EnvironmentLog
  */
 export interface EnvironmentLog {
@@ -6954,6 +7104,43 @@ export interface InlineObject {
      * @memberof InlineObject
      */
     'user_id': string;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse200
+ */
+export interface InlineResponse200 {
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineResponse200
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineResponse200
+     */
+    'timestamp': string;
+    /**
+     * 
+     * @type {EnvironmentEnvironmentIdLogsDetails}
+     * @memberof InlineResponse200
+     */
+    'details': EnvironmentEnvironmentIdLogsDetails;
+    /**
+     * 
+     * @type {EnvironmentEnvironmentIdLogsError}
+     * @memberof InlineResponse200
+     */
+    'error'?: EnvironmentEnvironmentIdLogsError | null;
+    /**
+     * 
+     * @type {EnvironmentEnvironmentIdLogsMessage}
+     * @memberof InlineResponse200
+     */
+    'message'?: EnvironmentEnvironmentIdLogsMessage | null;
 }
 /**
  * 
@@ -28586,6 +28773,44 @@ export const EnvironmentLogsApiAxiosParamCreator = function (configuration?: Con
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * This returns the last 1000 environment deployment logs v2
+         * @summary List environment deployment logs v2
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listEnvironmentLogs: async (environmentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('listEnvironmentLogs', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/logs`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -28605,6 +28830,17 @@ export const EnvironmentLogsApiFp = function(configuration?: Configuration) {
          */
         async listEnvironmentLog(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentLogResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listEnvironmentLog(environmentId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * This returns the last 1000 environment deployment logs v2
+         * @summary List environment deployment logs v2
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listEnvironmentLogs(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<InlineResponse200>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listEnvironmentLogs(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -28627,6 +28863,16 @@ export const EnvironmentLogsApiFactory = function (configuration?: Configuration
         listEnvironmentLog(environmentId: string, options?: any): AxiosPromise<EnvironmentLogResponseList> {
             return localVarFp.listEnvironmentLog(environmentId, options).then((request) => request(axios, basePath));
         },
+        /**
+         * This returns the last 1000 environment deployment logs v2
+         * @summary List environment deployment logs v2
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listEnvironmentLogs(environmentId: string, options?: any): AxiosPromise<Array<InlineResponse200>> {
+            return localVarFp.listEnvironmentLogs(environmentId, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -28647,6 +28893,18 @@ export class EnvironmentLogsApi extends BaseAPI {
      */
     public listEnvironmentLog(environmentId: string, options?: AxiosRequestConfig) {
         return EnvironmentLogsApiFp(this.configuration).listEnvironmentLog(environmentId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * This returns the last 1000 environment deployment logs v2
+     * @summary List environment deployment logs v2
+     * @param {string} environmentId Environment ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentLogsApi
+     */
+    public listEnvironmentLogs(environmentId: string, options?: AxiosRequestConfig) {
+        return EnvironmentLogsApiFp(this.configuration).listEnvironmentLogs(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
