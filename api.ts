@@ -6395,7 +6395,7 @@ export interface EnvironmentLogs {
      * @type {string}
      * @memberof EnvironmentLogs
      */
-    'id': string;
+    'type': string;
     /**
      * 
      * @type {string}
