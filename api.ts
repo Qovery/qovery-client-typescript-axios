@@ -25278,6 +25278,40 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
+         * 
+         * @summary List default container advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDefaultContainerAdvancedSettings: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/defaultContainerAdvancedSettings`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns min, max, and running number of instances for each container
          * @summary List current scaling information for each container
          * @param {string} environmentId Environment ID
@@ -25530,6 +25564,16 @@ export const ContainersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @summary List default container advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDefaultContainerAdvancedSettings(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerAdvancedSettings>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDefaultContainerAdvancedSettings(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Returns min, max, and running number of instances for each container
          * @summary List current scaling information for each container
          * @param {string} environmentId Environment ID
@@ -25638,6 +25682,15 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
          */
         getContainerRegistryContainerStatus(organizationId: string, containerRegistryId: string, options?: any): AxiosPromise<ReferenceObjectStatusResponseList> {
             return localVarFp.getContainerRegistryContainerStatus(organizationId, containerRegistryId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List default container advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDefaultContainerAdvancedSettings(options?: any): AxiosPromise<ContainerAdvancedSettings> {
+            return localVarFp.getDefaultContainerAdvancedSettings(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns min, max, and running number of instances for each container
@@ -25750,6 +25803,17 @@ export class ContainersApi extends BaseAPI {
      */
     public getContainerRegistryContainerStatus(organizationId: string, containerRegistryId: string, options?: AxiosRequestConfig) {
         return ContainersApiFp(this.configuration).getContainerRegistryContainerStatus(organizationId, containerRegistryId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List default container advanced settings
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContainersApi
+     */
+    public getDefaultContainerAdvancedSettings(options?: AxiosRequestConfig) {
+        return ContainersApiFp(this.configuration).getDefaultContainerAdvancedSettings(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
