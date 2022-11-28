@@ -5250,6 +5250,18 @@ export interface DeploymentHistoryJobResponse {
     'tag'?: string;
     /**
      * 
+     * @type {Commit}
+     * @memberof DeploymentHistoryJobResponse
+     */
+    'commit'?: Commit;
+    /**
+     * 
+     * @type {JobRequestAllOfSchedule}
+     * @memberof DeploymentHistoryJobResponse
+     */
+    'schedule'?: JobRequestAllOfSchedule;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof DeploymentHistoryJobResponse
      */
@@ -5291,6 +5303,18 @@ export interface DeploymentHistoryJobResponseAllOf {
      * @memberof DeploymentHistoryJobResponseAllOf
      */
     'tag'?: string;
+    /**
+     * 
+     * @type {Commit}
+     * @memberof DeploymentHistoryJobResponseAllOf
+     */
+    'commit'?: Commit;
+    /**
+     * 
+     * @type {JobRequestAllOfSchedule}
+     * @memberof DeploymentHistoryJobResponseAllOf
+     */
+    'schedule'?: JobRequestAllOfSchedule;
     /**
      * 
      * @type {Array<string>}
