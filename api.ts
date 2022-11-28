@@ -5118,6 +5118,12 @@ export interface DeploymentHistoryEnvironment {
      * @memberof DeploymentHistoryEnvironment
      */
     'databases'?: Array<DeploymentHistoryDatabase>;
+    /**
+     * 
+     * @type {Array<DeploymentHistoryJobResponse>}
+     * @memberof DeploymentHistoryEnvironment
+     */
+    'jobs'?: Array<DeploymentHistoryJobResponse>;
 }
 /**
  * 
@@ -5149,6 +5155,12 @@ export interface DeploymentHistoryEnvironmentAllOf {
      * @memberof DeploymentHistoryEnvironmentAllOf
      */
     'databases'?: Array<DeploymentHistoryDatabase>;
+    /**
+     * 
+     * @type {Array<DeploymentHistoryJobResponse>}
+     * @memberof DeploymentHistoryEnvironmentAllOf
+     */
+    'jobs'?: Array<DeploymentHistoryJobResponse>;
 }
 /**
  * 
