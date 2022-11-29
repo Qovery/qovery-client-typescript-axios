@@ -5256,10 +5256,10 @@ export interface DeploymentHistoryJobResponse {
     'commit'?: Commit;
     /**
      * 
-     * @type {JobRequestAllOfSchedule}
+     * @type {JobResponseAllOfSchedule}
      * @memberof DeploymentHistoryJobResponse
      */
-    'schedule'?: JobRequestAllOfSchedule;
+    'schedule'?: JobResponseAllOfSchedule;
     /**
      * 
      * @type {Array<string>}
@@ -5311,10 +5311,10 @@ export interface DeploymentHistoryJobResponseAllOf {
     'commit'?: Commit;
     /**
      * 
-     * @type {JobRequestAllOfSchedule}
+     * @type {JobResponseAllOfSchedule}
      * @memberof DeploymentHistoryJobResponseAllOf
      */
-    'schedule'?: JobRequestAllOfSchedule;
+    'schedule'?: JobResponseAllOfSchedule;
     /**
      * 
      * @type {Array<string>}
@@ -7818,6 +7818,12 @@ export interface JobRequest {
     'name': string;
     /**
      * 
+     * @type {string}
+     * @memberof JobRequest
+     */
+    'description'?: string;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof JobRequest
      */
@@ -7889,6 +7895,12 @@ export interface JobRequestAllOf {
      * @memberof JobRequestAllOf
      */
     'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JobRequestAllOf
+     */
+    'description'?: string;
     /**
      * 
      * @type {Array<string>}
@@ -7967,7 +7979,7 @@ export interface JobRequestAllOfSchedule {
      * @type {string}
      * @memberof JobRequestAllOfSchedule
      */
-    'schedule_at'?: string | null;
+    'scheduled_at'?: string | null;
 }
 /**
  * 
@@ -8142,10 +8154,10 @@ export interface JobResponse {
     'source'?: JobResponseAllOfSource;
     /**
      * 
-     * @type {JobRequestAllOfSchedule}
+     * @type {JobResponseAllOfSchedule}
      * @memberof JobResponse
      */
-    'schedule'?: JobRequestAllOfSchedule;
+    'schedule'?: JobResponseAllOfSchedule;
 }
 /**
  * 
@@ -8239,10 +8251,29 @@ export interface JobResponseAllOf {
     'source'?: JobResponseAllOfSource;
     /**
      * 
-     * @type {JobRequestAllOfSchedule}
+     * @type {JobResponseAllOfSchedule}
      * @memberof JobResponseAllOf
      */
-    'schedule'?: JobRequestAllOfSchedule;
+    'schedule'?: JobResponseAllOfSchedule;
+}
+/**
+ * 
+ * @export
+ * @interface JobResponseAllOfSchedule
+ */
+export interface JobResponseAllOfSchedule {
+    /**
+     * 
+     * @type {JobScheduleEvent}
+     * @memberof JobResponseAllOfSchedule
+     */
+    'event'?: JobScheduleEvent;
+    /**
+     * Can only be set if the event is CRON. Represent the cron format for the job schedule without seconds. For example: `* * * * *` represent the cron to launch the job every minute. See https://crontab.guru/ to WISIWIG interface. Timezone is UTC 
+     * @type {string}
+     * @memberof JobResponseAllOfSchedule
+     */
+    'schedule_at'?: string | null;
 }
 /**
  * 
