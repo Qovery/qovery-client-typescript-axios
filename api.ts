@@ -7285,6 +7285,43 @@ export interface InlineObject {
 /**
  * 
  * @export
+ * @interface InlineResponse200
+ */
+export interface InlineResponse200 {
+    /**
+     * 
+     * @type {Status}
+     * @memberof InlineResponse200
+     */
+    'environment'?: Status;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof InlineResponse200
+     */
+    'applications'?: Array<Status>;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof InlineResponse200
+     */
+    'containers'?: Array<Status>;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof InlineResponse200
+     */
+    'jobs'?: Array<Status>;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof InlineResponse200
+     */
+    'databases'?: Array<Status>;
+}
+/**
+ * 
+ * @export
  * @interface Instance
  */
 export interface Instance {
@@ -29950,6 +29987,44 @@ export const EnvironmentMainCallsApiAxiosParamCreator = function (configuration?
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Get environment statuses with services status
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentStatuses: async (environmentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('getEnvironmentStatuses', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/statuses`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -30005,6 +30080,17 @@ export const EnvironmentMainCallsApiFp = function(configuration?: Configuration)
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentStatus(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Get environment statuses with services status
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEnvironmentStatuses(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentStatuses(environmentId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -30055,6 +30141,16 @@ export const EnvironmentMainCallsApiFactory = function (configuration?: Configur
          */
         getEnvironmentStatus(environmentId: string, options?: any): AxiosPromise<Status> {
             return localVarFp.getEnvironmentStatus(environmentId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get environment statuses with services status
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentStatuses(environmentId: string, options?: any): AxiosPromise<InlineResponse200> {
+            return localVarFp.getEnvironmentStatuses(environmentId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -30113,6 +30209,18 @@ export class EnvironmentMainCallsApi extends BaseAPI {
      */
     public getEnvironmentStatus(environmentId: string, options?: AxiosRequestConfig) {
         return EnvironmentMainCallsApiFp(this.configuration).getEnvironmentStatus(environmentId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get environment statuses with services status
+     * @param {string} environmentId Environment ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentMainCallsApi
+     */
+    public getEnvironmentStatuses(environmentId: string, options?: AxiosRequestConfig) {
+        return EnvironmentMainCallsApiFp(this.configuration).getEnvironmentStatuses(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
