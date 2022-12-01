@@ -8012,7 +8012,7 @@ export interface JobRequestAllOfSchedule {
      */
     'event'?: JobScheduleEvent;
     /**
-     * Can only be set if the event is CRON. Represent the cron format for the job schedule without seconds. For example: `* * * * *` represent the cron to launch the job every minute. See https://crontab.guru/ to WISIWIG interface. Timezone is UTC 
+     * Can only be set if the event is CRON.   Represent the cron format for the job schedule without seconds.   For example: `* * * * *` represent the cron to launch the job every minute.   See https://crontab.guru/ to WISIWIG interface.   Timezone is UTC   
      * @type {string}
      * @memberof JobRequestAllOfSchedule
      */
@@ -8364,7 +8364,7 @@ export interface JobResponseList {
     'results'?: Array<JobResponse>;
 }
 /**
- * On which event the job is going to run. ON_START means when a deployment is requested for the environment ON_STOP means when a stop of the environment is requested CRON means at a scheduled interval 
+ * On which event the job is going to run.   ON_START means when a deployment is requested for the environment   ON_STOP means when a stop of the environment is requested   ON_DELETE means when an environment delete is requested CRON means at a scheduled interval   
  * @export
  * @enum {string}
  */
