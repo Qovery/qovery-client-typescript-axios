@@ -5256,10 +5256,10 @@ export interface DeploymentHistoryJobResponse {
     'commit'?: Commit;
     /**
      * 
-     * @type {JobResponseAllOfSchedule}
+     * @type {DeploymentHistoryJobResponseAllOfSchedule}
      * @memberof DeploymentHistoryJobResponse
      */
-    'schedule'?: JobResponseAllOfSchedule;
+    'schedule'?: DeploymentHistoryJobResponseAllOfSchedule;
     /**
      * 
      * @type {Array<string>}
@@ -5311,10 +5311,10 @@ export interface DeploymentHistoryJobResponseAllOf {
     'commit'?: Commit;
     /**
      * 
-     * @type {JobResponseAllOfSchedule}
+     * @type {DeploymentHistoryJobResponseAllOfSchedule}
      * @memberof DeploymentHistoryJobResponseAllOf
      */
-    'schedule'?: JobResponseAllOfSchedule;
+    'schedule'?: DeploymentHistoryJobResponseAllOfSchedule;
     /**
      * 
      * @type {Array<string>}
@@ -5327,6 +5327,25 @@ export interface DeploymentHistoryJobResponseAllOf {
      * @memberof DeploymentHistoryJobResponseAllOf
      */
     'entrypoint'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentHistoryJobResponseAllOfSchedule
+ */
+export interface DeploymentHistoryJobResponseAllOfSchedule {
+    /**
+     * 
+     * @type {JobScheduleEvent}
+     * @memberof DeploymentHistoryJobResponseAllOfSchedule
+     */
+    'event'?: JobScheduleEvent;
+    /**
+     * Can only be set if the event is CRON. Represent the cron format for the job schedule without seconds. For example: `* * * * *` represent the cron to launch the job every minute. See https://crontab.guru/ to WISIWIG interface. Timezone is UTC 
+     * @type {string}
+     * @memberof DeploymentHistoryJobResponseAllOfSchedule
+     */
+    'schedule_at'?: string | null;
 }
 /**
  * 
@@ -8000,23 +8019,79 @@ export interface JobRequestAllOf {
     'schedule'?: JobRequestAllOfSchedule;
 }
 /**
- * 
+ * If you want to define a Cron job, only the `cronjob` property must be filled   A Lifecycle job should contain at least one property `on_XXX` among the 3 properties: `on_start`, `on_stop`, `on_delete` 
  * @export
  * @interface JobRequestAllOfSchedule
  */
 export interface JobRequestAllOfSchedule {
     /**
      * 
-     * @type {JobScheduleEvent}
+     * @type {JobRequestAllOfScheduleOnStart}
      * @memberof JobRequestAllOfSchedule
      */
-    'event'?: JobScheduleEvent;
+    'on_start'?: JobRequestAllOfScheduleOnStart;
     /**
-     * Can only be set if the event is CRON.   Represent the cron format for the job schedule without seconds.   For example: `* * * * *` represent the cron to launch the job every minute.   See https://crontab.guru/ to WISIWIG interface.   Timezone is UTC   
-     * @type {string}
+     * 
+     * @type {JobRequestAllOfScheduleOnStart}
      * @memberof JobRequestAllOfSchedule
      */
-    'scheduled_at'?: string | null;
+    'on_stop'?: JobRequestAllOfScheduleOnStart;
+    /**
+     * 
+     * @type {JobRequestAllOfScheduleOnStart}
+     * @memberof JobRequestAllOfSchedule
+     */
+    'on_delete'?: JobRequestAllOfScheduleOnStart;
+    /**
+     * 
+     * @type {JobRequestAllOfScheduleCronjob}
+     * @memberof JobRequestAllOfSchedule
+     */
+    'cronjob'?: JobRequestAllOfScheduleCronjob;
+}
+/**
+ * 
+ * @export
+ * @interface JobRequestAllOfScheduleCronjob
+ */
+export interface JobRequestAllOfScheduleCronjob {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof JobRequestAllOfScheduleCronjob
+     */
+    'arguments'?: Array<string>;
+    /**
+     * optional entrypoint when launching container
+     * @type {string}
+     * @memberof JobRequestAllOfScheduleCronjob
+     */
+    'entrypoint'?: string;
+    /**
+     * Can only be set if the event is CRON.   Represent the cron format for the job schedule without seconds.   For example: `* * * * *` represent the cron to launch the job every minute.   See https://crontab.guru/ to WISIWIG interface.   Timezone is UTC 
+     * @type {string}
+     * @memberof JobRequestAllOfScheduleCronjob
+     */
+    'scheduled_at': string;
+}
+/**
+ * 
+ * @export
+ * @interface JobRequestAllOfScheduleOnStart
+ */
+export interface JobRequestAllOfScheduleOnStart {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof JobRequestAllOfScheduleOnStart
+     */
+    'arguments'?: Array<string>;
+    /**
+     * optional entrypoint when launching container
+     * @type {string}
+     * @memberof JobRequestAllOfScheduleOnStart
+     */
+    'entrypoint'?: string;
 }
 /**
  * 
@@ -8137,16 +8212,10 @@ export interface JobResponse {
     'name': string;
     /**
      * 
-     * @type {Array<string>}
-     * @memberof JobResponse
-     */
-    'arguments'?: Array<string>;
-    /**
-     * optional entrypoint when launching container
      * @type {string}
      * @memberof JobResponse
      */
-    'entrypoint'?: string;
+    'description'?: string;
     /**
      * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -8234,16 +8303,10 @@ export interface JobResponseAllOf {
     'name': string;
     /**
      * 
-     * @type {Array<string>}
-     * @memberof JobResponseAllOf
-     */
-    'arguments'?: Array<string>;
-    /**
-     * optional entrypoint when launching container
      * @type {string}
      * @memberof JobResponseAllOf
      */
-    'entrypoint'?: string;
+    'description'?: string;
     /**
      * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -8294,23 +8357,60 @@ export interface JobResponseAllOf {
     'schedule'?: JobResponseAllOfSchedule;
 }
 /**
- * 
+ * If you want to define a Cron job, only the `cronjob` property must be filled   A Lifecycle job should contain at least one property `on_XXX` among the 3 properties: `on_start`, `on_stop`, `on_delete` 
  * @export
  * @interface JobResponseAllOfSchedule
  */
 export interface JobResponseAllOfSchedule {
     /**
      * 
-     * @type {JobScheduleEvent}
+     * @type {JobRequestAllOfScheduleOnStart}
      * @memberof JobResponseAllOfSchedule
      */
-    'event'?: JobScheduleEvent;
+    'on_start'?: JobRequestAllOfScheduleOnStart;
     /**
-     * Can only be set if the event is CRON. Represent the cron format for the job schedule without seconds. For example: `* * * * *` represent the cron to launch the job every minute. See https://crontab.guru/ to WISIWIG interface. Timezone is UTC 
-     * @type {string}
+     * 
+     * @type {JobRequestAllOfScheduleOnStart}
      * @memberof JobResponseAllOfSchedule
      */
-    'schedule_at'?: string | null;
+    'on_stop'?: JobRequestAllOfScheduleOnStart;
+    /**
+     * 
+     * @type {JobRequestAllOfScheduleOnStart}
+     * @memberof JobResponseAllOfSchedule
+     */
+    'on_delete'?: JobRequestAllOfScheduleOnStart;
+    /**
+     * 
+     * @type {JobResponseAllOfScheduleCronjob}
+     * @memberof JobResponseAllOfSchedule
+     */
+    'cronjob'?: JobResponseAllOfScheduleCronjob;
+}
+/**
+ * 
+ * @export
+ * @interface JobResponseAllOfScheduleCronjob
+ */
+export interface JobResponseAllOfScheduleCronjob {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof JobResponseAllOfScheduleCronjob
+     */
+    'arguments'?: Array<string>;
+    /**
+     * optional entrypoint when launching container
+     * @type {string}
+     * @memberof JobResponseAllOfScheduleCronjob
+     */
+    'entrypoint'?: string;
+    /**
+     * Can only be set if the event is CRON.   Represent the cron format for the job schedule without seconds.   For example: `* * * * *` represent the cron to launch the job every minute.   See https://crontab.guru/ to WISIWIG interface.   Timezone is UT 
+     * @type {string}
+     * @memberof JobResponseAllOfScheduleCronjob
+     */
+    'scheduled_at': string;
 }
 /**
  * 
@@ -8364,7 +8464,7 @@ export interface JobResponseList {
     'results'?: Array<JobResponse>;
 }
 /**
- * On which event the job is going to run.   ON_START means when a deployment is requested for the environment   ON_STOP means when a stop of the environment is requested   ON_DELETE means when an environment delete is requested CRON means at a scheduled interval   
+ * On which event the job is going to run.   ON_START means when a deployment is requested for the environment   ON_STOP means when a stop of the environment is requested   ON_DELETE means when an environment delete is requested   CRON means at a scheduled interval   
  * @export
  * @enum {string}
  */
