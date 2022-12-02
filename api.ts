@@ -7879,18 +7879,6 @@ export interface JobRequest {
      */
     'description'?: string;
     /**
-     * 
-     * @type {Array<string>}
-     * @memberof JobRequest
-     */
-    'arguments'?: Array<string>;
-    /**
-     * optional entrypoint when launching container
-     * @type {string}
-     * @memberof JobRequest
-     */
-    'entrypoint'?: string;
-    /**
      * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
      * @memberof JobRequest
@@ -7957,18 +7945,6 @@ export interface JobRequestAllOf {
      * @memberof JobRequestAllOf
      */
     'description'?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof JobRequestAllOf
-     */
-    'arguments'?: Array<string>;
-    /**
-     * optional entrypoint when launching container
-     * @type {string}
-     * @memberof JobRequestAllOf
-     */
-    'entrypoint'?: string;
     /**
      * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
