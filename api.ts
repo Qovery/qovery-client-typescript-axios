@@ -32,7 +32,8 @@ export enum APIVariableScopeEnum {
     BUILT_IN = 'BUILT_IN',
     ENVIRONMENT = 'ENVIRONMENT',
     PROJECT = 'PROJECT',
-    CONTAINER = 'CONTAINER'
+    CONTAINER = 'CONTAINER',
+    JOB = 'JOB'
 }
 
 /**
