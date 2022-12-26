@@ -3667,6 +3667,12 @@ export interface ContainerResponse {
      */
     'name': string;
     /**
+     * give a description to this container
+     * @type {string}
+     * @memberof ContainerResponse
+     */
+    'description'?: string;
+    /**
      * name of the image container
      * @type {string}
      * @memberof ContainerResponse
@@ -3763,6 +3769,12 @@ export interface ContainerResponseAllOf {
      * @memberof ContainerResponseAllOf
      */
     'name': string;
+    /**
+     * give a description to this container
+     * @type {string}
+     * @memberof ContainerResponseAllOf
+     */
+    'description'?: string;
     /**
      * name of the image container
      * @type {string}
