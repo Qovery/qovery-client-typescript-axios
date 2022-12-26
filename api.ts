@@ -3461,6 +3461,12 @@ export interface ContainerRequest {
      */
     'name': string;
     /**
+     * give a description to this container
+     * @type {string}
+     * @memberof ContainerRequest
+     */
+    'description'?: string;
+    /**
      * id of the linked registry
      * @type {string}
      * @memberof ContainerRequest
@@ -3533,6 +3539,12 @@ export interface ContainerRequestAllOf {
      * @memberof ContainerRequestAllOf
      */
     'name': string;
+    /**
+     * give a description to this container
+     * @type {string}
+     * @memberof ContainerRequestAllOf
+     */
+    'description'?: string;
     /**
      * id of the linked registry
      * @type {string}
@@ -4221,6 +4233,12 @@ export interface Database {
      */
     'name': string;
     /**
+     * give a description to this database
+     * @type {string}
+     * @memberof Database
+     */
+    'description'?: string;
+    /**
      * 
      * @type {DatabaseTypeEnum}
      * @memberof Database
@@ -4552,6 +4570,12 @@ export interface DatabaseEditRequest {
      */
     'name'?: string;
     /**
+     * give a description to this database
+     * @type {string}
+     * @memberof DatabaseEditRequest
+     */
+    'description'?: string;
+    /**
      * 
      * @type {string}
      * @memberof DatabaseEditRequest
@@ -4605,6 +4629,12 @@ export interface DatabaseRequest {
      * @memberof DatabaseRequest
      */
     'name': string;
+    /**
+     * give a description to this database
+     * @type {string}
+     * @memberof DatabaseRequest
+     */
+    'description'?: string;
     /**
      * 
      * @type {DatabaseTypeEnum}
