@@ -33807,6 +33807,54 @@ export const JobMainCallsApiAxiosParamCreator = function (configuration?: Config
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Returns list of the last 100 commits made on the repository linked to the job
+         * @summary List last job commits
+         * @param {string} jobId Job ID
+         * @param {string} [startId] Starting point after which to return results
+         * @param {string} [gitCommitId] Git Commit ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listJobCommit: async (jobId: string, startId?: string, gitCommitId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'jobId' is not null or undefined
+            assertParamExists('listJobCommit', 'jobId', jobId)
+            const localVarPath = `/job/{jobId}/commit`
+                .replace(`{${"jobId"}}`, encodeURIComponent(String(jobId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (startId !== undefined) {
+                localVarQueryParameter['startId'] = startId;
+            }
+
+            if (gitCommitId !== undefined) {
+                localVarQueryParameter['gitCommitId'] = gitCommitId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -33862,6 +33910,19 @@ export const JobMainCallsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getJobStatus(jobId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * Returns list of the last 100 commits made on the repository linked to the job
+         * @summary List last job commits
+         * @param {string} jobId Job ID
+         * @param {string} [startId] Starting point after which to return results
+         * @param {string} [gitCommitId] Git Commit ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listJobCommit(jobId: string, startId?: string, gitCommitId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommitResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listJobCommit(jobId, startId, gitCommitId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -33912,6 +33973,18 @@ export const JobMainCallsApiFactory = function (configuration?: Configuration, b
          */
         getJobStatus(jobId: string, options?: any): AxiosPromise<Status> {
             return localVarFp.getJobStatus(jobId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns list of the last 100 commits made on the repository linked to the job
+         * @summary List last job commits
+         * @param {string} jobId Job ID
+         * @param {string} [startId] Starting point after which to return results
+         * @param {string} [gitCommitId] Git Commit ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listJobCommit(jobId: string, startId?: string, gitCommitId?: string, options?: any): AxiosPromise<CommitResponseList> {
+            return localVarFp.listJobCommit(jobId, startId, gitCommitId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -33970,6 +34043,20 @@ export class JobMainCallsApi extends BaseAPI {
      */
     public getJobStatus(jobId: string, options?: AxiosRequestConfig) {
         return JobMainCallsApiFp(this.configuration).getJobStatus(jobId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns list of the last 100 commits made on the repository linked to the job
+     * @summary List last job commits
+     * @param {string} jobId Job ID
+     * @param {string} [startId] Starting point after which to return results
+     * @param {string} [gitCommitId] Git Commit ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobMainCallsApi
+     */
+    public listJobCommit(jobId: string, startId?: string, gitCommitId?: string, options?: AxiosRequestConfig) {
+        return JobMainCallsApiFp(this.configuration).listJobCommit(jobId, startId, gitCommitId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
