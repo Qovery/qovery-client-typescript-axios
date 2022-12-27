@@ -34741,6 +34741,40 @@ export const JobsApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * 
+         * @summary List default job advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDefaultJobAdvancedSettings: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/defaultJobAdvancedSettings`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns a list of jobs with only their id and status.
          * @summary List all environment job statuses
          * @param {string} environmentId Environment ID
@@ -34844,6 +34878,16 @@ export const JobsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @summary List default job advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDefaultJobAdvancedSettings(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JobAdvancedSettings>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDefaultJobAdvancedSettings(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Returns a list of jobs with only their id and status.
          * @summary List all environment job statuses
          * @param {string} environmentId Environment ID
@@ -34888,6 +34932,15 @@ export const JobsApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.createJob(environmentId, jobRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * 
+         * @summary List default job advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDefaultJobAdvancedSettings(options?: any): AxiosPromise<JobAdvancedSettings> {
+            return localVarFp.getDefaultJobAdvancedSettings(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns a list of jobs with only their id and status.
          * @summary List all environment job statuses
          * @param {string} environmentId Environment ID
@@ -34929,6 +34982,17 @@ export class JobsApi extends BaseAPI {
      */
     public createJob(environmentId: string, jobRequest?: JobRequest, options?: AxiosRequestConfig) {
         return JobsApiFp(this.configuration).createJob(environmentId, jobRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List default job advanced settings
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobsApi
+     */
+    public getDefaultJobAdvancedSettings(options?: AxiosRequestConfig) {
+        return JobsApiFp(this.configuration).getDefaultJobAdvancedSettings(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
