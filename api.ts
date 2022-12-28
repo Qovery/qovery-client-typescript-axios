@@ -7922,11 +7922,17 @@ export enum JobAdvancedSettingsLivenessProbeTypeEnum {
  */
 export interface JobDeployRequest {
     /**
-     * Image tag to deploy
+     * Image tag to deploy.   Cannot be set if `git_commit_id` is defined 
      * @type {string}
      * @memberof JobDeployRequest
      */
-    'image_tag': string;
+    'image_tag'?: string;
+    /**
+     * Commit to deploy Cannot be set if `image_tag` is defined 
+     * @type {string}
+     * @memberof JobDeployRequest
+     */
+    'git_commit_id'?: string;
 }
 /**
  * 
