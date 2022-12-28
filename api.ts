@@ -32488,7 +32488,7 @@ export class GithubAppApi extends BaseAPI {
 export const JobActionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * You must provide a git commit id
+         * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
          * @summary Deploy job
          * @param {string} jobId Job ID
          * @param {boolean} [force] Enable or Disable the force trigger of the job
@@ -32626,7 +32626,7 @@ export const JobActionsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = JobActionsApiAxiosParamCreator(configuration)
     return {
         /**
-         * You must provide a git commit id
+         * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
          * @summary Deploy job
          * @param {string} jobId Job ID
          * @param {boolean} [force] Enable or Disable the force trigger of the job
@@ -32672,7 +32672,7 @@ export const JobActionsApiFactory = function (configuration?: Configuration, bas
     const localVarFp = JobActionsApiFp(configuration)
     return {
         /**
-         * You must provide a git commit id
+         * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
          * @summary Deploy job
          * @param {string} jobId Job ID
          * @param {boolean} [force] Enable or Disable the force trigger of the job
@@ -32715,7 +32715,7 @@ export const JobActionsApiFactory = function (configuration?: Configuration, bas
  */
 export class JobActionsApi extends BaseAPI {
     /**
-     * You must provide a git commit id
+     * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
      * @summary Deploy job
      * @param {string} jobId Job ID
      * @param {boolean} [force] Enable or Disable the force trigger of the job
