@@ -8585,7 +8585,8 @@ export interface LinkResponseList {
 export enum LinkedServiceTypeEnum {
     APPLICATION = 'APPLICATION',
     CONTAINER = 'CONTAINER',
-    DATABASE = 'DATABASE'
+    DATABASE = 'DATABASE',
+    JOB = 'JOB'
 }
 
 /**
