@@ -35861,6 +35861,48 @@ export const MembersApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Get member invitation
+         * @param {string} organizationId Organization ID
+         * @param {string} inviteId Invite ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMemberInvitation: async (organizationId: string, inviteId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getMemberInvitation', 'organizationId', organizationId)
+            // verify required parameter 'inviteId' is not null or undefined
+            assertParamExists('getMemberInvitation', 'inviteId', inviteId)
+            const localVarPath = `/organization/{organizationId}/inviteMember/{inviteId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"inviteId"}}`, encodeURIComponent(String(inviteId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get invited members
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
@@ -36109,6 +36151,18 @@ export const MembersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get member invitation
+         * @param {string} organizationId Organization ID
+         * @param {string} inviteId Invite ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMemberInvitation(organizationId: string, inviteId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InviteMember>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMemberInvitation(organizationId, inviteId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get invited members
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
@@ -36210,6 +36264,17 @@ export const MembersApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Get member invitation
+         * @param {string} organizationId Organization ID
+         * @param {string} inviteId Invite ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMemberInvitation(organizationId: string, inviteId: string, options?: any): AxiosPromise<InviteMember> {
+            return localVarFp.getMemberInvitation(organizationId, inviteId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get invited members
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
@@ -36308,6 +36373,19 @@ export class MembersApi extends BaseAPI {
      */
     public editOrganizationMemberRole(organizationId: string, memberRoleUpdateRequest?: MemberRoleUpdateRequest, options?: AxiosRequestConfig) {
         return MembersApiFp(this.configuration).editOrganizationMemberRole(organizationId, memberRoleUpdateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get member invitation
+     * @param {string} organizationId Organization ID
+     * @param {string} inviteId Invite ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MembersApi
+     */
+    public getMemberInvitation(organizationId: string, inviteId: string, options?: AxiosRequestConfig) {
+        return MembersApiFp(this.configuration).getMemberInvitation(organizationId, inviteId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
