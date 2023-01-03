@@ -7937,6 +7937,19 @@ export interface JobDeployRequest {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export enum JobForceEvent {
+    START = 'START',
+    STOP = 'STOP',
+    DELETE = 'DELETE',
+    CRON = 'CRON'
+}
+
+/**
+ * 
+ * @export
  * @interface JobRequest
  */
 export interface JobRequest {
@@ -32492,12 +32505,12 @@ export const JobActionsApiAxiosParamCreator = function (configuration?: Configur
          * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
          * @summary Deploy job
          * @param {string} jobId Job ID
-         * @param {boolean} [force] Enable or Disable the force trigger of the job
+         * @param {JobForceEvent} [force] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
          * @param {JobDeployRequest} [jobDeployRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployJob: async (jobId: string, force?: boolean, jobDeployRequest?: JobDeployRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deployJob: async (jobId: string, force?: JobForceEvent, jobDeployRequest?: JobDeployRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'jobId' is not null or undefined
             assertParamExists('deployJob', 'jobId', jobId)
             const localVarPath = `/job/{jobId}/deploy`
@@ -32630,12 +32643,12 @@ export const JobActionsApiFp = function(configuration?: Configuration) {
          * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
          * @summary Deploy job
          * @param {string} jobId Job ID
-         * @param {boolean} [force] Enable or Disable the force trigger of the job
+         * @param {JobForceEvent} [force] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
          * @param {JobDeployRequest} [jobDeployRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deployJob(jobId: string, force?: boolean, jobDeployRequest?: JobDeployRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+        async deployJob(jobId: string, force?: JobForceEvent, jobDeployRequest?: JobDeployRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deployJob(jobId, force, jobDeployRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -32676,12 +32689,12 @@ export const JobActionsApiFactory = function (configuration?: Configuration, bas
          * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
          * @summary Deploy job
          * @param {string} jobId Job ID
-         * @param {boolean} [force] Enable or Disable the force trigger of the job
+         * @param {JobForceEvent} [force] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
          * @param {JobDeployRequest} [jobDeployRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployJob(jobId: string, force?: boolean, jobDeployRequest?: JobDeployRequest, options?: any): AxiosPromise<Status> {
+        deployJob(jobId: string, force?: JobForceEvent, jobDeployRequest?: JobDeployRequest, options?: any): AxiosPromise<Status> {
             return localVarFp.deployJob(jobId, force, jobDeployRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -32719,13 +32732,13 @@ export class JobActionsApi extends BaseAPI {
      * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
      * @summary Deploy job
      * @param {string} jobId Job ID
-     * @param {boolean} [force] Enable or Disable the force trigger of the job
+     * @param {JobForceEvent} [force] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
      * @param {JobDeployRequest} [jobDeployRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof JobActionsApi
      */
-    public deployJob(jobId: string, force?: boolean, jobDeployRequest?: JobDeployRequest, options?: AxiosRequestConfig) {
+    public deployJob(jobId: string, force?: JobForceEvent, jobDeployRequest?: JobDeployRequest, options?: AxiosRequestConfig) {
         return JobActionsApiFp(this.configuration).deployJob(jobId, force, jobDeployRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
