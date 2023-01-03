@@ -32505,12 +32505,12 @@ export const JobActionsApiAxiosParamCreator = function (configuration?: Configur
          * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
          * @summary Deploy job
          * @param {string} jobId Job ID
-         * @param {JobForceEvent} [force] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
+         * @param {JobForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
          * @param {JobDeployRequest} [jobDeployRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployJob: async (jobId: string, force?: JobForceEvent, jobDeployRequest?: JobDeployRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deployJob: async (jobId: string, forceEvent?: JobForceEvent, jobDeployRequest?: JobDeployRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'jobId' is not null or undefined
             assertParamExists('deployJob', 'jobId', jobId)
             const localVarPath = `/job/{jobId}/deploy`
@@ -32530,8 +32530,8 @@ export const JobActionsApiAxiosParamCreator = function (configuration?: Configur
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-            if (force !== undefined) {
-                localVarQueryParameter['force'] = force;
+            if (forceEvent !== undefined) {
+                localVarQueryParameter['forceEvent'] = forceEvent;
             }
 
 
@@ -32552,11 +32552,11 @@ export const JobActionsApiAxiosParamCreator = function (configuration?: Configur
          * 
          * @summary Restart job
          * @param {string} jobId Job ID
-         * @param {boolean} [force] Enable or Disable the force trigger of the job
+         * @param {JobForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        restartJob: async (jobId: string, force?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        restartJob: async (jobId: string, forceEvent?: JobForceEvent, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'jobId' is not null or undefined
             assertParamExists('restartJob', 'jobId', jobId)
             const localVarPath = `/job/{jobId}/restart`
@@ -32576,8 +32576,8 @@ export const JobActionsApiAxiosParamCreator = function (configuration?: Configur
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-            if (force !== undefined) {
-                localVarQueryParameter['force'] = force;
+            if (forceEvent !== undefined) {
+                localVarQueryParameter['forceEvent'] = forceEvent;
             }
 
 
@@ -32643,25 +32643,25 @@ export const JobActionsApiFp = function(configuration?: Configuration) {
          * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
          * @summary Deploy job
          * @param {string} jobId Job ID
-         * @param {JobForceEvent} [force] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
+         * @param {JobForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
          * @param {JobDeployRequest} [jobDeployRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deployJob(jobId: string, force?: JobForceEvent, jobDeployRequest?: JobDeployRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deployJob(jobId, force, jobDeployRequest, options);
+        async deployJob(jobId: string, forceEvent?: JobForceEvent, jobDeployRequest?: JobDeployRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deployJob(jobId, forceEvent, jobDeployRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Restart job
          * @param {string} jobId Job ID
-         * @param {boolean} [force] Enable or Disable the force trigger of the job
+         * @param {JobForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async restartJob(jobId: string, force?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.restartJob(jobId, force, options);
+        async restartJob(jobId: string, forceEvent?: JobForceEvent, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.restartJob(jobId, forceEvent, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -32689,24 +32689,24 @@ export const JobActionsApiFactory = function (configuration?: Configuration, bas
          * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
          * @summary Deploy job
          * @param {string} jobId Job ID
-         * @param {JobForceEvent} [force] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
+         * @param {JobForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
          * @param {JobDeployRequest} [jobDeployRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployJob(jobId: string, force?: JobForceEvent, jobDeployRequest?: JobDeployRequest, options?: any): AxiosPromise<Status> {
-            return localVarFp.deployJob(jobId, force, jobDeployRequest, options).then((request) => request(axios, basePath));
+        deployJob(jobId: string, forceEvent?: JobForceEvent, jobDeployRequest?: JobDeployRequest, options?: any): AxiosPromise<Status> {
+            return localVarFp.deployJob(jobId, forceEvent, jobDeployRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Restart job
          * @param {string} jobId Job ID
-         * @param {boolean} [force] Enable or Disable the force trigger of the job
+         * @param {JobForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        restartJob(jobId: string, force?: boolean, options?: any): AxiosPromise<Status> {
-            return localVarFp.restartJob(jobId, force, options).then((request) => request(axios, basePath));
+        restartJob(jobId: string, forceEvent?: JobForceEvent, options?: any): AxiosPromise<Status> {
+            return localVarFp.restartJob(jobId, forceEvent, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -32732,27 +32732,27 @@ export class JobActionsApi extends BaseAPI {
      * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
      * @summary Deploy job
      * @param {string} jobId Job ID
-     * @param {JobForceEvent} [force] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
+     * @param {JobForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
      * @param {JobDeployRequest} [jobDeployRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof JobActionsApi
      */
-    public deployJob(jobId: string, force?: JobForceEvent, jobDeployRequest?: JobDeployRequest, options?: AxiosRequestConfig) {
-        return JobActionsApiFp(this.configuration).deployJob(jobId, force, jobDeployRequest, options).then((request) => request(this.axios, this.basePath));
+    public deployJob(jobId: string, forceEvent?: JobForceEvent, jobDeployRequest?: JobDeployRequest, options?: AxiosRequestConfig) {
+        return JobActionsApiFp(this.configuration).deployJob(jobId, forceEvent, jobDeployRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Restart job
      * @param {string} jobId Job ID
-     * @param {boolean} [force] Enable or Disable the force trigger of the job
+     * @param {JobForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof JobActionsApi
      */
-    public restartJob(jobId: string, force?: boolean, options?: AxiosRequestConfig) {
-        return JobActionsApiFp(this.configuration).restartJob(jobId, force, options).then((request) => request(this.axios, this.basePath));
+    public restartJob(jobId: string, forceEvent?: JobForceEvent, options?: AxiosRequestConfig) {
+        return JobActionsApiFp(this.configuration).restartJob(jobId, forceEvent, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
