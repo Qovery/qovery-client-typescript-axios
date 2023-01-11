@@ -251,6 +251,12 @@ export interface ApplicationAdvancedSettings {
      */
     'deployment.custom_domain_check_enabled'?: boolean;
     /**
+     * define how long in seconds an application is supposed to be stopped gracefully
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'deployment.termination_grace_period_seconds'?: number;
+    /**
      * 
      * @type {number}
      * @memberof ApplicationAdvancedSettings
@@ -2941,6 +2947,12 @@ export interface ContainerAdvancedSettings {
      * @memberof ContainerAdvancedSettings
      */
     'deployment.custom_domain_check_enabled'?: boolean;
+    /**
+     * define how long in seconds an application is supposed to be stopped gracefully
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'deployment.termination_grace_period_seconds'?: number;
     /**
      * 
      * @type {number}
@@ -7786,6 +7798,12 @@ export enum InvoiceStatusEnum {
  * @interface JobAdvancedSettings
  */
 export interface JobAdvancedSettings {
+    /**
+     * define how long in seconds an application is supposed to be stopped gracefully
+     * @type {number}
+     * @memberof JobAdvancedSettings
+     */
+    'deployment.termination_grace_period_seconds'?: number;
     /**
      * 
      * @type {number}
