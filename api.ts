@@ -7558,6 +7558,12 @@ export interface InviteMember {
      * @type {string}
      * @memberof InviteMember
      */
+    'organization_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InviteMember
+     */
     'inviter': string;
     /**
      * 
@@ -7608,6 +7614,12 @@ export interface InviteMemberAllOf {
      * @memberof InviteMemberAllOf
      */
     'invitation_status': InviteStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof InviteMemberAllOf
+     */
+    'organization_name'?: string;
     /**
      * 
      * @type {string}
