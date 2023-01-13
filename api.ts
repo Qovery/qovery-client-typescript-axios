@@ -1880,11 +1880,29 @@ export interface Cluster {
  */
 export interface ClusterAdvancedSettings {
     /**
+     * For how long in week loki is going to keep logs of your applications
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'loki.log_retention_in_week'?: number;
+    /**
+     * Enable flow logs for on the VPC and store them in an S3 bucket
+     * @type {boolean}
+     * @memberof ClusterAdvancedSettings
+     */
+    'aws.vpc.enable_s3_flow_logs'?: boolean;
+    /**
      * Configure the number of seconds before cleaning images in the registry
      * @type {number}
      * @memberof ClusterAdvancedSettings
      */
     'registry.image_retention_time'?: number;
+    /**
+     * 
+     * @type {ClusterAdvancedSettingsCloudProviderContainerRegistryTags}
+     * @memberof ClusterAdvancedSettings
+     */
+    'cloud_provider_container_registry_tags'?: ClusterAdvancedSettingsCloudProviderContainerRegistryTags;
     /**
      * Select the size of the main load_balancer (only effective for Scaleway)
      * @type {string}
@@ -1898,12 +1916,25 @@ export interface ClusterAdvancedSettings {
      * @deprecated
      */
     'pleco.resources_ttl'?: number;
+}
+/**
+ * Add additional tags on the cluster dedicated registry
+ * @export
+ * @interface ClusterAdvancedSettingsCloudProviderContainerRegistryTags
+ */
+export interface ClusterAdvancedSettingsCloudProviderContainerRegistryTags {
     /**
-     * For how long in week loki is going to keep logs of your applications
-     * @type {number}
-     * @memberof ClusterAdvancedSettings
+     * 
+     * @type {string}
+     * @memberof ClusterAdvancedSettingsCloudProviderContainerRegistryTags
      */
-    'loki.log_retention_in_week'?: number;
+    'key'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterAdvancedSettingsCloudProviderContainerRegistryTags
+     */
+    'value'?: string;
 }
 /**
  * 
