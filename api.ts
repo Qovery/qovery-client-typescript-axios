@@ -1892,6 +1892,12 @@ export interface ClusterAdvancedSettings {
      */
     'aws.vpc.enable_s3_flow_logs'?: boolean;
     /**
+     * Set the number of retention days for flow logs. Disable with value \"0\"
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'aws.vpc.flow_logs_retention_days'?: number;
+    /**
      * Configure the number of seconds before cleaning images in the registry
      * @type {number}
      * @memberof ClusterAdvancedSettings
