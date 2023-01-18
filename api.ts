@@ -37,6 +37,20 @@ export enum APIVariableScopeEnum {
 }
 
 /**
+ * type of the environment variable (VALUE, FILE, ALIAS, OVERRIDE or BUIT_IN)  
+ * @export
+ * @enum {string}
+ */
+
+export enum APIVariableTypeEnum {
+    VALUE = 'VALUE',
+    ALIAS = 'ALIAS',
+    OVERRIDE = 'OVERRIDE',
+    BUILT_IN = 'BUILT_IN',
+    FILE = 'FILE'
+}
+
+/**
  * 
  * @export
  * @interface AccountInfo
@@ -6865,7 +6879,7 @@ export interface EnvironmentVariable {
      */
     'updated_at'?: string;
     /**
-     * key is case sensitive
+     * key is case sensitive.
      * @type {string}
      * @memberof EnvironmentVariable
      */
@@ -6876,6 +6890,12 @@ export interface EnvironmentVariable {
      * @memberof EnvironmentVariable
      */
     'value': string;
+    /**
+     * should be set for file only. variable mount path makes variable a file (where file should be mounted).
+     * @type {string}
+     * @memberof EnvironmentVariable
+     */
+    'mount_path'?: string | null;
     /**
      * 
      * @type {EnvironmentVariableOverride}
@@ -6894,6 +6914,12 @@ export interface EnvironmentVariable {
      * @memberof EnvironmentVariable
      */
     'scope': APIVariableScopeEnum;
+    /**
+     * 
+     * @type {APIVariableTypeEnum}
+     * @memberof EnvironmentVariable
+     */
+    'type'?: APIVariableTypeEnum;
     /**
      * present only for `BUILT_IN` variable
      * @type {string}
@@ -6968,6 +6994,12 @@ export interface EnvironmentVariableAllOf {
      * @memberof EnvironmentVariableAllOf
      */
     'scope': APIVariableScopeEnum;
+    /**
+     * 
+     * @type {APIVariableTypeEnum}
+     * @memberof EnvironmentVariableAllOf
+     */
+    'type'?: APIVariableTypeEnum;
     /**
      * present only for `BUILT_IN` variable
      * @type {string}
@@ -7044,7 +7076,7 @@ export interface EnvironmentVariableOverride {
  */
 export interface EnvironmentVariableRequest {
     /**
-     * key is case sensitive
+     * key is case sensitive.
      * @type {string}
      * @memberof EnvironmentVariableRequest
      */
@@ -7055,6 +7087,12 @@ export interface EnvironmentVariableRequest {
      * @memberof EnvironmentVariableRequest
      */
     'value': string;
+    /**
+     * should be set for file only. variable mount path makes variable a file (where file should be mounted).
+     * @type {string}
+     * @memberof EnvironmentVariableRequest
+     */
+    'mount_path'?: string | null;
 }
 /**
  * 
@@ -11167,6 +11205,12 @@ export interface Secret {
      */
     'scope': APIVariableScopeEnum;
     /**
+     * 
+     * @type {APIVariableTypeEnum}
+     * @memberof Secret
+     */
+    'type'?: APIVariableTypeEnum;
+    /**
      * present only for `BUILT_IN` variable
      * @type {string}
      * @memberof Secret
@@ -11240,6 +11284,12 @@ export interface SecretAllOf {
      * @memberof SecretAllOf
      */
     'scope': APIVariableScopeEnum;
+    /**
+     * 
+     * @type {APIVariableTypeEnum}
+     * @memberof SecretAllOf
+     */
+    'type'?: APIVariableTypeEnum;
     /**
      * present only for `BUILT_IN` variable
      * @type {string}
@@ -11321,6 +11371,12 @@ export interface SecretRequest {
      * @memberof SecretRequest
      */
     'value': string;
+    /**
+     * should be set for file only. variable mount path make secret a file (where file should be mounted).
+     * @type {string}
+     * @memberof SecretRequest
+     */
+    'mount_path'?: string | null;
 }
 /**
  * 
