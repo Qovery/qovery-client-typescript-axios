@@ -6786,19 +6786,6 @@ export interface EnvironmentResponseList {
 /**
  * 
  * @export
- * @interface EnvironmentRestartRequest
- */
-export interface EnvironmentRestartRequest {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnvironmentRestartRequest
-     */
-    'restart_db'?: boolean;
-}
-/**
- * 
- * @export
  * @interface EnvironmentStats
  */
 export interface EnvironmentStats {
@@ -10993,6 +10980,31 @@ export interface ProjectStatsResponseList {
 /**
  * 
  * @export
+ * @interface RebootServicesRequest
+ */
+export interface RebootServicesRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof RebootServicesRequest
+     */
+    'applicationIds'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof RebootServicesRequest
+     */
+    'databaseIds'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof RebootServicesRequest
+     */
+    'containerIds'?: Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface ReferenceObject
  */
 export interface ReferenceObject {
@@ -12572,7 +12584,83 @@ export const ApplicationActionsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
-         * @summary Restart application
+         * @summary Reboot application
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rebootApplication: async (applicationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'applicationId' is not null or undefined
+            assertParamExists('rebootApplication', 'applicationId', applicationId)
+            const localVarPath = `/application/{applicationId}/restart-service`
+                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Redeploy application
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        redeployApplication: async (applicationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'applicationId' is not null or undefined
+            assertParamExists('redeployApplication', 'applicationId', applicationId)
+            const localVarPath = `/application/{applicationId}/redeploy`
+                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * **Deprecated** - Please use the \"Redeploy application\" endpoint now
+         * @summary Deprecated - Restart application
          * @param {string} applicationId Application ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -12670,7 +12758,29 @@ export const ApplicationActionsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Restart application
+         * @summary Reboot application
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async rebootApplication(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.rebootApplication(applicationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Redeploy application
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async redeployApplication(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.redeployApplication(applicationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * **Deprecated** - Please use the \"Redeploy application\" endpoint now
+         * @summary Deprecated - Restart application
          * @param {string} applicationId Application ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -12713,7 +12823,27 @@ export const ApplicationActionsApiFactory = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary Restart application
+         * @summary Reboot application
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rebootApplication(applicationId: string, options?: any): AxiosPromise<Status> {
+            return localVarFp.rebootApplication(applicationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Redeploy application
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        redeployApplication(applicationId: string, options?: any): AxiosPromise<Status> {
+            return localVarFp.redeployApplication(applicationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * **Deprecated** - Please use the \"Redeploy application\" endpoint now
+         * @summary Deprecated - Restart application
          * @param {string} applicationId Application ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -12756,7 +12886,31 @@ export class ApplicationActionsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Restart application
+     * @summary Reboot application
+     * @param {string} applicationId Application ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApplicationActionsApi
+     */
+    public rebootApplication(applicationId: string, options?: AxiosRequestConfig) {
+        return ApplicationActionsApiFp(this.configuration).rebootApplication(applicationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Redeploy application
+     * @param {string} applicationId Application ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApplicationActionsApi
+     */
+    public redeployApplication(applicationId: string, options?: AxiosRequestConfig) {
+        return ApplicationActionsApiFp(this.configuration).redeployApplication(applicationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * **Deprecated** - Please use the \"Redeploy application\" endpoint now
+     * @summary Deprecated - Restart application
      * @param {string} applicationId Application ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -21781,7 +21935,83 @@ export const ContainerActionsApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @summary Restart container
+         * @summary Reboot container
+         * @param {string} containerId Container ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rebootContainer: async (containerId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'containerId' is not null or undefined
+            assertParamExists('rebootContainer', 'containerId', containerId)
+            const localVarPath = `/container/{containerId}/restart-service`
+                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Redeploy container
+         * @param {string} containerId Container ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        redeployContainer: async (containerId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'containerId' is not null or undefined
+            assertParamExists('redeployContainer', 'containerId', containerId)
+            const localVarPath = `/container/{containerId}/redeploy`
+                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * **Deprecated** - Please use the \"Redeploy container\" endpoint now
+         * @summary Deprecated - Restart container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21879,7 +22109,29 @@ export const ContainerActionsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Restart container
+         * @summary Reboot container
+         * @param {string} containerId Container ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async rebootContainer(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.rebootContainer(containerId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Redeploy container
+         * @param {string} containerId Container ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async redeployContainer(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.redeployContainer(containerId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * **Deprecated** - Please use the \"Redeploy container\" endpoint now
+         * @summary Deprecated - Restart container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21922,7 +22174,27 @@ export const ContainerActionsApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary Restart container
+         * @summary Reboot container
+         * @param {string} containerId Container ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rebootContainer(containerId: string, options?: any): AxiosPromise<Status> {
+            return localVarFp.rebootContainer(containerId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Redeploy container
+         * @param {string} containerId Container ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        redeployContainer(containerId: string, options?: any): AxiosPromise<Status> {
+            return localVarFp.redeployContainer(containerId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * **Deprecated** - Please use the \"Redeploy container\" endpoint now
+         * @summary Deprecated - Restart container
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -21965,7 +22237,31 @@ export class ContainerActionsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Restart container
+     * @summary Reboot container
+     * @param {string} containerId Container ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContainerActionsApi
+     */
+    public rebootContainer(containerId: string, options?: AxiosRequestConfig) {
+        return ContainerActionsApiFp(this.configuration).rebootContainer(containerId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Redeploy container
+     * @param {string} containerId Container ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContainerActionsApi
+     */
+    public redeployContainer(containerId: string, options?: AxiosRequestConfig) {
+        return ContainerActionsApiFp(this.configuration).redeployContainer(containerId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * **Deprecated** - Please use the \"Redeploy container\" endpoint now
+     * @summary Deprecated - Restart container
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -26671,6 +26967,82 @@ export const DatabaseActionsApiAxiosParamCreator = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        rebootDatabase: async (databaseId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'databaseId' is not null or undefined
+            assertParamExists('rebootDatabase', 'databaseId', databaseId)
+            const localVarPath = `/database/{databaseId}/restart-service`
+                .replace(`{${"databaseId"}}`, encodeURIComponent(String(databaseId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Redeploy database
+         * @param {string} databaseId Database ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        redeployDatabase: async (databaseId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'databaseId' is not null or undefined
+            assertParamExists('redeployDatabase', 'databaseId', databaseId)
+            const localVarPath = `/database/{databaseId}/redeploy`
+                .replace(`{${"databaseId"}}`, encodeURIComponent(String(databaseId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * **Deprecated** - Please use the \"Redeploy database\" endpoint now
+         * @summary Deprecated - Restart database
+         * @param {string} databaseId Database ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         restartDatabase: async (databaseId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'databaseId' is not null or undefined
             assertParamExists('restartDatabase', 'databaseId', databaseId)
@@ -26768,6 +27140,28 @@ export const DatabaseActionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async rebootDatabase(databaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.rebootDatabase(databaseId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Redeploy database
+         * @param {string} databaseId Database ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async redeployDatabase(databaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.redeployDatabase(databaseId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * **Deprecated** - Please use the \"Redeploy database\" endpoint now
+         * @summary Deprecated - Restart database
+         * @param {string} databaseId Database ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async restartDatabase(databaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.restartDatabase(databaseId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -26810,6 +27204,26 @@ export const DatabaseActionsApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        rebootDatabase(databaseId: string, options?: any): AxiosPromise<Status> {
+            return localVarFp.rebootDatabase(databaseId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Redeploy database
+         * @param {string} databaseId Database ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        redeployDatabase(databaseId: string, options?: any): AxiosPromise<Status> {
+            return localVarFp.redeployDatabase(databaseId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * **Deprecated** - Please use the \"Redeploy database\" endpoint now
+         * @summary Deprecated - Restart database
+         * @param {string} databaseId Database ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         restartDatabase(databaseId: string, options?: any): AxiosPromise<Status> {
             return localVarFp.restartDatabase(databaseId, options).then((request) => request(axios, basePath));
         },
@@ -26848,6 +27262,30 @@ export class DatabaseActionsApi extends BaseAPI {
     /**
      * 
      * @summary Retart database
+     * @param {string} databaseId Database ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DatabaseActionsApi
+     */
+    public rebootDatabase(databaseId: string, options?: AxiosRequestConfig) {
+        return DatabaseActionsApiFp(this.configuration).rebootDatabase(databaseId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Redeploy database
+     * @param {string} databaseId Database ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DatabaseActionsApi
+     */
+    public redeployDatabase(databaseId: string, options?: AxiosRequestConfig) {
+        return DatabaseActionsApiFp(this.configuration).redeployDatabase(databaseId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * **Deprecated** - Please use the \"Redeploy database\" endpoint now
+     * @summary Deprecated - Restart database
      * @param {string} databaseId Database ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -29303,17 +29741,17 @@ export const EnvironmentActionsApiAxiosParamCreator = function (configuration?: 
             };
         },
         /**
-         * 
-         * @summary Restart environment
+         * Update and reboot the selected services
+         * @summary Reboot services
          * @param {string} environmentId Environment ID
-         * @param {EnvironmentRestartRequest} [environmentRestartRequest] 
+         * @param {RebootServicesRequest} [rebootServicesRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        restartEnvironment: async (environmentId: string, environmentRestartRequest?: EnvironmentRestartRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        rebootServices: async (environmentId: string, rebootServicesRequest?: RebootServicesRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'environmentId' is not null or undefined
-            assertParamExists('restartEnvironment', 'environmentId', environmentId)
-            const localVarPath = `/environment/{environmentId}/restart`
+            assertParamExists('rebootServices', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/service/restart-service`
                 .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -29337,7 +29775,83 @@ export const EnvironmentActionsApiAxiosParamCreator = function (configuration?: 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(environmentRestartRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(rebootServicesRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Redeploy environment
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        redeployEnvironment: async (environmentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('redeployEnvironment', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/redeploy`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * **Deprecated** - Please use the \"Redeploy environment\" endpoint now
+         * @summary Deprecated - Restart environment
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restartEnvironment: async (environmentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('restartEnvironment', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/restart`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -29439,15 +29953,37 @@ export const EnvironmentActionsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
-         * @summary Restart environment
+         * Update and reboot the selected services
+         * @summary Reboot services
          * @param {string} environmentId Environment ID
-         * @param {EnvironmentRestartRequest} [environmentRestartRequest] 
+         * @param {RebootServicesRequest} [rebootServicesRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async restartEnvironment(environmentId: string, environmentRestartRequest?: EnvironmentRestartRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.restartEnvironment(environmentId, environmentRestartRequest, options);
+        async rebootServices(environmentId: string, rebootServicesRequest?: RebootServicesRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.rebootServices(environmentId, rebootServicesRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Redeploy environment
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async redeployEnvironment(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.redeployEnvironment(environmentId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * **Deprecated** - Please use the \"Redeploy environment\" endpoint now
+         * @summary Deprecated - Restart environment
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async restartEnvironment(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.restartEnvironment(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -29514,15 +30050,35 @@ export const EnvironmentActionsApiFactory = function (configuration?: Configurat
             return localVarFp.deployEnvironment(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Restart environment
+         * Update and reboot the selected services
+         * @summary Reboot services
          * @param {string} environmentId Environment ID
-         * @param {EnvironmentRestartRequest} [environmentRestartRequest] 
+         * @param {RebootServicesRequest} [rebootServicesRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        restartEnvironment(environmentId: string, environmentRestartRequest?: EnvironmentRestartRequest, options?: any): AxiosPromise<Status> {
-            return localVarFp.restartEnvironment(environmentId, environmentRestartRequest, options).then((request) => request(axios, basePath));
+        rebootServices(environmentId: string, rebootServicesRequest?: RebootServicesRequest, options?: any): AxiosPromise<Status> {
+            return localVarFp.rebootServices(environmentId, rebootServicesRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Redeploy environment
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        redeployEnvironment(environmentId: string, options?: any): AxiosPromise<Status> {
+            return localVarFp.redeployEnvironment(environmentId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * **Deprecated** - Please use the \"Redeploy environment\" endpoint now
+         * @summary Deprecated - Restart environment
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restartEnvironment(environmentId: string, options?: any): AxiosPromise<Status> {
+            return localVarFp.restartEnvironment(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -29595,16 +30151,40 @@ export class EnvironmentActionsApi extends BaseAPI {
     }
 
     /**
-     * 
-     * @summary Restart environment
+     * Update and reboot the selected services
+     * @summary Reboot services
      * @param {string} environmentId Environment ID
-     * @param {EnvironmentRestartRequest} [environmentRestartRequest] 
+     * @param {RebootServicesRequest} [rebootServicesRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EnvironmentActionsApi
      */
-    public restartEnvironment(environmentId: string, environmentRestartRequest?: EnvironmentRestartRequest, options?: AxiosRequestConfig) {
-        return EnvironmentActionsApiFp(this.configuration).restartEnvironment(environmentId, environmentRestartRequest, options).then((request) => request(this.axios, this.basePath));
+    public rebootServices(environmentId: string, rebootServicesRequest?: RebootServicesRequest, options?: AxiosRequestConfig) {
+        return EnvironmentActionsApiFp(this.configuration).rebootServices(environmentId, rebootServicesRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Redeploy environment
+     * @param {string} environmentId Environment ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentActionsApi
+     */
+    public redeployEnvironment(environmentId: string, options?: AxiosRequestConfig) {
+        return EnvironmentActionsApiFp(this.configuration).redeployEnvironment(environmentId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * **Deprecated** - Please use the \"Redeploy environment\" endpoint now
+     * @summary Deprecated - Restart environment
+     * @param {string} environmentId Environment ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentActionsApi
+     */
+    public restartEnvironment(environmentId: string, options?: AxiosRequestConfig) {
+        return EnvironmentActionsApiFp(this.configuration).restartEnvironment(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -32673,7 +33253,50 @@ export const JobActionsApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @summary Restart job
+         * @summary Redeploy job
+         * @param {string} jobId Job ID
+         * @param {JobForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        redeployJob: async (jobId: string, forceEvent?: JobForceEvent, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'jobId' is not null or undefined
+            assertParamExists('redeployJob', 'jobId', jobId)
+            const localVarPath = `/job/{jobId}/redeploy`
+                .replace(`{${"jobId"}}`, encodeURIComponent(String(jobId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (forceEvent !== undefined) {
+                localVarQueryParameter['forceEvent'] = forceEvent;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * **Deprecated** - Please use the \"Redeploy job\" endpoint now
+         * @summary Deprecated - Restart job
          * @param {string} jobId Job ID
          * @param {JobForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
          * @param {*} [options] Override http request option.
@@ -32777,7 +33400,19 @@ export const JobActionsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Restart job
+         * @summary Redeploy job
+         * @param {string} jobId Job ID
+         * @param {JobForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async redeployJob(jobId: string, forceEvent?: JobForceEvent, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.redeployJob(jobId, forceEvent, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * **Deprecated** - Please use the \"Redeploy job\" endpoint now
+         * @summary Deprecated - Restart job
          * @param {string} jobId Job ID
          * @param {JobForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
          * @param {*} [options] Override http request option.
@@ -32822,7 +33457,18 @@ export const JobActionsApiFactory = function (configuration?: Configuration, bas
         },
         /**
          * 
-         * @summary Restart job
+         * @summary Redeploy job
+         * @param {string} jobId Job ID
+         * @param {JobForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        redeployJob(jobId: string, forceEvent?: JobForceEvent, options?: any): AxiosPromise<Status> {
+            return localVarFp.redeployJob(jobId, forceEvent, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * **Deprecated** - Please use the \"Redeploy job\" endpoint now
+         * @summary Deprecated - Restart job
          * @param {string} jobId Job ID
          * @param {JobForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
          * @param {*} [options] Override http request option.
@@ -32867,7 +33513,20 @@ export class JobActionsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Restart job
+     * @summary Redeploy job
+     * @param {string} jobId Job ID
+     * @param {JobForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobActionsApi
+     */
+    public redeployJob(jobId: string, forceEvent?: JobForceEvent, options?: AxiosRequestConfig) {
+        return JobActionsApiFp(this.configuration).redeployJob(jobId, forceEvent, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * **Deprecated** - Please use the \"Redeploy job\" endpoint now
+     * @summary Deprecated - Restart job
      * @param {string} jobId Job ID
      * @param {JobForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned job hasn\&#39;t the target event provided, the job won\&#39;t be deployed. 
      * @param {*} [options] Override http request option.
