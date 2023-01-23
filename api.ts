@@ -1894,11 +1894,11 @@ export interface Cluster {
  */
 export interface ClusterAdvancedSettings {
     /**
-     * For how long in week loki is going to keep logs of your applications
+     * Set the number of retention days for EKS Cloudwatch logs
      * @type {number}
      * @memberof ClusterAdvancedSettings
      */
-    'loki.log_retention_in_week'?: number;
+    'aws.cloudwatch.eks_logs_retention_days'?: number;
     /**
      * Enable flow logs for on the VPC and store them in an S3 bucket
      * @type {boolean}
@@ -1917,6 +1917,12 @@ export interface ClusterAdvancedSettings {
      * @memberof ClusterAdvancedSettings
      */
     'registry.image_retention_time'?: number;
+    /**
+     * For how long in week loki is going to keep logs of your applications
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'loki.log_retention_in_week'?: number;
     /**
      * 
      * @type {ClusterAdvancedSettingsCloudProviderContainerRegistryTags}
