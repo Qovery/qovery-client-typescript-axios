@@ -18434,11 +18434,15 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
         /**
          * 
          * @summary List AWS EKS available instance types
+         * @param {string} region region name
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAWSEKSInstanceType: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/aws/eks/instanceType/{region}`;
+        listAWSEKSInstanceType: async (region: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'region' is not null or undefined
+            assertParamExists('listAWSEKSInstanceType', 'region', region)
+            const localVarPath = `/aws/eks/instanceType/{region}`
+                .replace(`{${"region"}}`, encodeURIComponent(String(region)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -18894,11 +18898,12 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary List AWS EKS available instance types
+         * @param {string} region region name
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listAWSEKSInstanceType(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterInstanceTypeResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listAWSEKSInstanceType(options);
+        async listAWSEKSInstanceType(region: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterInstanceTypeResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAWSEKSInstanceType(region, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -19036,11 +19041,12 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
         /**
          * 
          * @summary List AWS EKS available instance types
+         * @param {string} region region name
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAWSEKSInstanceType(options?: any): AxiosPromise<ClusterInstanceTypeResponseList> {
-            return localVarFp.listAWSEKSInstanceType(options).then((request) => request(axios, basePath));
+        listAWSEKSInstanceType(region: string, options?: any): AxiosPromise<ClusterInstanceTypeResponseList> {
+            return localVarFp.listAWSEKSInstanceType(region, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -19165,12 +19171,13 @@ export class CloudProviderApi extends BaseAPI {
     /**
      * 
      * @summary List AWS EKS available instance types
+     * @param {string} region region name
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudProviderApi
      */
-    public listAWSEKSInstanceType(options?: AxiosRequestConfig) {
-        return CloudProviderApiFp(this.configuration).listAWSEKSInstanceType(options).then((request) => request(this.axios, this.basePath));
+    public listAWSEKSInstanceType(region: string, options?: AxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listAWSEKSInstanceType(region, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
