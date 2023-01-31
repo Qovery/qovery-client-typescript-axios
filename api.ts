@@ -355,6 +355,18 @@ export interface ApplicationAdvancedSettings {
      */
     'network.ingress.whitelist_source_range'?: string;
     /**
+     * list of source ranges to deny access to ingress proxy.  This property can be used to blacklist source IP ranges for ingress proxy. The value is a comma separated list of CIDRs, e.g. 10.0.0.0/24,172.10.0.1 
+     * @type {string}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.ingress.denylist_source_range'?: string;
+    /**
+     * Set the name of an environment variable to use as a basic authentication (`login:crypted_password`) from `htpasswd` command. 
+     * @type {string}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.ingress.basic_auth_env_var'?: string;
+    /**
      * `NONE` disable readiness probe `TCP` enable TCP readiness probe `HTTP` enable HTTP readiness probe 
      * @type {string}
      * @memberof ApplicationAdvancedSettings
@@ -3088,6 +3100,18 @@ export interface ContainerAdvancedSettings {
      * @memberof ContainerAdvancedSettings
      */
     'network.ingress.whitelist_source_range'?: string;
+    /**
+     * list of source ranges to deny access to ingress proxy.  This property can be used to blacklist source IP ranges for ingress proxy. The value is a comma separated list of CIDRs, e.g. 10.0.0.0/24,172.10.0.1 
+     * @type {string}
+     * @memberof ContainerAdvancedSettings
+     */
+    'network.ingress.denylist_source_range'?: string;
+    /**
+     * Set the name of an environment variable to use as a basic authentication (`login:crypted_password`) from `htpasswd` command. You can add multiples comma separated values. 
+     * @type {string}
+     * @memberof ContainerAdvancedSettings
+     */
+    'network.ingress.basic_auth_env_var'?: string;
     /**
      * `NONE` disable readiness probe `TCP` enable TCP readiness probe `HTTP` enable HTTP readiness probe 
      * @type {string}
