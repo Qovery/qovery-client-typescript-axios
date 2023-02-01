@@ -244,6 +244,18 @@ export interface Application {
      * @memberof Application
      */
     'ports'?: Array<ServicePort>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Application
+     */
+    'arguments'?: Array<string>;
+    /**
+     * optional entrypoint when launching container
+     * @type {string}
+     * @memberof Application
+     */
+    'entrypoint'?: string;
 }
 /**
  * 
@@ -579,6 +591,18 @@ export interface ApplicationAllOf {
      * @memberof ApplicationAllOf
      */
     'ports'?: Array<ServicePort>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ApplicationAllOf
+     */
+    'arguments'?: Array<string>;
+    /**
+     * optional entrypoint when launching container
+     * @type {string}
+     * @memberof ApplicationAllOf
+     */
+    'entrypoint'?: string;
 }
 /**
  * 
@@ -806,6 +830,18 @@ export interface ApplicationEditRequest {
      * @memberof ApplicationEditRequest
      */
     'ports'?: Array<ServicePort>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ApplicationEditRequest
+     */
+    'arguments'?: Array<string>;
+    /**
+     * optional entrypoint when launching container
+     * @type {string}
+     * @memberof ApplicationEditRequest
+     */
+    'entrypoint'?: string;
 }
 /**
  * 
@@ -891,6 +927,18 @@ export interface ApplicationEditRequestAllOf {
      * @memberof ApplicationEditRequestAllOf
      */
     'ports'?: Array<ServicePort>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ApplicationEditRequestAllOf
+     */
+    'arguments'?: Array<string>;
+    /**
+     * optional entrypoint when launching container
+     * @type {string}
+     * @memberof ApplicationEditRequestAllOf
+     */
+    'entrypoint'?: string;
 }
 /**
  * 
@@ -1106,6 +1154,18 @@ export interface ApplicationRequest {
      * @memberof ApplicationRequest
      */
     'auto_preview'?: boolean;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ApplicationRequest
+     */
+    'arguments'?: Array<string>;
+    /**
+     * optional entrypoint when launching container
+     * @type {string}
+     * @memberof ApplicationRequest
+     */
+    'entrypoint'?: string;
 }
 /**
  * 
@@ -1185,6 +1245,18 @@ export interface ApplicationRequestAllOf {
      * @memberof ApplicationRequestAllOf
      */
     'auto_preview'?: boolean;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ApplicationRequestAllOf
+     */
+    'arguments'?: Array<string>;
+    /**
+     * optional entrypoint when launching container
+     * @type {string}
+     * @memberof ApplicationRequestAllOf
+     */
+    'entrypoint'?: string;
 }
 /**
  * 
