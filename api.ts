@@ -9491,7 +9491,7 @@ export interface Organization {
      * @type {string}
      * @memberof Organization
      */
-    'description'?: string;
+    'description'?: string | null;
     /**
      * 
      * @type {PlanEnum}
@@ -10219,7 +10219,7 @@ export interface OrganizationRequest {
      * @type {string}
      * @memberof OrganizationRequest
      */
-    'description'?: string;
+    'description'?: string | null;
     /**
      * 
      * @type {PlanEnum}
