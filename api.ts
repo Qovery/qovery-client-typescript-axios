@@ -10629,7 +10629,7 @@ export interface PaidUsage {
      * @type {string}
      * @memberof PaidUsage
      */
-    'renewal_at'?: string;
+    'renewal_at'?: string | null;
 }
 /**
  * BUSINESS & PROFESSIONAL are deprecated
