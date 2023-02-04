@@ -255,7 +255,7 @@ export interface Application {
      * @type {string}
      * @memberof Application
      */
-    'entrypoint'?: string;
+    'entrypoint'?: string | null;
 }
 /**
  * 
@@ -602,7 +602,7 @@ export interface ApplicationAllOf {
      * @type {string}
      * @memberof ApplicationAllOf
      */
-    'entrypoint'?: string;
+    'entrypoint'?: string | null;
 }
 /**
  * 
