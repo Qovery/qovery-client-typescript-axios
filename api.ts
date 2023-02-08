@@ -5733,6 +5733,174 @@ export interface DeploymentRuleRequest {
 /**
  * 
  * @export
+ * @interface DeploymentStageRequest
+ */
+export interface DeploymentStageRequest {
+    /**
+     * The name of the deployment stage
+     * @type {string}
+     * @memberof DeploymentStageRequest
+     */
+    'name'?: string;
+    /**
+     * free test describing this stage
+     * @type {string}
+     * @memberof DeploymentStageRequest
+     */
+    'description'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentStageResponse
+ */
+export interface DeploymentStageResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentStageResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentStageResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentStageResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof DeploymentStageResponse
+     */
+    'environment': ReferenceObject;
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof DeploymentStageResponse
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentStageResponse
+     */
+    'description'?: string;
+    /**
+     * Position of the deployment stage within the environment
+     * @type {number}
+     * @memberof DeploymentStageResponse
+     */
+    'deployment_order'?: number;
+    /**
+     * 
+     * @type {Array<DeploymentStageServiceResponse>}
+     * @memberof DeploymentStageResponse
+     */
+    'services'?: Array<DeploymentStageServiceResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentStageResponseAllOf
+ */
+export interface DeploymentStageResponseAllOf {
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof DeploymentStageResponseAllOf
+     */
+    'environment': ReferenceObject;
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof DeploymentStageResponseAllOf
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentStageResponseAllOf
+     */
+    'description'?: string;
+    /**
+     * Position of the deployment stage within the environment
+     * @type {number}
+     * @memberof DeploymentStageResponseAllOf
+     */
+    'deployment_order'?: number;
+    /**
+     * 
+     * @type {Array<DeploymentStageServiceResponse>}
+     * @memberof DeploymentStageResponseAllOf
+     */
+    'services'?: Array<DeploymentStageServiceResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentStageResponseList
+ */
+export interface DeploymentStageResponseList {
+    /**
+     * 
+     * @type {Array<DeploymentStageResponse>}
+     * @memberof DeploymentStageResponseList
+     */
+    'results'?: Array<DeploymentStageResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentStageServiceResponse
+ */
+export interface DeploymentStageServiceResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentStageServiceResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentStageServiceResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentStageServiceResponse
+     */
+    'updated_at'?: string;
+    /**
+     * id of the service attached to the stage
+     * @type {string}
+     * @memberof DeploymentStageServiceResponse
+     */
+    'service_id'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentStageServiceResponseAllOf
+ */
+export interface DeploymentStageServiceResponseAllOf {
+    /**
+     * id of the service attached to the stage
+     * @type {string}
+     * @memberof DeploymentStageServiceResponseAllOf
+     */
+    'service_id'?: string;
+}
+/**
+ * 
+ * @export
  * @interface DoCredentialsRequest
  */
 export interface DoCredentialsRequest {
@@ -29636,6 +29804,477 @@ export class DependencyApi extends BaseAPI {
 
 
 /**
+ * DeploymentStageMainCallsApi - axios parameter creator
+ * @export
+ */
+export const DeploymentStageMainCallsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Attach service to deployment stage
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        attachServiceToDeploymentStage: async (serviceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'serviceId' is not null or undefined
+            assertParamExists('attachServiceToDeploymentStage', 'serviceId', serviceId)
+            const localVarPath = `/deploymentStage/{deploymentStageId}/service/{serviceId}`
+                .replace(`{${"serviceId"}}`, encodeURIComponent(String(serviceId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create environment deployment stage
+         * @param {string} environmentId Environment ID
+         * @param {DeploymentStageRequest} [deploymentStageRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEnvironmentDeploymentStage: async (environmentId: string, deploymentStageRequest?: DeploymentStageRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('createEnvironmentDeploymentStage', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/deploymentStage`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(deploymentStageRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete deployment stage
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteDeploymentStage: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/deploymentStage/{deploymentStageId}`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Edit deployment stage
+         * @param {string} deploymentStageId Deployment Stage ID
+         * @param {DeploymentStageRequest} [deploymentStageRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editDeploymentStage: async (deploymentStageId: string, deploymentStageRequest?: DeploymentStageRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'deploymentStageId' is not null or undefined
+            assertParamExists('editDeploymentStage', 'deploymentStageId', deploymentStageId)
+            const localVarPath = `/deploymentStage/{deploymentStageId}`
+                .replace(`{${"deploymentStageId"}}`, encodeURIComponent(String(deploymentStageId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(deploymentStageRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List environment deployment stage
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listEnvironmentDeploymentStage: async (environmentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('listEnvironmentDeploymentStage', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/deploymentStage`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Move deployment stage before requested stage
+         * @param {string} stageId Deployment Stage ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        moveDeploymentStage: async (stageId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'stageId' is not null or undefined
+            assertParamExists('moveDeploymentStage', 'stageId', stageId)
+            const localVarPath = `/deploymentStage/{deploymentStageId}/moveBefore/{stageId}`
+                .replace(`{${"stageId"}}`, encodeURIComponent(String(stageId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * DeploymentStageMainCallsApi - functional programming interface
+ * @export
+ */
+export const DeploymentStageMainCallsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = DeploymentStageMainCallsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Attach service to deployment stage
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async attachServiceToDeploymentStage(serviceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.attachServiceToDeploymentStage(serviceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create environment deployment stage
+         * @param {string} environmentId Environment ID
+         * @param {DeploymentStageRequest} [deploymentStageRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createEnvironmentDeploymentStage(environmentId: string, deploymentStageRequest?: DeploymentStageRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentStageResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createEnvironmentDeploymentStage(environmentId, deploymentStageRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete deployment stage
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteDeploymentStage(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDeploymentStage(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Edit deployment stage
+         * @param {string} deploymentStageId Deployment Stage ID
+         * @param {DeploymentStageRequest} [deploymentStageRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editDeploymentStage(deploymentStageId: string, deploymentStageRequest?: DeploymentStageRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentStageResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editDeploymentStage(deploymentStageId, deploymentStageRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary List environment deployment stage
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listEnvironmentDeploymentStage(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentStageResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listEnvironmentDeploymentStage(environmentId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Move deployment stage before requested stage
+         * @param {string} stageId Deployment Stage ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async moveDeploymentStage(stageId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentStageResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.moveDeploymentStage(stageId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * DeploymentStageMainCallsApi - factory interface
+ * @export
+ */
+export const DeploymentStageMainCallsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = DeploymentStageMainCallsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Attach service to deployment stage
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        attachServiceToDeploymentStage(serviceId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.attachServiceToDeploymentStage(serviceId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create environment deployment stage
+         * @param {string} environmentId Environment ID
+         * @param {DeploymentStageRequest} [deploymentStageRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEnvironmentDeploymentStage(environmentId: string, deploymentStageRequest?: DeploymentStageRequest, options?: any): AxiosPromise<DeploymentStageResponse> {
+            return localVarFp.createEnvironmentDeploymentStage(environmentId, deploymentStageRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete deployment stage
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteDeploymentStage(options?: any): AxiosPromise<void> {
+            return localVarFp.deleteDeploymentStage(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Edit deployment stage
+         * @param {string} deploymentStageId Deployment Stage ID
+         * @param {DeploymentStageRequest} [deploymentStageRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editDeploymentStage(deploymentStageId: string, deploymentStageRequest?: DeploymentStageRequest, options?: any): AxiosPromise<DeploymentStageResponse> {
+            return localVarFp.editDeploymentStage(deploymentStageId, deploymentStageRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List environment deployment stage
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listEnvironmentDeploymentStage(environmentId: string, options?: any): AxiosPromise<DeploymentStageResponseList> {
+            return localVarFp.listEnvironmentDeploymentStage(environmentId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Move deployment stage before requested stage
+         * @param {string} stageId Deployment Stage ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        moveDeploymentStage(stageId: string, options?: any): AxiosPromise<DeploymentStageResponseList> {
+            return localVarFp.moveDeploymentStage(stageId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * DeploymentStageMainCallsApi - object-oriented interface
+ * @export
+ * @class DeploymentStageMainCallsApi
+ * @extends {BaseAPI}
+ */
+export class DeploymentStageMainCallsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Attach service to deployment stage
+     * @param {string} serviceId Service ID of an application/job/container/database
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DeploymentStageMainCallsApi
+     */
+    public attachServiceToDeploymentStage(serviceId: string, options?: AxiosRequestConfig) {
+        return DeploymentStageMainCallsApiFp(this.configuration).attachServiceToDeploymentStage(serviceId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create environment deployment stage
+     * @param {string} environmentId Environment ID
+     * @param {DeploymentStageRequest} [deploymentStageRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DeploymentStageMainCallsApi
+     */
+    public createEnvironmentDeploymentStage(environmentId: string, deploymentStageRequest?: DeploymentStageRequest, options?: AxiosRequestConfig) {
+        return DeploymentStageMainCallsApiFp(this.configuration).createEnvironmentDeploymentStage(environmentId, deploymentStageRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete deployment stage
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DeploymentStageMainCallsApi
+     */
+    public deleteDeploymentStage(options?: AxiosRequestConfig) {
+        return DeploymentStageMainCallsApiFp(this.configuration).deleteDeploymentStage(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Edit deployment stage
+     * @param {string} deploymentStageId Deployment Stage ID
+     * @param {DeploymentStageRequest} [deploymentStageRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DeploymentStageMainCallsApi
+     */
+    public editDeploymentStage(deploymentStageId: string, deploymentStageRequest?: DeploymentStageRequest, options?: AxiosRequestConfig) {
+        return DeploymentStageMainCallsApiFp(this.configuration).editDeploymentStage(deploymentStageId, deploymentStageRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List environment deployment stage
+     * @param {string} environmentId Environment ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DeploymentStageMainCallsApi
+     */
+    public listEnvironmentDeploymentStage(environmentId: string, options?: AxiosRequestConfig) {
+        return DeploymentStageMainCallsApiFp(this.configuration).listEnvironmentDeploymentStage(environmentId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Move deployment stage before requested stage
+     * @param {string} stageId Deployment Stage ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DeploymentStageMainCallsApi
+     */
+    public moveDeploymentStage(stageId: string, options?: AxiosRequestConfig) {
+        return DeploymentStageMainCallsApiFp(this.configuration).moveDeploymentStage(stageId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * EnvironmentApi - axios parameter creator
  * @export
  */
@@ -30547,44 +31186,6 @@ export const EnvironmentDeploymentRuleApiAxiosParamCreator = function (configura
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @summary Get environment deployment rule
-         * @param {string} environmentId Environment ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getEnvironmentDeploymentRule: async (environmentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'environmentId' is not null or undefined
-            assertParamExists('getEnvironmentDeploymentRule', 'environmentId', environmentId)
-            const localVarPath = `/environment/{environmentId}/deploymentRule`
-                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -30606,17 +31207,6 @@ export const EnvironmentDeploymentRuleApiFp = function(configuration?: Configura
          */
         async editEnvironmentDeploymentRule(environmentId: string, deploymentRuleId: string, environmentDeploymentRuleEditRequest?: EnvironmentDeploymentRuleEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentDeploymentRule>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editEnvironmentDeploymentRule(environmentId, deploymentRuleId, environmentDeploymentRuleEditRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Get environment deployment rule
-         * @param {string} environmentId Environment ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getEnvironmentDeploymentRule(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentDeploymentRule>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentDeploymentRule(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -30641,16 +31231,6 @@ export const EnvironmentDeploymentRuleApiFactory = function (configuration?: Con
         editEnvironmentDeploymentRule(environmentId: string, deploymentRuleId: string, environmentDeploymentRuleEditRequest?: EnvironmentDeploymentRuleEditRequest, options?: any): AxiosPromise<EnvironmentDeploymentRule> {
             return localVarFp.editEnvironmentDeploymentRule(environmentId, deploymentRuleId, environmentDeploymentRuleEditRequest, options).then((request) => request(axios, basePath));
         },
-        /**
-         * 
-         * @summary Get environment deployment rule
-         * @param {string} environmentId Environment ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getEnvironmentDeploymentRule(environmentId: string, options?: any): AxiosPromise<EnvironmentDeploymentRule> {
-            return localVarFp.getEnvironmentDeploymentRule(environmentId, options).then((request) => request(axios, basePath));
-        },
     };
 };
 
@@ -30673,18 +31253,6 @@ export class EnvironmentDeploymentRuleApi extends BaseAPI {
      */
     public editEnvironmentDeploymentRule(environmentId: string, deploymentRuleId: string, environmentDeploymentRuleEditRequest?: EnvironmentDeploymentRuleEditRequest, options?: AxiosRequestConfig) {
         return EnvironmentDeploymentRuleApiFp(this.configuration).editEnvironmentDeploymentRule(environmentId, deploymentRuleId, environmentDeploymentRuleEditRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get environment deployment rule
-     * @param {string} environmentId Environment ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof EnvironmentDeploymentRuleApi
-     */
-    public getEnvironmentDeploymentRule(environmentId: string, options?: AxiosRequestConfig) {
-        return EnvironmentDeploymentRuleApiFp(this.configuration).getEnvironmentDeploymentRule(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
