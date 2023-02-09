@@ -5871,6 +5871,12 @@ export interface DeploymentStageServiceResponse {
      * @memberof DeploymentStageServiceResponse
      */
     'service_id'?: string;
+    /**
+     * type of the service (i.e APPLICATION, JOB, DATABASE, ...)
+     * @type {string}
+     * @memberof DeploymentStageServiceResponse
+     */
+    'service_type'?: string;
 }
 /**
  * 
@@ -5884,6 +5890,12 @@ export interface DeploymentStageServiceResponseAllOf {
      * @memberof DeploymentStageServiceResponseAllOf
      */
     'service_id'?: string;
+    /**
+     * type of the service (i.e APPLICATION, JOB, DATABASE, ...)
+     * @type {string}
+     * @memberof DeploymentStageServiceResponseAllOf
+     */
+    'service_type'?: string;
 }
 /**
  * 
