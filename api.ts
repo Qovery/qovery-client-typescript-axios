@@ -21507,48 +21507,6 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * allows to update cluster version
-         * @summary Update a cluster Version
-         * @param {string} organizationId Organization ID
-         * @param {string} clusterId Cluster ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateCluster: async (organizationId: string, clusterId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            assertParamExists('updateCluster', 'organizationId', organizationId)
-            // verify required parameter 'clusterId' is not null or undefined
-            assertParamExists('updateCluster', 'clusterId', clusterId)
-            const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/update`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
-                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -21763,18 +21721,6 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.stopCluster(organizationId, clusterId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-        /**
-         * allows to update cluster version
-         * @summary Update a cluster Version
-         * @param {string} organizationId Organization ID
-         * @param {string} clusterId Cluster ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async updateCluster(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatus>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateCluster(organizationId, clusterId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
     }
 };
 
@@ -21971,17 +21917,6 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          */
         stopCluster(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterStatus> {
             return localVarFp.stopCluster(organizationId, clusterId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * allows to update cluster version
-         * @summary Update a cluster Version
-         * @param {string} organizationId Organization ID
-         * @param {string} clusterId Cluster ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateCluster(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterStatus> {
-            return localVarFp.updateCluster(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -22212,19 +22147,6 @@ export class ClustersApi extends BaseAPI {
      */
     public stopCluster(organizationId: string, clusterId: string, options?: AxiosRequestConfig) {
         return ClustersApiFp(this.configuration).stopCluster(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * allows to update cluster version
-     * @summary Update a cluster Version
-     * @param {string} organizationId Organization ID
-     * @param {string} clusterId Cluster ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ClustersApi
-     */
-    public updateCluster(organizationId: string, clusterId: string, options?: AxiosRequestConfig) {
-        return ClustersApiFp(this.configuration).updateCluster(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
