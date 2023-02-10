@@ -29210,14 +29210,18 @@ export const DeploymentStageMainCallsApiAxiosParamCreator = function (configurat
         /**
          * 
          * @summary Attach service to deployment stage
+         * @param {string} deploymentStageId Deployment Stage ID
          * @param {string} serviceId Service ID of an application/job/container/database
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        attachServiceToDeploymentStage: async (serviceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        attachServiceToDeploymentStage: async (deploymentStageId: string, serviceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'deploymentStageId' is not null or undefined
+            assertParamExists('attachServiceToDeploymentStage', 'deploymentStageId', deploymentStageId)
             // verify required parameter 'serviceId' is not null or undefined
             assertParamExists('attachServiceToDeploymentStage', 'serviceId', serviceId)
             const localVarPath = `/deploymentStage/{deploymentStageId}/service/{serviceId}`
+                .replace(`{${"deploymentStageId"}}`, encodeURIComponent(String(deploymentStageId)))
                 .replace(`{${"serviceId"}}`, encodeURIComponent(String(serviceId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -29290,11 +29294,15 @@ export const DeploymentStageMainCallsApiAxiosParamCreator = function (configurat
         /**
          * 
          * @summary Delete deployment stage
+         * @param {string} deploymentStageId Deployment Stage ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteDeploymentStage: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/deploymentStage/{deploymentStageId}`;
+        deleteDeploymentStage: async (deploymentStageId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'deploymentStageId' is not null or undefined
+            assertParamExists('deleteDeploymentStage', 'deploymentStageId', deploymentStageId)
+            const localVarPath = `/deploymentStage/{deploymentStageId}`
+                .replace(`{${"deploymentStageId"}}`, encodeURIComponent(String(deploymentStageId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -29404,14 +29412,18 @@ export const DeploymentStageMainCallsApiAxiosParamCreator = function (configurat
         /**
          * 
          * @summary Move deployment stage before requested stage
+         * @param {string} deploymentStageId Deployment Stage ID
          * @param {string} stageId Deployment Stage ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        moveDeploymentStage: async (stageId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        moveDeploymentStage: async (deploymentStageId: string, stageId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'deploymentStageId' is not null or undefined
+            assertParamExists('moveDeploymentStage', 'deploymentStageId', deploymentStageId)
             // verify required parameter 'stageId' is not null or undefined
             assertParamExists('moveDeploymentStage', 'stageId', stageId)
             const localVarPath = `/deploymentStage/{deploymentStageId}/moveBefore/{stageId}`
+                .replace(`{${"deploymentStageId"}}`, encodeURIComponent(String(deploymentStageId)))
                 .replace(`{${"stageId"}}`, encodeURIComponent(String(stageId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -29452,12 +29464,13 @@ export const DeploymentStageMainCallsApiFp = function(configuration?: Configurat
         /**
          * 
          * @summary Attach service to deployment stage
+         * @param {string} deploymentStageId Deployment Stage ID
          * @param {string} serviceId Service ID of an application/job/container/database
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async attachServiceToDeploymentStage(serviceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.attachServiceToDeploymentStage(serviceId, options);
+        async attachServiceToDeploymentStage(deploymentStageId: string, serviceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.attachServiceToDeploymentStage(deploymentStageId, serviceId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -29475,11 +29488,12 @@ export const DeploymentStageMainCallsApiFp = function(configuration?: Configurat
         /**
          * 
          * @summary Delete deployment stage
+         * @param {string} deploymentStageId Deployment Stage ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteDeploymentStage(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDeploymentStage(options);
+        async deleteDeploymentStage(deploymentStageId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDeploymentStage(deploymentStageId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -29508,12 +29522,13 @@ export const DeploymentStageMainCallsApiFp = function(configuration?: Configurat
         /**
          * 
          * @summary Move deployment stage before requested stage
+         * @param {string} deploymentStageId Deployment Stage ID
          * @param {string} stageId Deployment Stage ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async moveDeploymentStage(stageId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentStageResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.moveDeploymentStage(stageId, options);
+        async moveDeploymentStage(deploymentStageId: string, stageId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentStageResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.moveDeploymentStage(deploymentStageId, stageId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -29529,12 +29544,13 @@ export const DeploymentStageMainCallsApiFactory = function (configuration?: Conf
         /**
          * 
          * @summary Attach service to deployment stage
+         * @param {string} deploymentStageId Deployment Stage ID
          * @param {string} serviceId Service ID of an application/job/container/database
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        attachServiceToDeploymentStage(serviceId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.attachServiceToDeploymentStage(serviceId, options).then((request) => request(axios, basePath));
+        attachServiceToDeploymentStage(deploymentStageId: string, serviceId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.attachServiceToDeploymentStage(deploymentStageId, serviceId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -29550,11 +29566,12 @@ export const DeploymentStageMainCallsApiFactory = function (configuration?: Conf
         /**
          * 
          * @summary Delete deployment stage
+         * @param {string} deploymentStageId Deployment Stage ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteDeploymentStage(options?: any): AxiosPromise<void> {
-            return localVarFp.deleteDeploymentStage(options).then((request) => request(axios, basePath));
+        deleteDeploymentStage(deploymentStageId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteDeploymentStage(deploymentStageId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -29580,12 +29597,13 @@ export const DeploymentStageMainCallsApiFactory = function (configuration?: Conf
         /**
          * 
          * @summary Move deployment stage before requested stage
+         * @param {string} deploymentStageId Deployment Stage ID
          * @param {string} stageId Deployment Stage ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        moveDeploymentStage(stageId: string, options?: any): AxiosPromise<DeploymentStageResponseList> {
-            return localVarFp.moveDeploymentStage(stageId, options).then((request) => request(axios, basePath));
+        moveDeploymentStage(deploymentStageId: string, stageId: string, options?: any): AxiosPromise<DeploymentStageResponseList> {
+            return localVarFp.moveDeploymentStage(deploymentStageId, stageId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -29600,13 +29618,14 @@ export class DeploymentStageMainCallsApi extends BaseAPI {
     /**
      * 
      * @summary Attach service to deployment stage
+     * @param {string} deploymentStageId Deployment Stage ID
      * @param {string} serviceId Service ID of an application/job/container/database
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeploymentStageMainCallsApi
      */
-    public attachServiceToDeploymentStage(serviceId: string, options?: AxiosRequestConfig) {
-        return DeploymentStageMainCallsApiFp(this.configuration).attachServiceToDeploymentStage(serviceId, options).then((request) => request(this.axios, this.basePath));
+    public attachServiceToDeploymentStage(deploymentStageId: string, serviceId: string, options?: AxiosRequestConfig) {
+        return DeploymentStageMainCallsApiFp(this.configuration).attachServiceToDeploymentStage(deploymentStageId, serviceId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -29625,12 +29644,13 @@ export class DeploymentStageMainCallsApi extends BaseAPI {
     /**
      * 
      * @summary Delete deployment stage
+     * @param {string} deploymentStageId Deployment Stage ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeploymentStageMainCallsApi
      */
-    public deleteDeploymentStage(options?: AxiosRequestConfig) {
-        return DeploymentStageMainCallsApiFp(this.configuration).deleteDeploymentStage(options).then((request) => request(this.axios, this.basePath));
+    public deleteDeploymentStage(deploymentStageId: string, options?: AxiosRequestConfig) {
+        return DeploymentStageMainCallsApiFp(this.configuration).deleteDeploymentStage(deploymentStageId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -29661,13 +29681,14 @@ export class DeploymentStageMainCallsApi extends BaseAPI {
     /**
      * 
      * @summary Move deployment stage before requested stage
+     * @param {string} deploymentStageId Deployment Stage ID
      * @param {string} stageId Deployment Stage ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeploymentStageMainCallsApi
      */
-    public moveDeploymentStage(stageId: string, options?: AxiosRequestConfig) {
-        return DeploymentStageMainCallsApiFp(this.configuration).moveDeploymentStage(stageId, options).then((request) => request(this.axios, this.basePath));
+    public moveDeploymentStage(deploymentStageId: string, stageId: string, options?: AxiosRequestConfig) {
+        return DeploymentStageMainCallsApiFp(this.configuration).moveDeploymentStage(deploymentStageId, stageId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
