@@ -5728,13 +5728,13 @@ export interface DeploymentStageRequest {
      * @type {string}
      * @memberof DeploymentStageRequest
      */
-    'name'?: string;
+    'name': string;
     /**
      * free test describing this stage
      * @type {string}
      * @memberof DeploymentStageRequest
      */
-    'description'?: string;
+    'description'?: string | null;
 }
 /**
  * 
