@@ -7175,7 +7175,7 @@ export interface EnvironmentVariable {
      * @type {APIVariableTypeEnum}
      * @memberof EnvironmentVariable
      */
-    'type'?: APIVariableTypeEnum;
+    'variable_type'?: APIVariableTypeEnum;
     /**
      * present only for `BUILT_IN` variable
      * @type {string}
@@ -7267,7 +7267,7 @@ export interface EnvironmentVariableAllOf {
      * @type {APIVariableTypeEnum}
      * @memberof EnvironmentVariableAllOf
      */
-    'type'?: APIVariableTypeEnum;
+    'variable_type'?: APIVariableTypeEnum;
     /**
      * present only for `BUILT_IN` variable
      * @type {string}
@@ -11514,7 +11514,7 @@ export interface Secret {
      * @type {APIVariableTypeEnum}
      * @memberof Secret
      */
-    'type'?: APIVariableTypeEnum;
+    'variable_type'?: APIVariableTypeEnum;
     /**
      * present only for `BUILT_IN` variable
      * @type {string}
@@ -11606,7 +11606,7 @@ export interface SecretAllOf {
      * @type {APIVariableTypeEnum}
      * @memberof SecretAllOf
      */
-    'type'?: APIVariableTypeEnum;
+    'variable_type'?: APIVariableTypeEnum;
     /**
      * present only for `BUILT_IN` variable
      * @type {string}
