@@ -7221,10 +7221,22 @@ export interface EnvironmentVariableAlias {
     'value': string;
     /**
      * 
+     * @type {string}
+     * @memberof EnvironmentVariableAlias
+     */
+    'mount_path': string;
+    /**
+     * 
      * @type {APIVariableScopeEnum}
      * @memberof EnvironmentVariableAlias
      */
     'scope': APIVariableScopeEnum;
+    /**
+     * 
+     * @type {APIVariableTypeEnum}
+     * @memberof EnvironmentVariableAlias
+     */
+    'variable_type': APIVariableTypeEnum;
 }
 /**
  * 
@@ -7320,10 +7332,22 @@ export interface EnvironmentVariableOverride {
     'value': string;
     /**
      * 
+     * @type {string}
+     * @memberof EnvironmentVariableOverride
+     */
+    'mount_path': string;
+    /**
+     * 
      * @type {APIVariableScopeEnum}
      * @memberof EnvironmentVariableOverride
      */
     'scope': APIVariableScopeEnum;
+    /**
+     * 
+     * @type {APIVariableTypeEnum}
+     * @memberof EnvironmentVariableOverride
+     */
+    'variable_type': APIVariableTypeEnum;
 }
 /**
  * 
@@ -11530,10 +11554,22 @@ export interface SecretAlias {
     'key': string;
     /**
      * 
+     * @type {string}
+     * @memberof SecretAlias
+     */
+    'mount_path': string;
+    /**
+     * 
      * @type {APIVariableScopeEnum}
      * @memberof SecretAlias
      */
     'scope': APIVariableScopeEnum;
+    /**
+     * 
+     * @type {APIVariableTypeEnum}
+     * @memberof SecretAlias
+     */
+    'variable_type': APIVariableTypeEnum;
 }
 /**
  * 
@@ -11629,10 +11665,22 @@ export interface SecretOverride {
     'key': string;
     /**
      * 
+     * @type {string}
+     * @memberof SecretOverride
+     */
+    'mount_path': string;
+    /**
+     * 
      * @type {APIVariableScopeEnum}
      * @memberof SecretOverride
      */
     'scope': APIVariableScopeEnum;
+    /**
+     * 
+     * @type {APIVariableTypeEnum}
+     * @memberof SecretOverride
+     */
+    'variable_type': APIVariableTypeEnum;
 }
 /**
  * 
