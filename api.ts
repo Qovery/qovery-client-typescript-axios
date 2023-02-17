@@ -29517,7 +29517,7 @@ export const DeploymentStageMainCallsApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async attachServiceToDeploymentStage(deploymentStageId: string, serviceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async attachServiceToDeploymentStage(deploymentStageId: string, serviceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentStageResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.attachServiceToDeploymentStage(deploymentStageId, serviceId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -29597,7 +29597,7 @@ export const DeploymentStageMainCallsApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        attachServiceToDeploymentStage(deploymentStageId: string, serviceId: string, options?: any): AxiosPromise<void> {
+        attachServiceToDeploymentStage(deploymentStageId: string, serviceId: string, options?: any): AxiosPromise<DeploymentStageResponseList> {
             return localVarFp.attachServiceToDeploymentStage(deploymentStageId, serviceId, options).then((request) => request(axios, basePath));
         },
         /**
