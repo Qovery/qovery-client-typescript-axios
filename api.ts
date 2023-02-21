@@ -1996,6 +1996,54 @@ export interface ClusterAdvancedSettings {
      */
     'aws.vpc.flow_logs_retention_days'?: number;
     /**
+     * Deny public access to any PostgreSQL database
+     * @type {boolean}
+     * @memberof ClusterAdvancedSettings
+     */
+    'database.postgresql.deny_public_access'?: boolean;
+    /**
+     * List of CIDRs allowed to access the PostgreSQL database
+     * @type {Array<string>}
+     * @memberof ClusterAdvancedSettings
+     */
+    'database.postgresql.allowed_cidrs'?: Array<string>;
+    /**
+     * Deny public access to any MySql database
+     * @type {boolean}
+     * @memberof ClusterAdvancedSettings
+     */
+    'database.mysql.deny_public_access'?: boolean;
+    /**
+     * List of CIDRs allowed to access the MySql database
+     * @type {Array<string>}
+     * @memberof ClusterAdvancedSettings
+     */
+    'database.mysql.allowed_cidrs'?: Array<string>;
+    /**
+     * Deny public access to any MongoDB/DocumentDB database
+     * @type {boolean}
+     * @memberof ClusterAdvancedSettings
+     */
+    'database.mongodb.deny_public_access'?: boolean;
+    /**
+     * List of CIDRs allowed to access the MongoDB/DocumentDB database
+     * @type {Array<string>}
+     * @memberof ClusterAdvancedSettings
+     */
+    'database.mongodb.allowed_cidrs'?: Array<string>;
+    /**
+     * Deny public access to any Redis database
+     * @type {boolean}
+     * @memberof ClusterAdvancedSettings
+     */
+    'database.redis.deny_public_access'?: boolean;
+    /**
+     * List of CIDRs allowed to access the Redis database
+     * @type {Array<string>}
+     * @memberof ClusterAdvancedSettings
+     */
+    'database.redis.allowed_cidrs'?: Array<string>;
+    /**
      * Configure the number of seconds before cleaning images in the registry
      * @type {number}
      * @memberof ClusterAdvancedSettings
