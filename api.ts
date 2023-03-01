@@ -29627,14 +29627,18 @@ export const DeploymentStageMainCallsApiAxiosParamCreator = function (configurat
          * 
          * @summary Move deployment stage before requested stage
          * @param {string} deploymentStageId Deployment Stage ID
+         * @param {string} stageId Deployment Stage ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        moveBeforeDeploymentStage: async (deploymentStageId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        moveBeforeDeploymentStage: async (deploymentStageId: string, stageId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'deploymentStageId' is not null or undefined
             assertParamExists('moveBeforeDeploymentStage', 'deploymentStageId', deploymentStageId)
+            // verify required parameter 'stageId' is not null or undefined
+            assertParamExists('moveBeforeDeploymentStage', 'stageId', stageId)
             const localVarPath = `/deploymentStage/{deploymentStageId}/moveBefore/{stageId}`
-                .replace(`{${"deploymentStageId"}}`, encodeURIComponent(String(deploymentStageId)));
+                .replace(`{${"deploymentStageId"}}`, encodeURIComponent(String(deploymentStageId)))
+                .replace(`{${"stageId"}}`, encodeURIComponent(String(stageId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -29767,11 +29771,12 @@ export const DeploymentStageMainCallsApiFp = function(configuration?: Configurat
          * 
          * @summary Move deployment stage before requested stage
          * @param {string} deploymentStageId Deployment Stage ID
+         * @param {string} stageId Deployment Stage ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async moveBeforeDeploymentStage(deploymentStageId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentStageResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.moveBeforeDeploymentStage(deploymentStageId, options);
+        async moveBeforeDeploymentStage(deploymentStageId: string, stageId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentStageResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.moveBeforeDeploymentStage(deploymentStageId, stageId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -29872,11 +29877,12 @@ export const DeploymentStageMainCallsApiFactory = function (configuration?: Conf
          * 
          * @summary Move deployment stage before requested stage
          * @param {string} deploymentStageId Deployment Stage ID
+         * @param {string} stageId Deployment Stage ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        moveBeforeDeploymentStage(deploymentStageId: string, options?: any): AxiosPromise<DeploymentStageResponseList> {
-            return localVarFp.moveBeforeDeploymentStage(deploymentStageId, options).then((request) => request(axios, basePath));
+        moveBeforeDeploymentStage(deploymentStageId: string, stageId: string, options?: any): AxiosPromise<DeploymentStageResponseList> {
+            return localVarFp.moveBeforeDeploymentStage(deploymentStageId, stageId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -29992,12 +29998,13 @@ export class DeploymentStageMainCallsApi extends BaseAPI {
      * 
      * @summary Move deployment stage before requested stage
      * @param {string} deploymentStageId Deployment Stage ID
+     * @param {string} stageId Deployment Stage ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeploymentStageMainCallsApi
      */
-    public moveBeforeDeploymentStage(deploymentStageId: string, options?: AxiosRequestConfig) {
-        return DeploymentStageMainCallsApiFp(this.configuration).moveBeforeDeploymentStage(deploymentStageId, options).then((request) => request(this.axios, this.basePath));
+    public moveBeforeDeploymentStage(deploymentStageId: string, stageId: string, options?: AxiosRequestConfig) {
+        return DeploymentStageMainCallsApiFp(this.configuration).moveBeforeDeploymentStage(deploymentStageId, stageId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
