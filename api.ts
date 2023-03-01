@@ -29307,14 +29307,18 @@ export const DeploymentStageMainCallsApiAxiosParamCreator = function (configurat
          * 
          * @summary Attach service to deployment stage
          * @param {string} deploymentStageId Deployment Stage ID
+         * @param {string} serviceId Service ID of an application/job/container/database
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        attachServiceToDeploymentStage: async (deploymentStageId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        attachServiceToDeploymentStage: async (deploymentStageId: string, serviceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'deploymentStageId' is not null or undefined
             assertParamExists('attachServiceToDeploymentStage', 'deploymentStageId', deploymentStageId)
+            // verify required parameter 'serviceId' is not null or undefined
+            assertParamExists('attachServiceToDeploymentStage', 'serviceId', serviceId)
             const localVarPath = `/deploymentStage/{deploymentStageId}/service/{serviceId}`
-                .replace(`{${"deploymentStageId"}}`, encodeURIComponent(String(deploymentStageId)));
+                .replace(`{${"deploymentStageId"}}`, encodeURIComponent(String(deploymentStageId)))
+                .replace(`{${"serviceId"}}`, encodeURIComponent(String(serviceId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -29633,11 +29637,12 @@ export const DeploymentStageMainCallsApiFp = function(configuration?: Configurat
          * 
          * @summary Attach service to deployment stage
          * @param {string} deploymentStageId Deployment Stage ID
+         * @param {string} serviceId Service ID of an application/job/container/database
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async attachServiceToDeploymentStage(deploymentStageId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentStageResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.attachServiceToDeploymentStage(deploymentStageId, options);
+        async attachServiceToDeploymentStage(deploymentStageId: string, serviceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentStageResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.attachServiceToDeploymentStage(deploymentStageId, serviceId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -29734,11 +29739,12 @@ export const DeploymentStageMainCallsApiFactory = function (configuration?: Conf
          * 
          * @summary Attach service to deployment stage
          * @param {string} deploymentStageId Deployment Stage ID
+         * @param {string} serviceId Service ID of an application/job/container/database
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        attachServiceToDeploymentStage(deploymentStageId: string, options?: any): AxiosPromise<DeploymentStageResponseList> {
-            return localVarFp.attachServiceToDeploymentStage(deploymentStageId, options).then((request) => request(axios, basePath));
+        attachServiceToDeploymentStage(deploymentStageId: string, serviceId: string, options?: any): AxiosPromise<DeploymentStageResponseList> {
+            return localVarFp.attachServiceToDeploymentStage(deploymentStageId, serviceId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -29827,12 +29833,13 @@ export class DeploymentStageMainCallsApi extends BaseAPI {
      * 
      * @summary Attach service to deployment stage
      * @param {string} deploymentStageId Deployment Stage ID
+     * @param {string} serviceId Service ID of an application/job/container/database
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeploymentStageMainCallsApi
      */
-    public attachServiceToDeploymentStage(deploymentStageId: string, options?: AxiosRequestConfig) {
-        return DeploymentStageMainCallsApiFp(this.configuration).attachServiceToDeploymentStage(deploymentStageId, options).then((request) => request(this.axios, this.basePath));
+    public attachServiceToDeploymentStage(deploymentStageId: string, serviceId: string, options?: AxiosRequestConfig) {
+        return DeploymentStageMainCallsApiFp(this.configuration).attachServiceToDeploymentStage(deploymentStageId, serviceId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
