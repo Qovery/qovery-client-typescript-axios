@@ -5210,10 +5210,10 @@ export interface DeploymentHistoryContainer {
     'name'?: string;
     /**
      * 
-     * @type {DeploymentHistoryStatusEnum}
+     * @type {StateEnum}
      * @memberof DeploymentHistoryContainer
      */
-    'status'?: DeploymentHistoryStatusEnum;
+    'status'?: StateEnum;
     /**
      * 
      * @type {string}
@@ -5253,10 +5253,10 @@ export interface DeploymentHistoryContainerAllOf {
     'name'?: string;
     /**
      * 
-     * @type {DeploymentHistoryStatusEnum}
+     * @type {StateEnum}
      * @memberof DeploymentHistoryContainerAllOf
      */
-    'status'?: DeploymentHistoryStatusEnum;
+    'status'?: StateEnum;
     /**
      * 
      * @type {string}
@@ -5314,10 +5314,10 @@ export interface DeploymentHistoryDatabase {
     'name'?: string;
     /**
      * 
-     * @type {DeploymentHistoryStatusEnum}
+     * @type {StateEnum}
      * @memberof DeploymentHistoryDatabase
      */
-    'status'?: DeploymentHistoryStatusEnum;
+    'status'?: StateEnum;
 }
 /**
  * 
@@ -5333,10 +5333,10 @@ export interface DeploymentHistoryDatabaseAllOf {
     'name'?: string;
     /**
      * 
-     * @type {DeploymentHistoryStatusEnum}
+     * @type {StateEnum}
      * @memberof DeploymentHistoryDatabaseAllOf
      */
-    'status'?: DeploymentHistoryStatusEnum;
+    'status'?: StateEnum;
 }
 /**
  * 
@@ -5500,10 +5500,10 @@ export interface DeploymentHistoryJobResponse {
     'name'?: string;
     /**
      * 
-     * @type {DeploymentHistoryStatusEnum}
+     * @type {StateEnum}
      * @memberof DeploymentHistoryJobResponse
      */
-    'status'?: DeploymentHistoryStatusEnum;
+    'status'?: StateEnum;
     /**
      * 
      * @type {string}
@@ -5555,10 +5555,10 @@ export interface DeploymentHistoryJobResponseAllOf {
     'name'?: string;
     /**
      * 
-     * @type {DeploymentHistoryStatusEnum}
+     * @type {StateEnum}
      * @memberof DeploymentHistoryJobResponseAllOf
      */
-    'status'?: DeploymentHistoryStatusEnum;
+    'status'?: StateEnum;
     /**
      * 
      * @type {string}
