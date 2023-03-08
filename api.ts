@@ -2074,6 +2074,12 @@ export interface ClusterAdvancedSettings {
      * @deprecated
      */
     'pleco.resources_ttl'?: number;
+    /**
+     * AWS IAM group name with cluster access
+     * @type {string}
+     * @memberof ClusterAdvancedSettings
+     */
+    'aws.iam.admin_group'?: string;
 }
 /**
  * Add additional tags on the cluster dedicated registry
