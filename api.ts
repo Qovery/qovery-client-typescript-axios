@@ -2060,7 +2060,7 @@ export interface ClusterAdvancedSettings {
      * @type {{ [key: string]: string; }}
      * @memberof ClusterAdvancedSettings
      */
-    'cloud_provider_container_registry_tags'?: { [key: string]: string; };
+    'cloud_provider.container_registry.tags'?: { [key: string]: string; };
     /**
      * Select the size of the main load_balancer (only effective for Scaleway)
      * @type {string}
