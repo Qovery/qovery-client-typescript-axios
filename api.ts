@@ -2056,11 +2056,11 @@ export interface ClusterAdvancedSettings {
      */
     'loki.log_retention_in_week'?: number;
     /**
-     * 
-     * @type {ClusterAdvancedSettingsCloudProviderContainerRegistryTags}
+     * Add additional tags on the cluster dedicated registry
+     * @type {{ [key: string]: string; }}
      * @memberof ClusterAdvancedSettings
      */
-    'cloud_provider_container_registry_tags'?: ClusterAdvancedSettingsCloudProviderContainerRegistryTags;
+    'cloud_provider_container_registry_tags'?: { [key: string]: string; };
     /**
      * Select the size of the main load_balancer (only effective for Scaleway)
      * @type {string}
@@ -2080,25 +2080,6 @@ export interface ClusterAdvancedSettings {
      * @memberof ClusterAdvancedSettings
      */
     'aws.iam.admin_group'?: string;
-}
-/**
- * Add additional tags on the cluster dedicated registry
- * @export
- * @interface ClusterAdvancedSettingsCloudProviderContainerRegistryTags
- */
-export interface ClusterAdvancedSettingsCloudProviderContainerRegistryTags {
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterAdvancedSettingsCloudProviderContainerRegistryTags
-     */
-    'key'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterAdvancedSettingsCloudProviderContainerRegistryTags
-     */
-    'value'?: string;
 }
 /**
  * 
