@@ -1996,6 +1996,30 @@ export interface ClusterAdvancedSettings {
      */
     'aws.vpc.flow_logs_retention_days'?: number;
     /**
+     * For how long in week loki is going to keep logs of your applications
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'loki.log_retention_in_week'?: number;
+    /**
+     * Configure the number of seconds before cleaning images in the registry
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'registry.image_retention_time'?: number;
+    /**
+     * Add additional tags on the cluster dedicated registry
+     * @type {{ [key: string]: string; }}
+     * @memberof ClusterAdvancedSettings
+     */
+    'cloud_provider.container_registry.tags'?: { [key: string]: string; };
+    /**
+     * Select the size of the main load_balancer (only effective for Scaleway)
+     * @type {string}
+     * @memberof ClusterAdvancedSettings
+     */
+    'load_balancer.size'?: string;
+    /**
      * Deny public access to any PostgreSQL database
      * @type {boolean}
      * @memberof ClusterAdvancedSettings
@@ -2044,29 +2068,17 @@ export interface ClusterAdvancedSettings {
      */
     'database.redis.allowed_cidrs'?: Array<string>;
     /**
-     * Configure the number of seconds before cleaning images in the registry
-     * @type {number}
-     * @memberof ClusterAdvancedSettings
-     */
-    'registry.image_retention_time'?: number;
-    /**
-     * For how long in week loki is going to keep logs of your applications
-     * @type {number}
-     * @memberof ClusterAdvancedSettings
-     */
-    'loki.log_retention_in_week'?: number;
-    /**
-     * Add additional tags on the cluster dedicated registry
-     * @type {{ [key: string]: string; }}
-     * @memberof ClusterAdvancedSettings
-     */
-    'cloud_provider.container_registry.tags'?: { [key: string]: string; };
-    /**
-     * Select the size of the main load_balancer (only effective for Scaleway)
+     * AWS IAM group name with cluster access
      * @type {string}
      * @memberof ClusterAdvancedSettings
      */
-    'load_balancer.size'?: string;
+    'aws.iam.admin_group'?: string;
+    /**
+     * Specify the [IMDS](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html) version you want to use:   * `required`: IMDS V2 only   * `optional`: IMDS V1 + V2 
+     * @type {string}
+     * @memberof ClusterAdvancedSettings
+     */
+    'aws.eks.ec2.metadata_imds'?: ClusterAdvancedSettingsAwsEksEc2MetadataImdsEnum;
     /**
      * 
      * @type {number}
@@ -2074,13 +2086,17 @@ export interface ClusterAdvancedSettings {
      * @deprecated
      */
     'pleco.resources_ttl'?: number;
-    /**
-     * AWS IAM group name with cluster access
-     * @type {string}
-     * @memberof ClusterAdvancedSettings
-     */
-    'aws.iam.admin_group'?: string;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ClusterAdvancedSettingsAwsEksEc2MetadataImdsEnum {
+    OPTIONAL = 'optional',
+    REQUIRED = 'required'
+}
+
 /**
  * 
  * @export
