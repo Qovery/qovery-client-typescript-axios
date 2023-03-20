@@ -2463,6 +2463,12 @@ export interface ClusterInstanceTypeResponseListResults {
      * @memberof ClusterInstanceTypeResponseListResults
      */
     'bandwidth_guarantee': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterInstanceTypeResponseListResults
+     */
+    'architecture'?: string;
 }
 /**
  * 
