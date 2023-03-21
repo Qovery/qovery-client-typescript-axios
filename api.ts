@@ -22666,11 +22666,11 @@ export const ContainerConfigurationApiAxiosParamCreator = function (configuratio
          * Edit advanced settings by returning table of advanced settings.
          * @summary Edit advanced settings
          * @param {string} containerId Container ID
-         * @param {Array<ContainerAdvancedSettings>} [containerAdvancedSettings] 
+         * @param {ContainerAdvancedSettings} [containerAdvancedSettings] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editContainerAdvancedSettings: async (containerId: string, containerAdvancedSettings?: Array<ContainerAdvancedSettings>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        editContainerAdvancedSettings: async (containerId: string, containerAdvancedSettings?: ContainerAdvancedSettings, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'containerId' is not null or undefined
             assertParamExists('editContainerAdvancedSettings', 'containerId', containerId)
             const localVarPath = `/container/{containerId}/advancedSettings`
@@ -22836,11 +22836,11 @@ export const ContainerConfigurationApiFp = function(configuration?: Configuratio
          * Edit advanced settings by returning table of advanced settings.
          * @summary Edit advanced settings
          * @param {string} containerId Container ID
-         * @param {Array<ContainerAdvancedSettings>} [containerAdvancedSettings] 
+         * @param {ContainerAdvancedSettings} [containerAdvancedSettings] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editContainerAdvancedSettings(containerId: string, containerAdvancedSettings?: Array<ContainerAdvancedSettings>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ContainerAdvancedSettings>>> {
+        async editContainerAdvancedSettings(containerId: string, containerAdvancedSettings?: ContainerAdvancedSettings, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerAdvancedSettings>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.editContainerAdvancedSettings(containerId, containerAdvancedSettings, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -22863,7 +22863,7 @@ export const ContainerConfigurationApiFp = function(configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getContainerAdvancedSettings(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ContainerAdvancedSettings>>> {
+        async getContainerAdvancedSettings(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerAdvancedSettings>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getContainerAdvancedSettings(containerId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -22892,11 +22892,11 @@ export const ContainerConfigurationApiFactory = function (configuration?: Config
          * Edit advanced settings by returning table of advanced settings.
          * @summary Edit advanced settings
          * @param {string} containerId Container ID
-         * @param {Array<ContainerAdvancedSettings>} [containerAdvancedSettings] 
+         * @param {ContainerAdvancedSettings} [containerAdvancedSettings] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editContainerAdvancedSettings(containerId: string, containerAdvancedSettings?: Array<ContainerAdvancedSettings>, options?: any): AxiosPromise<Array<ContainerAdvancedSettings>> {
+        editContainerAdvancedSettings(containerId: string, containerAdvancedSettings?: ContainerAdvancedSettings, options?: any): AxiosPromise<ContainerAdvancedSettings> {
             return localVarFp.editContainerAdvancedSettings(containerId, containerAdvancedSettings, options).then((request) => request(axios, basePath));
         },
         /**
@@ -22917,7 +22917,7 @@ export const ContainerConfigurationApiFactory = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getContainerAdvancedSettings(containerId: string, options?: any): AxiosPromise<Array<ContainerAdvancedSettings>> {
+        getContainerAdvancedSettings(containerId: string, options?: any): AxiosPromise<ContainerAdvancedSettings> {
             return localVarFp.getContainerAdvancedSettings(containerId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -22944,12 +22944,12 @@ export class ContainerConfigurationApi extends BaseAPI {
      * Edit advanced settings by returning table of advanced settings.
      * @summary Edit advanced settings
      * @param {string} containerId Container ID
-     * @param {Array<ContainerAdvancedSettings>} [containerAdvancedSettings] 
+     * @param {ContainerAdvancedSettings} [containerAdvancedSettings] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContainerConfigurationApi
      */
-    public editContainerAdvancedSettings(containerId: string, containerAdvancedSettings?: Array<ContainerAdvancedSettings>, options?: AxiosRequestConfig) {
+    public editContainerAdvancedSettings(containerId: string, containerAdvancedSettings?: ContainerAdvancedSettings, options?: AxiosRequestConfig) {
         return ContainerConfigurationApiFp(this.configuration).editContainerAdvancedSettings(containerId, containerAdvancedSettings, options).then((request) => request(this.axios, this.basePath));
     }
 
