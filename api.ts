@@ -474,6 +474,12 @@ export interface ApplicationAdvancedSettings {
      * @memberof ApplicationAdvancedSettings
      */
     'hpa.cpu.average_utilization_percent'?: number;
+    /**
+     * Allows you to set an existing Kubernetes service account name 
+     * @type {string}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'security.service_account_name'?: string;
 }
 
 /**
@@ -3337,6 +3343,12 @@ export interface ContainerAdvancedSettings {
      * @memberof ContainerAdvancedSettings
      */
     'liveness_probe.failure_threshold'?: number;
+    /**
+     * Allows you to set an existing Kubernetes service account name 
+     * @type {string}
+     * @memberof ContainerAdvancedSettings
+     */
+    'security.service_account_name'?: string;
 }
 
 /**
@@ -8348,6 +8360,12 @@ export interface JobAdvancedSettings {
      * @memberof JobAdvancedSettings
      */
     'liveness_probe.failure_threshold'?: number;
+    /**
+     * Allows you to set an existing Kubernetes service account name 
+     * @type {string}
+     * @memberof JobAdvancedSettings
+     */
+    'security.service_account_name'?: string;
 }
 
 /**
