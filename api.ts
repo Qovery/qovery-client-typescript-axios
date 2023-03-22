@@ -379,6 +379,12 @@ export interface ApplicationAdvancedSettings {
      */
     'network.ingress.basic_auth_env_var'?: string;
     /**
+     * Enable the load balancer to bind a user\'s session to a specific target. This ensures that all requests from the user during the session are sent to the same target 
+     * @type {boolean}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.ingress.enable_sticky_session'?: boolean;
+    /**
      * `NONE` disable readiness probe `TCP` enable TCP readiness probe `HTTP` enable HTTP readiness probe 
      * @type {string}
      * @memberof ApplicationAdvancedSettings
@@ -3241,6 +3247,12 @@ export interface ContainerAdvancedSettings {
      * @memberof ContainerAdvancedSettings
      */
     'network.ingress.basic_auth_env_var'?: string;
+    /**
+     * Enable the load balancer to bind a user\'s session to a specific target. This ensures that all requests from the user during the session are sent to the same target 
+     * @type {boolean}
+     * @memberof ContainerAdvancedSettings
+     */
+    'network.ingress.enable_sticky_session'?: boolean;
     /**
      * `NONE` disable readiness probe `TCP` enable TCP readiness probe `HTTP` enable HTTP readiness probe 
      * @type {string}
