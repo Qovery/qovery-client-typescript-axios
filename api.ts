@@ -3349,6 +3349,12 @@ export interface ContainerAdvancedSettings {
      * @memberof ContainerAdvancedSettings
      */
     'security.service_account_name'?: string;
+    /**
+     * Percentage value of cpu usage at which point pods should scale up.
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'hpa.cpu.average_utilization_percent'?: number;
 }
 
 /**
