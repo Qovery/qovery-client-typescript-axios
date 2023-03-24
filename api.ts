@@ -9622,38 +9622,6 @@ export interface MetricMemoryResponseList {
 /**
  * 
  * @export
- * @interface MetricRestart
- */
-export interface MetricRestart {
-    /**
-     * 
-     * @type {Array<MetricRestartResults>}
-     * @memberof MetricRestart
-     */
-    'results'?: Array<MetricRestartResults>;
-}
-/**
- * 
- * @export
- * @interface MetricRestartResults
- */
-export interface MetricRestartResults {
-    /**
-     * 
-     * @type {string}
-     * @memberof MetricRestartResults
-     */
-    'datetime': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MetricRestartResults
-     */
-    'message': string;
-}
-/**
- * 
- * @export
  * @interface MetricStorage
  */
 export interface MetricStorage {
@@ -16011,51 +15979,6 @@ export const ApplicationMetricsApiAxiosParamCreator = function (configuration?: 
             };
         },
         /**
-         * Get application restart message and timestamp.
-         * @summary List application restarts
-         * @param {string} applicationId Application ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getApplicationMetricRestart: async (applicationId: string, lastSeconds: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'applicationId' is not null or undefined
-            assertParamExists('getApplicationMetricRestart', 'applicationId', applicationId)
-            // verify required parameter 'lastSeconds' is not null or undefined
-            assertParamExists('getApplicationMetricRestart', 'lastSeconds', lastSeconds)
-            const localVarPath = `/application/{applicationId}/metric/restart`
-                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (lastSeconds !== undefined) {
-                localVarQueryParameter['lastSeconds'] = lastSeconds;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * 
          * @summary Get Storage consumption metric over time for the application
          * @param {string} applicationId Application ID
@@ -16180,18 +16103,6 @@ export const ApplicationMetricsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get application restart message and timestamp.
-         * @summary List application restarts
-         * @param {string} applicationId Application ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getApplicationMetricRestart(applicationId: string, lastSeconds: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricRestart>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getApplicationMetricRestart(applicationId, lastSeconds, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * 
          * @summary Get Storage consumption metric over time for the application
          * @param {string} applicationId Application ID
@@ -16275,17 +16186,6 @@ export const ApplicationMetricsApiFactory = function (configuration?: Configurat
          */
         getApplicationMetricMemory(applicationId: string, lastSeconds: number, options?: any): AxiosPromise<MetricMemoryResponseList> {
             return localVarFp.getApplicationMetricMemory(applicationId, lastSeconds, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Get application restart message and timestamp.
-         * @summary List application restarts
-         * @param {string} applicationId Application ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getApplicationMetricRestart(applicationId: string, lastSeconds: number, options?: any): AxiosPromise<MetricRestart> {
-            return localVarFp.getApplicationMetricRestart(applicationId, lastSeconds, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -16381,19 +16281,6 @@ export class ApplicationMetricsApi extends BaseAPI {
      */
     public getApplicationMetricMemory(applicationId: string, lastSeconds: number, options?: AxiosRequestConfig) {
         return ApplicationMetricsApiFp(this.configuration).getApplicationMetricMemory(applicationId, lastSeconds, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get application restart message and timestamp.
-     * @summary List application restarts
-     * @param {string} applicationId Application ID
-     * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApplicationMetricsApi
-     */
-    public getApplicationMetricRestart(applicationId: string, lastSeconds: number, options?: AxiosRequestConfig) {
-        return ApplicationMetricsApiFp(this.configuration).getApplicationMetricRestart(applicationId, lastSeconds, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -28608,51 +28495,6 @@ export const DatabaseMetricsApiAxiosParamCreator = function (configuration?: Con
             };
         },
         /**
-         * Get database restart message and timestamp.
-         * @summary List database restarts
-         * @param {string} databaseId Database ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDatabaseMetricRestart: async (databaseId: string, lastSeconds: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'databaseId' is not null or undefined
-            assertParamExists('getDatabaseMetricRestart', 'databaseId', databaseId)
-            // verify required parameter 'lastSeconds' is not null or undefined
-            assertParamExists('getDatabaseMetricRestart', 'lastSeconds', lastSeconds)
-            const localVarPath = `/database/{databaseId}/metric/restart`
-                .replace(`{${"databaseId"}}`, encodeURIComponent(String(databaseId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (lastSeconds !== undefined) {
-                localVarQueryParameter['lastSeconds'] = lastSeconds;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * 
          * @summary Get Storage consumption metric over time for the database
          * @param {string} databaseId Database ID
@@ -28755,18 +28597,6 @@ export const DatabaseMetricsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get database restart message and timestamp.
-         * @summary List database restarts
-         * @param {string} databaseId Database ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getDatabaseMetricRestart(databaseId: string, lastSeconds: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricRestart>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDatabaseMetricRestart(databaseId, lastSeconds, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * 
          * @summary Get Storage consumption metric over time for the database
          * @param {string} databaseId Database ID
@@ -28830,17 +28660,6 @@ export const DatabaseMetricsApiFactory = function (configuration?: Configuration
          */
         getDatabaseMetricMemory(databaseId: string, lastSeconds: number, options?: any): AxiosPromise<MetricMemoryDatapointResponseList> {
             return localVarFp.getDatabaseMetricMemory(databaseId, lastSeconds, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Get database restart message and timestamp.
-         * @summary List database restarts
-         * @param {string} databaseId Database ID
-         * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDatabaseMetricRestart(databaseId: string, lastSeconds: number, options?: any): AxiosPromise<MetricRestart> {
-            return localVarFp.getDatabaseMetricRestart(databaseId, lastSeconds, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -28912,19 +28731,6 @@ export class DatabaseMetricsApi extends BaseAPI {
      */
     public getDatabaseMetricMemory(databaseId: string, lastSeconds: number, options?: AxiosRequestConfig) {
         return DatabaseMetricsApiFp(this.configuration).getDatabaseMetricMemory(databaseId, lastSeconds, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get database restart message and timestamp.
-     * @summary List database restarts
-     * @param {string} databaseId Database ID
-     * @param {number} lastSeconds Up to how many seconds in the past to ask analytics results
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DatabaseMetricsApi
-     */
-    public getDatabaseMetricRestart(databaseId: string, lastSeconds: number, options?: AxiosRequestConfig) {
-        return DatabaseMetricsApiFp(this.configuration).getDatabaseMetricRestart(databaseId, lastSeconds, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
