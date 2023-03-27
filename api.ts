@@ -39418,14 +39418,18 @@ export const OrganizationWebhookApiAxiosParamCreator = function (configuration?:
          * Delete organization webhook
          * @summary Delete organization webhook
          * @param {string} organizationId Organization ID
+         * @param {string} webhookId Webhook ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteOrganizationWebhook: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteOrganizationWebhook: async (organizationId: string, webhookId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('deleteOrganizationWebhook', 'organizationId', organizationId)
+            // verify required parameter 'webhookId' is not null or undefined
+            assertParamExists('deleteOrganizationWebhook', 'webhookId', webhookId)
             const localVarPath = `/organization/{organizationId}/webhook/{webhookId}`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"webhookId"}}`, encodeURIComponent(String(webhookId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -39456,15 +39460,19 @@ export const OrganizationWebhookApiAxiosParamCreator = function (configuration?:
          * Edit an organization webhook
          * @summary Edit an organization webhook
          * @param {string} organizationId Organization ID
+         * @param {string} webhookId Webhook ID
          * @param {OrganizationWebhookCreateRequest} [organizationWebhookCreateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editOrganizationWebhook: async (organizationId: string, organizationWebhookCreateRequest?: OrganizationWebhookCreateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        editOrganizationWebhook: async (organizationId: string, webhookId: string, organizationWebhookCreateRequest?: OrganizationWebhookCreateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('editOrganizationWebhook', 'organizationId', organizationId)
+            // verify required parameter 'webhookId' is not null or undefined
+            assertParamExists('editOrganizationWebhook', 'webhookId', webhookId)
             const localVarPath = `/organization/{organizationId}/webhook/{webhookId}`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"webhookId"}}`, encodeURIComponent(String(webhookId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -39600,23 +39608,25 @@ export const OrganizationWebhookApiFp = function(configuration?: Configuration) 
          * Delete organization webhook
          * @summary Delete organization webhook
          * @param {string} organizationId Organization ID
+         * @param {string} webhookId Webhook ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteOrganizationWebhook(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOrganizationWebhook(organizationId, options);
+        async deleteOrganizationWebhook(organizationId: string, webhookId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOrganizationWebhook(organizationId, webhookId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Edit an organization webhook
          * @summary Edit an organization webhook
          * @param {string} organizationId Organization ID
+         * @param {string} webhookId Webhook ID
          * @param {OrganizationWebhookCreateRequest} [organizationWebhookCreateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editOrganizationWebhook(organizationId: string, organizationWebhookCreateRequest?: OrganizationWebhookCreateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationWebhookCreateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.editOrganizationWebhook(organizationId, organizationWebhookCreateRequest, options);
+        async editOrganizationWebhook(organizationId: string, webhookId: string, organizationWebhookCreateRequest?: OrganizationWebhookCreateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationWebhookCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editOrganizationWebhook(organizationId, webhookId, organizationWebhookCreateRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -39667,22 +39677,24 @@ export const OrganizationWebhookApiFactory = function (configuration?: Configura
          * Delete organization webhook
          * @summary Delete organization webhook
          * @param {string} organizationId Organization ID
+         * @param {string} webhookId Webhook ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteOrganizationWebhook(organizationId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteOrganizationWebhook(organizationId, options).then((request) => request(axios, basePath));
+        deleteOrganizationWebhook(organizationId: string, webhookId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteOrganizationWebhook(organizationId, webhookId, options).then((request) => request(axios, basePath));
         },
         /**
          * Edit an organization webhook
          * @summary Edit an organization webhook
          * @param {string} organizationId Organization ID
+         * @param {string} webhookId Webhook ID
          * @param {OrganizationWebhookCreateRequest} [organizationWebhookCreateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editOrganizationWebhook(organizationId: string, organizationWebhookCreateRequest?: OrganizationWebhookCreateRequest, options?: any): AxiosPromise<OrganizationWebhookCreateResponse> {
-            return localVarFp.editOrganizationWebhook(organizationId, organizationWebhookCreateRequest, options).then((request) => request(axios, basePath));
+        editOrganizationWebhook(organizationId: string, webhookId: string, organizationWebhookCreateRequest?: OrganizationWebhookCreateRequest, options?: any): AxiosPromise<OrganizationWebhookCreateResponse> {
+            return localVarFp.editOrganizationWebhook(organizationId, webhookId, organizationWebhookCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Get an Organization webhook
@@ -39732,25 +39744,27 @@ export class OrganizationWebhookApi extends BaseAPI {
      * Delete organization webhook
      * @summary Delete organization webhook
      * @param {string} organizationId Organization ID
+     * @param {string} webhookId Webhook ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationWebhookApi
      */
-    public deleteOrganizationWebhook(organizationId: string, options?: AxiosRequestConfig) {
-        return OrganizationWebhookApiFp(this.configuration).deleteOrganizationWebhook(organizationId, options).then((request) => request(this.axios, this.basePath));
+    public deleteOrganizationWebhook(organizationId: string, webhookId: string, options?: AxiosRequestConfig) {
+        return OrganizationWebhookApiFp(this.configuration).deleteOrganizationWebhook(organizationId, webhookId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Edit an organization webhook
      * @summary Edit an organization webhook
      * @param {string} organizationId Organization ID
+     * @param {string} webhookId Webhook ID
      * @param {OrganizationWebhookCreateRequest} [organizationWebhookCreateRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationWebhookApi
      */
-    public editOrganizationWebhook(organizationId: string, organizationWebhookCreateRequest?: OrganizationWebhookCreateRequest, options?: AxiosRequestConfig) {
-        return OrganizationWebhookApiFp(this.configuration).editOrganizationWebhook(organizationId, organizationWebhookCreateRequest, options).then((request) => request(this.axios, this.basePath));
+    public editOrganizationWebhook(organizationId: string, webhookId: string, organizationWebhookCreateRequest?: OrganizationWebhookCreateRequest, options?: AxiosRequestConfig) {
+        return OrganizationWebhookApiFp(this.configuration).editOrganizationWebhook(organizationId, webhookId, organizationWebhookCreateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
