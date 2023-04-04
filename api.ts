@@ -7863,6 +7863,75 @@ export interface InlineResponse200 {
 /**
  * 
  * @export
+ * @interface InlineResponse2001
+ */
+export interface InlineResponse2001 {
+    /**
+     * 
+     * @type {Status}
+     * @memberof InlineResponse2001
+     */
+    'environment'?: Status;
+    /**
+     * 
+     * @type {InlineResponse2001Stages}
+     * @memberof InlineResponse2001
+     */
+    'stages'?: InlineResponse2001Stages;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2001Stages
+ */
+export interface InlineResponse2001Stages {
+    /**
+     * 
+     * @type {Array<InlineResponse2001StagesResults>}
+     * @memberof InlineResponse2001Stages
+     */
+    'results'?: Array<InlineResponse2001StagesResults>;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2001StagesResults
+ */
+export interface InlineResponse2001StagesResults {
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof InlineResponse2001StagesResults
+     */
+    'applications'?: Array<Status>;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof InlineResponse2001StagesResults
+     */
+    'containers'?: Array<Status>;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof InlineResponse2001StagesResults
+     */
+    'jobs'?: Array<Status>;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof InlineResponse2001StagesResults
+     */
+    'databases'?: Array<Status>;
+    /**
+     * 
+     * @type {Stage}
+     * @memberof InlineResponse2001StagesResults
+     */
+    'stage'?: Stage;
+}
+/**
+ * 
+ * @export
  * @interface Instance
  */
 export interface Instance {
@@ -12332,6 +12401,25 @@ export interface SignUpRequest {
      * @memberof SignUpRequest
      */
     'dx_auth'?: boolean | null;
+}
+/**
+ * 
+ * @export
+ * @interface Stage
+ */
+export interface Stage {
+    /**
+     * 
+     * @type {string}
+     * @memberof Stage
+     */
+    'id': string;
+    /**
+     * stage name
+     * @type {string}
+     * @memberof Stage
+     */
+    'name': string;
 }
 /**
  * 
@@ -31294,6 +31382,44 @@ export const EnvironmentMainCallsApiAxiosParamCreator = function (configuration?
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Get environment statuses with stages
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentStatusesWithStages: async (environmentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('getEnvironmentStatusesWithStages', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/statusesWithStages`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -31360,6 +31486,17 @@ export const EnvironmentMainCallsApiFp = function(configuration?: Configuration)
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentStatuses(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Get environment statuses with stages
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEnvironmentStatusesWithStages(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2001>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentStatusesWithStages(environmentId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -31420,6 +31557,16 @@ export const EnvironmentMainCallsApiFactory = function (configuration?: Configur
          */
         getEnvironmentStatuses(environmentId: string, options?: any): AxiosPromise<InlineResponse200> {
             return localVarFp.getEnvironmentStatuses(environmentId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get environment statuses with stages
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentStatusesWithStages(environmentId: string, options?: any): AxiosPromise<InlineResponse2001> {
+            return localVarFp.getEnvironmentStatusesWithStages(environmentId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -31490,6 +31637,18 @@ export class EnvironmentMainCallsApi extends BaseAPI {
      */
     public getEnvironmentStatuses(environmentId: string, options?: AxiosRequestConfig) {
         return EnvironmentMainCallsApiFp(this.configuration).getEnvironmentStatuses(environmentId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get environment statuses with stages
+     * @param {string} environmentId Environment ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentMainCallsApi
+     */
+    public getEnvironmentStatusesWithStages(environmentId: string, options?: AxiosRequestConfig) {
+        return EnvironmentMainCallsApiFp(this.configuration).getEnvironmentStatusesWithStages(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
