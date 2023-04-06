@@ -5987,6 +5987,56 @@ export interface DeploymentStageServiceResponseAllOf {
 /**
  * 
  * @export
+ * @interface DeploymentStageWithServiceStatusesList
+ */
+export interface DeploymentStageWithServiceStatusesList {
+    /**
+     * 
+     * @type {Array<DeploymentStageWithServicesStatuses>}
+     * @memberof DeploymentStageWithServiceStatusesList
+     */
+    'results'?: Array<DeploymentStageWithServicesStatuses>;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentStageWithServicesStatuses
+ */
+export interface DeploymentStageWithServicesStatuses {
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof DeploymentStageWithServicesStatuses
+     */
+    'applications'?: Array<Status>;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof DeploymentStageWithServicesStatuses
+     */
+    'containers'?: Array<Status>;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof DeploymentStageWithServicesStatuses
+     */
+    'jobs'?: Array<Status>;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof DeploymentStageWithServicesStatuses
+     */
+    'databases'?: Array<Status>;
+    /**
+     * 
+     * @type {Stage}
+     * @memberof DeploymentStageWithServicesStatuses
+     */
+    'stage'?: Stage;
+}
+/**
+ * 
+ * @export
  * @interface DoCredentialsRequest
  */
 export interface DoCredentialsRequest {
@@ -7874,60 +7924,10 @@ export interface InlineResponse2001 {
     'environment'?: Status;
     /**
      * 
-     * @type {InlineResponse2001Stages}
+     * @type {DeploymentStageWithServiceStatusesList}
      * @memberof InlineResponse2001
      */
-    'stages'?: InlineResponse2001Stages;
-}
-/**
- * 
- * @export
- * @interface InlineResponse2001Stages
- */
-export interface InlineResponse2001Stages {
-    /**
-     * 
-     * @type {Array<InlineResponse2001StagesResults>}
-     * @memberof InlineResponse2001Stages
-     */
-    'results'?: Array<InlineResponse2001StagesResults>;
-}
-/**
- * 
- * @export
- * @interface InlineResponse2001StagesResults
- */
-export interface InlineResponse2001StagesResults {
-    /**
-     * 
-     * @type {Array<Status>}
-     * @memberof InlineResponse2001StagesResults
-     */
-    'applications'?: Array<Status>;
-    /**
-     * 
-     * @type {Array<Status>}
-     * @memberof InlineResponse2001StagesResults
-     */
-    'containers'?: Array<Status>;
-    /**
-     * 
-     * @type {Array<Status>}
-     * @memberof InlineResponse2001StagesResults
-     */
-    'jobs'?: Array<Status>;
-    /**
-     * 
-     * @type {Array<Status>}
-     * @memberof InlineResponse2001StagesResults
-     */
-    'databases'?: Array<Status>;
-    /**
-     * 
-     * @type {Stage}
-     * @memberof InlineResponse2001StagesResults
-     */
-    'stage'?: Stage;
+    'stages'?: DeploymentStageWithServiceStatusesList;
 }
 /**
  * 
