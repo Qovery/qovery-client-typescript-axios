@@ -7062,6 +7062,18 @@ export interface EnvironmentLogsDetailsStage {
      * @memberof EnvironmentLogsDetailsStage
      */
     'step'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLogsDetailsStage
+     */
+    'id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentLogsDetailsStage
+     */
+    'name'?: string | null;
 }
 /**
  * 
