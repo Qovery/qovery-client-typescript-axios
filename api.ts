@@ -7236,15 +7236,46 @@ export interface EnvironmentStatsResponseList {
 /**
  * 
  * @export
+ * @interface EnvironmentStatus
+ */
+export interface EnvironmentStatus {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentStatus
+     */
+    'id': string;
+    /**
+     * 
+     * @type {StateEnum}
+     * @memberof EnvironmentStatus
+     */
+    'state': StateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentStatus
+     */
+    'last_deployment_date'?: string;
+    /**
+     * 
+     * @type {StateEnum}
+     * @memberof EnvironmentStatus
+     */
+    'last_deployment_state': StateEnum;
+}
+/**
+ * 
+ * @export
  * @interface EnvironmentStatusList
  */
 export interface EnvironmentStatusList {
     /**
      * 
-     * @type {Array<Status>}
+     * @type {Array<EnvironmentStatus>}
      * @memberof EnvironmentStatusList
      */
-    'results'?: Array<Status>;
+    'results'?: Array<EnvironmentStatus>;
 }
 /**
  * 
@@ -7893,10 +7924,10 @@ export interface InlineObject {
 export interface InlineResponse200 {
     /**
      * 
-     * @type {Status}
+     * @type {EnvironmentStatus}
      * @memberof InlineResponse200
      */
-    'environment'?: Status;
+    'environment'?: EnvironmentStatus;
     /**
      * 
      * @type {Array<Status>}
@@ -7930,10 +7961,10 @@ export interface InlineResponse200 {
 export interface InlineResponse2001 {
     /**
      * 
-     * @type {Status}
+     * @type {EnvironmentStatus}
      * @memberof InlineResponse2001
      */
-    'environment'?: Status;
+    'environment'?: EnvironmentStatus;
     /**
      * 
      * @type {DeploymentStageWithServiceStatusesList}
@@ -11381,12 +11412,6 @@ export interface ReferenceObjectStatus {
      */
     'state': StateEnum;
     /**
-     * message related to the state
-     * @type {string}
-     * @memberof ReferenceObjectStatus
-     */
-    'message'?: string;
-    /**
      * 
      * @type {ServiceDeploymentStatusEnum}
      * @memberof ReferenceObjectStatus
@@ -12394,12 +12419,6 @@ export interface Status {
      * @memberof Status
      */
     'state': StateEnum;
-    /**
-     * message related to the state
-     * @type {string}
-     * @memberof Status
-     */
-    'message'?: string;
     /**
      * 
      * @type {ServiceDeploymentStatusEnum}
@@ -30327,7 +30346,7 @@ export const EnvironmentActionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cancelEnvironmentDeployment(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+        async cancelEnvironmentDeployment(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cancelEnvironmentDeployment(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -30385,7 +30404,7 @@ export const EnvironmentActionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async redeployEnvironment(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+        async redeployEnvironment(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.redeployEnvironment(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -30396,7 +30415,7 @@ export const EnvironmentActionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async restartEnvironment(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+        async restartEnvironment(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.restartEnvironment(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -30407,7 +30426,7 @@ export const EnvironmentActionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async stopEnvironment(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+        async stopEnvironment(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.stopEnvironment(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -30428,7 +30447,7 @@ export const EnvironmentActionsApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelEnvironmentDeployment(environmentId: string, options?: any): AxiosPromise<Status> {
+        cancelEnvironmentDeployment(environmentId: string, options?: any): AxiosPromise<EnvironmentStatus> {
             return localVarFp.cancelEnvironmentDeployment(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -30481,7 +30500,7 @@ export const EnvironmentActionsApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        redeployEnvironment(environmentId: string, options?: any): AxiosPromise<Status> {
+        redeployEnvironment(environmentId: string, options?: any): AxiosPromise<EnvironmentStatus> {
             return localVarFp.redeployEnvironment(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -30491,7 +30510,7 @@ export const EnvironmentActionsApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        restartEnvironment(environmentId: string, options?: any): AxiosPromise<Status> {
+        restartEnvironment(environmentId: string, options?: any): AxiosPromise<EnvironmentStatus> {
             return localVarFp.restartEnvironment(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -30501,7 +30520,7 @@ export const EnvironmentActionsApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopEnvironment(environmentId: string, options?: any): AxiosPromise<Status> {
+        stopEnvironment(environmentId: string, options?: any): AxiosPromise<EnvironmentStatus> {
             return localVarFp.stopEnvironment(environmentId, options).then((request) => request(axios, basePath));
         },
     };
