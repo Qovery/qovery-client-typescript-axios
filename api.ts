@@ -11429,6 +11429,12 @@ export interface ReferenceObjectStatus {
      * @memberof ReferenceObjectStatus
      */
     'last_deployment_date'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ReferenceObjectStatus
+     */
+    'is_part_last_deployment'?: boolean;
 }
 /**
  * 
@@ -12437,6 +12443,12 @@ export interface Status {
      * @memberof Status
      */
     'last_deployment_date'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Status
+     */
+    'is_part_last_deployment'?: boolean;
 }
 /**
  * 
