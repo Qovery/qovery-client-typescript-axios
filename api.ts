@@ -7263,6 +7263,12 @@ export interface EnvironmentStatus {
      * @memberof EnvironmentStatus
      */
     'last_deployment_state': StateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentStatus
+     */
+    'last_deployment_id'?: string;
 }
 /**
  * 
