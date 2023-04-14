@@ -7256,7 +7256,7 @@ export interface EnvironmentStatus {
      * @type {string}
      * @memberof EnvironmentStatus
      */
-    'last_deployment_date'?: string;
+    'last_deployment_date'?: string | null;
     /**
      * 
      * @type {StateEnum}
@@ -7268,7 +7268,7 @@ export interface EnvironmentStatus {
      * @type {string}
      * @memberof EnvironmentStatus
      */
-    'last_deployment_id'?: string;
+    'last_deployment_id'?: string | null;
 }
 /**
  * 
