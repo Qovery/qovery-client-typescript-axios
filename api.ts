@@ -12390,6 +12390,7 @@ export interface Stage {
 
 export enum StateEnum {
     BUILDING = 'BUILDING',
+    BUILD_ERROR = 'BUILD_ERROR',
     CANCELED = 'CANCELED',
     CANCELING = 'CANCELING',
     DELETED = 'DELETED',
@@ -12402,7 +12403,6 @@ export enum StateEnum {
     DEPLOYMENT_QUEUED = 'DEPLOYMENT_QUEUED',
     QUEUED = 'QUEUED',
     READY = 'READY',
-    RUNNING = 'RUNNING',
     STOPPED = 'STOPPED',
     STOPPING = 'STOPPING',
     STOP_ERROR = 'STOP_ERROR',
