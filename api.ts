@@ -31432,7 +31432,7 @@ export const EnvironmentMainCallsApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEnvironmentStatus(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+        async getEnvironmentStatus(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentStatus(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -31506,7 +31506,7 @@ export const EnvironmentMainCallsApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEnvironmentStatus(environmentId: string, options?: any): AxiosPromise<Status> {
+        getEnvironmentStatus(environmentId: string, options?: any): AxiosPromise<EnvironmentStatus> {
             return localVarFp.getEnvironmentStatus(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
