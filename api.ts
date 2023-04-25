@@ -10466,6 +10466,205 @@ export interface OrganizationEditRequest {
     'admin_emails'?: Array<string> | null;
 }
 /**
+ * Origin of the organization event
+ * @export
+ * @enum {string}
+ */
+
+export enum OrganizationEventOrigin {
+    API = 'API',
+    CLI = 'CLI',
+    CONSOLE = 'CONSOLE',
+    GIT = 'GIT',
+    TERRAFORM_PROVIDER = 'TERRAFORM_PROVIDER'
+}
+
+/**
+ * 
+ * @export
+ * @interface OrganizationEventResponse
+ */
+export interface OrganizationEventResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationEventResponse
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationEventResponse
+     */
+    'timestamp'?: string;
+    /**
+     * 
+     * @type {OrganizationEventType}
+     * @memberof OrganizationEventResponse
+     */
+    'event_type'?: OrganizationEventType;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationEventResponse
+     */
+    'target_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationEventResponse
+     */
+    'target_name'?: string;
+    /**
+     * 
+     * @type {OrganizationEventTargetType}
+     * @memberof OrganizationEventResponse
+     */
+    'target_type'?: OrganizationEventTargetType;
+    /**
+     * 
+     * @type {OrganizationEventSubTargetType}
+     * @memberof OrganizationEventResponse
+     */
+    'sub_target_type'?: OrganizationEventSubTargetType;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationEventResponse
+     */
+    'change'?: string;
+    /**
+     * 
+     * @type {OrganizationEventOrigin}
+     * @memberof OrganizationEventResponse
+     */
+    'origin'?: OrganizationEventOrigin;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationEventResponse
+     */
+    'triggered_by'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationEventResponse
+     */
+    'project_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationEventResponse
+     */
+    'environment_id'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationEventResponseList
+ */
+export interface OrganizationEventResponseList {
+    /**
+     * 
+     * @type {OrganizationEventResponseListLinks}
+     * @memberof OrganizationEventResponseList
+     */
+    'links'?: OrganizationEventResponseListLinks;
+    /**
+     * 
+     * @type {Array<OrganizationEventResponse>}
+     * @memberof OrganizationEventResponseList
+     */
+    'events'?: Array<OrganizationEventResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationEventResponseListLinks
+ */
+export interface OrganizationEventResponseListLinks {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationEventResponseListLinks
+     */
+    'previous'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationEventResponseListLinks
+     */
+    'next'?: string;
+}
+/**
+ * Type of the organization event
+ * @export
+ * @enum {string}
+ */
+
+export enum OrganizationEventSubTargetType {
+    ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
+    API_TOKEN = 'API_TOKEN',
+    BILLING_INFO = 'BILLING_INFO',
+    CLOUD_PROVIDER_CREDENTIALS = 'CLOUD_PROVIDER_CREDENTIALS',
+    CLUSTER_CREDENTIALS = 'CLUSTER_CREDENTIALS',
+    CLUSTER_ROUTING_TABLE = 'CLUSTER_ROUTING_TABLE',
+    CREDIT_CARD = 'CREDIT_CARD',
+    CREDIT_CODE = 'CREDIT_CODE',
+    CUSTOM_DOMAIN = 'CUSTOM_DOMAIN',
+    CUSTOM_ROLE = 'CUSTOM_ROLE',
+    DEPLOYMENT_RULE = 'DEPLOYMENT_RULE',
+    DEPLOYMENT_STAGE = 'DEPLOYMENT_STAGE',
+    GITHUB_APP = 'GITHUB_APP',
+    GIT_REPOSITORY = 'GIT_REPOSITORY',
+    INVITATION = 'INVITATION',
+    MEMBER_ROLE = 'MEMBER_ROLE',
+    PLAN = 'PLAN',
+    SECRET = 'SECRET',
+    TRANSFER_OWNERSHIP = 'TRANSFER_OWNERSHIP',
+    VARIABLE = 'VARIABLE'
+}
+
+/**
+ * Type of the organization event
+ * @export
+ * @enum {string}
+ */
+
+export enum OrganizationEventTargetType {
+    APPLICATION = 'APPLICATION',
+    CLUSTER = 'CLUSTER',
+    CONTAINER = 'CONTAINER',
+    CONTAINER_REGISTRY = 'CONTAINER_REGISTRY',
+    DATABASE = 'DATABASE',
+    ENVIRONMENT = 'ENVIRONMENT',
+    JOB = 'JOB',
+    MEMBERS_AND_ROLES = 'MEMBERS_AND_ROLES',
+    ORGANIZATION = 'ORGANIZATION',
+    PROJECT = 'PROJECT',
+    WEBHOOK = 'WEBHOOK'
+}
+
+/**
+ * Type of the organization event
+ * @export
+ * @enum {string}
+ */
+
+export enum OrganizationEventType {
+    CREATE = 'CREATE',
+    UPDATE = 'UPDATE',
+    DELETE = 'DELETE',
+    ACCEPT = 'ACCEPT',
+    TRIGGER_DEPLOY = 'TRIGGER_DEPLOY',
+    TRIGGER_REDEPLOY = 'TRIGGER_REDEPLOY',
+    TRIGGER_STOP = 'TRIGGER_STOP',
+    TRIGGER_CANCEL = 'TRIGGER_CANCEL',
+    TRIGGER_RESTART = 'TRIGGER_RESTART',
+    TRIGGER_DELETE = 'TRIGGER_DELETE'
+}
+
+/**
  * 
  * @export
  * @interface OrganizationGithubAppConnectRequest
@@ -38320,6 +38519,183 @@ export class OrganizationCustomRoleApi extends BaseAPI {
      */
     public listOrganizationCustomRoles(organizationId: string, options?: AxiosRequestConfig) {
         return OrganizationCustomRoleApiFp(this.configuration).listOrganizationCustomRoles(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * OrganizationEventApi - axios parameter creator
+ * @export
+ */
+export const OrganizationEventApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Get all events inside the organization
+         * @summary Get all events inside the organization
+         * @param {string} organizationId Organization ID
+         * @param {string} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; 
+         * @param {string} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; 
+         * @param {OrganizationEventType} [eventType] 
+         * @param {OrganizationEventTargetType} [targetType] 
+         * @param {string} [targetId] 
+         * @param {OrganizationEventSubTargetType} [subTarget] 
+         * @param {string} [user] The username who has triggered the action
+         * @param {OrganizationEventOrigin} [origin] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationEvents: async (organizationId: string, fromTimestamp?: string, toTimestamp?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string, subTarget?: OrganizationEventSubTargetType, user?: string, origin?: OrganizationEventOrigin, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOrganizationEvents', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/events`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (fromTimestamp !== undefined) {
+                localVarQueryParameter['from-timestamp'] = (fromTimestamp as any instanceof Date) ?
+                    (fromTimestamp as any).toISOString() :
+                    fromTimestamp;
+            }
+
+            if (toTimestamp !== undefined) {
+                localVarQueryParameter['to-timestamp'] = (toTimestamp as any instanceof Date) ?
+                    (toTimestamp as any).toISOString() :
+                    toTimestamp;
+            }
+
+            if (eventType !== undefined) {
+                localVarQueryParameter['event_type'] = eventType;
+            }
+
+            if (targetType !== undefined) {
+                localVarQueryParameter['target_type'] = targetType;
+            }
+
+            if (targetId !== undefined) {
+                localVarQueryParameter['target_id'] = targetId;
+            }
+
+            if (subTarget !== undefined) {
+                localVarQueryParameter['sub_target'] = subTarget;
+            }
+
+            if (user !== undefined) {
+                localVarQueryParameter['user'] = user;
+            }
+
+            if (origin !== undefined) {
+                localVarQueryParameter['origin'] = origin;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * OrganizationEventApi - functional programming interface
+ * @export
+ */
+export const OrganizationEventApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = OrganizationEventApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Get all events inside the organization
+         * @summary Get all events inside the organization
+         * @param {string} organizationId Organization ID
+         * @param {string} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; 
+         * @param {string} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; 
+         * @param {OrganizationEventType} [eventType] 
+         * @param {OrganizationEventTargetType} [targetType] 
+         * @param {string} [targetId] 
+         * @param {OrganizationEventSubTargetType} [subTarget] 
+         * @param {string} [user] The username who has triggered the action
+         * @param {OrganizationEventOrigin} [origin] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationEvents(organizationId: string, fromTimestamp?: string, toTimestamp?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string, subTarget?: OrganizationEventSubTargetType, user?: string, origin?: OrganizationEventOrigin, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationEventResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationEvents(organizationId, fromTimestamp, toTimestamp, eventType, targetType, targetId, subTarget, user, origin, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * OrganizationEventApi - factory interface
+ * @export
+ */
+export const OrganizationEventApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = OrganizationEventApiFp(configuration)
+    return {
+        /**
+         * Get all events inside the organization
+         * @summary Get all events inside the organization
+         * @param {string} organizationId Organization ID
+         * @param {string} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; 
+         * @param {string} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; 
+         * @param {OrganizationEventType} [eventType] 
+         * @param {OrganizationEventTargetType} [targetType] 
+         * @param {string} [targetId] 
+         * @param {OrganizationEventSubTargetType} [subTarget] 
+         * @param {string} [user] The username who has triggered the action
+         * @param {OrganizationEventOrigin} [origin] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationEvents(organizationId: string, fromTimestamp?: string, toTimestamp?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string, subTarget?: OrganizationEventSubTargetType, user?: string, origin?: OrganizationEventOrigin, options?: any): AxiosPromise<OrganizationEventResponseList> {
+            return localVarFp.getOrganizationEvents(organizationId, fromTimestamp, toTimestamp, eventType, targetType, targetId, subTarget, user, origin, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * OrganizationEventApi - object-oriented interface
+ * @export
+ * @class OrganizationEventApi
+ * @extends {BaseAPI}
+ */
+export class OrganizationEventApi extends BaseAPI {
+    /**
+     * Get all events inside the organization
+     * @summary Get all events inside the organization
+     * @param {string} organizationId Organization ID
+     * @param {string} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; 
+     * @param {string} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; 
+     * @param {OrganizationEventType} [eventType] 
+     * @param {OrganizationEventTargetType} [targetType] 
+     * @param {string} [targetId] 
+     * @param {OrganizationEventSubTargetType} [subTarget] 
+     * @param {string} [user] The username who has triggered the action
+     * @param {OrganizationEventOrigin} [origin] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationEventApi
+     */
+    public getOrganizationEvents(organizationId: string, fromTimestamp?: string, toTimestamp?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string, subTarget?: OrganizationEventSubTargetType, user?: string, origin?: OrganizationEventOrigin, options?: AxiosRequestConfig) {
+        return OrganizationEventApiFp(this.configuration).getOrganizationEvents(organizationId, fromTimestamp, toTimestamp, eventType, targetType, targetId, subTarget, user, origin, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
