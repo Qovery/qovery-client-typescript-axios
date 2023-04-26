@@ -7380,6 +7380,12 @@ export interface EnvironmentVariable {
      * @memberof EnvironmentVariable
      */
     'service_type'?: LinkedServiceTypeEnum;
+    /**
+     * Entity that created/own the variable (i.e: Qovery, Doppler)
+     * @type {string}
+     * @memberof EnvironmentVariable
+     */
+    'owned_by'?: string;
 }
 /**
  * 
@@ -7472,6 +7478,12 @@ export interface EnvironmentVariableAllOf {
      * @memberof EnvironmentVariableAllOf
      */
     'service_type'?: LinkedServiceTypeEnum;
+    /**
+     * Entity that created/own the variable (i.e: Qovery, Doppler)
+     * @type {string}
+     * @memberof EnvironmentVariableAllOf
+     */
+    'owned_by'?: string;
 }
 /**
  * 
@@ -11823,6 +11835,12 @@ export interface Secret {
      * @memberof Secret
      */
     'service_type'?: LinkedServiceTypeEnum;
+    /**
+     * Entity that created/own the variable (i.e: Qovery, Doppler)
+     * @type {string}
+     * @memberof Secret
+     */
+    'owned_by'?: string;
 }
 /**
  * 
@@ -11915,6 +11933,12 @@ export interface SecretAllOf {
      * @memberof SecretAllOf
      */
     'service_type'?: LinkedServiceTypeEnum;
+    /**
+     * Entity that created/own the variable (i.e: Qovery, Doppler)
+     * @type {string}
+     * @memberof SecretAllOf
+     */
+    'owned_by'?: string;
 }
 /**
  * 
