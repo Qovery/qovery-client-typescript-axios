@@ -38558,8 +38558,10 @@ export const OrganizationEventApiAxiosParamCreator = function (configuration?: C
          * @summary Get all events inside the organization
          * @param {string} organizationId Organization ID
          * @param {number} [pageSize] The number of events to display in the current page
-         * @param {string} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; 
-         * @param {string} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; 
+         * @param {string} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string} [continueToken] Token used to fetch the next page results The format is a timestamp with nano precision 
+         * @param {string} [stepBackToken] Token used to fetch the previous page results The format is a timestamp with nano precision 
          * @param {OrganizationEventType} [eventType] 
          * @param {OrganizationEventTargetType} [targetType] 
          * @param {string} [targetId] The target resource id to search.   Must be specified with the corresponding &#x60;target_type&#x60; 
@@ -38569,7 +38571,7 @@ export const OrganizationEventApiAxiosParamCreator = function (configuration?: C
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationEvents: async (organizationId: string, pageSize?: number, fromTimestamp?: string, toTimestamp?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getOrganizationEvents: async (organizationId: string, pageSize?: number, fromTimestamp?: string, toTimestamp?: string, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('getOrganizationEvents', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/events`
@@ -38594,15 +38596,19 @@ export const OrganizationEventApiAxiosParamCreator = function (configuration?: C
             }
 
             if (fromTimestamp !== undefined) {
-                localVarQueryParameter['from-timestamp'] = (fromTimestamp as any instanceof Date) ?
-                    (fromTimestamp as any).toISOString() :
-                    fromTimestamp;
+                localVarQueryParameter['from-timestamp'] = fromTimestamp;
             }
 
             if (toTimestamp !== undefined) {
-                localVarQueryParameter['to-timestamp'] = (toTimestamp as any instanceof Date) ?
-                    (toTimestamp as any).toISOString() :
-                    toTimestamp;
+                localVarQueryParameter['to-timestamp'] = toTimestamp;
+            }
+
+            if (continueToken !== undefined) {
+                localVarQueryParameter['continue-token'] = continueToken;
+            }
+
+            if (stepBackToken !== undefined) {
+                localVarQueryParameter['step-back-token'] = stepBackToken;
             }
 
             if (eventType !== undefined) {
@@ -38655,8 +38661,10 @@ export const OrganizationEventApiFp = function(configuration?: Configuration) {
          * @summary Get all events inside the organization
          * @param {string} organizationId Organization ID
          * @param {number} [pageSize] The number of events to display in the current page
-         * @param {string} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; 
-         * @param {string} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; 
+         * @param {string} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string} [continueToken] Token used to fetch the next page results The format is a timestamp with nano precision 
+         * @param {string} [stepBackToken] Token used to fetch the previous page results The format is a timestamp with nano precision 
          * @param {OrganizationEventType} [eventType] 
          * @param {OrganizationEventTargetType} [targetType] 
          * @param {string} [targetId] The target resource id to search.   Must be specified with the corresponding &#x60;target_type&#x60; 
@@ -38666,8 +38674,8 @@ export const OrganizationEventApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganizationEvents(organizationId: string, pageSize?: number, fromTimestamp?: string, toTimestamp?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationEventResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationEvents(organizationId, pageSize, fromTimestamp, toTimestamp, eventType, targetType, targetId, subTargetType, triggeredBy, origin, options);
+        async getOrganizationEvents(organizationId: string, pageSize?: number, fromTimestamp?: string, toTimestamp?: string, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationEventResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationEvents(organizationId, pageSize, fromTimestamp, toTimestamp, continueToken, stepBackToken, eventType, targetType, targetId, subTargetType, triggeredBy, origin, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -38685,8 +38693,10 @@ export const OrganizationEventApiFactory = function (configuration?: Configurati
          * @summary Get all events inside the organization
          * @param {string} organizationId Organization ID
          * @param {number} [pageSize] The number of events to display in the current page
-         * @param {string} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; 
-         * @param {string} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; 
+         * @param {string} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string} [continueToken] Token used to fetch the next page results The format is a timestamp with nano precision 
+         * @param {string} [stepBackToken] Token used to fetch the previous page results The format is a timestamp with nano precision 
          * @param {OrganizationEventType} [eventType] 
          * @param {OrganizationEventTargetType} [targetType] 
          * @param {string} [targetId] The target resource id to search.   Must be specified with the corresponding &#x60;target_type&#x60; 
@@ -38696,8 +38706,8 @@ export const OrganizationEventApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationEvents(organizationId: string, pageSize?: number, fromTimestamp?: string, toTimestamp?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: any): AxiosPromise<OrganizationEventResponseList> {
-            return localVarFp.getOrganizationEvents(organizationId, pageSize, fromTimestamp, toTimestamp, eventType, targetType, targetId, subTargetType, triggeredBy, origin, options).then((request) => request(axios, basePath));
+        getOrganizationEvents(organizationId: string, pageSize?: number, fromTimestamp?: string, toTimestamp?: string, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: any): AxiosPromise<OrganizationEventResponseList> {
+            return localVarFp.getOrganizationEvents(organizationId, pageSize, fromTimestamp, toTimestamp, continueToken, stepBackToken, eventType, targetType, targetId, subTargetType, triggeredBy, origin, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -38714,8 +38724,10 @@ export class OrganizationEventApi extends BaseAPI {
      * @summary Get all events inside the organization
      * @param {string} organizationId Organization ID
      * @param {number} [pageSize] The number of events to display in the current page
-     * @param {string} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; 
-     * @param {string} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; 
+     * @param {string} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
+     * @param {string} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
+     * @param {string} [continueToken] Token used to fetch the next page results The format is a timestamp with nano precision 
+     * @param {string} [stepBackToken] Token used to fetch the previous page results The format is a timestamp with nano precision 
      * @param {OrganizationEventType} [eventType] 
      * @param {OrganizationEventTargetType} [targetType] 
      * @param {string} [targetId] The target resource id to search.   Must be specified with the corresponding &#x60;target_type&#x60; 
@@ -38726,8 +38738,8 @@ export class OrganizationEventApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrganizationEventApi
      */
-    public getOrganizationEvents(organizationId: string, pageSize?: number, fromTimestamp?: string, toTimestamp?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: AxiosRequestConfig) {
-        return OrganizationEventApiFp(this.configuration).getOrganizationEvents(organizationId, pageSize, fromTimestamp, toTimestamp, eventType, targetType, targetId, subTargetType, triggeredBy, origin, options).then((request) => request(this.axios, this.basePath));
+    public getOrganizationEvents(organizationId: string, pageSize?: number, fromTimestamp?: string, toTimestamp?: string, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: AxiosRequestConfig) {
+        return OrganizationEventApiFp(this.configuration).getOrganizationEvents(organizationId, pageSize, fromTimestamp, toTimestamp, continueToken, stepBackToken, eventType, targetType, targetId, subTargetType, triggeredBy, origin, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
