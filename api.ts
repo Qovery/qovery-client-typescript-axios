@@ -1787,6 +1787,12 @@ export interface CloneRequest {
      * @memberof CloneRequest
      */
     'mode'?: EnvironmentModeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CloneRequest
+     */
+    'apply_deployment_rule'?: boolean;
 }
 /**
  * 
