@@ -38592,43 +38592,43 @@ export const OrganizationEventApiAxiosParamCreator = function (configuration?: C
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
             if (pageSize !== undefined) {
-                localVarQueryParameter['page-size'] = pageSize;
+                localVarQueryParameter['pageSize'] = pageSize;
             }
 
             if (fromTimestamp !== undefined) {
-                localVarQueryParameter['from-timestamp'] = fromTimestamp;
+                localVarQueryParameter['fromTimestamp'] = fromTimestamp;
             }
 
             if (toTimestamp !== undefined) {
-                localVarQueryParameter['to-timestamp'] = toTimestamp;
+                localVarQueryParameter['toTimestamp'] = toTimestamp;
             }
 
             if (continueToken !== undefined) {
-                localVarQueryParameter['continue-token'] = continueToken;
+                localVarQueryParameter['continueToken'] = continueToken;
             }
 
             if (stepBackToken !== undefined) {
-                localVarQueryParameter['step-back-token'] = stepBackToken;
+                localVarQueryParameter['stepBackToken'] = stepBackToken;
             }
 
             if (eventType !== undefined) {
-                localVarQueryParameter['event_type'] = eventType;
+                localVarQueryParameter['eventType'] = eventType;
             }
 
             if (targetType !== undefined) {
-                localVarQueryParameter['target_type'] = targetType;
+                localVarQueryParameter['targetType'] = targetType;
             }
 
             if (targetId !== undefined) {
-                localVarQueryParameter['target_id'] = targetId;
+                localVarQueryParameter['targetId'] = targetId;
             }
 
             if (subTargetType !== undefined) {
-                localVarQueryParameter['sub_target_type'] = subTargetType;
+                localVarQueryParameter['subTargetType'] = subTargetType;
             }
 
             if (triggeredBy !== undefined) {
-                localVarQueryParameter['triggered_by'] = triggeredBy;
+                localVarQueryParameter['triggeredBy'] = triggeredBy;
             }
 
             if (origin !== undefined) {
