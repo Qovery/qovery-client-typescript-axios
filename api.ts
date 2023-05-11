@@ -6736,6 +6736,12 @@ export interface EnvironmentDeploymentRule {
      * @type {boolean}
      * @memberof EnvironmentDeploymentRule
      */
+    'on_demand_preview'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnvironmentDeploymentRule
+     */
     'auto_stop'?: boolean;
     /**
      * 
@@ -6791,6 +6797,12 @@ export interface EnvironmentDeploymentRuleAllOf {
      * @type {boolean}
      * @memberof EnvironmentDeploymentRuleAllOf
      */
+    'on_demand_preview'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnvironmentDeploymentRuleAllOf
+     */
     'auto_stop'?: boolean;
     /**
      * 
@@ -6841,6 +6853,18 @@ export interface EnvironmentDeploymentRuleEditRequest {
      * @memberof EnvironmentDeploymentRuleEditRequest
      */
     'auto_deploy'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnvironmentDeploymentRuleEditRequest
+     */
+    'on_demand_preview'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnvironmentDeploymentRuleEditRequest
+     */
+    'auto_preview'?: boolean;
     /**
      * 
      * @type {boolean}
