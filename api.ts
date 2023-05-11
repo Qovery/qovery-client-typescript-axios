@@ -283,6 +283,24 @@ export interface ApplicationAdvancedSettings {
      */
     'deployment.termination_grace_period_seconds'?: number;
     /**
+     * * `RollingUpdate` gracefully rollout new versions, and automatically rollback if the new version fails to start * `Recreate` stop all current versions and create new ones once all old ones have been shutdown 
+     * @type {string}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'deployment.update_strategy.type'?: ApplicationAdvancedSettingsDeploymentUpdateStrategyTypeEnum;
+    /**
+     * Define the percentage of a maximum number of pods that can be unavailable during the update process
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'deployment.update_strategy.rolling_update.max_unavailable_percent'?: number;
+    /**
+     * Define the percentage of the maximum number of pods that can be created over the desired number of pods
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'deployment.update_strategy.rolling_update.max_surge_percent'?: number;
+    /**
      * 
      * @type {number}
      * @memberof ApplicationAdvancedSettings
@@ -385,7 +403,7 @@ export interface ApplicationAdvancedSettings {
      */
     'network.ingress.enable_sticky_session'?: boolean;
     /**
-     * `NONE` disable readiness probe `TCP` enable TCP readiness probe `HTTP` enable HTTP readiness probe 
+     * * `NONE` disable readiness probe * `TCP` enable TCP readiness probe * `HTTP` enable HTTP readiness probe 
      * @type {string}
      * @memberof ApplicationAdvancedSettings
      */
@@ -427,7 +445,7 @@ export interface ApplicationAdvancedSettings {
      */
     'readiness_probe.failure_threshold'?: number;
     /**
-     * `NONE` disable liveness probe `TCP` enable TCP liveness probe `HTTP` enable HTTP liveness probe 
+     * * `NONE` disable liveness probe * `TCP` enable TCP liveness probe * `HTTP` enable HTTP liveness probe 
      * @type {string}
      * @memberof ApplicationAdvancedSettings
      */
@@ -482,6 +500,14 @@ export interface ApplicationAdvancedSettings {
     'security.service_account_name'?: string;
 }
 
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ApplicationAdvancedSettingsDeploymentUpdateStrategyTypeEnum {
+    ROLLING_UPDATE = 'RollingUpdate',
+    RECREATE = 'Recreate'
+}
 /**
     * @export
     * @enum {string}
@@ -3170,6 +3196,24 @@ export interface ContainerAdvancedSettings {
      */
     'deployment.termination_grace_period_seconds'?: number;
     /**
+     * * `RollingUpdate` gracefully rollout new versions, and automatically rollback if the new version fails to start * `Recreate` stop all current versions and create new ones once all old ones have been shutdown 
+     * @type {string}
+     * @memberof ContainerAdvancedSettings
+     */
+    'deployment.update_strategy.type'?: ContainerAdvancedSettingsDeploymentUpdateStrategyTypeEnum;
+    /**
+     * Define the percentage of a maximum number of pods that can be unavailable during the update process
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'deployment.update_strategy.rolling_update.max_unavailable_percent'?: number;
+    /**
+     * Define the percentage of the maximum number of pods that can be created over the desired number of pods
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'deployment.update_strategy.rolling_update.max_surge_percent'?: number;
+    /**
      * 
      * @type {number}
      * @memberof ContainerAdvancedSettings
@@ -3266,7 +3310,7 @@ export interface ContainerAdvancedSettings {
      */
     'network.ingress.enable_sticky_session'?: boolean;
     /**
-     * `NONE` disable readiness probe `TCP` enable TCP readiness probe `HTTP` enable HTTP readiness probe 
+     * * `NONE` disable readiness probe * `TCP` enable TCP readiness probe * `HTTP` enable HTTP readiness probe 
      * @type {string}
      * @memberof ContainerAdvancedSettings
      */
@@ -3308,7 +3352,7 @@ export interface ContainerAdvancedSettings {
      */
     'readiness_probe.failure_threshold'?: number;
     /**
-     * `NONE` disable liveness probe `TCP` enable TCP liveness probe `HTTP` enable HTTP liveness probe 
+     * * `NONE` disable liveness probe * `TCP` enable TCP liveness probe * `HTTP` enable HTTP liveness probe 
      * @type {string}
      * @memberof ContainerAdvancedSettings
      */
@@ -3363,6 +3407,14 @@ export interface ContainerAdvancedSettings {
     'hpa.cpu.average_utilization_percent'?: number;
 }
 
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ContainerAdvancedSettingsDeploymentUpdateStrategyTypeEnum {
+    ROLLING_UPDATE = 'RollingUpdate',
+    RECREATE = 'Recreate'
+}
 /**
     * @export
     * @enum {string}
