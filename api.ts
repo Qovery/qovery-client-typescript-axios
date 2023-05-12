@@ -1582,7 +1582,7 @@ export interface BillingInfo {
      * @type {string}
      * @memberof BillingInfo
      */
-    'company'?: string;
+    'company'?: string | null;
     /**
      * 
      * @type {string}
