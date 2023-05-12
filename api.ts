@@ -1534,49 +1534,49 @@ export interface BillingInfo {
      * @type {string}
      * @memberof BillingInfo
      */
-    'first_name'?: string;
+    'first_name'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof BillingInfo
      */
-    'last_name'?: string;
+    'last_name'?: string | null;
     /**
      * email used for billing, and to receive all invoices by email
      * @type {string}
      * @memberof BillingInfo
      */
-    'email'?: string;
+    'email'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof BillingInfo
      */
-    'address'?: string;
+    'address'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof BillingInfo
      */
-    'city'?: string;
+    'city'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof BillingInfo
      */
-    'zip'?: string;
+    'zip'?: string | null;
     /**
      * only for US
      * @type {string}
      * @memberof BillingInfo
      */
-    'state'?: string;
+    'state'?: string | null;
     /**
      * ISO code of the country
      * @type {string}
      * @memberof BillingInfo
      */
-    'country_code'?: string;
+    'country_code'?: string | null;
     /**
      * name of the company to bill
      * @type {string}
@@ -1588,7 +1588,7 @@ export interface BillingInfo {
      * @type {string}
      * @memberof BillingInfo
      */
-    'vat_number'?: string;
+    'vat_number'?: string | null;
 }
 /**
  * 
