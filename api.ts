@@ -1534,37 +1534,37 @@ export interface BillingInfo {
      * @type {string}
      * @memberof BillingInfo
      */
-    'first_name': string;
+    'first_name'?: string;
     /**
      * 
      * @type {string}
      * @memberof BillingInfo
      */
-    'last_name': string;
+    'last_name'?: string;
     /**
      * email used for billing, and to receive all invoices by email
      * @type {string}
      * @memberof BillingInfo
      */
-    'email': string;
+    'email'?: string;
     /**
      * 
      * @type {string}
      * @memberof BillingInfo
      */
-    'address': string;
+    'address'?: string;
     /**
      * 
      * @type {string}
      * @memberof BillingInfo
      */
-    'city': string;
+    'city'?: string;
     /**
      * 
      * @type {string}
      * @memberof BillingInfo
      */
-    'zip': string;
+    'zip'?: string;
     /**
      * only for US
      * @type {string}
@@ -1576,7 +1576,7 @@ export interface BillingInfo {
      * @type {string}
      * @memberof BillingInfo
      */
-    'country_code': string;
+    'country_code'?: string;
     /**
      * name of the company to bill
      * @type {string}
