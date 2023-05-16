@@ -10584,6 +10584,12 @@ export interface OrganizationEventResponse {
      * @type {string}
      * @memberof OrganizationEventResponse
      */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationEventResponse
+     */
     'timestamp'?: string;
     /**
      * 
