@@ -10650,7 +10650,19 @@ export interface OrganizationEventResponse {
      * @type {string}
      * @memberof OrganizationEventResponse
      */
+    'project_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationEventResponse
+     */
     'environment_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationEventResponse
+     */
+    'environment_name'?: string;
 }
 /**
  * 
