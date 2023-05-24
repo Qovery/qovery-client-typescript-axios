@@ -11290,10 +11290,10 @@ export enum PortProtocolEnum {
 export interface Probe {
     /**
      * 
-     * @type {ProbeProbe}
+     * @type {ProbeType}
      * @memberof Probe
      */
-    'probe'?: ProbeProbe;
+    'type'?: ProbeType;
     /**
      * 
      * @type {number}
@@ -11328,95 +11328,95 @@ export interface Probe {
 /**
  * 
  * @export
- * @interface ProbeProbe
+ * @interface ProbeType
  */
-export interface ProbeProbe {
+export interface ProbeType {
     /**
      * 
      * @type {object}
-     * @memberof ProbeProbe
+     * @memberof ProbeType
      */
     'none'?: object | null;
     /**
      * 
-     * @type {ProbeProbeTcp}
-     * @memberof ProbeProbe
+     * @type {ProbeTypeTcp}
+     * @memberof ProbeType
      */
-    'tcp'?: ProbeProbeTcp | null;
+    'tcp'?: ProbeTypeTcp | null;
     /**
      * 
-     * @type {ProbeProbeHttp}
-     * @memberof ProbeProbe
+     * @type {ProbeTypeHttp}
+     * @memberof ProbeType
      */
-    'http'?: ProbeProbeHttp | null;
+    'http'?: ProbeTypeHttp | null;
     /**
      * 
-     * @type {ProbeProbeExec}
-     * @memberof ProbeProbe
+     * @type {ProbeTypeExec}
+     * @memberof ProbeType
      */
-    'exec'?: ProbeProbeExec | null;
+    'exec'?: ProbeTypeExec | null;
     /**
      * 
-     * @type {ProbeProbeGrpc}
-     * @memberof ProbeProbe
+     * @type {ProbeTypeGrpc}
+     * @memberof ProbeType
      */
-    'grpc'?: ProbeProbeGrpc | null;
+    'grpc'?: ProbeTypeGrpc | null;
 }
 /**
  * 
  * @export
- * @interface ProbeProbeExec
+ * @interface ProbeTypeExec
  */
-export interface ProbeProbeExec {
+export interface ProbeTypeExec {
     /**
      * 
      * @type {Array<string>}
-     * @memberof ProbeProbeExec
+     * @memberof ProbeTypeExec
      */
     'command'?: Array<string>;
 }
 /**
  * 
  * @export
- * @interface ProbeProbeGrpc
+ * @interface ProbeTypeGrpc
  */
-export interface ProbeProbeGrpc {
+export interface ProbeTypeGrpc {
     /**
      * 
      * @type {string}
-     * @memberof ProbeProbeGrpc
+     * @memberof ProbeTypeGrpc
      */
     'service'?: string | null;
 }
 /**
  * 
  * @export
- * @interface ProbeProbeHttp
+ * @interface ProbeTypeHttp
  */
-export interface ProbeProbeHttp {
+export interface ProbeTypeHttp {
     /**
      * 
      * @type {string}
-     * @memberof ProbeProbeHttp
+     * @memberof ProbeTypeHttp
      */
     'path'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ProbeProbeHttp
+     * @memberof ProbeTypeHttp
      */
     'scheme'?: string;
 }
 /**
  * 
  * @export
- * @interface ProbeProbeTcp
+ * @interface ProbeTypeTcp
  */
-export interface ProbeProbeTcp {
+export interface ProbeTypeTcp {
     /**
      * 
      * @type {string}
-     * @memberof ProbeProbeTcp
+     * @memberof ProbeTypeTcp
      */
     'host'?: string | null;
 }
