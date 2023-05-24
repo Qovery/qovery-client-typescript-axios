@@ -231,7 +231,7 @@ export interface Application {
      * @type {Healthcheck}
      * @memberof Application
      */
-    'healthcheck'?: Healthcheck;
+    'healthchecks'?: Healthcheck;
     /**
      * Specify if the environment preview option is activated or not for this application.   If activated, a preview environment will be automatically cloned at each pull request.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
@@ -616,7 +616,7 @@ export interface ApplicationAllOf {
      * @type {Healthcheck}
      * @memberof ApplicationAllOf
      */
-    'healthcheck'?: Healthcheck;
+    'healthchecks'?: Healthcheck;
     /**
      * Specify if the environment preview option is activated or not for this application.   If activated, a preview environment will be automatically cloned at each pull request.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
@@ -1185,7 +1185,7 @@ export interface ApplicationRequest {
      * @type {Healthcheck}
      * @memberof ApplicationRequest
      */
-    'healthcheck'?: Healthcheck;
+    'healthchecks'?: Healthcheck;
     /**
      * Specify if the environment preview option is activated or not for this application.   If activated, a preview environment will be automatically cloned at each pull request.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
@@ -1276,7 +1276,7 @@ export interface ApplicationRequestAllOf {
      * @type {Healthcheck}
      * @memberof ApplicationRequestAllOf
      */
-    'healthcheck'?: Healthcheck;
+    'healthchecks'?: Healthcheck;
     /**
      * Specify if the environment preview option is activated or not for this application.   If activated, a preview environment will be automatically cloned at each pull request.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
@@ -3818,6 +3818,12 @@ export interface ContainerRequest {
      */
     'max_running_instances'?: number;
     /**
+     * 
+     * @type {Healthcheck}
+     * @memberof ContainerRequest
+     */
+    'healthchecks'?: Healthcheck;
+    /**
      * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
      * @memberof ContainerRequest
@@ -3896,6 +3902,12 @@ export interface ContainerRequestAllOf {
      * @memberof ContainerRequestAllOf
      */
     'max_running_instances'?: number;
+    /**
+     * 
+     * @type {Healthcheck}
+     * @memberof ContainerRequestAllOf
+     */
+    'healthchecks'?: Healthcheck;
     /**
      * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
@@ -4018,6 +4030,12 @@ export interface ContainerResponse {
      */
     'max_running_instances': number;
     /**
+     * 
+     * @type {Healthcheck}
+     * @memberof ContainerResponse
+     */
+    'healthchecks'?: Healthcheck;
+    /**
      * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
      * @memberof ContainerResponse
@@ -4120,6 +4138,12 @@ export interface ContainerResponseAllOf {
      * @memberof ContainerResponseAllOf
      */
     'max_running_instances': number;
+    /**
+     * 
+     * @type {Healthcheck}
+     * @memberof ContainerResponseAllOf
+     */
+    'healthchecks'?: Healthcheck;
     /**
      * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
@@ -7981,28 +8005,17 @@ export interface GitRepositoryResponseList {
 export interface Healthcheck {
     /**
      * 
-     * @type {string}
+     * @type {Probe}
      * @memberof Healthcheck
      */
-    'protocol'?: HealthcheckProtocolEnum;
+    'readiness_probe'?: Probe;
     /**
      * 
-     * @type {string}
+     * @type {Probe}
      * @memberof Healthcheck
      */
-    'value'?: string;
+    'liveness_probe'?: Probe;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum HealthcheckProtocolEnum {
-    TCP = 'TCP',
-    HTTP = 'HTTP',
-    NONE = 'None'
-}
-
 /**
  * 
  * @export
@@ -8699,6 +8712,12 @@ export interface JobRequest {
     'source'?: JobRequestAllOfSource;
     /**
      * 
+     * @type {Healthcheck}
+     * @memberof JobRequest
+     */
+    'healthchecks'?: Healthcheck;
+    /**
+     * 
      * @type {JobRequestAllOfSchedule}
      * @memberof JobRequest
      */
@@ -8764,6 +8783,12 @@ export interface JobRequestAllOf {
      * @memberof JobRequestAllOf
      */
     'source'?: JobRequestAllOfSource;
+    /**
+     * 
+     * @type {Healthcheck}
+     * @memberof JobRequestAllOf
+     */
+    'healthchecks'?: Healthcheck;
     /**
      * 
      * @type {JobRequestAllOfSchedule}
@@ -9013,6 +9038,12 @@ export interface JobResponse {
     'source'?: JobResponseAllOfSource;
     /**
      * 
+     * @type {Healthcheck}
+     * @memberof JobResponse
+     */
+    'healthchecks'?: Healthcheck;
+    /**
+     * 
      * @type {JobResponseAllOfSchedule}
      * @memberof JobResponse
      */
@@ -9102,6 +9133,12 @@ export interface JobResponseAllOf {
      * @memberof JobResponseAllOf
      */
     'source'?: JobResponseAllOfSource;
+    /**
+     * 
+     * @type {Healthcheck}
+     * @memberof JobResponseAllOf
+     */
+    'healthchecks'?: Healthcheck;
     /**
      * 
      * @type {JobResponseAllOfSchedule}
@@ -11245,6 +11282,144 @@ export enum PortProtocolEnum {
     HTTP = 'HTTP'
 }
 
+/**
+ * 
+ * @export
+ * @interface Probe
+ */
+export interface Probe {
+    /**
+     * 
+     * @type {ProbeProbe}
+     * @memberof Probe
+     */
+    'probe'?: ProbeProbe;
+    /**
+     * 
+     * @type {number}
+     * @memberof Probe
+     */
+    'initial_delay_seconds'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Probe
+     */
+    'period_seconds'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Probe
+     */
+    'timeout_seconds'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Probe
+     */
+    'success_threshold'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Probe
+     */
+    'failure_threshold'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface ProbeProbe
+ */
+export interface ProbeProbe {
+    /**
+     * 
+     * @type {object}
+     * @memberof ProbeProbe
+     */
+    'none'?: object | null;
+    /**
+     * 
+     * @type {ProbeProbeTcp}
+     * @memberof ProbeProbe
+     */
+    'tcp'?: ProbeProbeTcp | null;
+    /**
+     * 
+     * @type {ProbeProbeHttp}
+     * @memberof ProbeProbe
+     */
+    'http'?: ProbeProbeHttp | null;
+    /**
+     * 
+     * @type {ProbeProbeExec}
+     * @memberof ProbeProbe
+     */
+    'exec'?: ProbeProbeExec | null;
+    /**
+     * 
+     * @type {ProbeProbeGrpc}
+     * @memberof ProbeProbe
+     */
+    'grpc'?: ProbeProbeGrpc | null;
+}
+/**
+ * 
+ * @export
+ * @interface ProbeProbeExec
+ */
+export interface ProbeProbeExec {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ProbeProbeExec
+     */
+    'command'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface ProbeProbeGrpc
+ */
+export interface ProbeProbeGrpc {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProbeProbeGrpc
+     */
+    'service'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface ProbeProbeHttp
+ */
+export interface ProbeProbeHttp {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProbeProbeHttp
+     */
+    'path'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProbeProbeHttp
+     */
+    'scheme'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ProbeProbeTcp
+ */
+export interface ProbeProbeTcp {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProbeProbeTcp
+     */
+    'host'?: string | null;
+}
 /**
  * 
  * @export
