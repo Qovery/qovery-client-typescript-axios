@@ -855,7 +855,7 @@ export interface ApplicationEditRequest {
      * @type {Healthcheck}
      * @memberof ApplicationEditRequest
      */
-    'healthcheck'?: Healthcheck;
+    'healthchecks'?: Healthcheck;
     /**
      * Specify if the environment preview option is activated or not for this application.   If activated, a preview environment will be automatically cloned at each pull request.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
@@ -952,7 +952,7 @@ export interface ApplicationEditRequestAllOf {
      * @type {Healthcheck}
      * @memberof ApplicationEditRequestAllOf
      */
-    'healthcheck'?: Healthcheck;
+    'healthchecks'?: Healthcheck;
     /**
      * Specify if the environment preview option is activated or not for this application.   If activated, a preview environment will be automatically cloned at each pull request.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
