@@ -4602,6 +4602,12 @@ export interface Database {
      */
     'cpu'?: number;
     /**
+     * Database instance type to be used for this database. The list of values can be retrieved via the endpoint /{CloudProvider}/managedDatabase/instanceType/{region}/{dbType}. This field is null for container DB.
+     * @type {string}
+     * @memberof Database
+     */
+    'instance_type'?: string;
+    /**
      * unit is MB. 1024 MB = 1GB   Default value is linked to the database type: - MANAGED: `100` - CONTAINER   - POSTGRES: `100`   - REDIS: `100`   - MYSQL: `512`   - MONGODB: `256` 
      * @type {number}
      * @memberof Database
@@ -4703,6 +4709,12 @@ export interface DatabaseAllOf {
      * @memberof DatabaseAllOf
      */
     'disk_encrypted'?: boolean;
+    /**
+     * Database instance type to be used for this database. The list of values can be retrieved via the endpoint /{CloudProvider}/managedDatabase/instanceType/{region}/{dbType}. This field is null for container DB.
+     * @type {string}
+     * @memberof DatabaseAllOf
+     */
+    'instance_type'?: string;
 }
 /**
  * 
@@ -4998,6 +5010,12 @@ export interface DatabaseRequest {
      * @memberof DatabaseRequest
      */
     'cpu'?: number;
+    /**
+     * Database instance type to be used for this database. The list of values can be retrieved via the endpoint /{CloudProvider}/managedDatabase/instanceType/{region}/{dbType}. This field SHOULD NOT be set for container DB.
+     * @type {string}
+     * @memberof DatabaseRequest
+     */
+    'instance_type'?: string;
     /**
      * unit is MB. 1024 MB = 1GB   Default value is linked to the database type: - MANAGED: `100` - CONTAINER   - POSTGRES: `100`   - REDIS: `100`   - MYSQL: `512`   - MONGODB: `256` 
      * @type {number}
@@ -9416,6 +9434,58 @@ export interface LogResponseList {
      * @memberof LogResponseList
      */
     'results'?: Array<Log>;
+}
+/**
+ * 
+ * @export
+ * @interface ManagedDatabaseInstanceTypeResponse
+ */
+export interface ManagedDatabaseInstanceTypeResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ManagedDatabaseInstanceTypeResponse
+     */
+    'name': string;
+}
+/**
+ * 
+ * @export
+ * @interface ManagedDatabaseInstanceTypeResponseList
+ */
+export interface ManagedDatabaseInstanceTypeResponseList {
+    /**
+     * 
+     * @type {Array<ManagedDatabaseInstanceTypeResponse>}
+     * @memberof ManagedDatabaseInstanceTypeResponseList
+     */
+    'results'?: Array<ManagedDatabaseInstanceTypeResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface ManagedDatabaseTypeResponse
+ */
+export interface ManagedDatabaseTypeResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ManagedDatabaseTypeResponse
+     */
+    'name': string;
+}
+/**
+ * 
+ * @export
+ * @interface ManagedDatabaseTypeResponseList
+ */
+export interface ManagedDatabaseTypeResponseList {
+    /**
+     * 
+     * @type {Array<ManagedDatabaseTypeResponse>}
+     * @memberof ManagedDatabaseTypeResponseList
+     */
+    'results'?: Array<ManagedDatabaseTypeResponse>;
 }
 /**
  * 
@@ -19429,6 +19499,82 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
+         * @summary List AWS available managed database instance types
+         * @param {string} region region name
+         * @param {string} databaseType Database type
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAWSManagedDatabaseInstanceType: async (region: string, databaseType: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'region' is not null or undefined
+            assertParamExists('listAWSManagedDatabaseInstanceType', 'region', region)
+            // verify required parameter 'databaseType' is not null or undefined
+            assertParamExists('listAWSManagedDatabaseInstanceType', 'databaseType', databaseType)
+            const localVarPath = `/aws/managedDatabase/instanceType/{region}/{databaseType}`
+                .replace(`{${"region"}}`, encodeURIComponent(String(region)))
+                .replace(`{${"databaseType"}}`, encodeURIComponent(String(databaseType)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List AWS available managed database types
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAWSManagedDatabaseType: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/aws/managedDatabase/type`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary List AWS regions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -19565,12 +19711,160 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
+         * @summary List Digital Ocean available managed database instance types
+         * @param {string} region region name
+         * @param {string} databaseType Database type
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listDOManagedDatabaseInstanceType: async (region: string, databaseType: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'region' is not null or undefined
+            assertParamExists('listDOManagedDatabaseInstanceType', 'region', region)
+            // verify required parameter 'databaseType' is not null or undefined
+            assertParamExists('listDOManagedDatabaseInstanceType', 'databaseType', databaseType)
+            const localVarPath = `/digitalOcean/managedDatabase/instanceType/{region}/{databaseType}`
+                .replace(`{${"region"}}`, encodeURIComponent(String(region)))
+                .replace(`{${"databaseType"}}`, encodeURIComponent(String(databaseType)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List Digital Ocean available managed database types
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listDOManagedDatabaseType: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/digitalOcean/managedDatabase/type`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary List DO regions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         listDORegions: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/digitalOcean/region`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List Scaleway available managed database instance types
+         * @param {string} databaseType Database type
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listSCWManagedDatabaseInstanceType: async (databaseType: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'databaseType' is not null or undefined
+            assertParamExists('listSCWManagedDatabaseInstanceType', 'databaseType', databaseType)
+            const localVarPath = `/scaleway/managedDatabase/instanceType/{zone}/{databaseType}`
+                .replace(`{${"databaseType"}}`, encodeURIComponent(String(databaseType)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List Scaleway available managed database types
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listSCWManagedDatabaseType: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/scaleway/managedDatabase/type`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -19791,6 +20085,28 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List AWS available managed database instance types
+         * @param {string} region region name
+         * @param {string} databaseType Database type
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listAWSManagedDatabaseInstanceType(region: string, databaseType: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ManagedDatabaseInstanceTypeResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAWSManagedDatabaseInstanceType(region, databaseType, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary List AWS available managed database types
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listAWSManagedDatabaseType(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ManagedDatabaseTypeResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAWSManagedDatabaseType(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary List AWS regions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -19831,12 +20147,55 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List Digital Ocean available managed database instance types
+         * @param {string} region region name
+         * @param {string} databaseType Database type
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listDOManagedDatabaseInstanceType(region: string, databaseType: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ManagedDatabaseInstanceTypeResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listDOManagedDatabaseInstanceType(region, databaseType, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary List Digital Ocean available managed database types
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listDOManagedDatabaseType(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ManagedDatabaseTypeResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listDOManagedDatabaseType(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary List DO regions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async listDORegions(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterRegionResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listDORegions(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary List Scaleway available managed database instance types
+         * @param {string} databaseType Database type
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listSCWManagedDatabaseInstanceType(databaseType: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ManagedDatabaseInstanceTypeResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listSCWManagedDatabaseInstanceType(databaseType, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary List Scaleway available managed database types
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listSCWManagedDatabaseType(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ManagedDatabaseTypeResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listSCWManagedDatabaseType(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -19930,6 +20289,26 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
         },
         /**
          * 
+         * @summary List AWS available managed database instance types
+         * @param {string} region region name
+         * @param {string} databaseType Database type
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAWSManagedDatabaseInstanceType(region: string, databaseType: string, options?: any): AxiosPromise<ManagedDatabaseInstanceTypeResponseList> {
+            return localVarFp.listAWSManagedDatabaseInstanceType(region, databaseType, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List AWS available managed database types
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAWSManagedDatabaseType(options?: any): AxiosPromise<ManagedDatabaseTypeResponseList> {
+            return localVarFp.listAWSManagedDatabaseType(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary List AWS regions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -19966,12 +20345,51 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
         },
         /**
          * 
+         * @summary List Digital Ocean available managed database instance types
+         * @param {string} region region name
+         * @param {string} databaseType Database type
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listDOManagedDatabaseInstanceType(region: string, databaseType: string, options?: any): AxiosPromise<ManagedDatabaseInstanceTypeResponseList> {
+            return localVarFp.listDOManagedDatabaseInstanceType(region, databaseType, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List Digital Ocean available managed database types
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listDOManagedDatabaseType(options?: any): AxiosPromise<ManagedDatabaseTypeResponseList> {
+            return localVarFp.listDOManagedDatabaseType(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary List DO regions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         listDORegions(options?: any): AxiosPromise<ClusterRegionResponseList> {
             return localVarFp.listDORegions(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List Scaleway available managed database instance types
+         * @param {string} databaseType Database type
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listSCWManagedDatabaseInstanceType(databaseType: string, options?: any): AxiosPromise<ManagedDatabaseInstanceTypeResponseList> {
+            return localVarFp.listSCWManagedDatabaseInstanceType(databaseType, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List Scaleway available managed database types
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listSCWManagedDatabaseType(options?: any): AxiosPromise<ManagedDatabaseTypeResponseList> {
+            return localVarFp.listSCWManagedDatabaseType(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -20068,6 +20486,30 @@ export class CloudProviderApi extends BaseAPI {
 
     /**
      * 
+     * @summary List AWS available managed database instance types
+     * @param {string} region region name
+     * @param {string} databaseType Database type
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderApi
+     */
+    public listAWSManagedDatabaseInstanceType(region: string, databaseType: string, options?: AxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listAWSManagedDatabaseInstanceType(region, databaseType, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List AWS available managed database types
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderApi
+     */
+    public listAWSManagedDatabaseType(options?: AxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listAWSManagedDatabaseType(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary List AWS regions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -20112,6 +20554,30 @@ export class CloudProviderApi extends BaseAPI {
 
     /**
      * 
+     * @summary List Digital Ocean available managed database instance types
+     * @param {string} region region name
+     * @param {string} databaseType Database type
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderApi
+     */
+    public listDOManagedDatabaseInstanceType(region: string, databaseType: string, options?: AxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listDOManagedDatabaseInstanceType(region, databaseType, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List Digital Ocean available managed database types
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderApi
+     */
+    public listDOManagedDatabaseType(options?: AxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listDOManagedDatabaseType(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary List DO regions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -20119,6 +20585,29 @@ export class CloudProviderApi extends BaseAPI {
      */
     public listDORegions(options?: AxiosRequestConfig) {
         return CloudProviderApiFp(this.configuration).listDORegions(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List Scaleway available managed database instance types
+     * @param {string} databaseType Database type
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderApi
+     */
+    public listSCWManagedDatabaseInstanceType(databaseType: string, options?: AxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listSCWManagedDatabaseInstanceType(databaseType, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List Scaleway available managed database types
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderApi
+     */
+    public listSCWManagedDatabaseType(options?: AxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listSCWManagedDatabaseType(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
