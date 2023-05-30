@@ -11279,7 +11279,8 @@ export enum PlanEnum {
  */
 
 export enum PortProtocolEnum {
-    HTTP = 'HTTP'
+    HTTP = 'HTTP',
+    GRPC = 'GRPC'
 }
 
 /**
@@ -12487,11 +12488,23 @@ export interface ServicePort {
      */
     'publicly_accessible': boolean;
     /**
-     * is the default port to use for domain & probes check
+     * is the default port to use for domain
      * @type {boolean}
      * @memberof ServicePort
      */
     'is_default'?: boolean;
+    /**
+     * is port to use for probe readiness check
+     * @type {boolean}
+     * @memberof ServicePort
+     */
+    'has_readiness_probe'?: boolean;
+    /**
+     * is port to use for probe liveness check
+     * @type {boolean}
+     * @memberof ServicePort
+     */
+    'has_liveness_probe'?: boolean;
     /**
      * 
      * @type {PortProtocolEnum}
@@ -12543,11 +12556,23 @@ export interface ServicePortRequestPorts {
      */
     'publicly_accessible': boolean;
     /**
-     * is the default port to use for domain & probes check
+     * is the default port to use for domain
      * @type {boolean}
      * @memberof ServicePortRequestPorts
      */
     'is_default'?: boolean;
+    /**
+     * is port to use for probe readiness check
+     * @type {boolean}
+     * @memberof ServicePortRequestPorts
+     */
+    'has_readiness_probe'?: boolean;
+    /**
+     * is port to use for probe liveness check
+     * @type {boolean}
+     * @memberof ServicePortRequestPorts
+     */
+    'has_liveness_probe'?: boolean;
     /**
      * 
      * @type {PortProtocolEnum}
