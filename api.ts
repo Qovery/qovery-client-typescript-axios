@@ -11334,12 +11334,6 @@ export interface Probe {
 export interface ProbeType {
     /**
      * 
-     * @type {object}
-     * @memberof ProbeType
-     */
-    'none'?: object | null;
-    /**
-     * 
      * @type {ProbeTypeTcp}
      * @memberof ProbeType
      */
