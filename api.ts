@@ -9320,6 +9320,24 @@ export interface Link {
      * @memberof Link
      */
     'url'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Link
+     */
+    'port'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Link
+     */
+    'is_qovery_domain'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Link
+     */
+    'is_default'?: boolean;
 }
 /**
  * 
