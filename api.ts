@@ -9325,7 +9325,13 @@ export interface Link {
      * @type {number}
      * @memberof Link
      */
-    'port'?: number;
+    'internal_port'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Link
+     */
+    'external_port'?: number;
     /**
      * 
      * @type {boolean}
