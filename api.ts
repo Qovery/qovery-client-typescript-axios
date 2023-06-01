@@ -10695,6 +10695,7 @@ export enum OrganizationEventOrigin {
     CLI = 'CLI',
     CONSOLE = 'CONSOLE',
     GIT = 'GIT',
+    QOVERY_INTERNAL = 'QOVERY_INTERNAL',
     TERRAFORM_PROVIDER = 'TERRAFORM_PROVIDER'
 }
 
