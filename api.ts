@@ -4596,7 +4596,7 @@ export interface Database {
      */
     'accessibility'?: DatabaseAccessibilityEnum;
     /**
-     * unit is millicores (m). 1000m = 1 cpu
+     * unit is millicores (m). 1000m = 1 cpu This field will be ignored for managed DB (instance type will be used instead). 
      * @type {number}
      * @memberof Database
      */
@@ -4608,7 +4608,7 @@ export interface Database {
      */
     'instance_type'?: string;
     /**
-     * unit is MB. 1024 MB = 1GB   Default value is linked to the database type: - MANAGED: `100` - CONTAINER   - POSTGRES: `100`   - REDIS: `100`   - MYSQL: `512`   - MONGODB: `256` 
+     * unit is MB. 1024 MB = 1GB This field will be ignored for managed DB (instance type will be used instead). Default value is linked to the database type: - MANAGED: `100` - CONTAINER   - POSTGRES: `100`   - REDIS: `100`   - MYSQL: `512`   - MONGODB: `256` 
      * @type {number}
      * @memberof Database
      */
@@ -4933,13 +4933,13 @@ export interface DatabaseEditRequest {
      */
     'accessibility'?: DatabaseAccessibilityEnum;
     /**
-     * unit is millicores (m). 1000m = 1 cpu
+     * unit is millicores (m). 1000m = 1 cpu. This field will be ignored for managed DB (instance type will be used instead). 
      * @type {number}
      * @memberof DatabaseEditRequest
      */
     'cpu'?: number;
     /**
-     * unit is MB. 1024 MB = 1GB   Default value is linked to the database type: - MANAGED: 100 - CONTAINER   - POSTGRES: 100   - REDIS: 100   - MYSQL: 512   - MONGODB: 256 
+     * unit is MB. 1024 MB = 1GB This field will be ignored for managed DB (instance type will be used instead). Default value is linked to the database type: - MANAGED: 100 - CONTAINER   - POSTGRES: 100   - REDIS: 100   - MYSQL: 512   - MONGODB: 256 
      * @type {number}
      * @memberof DatabaseEditRequest
      */
@@ -5011,7 +5011,7 @@ export interface DatabaseRequest {
      */
     'accessibility'?: DatabaseAccessibilityEnum;
     /**
-     * unit is millicores (m). 1000m = 1 cpu
+     * unit is millicores (m). 1000m = 1 cpu This field will be ignored for managed DB (instance type will be used instead). 
      * @type {number}
      * @memberof DatabaseRequest
      */
@@ -5023,7 +5023,7 @@ export interface DatabaseRequest {
      */
     'instance_type'?: string;
     /**
-     * unit is MB. 1024 MB = 1GB   Default value is linked to the database type: - MANAGED: `100` - CONTAINER   - POSTGRES: `100`   - REDIS: `100`   - MYSQL: `512`   - MONGODB: `256` 
+     * unit is MB. 1024 MB = 1GB This field will be ignored for managed DB (instance type will be used instead). Default value is linked to the database type: - MANAGED: `100` - CONTAINER   - POSTGRES: `100`   - REDIS: `100`   - MYSQL: `512`   - MONGODB: `256` 
      * @type {number}
      * @memberof DatabaseRequest
      */
