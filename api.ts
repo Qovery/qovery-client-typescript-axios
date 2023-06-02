@@ -4950,6 +4950,12 @@ export interface DatabaseEditRequest {
      * @memberof DatabaseEditRequest
      */
     'storage'?: number;
+    /**
+     * Database instance type to be used for this database. The list of values can be retrieved via the endpoint /{CloudProvider}/managedDatabase/instanceType/{region}/{dbType}. This field SHOULD NOT be set for container DB.
+     * @type {string}
+     * @memberof DatabaseEditRequest
+     */
+    'instance_type'?: string;
 }
 /**
  * 
