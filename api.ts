@@ -11483,6 +11483,12 @@ export interface ProbeTypeGrpc {
      * @memberof ProbeTypeGrpc
      */
     'service'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProbeTypeGrpc
+     */
+    'port'?: number;
 }
 /**
  * 
@@ -11502,6 +11508,12 @@ export interface ProbeTypeHttp {
      * @memberof ProbeTypeHttp
      */
     'scheme'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProbeTypeHttp
+     */
+    'port'?: number;
 }
 /**
  * 
@@ -11509,6 +11521,12 @@ export interface ProbeTypeHttp {
  * @interface ProbeTypeTcp
  */
 export interface ProbeTypeTcp {
+    /**
+     * 
+     * @type {number}
+     * @memberof ProbeTypeTcp
+     */
+    'port'?: number;
     /**
      * 
      * @type {string}
@@ -12589,18 +12607,6 @@ export interface ServicePort {
      */
     'is_default'?: boolean;
     /**
-     * is port to use for probe readiness check
-     * @type {boolean}
-     * @memberof ServicePort
-     */
-    'has_readiness_probe'?: boolean;
-    /**
-     * is port to use for probe liveness check
-     * @type {boolean}
-     * @memberof ServicePort
-     */
-    'has_liveness_probe'?: boolean;
-    /**
      * 
      * @type {PortProtocolEnum}
      * @memberof ServicePort
@@ -12656,18 +12662,6 @@ export interface ServicePortRequestPorts {
      * @memberof ServicePortRequestPorts
      */
     'is_default'?: boolean;
-    /**
-     * is port to use for probe readiness check
-     * @type {boolean}
-     * @memberof ServicePortRequestPorts
-     */
-    'has_readiness_probe'?: boolean;
-    /**
-     * is port to use for probe liveness check
-     * @type {boolean}
-     * @memberof ServicePortRequestPorts
-     */
-    'has_liveness_probe'?: boolean;
     /**
      * 
      * @type {PortProtocolEnum}
