@@ -32037,10 +32037,11 @@ export const EnvironmentLogsApiAxiosParamCreator = function (configuration?: Con
          * This returns the last 1000 environment deployment logs v2
          * @summary List environment deployment logs v2
          * @param {string} environmentId Environment ID
+         * @param {string} [version] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listEnvironmentLogs: async (environmentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listEnvironmentLogs: async (environmentId: string, version?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'environmentId' is not null or undefined
             assertParamExists('listEnvironmentLogs', 'environmentId', environmentId)
             const localVarPath = `/environment/{environmentId}/logs`
@@ -32059,6 +32060,10 @@ export const EnvironmentLogsApiAxiosParamCreator = function (configuration?: Con
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (version !== undefined) {
+                localVarQueryParameter['version'] = version;
+            }
 
 
     
@@ -32096,11 +32101,12 @@ export const EnvironmentLogsApiFp = function(configuration?: Configuration) {
          * This returns the last 1000 environment deployment logs v2
          * @summary List environment deployment logs v2
          * @param {string} environmentId Environment ID
+         * @param {string} [version] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listEnvironmentLogs(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<EnvironmentLogs>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listEnvironmentLogs(environmentId, options);
+        async listEnvironmentLogs(environmentId: string, version?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<EnvironmentLogs>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listEnvironmentLogs(environmentId, version, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -32127,11 +32133,12 @@ export const EnvironmentLogsApiFactory = function (configuration?: Configuration
          * This returns the last 1000 environment deployment logs v2
          * @summary List environment deployment logs v2
          * @param {string} environmentId Environment ID
+         * @param {string} [version] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listEnvironmentLogs(environmentId: string, options?: any): AxiosPromise<Array<EnvironmentLogs>> {
-            return localVarFp.listEnvironmentLogs(environmentId, options).then((request) => request(axios, basePath));
+        listEnvironmentLogs(environmentId: string, version?: string, options?: any): AxiosPromise<Array<EnvironmentLogs>> {
+            return localVarFp.listEnvironmentLogs(environmentId, version, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -32159,12 +32166,13 @@ export class EnvironmentLogsApi extends BaseAPI {
      * This returns the last 1000 environment deployment logs v2
      * @summary List environment deployment logs v2
      * @param {string} environmentId Environment ID
+     * @param {string} [version] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EnvironmentLogsApi
      */
-    public listEnvironmentLogs(environmentId: string, options?: AxiosRequestConfig) {
-        return EnvironmentLogsApiFp(this.configuration).listEnvironmentLogs(environmentId, options).then((request) => request(this.axios, this.basePath));
+    public listEnvironmentLogs(environmentId: string, version?: string, options?: AxiosRequestConfig) {
+        return EnvironmentLogsApiFp(this.configuration).listEnvironmentLogs(environmentId, version, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
