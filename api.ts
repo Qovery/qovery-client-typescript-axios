@@ -17526,6 +17526,49 @@ export const ApplicationsApiAxiosParamCreator = function (configuration?: Config
         },
         /**
          * 
+         * @summary Export full environment and its resources into Terraform manifests
+         * @param {string} environmentId Environment ID
+         * @param {boolean} [exportSecrets] export Secrets from configuration and include them into Terraform export
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        exportEnvironmentConfigurationIntoTerraform: async (environmentId: string, exportSecrets?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('exportEnvironmentConfigurationIntoTerraform', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/terraformExport`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (exportSecrets !== undefined) {
+                localVarQueryParameter['exportSecrets'] = exportSecrets;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary List default application advanced settings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17772,6 +17815,18 @@ export const ApplicationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Export full environment and its resources into Terraform manifests
+         * @param {string} environmentId Environment ID
+         * @param {boolean} [exportSecrets] export Secrets from configuration and include them into Terraform export
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async exportEnvironmentConfigurationIntoTerraform(environmentId: string, exportSecrets?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.exportEnvironmentConfigurationIntoTerraform(environmentId, exportSecrets, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary List default application advanced settings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17858,6 +17913,17 @@ export const ApplicationsApiFactory = function (configuration?: Configuration, b
         },
         /**
          * 
+         * @summary Export full environment and its resources into Terraform manifests
+         * @param {string} environmentId Environment ID
+         * @param {boolean} [exportSecrets] export Secrets from configuration and include them into Terraform export
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        exportEnvironmentConfigurationIntoTerraform(environmentId: string, exportSecrets?: boolean, options?: any): AxiosPromise<any> {
+            return localVarFp.exportEnvironmentConfigurationIntoTerraform(environmentId, exportSecrets, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary List default application advanced settings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17936,6 +18002,19 @@ export class ApplicationsApi extends BaseAPI {
      */
     public createApplication(environmentId: string, applicationRequest?: ApplicationRequest, options?: AxiosRequestConfig) {
         return ApplicationsApiFp(this.configuration).createApplication(environmentId, applicationRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Export full environment and its resources into Terraform manifests
+     * @param {string} environmentId Environment ID
+     * @param {boolean} [exportSecrets] export Secrets from configuration and include them into Terraform export
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApplicationsApi
+     */
+    public exportEnvironmentConfigurationIntoTerraform(environmentId: string, exportSecrets?: boolean, options?: AxiosRequestConfig) {
+        return ApplicationsApiFp(this.configuration).exportEnvironmentConfigurationIntoTerraform(environmentId, exportSecrets, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
