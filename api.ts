@@ -7461,7 +7461,7 @@ export interface EnvironmentVariable {
      * @type {string}
      * @memberof EnvironmentVariable
      */
-    'value': string;
+    'value'?: string;
     /**
      * should be set for file only. variable mount path makes variable a file (where file should be mounted).
      * @type {string}
@@ -7694,7 +7694,7 @@ export interface EnvironmentVariableRequest {
      * @type {string}
      * @memberof EnvironmentVariableRequest
      */
-    'value': string;
+    'value'?: string;
     /**
      * should be set for file only. variable mount path makes variable a file (where file should be mounted).
      * @type {string}
@@ -13325,7 +13325,7 @@ export interface Value {
      * @type {string}
      * @memberof Value
      */
-    'value': string;
+    'value'?: string;
 }
 /**
  * 
