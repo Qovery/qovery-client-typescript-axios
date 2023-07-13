@@ -2352,16 +2352,35 @@ export interface ClusterCloudProviderInfo {
     'cloud_provider'?: CloudProviderEnum;
     /**
      * 
-     * @type {InlineResponse200Targets}
+     * @type {ClusterCloudProviderInfoCredentials}
      * @memberof ClusterCloudProviderInfo
      */
-    'credentials'?: InlineResponse200Targets;
+    'credentials'?: ClusterCloudProviderInfoCredentials;
     /**
      * 
      * @type {string}
      * @memberof ClusterCloudProviderInfo
      */
     'region'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterCloudProviderInfoCredentials
+ */
+export interface ClusterCloudProviderInfoCredentials {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterCloudProviderInfoCredentials
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterCloudProviderInfoCredentials
+     */
+    'name'?: string;
 }
 /**
  * 
@@ -2377,10 +2396,10 @@ export interface ClusterCloudProviderInfoRequest {
     'cloud_provider'?: CloudProviderEnum;
     /**
      * 
-     * @type {InlineResponse200Targets}
+     * @type {ClusterCloudProviderInfoCredentials}
      * @memberof ClusterCloudProviderInfoRequest
      */
-    'credentials'?: InlineResponse200Targets;
+    'credentials'?: ClusterCloudProviderInfoCredentials;
     /**
      * 
      * @type {string}
@@ -8118,10 +8137,34 @@ export interface InlineObject {
 export interface InlineResponse200 {
     /**
      * 
-     * @type {Array<InlineResponse200Targets>}
+     * @type {EnvironmentStatus}
      * @memberof InlineResponse200
      */
-    'targets'?: Array<InlineResponse200Targets>;
+    'environment'?: EnvironmentStatus;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof InlineResponse200
+     */
+    'applications'?: Array<Status>;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof InlineResponse200
+     */
+    'containers'?: Array<Status>;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof InlineResponse200
+     */
+    'jobs'?: Array<Status>;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof InlineResponse200
+     */
+    'databases'?: Array<Status>;
 }
 /**
  * 
@@ -8137,66 +8180,10 @@ export interface InlineResponse2001 {
     'environment'?: EnvironmentStatus;
     /**
      * 
-     * @type {Array<Status>}
-     * @memberof InlineResponse2001
-     */
-    'applications'?: Array<Status>;
-    /**
-     * 
-     * @type {Array<Status>}
-     * @memberof InlineResponse2001
-     */
-    'containers'?: Array<Status>;
-    /**
-     * 
-     * @type {Array<Status>}
-     * @memberof InlineResponse2001
-     */
-    'jobs'?: Array<Status>;
-    /**
-     * 
-     * @type {Array<Status>}
-     * @memberof InlineResponse2001
-     */
-    'databases'?: Array<Status>;
-}
-/**
- * 
- * @export
- * @interface InlineResponse2002
- */
-export interface InlineResponse2002 {
-    /**
-     * 
-     * @type {EnvironmentStatus}
-     * @memberof InlineResponse2002
-     */
-    'environment'?: EnvironmentStatus;
-    /**
-     * 
      * @type {DeploymentStageWithServiceStatusesList}
-     * @memberof InlineResponse2002
+     * @memberof InlineResponse2001
      */
     'stages'?: DeploymentStageWithServiceStatusesList;
-}
-/**
- * 
- * @export
- * @interface InlineResponse200Targets
- */
-export interface InlineResponse200Targets {
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse200Targets
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse200Targets
-     */
-    'name'?: string;
 }
 /**
  * 
@@ -10959,6 +10946,19 @@ export enum OrganizationEventSubTargetType {
     VARIABLE = 'VARIABLE'
 }
 
+/**
+ * 
+ * @export
+ * @interface OrganizationEventTargetResponseList
+ */
+export interface OrganizationEventTargetResponseList {
+    /**
+     * 
+     * @type {Array<ClusterCloudProviderInfoCredentials>}
+     * @memberof OrganizationEventTargetResponseList
+     */
+    'targets'?: Array<ClusterCloudProviderInfoCredentials>;
+}
 /**
  * Type of the organization event
  * @export
@@ -32917,7 +32917,7 @@ export const EnvironmentMainCallsApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEnvironmentStatuses(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2001>> {
+        async getEnvironmentStatuses(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentStatuses(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -32928,7 +32928,7 @@ export const EnvironmentMainCallsApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEnvironmentStatusesWithStages(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2002>> {
+        async getEnvironmentStatusesWithStages(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2001>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentStatusesWithStages(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -32990,7 +32990,7 @@ export const EnvironmentMainCallsApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEnvironmentStatuses(environmentId: string, options?: any): AxiosPromise<InlineResponse2001> {
+        getEnvironmentStatuses(environmentId: string, options?: any): AxiosPromise<InlineResponse200> {
             return localVarFp.getEnvironmentStatuses(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -33000,7 +33000,7 @@ export const EnvironmentMainCallsApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEnvironmentStatusesWithStages(environmentId: string, options?: any): AxiosPromise<InlineResponse2002> {
+        getEnvironmentStatusesWithStages(environmentId: string, options?: any): AxiosPromise<InlineResponse2001> {
             return localVarFp.getEnvironmentStatusesWithStages(environmentId, options).then((request) => request(axios, basePath));
         },
     };
@@ -40078,7 +40078,7 @@ export const OrganizationEventApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganizationEventTargets(organizationId: string, fromTimestamp?: string, toTimestamp?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
+        async getOrganizationEventTargets(organizationId: string, fromTimestamp?: string, toTimestamp?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationEventTargetResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationEventTargets(organizationId, fromTimestamp, toTimestamp, eventType, targetType, triggeredBy, origin, projectId, environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -40129,7 +40129,7 @@ export const OrganizationEventApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationEventTargets(organizationId: string, fromTimestamp?: string, toTimestamp?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options?: any): AxiosPromise<InlineResponse200> {
+        getOrganizationEventTargets(organizationId: string, fromTimestamp?: string, toTimestamp?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options?: any): AxiosPromise<OrganizationEventTargetResponseList> {
             return localVarFp.getOrganizationEventTargets(organizationId, fromTimestamp, toTimestamp, eventType, targetType, triggeredBy, origin, projectId, environmentId, options).then((request) => request(axios, basePath));
         },
         /**
