@@ -13419,6 +13419,31 @@ export interface Value {
 /**
  * 
  * @export
+ * @interface VariableAliasRequest
+ */
+export interface VariableAliasRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableAliasRequest
+     */
+    'key': string;
+    /**
+     * 
+     * @type {APIVariableScopeEnum}
+     * @memberof VariableAliasRequest
+     */
+    'aliasScope': APIVariableScopeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableAliasRequest
+     */
+    'aliasParentId': string;
+}
+/**
+ * 
+ * @export
  * @interface VariableImport
  */
 export interface VariableImport {
@@ -13515,6 +13540,158 @@ export interface VariableImportSuccessfulImportedVariables {
      * @memberof VariableImportSuccessfulImportedVariables
      */
     'is_secret': boolean;
+}
+/**
+ * 
+ * @export
+ * @interface VariableResponse
+ */
+export interface VariableResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {EnvironmentVariableOverride}
+     * @memberof VariableResponse
+     */
+    'overridden_variable'?: EnvironmentVariableOverride;
+    /**
+     * 
+     * @type {EnvironmentVariableAlias}
+     * @memberof VariableResponse
+     */
+    'aliased_variable'?: EnvironmentVariableAlias;
+    /**
+     * 
+     * @type {SecretOverride}
+     * @memberof VariableResponse
+     */
+    'overridden_secret'?: SecretOverride;
+    /**
+     * 
+     * @type {SecretAlias}
+     * @memberof VariableResponse
+     */
+    'aliased_secret'?: SecretAlias;
+    /**
+     * 
+     * @type {APIVariableScopeEnum}
+     * @memberof VariableResponse
+     */
+    'scope': APIVariableScopeEnum;
+    /**
+     * 
+     * @type {APIVariableTypeEnum}
+     * @memberof VariableResponse
+     */
+    'variable_type'?: APIVariableTypeEnum;
+    /**
+     * present only for `BUILT_IN` variable
+     * @type {string}
+     * @memberof VariableResponse
+     */
+    'service_id'?: string;
+    /**
+     * present only for `BUILT_IN` variable
+     * @type {string}
+     * @memberof VariableResponse
+     */
+    'service_name'?: string;
+    /**
+     * 
+     * @type {LinkedServiceTypeEnum}
+     * @memberof VariableResponse
+     */
+    'service_type'?: LinkedServiceTypeEnum;
+    /**
+     * Entity that created/own the variable (i.e: Qovery, Doppler)
+     * @type {string}
+     * @memberof VariableResponse
+     */
+    'owned_by'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface VariableResponseAllOf
+ */
+export interface VariableResponseAllOf {
+    /**
+     * 
+     * @type {EnvironmentVariableOverride}
+     * @memberof VariableResponseAllOf
+     */
+    'overridden_variable'?: EnvironmentVariableOverride;
+    /**
+     * 
+     * @type {EnvironmentVariableAlias}
+     * @memberof VariableResponseAllOf
+     */
+    'aliased_variable'?: EnvironmentVariableAlias;
+    /**
+     * 
+     * @type {SecretOverride}
+     * @memberof VariableResponseAllOf
+     */
+    'overridden_secret'?: SecretOverride;
+    /**
+     * 
+     * @type {SecretAlias}
+     * @memberof VariableResponseAllOf
+     */
+    'aliased_secret'?: SecretAlias;
+    /**
+     * 
+     * @type {APIVariableScopeEnum}
+     * @memberof VariableResponseAllOf
+     */
+    'scope': APIVariableScopeEnum;
+    /**
+     * 
+     * @type {APIVariableTypeEnum}
+     * @memberof VariableResponseAllOf
+     */
+    'variable_type'?: APIVariableTypeEnum;
+    /**
+     * present only for `BUILT_IN` variable
+     * @type {string}
+     * @memberof VariableResponseAllOf
+     */
+    'service_id'?: string;
+    /**
+     * present only for `BUILT_IN` variable
+     * @type {string}
+     * @memberof VariableResponseAllOf
+     */
+    'service_name'?: string;
+    /**
+     * 
+     * @type {LinkedServiceTypeEnum}
+     * @memberof VariableResponseAllOf
+     */
+    'service_type'?: LinkedServiceTypeEnum;
+    /**
+     * Entity that created/own the variable (i.e: Qovery, Doppler)
+     * @type {string}
+     * @memberof VariableResponseAllOf
+     */
+    'owned_by'?: string;
 }
 /**
  * 
@@ -43508,6 +43685,122 @@ export class UserSignUpApi extends BaseAPI {
      */
     public getUserSignUp(options?: AxiosRequestConfig) {
         return UserSignUpApiFp(this.configuration).getUserSignUp(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * VariableMainCallsApi - axios parameter creator
+ * @export
+ */
+export const VariableMainCallsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key. - You have to specify a key in the request body and the scope and the parent id of the alias - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * @summary Create a variable alias
+         * @param {string} variableId Variable ID
+         * @param {VariableAliasRequest} [variableAliasRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createVariableAlias: async (variableId: string, variableAliasRequest?: VariableAliasRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'variableId' is not null or undefined
+            assertParamExists('createVariableAlias', 'variableId', variableId)
+            const localVarPath = `/variable/{variableId}/alias`
+                .replace(`{${"variableId"}}`, encodeURIComponent(String(variableId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(variableAliasRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * VariableMainCallsApi - functional programming interface
+ * @export
+ */
+export const VariableMainCallsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = VariableMainCallsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key. - You have to specify a key in the request body and the scope and the parent id of the alias - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * @summary Create a variable alias
+         * @param {string} variableId Variable ID
+         * @param {VariableAliasRequest} [variableAliasRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createVariableAlias(variableId: string, variableAliasRequest?: VariableAliasRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VariableResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createVariableAlias(variableId, variableAliasRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * VariableMainCallsApi - factory interface
+ * @export
+ */
+export const VariableMainCallsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = VariableMainCallsApiFp(configuration)
+    return {
+        /**
+         * - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key. - You have to specify a key in the request body and the scope and the parent id of the alias - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * @summary Create a variable alias
+         * @param {string} variableId Variable ID
+         * @param {VariableAliasRequest} [variableAliasRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createVariableAlias(variableId: string, variableAliasRequest?: VariableAliasRequest, options?: any): AxiosPromise<VariableResponse> {
+            return localVarFp.createVariableAlias(variableId, variableAliasRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * VariableMainCallsApi - object-oriented interface
+ * @export
+ * @class VariableMainCallsApi
+ * @extends {BaseAPI}
+ */
+export class VariableMainCallsApi extends BaseAPI {
+    /**
+     * - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key. - You have to specify a key in the request body and the scope and the parent id of the alias - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+     * @summary Create a variable alias
+     * @param {string} variableId Variable ID
+     * @param {VariableAliasRequest} [variableAliasRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VariableMainCallsApi
+     */
+    public createVariableAlias(variableId: string, variableAliasRequest?: VariableAliasRequest, options?: AxiosRequestConfig) {
+        return VariableMainCallsApiFp(this.configuration).createVariableAlias(variableId, variableAliasRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
