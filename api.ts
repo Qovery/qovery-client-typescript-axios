@@ -6872,12 +6872,6 @@ export interface EnvironmentDeploymentRule {
      * @type {boolean}
      * @memberof EnvironmentDeploymentRule
      */
-    'auto_delete'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnvironmentDeploymentRule
-     */
     'auto_preview'?: boolean;
     /**
      * 
@@ -6933,12 +6927,6 @@ export interface EnvironmentDeploymentRuleAllOf {
      * @type {boolean}
      * @memberof EnvironmentDeploymentRuleAllOf
      */
-    'auto_delete'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnvironmentDeploymentRuleAllOf
-     */
     'auto_preview'?: boolean;
     /**
      * 
@@ -6989,12 +6977,6 @@ export interface EnvironmentDeploymentRuleEditRequest {
      * @memberof EnvironmentDeploymentRuleEditRequest
      */
     'auto_preview'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnvironmentDeploymentRuleEditRequest
-     */
-    'auto_delete'?: boolean;
     /**
      * 
      * @type {boolean}
@@ -11816,12 +11798,6 @@ export interface ProjectDeploymentRule {
     'auto_stop'?: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof ProjectDeploymentRule
-     */
-    'auto_delete'?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof ProjectDeploymentRule
      */
@@ -11912,12 +11888,6 @@ export interface ProjectDeploymentRuleRequest {
      * @memberof ProjectDeploymentRuleRequest
      */
     'auto_stop'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProjectDeploymentRuleRequest
-     */
-    'auto_delete'?: boolean;
     /**
      * 
      * @type {string}
