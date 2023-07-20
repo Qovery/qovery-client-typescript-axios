@@ -7690,7 +7690,7 @@ export interface EnvironmentVariableEditRequest {
      * @type {string}
      * @memberof EnvironmentVariableEditRequest
      */
-    'value': string;
+    'value'?: string;
 }
 /**
  * 
@@ -12394,7 +12394,7 @@ export interface SecretEditRequest {
      * @type {string}
      * @memberof SecretEditRequest
      */
-    'value': string;
+    'value'?: string;
     /**
      * 
      * @type {string}
@@ -12456,7 +12456,7 @@ export interface SecretRequest {
      * @type {string}
      * @memberof SecretRequest
      */
-    'value': string;
+    'value'?: string;
     /**
      * should be set for file only. variable mount path make secret a file (where file should be mounted).
      * @type {string}
