@@ -13419,6 +13419,49 @@ export interface Value {
 /**
  * 
  * @export
+ * @interface VariableAlias
+ */
+export interface VariableAlias {
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableAlias
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableAlias
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableAlias
+     */
+    'value'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableAlias
+     */
+    'mount_path': string;
+    /**
+     * 
+     * @type {APIVariableScopeEnum}
+     * @memberof VariableAlias
+     */
+    'scope': APIVariableScopeEnum;
+    /**
+     * 
+     * @type {APIVariableTypeEnum}
+     * @memberof VariableAlias
+     */
+    'variable_type': APIVariableTypeEnum;
+}
+/**
+ * 
+ * @export
  * @interface VariableAliasRequest
  */
 export interface VariableAliasRequest {
@@ -13544,6 +13587,49 @@ export interface VariableImportSuccessfulImportedVariables {
 /**
  * 
  * @export
+ * @interface VariableOverride
+ */
+export interface VariableOverride {
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableOverride
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableOverride
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableOverride
+     */
+    'value'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableOverride
+     */
+    'mount_path': string;
+    /**
+     * 
+     * @type {APIVariableScopeEnum}
+     * @memberof VariableOverride
+     */
+    'scope': APIVariableScopeEnum;
+    /**
+     * 
+     * @type {APIVariableTypeEnum}
+     * @memberof VariableOverride
+     */
+    'variable_type': APIVariableTypeEnum;
+}
+/**
+ * 
+ * @export
  * @interface VariableResponse
  */
 export interface VariableResponse {
@@ -13567,28 +13653,16 @@ export interface VariableResponse {
     'updated_at'?: string;
     /**
      * 
-     * @type {EnvironmentVariableOverride}
+     * @type {VariableOverride}
      * @memberof VariableResponse
      */
-    'overridden_variable'?: EnvironmentVariableOverride;
+    'overridden_variable'?: VariableOverride;
     /**
      * 
-     * @type {EnvironmentVariableAlias}
+     * @type {VariableAlias}
      * @memberof VariableResponse
      */
-    'aliased_variable'?: EnvironmentVariableAlias;
-    /**
-     * 
-     * @type {SecretOverride}
-     * @memberof VariableResponse
-     */
-    'overridden_secret'?: SecretOverride;
-    /**
-     * 
-     * @type {SecretAlias}
-     * @memberof VariableResponse
-     */
-    'aliased_secret'?: SecretAlias;
+    'aliased_variable'?: VariableAlias;
     /**
      * 
      * @type {APIVariableScopeEnum}
@@ -13634,28 +13708,16 @@ export interface VariableResponse {
 export interface VariableResponseAllOf {
     /**
      * 
-     * @type {EnvironmentVariableOverride}
+     * @type {VariableOverride}
      * @memberof VariableResponseAllOf
      */
-    'overridden_variable'?: EnvironmentVariableOverride;
+    'overridden_variable'?: VariableOverride;
     /**
      * 
-     * @type {EnvironmentVariableAlias}
+     * @type {VariableAlias}
      * @memberof VariableResponseAllOf
      */
-    'aliased_variable'?: EnvironmentVariableAlias;
-    /**
-     * 
-     * @type {SecretOverride}
-     * @memberof VariableResponseAllOf
-     */
-    'overridden_secret'?: SecretOverride;
-    /**
-     * 
-     * @type {SecretAlias}
-     * @memberof VariableResponseAllOf
-     */
-    'aliased_secret'?: SecretAlias;
+    'aliased_variable'?: VariableAlias;
     /**
      * 
      * @type {APIVariableScopeEnum}
@@ -43697,7 +43759,7 @@ export const VariableMainCallsApiAxiosParamCreator = function (configuration?: C
     return {
         /**
          * - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key. - You have to specify a key in the request body and the scope and the parent id of the alias - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
-         * @summary Create a variable alias
+         * @summary WIP: Create a variable alias
          * @param {string} variableId Variable ID
          * @param {VariableAliasRequest} [variableAliasRequest] 
          * @param {*} [options] Override http request option.
@@ -43749,7 +43811,7 @@ export const VariableMainCallsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key. - You have to specify a key in the request body and the scope and the parent id of the alias - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
-         * @summary Create a variable alias
+         * @summary WIP: Create a variable alias
          * @param {string} variableId Variable ID
          * @param {VariableAliasRequest} [variableAliasRequest] 
          * @param {*} [options] Override http request option.
@@ -43771,7 +43833,7 @@ export const VariableMainCallsApiFactory = function (configuration?: Configurati
     return {
         /**
          * - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key. - You have to specify a key in the request body and the scope and the parent id of the alias - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
-         * @summary Create a variable alias
+         * @summary WIP: Create a variable alias
          * @param {string} variableId Variable ID
          * @param {VariableAliasRequest} [variableAliasRequest] 
          * @param {*} [options] Override http request option.
@@ -43792,7 +43854,7 @@ export const VariableMainCallsApiFactory = function (configuration?: Configurati
 export class VariableMainCallsApi extends BaseAPI {
     /**
      * - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key. - You have to specify a key in the request body and the scope and the parent id of the alias - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
-     * @summary Create a variable alias
+     * @summary WIP: Create a variable alias
      * @param {string} variableId Variable ID
      * @param {VariableAliasRequest} [variableAliasRequest] 
      * @param {*} [options] Override http request option.
