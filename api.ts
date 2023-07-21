@@ -13446,13 +13446,13 @@ export interface VariableAliasRequest {
      * @type {APIVariableScopeEnum}
      * @memberof VariableAliasRequest
      */
-    'aliasScope': APIVariableScopeEnum;
+    'alias_scope': APIVariableScopeEnum;
     /**
      * 
      * @type {string}
      * @memberof VariableAliasRequest
      */
-    'aliasParentId': string;
+    'alias_parent_id': string;
 }
 /**
  * 
@@ -13596,6 +13596,31 @@ export interface VariableOverride {
      * @memberof VariableOverride
      */
     'variable_type': APIVariableTypeEnum;
+}
+/**
+ * 
+ * @export
+ * @interface VariableOverrideRequest
+ */
+export interface VariableOverrideRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableOverrideRequest
+     */
+    'value': string;
+    /**
+     * 
+     * @type {APIVariableScopeEnum}
+     * @memberof VariableOverrideRequest
+     */
+    'alias_scope': APIVariableScopeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableOverrideRequest
+     */
+    'alias_parent_id': string;
 }
 /**
  * 
@@ -43729,7 +43754,7 @@ export const VariableMainCallsApiAxiosParamCreator = function (configuration?: C
     return {
         /**
          * - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key. - You have to specify a key in the request body and the scope and the parent id of the alias - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
-         * @summary WIP: Create a variable alias
+         * @summary Create a variable alias
          * @param {string} variableId Variable ID
          * @param {VariableAliasRequest} [variableAliasRequest] 
          * @param {*} [options] Override http request option.
@@ -43769,6 +43794,48 @@ export const VariableMainCallsApiAxiosParamCreator = function (configuration?: C
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * - Allows you to override a variable that has a higher scope. - You have to specify a value in the request body and the scope and the parent id of the variable to alias - The system will create a new environment variable at project level with the same key as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the overridden_variable will be exposed in the \"overridden_variable\" or in the \"overridden_secret\" field of the newly created variable 
+         * @summary Create a variable override
+         * @param {string} variableId Variable ID
+         * @param {VariableOverrideRequest} [variableOverrideRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createVariableOverride: async (variableId: string, variableOverrideRequest?: VariableOverrideRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'variableId' is not null or undefined
+            assertParamExists('createVariableOverride', 'variableId', variableId)
+            const localVarPath = `/variable/{variableId}/override`
+                .replace(`{${"variableId"}}`, encodeURIComponent(String(variableId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(variableOverrideRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -43781,7 +43848,7 @@ export const VariableMainCallsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key. - You have to specify a key in the request body and the scope and the parent id of the alias - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
-         * @summary WIP: Create a variable alias
+         * @summary Create a variable alias
          * @param {string} variableId Variable ID
          * @param {VariableAliasRequest} [variableAliasRequest] 
          * @param {*} [options] Override http request option.
@@ -43789,6 +43856,18 @@ export const VariableMainCallsApiFp = function(configuration?: Configuration) {
          */
         async createVariableAlias(variableId: string, variableAliasRequest?: VariableAliasRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VariableResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createVariableAlias(variableId, variableAliasRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * - Allows you to override a variable that has a higher scope. - You have to specify a value in the request body and the scope and the parent id of the variable to alias - The system will create a new environment variable at project level with the same key as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the overridden_variable will be exposed in the \"overridden_variable\" or in the \"overridden_secret\" field of the newly created variable 
+         * @summary Create a variable override
+         * @param {string} variableId Variable ID
+         * @param {VariableOverrideRequest} [variableOverrideRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createVariableOverride(variableId: string, variableOverrideRequest?: VariableOverrideRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VariableResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createVariableOverride(variableId, variableOverrideRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -43803,7 +43882,7 @@ export const VariableMainCallsApiFactory = function (configuration?: Configurati
     return {
         /**
          * - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key. - You have to specify a key in the request body and the scope and the parent id of the alias - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
-         * @summary WIP: Create a variable alias
+         * @summary Create a variable alias
          * @param {string} variableId Variable ID
          * @param {VariableAliasRequest} [variableAliasRequest] 
          * @param {*} [options] Override http request option.
@@ -43811,6 +43890,17 @@ export const VariableMainCallsApiFactory = function (configuration?: Configurati
          */
         createVariableAlias(variableId: string, variableAliasRequest?: VariableAliasRequest, options?: any): AxiosPromise<VariableResponse> {
             return localVarFp.createVariableAlias(variableId, variableAliasRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * - Allows you to override a variable that has a higher scope. - You have to specify a value in the request body and the scope and the parent id of the variable to alias - The system will create a new environment variable at project level with the same key as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the overridden_variable will be exposed in the \"overridden_variable\" or in the \"overridden_secret\" field of the newly created variable 
+         * @summary Create a variable override
+         * @param {string} variableId Variable ID
+         * @param {VariableOverrideRequest} [variableOverrideRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createVariableOverride(variableId: string, variableOverrideRequest?: VariableOverrideRequest, options?: any): AxiosPromise<VariableResponse> {
+            return localVarFp.createVariableOverride(variableId, variableOverrideRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -43824,7 +43914,7 @@ export const VariableMainCallsApiFactory = function (configuration?: Configurati
 export class VariableMainCallsApi extends BaseAPI {
     /**
      * - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key. - You have to specify a key in the request body and the scope and the parent id of the alias - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
-     * @summary WIP: Create a variable alias
+     * @summary Create a variable alias
      * @param {string} variableId Variable ID
      * @param {VariableAliasRequest} [variableAliasRequest] 
      * @param {*} [options] Override http request option.
@@ -43833,6 +43923,19 @@ export class VariableMainCallsApi extends BaseAPI {
      */
     public createVariableAlias(variableId: string, variableAliasRequest?: VariableAliasRequest, options?: AxiosRequestConfig) {
         return VariableMainCallsApiFp(this.configuration).createVariableAlias(variableId, variableAliasRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * - Allows you to override a variable that has a higher scope. - You have to specify a value in the request body and the scope and the parent id of the variable to alias - The system will create a new environment variable at project level with the same key as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the overridden_variable will be exposed in the \"overridden_variable\" or in the \"overridden_secret\" field of the newly created variable 
+     * @summary Create a variable override
+     * @param {string} variableId Variable ID
+     * @param {VariableOverrideRequest} [variableOverrideRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VariableMainCallsApi
+     */
+    public createVariableOverride(variableId: string, variableOverrideRequest?: VariableOverrideRequest, options?: AxiosRequestConfig) {
+        return VariableMainCallsApiFp(this.configuration).createVariableOverride(variableId, variableOverrideRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
