@@ -13457,6 +13457,25 @@ export interface VariableAliasRequest {
 /**
  * 
  * @export
+ * @interface VariableEditRequest
+ */
+export interface VariableEditRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableEditRequest
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableEditRequest
+     */
+    'value': string;
+}
+/**
+ * 
+ * @export
  * @interface VariableImport
  */
 export interface VariableImport {
@@ -13625,6 +13644,49 @@ export interface VariableOverrideRequest {
 /**
  * 
  * @export
+ * @interface VariableRequest
+ */
+export interface VariableRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableRequest
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableRequest
+     */
+    'value': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableRequest
+     */
+    'mount_path'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof VariableRequest
+     */
+    'is_secret': boolean;
+    /**
+     * 
+     * @type {APIVariableScopeEnum}
+     * @memberof VariableRequest
+     */
+    'variable_scope': APIVariableScopeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableRequest
+     */
+    'variable_parent_id': string;
+}
+/**
+ * 
+ * @export
  * @interface VariableResponse
  */
 export interface VariableResponse {
@@ -13749,6 +13811,19 @@ export interface VariableResponseAllOf {
      * @memberof VariableResponseAllOf
      */
     'owned_by'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface VariableResponseList
+ */
+export interface VariableResponseList {
+    /**
+     * 
+     * @type {Array<VariableResponse>}
+     * @memberof VariableResponseList
+     */
+    'results'?: Array<VariableResponse>;
 }
 /**
  * 
@@ -43753,6 +43828,44 @@ export class UserSignUpApi extends BaseAPI {
 export const VariableMainCallsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * - Create a variable at the level defined in the request body. 
+         * @summary Create a variable
+         * @param {VariableRequest} [variableRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createVariable: async (variableRequest?: VariableRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/variable`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(variableRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key. - You have to specify a key in the request body and the scope and the parent id of the alias - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
          * @summary Create a variable alias
          * @param {string} variableId Variable ID
@@ -43836,6 +43949,137 @@ export const VariableMainCallsApiAxiosParamCreator = function (configuration?: C
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * - To delete a variable - You can\'t delete a BUILT_IN variable - If you delete a variable having override or alias, the associated override/alias will be deleted as well 
+         * @summary Delete a variable
+         * @param {string} variableId Variable ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteVariable: async (variableId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'variableId' is not null or undefined
+            assertParamExists('deleteVariable', 'variableId', variableId)
+            const localVarPath = `/variable/{variableId}`
+                .replace(`{${"variableId"}}`, encodeURIComponent(String(variableId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value 
+         * @summary Edit a variable
+         * @param {string} variableId Variable ID
+         * @param {VariableEditRequest} variableEditRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editVariable: async (variableId: string, variableEditRequest: VariableEditRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'variableId' is not null or undefined
+            assertParamExists('editVariable', 'variableId', variableId)
+            // verify required parameter 'variableEditRequest' is not null or undefined
+            assertParamExists('editVariable', 'variableEditRequest', variableEditRequest)
+            const localVarPath = `/variable/{variableId}`
+                .replace(`{${"variableId"}}`, encodeURIComponent(String(variableId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(variableEditRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns a list of variables
+         * @summary List variables
+         * @param {string} [parentId] the id where the variable will be added
+         * @param {APIVariableScopeEnum} [scope] the scope of the parent where the variable will be added
+         * @param {boolean} [isSecret] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listVariables: async (parentId?: string, scope?: APIVariableScopeEnum, isSecret?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/variable`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (parentId !== undefined) {
+                localVarQueryParameter['parent_id'] = parentId;
+            }
+
+            if (scope !== undefined) {
+                localVarQueryParameter['scope'] = scope;
+            }
+
+            if (isSecret !== undefined) {
+                localVarQueryParameter['is_secret'] = isSecret;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -43846,6 +44090,17 @@ export const VariableMainCallsApiAxiosParamCreator = function (configuration?: C
 export const VariableMainCallsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = VariableMainCallsApiAxiosParamCreator(configuration)
     return {
+        /**
+         * - Create a variable at the level defined in the request body. 
+         * @summary Create a variable
+         * @param {VariableRequest} [variableRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createVariable(variableRequest?: VariableRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VariableResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createVariable(variableRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
         /**
          * - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key. - You have to specify a key in the request body and the scope and the parent id of the alias - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
          * @summary Create a variable alias
@@ -43870,6 +44125,42 @@ export const VariableMainCallsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createVariableOverride(variableId, variableOverrideRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * - To delete a variable - You can\'t delete a BUILT_IN variable - If you delete a variable having override or alias, the associated override/alias will be deleted as well 
+         * @summary Delete a variable
+         * @param {string} variableId Variable ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteVariable(variableId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteVariable(variableId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value 
+         * @summary Edit a variable
+         * @param {string} variableId Variable ID
+         * @param {VariableEditRequest} variableEditRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editVariable(variableId: string, variableEditRequest: VariableEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VariableResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editVariable(variableId, variableEditRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Returns a list of variables
+         * @summary List variables
+         * @param {string} [parentId] the id where the variable will be added
+         * @param {APIVariableScopeEnum} [scope] the scope of the parent where the variable will be added
+         * @param {boolean} [isSecret] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listVariables(parentId?: string, scope?: APIVariableScopeEnum, isSecret?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VariableResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listVariables(parentId, scope, isSecret, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -43880,6 +44171,16 @@ export const VariableMainCallsApiFp = function(configuration?: Configuration) {
 export const VariableMainCallsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = VariableMainCallsApiFp(configuration)
     return {
+        /**
+         * - Create a variable at the level defined in the request body. 
+         * @summary Create a variable
+         * @param {VariableRequest} [variableRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createVariable(variableRequest?: VariableRequest, options?: any): AxiosPromise<VariableResponse> {
+            return localVarFp.createVariable(variableRequest, options).then((request) => request(axios, basePath));
+        },
         /**
          * - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key. - You have to specify a key in the request body and the scope and the parent id of the alias - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
          * @summary Create a variable alias
@@ -43902,6 +44203,39 @@ export const VariableMainCallsApiFactory = function (configuration?: Configurati
         createVariableOverride(variableId: string, variableOverrideRequest?: VariableOverrideRequest, options?: any): AxiosPromise<VariableResponse> {
             return localVarFp.createVariableOverride(variableId, variableOverrideRequest, options).then((request) => request(axios, basePath));
         },
+        /**
+         * - To delete a variable - You can\'t delete a BUILT_IN variable - If you delete a variable having override or alias, the associated override/alias will be deleted as well 
+         * @summary Delete a variable
+         * @param {string} variableId Variable ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteVariable(variableId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteVariable(variableId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value 
+         * @summary Edit a variable
+         * @param {string} variableId Variable ID
+         * @param {VariableEditRequest} variableEditRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editVariable(variableId: string, variableEditRequest: VariableEditRequest, options?: any): AxiosPromise<VariableResponse> {
+            return localVarFp.editVariable(variableId, variableEditRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns a list of variables
+         * @summary List variables
+         * @param {string} [parentId] the id where the variable will be added
+         * @param {APIVariableScopeEnum} [scope] the scope of the parent where the variable will be added
+         * @param {boolean} [isSecret] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listVariables(parentId?: string, scope?: APIVariableScopeEnum, isSecret?: boolean, options?: any): AxiosPromise<VariableResponseList> {
+            return localVarFp.listVariables(parentId, scope, isSecret, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -43912,6 +44246,18 @@ export const VariableMainCallsApiFactory = function (configuration?: Configurati
  * @extends {BaseAPI}
  */
 export class VariableMainCallsApi extends BaseAPI {
+    /**
+     * - Create a variable at the level defined in the request body. 
+     * @summary Create a variable
+     * @param {VariableRequest} [variableRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VariableMainCallsApi
+     */
+    public createVariable(variableRequest?: VariableRequest, options?: AxiosRequestConfig) {
+        return VariableMainCallsApiFp(this.configuration).createVariable(variableRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key. - You have to specify a key in the request body and the scope and the parent id of the alias - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
      * @summary Create a variable alias
@@ -43936,6 +44282,45 @@ export class VariableMainCallsApi extends BaseAPI {
      */
     public createVariableOverride(variableId: string, variableOverrideRequest?: VariableOverrideRequest, options?: AxiosRequestConfig) {
         return VariableMainCallsApiFp(this.configuration).createVariableOverride(variableId, variableOverrideRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * - To delete a variable - You can\'t delete a BUILT_IN variable - If you delete a variable having override or alias, the associated override/alias will be deleted as well 
+     * @summary Delete a variable
+     * @param {string} variableId Variable ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VariableMainCallsApi
+     */
+    public deleteVariable(variableId: string, options?: AxiosRequestConfig) {
+        return VariableMainCallsApiFp(this.configuration).deleteVariable(variableId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value 
+     * @summary Edit a variable
+     * @param {string} variableId Variable ID
+     * @param {VariableEditRequest} variableEditRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VariableMainCallsApi
+     */
+    public editVariable(variableId: string, variableEditRequest: VariableEditRequest, options?: AxiosRequestConfig) {
+        return VariableMainCallsApiFp(this.configuration).editVariable(variableId, variableEditRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns a list of variables
+     * @summary List variables
+     * @param {string} [parentId] the id where the variable will be added
+     * @param {APIVariableScopeEnum} [scope] the scope of the parent where the variable will be added
+     * @param {boolean} [isSecret] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VariableMainCallsApi
+     */
+    public listVariables(parentId?: string, scope?: APIVariableScopeEnum, isSecret?: boolean, options?: AxiosRequestConfig) {
+        return VariableMainCallsApiFp(this.configuration).listVariables(parentId, scope, isSecret, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
