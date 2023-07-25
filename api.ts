@@ -307,6 +307,18 @@ export interface ApplicationAdvancedSettings {
      */
     'build.timeout_max_sec'?: number;
     /**
+     * define the max cpu resources (in milli)
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'build.cpu_max_in_milli'?: number;
+    /**
+     * define the max ram resources (in gib)
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'build.ram_max_in_gib'?: number;
+    /**
      * 
      * @type {number}
      * @memberof ApplicationAdvancedSettings
@@ -403,89 +415,17 @@ export interface ApplicationAdvancedSettings {
      */
     'network.ingress.enable_sticky_session'?: boolean;
     /**
-     * * `NONE` disable readiness probe * `TCP` enable TCP readiness probe * `HTTP` enable HTTP readiness probe 
-     * @type {string}
-     * @memberof ApplicationAdvancedSettings
-     */
-    'readiness_probe.type'?: ApplicationAdvancedSettingsReadinessProbeTypeEnum;
-    /**
-     * HTTP GET path to check status (must returns 2xx E.g \"/healtz\") - only usable with TYPE = HTTP
-     * @type {string}
-     * @memberof ApplicationAdvancedSettings
-     */
-    'readiness_probe.http_get.path'?: string;
-    /**
-     * Delay before liveness probe is initiated
+     * Sets a timeout (in seconds) for transmitting a request to the grpc server
      * @type {number}
      * @memberof ApplicationAdvancedSettings
      */
-    'readiness_probe.initial_delay_seconds'?: number;
+    'network.ingress.grpc_send_timeout_seconds'?: number;
     /**
-     * How often to perform the probe
+     * Sets a timeout (in seconds) for transmitting a request to the grpc server
      * @type {number}
      * @memberof ApplicationAdvancedSettings
      */
-    'readiness_probe.period_seconds'?: number;
-    /**
-     * When the probe times out
-     * @type {number}
-     * @memberof ApplicationAdvancedSettings
-     */
-    'readiness_probe.timeout_seconds'?: number;
-    /**
-     * Minimum consecutive successes for the probe to be considered successful after having failed.
-     * @type {number}
-     * @memberof ApplicationAdvancedSettings
-     */
-    'readiness_probe.success_threshold'?: number;
-    /**
-     * Minimum consecutive failures for the probe to be considered failed after having succeeded.
-     * @type {number}
-     * @memberof ApplicationAdvancedSettings
-     */
-    'readiness_probe.failure_threshold'?: number;
-    /**
-     * * `NONE` disable liveness probe * `TCP` enable TCP liveness probe * `HTTP` enable HTTP liveness probe 
-     * @type {string}
-     * @memberof ApplicationAdvancedSettings
-     */
-    'liveness_probe.type'?: ApplicationAdvancedSettingsLivenessProbeTypeEnum;
-    /**
-     * HTTP GET path to check status (must returns 2xx E.g \"/healtz\") - only usable with TYPE = HTTP
-     * @type {string}
-     * @memberof ApplicationAdvancedSettings
-     */
-    'liveness_probe.http_get.path'?: string;
-    /**
-     * Delay before liveness probe is initiated
-     * @type {number}
-     * @memberof ApplicationAdvancedSettings
-     */
-    'liveness_probe.initial_delay_seconds'?: number;
-    /**
-     * How often to perform the probe
-     * @type {number}
-     * @memberof ApplicationAdvancedSettings
-     */
-    'liveness_probe.period_seconds'?: number;
-    /**
-     * When the probe times out
-     * @type {number}
-     * @memberof ApplicationAdvancedSettings
-     */
-    'liveness_probe.timeout_seconds'?: number;
-    /**
-     * Minimum consecutive successes for the probe to be considered successful after having failed.
-     * @type {number}
-     * @memberof ApplicationAdvancedSettings
-     */
-    'liveness_probe.success_threshold'?: number;
-    /**
-     * Minimum consecutive failures for the probe to be considered failed after having succeeded.
-     * @type {number}
-     * @memberof ApplicationAdvancedSettings
-     */
-    'liveness_probe.failure_threshold'?: number;
+    'network.ingress.grpc_read_timeout_seconds'?: number;
     /**
      * Percentage value of cpu usage at which point pods should scale up.
      * @type {number}
@@ -507,24 +447,6 @@ export interface ApplicationAdvancedSettings {
 export enum ApplicationAdvancedSettingsDeploymentUpdateStrategyTypeEnum {
     ROLLING_UPDATE = 'RollingUpdate',
     RECREATE = 'Recreate'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ApplicationAdvancedSettingsReadinessProbeTypeEnum {
-    NONE = 'NONE',
-    TCP = 'TCP',
-    HTTP = 'HTTP'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ApplicationAdvancedSettingsLivenessProbeTypeEnum {
-    NONE = 'NONE',
-    TCP = 'TCP',
-    HTTP = 'HTTP'
 }
 
 /**
@@ -3362,6 +3284,18 @@ export interface ContainerAdvancedSettings {
      */
     'network.ingress.proxy_read_timeout_seconds'?: number;
     /**
+     * Sets a timeout (in seconds) for transmitting a request to the grpc server
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'network.ingress.grpc_send_timeout_seconds'?: number;
+    /**
+     * Sets a timeout (in seconds) for transmitting a request to the grpc server
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'network.ingress.grpc_read_timeout_seconds'?: number;
+    /**
      * list of source ranges to allow access to ingress proxy.  This property can be used to whitelist source IP ranges for ingress proxy. The value is a comma separated list of CIDRs, e.g. 10.0.0.0/24,172.10.0.1 To allow all source ranges, set 0.0.0.0/0. 
      * @type {string}
      * @memberof ContainerAdvancedSettings
@@ -3386,90 +3320,6 @@ export interface ContainerAdvancedSettings {
      */
     'network.ingress.enable_sticky_session'?: boolean;
     /**
-     * * `NONE` disable readiness probe * `TCP` enable TCP readiness probe * `HTTP` enable HTTP readiness probe 
-     * @type {string}
-     * @memberof ContainerAdvancedSettings
-     */
-    'readiness_probe.type'?: ContainerAdvancedSettingsReadinessProbeTypeEnum;
-    /**
-     * HTTP GET path to check status (must returns 2xx E.g \"/healtz\") - only usable with TYPE = HTTP
-     * @type {string}
-     * @memberof ContainerAdvancedSettings
-     */
-    'readiness_probe.http_get.path'?: string;
-    /**
-     * Delay before liveness probe is initiated
-     * @type {number}
-     * @memberof ContainerAdvancedSettings
-     */
-    'readiness_probe.initial_delay_seconds'?: number;
-    /**
-     * How often to perform the probe
-     * @type {number}
-     * @memberof ContainerAdvancedSettings
-     */
-    'readiness_probe.period_seconds'?: number;
-    /**
-     * When the probe times out
-     * @type {number}
-     * @memberof ContainerAdvancedSettings
-     */
-    'readiness_probe.timeout_seconds'?: number;
-    /**
-     * Minimum consecutive successes for the probe to be considered successful after having failed.
-     * @type {number}
-     * @memberof ContainerAdvancedSettings
-     */
-    'readiness_probe.success_threshold'?: number;
-    /**
-     * Minimum consecutive failures for the probe to be considered failed after having succeeded.
-     * @type {number}
-     * @memberof ContainerAdvancedSettings
-     */
-    'readiness_probe.failure_threshold'?: number;
-    /**
-     * * `NONE` disable liveness probe * `TCP` enable TCP liveness probe * `HTTP` enable HTTP liveness probe 
-     * @type {string}
-     * @memberof ContainerAdvancedSettings
-     */
-    'liveness_probe.type'?: ContainerAdvancedSettingsLivenessProbeTypeEnum;
-    /**
-     * HTTP GET path to check status (must returns 2xx E.g \"/healtz\") - only usable with TYPE = HTTP
-     * @type {string}
-     * @memberof ContainerAdvancedSettings
-     */
-    'liveness_probe.http_get.path'?: string;
-    /**
-     * Delay before liveness probe is initiated
-     * @type {number}
-     * @memberof ContainerAdvancedSettings
-     */
-    'liveness_probe.initial_delay_seconds'?: number;
-    /**
-     * How often to perform the probe
-     * @type {number}
-     * @memberof ContainerAdvancedSettings
-     */
-    'liveness_probe.period_seconds'?: number;
-    /**
-     * When the probe times out
-     * @type {number}
-     * @memberof ContainerAdvancedSettings
-     */
-    'liveness_probe.timeout_seconds'?: number;
-    /**
-     * Minimum consecutive successes for the probe to be considered successful after having failed.
-     * @type {number}
-     * @memberof ContainerAdvancedSettings
-     */
-    'liveness_probe.success_threshold'?: number;
-    /**
-     * Minimum consecutive failures for the probe to be considered failed after having succeeded.
-     * @type {number}
-     * @memberof ContainerAdvancedSettings
-     */
-    'liveness_probe.failure_threshold'?: number;
-    /**
      * Allows you to set an existing Kubernetes service account name 
      * @type {string}
      * @memberof ContainerAdvancedSettings
@@ -3490,24 +3340,6 @@ export interface ContainerAdvancedSettings {
 export enum ContainerAdvancedSettingsDeploymentUpdateStrategyTypeEnum {
     ROLLING_UPDATE = 'RollingUpdate',
     RECREATE = 'Recreate'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ContainerAdvancedSettingsReadinessProbeTypeEnum {
-    NONE = 'NONE',
-    TCP = 'TCP',
-    HTTP = 'HTTP'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ContainerAdvancedSettingsLivenessProbeTypeEnum {
-    NONE = 'NONE',
-    TCP = 'TCP',
-    HTTP = 'HTTP'
 }
 
 /**
@@ -8560,6 +8392,24 @@ export enum InvoiceStatusEnum {
  */
 export interface JobAdvancedSettings {
     /**
+     * define the max timeout for the build
+     * @type {number}
+     * @memberof JobAdvancedSettings
+     */
+    'build.timeout_max_sec'?: number;
+    /**
+     * define the max cpu resources (in milli)
+     * @type {number}
+     * @memberof JobAdvancedSettings
+     */
+    'build.cpu_max_in_milli'?: number;
+    /**
+     * define the max ram resources (in gib)
+     * @type {number}
+     * @memberof JobAdvancedSettings
+     */
+    'build.ram_max_in_gib'?: number;
+    /**
      * define how long in seconds an application is supposed to be stopped gracefully
      * @type {number}
      * @memberof JobAdvancedSettings
@@ -8590,116 +8440,12 @@ export interface JobAdvancedSettings {
      */
     'cronjob.success_jobs_history_limit'?: number;
     /**
-     * `NONE` disable readiness probe `TCP` enable TCP readiness probe `HTTP` enable HTTP readiness probe 
-     * @type {string}
-     * @memberof JobAdvancedSettings
-     */
-    'readiness_probe.type'?: JobAdvancedSettingsReadinessProbeTypeEnum;
-    /**
-     * HTTP GET path to check status (must returns 2xx E.g \"/healtz\") - only usable with TYPE = HTTP
-     * @type {string}
-     * @memberof JobAdvancedSettings
-     */
-    'readiness_probe.http_get.path'?: string;
-    /**
-     * Delay before liveness probe is initiated
-     * @type {number}
-     * @memberof JobAdvancedSettings
-     */
-    'readiness_probe.initial_delay_seconds'?: number;
-    /**
-     * How often to perform the probe
-     * @type {number}
-     * @memberof JobAdvancedSettings
-     */
-    'readiness_probe.period_seconds'?: number;
-    /**
-     * When the probe times out
-     * @type {number}
-     * @memberof JobAdvancedSettings
-     */
-    'readiness_probe.timeout_seconds'?: number;
-    /**
-     * Minimum consecutive successes for the probe to be considered successful after having failed.
-     * @type {number}
-     * @memberof JobAdvancedSettings
-     */
-    'readiness_probe.success_threshold'?: number;
-    /**
-     * Minimum consecutive failures for the probe to be considered failed after having succeeded.
-     * @type {number}
-     * @memberof JobAdvancedSettings
-     */
-    'readiness_probe.failure_threshold'?: number;
-    /**
-     * `NONE` disable liveness probe `TCP` enable TCP liveness probe `HTTP` enable HTTP liveness probe 
-     * @type {string}
-     * @memberof JobAdvancedSettings
-     */
-    'liveness_probe.type'?: JobAdvancedSettingsLivenessProbeTypeEnum;
-    /**
-     * HTTP GET path to check status (must returns 2xx E.g \"/healtz\") - only usable with TYPE = HTTP
-     * @type {string}
-     * @memberof JobAdvancedSettings
-     */
-    'liveness_probe.http_get.path'?: string;
-    /**
-     * Delay before liveness probe is initiated
-     * @type {number}
-     * @memberof JobAdvancedSettings
-     */
-    'liveness_probe.initial_delay_seconds'?: number;
-    /**
-     * How often to perform the probe
-     * @type {number}
-     * @memberof JobAdvancedSettings
-     */
-    'liveness_probe.period_seconds'?: number;
-    /**
-     * When the probe times out
-     * @type {number}
-     * @memberof JobAdvancedSettings
-     */
-    'liveness_probe.timeout_seconds'?: number;
-    /**
-     * Minimum consecutive successes for the probe to be considered successful after having failed.
-     * @type {number}
-     * @memberof JobAdvancedSettings
-     */
-    'liveness_probe.success_threshold'?: number;
-    /**
-     * Minimum consecutive failures for the probe to be considered failed after having succeeded.
-     * @type {number}
-     * @memberof JobAdvancedSettings
-     */
-    'liveness_probe.failure_threshold'?: number;
-    /**
      * Allows you to set an existing Kubernetes service account name 
      * @type {string}
      * @memberof JobAdvancedSettings
      */
     'security.service_account_name'?: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum JobAdvancedSettingsReadinessProbeTypeEnum {
-    NONE = 'NONE',
-    TCP = 'TCP',
-    HTTP = 'HTTP'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum JobAdvancedSettingsLivenessProbeTypeEnum {
-    NONE = 'NONE',
-    TCP = 'TCP',
-    HTTP = 'HTTP'
-}
-
 /**
  * 
  * @export
