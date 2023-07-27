@@ -11200,7 +11200,9 @@ export enum PlanEnum {
 
 export enum PortProtocolEnum {
     HTTP = 'HTTP',
-    GRPC = 'GRPC'
+    GRPC = 'GRPC',
+    TCP = 'TCP',
+    UDP = 'UDP'
 }
 
 /**
