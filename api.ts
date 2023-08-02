@@ -283,6 +283,18 @@ export interface ApplicationAdvancedSettings {
      */
     'deployment.termination_grace_period_seconds'?: number;
     /**
+     * Set pod placement on specific Kubernetes nodes labels
+     * @type {{ [key: string]: string; }}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'deployment.affinity.node.required'?: { [key: string]: string; };
+    /**
+     * Define how you want pods affinity to behave: * `Preferred` allows, but does not require, pods of a given service are not co-located (or co-hosted) on a single node * `Requirred` ensures that the pods of a given service are not co-located (or co-hosted) on a single node (safer in term of availability but can be expensive depending on the number of replicas) 
+     * @type {string}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'deployment.antiaffinity.pod'?: ApplicationAdvancedSettingsDeploymentAntiaffinityPodEnum;
+    /**
      * * `RollingUpdate` gracefully rollout new versions, and automatically rollback if the new version fails to start * `Recreate` stop all current versions and create new ones once all old ones have been shutdown 
      * @type {string}
      * @memberof ApplicationAdvancedSettings
@@ -440,6 +452,14 @@ export interface ApplicationAdvancedSettings {
     'security.service_account_name'?: string;
 }
 
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ApplicationAdvancedSettingsDeploymentAntiaffinityPodEnum {
+    PREFERRED = 'Preferred',
+    REQUIRRED = 'Requirred'
+}
 /**
     * @export
     * @enum {string}
@@ -3194,6 +3214,18 @@ export interface ContainerAdvancedSettings {
      */
     'deployment.termination_grace_period_seconds'?: number;
     /**
+     * Set pod placement on specific Kubernetes nodes labels
+     * @type {{ [key: string]: string; }}
+     * @memberof ContainerAdvancedSettings
+     */
+    'deployment.affinity.node.required'?: { [key: string]: string; };
+    /**
+     * Define how you want pods affinity to behave: * `Preferred` allows, but does not require, pods of a given service are not co-located (or co-hosted) on a single node * `Requirred` ensures that the pods of a given service are not co-located (or co-hosted) on a single node (safer in term of availability but can be expensive depending on the number of replicas) 
+     * @type {string}
+     * @memberof ContainerAdvancedSettings
+     */
+    'deployment.antiaffinity.pod'?: ContainerAdvancedSettingsDeploymentAntiaffinityPodEnum;
+    /**
      * * `RollingUpdate` gracefully rollout new versions, and automatically rollback if the new version fails to start * `Recreate` stop all current versions and create new ones once all old ones have been shutdown 
      * @type {string}
      * @memberof ContainerAdvancedSettings
@@ -3333,6 +3365,14 @@ export interface ContainerAdvancedSettings {
     'hpa.cpu.average_utilization_percent'?: number;
 }
 
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ContainerAdvancedSettingsDeploymentAntiaffinityPodEnum {
+    PREFERRED = 'Preferred',
+    REQUIRRED = 'Requirred'
+}
 /**
     * @export
     * @enum {string}
@@ -8415,6 +8455,12 @@ export interface JobAdvancedSettings {
      * @memberof JobAdvancedSettings
      */
     'deployment.termination_grace_period_seconds'?: number;
+    /**
+     * Set pod placement on specific Kubernetes nodes labels
+     * @type {{ [key: string]: string; }}
+     * @memberof JobAdvancedSettings
+     */
+    'deployment.affinity.node.required'?: { [key: string]: string; };
     /**
      * 
      * @type {number}
