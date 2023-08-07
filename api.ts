@@ -264,13 +264,6 @@ export interface Application {
  */
 export interface ApplicationAdvancedSettings {
     /**
-     * please use `readiness_probe.initial_delay_seconds` and `liveness_probe.initial_delay_seconds` instead
-     * @type {number}
-     * @memberof ApplicationAdvancedSettings
-     * @deprecated
-     */
-    'deployment.delay_start_time_sec'?: number;
-    /**
      * disable custom domain check when deploying an application
      * @type {boolean}
      * @memberof ApplicationAdvancedSettings
