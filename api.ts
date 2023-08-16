@@ -7339,6 +7339,43 @@ export interface EnvironmentStatusList {
 /**
  * 
  * @export
+ * @interface EnvironmentStatuses
+ */
+export interface EnvironmentStatuses {
+    /**
+     * 
+     * @type {EnvironmentStatus}
+     * @memberof EnvironmentStatuses
+     */
+    'environment'?: EnvironmentStatus;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof EnvironmentStatuses
+     */
+    'applications'?: Array<Status>;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof EnvironmentStatuses
+     */
+    'containers'?: Array<Status>;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof EnvironmentStatuses
+     */
+    'jobs'?: Array<Status>;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof EnvironmentStatuses
+     */
+    'databases'?: Array<Status>;
+}
+/**
+ * 
+ * @export
  * @interface EnvironmentTotalNumber
  */
 export interface EnvironmentTotalNumber {
@@ -7990,45 +8027,8 @@ export interface InlineResponse200 {
     'environment'?: EnvironmentStatus;
     /**
      * 
-     * @type {Array<Status>}
-     * @memberof InlineResponse200
-     */
-    'applications'?: Array<Status>;
-    /**
-     * 
-     * @type {Array<Status>}
-     * @memberof InlineResponse200
-     */
-    'containers'?: Array<Status>;
-    /**
-     * 
-     * @type {Array<Status>}
-     * @memberof InlineResponse200
-     */
-    'jobs'?: Array<Status>;
-    /**
-     * 
-     * @type {Array<Status>}
-     * @memberof InlineResponse200
-     */
-    'databases'?: Array<Status>;
-}
-/**
- * 
- * @export
- * @interface InlineResponse2001
- */
-export interface InlineResponse2001 {
-    /**
-     * 
-     * @type {EnvironmentStatus}
-     * @memberof InlineResponse2001
-     */
-    'environment'?: EnvironmentStatus;
-    /**
-     * 
      * @type {DeploymentStageWithServiceStatusesList}
-     * @memberof InlineResponse2001
+     * @memberof InlineResponse200
      */
     'stages'?: DeploymentStageWithServiceStatusesList;
 }
@@ -33015,7 +33015,7 @@ export const EnvironmentMainCallsApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEnvironmentStatuses(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
+        async getEnvironmentStatuses(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentStatuses>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentStatuses(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -33026,7 +33026,7 @@ export const EnvironmentMainCallsApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEnvironmentStatusesWithStages(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2001>> {
+        async getEnvironmentStatusesWithStages(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentStatusesWithStages(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -33088,7 +33088,7 @@ export const EnvironmentMainCallsApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEnvironmentStatuses(environmentId: string, options?: any): AxiosPromise<InlineResponse200> {
+        getEnvironmentStatuses(environmentId: string, options?: any): AxiosPromise<EnvironmentStatuses> {
             return localVarFp.getEnvironmentStatuses(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -33098,7 +33098,7 @@ export const EnvironmentMainCallsApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEnvironmentStatusesWithStages(environmentId: string, options?: any): AxiosPromise<InlineResponse2001> {
+        getEnvironmentStatusesWithStages(environmentId: string, options?: any): AxiosPromise<InlineResponse200> {
             return localVarFp.getEnvironmentStatusesWithStages(environmentId, options).then((request) => request(axios, basePath));
         },
     };
