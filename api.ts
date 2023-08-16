@@ -7376,6 +7376,25 @@ export interface EnvironmentStatuses {
 /**
  * 
  * @export
+ * @interface EnvironmentStatusesWithStages
+ */
+export interface EnvironmentStatusesWithStages {
+    /**
+     * 
+     * @type {EnvironmentStatus}
+     * @memberof EnvironmentStatusesWithStages
+     */
+    'environment'?: EnvironmentStatus;
+    /**
+     * 
+     * @type {DeploymentStageWithServiceStatusesList}
+     * @memberof EnvironmentStatusesWithStages
+     */
+    'stages'?: DeploymentStageWithServiceStatusesList;
+}
+/**
+ * 
+ * @export
  * @interface EnvironmentTotalNumber
  */
 export interface EnvironmentTotalNumber {
@@ -8012,25 +8031,6 @@ export interface InlineObject {
      * @memberof InlineObject
      */
     'user_id': string;
-}
-/**
- * 
- * @export
- * @interface InlineResponse200
- */
-export interface InlineResponse200 {
-    /**
-     * 
-     * @type {EnvironmentStatus}
-     * @memberof InlineResponse200
-     */
-    'environment'?: EnvironmentStatus;
-    /**
-     * 
-     * @type {DeploymentStageWithServiceStatusesList}
-     * @memberof InlineResponse200
-     */
-    'stages'?: DeploymentStageWithServiceStatusesList;
 }
 /**
  * 
@@ -33026,7 +33026,7 @@ export const EnvironmentMainCallsApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getEnvironmentStatusesWithStages(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
+        async getEnvironmentStatusesWithStages(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentStatusesWithStages>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentStatusesWithStages(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -33098,7 +33098,7 @@ export const EnvironmentMainCallsApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEnvironmentStatusesWithStages(environmentId: string, options?: any): AxiosPromise<InlineResponse200> {
+        getEnvironmentStatusesWithStages(environmentId: string, options?: any): AxiosPromise<EnvironmentStatusesWithStages> {
             return localVarFp.getEnvironmentStatusesWithStages(environmentId, options).then((request) => request(axios, basePath));
         },
     };
