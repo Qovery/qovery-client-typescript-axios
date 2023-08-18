@@ -13225,7 +13225,7 @@ export interface VariableAlias {
  */
 export interface VariableAliasRequest {
     /**
-     * 
+     * the value to be used as Alias of the targeted environment variable.
      * @type {string}
      * @memberof VariableAliasRequest
      */
@@ -13237,7 +13237,7 @@ export interface VariableAliasRequest {
      */
     'alias_scope': APIVariableScopeEnum;
     /**
-     * 
+     * the id of the variable that is aliased.
      * @type {string}
      * @memberof VariableAliasRequest
      */
@@ -13250,13 +13250,13 @@ export interface VariableAliasRequest {
  */
 export interface VariableEditRequest {
     /**
-     * 
+     * the key of the environment variable
      * @type {string}
      * @memberof VariableEditRequest
      */
     'key': string;
     /**
-     * 
+     * the value of the environment variable
      * @type {string}
      * @memberof VariableEditRequest
      */
@@ -13369,25 +13369,25 @@ export interface VariableImportSuccessfulImportedVariables {
  */
 export interface VariableOverride {
     /**
-     * 
+     * The id of the overriden variable
      * @type {string}
      * @memberof VariableOverride
      */
     'id': string;
     /**
-     * 
+     * The key of the overriden variable
      * @type {string}
      * @memberof VariableOverride
      */
     'key': string;
     /**
-     * 
+     * The value of the overriden variable
      * @type {string}
      * @memberof VariableOverride
      */
     'value'?: string | null;
     /**
-     * 
+     * The mounth path of the overriden variable (only if environment variable type is \'file\')
      * @type {string}
      * @memberof VariableOverride
      */
@@ -13412,7 +13412,7 @@ export interface VariableOverride {
  */
 export interface VariableOverrideRequest {
     /**
-     * 
+     * the value to be used as Override of the targeted environment variable.
      * @type {string}
      * @memberof VariableOverrideRequest
      */
@@ -13422,13 +13422,13 @@ export interface VariableOverrideRequest {
      * @type {APIVariableScopeEnum}
      * @memberof VariableOverrideRequest
      */
-    'alias_scope': APIVariableScopeEnum;
+    'override_scope': APIVariableScopeEnum;
     /**
-     * 
+     * the id of the variable that is aliased.
      * @type {string}
      * @memberof VariableOverrideRequest
      */
-    'alias_parent_id': string;
+    'override_parent_id': string;
 }
 /**
  * 
@@ -13437,25 +13437,25 @@ export interface VariableOverrideRequest {
  */
 export interface VariableRequest {
     /**
-     * 
+     * the key of the environment variable
      * @type {string}
      * @memberof VariableRequest
      */
     'key': string;
     /**
-     * 
+     * the value of the environment variable
      * @type {string}
      * @memberof VariableRequest
      */
     'value': string;
     /**
-     * 
+     * the path where the file will be mounted (only if type =file)
      * @type {string}
      * @memberof VariableRequest
      */
     'mount_path'?: string | null;
     /**
-     * 
+     * if true, the variable will be considered as a secret and will not be accessible after its creation. Only your applications will be able to access its value at build and run time.
      * @type {boolean}
      * @memberof VariableRequest
      */
@@ -13467,7 +13467,7 @@ export interface VariableRequest {
      */
     'variable_scope': APIVariableScopeEnum;
     /**
-     * 
+     * based on the selected scope, it contains the ID of the service, environment or project where the variable is attached
      * @type {string}
      * @memberof VariableRequest
      */
@@ -13522,13 +13522,13 @@ export interface VariableResponse {
      */
     'variable_type'?: APIVariableTypeEnum;
     /**
-     * present only for `BUILT_IN` variable
+     * The id of the service referenced by this variable. present only for `BUILT_IN` variable
      * @type {string}
      * @memberof VariableResponse
      */
     'service_id'?: string;
     /**
-     * present only for `BUILT_IN` variable
+     * The name of the service referenced by this variable. present only for `BUILT_IN` variable
      * @type {string}
      * @memberof VariableResponse
      */
@@ -13577,13 +13577,13 @@ export interface VariableResponseAllOf {
      */
     'variable_type'?: APIVariableTypeEnum;
     /**
-     * present only for `BUILT_IN` variable
+     * The id of the service referenced by this variable. present only for `BUILT_IN` variable
      * @type {string}
      * @memberof VariableResponseAllOf
      */
     'service_id'?: string;
     /**
-     * present only for `BUILT_IN` variable
+     * The name of the service referenced by this variable. present only for `BUILT_IN` variable
      * @type {string}
      * @memberof VariableResponseAllOf
      */
@@ -15004,7 +15004,7 @@ export const ApplicationEnvironmentVariableApiAxiosParamCreator = function (conf
             };
         },
         /**
-         * - Allows you to add an alias at application level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at application level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at application level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at application level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - You can\'t create an alias on an alias 
          * @summary Create an environment variable alias at the application level
          * @param {string} applicationId Application ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -15288,7 +15288,7 @@ export const ApplicationEnvironmentVariableApiFp = function(configuration?: Conf
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * - Allows you to add an alias at application level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at application level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at application level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at application level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - You can\'t create an alias on an alias 
          * @summary Create an environment variable alias at the application level
          * @param {string} applicationId Application ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -15383,7 +15383,7 @@ export const ApplicationEnvironmentVariableApiFactory = function (configuration?
             return localVarFp.createApplicationEnvironmentVariable(applicationId, environmentVariableRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * - Allows you to add an alias at application level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at application level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at application level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at application level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - You can\'t create an alias on an alias 
          * @summary Create an environment variable alias at the application level
          * @param {string} applicationId Application ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -15474,7 +15474,7 @@ export class ApplicationEnvironmentVariableApi extends BaseAPI {
     }
 
     /**
-     * - Allows you to add an alias at application level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at application level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+     * - Allows you to add an alias at application level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at application level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - You can\'t create an alias on an alias 
      * @summary Create an environment variable alias at the application level
      * @param {string} applicationId Application ID
      * @param {string} environmentVariableId Environment Variable ID
@@ -17190,7 +17190,7 @@ export const ApplicationSecretApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         * - Allows you to add an alias at application level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at application level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at application level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at application level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - You can\'t create an alias on an alias 
          * @summary Create a secret alias at the application level
          * @param {string} applicationId Application ID
          * @param {string} secretId Secret ID
@@ -17432,7 +17432,7 @@ export const ApplicationSecretApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * - Allows you to add an alias at application level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at application level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at application level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at application level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - You can\'t create an alias on an alias 
          * @summary Create a secret alias at the application level
          * @param {string} applicationId Application ID
          * @param {string} secretId Secret ID
@@ -17515,7 +17515,7 @@ export const ApplicationSecretApiFactory = function (configuration?: Configurati
             return localVarFp.createApplicationSecret(applicationId, secretRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * - Allows you to add an alias at application level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at application level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at application level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at application level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - You can\'t create an alias on an alias 
          * @summary Create a secret alias at the application level
          * @param {string} applicationId Application ID
          * @param {string} secretId Secret ID
@@ -17595,7 +17595,7 @@ export class ApplicationSecretApi extends BaseAPI {
     }
 
     /**
-     * - Allows you to add an alias at application level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at application level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+     * - Allows you to add an alias at application level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at application level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - You can\'t create an alias on an alias 
      * @summary Create a secret alias at the application level
      * @param {string} applicationId Application ID
      * @param {string} secretId Secret ID
@@ -24841,7 +24841,7 @@ export const ContainerEnvironmentVariableApiAxiosParamCreator = function (config
             };
         },
         /**
-         * - Allows you to add an alias at container level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at container level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at container level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at container level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - You can\'t create an alias on an alias 
          * @summary Create an environment variable alias at the container level
          * @param {string} containerId Container ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -25125,7 +25125,7 @@ export const ContainerEnvironmentVariableApiFp = function(configuration?: Config
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * - Allows you to add an alias at container level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at container level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at container level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at container level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - You can\'t create an alias on an alias 
          * @summary Create an environment variable alias at the container level
          * @param {string} containerId Container ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -25220,7 +25220,7 @@ export const ContainerEnvironmentVariableApiFactory = function (configuration?: 
             return localVarFp.createContainerEnvironmentVariable(containerId, environmentVariableRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * - Allows you to add an alias at container level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at container level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at container level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at container level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - You can\'t create an alias on an alias 
          * @summary Create an environment variable alias at the container level
          * @param {string} containerId Container ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -25311,7 +25311,7 @@ export class ContainerEnvironmentVariableApi extends BaseAPI {
     }
 
     /**
-     * - Allows you to add an alias at container level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at container level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+     * - Allows you to add an alias at container level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at container level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - You can\'t create an alias on an alias 
      * @summary Create an environment variable alias at the container level
      * @param {string} containerId Container ID
      * @param {string} environmentVariableId Environment Variable ID
@@ -26693,7 +26693,7 @@ export const ContainerSecretApiAxiosParamCreator = function (configuration?: Con
             };
         },
         /**
-         * - Allows you to add an alias at container level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at container level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at container level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at container level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - You can\'t create an alias on an alias 
          * @summary Create a secret alias at the container level
          * @param {string} containerId Container ID
          * @param {string} secretId Secret ID
@@ -26935,7 +26935,7 @@ export const ContainerSecretApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * - Allows you to add an alias at container level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at container level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at container level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at container level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - You can\'t create an alias on an alias 
          * @summary Create a secret alias at the container level
          * @param {string} containerId Container ID
          * @param {string} secretId Secret ID
@@ -27018,7 +27018,7 @@ export const ContainerSecretApiFactory = function (configuration?: Configuration
             return localVarFp.createContainerSecret(containerId, secretRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * - Allows you to add an alias at container level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at container level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at container level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at container level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - You can\'t create an alias on an alias 
          * @summary Create a secret alias at the container level
          * @param {string} containerId Container ID
          * @param {string} secretId Secret ID
@@ -27098,7 +27098,7 @@ export class ContainerSecretApi extends BaseAPI {
     }
 
     /**
-     * - Allows you to add an alias at container level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at container level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+     * - Allows you to add an alias at container level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at container level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - You can\'t create an alias on an alias 
      * @summary Create a secret alias at the container level
      * @param {string} containerId Container ID
      * @param {string} secretId Secret ID
@@ -33235,7 +33235,7 @@ export const EnvironmentSecretApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         * - Allows you to add an alias at environment level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at environment level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at environment level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at environment level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - You can\'t create an alias on an alias 
          * @summary Create a secret alias at the environment level
          * @param {string} environmentId Environment ID
          * @param {string} secretId Secret ID
@@ -33477,7 +33477,7 @@ export const EnvironmentSecretApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * - Allows you to add an alias at environment level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at environment level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at environment level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at environment level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - You can\'t create an alias on an alias 
          * @summary Create a secret alias at the environment level
          * @param {string} environmentId Environment ID
          * @param {string} secretId Secret ID
@@ -33560,7 +33560,7 @@ export const EnvironmentSecretApiFactory = function (configuration?: Configurati
             return localVarFp.createEnvironmentSecret(environmentId, secretRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * - Allows you to add an alias at environment level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at environment level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at environment level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at environment level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - You can\'t create an alias on an alias 
          * @summary Create a secret alias at the environment level
          * @param {string} environmentId Environment ID
          * @param {string} secretId Secret ID
@@ -33640,7 +33640,7 @@ export class EnvironmentSecretApi extends BaseAPI {
     }
 
     /**
-     * - Allows you to add an alias at environment level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at environment level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+     * - Allows you to add an alias at environment level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at environment level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - You can\'t create an alias on an alias 
      * @summary Create a secret alias at the environment level
      * @param {string} environmentId Environment ID
      * @param {string} secretId Secret ID
@@ -33757,7 +33757,7 @@ export const EnvironmentVariableApiAxiosParamCreator = function (configuration?:
             };
         },
         /**
-         * - Allows you to add an alias at environment level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at environment level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at environment level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at environment level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - You can\'t create an alias on an alias 
          * @summary Create an environment variable alias at the environment level
          * @param {string} environmentId Environment ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -33999,7 +33999,7 @@ export const EnvironmentVariableApiFp = function(configuration?: Configuration) 
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * - Allows you to add an alias at environment level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at environment level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at environment level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at environment level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - You can\'t create an alias on an alias 
          * @summary Create an environment variable alias at the environment level
          * @param {string} environmentId Environment ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -34082,7 +34082,7 @@ export const EnvironmentVariableApiFactory = function (configuration?: Configura
             return localVarFp.createEnvironmentEnvironmentVariable(environmentId, environmentVariableRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * - Allows you to add an alias at environment level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at environment level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at environment level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at environment level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - You can\'t create an alias on an alias 
          * @summary Create an environment variable alias at the environment level
          * @param {string} environmentId Environment ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -34162,7 +34162,7 @@ export class EnvironmentVariableApi extends BaseAPI {
     }
 
     /**
-     * - Allows you to add an alias at environment level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at environment level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+     * - Allows you to add an alias at environment level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at environment level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - You can\'t create an alias on an alias 
      * @summary Create an environment variable alias at the environment level
      * @param {string} environmentId Environment ID
      * @param {string} environmentVariableId Environment Variable ID
@@ -35990,7 +35990,7 @@ export const JobEnvironmentVariableApiAxiosParamCreator = function (configuratio
             };
         },
         /**
-         * - Allows you to add an alias at job level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at job level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at job level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at job level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - You can\'t create an alias on an alias 
          * @summary Create an environment variable alias at the job level
          * @param {string} jobId Job ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -36274,7 +36274,7 @@ export const JobEnvironmentVariableApiFp = function(configuration?: Configuratio
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * - Allows you to add an alias at job level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at job level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at job level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at job level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - You can\'t create an alias on an alias 
          * @summary Create an environment variable alias at the job level
          * @param {string} jobId Job ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -36369,7 +36369,7 @@ export const JobEnvironmentVariableApiFactory = function (configuration?: Config
             return localVarFp.createJobEnvironmentVariable(jobId, environmentVariableRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * - Allows you to add an alias at job level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at job level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at job level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at job level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - You can\'t create an alias on an alias 
          * @summary Create an environment variable alias at the job level
          * @param {string} jobId Job ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -36460,7 +36460,7 @@ export class JobEnvironmentVariableApi extends BaseAPI {
     }
 
     /**
-     * - Allows you to add an alias at job level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at job level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+     * - Allows you to add an alias at job level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at job level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - You can\'t create an alias on an alias 
      * @summary Create an environment variable alias at the job level
      * @param {string} jobId Job ID
      * @param {string} environmentVariableId Environment Variable ID
@@ -37115,7 +37115,7 @@ export const JobSecretApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * - Allows you to add an alias at job level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at job level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at job level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at job level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - You can\'t create an alias on an alias 
          * @summary Create a secret alias at the job level
          * @param {string} jobId Job ID
          * @param {string} secretId Secret ID
@@ -37357,7 +37357,7 @@ export const JobSecretApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * - Allows you to add an alias at job level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at job level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at job level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at job level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - You can\'t create an alias on an alias 
          * @summary Create a secret alias at the job level
          * @param {string} jobId Job ID
          * @param {string} secretId Secret ID
@@ -37440,7 +37440,7 @@ export const JobSecretApiFactory = function (configuration?: Configuration, base
             return localVarFp.createJobSecret(jobId, secretRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * - Allows you to add an alias at job level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at job level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at job level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at job level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - You can\'t create an alias on an alias 
          * @summary Create a secret alias at the job level
          * @param {string} jobId Job ID
          * @param {string} secretId Secret ID
@@ -37520,7 +37520,7 @@ export class JobSecretApi extends BaseAPI {
     }
 
     /**
-     * - Allows you to add an alias at job level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at job level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+     * - Allows you to add an alias at job level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at job level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - You can\'t create an alias on an alias 
      * @summary Create a secret alias at the job level
      * @param {string} jobId Job ID
      * @param {string} secretId Secret ID
@@ -41753,7 +41753,7 @@ export const ProjectEnvironmentVariableApiAxiosParamCreator = function (configur
             };
         },
         /**
-         * - Allows you to add an alias at project level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at project level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at project level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at project level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - You can\'t create an alias on an alias 
          * @summary Create an environment variable alias at the project level
          * @param {string} projectId Project ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -41995,7 +41995,7 @@ export const ProjectEnvironmentVariableApiFp = function(configuration?: Configur
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * - Allows you to add an alias at project level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at project level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at project level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at project level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - You can\'t create an alias on an alias 
          * @summary Create an environment variable alias at the project level
          * @param {string} projectId Project ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -42078,7 +42078,7 @@ export const ProjectEnvironmentVariableApiFactory = function (configuration?: Co
             return localVarFp.createProjectEnvironmentVariable(projectId, environmentVariableRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * - Allows you to add an alias at project level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at project level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at project level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at project level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - You can\'t create an alias on an alias 
          * @summary Create an environment variable alias at the project level
          * @param {string} projectId Project ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -42158,7 +42158,7 @@ export class ProjectEnvironmentVariableApi extends BaseAPI {
     }
 
     /**
-     * - Allows you to add an alias at project level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at project level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+     * - Allows you to add an alias at project level on an existing environment variable having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new environment variable at project level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" field of the newly created variable - You can\'t create an alias on an alias 
      * @summary Create an environment variable alias at the project level
      * @param {string} projectId Project ID
      * @param {string} environmentVariableId Environment Variable ID
@@ -42533,7 +42533,7 @@ export const ProjectSecretApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * - Allows you to add an alias at project level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at project level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at project level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at project level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - You can\'t create an alias on an alias 
          * @summary Create a secret alias at the project level
          * @param {string} projectId Project ID
          * @param {string} secretId Secret ID
@@ -42775,7 +42775,7 @@ export const ProjectSecretApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * - Allows you to add an alias at project level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at project level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at project level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at project level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - You can\'t create an alias on an alias 
          * @summary Create a secret alias at the project level
          * @param {string} projectId Project ID
          * @param {string} secretId Secret ID
@@ -42858,7 +42858,7 @@ export const ProjectSecretApiFactory = function (configuration?: Configuration, 
             return localVarFp.createProjectSecret(projectId, secretRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * - Allows you to add an alias at project level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at project level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to add an alias at project level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at project level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - You can\'t create an alias on an alias 
          * @summary Create a secret alias at the project level
          * @param {string} projectId Project ID
          * @param {string} secretId Secret ID
@@ -42938,7 +42938,7 @@ export class ProjectSecretApi extends BaseAPI {
     }
 
     /**
-     * - Allows you to add an alias at project level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at project level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+     * - Allows you to add an alias at project level on an existing secret having higher scope, in order to customize its key. - You only have to specify a key in the request body - The system will create a new secret at project level with the same value as the one corresponding to the secret id in the path - The response body will contain the newly created secret - Information regarding the aliased_secret will be exposed in the \"aliased_secret\" field of the newly created secret - You can\'t create an alias on an alias 
      * @summary Create a secret alias at the project level
      * @param {string} projectId Project ID
      * @param {string} secretId Secret ID
@@ -43617,7 +43617,7 @@ export class UserSignUpApi extends BaseAPI {
 export const VariableMainCallsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * - Create a variable at the level defined in the request body. 
+         * - Create a variable with the scope defined in the request body. 
          * @summary Create a variable
          * @param {VariableRequest} [variableRequest] 
          * @param {*} [options] Override http request option.
@@ -43655,7 +43655,7 @@ export const VariableMainCallsApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         * - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key. - You have to specify a key in the request body and the scope and the parent id of the alias - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to create an alias of one of the existing variables. - You have to specify an alias (key) in the request body, the scope and the parent id of the alias (project id, environment id or service id) - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id passed as path parameter. - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - You can\'t create an alias on an alias 
          * @summary Create a variable alias
          * @param {string} variableId Variable ID
          * @param {VariableAliasRequest} [variableAliasRequest] 
@@ -43697,7 +43697,7 @@ export const VariableMainCallsApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         * - Allows you to override a variable that has a higher scope. - You have to specify a value in the request body and the scope and the parent id of the variable to alias - The system will create a new environment variable at project level with the same key as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the overridden_variable will be exposed in the \"overridden_variable\" or in the \"overridden_secret\" field of the newly created variable 
+         * - Allows you to override a variable that has a higher scope. - You have to specify a value (override) in the request body and the scope and the parent id of the variable to override (project id, environment id or service id) - The system will create a new environment variable at the requested level with the same key as the one corresponding to the variable id passed as path parameter. - The response body will contain the newly created variable - Information regarding the overridden_variable will be exposed in the \"overridden_variable\" or in the \"overridden_secret\" field of the newly created variable 
          * @summary Create a variable override
          * @param {string} variableId Variable ID
          * @param {VariableOverrideRequest} [variableOverrideRequest] 
@@ -43821,10 +43821,10 @@ export const VariableMainCallsApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         * Returns a list of variables
+         * Returns a list of variables. The result can be filtered by using the query parameters.
          * @summary List variables
-         * @param {string} [parentId] the id where the variable will be added
-         * @param {APIVariableScopeEnum} [scope] the scope of the parent where the variable will be added
+         * @param {string} [parentId] it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
+         * @param {APIVariableScopeEnum} [scope] the type of the parent_id (application, project, environment etc..).
          * @param {boolean} [isSecret] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -43880,7 +43880,7 @@ export const VariableMainCallsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = VariableMainCallsApiAxiosParamCreator(configuration)
     return {
         /**
-         * - Create a variable at the level defined in the request body. 
+         * - Create a variable with the scope defined in the request body. 
          * @summary Create a variable
          * @param {VariableRequest} [variableRequest] 
          * @param {*} [options] Override http request option.
@@ -43891,7 +43891,7 @@ export const VariableMainCallsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key. - You have to specify a key in the request body and the scope and the parent id of the alias - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to create an alias of one of the existing variables. - You have to specify an alias (key) in the request body, the scope and the parent id of the alias (project id, environment id or service id) - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id passed as path parameter. - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - You can\'t create an alias on an alias 
          * @summary Create a variable alias
          * @param {string} variableId Variable ID
          * @param {VariableAliasRequest} [variableAliasRequest] 
@@ -43903,7 +43903,7 @@ export const VariableMainCallsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * - Allows you to override a variable that has a higher scope. - You have to specify a value in the request body and the scope and the parent id of the variable to alias - The system will create a new environment variable at project level with the same key as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the overridden_variable will be exposed in the \"overridden_variable\" or in the \"overridden_secret\" field of the newly created variable 
+         * - Allows you to override a variable that has a higher scope. - You have to specify a value (override) in the request body and the scope and the parent id of the variable to override (project id, environment id or service id) - The system will create a new environment variable at the requested level with the same key as the one corresponding to the variable id passed as path parameter. - The response body will contain the newly created variable - Information regarding the overridden_variable will be exposed in the \"overridden_variable\" or in the \"overridden_secret\" field of the newly created variable 
          * @summary Create a variable override
          * @param {string} variableId Variable ID
          * @param {VariableOverrideRequest} [variableOverrideRequest] 
@@ -43938,10 +43938,10 @@ export const VariableMainCallsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Returns a list of variables
+         * Returns a list of variables. The result can be filtered by using the query parameters.
          * @summary List variables
-         * @param {string} [parentId] the id where the variable will be added
-         * @param {APIVariableScopeEnum} [scope] the scope of the parent where the variable will be added
+         * @param {string} [parentId] it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
+         * @param {APIVariableScopeEnum} [scope] the type of the parent_id (application, project, environment etc..).
          * @param {boolean} [isSecret] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -43961,7 +43961,7 @@ export const VariableMainCallsApiFactory = function (configuration?: Configurati
     const localVarFp = VariableMainCallsApiFp(configuration)
     return {
         /**
-         * - Create a variable at the level defined in the request body. 
+         * - Create a variable with the scope defined in the request body. 
          * @summary Create a variable
          * @param {VariableRequest} [variableRequest] 
          * @param {*} [options] Override http request option.
@@ -43971,7 +43971,7 @@ export const VariableMainCallsApiFactory = function (configuration?: Configurati
             return localVarFp.createVariable(variableRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key. - You have to specify a key in the request body and the scope and the parent id of the alias - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+         * - Allows you to create an alias of one of the existing variables. - You have to specify an alias (key) in the request body, the scope and the parent id of the alias (project id, environment id or service id) - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id passed as path parameter. - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - You can\'t create an alias on an alias 
          * @summary Create a variable alias
          * @param {string} variableId Variable ID
          * @param {VariableAliasRequest} [variableAliasRequest] 
@@ -43982,7 +43982,7 @@ export const VariableMainCallsApiFactory = function (configuration?: Configurati
             return localVarFp.createVariableAlias(variableId, variableAliasRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * - Allows you to override a variable that has a higher scope. - You have to specify a value in the request body and the scope and the parent id of the variable to alias - The system will create a new environment variable at project level with the same key as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the overridden_variable will be exposed in the \"overridden_variable\" or in the \"overridden_secret\" field of the newly created variable 
+         * - Allows you to override a variable that has a higher scope. - You have to specify a value (override) in the request body and the scope and the parent id of the variable to override (project id, environment id or service id) - The system will create a new environment variable at the requested level with the same key as the one corresponding to the variable id passed as path parameter. - The response body will contain the newly created variable - Information regarding the overridden_variable will be exposed in the \"overridden_variable\" or in the \"overridden_secret\" field of the newly created variable 
          * @summary Create a variable override
          * @param {string} variableId Variable ID
          * @param {VariableOverrideRequest} [variableOverrideRequest] 
@@ -44014,10 +44014,10 @@ export const VariableMainCallsApiFactory = function (configuration?: Configurati
             return localVarFp.editVariable(variableId, variableEditRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns a list of variables
+         * Returns a list of variables. The result can be filtered by using the query parameters.
          * @summary List variables
-         * @param {string} [parentId] the id where the variable will be added
-         * @param {APIVariableScopeEnum} [scope] the scope of the parent where the variable will be added
+         * @param {string} [parentId] it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
+         * @param {APIVariableScopeEnum} [scope] the type of the parent_id (application, project, environment etc..).
          * @param {boolean} [isSecret] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -44036,7 +44036,7 @@ export const VariableMainCallsApiFactory = function (configuration?: Configurati
  */
 export class VariableMainCallsApi extends BaseAPI {
     /**
-     * - Create a variable at the level defined in the request body. 
+     * - Create a variable with the scope defined in the request body. 
      * @summary Create a variable
      * @param {VariableRequest} [variableRequest] 
      * @param {*} [options] Override http request option.
@@ -44048,7 +44048,7 @@ export class VariableMainCallsApi extends BaseAPI {
     }
 
     /**
-     * - Allows you to add an alias at the level defined in the request body on an existing variable having a higher scope, in order to customize its key. - You have to specify a key in the request body and the scope and the parent id of the alias - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - Only 1 alias level is allowed. You can\'t create an alias on an alias 
+     * - Allows you to create an alias of one of the existing variables. - You have to specify an alias (key) in the request body, the scope and the parent id of the alias (project id, environment id or service id) - The system will create a new variable at the requested level with the same value as the one corresponding to the variable id passed as path parameter. - The response body will contain the newly created variable - Information regarding the aliased_variable will be exposed in the \"aliased_variable\" or in the \"aliased_secret\" field of the newly created variable - You can\'t create an alias on an alias 
      * @summary Create a variable alias
      * @param {string} variableId Variable ID
      * @param {VariableAliasRequest} [variableAliasRequest] 
@@ -44061,7 +44061,7 @@ export class VariableMainCallsApi extends BaseAPI {
     }
 
     /**
-     * - Allows you to override a variable that has a higher scope. - You have to specify a value in the request body and the scope and the parent id of the variable to alias - The system will create a new environment variable at project level with the same key as the one corresponding to the variable id in the path - The response body will contain the newly created variable - Information regarding the overridden_variable will be exposed in the \"overridden_variable\" or in the \"overridden_secret\" field of the newly created variable 
+     * - Allows you to override a variable that has a higher scope. - You have to specify a value (override) in the request body and the scope and the parent id of the variable to override (project id, environment id or service id) - The system will create a new environment variable at the requested level with the same key as the one corresponding to the variable id passed as path parameter. - The response body will contain the newly created variable - Information regarding the overridden_variable will be exposed in the \"overridden_variable\" or in the \"overridden_secret\" field of the newly created variable 
      * @summary Create a variable override
      * @param {string} variableId Variable ID
      * @param {VariableOverrideRequest} [variableOverrideRequest] 
@@ -44099,10 +44099,10 @@ export class VariableMainCallsApi extends BaseAPI {
     }
 
     /**
-     * Returns a list of variables
+     * Returns a list of variables. The result can be filtered by using the query parameters.
      * @summary List variables
-     * @param {string} [parentId] the id where the variable will be added
-     * @param {APIVariableScopeEnum} [scope] the scope of the parent where the variable will be added
+     * @param {string} [parentId] it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
+     * @param {APIVariableScopeEnum} [scope] the type of the parent_id (application, project, environment etc..).
      * @param {boolean} [isSecret] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
