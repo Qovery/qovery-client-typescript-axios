@@ -92,6 +92,12 @@ export interface AccountInfo {
      * @memberof AccountInfo
      */
     'profile_picture_url'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountInfo
+     */
+    'communication_email'?: string;
 }
 /**
  * 
@@ -100,23 +106,11 @@ export interface AccountInfo {
  */
 export interface AccountInfoEditRequest {
     /**
-     * 
+     * The email to be used for official Qovery communications
      * @type {string}
      * @memberof AccountInfoEditRequest
      */
-    'first_name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfoEditRequest
-     */
-    'last_name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfoEditRequest
-     */
-    'profile_picture_url'?: string;
+    'communication_email'?: string | null;
 }
 /**
  * 
@@ -13665,6 +13659,44 @@ export const AccountInfoApiAxiosParamCreator = function (configuration?: Configu
     return {
         /**
          * 
+         * @summary Edit account information
+         * @param {AccountInfoEditRequest} [accountInfoEditRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editAccountInformation: async (accountInfoEditRequest?: AccountInfoEditRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/account`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(accountInfoEditRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get Account information
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -13709,6 +13741,17 @@ export const AccountInfoApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Edit account information
+         * @param {AccountInfoEditRequest} [accountInfoEditRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editAccountInformation(accountInfoEditRequest?: AccountInfoEditRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountInfo>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editAccountInformation(accountInfoEditRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get Account information
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -13729,6 +13772,16 @@ export const AccountInfoApiFactory = function (configuration?: Configuration, ba
     return {
         /**
          * 
+         * @summary Edit account information
+         * @param {AccountInfoEditRequest} [accountInfoEditRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editAccountInformation(accountInfoEditRequest?: AccountInfoEditRequest, options?: any): AxiosPromise<AccountInfo> {
+            return localVarFp.editAccountInformation(accountInfoEditRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get Account information
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -13746,6 +13799,18 @@ export const AccountInfoApiFactory = function (configuration?: Configuration, ba
  * @extends {BaseAPI}
  */
 export class AccountInfoApi extends BaseAPI {
+    /**
+     * 
+     * @summary Edit account information
+     * @param {AccountInfoEditRequest} [accountInfoEditRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountInfoApi
+     */
+    public editAccountInformation(accountInfoEditRequest?: AccountInfoEditRequest, options?: AxiosRequestConfig) {
+        return AccountInfoApiFp(this.configuration).editAccountInformation(accountInfoEditRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Get Account information
