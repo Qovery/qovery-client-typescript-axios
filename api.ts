@@ -705,7 +705,7 @@ export interface ApplicationDeploymentRestrictionResponseList {
      * @type {Array<ApplicationDeploymentRestriction>}
      * @memberof ApplicationDeploymentRestrictionResponseList
      */
-    'deployment_restrictions'?: Array<ApplicationDeploymentRestriction>;
+    'results'?: Array<ApplicationDeploymentRestriction>;
 }
 /**
  * 
