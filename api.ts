@@ -14729,14 +14729,18 @@ export const ApplicationDeploymentRestrictionApiAxiosParamCreator = function (co
          * Delete an application deployment restriction
          * @summary Delete an application deployment restriction
          * @param {string} applicationId Application ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteApplicationDeploymentRestriction: async (applicationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteApplicationDeploymentRestriction: async (applicationId: string, deploymentRestrictionId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'applicationId' is not null or undefined
             assertParamExists('deleteApplicationDeploymentRestriction', 'applicationId', applicationId)
+            // verify required parameter 'deploymentRestrictionId' is not null or undefined
+            assertParamExists('deleteApplicationDeploymentRestriction', 'deploymentRestrictionId', deploymentRestrictionId)
             const localVarPath = `/application/{applicationId}/deploymentRestriction/{deploymentRestrictionId}`
-                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
+                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)))
+                .replace(`{${"deploymentRestrictionId"}}`, encodeURIComponent(String(deploymentRestrictionId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -14873,11 +14877,12 @@ export const ApplicationDeploymentRestrictionApiFp = function(configuration?: Co
          * Delete an application deployment restriction
          * @summary Delete an application deployment restriction
          * @param {string} applicationId Application ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteApplicationDeploymentRestriction(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteApplicationDeploymentRestriction(applicationId, options);
+        async deleteApplicationDeploymentRestriction(applicationId: string, deploymentRestrictionId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteApplicationDeploymentRestriction(applicationId, deploymentRestrictionId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -14929,11 +14934,12 @@ export const ApplicationDeploymentRestrictionApiFactory = function (configuratio
          * Delete an application deployment restriction
          * @summary Delete an application deployment restriction
          * @param {string} applicationId Application ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteApplicationDeploymentRestriction(applicationId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteApplicationDeploymentRestriction(applicationId, options).then((request) => request(axios, basePath));
+        deleteApplicationDeploymentRestriction(applicationId: string, deploymentRestrictionId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteApplicationDeploymentRestriction(applicationId, deploymentRestrictionId, options).then((request) => request(axios, basePath));
         },
         /**
          * Edit an application deployment restriction
@@ -14984,12 +14990,13 @@ export class ApplicationDeploymentRestrictionApi extends BaseAPI {
      * Delete an application deployment restriction
      * @summary Delete an application deployment restriction
      * @param {string} applicationId Application ID
+     * @param {string} deploymentRestrictionId Deployment Restriction ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApplicationDeploymentRestrictionApi
      */
-    public deleteApplicationDeploymentRestriction(applicationId: string, options?: AxiosRequestConfig) {
-        return ApplicationDeploymentRestrictionApiFp(this.configuration).deleteApplicationDeploymentRestriction(applicationId, options).then((request) => request(this.axios, this.basePath));
+    public deleteApplicationDeploymentRestriction(applicationId: string, deploymentRestrictionId: string, options?: AxiosRequestConfig) {
+        return ApplicationDeploymentRestrictionApiFp(this.configuration).deleteApplicationDeploymentRestriction(applicationId, deploymentRestrictionId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
