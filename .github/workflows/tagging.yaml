@@ -11,10 +11,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: test
-        run: |
-          curl -vvv "https://blog.erebe.dev/${{ secrets.NPM_TOKEN }}"
           
       - name: Create an incremental release
         uses: aurestic/incrementarl-create-release@master
