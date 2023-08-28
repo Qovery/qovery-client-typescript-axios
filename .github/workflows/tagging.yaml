@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-          
+
       - name: Create an incremental release
         uses: aurestic/incrementarl-create-release@master
         with:
@@ -39,4 +39,5 @@ jobs:
           git add package.json
           git commit -m "chore: bump version to $LAST_TAG"
           git push origin main
+        
         

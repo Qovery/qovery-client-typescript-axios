@@ -13002,51 +13002,6 @@ export enum StorageTypeEnum {
 /**
  * 
  * @export
- * @interface Tag
- */
-export interface Tag {
-    /**
-     * 
-     * @type {string}
-     * @memberof Tag
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Tag
-     */
-    'id'?: string;
-}
-/**
- * 
- * @export
- * @interface TagRequest
- */
-export interface TagRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof TagRequest
-     */
-    'name': string;
-}
-/**
- * 
- * @export
- * @interface TagResponseList
- */
-export interface TagResponseList {
-    /**
-     * 
-     * @type {Array<Tag>}
-     * @memberof TagResponseList
-     */
-    'results'?: Array<Tag>;
-}
-/**
- * 
- * @export
  * @enum {string}
  */
 
@@ -15860,48 +15815,6 @@ export class ApplicationLogsApi extends BaseAPI {
 export const ApplicationMainCallsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
-         * @summary Add application tag
-         * @param {string} applicationId Application ID
-         * @param {TagRequest} [tagRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createApplicationTag: async (applicationId: string, tagRequest?: TagRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'applicationId' is not null or undefined
-            assertParamExists('createApplicationTag', 'applicationId', applicationId)
-            const localVarPath = `/application/{applicationId}/tag`
-                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(tagRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * To delete the application you must have the admin permission
          * @summary Delete application
          * @param {string} applicationId Application ID
@@ -15913,48 +15826,6 @@ export const ApplicationMainCallsApiAxiosParamCreator = function (configuration?
             assertParamExists('deleteApplication', 'applicationId', applicationId)
             const localVarPath = `/application/{applicationId}`
                 .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Delete application tag
-         * @param {string} applicationId Application ID
-         * @param {string} tagId Tag ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteApplicationTag: async (applicationId: string, tagId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'applicationId' is not null or undefined
-            assertParamExists('deleteApplicationTag', 'applicationId', applicationId)
-            // verify required parameter 'tagId' is not null or undefined
-            assertParamExists('deleteApplicationTag', 'tagId', tagId)
-            const localVarPath = `/application/{applicationId}/tag/{tagId}`
-                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)))
-                .replace(`{${"tagId"}}`, encodeURIComponent(String(tagId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -16223,44 +16094,6 @@ export const ApplicationMainCallsApiAxiosParamCreator = function (configuration?
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @summary List tags
-         * @param {string} applicationId Application ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listApplicationTag: async (applicationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'applicationId' is not null or undefined
-            assertParamExists('listApplicationTag', 'applicationId', applicationId)
-            const localVarPath = `/application/{applicationId}/tag`
-                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -16272,18 +16105,6 @@ export const ApplicationMainCallsApiFp = function(configuration?: Configuration)
     const localVarAxiosParamCreator = ApplicationMainCallsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
-         * @summary Add application tag
-         * @param {string} applicationId Application ID
-         * @param {TagRequest} [tagRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createApplicationTag(applicationId: string, tagRequest?: TagRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createApplicationTag(applicationId, tagRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * To delete the application you must have the admin permission
          * @summary Delete application
          * @param {string} applicationId Application ID
@@ -16292,18 +16113,6 @@ export const ApplicationMainCallsApiFp = function(configuration?: Configuration)
          */
         async deleteApplication(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteApplication(applicationId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Delete application tag
-         * @param {string} applicationId Application ID
-         * @param {string} tagId Tag ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteApplicationTag(applicationId: string, tagId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteApplicationTag(applicationId, tagId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -16375,17 +16184,6 @@ export const ApplicationMainCallsApiFp = function(configuration?: Configuration)
             const localVarAxiosArgs = await localVarAxiosParamCreator.listApplicationLinks(applicationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-        /**
-         * 
-         * @summary List tags
-         * @param {string} applicationId Application ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listApplicationTag(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listApplicationTag(applicationId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
     }
 };
 
@@ -16397,17 +16195,6 @@ export const ApplicationMainCallsApiFactory = function (configuration?: Configur
     const localVarFp = ApplicationMainCallsApiFp(configuration)
     return {
         /**
-         * 
-         * @summary Add application tag
-         * @param {string} applicationId Application ID
-         * @param {TagRequest} [tagRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createApplicationTag(applicationId: string, tagRequest?: TagRequest, options?: any): AxiosPromise<TagResponseList> {
-            return localVarFp.createApplicationTag(applicationId, tagRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
          * To delete the application you must have the admin permission
          * @summary Delete application
          * @param {string} applicationId Application ID
@@ -16416,17 +16203,6 @@ export const ApplicationMainCallsApiFactory = function (configuration?: Configur
          */
         deleteApplication(applicationId: string, options?: any): AxiosPromise<void> {
             return localVarFp.deleteApplication(applicationId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Delete application tag
-         * @param {string} applicationId Application ID
-         * @param {string} tagId Tag ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteApplicationTag(applicationId: string, tagId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteApplicationTag(applicationId, tagId, options).then((request) => request(axios, basePath));
         },
         /**
          * - To edit the application you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. 
@@ -16491,16 +16267,6 @@ export const ApplicationMainCallsApiFactory = function (configuration?: Configur
         listApplicationLinks(applicationId: string, options?: any): AxiosPromise<LinkResponseList> {
             return localVarFp.listApplicationLinks(applicationId, options).then((request) => request(axios, basePath));
         },
-        /**
-         * 
-         * @summary List tags
-         * @param {string} applicationId Application ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listApplicationTag(applicationId: string, options?: any): AxiosPromise<TagResponseList> {
-            return localVarFp.listApplicationTag(applicationId, options).then((request) => request(axios, basePath));
-        },
     };
 };
 
@@ -16512,19 +16278,6 @@ export const ApplicationMainCallsApiFactory = function (configuration?: Configur
  */
 export class ApplicationMainCallsApi extends BaseAPI {
     /**
-     * 
-     * @summary Add application tag
-     * @param {string} applicationId Application ID
-     * @param {TagRequest} [tagRequest] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApplicationMainCallsApi
-     */
-    public createApplicationTag(applicationId: string, tagRequest?: TagRequest, options?: AxiosRequestConfig) {
-        return ApplicationMainCallsApiFp(this.configuration).createApplicationTag(applicationId, tagRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * To delete the application you must have the admin permission
      * @summary Delete application
      * @param {string} applicationId Application ID
@@ -16534,19 +16287,6 @@ export class ApplicationMainCallsApi extends BaseAPI {
      */
     public deleteApplication(applicationId: string, options?: AxiosRequestConfig) {
         return ApplicationMainCallsApiFp(this.configuration).deleteApplication(applicationId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Delete application tag
-     * @param {string} applicationId Application ID
-     * @param {string} tagId Tag ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApplicationMainCallsApi
-     */
-    public deleteApplicationTag(applicationId: string, tagId: string, options?: AxiosRequestConfig) {
-        return ApplicationMainCallsApiFp(this.configuration).deleteApplicationTag(applicationId, tagId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16622,18 +16362,6 @@ export class ApplicationMainCallsApi extends BaseAPI {
      */
     public listApplicationLinks(applicationId: string, options?: AxiosRequestConfig) {
         return ApplicationMainCallsApiFp(this.configuration).listApplicationLinks(applicationId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary List tags
-     * @param {string} applicationId Application ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApplicationMainCallsApi
-     */
-    public listApplicationTag(applicationId: string, options?: AxiosRequestConfig) {
-        return ApplicationMainCallsApiFp(this.configuration).listApplicationTag(applicationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
