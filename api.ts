@@ -9164,25 +9164,25 @@ export interface Link {
      */
     'url'?: string;
     /**
-     * 
+     * The port from which the service is reachable from within the cluster
      * @type {number}
      * @memberof Link
      */
     'internal_port'?: number;
     /**
-     * 
+     * The port from which the service is reachable from externally (i.e: 443 for HTTPS)
      * @type {number}
      * @memberof Link
      */
     'external_port'?: number;
     /**
-     * 
+     * True if the domain is managed by Qovery, false if it belongs to the user
      * @type {boolean}
      * @memberof Link
      */
     'is_qovery_domain'?: boolean;
     /**
-     * 
+     * Indicate if the link is using the root of the domain and not one derivated from port i.e: p8080.zxxxx.jvm.worl      => is_default = false, is_qovery = true zxxxx.jvm.world           => is_default = true, is_qovery = true p8080-my-super-domain.com => is_default = false, is_qovery = false my-super-domain.com       => is_default = true, is_qovery = false 
      * @type {boolean}
      * @memberof Link
      */
