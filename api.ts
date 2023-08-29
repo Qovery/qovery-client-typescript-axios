@@ -110,7 +110,7 @@ export interface AccountInfoEditRequest {
      * @type {string}
      * @memberof AccountInfoEditRequest
      */
-    'communication_email'?: string | null;
+    'communication_email'?: string;
 }
 /**
  * 
