@@ -390,6 +390,18 @@ export interface ApplicationAdvancedSettings {
      */
     'network.ingress.proxy_read_timeout_seconds'?: number;
     /**
+     * Allows to enable or disable nginx `proxy-buffering`
+     * @type {string}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.ingress.proxy_buffering'?: string;
+    /**
+     * Allows to enable or disable nginx `proxy-request-buffering`
+     * @type {string}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.ingress.proxy_request_buffering'?: string;
+    /**
      * list of source ranges to allow access to ingress proxy.  This property can be used to whitelist source IP ranges for ingress proxy. The value is a comma separated list of CIDRs, e.g. 10.0.0.0/24,172.10.0.1 To allow all source ranges, set 0.0.0.0/0. 
      * @type {string}
      * @memberof ApplicationAdvancedSettings
@@ -425,6 +437,12 @@ export interface ApplicationAdvancedSettings {
      * @memberof ApplicationAdvancedSettings
      */
     'network.ingress.grpc_read_timeout_seconds'?: number;
+    /**
+     * Allows to define response headers
+     * @type {string}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.ingress.extra_headers'?: string;
     /**
      * Percentage value of cpu usage at which point pods should scale up.
      * @type {number}
@@ -3303,6 +3321,18 @@ export interface ContainerAdvancedSettings {
      */
     'network.ingress.proxy_read_timeout_seconds'?: number;
     /**
+     * Allows to enable or disable nginx `proxy-buffering`
+     * @type {string}
+     * @memberof ContainerAdvancedSettings
+     */
+    'network.ingress.proxy_buffering'?: string;
+    /**
+     * Allows to enable or disable nginx `proxy-request-buffering`
+     * @type {string}
+     * @memberof ContainerAdvancedSettings
+     */
+    'network.ingress.proxy_request_buffering'?: string;
+    /**
      * Sets a timeout (in seconds) for transmitting a request to the grpc server
      * @type {number}
      * @memberof ContainerAdvancedSettings
@@ -3326,6 +3356,12 @@ export interface ContainerAdvancedSettings {
      * @memberof ContainerAdvancedSettings
      */
     'network.ingress.denylist_source_range'?: string;
+    /**
+     * Allows to define response headers
+     * @type {string}
+     * @memberof ContainerAdvancedSettings
+     */
+    'network.ingress.extra_headers'?: string;
     /**
      * Set the name of an environment variable to use as a basic authentication (`login:crypted_password`) from `htpasswd` command. You can add multiples comma separated values. 
      * @type {string}
@@ -8497,6 +8533,87 @@ export interface JobDeployRequest {
      * @memberof JobDeployRequest
      */
     'git_commit_id'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface JobDeploymentRestrictionRequest
+ */
+export interface JobDeploymentRestrictionRequest {
+    /**
+     * 
+     * @type {DeploymentRestrictionModeEnum}
+     * @memberof JobDeploymentRestrictionRequest
+     */
+    'mode': DeploymentRestrictionModeEnum;
+    /**
+     * 
+     * @type {DeploymentRestrictionTypeEnum}
+     * @memberof JobDeploymentRestrictionRequest
+     */
+    'type': DeploymentRestrictionTypeEnum;
+    /**
+     * For `PATH` restrictions, the value must not start with `/`
+     * @type {string}
+     * @memberof JobDeploymentRestrictionRequest
+     */
+    'value': string;
+}
+/**
+ * 
+ * @export
+ * @interface JobDeploymentRestrictionResponse
+ */
+export interface JobDeploymentRestrictionResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof JobDeploymentRestrictionResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JobDeploymentRestrictionResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JobDeploymentRestrictionResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {DeploymentRestrictionModeEnum}
+     * @memberof JobDeploymentRestrictionResponse
+     */
+    'mode': DeploymentRestrictionModeEnum;
+    /**
+     * 
+     * @type {DeploymentRestrictionTypeEnum}
+     * @memberof JobDeploymentRestrictionResponse
+     */
+    'type': DeploymentRestrictionTypeEnum;
+    /**
+     * For `PATH` restrictions, the value must not start with `/`
+     * @type {string}
+     * @memberof JobDeploymentRestrictionResponse
+     */
+    'value': string;
+}
+/**
+ * 
+ * @export
+ * @interface JobDeploymentRestrictionResponseList
+ */
+export interface JobDeploymentRestrictionResponseList {
+    /**
+     * 
+     * @type {Array<JobDeploymentRestrictionResponse>}
+     * @memberof JobDeploymentRestrictionResponseList
+     */
+    'results'?: Array<JobDeploymentRestrictionResponse>;
 }
 /**
  * 
@@ -36541,6 +36658,368 @@ export class JobDeploymentHistoryApi extends BaseAPI {
      */
     public listJobDeploymentHistory(jobId: string, options?: AxiosRequestConfig) {
         return JobDeploymentHistoryApiFp(this.configuration).listJobDeploymentHistory(jobId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * JobDeploymentRestrictionApi - axios parameter creator
+ * @export
+ */
+export const JobDeploymentRestrictionApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Create a job deployment restriction
+         * @summary Create a job deployment restriction
+         * @param {string} jobId Job ID
+         * @param {JobDeploymentRestrictionRequest} [jobDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createJobDeploymentRestriction: async (jobId: string, jobDeploymentRestrictionRequest?: JobDeploymentRestrictionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'jobId' is not null or undefined
+            assertParamExists('createJobDeploymentRestriction', 'jobId', jobId)
+            const localVarPath = `/job/{jobId}/deploymentRestriction`
+                .replace(`{${"jobId"}}`, encodeURIComponent(String(jobId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Token", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(jobDeploymentRestrictionRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete a job deployment restriction
+         * @summary Delete a job deployment restriction
+         * @param {string} jobId Job ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteJobDeploymentRestriction: async (jobId: string, deploymentRestrictionId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'jobId' is not null or undefined
+            assertParamExists('deleteJobDeploymentRestriction', 'jobId', jobId)
+            // verify required parameter 'deploymentRestrictionId' is not null or undefined
+            assertParamExists('deleteJobDeploymentRestriction', 'deploymentRestrictionId', deploymentRestrictionId)
+            const localVarPath = `/job/{jobId}/deploymentRestriction/{deploymentRestrictionId}`
+                .replace(`{${"jobId"}}`, encodeURIComponent(String(jobId)))
+                .replace(`{${"deploymentRestrictionId"}}`, encodeURIComponent(String(deploymentRestrictionId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Token", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Edit a job deployment restriction
+         * @summary Edit a job deployment restriction
+         * @param {string} jobId Job ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {JobDeploymentRestrictionRequest} [jobDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editJobDeploymentRestriction: async (jobId: string, deploymentRestrictionId: string, jobDeploymentRestrictionRequest?: JobDeploymentRestrictionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'jobId' is not null or undefined
+            assertParamExists('editJobDeploymentRestriction', 'jobId', jobId)
+            // verify required parameter 'deploymentRestrictionId' is not null or undefined
+            assertParamExists('editJobDeploymentRestriction', 'deploymentRestrictionId', deploymentRestrictionId)
+            const localVarPath = `/job/{jobId}/deploymentRestriction/{deploymentRestrictionId}`
+                .replace(`{${"jobId"}}`, encodeURIComponent(String(jobId)))
+                .replace(`{${"deploymentRestrictionId"}}`, encodeURIComponent(String(deploymentRestrictionId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Token", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(jobDeploymentRestrictionRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get job deployment restrictions
+         * @summary Get job deployment restrictions
+         * @param {string} jobId Job ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getJobDeploymentRestrictions: async (jobId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'jobId' is not null or undefined
+            assertParamExists('getJobDeploymentRestrictions', 'jobId', jobId)
+            const localVarPath = `/job/{jobId}/deploymentRestriction`
+                .replace(`{${"jobId"}}`, encodeURIComponent(String(jobId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Token", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * JobDeploymentRestrictionApi - functional programming interface
+ * @export
+ */
+export const JobDeploymentRestrictionApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = JobDeploymentRestrictionApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Create a job deployment restriction
+         * @summary Create a job deployment restriction
+         * @param {string} jobId Job ID
+         * @param {JobDeploymentRestrictionRequest} [jobDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createJobDeploymentRestriction(jobId: string, jobDeploymentRestrictionRequest?: JobDeploymentRestrictionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JobDeploymentRestrictionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createJobDeploymentRestriction(jobId, jobDeploymentRestrictionRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Delete a job deployment restriction
+         * @summary Delete a job deployment restriction
+         * @param {string} jobId Job ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteJobDeploymentRestriction(jobId: string, deploymentRestrictionId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteJobDeploymentRestriction(jobId, deploymentRestrictionId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Edit a job deployment restriction
+         * @summary Edit a job deployment restriction
+         * @param {string} jobId Job ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {JobDeploymentRestrictionRequest} [jobDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editJobDeploymentRestriction(jobId: string, deploymentRestrictionId: string, jobDeploymentRestrictionRequest?: JobDeploymentRestrictionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JobDeploymentRestrictionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editJobDeploymentRestriction(jobId, deploymentRestrictionId, jobDeploymentRestrictionRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get job deployment restrictions
+         * @summary Get job deployment restrictions
+         * @param {string} jobId Job ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getJobDeploymentRestrictions(jobId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JobDeploymentRestrictionResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getJobDeploymentRestrictions(jobId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * JobDeploymentRestrictionApi - factory interface
+ * @export
+ */
+export const JobDeploymentRestrictionApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = JobDeploymentRestrictionApiFp(configuration)
+    return {
+        /**
+         * Create a job deployment restriction
+         * @summary Create a job deployment restriction
+         * @param {string} jobId Job ID
+         * @param {JobDeploymentRestrictionRequest} [jobDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createJobDeploymentRestriction(jobId: string, jobDeploymentRestrictionRequest?: JobDeploymentRestrictionRequest, options?: any): AxiosPromise<JobDeploymentRestrictionResponse> {
+            return localVarFp.createJobDeploymentRestriction(jobId, jobDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete a job deployment restriction
+         * @summary Delete a job deployment restriction
+         * @param {string} jobId Job ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteJobDeploymentRestriction(jobId: string, deploymentRestrictionId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteJobDeploymentRestriction(jobId, deploymentRestrictionId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Edit a job deployment restriction
+         * @summary Edit a job deployment restriction
+         * @param {string} jobId Job ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {JobDeploymentRestrictionRequest} [jobDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editJobDeploymentRestriction(jobId: string, deploymentRestrictionId: string, jobDeploymentRestrictionRequest?: JobDeploymentRestrictionRequest, options?: any): AxiosPromise<JobDeploymentRestrictionResponse> {
+            return localVarFp.editJobDeploymentRestriction(jobId, deploymentRestrictionId, jobDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get job deployment restrictions
+         * @summary Get job deployment restrictions
+         * @param {string} jobId Job ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getJobDeploymentRestrictions(jobId: string, options?: any): AxiosPromise<JobDeploymentRestrictionResponseList> {
+            return localVarFp.getJobDeploymentRestrictions(jobId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * JobDeploymentRestrictionApi - object-oriented interface
+ * @export
+ * @class JobDeploymentRestrictionApi
+ * @extends {BaseAPI}
+ */
+export class JobDeploymentRestrictionApi extends BaseAPI {
+    /**
+     * Create a job deployment restriction
+     * @summary Create a job deployment restriction
+     * @param {string} jobId Job ID
+     * @param {JobDeploymentRestrictionRequest} [jobDeploymentRestrictionRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobDeploymentRestrictionApi
+     */
+    public createJobDeploymentRestriction(jobId: string, jobDeploymentRestrictionRequest?: JobDeploymentRestrictionRequest, options?: AxiosRequestConfig) {
+        return JobDeploymentRestrictionApiFp(this.configuration).createJobDeploymentRestriction(jobId, jobDeploymentRestrictionRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete a job deployment restriction
+     * @summary Delete a job deployment restriction
+     * @param {string} jobId Job ID
+     * @param {string} deploymentRestrictionId Deployment Restriction ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobDeploymentRestrictionApi
+     */
+    public deleteJobDeploymentRestriction(jobId: string, deploymentRestrictionId: string, options?: AxiosRequestConfig) {
+        return JobDeploymentRestrictionApiFp(this.configuration).deleteJobDeploymentRestriction(jobId, deploymentRestrictionId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Edit a job deployment restriction
+     * @summary Edit a job deployment restriction
+     * @param {string} jobId Job ID
+     * @param {string} deploymentRestrictionId Deployment Restriction ID
+     * @param {JobDeploymentRestrictionRequest} [jobDeploymentRestrictionRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobDeploymentRestrictionApi
+     */
+    public editJobDeploymentRestriction(jobId: string, deploymentRestrictionId: string, jobDeploymentRestrictionRequest?: JobDeploymentRestrictionRequest, options?: AxiosRequestConfig) {
+        return JobDeploymentRestrictionApiFp(this.configuration).editJobDeploymentRestriction(jobId, deploymentRestrictionId, jobDeploymentRestrictionRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get job deployment restrictions
+     * @summary Get job deployment restrictions
+     * @param {string} jobId Job ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobDeploymentRestrictionApi
+     */
+    public getJobDeploymentRestrictions(jobId: string, options?: AxiosRequestConfig) {
+        return JobDeploymentRestrictionApiFp(this.configuration).getJobDeploymentRestrictions(jobId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
