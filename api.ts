@@ -2043,6 +2043,12 @@ export interface Cluster {
      * @memberof Cluster
      */
     'features'?: Array<ClusterFeature>;
+    /**
+     * 
+     * @type {ClusterDeploymentStatusEnum}
+     * @memberof Cluster
+     */
+    'deployment_status'?: ClusterDeploymentStatusEnum;
 }
 /**
  * 
@@ -2290,6 +2296,12 @@ export interface ClusterAllOf {
      * @memberof ClusterAllOf
      */
     'features'?: Array<ClusterFeature>;
+    /**
+     * 
+     * @type {ClusterDeploymentStatusEnum}
+     * @memberof ClusterAllOf
+     */
+    'deployment_status'?: ClusterDeploymentStatusEnum;
 }
 /**
  * 
@@ -2392,6 +2404,18 @@ export interface ClusterCredentialsResponseList {
      */
     'results'?: Array<ClusterCredentials>;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum ClusterDeploymentStatusEnum {
+    NEVER_DEPLOYED = 'NEVER_DEPLOYED',
+    OUT_OF_DATE = 'OUT_OF_DATE',
+    UP_TO_DATE = 'UP_TO_DATE'
+}
+
 /**
  * 
  * @export
