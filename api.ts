@@ -455,6 +455,12 @@ export interface ApplicationAdvancedSettings {
      * @memberof ApplicationAdvancedSettings
      */
     'security.service_account_name'?: string;
+    /**
+     * Mounts the container\'s root filesystem as read-only 
+     * @type {boolean}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'security.read_only_root_filesystem'?: boolean;
 }
 
 /**
@@ -3386,6 +3392,12 @@ export interface ContainerAdvancedSettings {
      * @memberof ContainerAdvancedSettings
      */
     'hpa.cpu.average_utilization_percent'?: number;
+    /**
+     * Mounts the container\'s root filesystem as read-only 
+     * @type {boolean}
+     * @memberof ContainerAdvancedSettings
+     */
+    'security.read_only_root_filesystem'?: boolean;
 }
 
 /**
@@ -8514,6 +8526,12 @@ export interface JobAdvancedSettings {
      * @memberof JobAdvancedSettings
      */
     'security.service_account_name'?: string;
+    /**
+     * Mounts the container\'s root filesystem as read-only 
+     * @type {boolean}
+     * @memberof JobAdvancedSettings
+     */
+    'security.read_only_root_filesystem'?: boolean;
 }
 /**
  * 
