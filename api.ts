@@ -3545,8 +3545,11 @@ export enum ContainerRegistryKindEnum {
     ECR = 'ECR',
     SCALEWAY_CR = 'SCALEWAY_CR',
     DOCKER_HUB = 'DOCKER_HUB',
+    GITHUB_CR = 'GITHUB_CR',
+    GITLAB_CR = 'GITLAB_CR',
     PUBLIC_ECR = 'PUBLIC_ECR',
-    DOCR = 'DOCR'
+    DOCR = 'DOCR',
+    GENERIC_CR = 'GENERIC_CR'
 }
 
 /**
@@ -3574,7 +3577,7 @@ export interface ContainerRegistryRequest {
      */
     'description'?: string;
     /**
-     * URL of the container registry: * For `DOCKER_HUB`: it must be `https://docker.io` (default with \'https://docker.io\' if no url provided for DOCKER_HUB) * For others: it\'s required and must start by `https://` 
+     * URL of the container registry: * For `DOCKER_HUB`: it must be `https://docker.io` (default with \'https://docker.io\' if no url provided for `DOCKER_HUB`) * For `GITHUB_CR`: it must be `https://ghcr.io` (default with \'https://ghcr.io\' if no url provided for `GITHUB_CR`) * For `GITLAB_CR`: it must be `https://registry.gitlab.com` (default with \'https://registry.gitlab.com\' if no url provided for `GITLAB_CR`) * For others: it\'s required and must start by `https://` 
      * @type {string}
      * @memberof ContainerRegistryRequest
      */
@@ -3587,7 +3590,7 @@ export interface ContainerRegistryRequest {
     'config': ContainerRegistryRequestConfig;
 }
 /**
- * This field is dependent of the container registry kind: * `ECR` needs in the config: region, access_key_id, secret_access_key * `SCALEWAY_CR` needs in the config: region, scaleway_access_key, scaleway_secret_key * `DOCKER_HUB` needs in the config (optional): username, password * `PUBLIC_ECR` doesn\'t need credentials info * `DOCR` is not supported anymore 
+ * This field is dependent of the container registry kind: * `ECR` needs in the config: region, access_key_id, secret_access_key * `SCALEWAY_CR` needs in the config: region, scaleway_access_key, scaleway_secret_key * `DOCKER_HUB` needs in the config (optional): username, password * `GITHUB_CR` needs in the config: username, password * `GITLAB_CR` needs in the config: username, password * `PUBLIC_ECR` doesn\'t need credentials info * `GENERIC_CR` needs in the config: username, password * `DOCR` is not supported anymore 
  * @export
  * @interface ContainerRegistryRequestConfig
  */
