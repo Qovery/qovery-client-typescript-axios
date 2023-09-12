@@ -12034,6 +12034,12 @@ export interface ReferenceObjectStatus {
      * @memberof ReferenceObjectStatus
      */
     'is_part_last_deployment'?: boolean;
+    /**
+     * 
+     * @type {ServiceStepMetrics}
+     * @memberof ReferenceObjectStatus
+     */
+    'metrics'?: ServiceStepMetrics;
 }
 /**
  * 
@@ -12689,6 +12695,64 @@ export interface ServiceResponseList {
 /**
  * 
  * @export
+ * @interface ServiceStepMetric
+ */
+export interface ServiceStepMetric {
+    /**
+     * 
+     * @type {ServiceStepMetricNameEnum}
+     * @memberof ServiceStepMetric
+     */
+    'step_name'?: ServiceStepMetricNameEnum;
+    /**
+     * 
+     * @type {StepMetricStatusEnum}
+     * @memberof ServiceStepMetric
+     */
+    'status'?: StepMetricStatusEnum;
+    /**
+     * The duration of the step in seconds.
+     * @type {number}
+     * @memberof ServiceStepMetric
+     */
+    'duration_sec'?: number;
+}
+/**
+ * The name of the deployment step at the service level: - REGISTRY_CREATE_REPOSITORY: The step to create the repository in the registry. - GIT_CLONE: The step to clone the source code repository.  - BUILD: The step to build the source code. - DEPLOYMENT: The step to deploy the service.  - ROUTER_DEPLOYMENT: The step to deploy the router.  
+ * @export
+ * @enum {string}
+ */
+
+export enum ServiceStepMetricNameEnum {
+    REGISTRY_CREATE_REPOSITORY = 'REGISTRY_CREATE_REPOSITORY',
+    GIT_CLONE = 'GIT_CLONE',
+    BUILD = 'BUILD',
+    DEPLOYMENT = 'DEPLOYMENT',
+    ROUTER_DEPLOYMENT = 'ROUTER_DEPLOYMENT'
+}
+
+/**
+ * 
+ * @export
+ * @interface ServiceStepMetrics
+ */
+export interface ServiceStepMetrics {
+    /**
+     * The total duration in seconds of the service deployment or null if the deployment is not completed.
+     * @type {number}
+     * @memberof ServiceStepMetrics
+     */
+    'total_duration_sec'?: number | null;
+    /**
+     * A list of metrics for deployment steps of the service.
+     * @type {Array<ServiceStepMetric>}
+     * @memberof ServiceStepMetrics
+     */
+    'details'?: Array<ServiceStepMetric>;
+}
+/**
+ * 
+ * @export
  * @interface ServiceStorage
  */
 export interface ServiceStorage {
@@ -12992,6 +13056,66 @@ export interface Stage {
      * @memberof Stage
      */
     'name': string;
+    /**
+     * 
+     * @type {StageStepMetrics}
+     * @memberof Stage
+     */
+    'metrics'?: StageStepMetrics;
+}
+/**
+ * 
+ * @export
+ * @interface StageStepMetric
+ */
+export interface StageStepMetric {
+    /**
+     * 
+     * @type {StageStepMetricNameEnum}
+     * @memberof StageStepMetric
+     */
+    'step_name'?: StageStepMetricNameEnum;
+    /**
+     * 
+     * @type {StepMetricStatusEnum}
+     * @memberof StageStepMetric
+     */
+    'status'?: StepMetricStatusEnum;
+    /**
+     * The duration of the step in seconds.
+     * @type {number}
+     * @memberof StageStepMetric
+     */
+    'duration_sec'?: number;
+}
+/**
+ * The name of the deployment step at the stage level: - PROVISION_BUILDER: The step to provision builders before the actual build 
+ * @export
+ * @enum {string}
+ */
+
+export enum StageStepMetricNameEnum {
+    PROVISION_BUILDER = 'PROVISION_BUILDER'
+}
+
+/**
+ * 
+ * @export
+ * @interface StageStepMetrics
+ */
+export interface StageStepMetrics {
+    /**
+     * The total duration in seconds of the stage deployment or null if the deployment is not completed
+     * @type {number}
+     * @memberof StageStepMetrics
+     */
+    'total_duration_sec'?: number | null;
+    /**
+     * A list of metrics for deployment steps of the stage.
+     * @type {Array<StageStepMetric>}
+     * @memberof StageStepMetrics
+     */
+    'details'?: Array<StageStepMetric>;
 }
 /**
  * 
@@ -13060,6 +13184,12 @@ export interface Status {
      * @memberof Status
      */
     'is_part_last_deployment'?: boolean;
+    /**
+     * 
+     * @type {ServiceStepMetrics}
+     * @memberof Status
+     */
+    'metrics'?: ServiceStepMetrics;
 }
 /**
  * 
@@ -13081,6 +13211,19 @@ export enum StatusKindEnum {
     PAUSE_ERROR = 'PAUSE_ERROR',
     PAUSE_IN_PROGRESS = 'PAUSE_IN_PROGRESS',
     WAITING = 'WAITING'
+}
+
+/**
+ * The status of completion for the step: - SUCCESS: The step completed successfully. - ERROR: The step completed with an error. - CANCEL: The step was canceled. - SKIP: The step was skipped because it was not necessary. 
+ * @export
+ * @enum {string}
+ */
+
+export enum StepMetricStatusEnum {
+    SUCCESS = 'SUCCESS',
+    ERROR = 'ERROR',
+    CANCEL = 'CANCEL',
+    SKIP = 'SKIP'
 }
 
 /**
