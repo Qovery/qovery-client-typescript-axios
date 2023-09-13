@@ -3590,7 +3590,7 @@ export interface ContainerRegistryRequest {
     'config': ContainerRegistryRequestConfig;
 }
 /**
- * This field is dependent of the container registry kind: * `ECR` needs in the config: region, access_key_id, secret_access_key * `SCALEWAY_CR` needs in the config: region, scaleway_access_key, scaleway_secret_key * `DOCKER_HUB` needs in the config (optional): username, password * `GITHUB_CR` needs in the config: username, password * `GITLAB_CR` needs in the config: username, password * `PUBLIC_ECR` doesn\'t need credentials info * `GENERIC_CR` needs in the config: username, password * `DOCR` is not supported anymore 
+ * This field is dependent of the container registry kind: * `ECR` needs in the config: region, access_key_id, secret_access_key * `SCALEWAY_CR` needs in the config: region, scaleway_access_key, scaleway_secret_key * `DOCKER_HUB` needs in the config (optional): username, password * `GITHUB_CR` needs in the config (optional): username, password * `GITLAB_CR` needs in the config (optional): username, password * `PUBLIC_ECR` doesn\'t need credentials info * `GENERIC_CR` needs in the config (optional): username, password * `DOCR` is not supported anymore 
  * @export
  * @interface ContainerRegistryRequestConfig
  */
