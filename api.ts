@@ -250,6 +250,12 @@ export interface Application {
      * @memberof Application
      */
     'entrypoint'?: string;
+    /**
+     * Specify if the application will be automatically updated after receiving a new commit.
+     * @type {boolean}
+     * @memberof Application
+     */
+    'auto_deploy'?: boolean;
 }
 /**
  * 
@@ -594,6 +600,12 @@ export interface ApplicationAllOf {
      * @memberof ApplicationAllOf
      */
     'entrypoint'?: string;
+    /**
+     * Specify if the application will be automatically updated after receiving a new commit.
+     * @type {boolean}
+     * @memberof ApplicationAllOf
+     */
+    'auto_deploy'?: boolean;
 }
 /**
  * 
@@ -833,6 +845,12 @@ export interface ApplicationEditRequest {
      * @memberof ApplicationEditRequest
      */
     'entrypoint'?: string;
+    /**
+     * Specify if the application will be automatically updated after receiving a new commit.
+     * @type {boolean}
+     * @memberof ApplicationEditRequest
+     */
+    'auto_deploy'?: boolean | null;
 }
 /**
  * 
@@ -930,6 +948,12 @@ export interface ApplicationEditRequestAllOf {
      * @memberof ApplicationEditRequestAllOf
      */
     'entrypoint'?: string;
+    /**
+     * Specify if the application will be automatically updated after receiving a new commit.
+     * @type {boolean}
+     * @memberof ApplicationEditRequestAllOf
+     */
+    'auto_deploy'?: boolean | null;
 }
 /**
  * 
@@ -1157,6 +1181,12 @@ export interface ApplicationRequest {
      * @memberof ApplicationRequest
      */
     'entrypoint'?: string;
+    /**
+     * Specify if the application will be automatically updated after receiving a new commit.
+     * @type {boolean}
+     * @memberof ApplicationRequest
+     */
+    'auto_deploy'?: boolean | null;
 }
 /**
  * 
@@ -1248,6 +1278,12 @@ export interface ApplicationRequestAllOf {
      * @memberof ApplicationRequestAllOf
      */
     'entrypoint'?: string;
+    /**
+     * Specify if the application will be automatically updated after receiving a new commit.
+     * @type {boolean}
+     * @memberof ApplicationRequestAllOf
+     */
+    'auto_deploy'?: boolean | null;
 }
 /**
  * 
@@ -3839,6 +3875,12 @@ export interface ContainerRequest {
      * @memberof ContainerRequest
      */
     'auto_preview'?: boolean;
+    /**
+     * Specify if the container will be automatically updated after receiving a new image tag.  The new image tag shall be communicated via the \"Auto Deploy container\" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments 
+     * @type {boolean}
+     * @memberof ContainerRequest
+     */
+    'auto_deploy'?: boolean | null;
 }
 /**
  * 
@@ -3924,6 +3966,12 @@ export interface ContainerRequestAllOf {
      * @memberof ContainerRequestAllOf
      */
     'auto_preview'?: boolean;
+    /**
+     * Specify if the container will be automatically updated after receiving a new image tag.  The new image tag shall be communicated via the \"Auto Deploy container\" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments 
+     * @type {boolean}
+     * @memberof ContainerRequestAllOf
+     */
+    'auto_deploy'?: boolean | null;
 }
 /**
  * 
@@ -4057,6 +4105,12 @@ export interface ContainerResponse {
      * @memberof ContainerResponse
      */
     'ports'?: Array<ServicePort>;
+    /**
+     * Specify if the container will be automatically updated after receiving a new image tag.  The new image tag shall be communicated via the \"Auto Deploy container\" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments 
+     * @type {boolean}
+     * @memberof ContainerResponse
+     */
+    'auto_deploy'?: boolean;
 }
 /**
  * 
@@ -4166,6 +4220,12 @@ export interface ContainerResponseAllOf {
      * @memberof ContainerResponseAllOf
      */
     'ports'?: Array<ServicePort>;
+    /**
+     * Specify if the container will be automatically updated after receiving a new image tag.  The new image tag shall be communicated via the \"Auto Deploy container\" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments 
+     * @type {boolean}
+     * @memberof ContainerResponseAllOf
+     */
+    'auto_deploy'?: boolean;
 }
 /**
  * 
@@ -8745,6 +8805,12 @@ export interface JobRequest {
      * @memberof JobRequest
      */
     'schedule'?: JobRequestAllOfSchedule;
+    /**
+     * Specify if the job will be automatically updated after receiving a new image tag or a new commit according to the source type.  The new image tag shall be communicated via the \"Auto Deploy job\" endpoint https://api-doc.qovery.com/#tag/Jobs/operation/autoDeployJobEnvironments 
+     * @type {boolean}
+     * @memberof JobRequest
+     */
+    'auto_deploy'?: boolean | null;
 }
 /**
  * 
@@ -8818,6 +8884,12 @@ export interface JobRequestAllOf {
      * @memberof JobRequestAllOf
      */
     'schedule'?: JobRequestAllOfSchedule;
+    /**
+     * Specify if the job will be automatically updated after receiving a new image tag or a new commit according to the source type.  The new image tag shall be communicated via the \"Auto Deploy job\" endpoint https://api-doc.qovery.com/#tag/Jobs/operation/autoDeployJobEnvironments 
+     * @type {boolean}
+     * @memberof JobRequestAllOf
+     */
+    'auto_deploy'?: boolean | null;
 }
 /**
  * If you want to define a Cron job, only the `cronjob` property must be filled   A Lifecycle job should contain at least one property `on_XXX` among the 3 properties: `on_start`, `on_stop`, `on_delete` 
@@ -9071,6 +9143,12 @@ export interface JobResponse {
      * @memberof JobResponse
      */
     'schedule'?: JobResponseAllOfSchedule;
+    /**
+     * Specify if the job will be automatically updated after receiving a new image tag or a new commit according to the source type.  The new image tag shall be communicated via the \"Auto Deploy job\" endpoint https://api-doc.qovery.com/#tag/Jobs/operation/autoDeployJobEnvironments 
+     * @type {boolean}
+     * @memberof JobResponse
+     */
+    'auto_deploy'?: boolean;
 }
 /**
  * 
@@ -9168,6 +9246,12 @@ export interface JobResponseAllOf {
      * @memberof JobResponseAllOf
      */
     'schedule'?: JobResponseAllOfSchedule;
+    /**
+     * Specify if the job will be automatically updated after receiving a new image tag or a new commit according to the source type.  The new image tag shall be communicated via the \"Auto Deploy job\" endpoint https://api-doc.qovery.com/#tag/Jobs/operation/autoDeployJobEnvironments 
+     * @type {boolean}
+     * @memberof JobResponseAllOf
+     */
+    'auto_deploy'?: boolean;
 }
 /**
  * If you want to define a Cron job, only the `cronjob` property must be filled   A Lifecycle job should contain at least one property `on_XXX` among the 3 properties: `on_start`, `on_stop`, `on_delete` 
@@ -10941,6 +11025,25 @@ export interface OrganizationGithubAppConnectRequest {
      * @memberof OrganizationGithubAppConnectRequest
      */
     'code': string;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationJobAutoDeployRequest
+ */
+export interface OrganizationJobAutoDeployRequest {
+    /**
+     * the job image name to deploy
+     * @type {string}
+     * @memberof OrganizationJobAutoDeployRequest
+     */
+    'image_name'?: string;
+    /**
+     * the new tag to deploy
+     * @type {string}
+     * @memberof OrganizationJobAutoDeployRequest
+     */
+    'tag'?: string;
 }
 /**
  * 
@@ -38923,6 +39026,51 @@ export class JobSecretApi extends BaseAPI {
 export const JobsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Triggers a new job deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the job should have the same image name and a different tag 
+         * @summary Auto deploy jobs
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationJobAutoDeployRequest} [organizationJobAutoDeployRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoDeployJobEnvironments: async (organizationId: string, organizationJobAutoDeployRequest?: OrganizationJobAutoDeployRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('autoDeployJobEnvironments', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/job/deploy`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Token", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organizationJobAutoDeployRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * This will create a new job with the same configuration on the targeted environment Id.
          * @summary Clone job
          * @param {string} jobId Job ID
@@ -39147,6 +39295,18 @@ export const JobsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = JobsApiAxiosParamCreator(configuration)
     return {
         /**
+         * Triggers a new job deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the job should have the same image name and a different tag 
+         * @summary Auto deploy jobs
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationJobAutoDeployRequest} [organizationJobAutoDeployRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async autoDeployJobEnvironments(organizationId: string, organizationJobAutoDeployRequest?: OrganizationJobAutoDeployRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.autoDeployJobEnvironments(organizationId, organizationJobAutoDeployRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * This will create a new job with the same configuration on the targeted environment Id.
          * @summary Clone job
          * @param {string} jobId Job ID
@@ -39214,6 +39374,17 @@ export const JobsApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = JobsApiFp(configuration)
     return {
         /**
+         * Triggers a new job deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the job should have the same image name and a different tag 
+         * @summary Auto deploy jobs
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationJobAutoDeployRequest} [organizationJobAutoDeployRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoDeployJobEnvironments(organizationId: string, organizationJobAutoDeployRequest?: OrganizationJobAutoDeployRequest, options?: any): AxiosPromise<Status> {
+            return localVarFp.autoDeployJobEnvironments(organizationId, organizationJobAutoDeployRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * This will create a new job with the same configuration on the targeted environment Id.
          * @summary Clone job
          * @param {string} jobId Job ID
@@ -39275,6 +39446,19 @@ export const JobsApiFactory = function (configuration?: Configuration, basePath?
  * @extends {BaseAPI}
  */
 export class JobsApi extends BaseAPI {
+    /**
+     * Triggers a new job deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the job should have the same image name and a different tag 
+     * @summary Auto deploy jobs
+     * @param {string} organizationId Organization ID
+     * @param {OrganizationJobAutoDeployRequest} [organizationJobAutoDeployRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobsApi
+     */
+    public autoDeployJobEnvironments(organizationId: string, organizationJobAutoDeployRequest?: OrganizationJobAutoDeployRequest, options?: AxiosRequestConfig) {
+        return JobsApiFp(this.configuration).autoDeployJobEnvironments(organizationId, organizationJobAutoDeployRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * This will create a new job with the same configuration on the targeted environment Id.
      * @summary Clone job
