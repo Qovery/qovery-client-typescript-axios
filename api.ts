@@ -1162,7 +1162,7 @@ export interface ApplicationRequest {
      * @type {Healthcheck}
      * @memberof ApplicationRequest
      */
-    'healthchecks'?: Healthcheck;
+    'healthchecks': Healthcheck;
     /**
      * Specify if the environment preview option is activated or not for this application.   If activated, a preview environment will be automatically cloned at each pull request.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
@@ -1259,7 +1259,7 @@ export interface ApplicationRequestAllOf {
      * @type {Healthcheck}
      * @memberof ApplicationRequestAllOf
      */
-    'healthchecks'?: Healthcheck;
+    'healthchecks': Healthcheck;
     /**
      * Specify if the environment preview option is activated or not for this application.   If activated, a preview environment will be automatically cloned at each pull request.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
@@ -3868,7 +3868,7 @@ export interface ContainerRequest {
      * @type {Healthcheck}
      * @memberof ContainerRequest
      */
-    'healthchecks'?: Healthcheck;
+    'healthchecks': Healthcheck;
     /**
      * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
@@ -3959,7 +3959,7 @@ export interface ContainerRequestAllOf {
      * @type {Healthcheck}
      * @memberof ContainerRequestAllOf
      */
-    'healthchecks'?: Healthcheck;
+    'healthchecks': Healthcheck;
     /**
      * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
@@ -8798,7 +8798,7 @@ export interface JobRequest {
      * @type {Healthcheck}
      * @memberof JobRequest
      */
-    'healthchecks'?: Healthcheck;
+    'healthchecks': Healthcheck;
     /**
      * 
      * @type {JobRequestAllOfSchedule}
@@ -8877,7 +8877,7 @@ export interface JobRequestAllOf {
      * @type {Healthcheck}
      * @memberof JobRequestAllOf
      */
-    'healthchecks'?: Healthcheck;
+    'healthchecks': Healthcheck;
     /**
      * 
      * @type {JobRequestAllOfSchedule}
