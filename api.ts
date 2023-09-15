@@ -225,7 +225,7 @@ export interface Application {
      * @type {Healthcheck}
      * @memberof Application
      */
-    'healthchecks'?: Healthcheck;
+    'healthchecks': Healthcheck;
     /**
      * Specify if the environment preview option is activated or not for this application.   If activated, a preview environment will be automatically cloned at each pull request.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
@@ -575,7 +575,7 @@ export interface ApplicationAllOf {
      * @type {Healthcheck}
      * @memberof ApplicationAllOf
      */
-    'healthchecks'?: Healthcheck;
+    'healthchecks': Healthcheck;
     /**
      * Specify if the environment preview option is activated or not for this application.   If activated, a preview environment will be automatically cloned at each pull request.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
@@ -4092,7 +4092,7 @@ export interface ContainerResponse {
      * @type {Healthcheck}
      * @memberof ContainerResponse
      */
-    'healthchecks'?: Healthcheck;
+    'healthchecks': Healthcheck;
     /**
      * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
@@ -4207,7 +4207,7 @@ export interface ContainerResponseAllOf {
      * @type {Healthcheck}
      * @memberof ContainerResponseAllOf
      */
-    'healthchecks'?: Healthcheck;
+    'healthchecks': Healthcheck;
     /**
      * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
@@ -9136,7 +9136,7 @@ export interface JobResponse {
      * @type {Healthcheck}
      * @memberof JobResponse
      */
-    'healthchecks'?: Healthcheck;
+    'healthchecks': Healthcheck;
     /**
      * 
      * @type {JobResponseAllOfSchedule}
@@ -9239,7 +9239,7 @@ export interface JobResponseAllOf {
      * @type {Healthcheck}
      * @memberof JobResponseAllOf
      */
-    'healthchecks'?: Healthcheck;
+    'healthchecks': Healthcheck;
     /**
      * 
      * @type {JobResponseAllOfSchedule}
