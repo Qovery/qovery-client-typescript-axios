@@ -7451,6 +7451,12 @@ export interface EnvironmentStatus {
      * @memberof EnvironmentStatus
      */
     'last_deployment_id'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof EnvironmentStatus
+     */
+    'total_deployment_duration_in_seconds'?: number | null;
 }
 /**
  * 
@@ -12142,7 +12148,7 @@ export interface ReferenceObjectStatus {
      * @type {ServiceStepMetrics}
      * @memberof ReferenceObjectStatus
      */
-    'metrics'?: ServiceStepMetrics;
+    'steps'?: ServiceStepMetrics;
 }
 /**
  * 
@@ -13164,7 +13170,7 @@ export interface Stage {
      * @type {StageStepMetrics}
      * @memberof Stage
      */
-    'metrics'?: StageStepMetrics;
+    'steps'?: StageStepMetrics;
 }
 /**
  * 
@@ -13292,7 +13298,7 @@ export interface Status {
      * @type {ServiceStepMetrics}
      * @memberof Status
      */
-    'metrics'?: ServiceStepMetrics;
+    'steps'?: ServiceStepMetrics;
 }
 /**
  * 
