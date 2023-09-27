@@ -10188,10 +10188,16 @@ export interface OrganizationApiToken {
     'description'?: string;
     /**
      * 
-     * @type {OrganizationApiTokenScope}
+     * @type {string}
      * @memberof OrganizationApiToken
      */
-    'scope'?: OrganizationApiTokenScope;
+    'roleName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiToken
+     */
+    'roleId'?: string;
 }
 /**
  * 
@@ -10213,10 +10219,16 @@ export interface OrganizationApiTokenAllOf {
     'description'?: string;
     /**
      * 
-     * @type {OrganizationApiTokenScope}
+     * @type {string}
      * @memberof OrganizationApiTokenAllOf
      */
-    'scope'?: OrganizationApiTokenScope;
+    'roleName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenAllOf
+     */
+    'roleId'?: string;
 }
 /**
  * 
@@ -10262,10 +10274,16 @@ export interface OrganizationApiTokenCreate {
     'token'?: string;
     /**
      * 
-     * @type {OrganizationApiTokenScope}
+     * @type {string}
      * @memberof OrganizationApiTokenCreate
      */
-    'scope'?: OrganizationApiTokenScope;
+    'roleName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenCreate
+     */
+    'roleId'?: string;
 }
 /**
  * 
@@ -10293,10 +10311,16 @@ export interface OrganizationApiTokenCreateAllOf {
     'token'?: string;
     /**
      * 
-     * @type {OrganizationApiTokenScope}
+     * @type {string}
      * @memberof OrganizationApiTokenCreateAllOf
      */
-    'scope'?: OrganizationApiTokenScope;
+    'roleName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationApiTokenCreateAllOf
+     */
+    'roleId'?: string;
 }
 /**
  * 
@@ -10321,7 +10345,13 @@ export interface OrganizationApiTokenCreateRequest {
      * @type {OrganizationApiTokenScope}
      * @memberof OrganizationApiTokenCreateRequest
      */
-    'scope': OrganizationApiTokenScope;
+    'scope'?: OrganizationApiTokenScope | null;
+    /**
+     * the roleId provided by the \"List organization custom roles\" endpoint.
+     * @type {string}
+     * @memberof OrganizationApiTokenCreateRequest
+     */
+    'roleId': string | null;
 }
 /**
  * 
@@ -10337,7 +10367,7 @@ export interface OrganizationApiTokenResponseList {
     'results'?: Array<OrganizationApiToken>;
 }
 /**
- * 
+ * deprecated
  * @export
  * @enum {string}
  */
