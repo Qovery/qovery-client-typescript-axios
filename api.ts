@@ -10191,13 +10191,13 @@ export interface OrganizationApiToken {
      * @type {string}
      * @memberof OrganizationApiToken
      */
-    'roleName'?: string;
+    'role_name'?: string;
     /**
      * 
      * @type {string}
      * @memberof OrganizationApiToken
      */
-    'roleId'?: string;
+    'role_id'?: string;
 }
 /**
  * 
@@ -10222,13 +10222,13 @@ export interface OrganizationApiTokenAllOf {
      * @type {string}
      * @memberof OrganizationApiTokenAllOf
      */
-    'roleName'?: string;
+    'role_name'?: string;
     /**
      * 
      * @type {string}
      * @memberof OrganizationApiTokenAllOf
      */
-    'roleId'?: string;
+    'role_id'?: string;
 }
 /**
  * 
@@ -10277,13 +10277,13 @@ export interface OrganizationApiTokenCreate {
      * @type {string}
      * @memberof OrganizationApiTokenCreate
      */
-    'roleName'?: string;
+    'role_name'?: string;
     /**
      * 
      * @type {string}
      * @memberof OrganizationApiTokenCreate
      */
-    'roleId'?: string;
+    'role_id'?: string;
 }
 /**
  * 
@@ -10314,13 +10314,13 @@ export interface OrganizationApiTokenCreateAllOf {
      * @type {string}
      * @memberof OrganizationApiTokenCreateAllOf
      */
-    'roleName'?: string;
+    'role_name'?: string;
     /**
      * 
      * @type {string}
      * @memberof OrganizationApiTokenCreateAllOf
      */
-    'roleId'?: string;
+    'role_id'?: string;
 }
 /**
  * 
@@ -10351,7 +10351,7 @@ export interface OrganizationApiTokenCreateRequest {
      * @type {string}
      * @memberof OrganizationApiTokenCreateRequest
      */
-    'roleId': string | null;
+    'role_id': string | null;
 }
 /**
  * 
