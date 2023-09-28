@@ -12857,7 +12857,7 @@ export interface ServiceStepMetric {
     'duration_sec'?: number;
 }
 /**
- * The name of the deployment step at the service level: - REGISTRY_CREATE_REPOSITORY: The step to create the repository in the registry. - GIT_CLONE: The step to clone the source code repository.  - BUILD: The step to build the source code. - DEPLOYMENT: The step to deploy the service.  - ROUTER_DEPLOYMENT: The step to deploy the router.  
+ * The name of the deployment step at the service level: - REGISTRY_CREATE_REPOSITORY: The step to create the repository in the registry. - GIT_CLONE: The step to clone the source code repository.  - BUILD_QUEUEING: The queuing time preceding the actual building step. - BUILD: The step to build the source code. - DEPLOYMENT_QUEUEING: The queuing time preceding the actual deployment step. - DEPLOYMENT: The step to deploy the service.  - ROUTER_DEPLOYMENT: The step to deploy the router.  
  * @export
  * @enum {string}
  */
@@ -12865,7 +12865,9 @@ export interface ServiceStepMetric {
 export enum ServiceStepMetricNameEnum {
     REGISTRY_CREATE_REPOSITORY = 'REGISTRY_CREATE_REPOSITORY',
     GIT_CLONE = 'GIT_CLONE',
+    BUILD_QUEUEING = 'BUILD_QUEUEING',
     BUILD = 'BUILD',
+    DEPLOYMENT_QUEUEING = 'DEPLOYMENT_QUEUEING',
     DEPLOYMENT = 'DEPLOYMENT',
     ROUTER_DEPLOYMENT = 'ROUTER_DEPLOYMENT'
 }
@@ -13228,12 +13230,13 @@ export interface StageStepMetric {
     'duration_sec'?: number;
 }
 /**
- * The name of the deployment step at the stage level: - PROVISION_BUILDER: The step to provision builders before the actual build 
+ * The name of the deployment step at the stage level: - QUEUEING: The step preceding the actual stage deployment step. - PROVISION_BUILDER: The step to provision builders before the actual build. 
  * @export
  * @enum {string}
  */
 
 export enum StageStepMetricNameEnum {
+    QUEUEING = 'QUEUEING',
     PROVISION_BUILDER = 'PROVISION_BUILDER'
 }
 
