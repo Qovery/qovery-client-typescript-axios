@@ -2039,10 +2039,10 @@ export interface Cluster {
     'estimated_cloud_provider_cost'?: number;
     /**
      * 
-     * @type {StateEnum}
+     * @type {ClusterStateEnum}
      * @memberof Cluster
      */
-    'status'?: StateEnum;
+    'status'?: ClusterStateEnum;
     /**
      * 
      * @type {boolean}
@@ -2292,10 +2292,10 @@ export interface ClusterAllOf {
     'estimated_cloud_provider_cost'?: number;
     /**
      * 
-     * @type {StateEnum}
+     * @type {ClusterStateEnum}
      * @memberof ClusterAllOf
      */
-    'status'?: StateEnum;
+    'status'?: ClusterStateEnum;
     /**
      * 
      * @type {boolean}
@@ -3073,6 +3073,38 @@ export interface ClusterRoutingTableResults {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export enum ClusterStateEnum {
+    BUILDING = 'BUILDING',
+    BUILD_ERROR = 'BUILD_ERROR',
+    CANCELED = 'CANCELED',
+    CANCELING = 'CANCELING',
+    DELETED = 'DELETED',
+    DELETE_ERROR = 'DELETE_ERROR',
+    DELETE_QUEUED = 'DELETE_QUEUED',
+    DELETING = 'DELETING',
+    DEPLOYED = 'DEPLOYED',
+    DEPLOYING = 'DEPLOYING',
+    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
+    DEPLOYMENT_QUEUED = 'DEPLOYMENT_QUEUED',
+    QUEUED = 'QUEUED',
+    READY = 'READY',
+    STOPPED = 'STOPPED',
+    STOPPING = 'STOPPING',
+    STOP_ERROR = 'STOP_ERROR',
+    STOP_QUEUED = 'STOP_QUEUED',
+    RESTART_QUEUED = 'RESTART_QUEUED',
+    RESTARTING = 'RESTARTING',
+    RESTARTED = 'RESTARTED',
+    RESTART_ERROR = 'RESTART_ERROR',
+    INVALID_CREDENTIALS = 'INVALID_CREDENTIALS'
+}
+
+/**
+ * 
+ * @export
  * @interface ClusterStatus
  */
 export interface ClusterStatus {
@@ -3084,10 +3116,10 @@ export interface ClusterStatus {
     'cluster_id'?: string;
     /**
      * 
-     * @type {StateEnum}
+     * @type {ClusterStateEnum}
      * @memberof ClusterStatus
      */
-    'status'?: StateEnum;
+    'status'?: ClusterStateEnum;
     /**
      * 
      * @type {boolean}
@@ -3109,10 +3141,10 @@ export interface ClusterStatusGet {
     'cluster_id'?: string;
     /**
      * 
-     * @type {StateEnum}
+     * @type {ClusterStateEnum}
      * @memberof ClusterStatusGet
      */
-    'status'?: StateEnum;
+    'status'?: ClusterStateEnum;
     /**
      * 
      * @type {boolean}
