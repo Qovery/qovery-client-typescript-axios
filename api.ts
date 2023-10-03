@@ -4637,6 +4637,12 @@ export interface CustomDomainAllOf {
      * @memberof CustomDomainAllOf
      */
     'status'?: CustomDomainStatusEnum;
+    /**
+     * to control if a certificate has to be generated for this custom domain by Qovery. The default value is `true`. This flag should be set to `false` if a CDN or other entities are managing the certificate for the specified domain and the traffic is proxied by the CDN to Qovery.
+     * @type {boolean}
+     * @memberof CustomDomainAllOf
+     */
+    'generate_certificate'?: boolean;
 }
 /**
  * 
