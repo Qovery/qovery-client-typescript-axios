@@ -3631,25 +3631,25 @@ export interface ContainerRegistryProviderDetailsResponse {
      * @type {string}
      * @memberof ContainerRegistryProviderDetailsResponse
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
      * @memberof ContainerRegistryProviderDetailsResponse
      */
-    'name'?: string;
+    'name': string;
     /**
      * URL of the container registry
      * @type {string}
      * @memberof ContainerRegistryProviderDetailsResponse
      */
-    'url'?: string;
+    'url': string;
     /**
      * 
      * @type {ContainerRegistryKindEnum}
      * @memberof ContainerRegistryProviderDetailsResponse
      */
-    'kind'?: ContainerRegistryKindEnum;
+    'kind': ContainerRegistryKindEnum;
 }
 /**
  * 
