@@ -6011,12 +6011,6 @@ export interface DeploymentRuleRequest {
      * @type {boolean}
      * @memberof DeploymentRuleRequest
      */
-    'auto_deploy'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DeploymentRuleRequest
-     */
     'auto_stop': boolean;
     /**
      * specify value only if auto_stop = false
@@ -6911,12 +6905,6 @@ export interface EnvironmentDeploymentRule {
      * @type {boolean}
      * @memberof EnvironmentDeploymentRule
      */
-    'auto_deploy'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnvironmentDeploymentRule
-     */
     'on_demand_preview'?: boolean;
     /**
      * 
@@ -6966,12 +6954,6 @@ export interface EnvironmentDeploymentRuleAllOf {
      * @type {boolean}
      * @memberof EnvironmentDeploymentRuleAllOf
      */
-    'auto_deploy'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnvironmentDeploymentRuleAllOf
-     */
     'on_demand_preview'?: boolean;
     /**
      * 
@@ -7016,12 +6998,6 @@ export interface EnvironmentDeploymentRuleAllOf {
  * @interface EnvironmentDeploymentRuleEditRequest
  */
 export interface EnvironmentDeploymentRuleEditRequest {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnvironmentDeploymentRuleEditRequest
-     */
-    'auto_deploy'?: boolean;
     /**
      * 
      * @type {boolean}
@@ -11955,12 +11931,6 @@ export interface ProjectDeploymentRule {
      * @type {boolean}
      * @memberof ProjectDeploymentRule
      */
-    'auto_deploy'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProjectDeploymentRule
-     */
     'auto_stop'?: boolean;
     /**
      * 
@@ -12042,12 +12012,6 @@ export interface ProjectDeploymentRuleRequest {
      * @memberof ProjectDeploymentRuleRequest
      */
     'cluster_id': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProjectDeploymentRuleRequest
-     */
-    'auto_deploy'?: boolean;
     /**
      * 
      * @type {boolean}
