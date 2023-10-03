@@ -9102,7 +9102,7 @@ export interface JobResponse {
      * @type {ReferenceObject}
      * @memberof JobResponse
      */
-    'registry': ReferenceObject;
+    'registry'?: ReferenceObject;
     /**
      * Maximum cpu that can be allocated to the job based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -9205,7 +9205,7 @@ export interface JobResponseAllOf {
      * @type {ReferenceObject}
      * @memberof JobResponseAllOf
      */
-    'registry': ReferenceObject;
+    'registry'?: ReferenceObject;
     /**
      * Maximum cpu that can be allocated to the job based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
      * @type {number}
