@@ -3623,6 +3623,37 @@ export enum ContainerRegistryKindEnum {
 /**
  * 
  * @export
+ * @interface ContainerRegistryProviderDetailsResponse
+ */
+export interface ContainerRegistryProviderDetailsResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryProviderDetailsResponse
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryProviderDetailsResponse
+     */
+    'name'?: string;
+    /**
+     * URL of the container registry
+     * @type {string}
+     * @memberof ContainerRegistryProviderDetailsResponse
+     */
+    'url'?: string;
+    /**
+     * 
+     * @type {ContainerRegistryKindEnum}
+     * @memberof ContainerRegistryProviderDetailsResponse
+     */
+    'kind'?: ContainerRegistryKindEnum;
+}
+/**
+ * 
+ * @export
  * @interface ContainerRegistryRequest
  */
 export interface ContainerRegistryRequest {
@@ -4043,10 +4074,10 @@ export interface ContainerResponse {
     'environment': ReferenceObject;
     /**
      * 
-     * @type {ReferenceObject}
+     * @type {ContainerRegistryProviderDetailsResponse}
      * @memberof ContainerResponse
      */
-    'registry': ReferenceObject;
+    'registry': ContainerRegistryProviderDetailsResponse;
     /**
      * Maximum cpu that can be allocated to the container based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -4158,10 +4189,10 @@ export interface ContainerResponseAllOf {
     'environment': ReferenceObject;
     /**
      * 
-     * @type {ReferenceObject}
+     * @type {ContainerRegistryProviderDetailsResponse}
      * @memberof ContainerResponseAllOf
      */
-    'registry': ReferenceObject;
+    'registry': ContainerRegistryProviderDetailsResponse;
     /**
      * Maximum cpu that can be allocated to the container based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -9098,12 +9129,6 @@ export interface JobResponse {
      */
     'environment': ReferenceObject;
     /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof JobResponse
-     */
-    'registry'?: ReferenceObject;
-    /**
      * Maximum cpu that can be allocated to the job based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
      * @type {number}
      * @memberof JobResponse
@@ -9200,12 +9225,6 @@ export interface JobResponseAllOf {
      * @memberof JobResponseAllOf
      */
     'environment': ReferenceObject;
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof JobResponseAllOf
-     */
-    'registry'?: ReferenceObject;
     /**
      * Maximum cpu that can be allocated to the job based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -9355,10 +9374,10 @@ export interface JobResponseAllOfScheduleCronjob {
 export interface JobResponseAllOfSource {
     /**
      * 
-     * @type {JobRequestAllOfSourceImage}
+     * @type {JobResponseAllOfSourceImage}
      * @memberof JobResponseAllOfSource
      */
-    'image'?: JobRequestAllOfSourceImage | null;
+    'image'?: JobResponseAllOfSourceImage | null;
     /**
      * 
      * @type {JobResponseAllOfSourceDocker}
@@ -9384,6 +9403,37 @@ export interface JobResponseAllOfSourceDocker {
      * @memberof JobResponseAllOfSourceDocker
      */
     'git_repository'?: ApplicationGitRepository;
+}
+/**
+ * 
+ * @export
+ * @interface JobResponseAllOfSourceImage
+ */
+export interface JobResponseAllOfSourceImage {
+    /**
+     * The image name pattern differs according to chosen container registry provider:   * `ECR`: `repository` * `SCALEWAY_CR`: `namespace/image` * `DOCKER_HUB`: `image` or `repository/image` * `PUBLIC_ECR`: `registry_alias/repository` 
+     * @type {string}
+     * @memberof JobResponseAllOfSourceImage
+     */
+    'image_name'?: string;
+    /**
+     * tag of the image container
+     * @type {string}
+     * @memberof JobResponseAllOfSourceImage
+     */
+    'tag'?: string;
+    /**
+     * tag of the image container
+     * @type {string}
+     * @memberof JobResponseAllOfSourceImage
+     */
+    'registry_id'?: string;
+    /**
+     * 
+     * @type {ContainerRegistryProviderDetailsResponse}
+     * @memberof JobResponseAllOfSourceImage
+     */
+    'registry'?: ContainerRegistryProviderDetailsResponse;
 }
 /**
  * 
