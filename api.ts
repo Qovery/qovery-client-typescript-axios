@@ -4601,6 +4601,12 @@ export interface CustomDomain {
      */
     'domain': string;
     /**
+     * to control if a certificate has to be generated for this custom domain by Qovery. The default value is `true`. This flag should be set to `false` if a CDN or other entities are managing the certificate for the specified domain and the traffic is proxied by the CDN to Qovery.
+     * @type {boolean}
+     * @memberof CustomDomain
+     */
+    'generate_certificate'?: boolean;
+    /**
      * URL provided by Qovery. You must create a CNAME on your DNS provider using that URL
      * @type {string}
      * @memberof CustomDomain
@@ -4644,6 +4650,12 @@ export interface CustomDomainRequest {
      * @memberof CustomDomainRequest
      */
     'domain': string;
+    /**
+     * to control if a certificate has to be generated for this custom domain by Qovery. The default value is `true`. This flag should be set to `false` if a CDN or other entities are managing the certificate for the specified domain and the traffic is proxied by the CDN to Qovery.
+     * @type {boolean}
+     * @memberof CustomDomainRequest
+     */
+    'generate_certificate'?: boolean;
 }
 /**
  * 
@@ -28855,7 +28867,7 @@ export const CustomDomainApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * To edit a Custom Domain  you must have the project user permission
+         * To edit a Custom Domain you must have the project user permission
          * @summary Edit a Custom Domain
          * @param {string} applicationId Application ID
          * @param {string} customDomainId Custom Domain ID
@@ -29024,7 +29036,7 @@ export const CustomDomainApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * To edit a Custom Domain  you must have the project user permission
+         * To edit a Custom Domain you must have the project user permission
          * @summary Edit a Custom Domain
          * @param {string} applicationId Application ID
          * @param {string} customDomainId Custom Domain ID
@@ -29092,7 +29104,7 @@ export const CustomDomainApiFactory = function (configuration?: Configuration, b
             return localVarFp.deleteCustomDomain(applicationId, customDomainId, options).then((request) => request(axios, basePath));
         },
         /**
-         * To edit a Custom Domain  you must have the project user permission
+         * To edit a Custom Domain you must have the project user permission
          * @summary Edit a Custom Domain
          * @param {string} applicationId Application ID
          * @param {string} customDomainId Custom Domain ID
@@ -29161,7 +29173,7 @@ export class CustomDomainApi extends BaseAPI {
     }
 
     /**
-     * To edit a Custom Domain  you must have the project user permission
+     * To edit a Custom Domain you must have the project user permission
      * @summary Edit a Custom Domain
      * @param {string} applicationId Application ID
      * @param {string} customDomainId Custom Domain ID
