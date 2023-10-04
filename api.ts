@@ -2441,6 +2441,18 @@ export interface ClusterCredentialsResponseList {
     'results'?: Array<ClusterCredentials>;
 }
 /**
+ * Indicates the mode to apply on cluster deletion   **\"hard delete\"** means that we delete directly from our database, this is different from a **\"trigger delete\"** that cleans the resource - `DEFAULT`: this is the normal way, trigger delete the cluster only if no environment linked to this cluster remains - `DELETE_CLUSTER_AND_QOVERY_CONFIG`: hard delete environments linked to this cluster then trigger delete the cluster - `DELETE_QOVERY_CONFIG`: hard delete environments linked to this cluster then hard delete the cluster 
+ * @export
+ * @enum {string}
+ */
+
+export enum ClusterDeleteMode {
+    DEFAULT = 'DEFAULT',
+    DELETE_CLUSTER_AND_QOVERY_CONFIG = 'DELETE_CLUSTER_AND_QOVERY_CONFIG',
+    DELETE_QOVERY_CONFIG = 'DELETE_QOVERY_CONFIG'
+}
+
+/**
  * 
  * @export
  * @enum {string}
@@ -22835,11 +22847,11 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
          * @summary Delete a cluster
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
-         * @param {'DEFAULT' | 'DELETE_CLUSTER_AND_QOVERY_CONFIG' | 'DELETE_QOVERY_CONFIG'} [deleteMode] 
+         * @param {ClusterDeleteMode} [deleteMode] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCluster: async (organizationId: string, clusterId: string, deleteMode?: 'DEFAULT' | 'DELETE_CLUSTER_AND_QOVERY_CONFIG' | 'DELETE_QOVERY_CONFIG', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCluster: async (organizationId: string, clusterId: string, deleteMode?: ClusterDeleteMode, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('deleteCluster', 'organizationId', organizationId)
             // verify required parameter 'clusterId' is not null or undefined
@@ -23582,11 +23594,11 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          * @summary Delete a cluster
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
-         * @param {'DEFAULT' | 'DELETE_CLUSTER_AND_QOVERY_CONFIG' | 'DELETE_QOVERY_CONFIG'} [deleteMode] 
+         * @param {ClusterDeleteMode} [deleteMode] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteCluster(organizationId: string, clusterId: string, deleteMode?: 'DEFAULT' | 'DELETE_CLUSTER_AND_QOVERY_CONFIG' | 'DELETE_QOVERY_CONFIG', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteCluster(organizationId: string, clusterId: string, deleteMode?: ClusterDeleteMode, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCluster(organizationId, clusterId, deleteMode, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -23796,11 +23808,11 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          * @summary Delete a cluster
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
-         * @param {'DEFAULT' | 'DELETE_CLUSTER_AND_QOVERY_CONFIG' | 'DELETE_QOVERY_CONFIG'} [deleteMode] 
+         * @param {ClusterDeleteMode} [deleteMode] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCluster(organizationId: string, clusterId: string, deleteMode?: 'DEFAULT' | 'DELETE_CLUSTER_AND_QOVERY_CONFIG' | 'DELETE_QOVERY_CONFIG', options?: any): AxiosPromise<void> {
+        deleteCluster(organizationId: string, clusterId: string, deleteMode?: ClusterDeleteMode, options?: any): AxiosPromise<void> {
             return localVarFp.deleteCluster(organizationId, clusterId, deleteMode, options).then((request) => request(axios, basePath));
         },
         /**
@@ -23996,12 +24008,12 @@ export class ClustersApi extends BaseAPI {
      * @summary Delete a cluster
      * @param {string} organizationId Organization ID
      * @param {string} clusterId Cluster ID
-     * @param {'DEFAULT' | 'DELETE_CLUSTER_AND_QOVERY_CONFIG' | 'DELETE_QOVERY_CONFIG'} [deleteMode] 
+     * @param {ClusterDeleteMode} [deleteMode] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ClustersApi
      */
-    public deleteCluster(organizationId: string, clusterId: string, deleteMode?: 'DEFAULT' | 'DELETE_CLUSTER_AND_QOVERY_CONFIG' | 'DELETE_QOVERY_CONFIG', options?: AxiosRequestConfig) {
+    public deleteCluster(organizationId: string, clusterId: string, deleteMode?: ClusterDeleteMode, options?: AxiosRequestConfig) {
         return ClustersApiFp(this.configuration).deleteCluster(organizationId, clusterId, deleteMode, options).then((request) => request(this.axios, this.basePath));
     }
 
