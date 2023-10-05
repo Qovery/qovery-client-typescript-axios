@@ -4617,7 +4617,7 @@ export interface CustomDomain {
      * @type {boolean}
      * @memberof CustomDomain
      */
-    'generate_certificate'?: boolean;
+    'generate_certificate': boolean;
     /**
      * URL provided by Qovery. You must create a CNAME on your DNS provider using that URL
      * @type {string}
@@ -4673,7 +4673,7 @@ export interface CustomDomainRequest {
      * @type {boolean}
      * @memberof CustomDomainRequest
      */
-    'generate_certificate'?: boolean;
+    'generate_certificate': boolean;
 }
 /**
  * 
