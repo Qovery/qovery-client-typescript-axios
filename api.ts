@@ -13,13 +13,15 @@
  */
 
 
-import { Configuration } from './configuration';
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { Configuration } from './configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
+import type { RequestArgs } from './base';
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
+import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 
 /**
  * 
@@ -27,14 +29,17 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
  * @enum {string}
  */
 
-export enum APIVariableScopeEnum {
-    APPLICATION = 'APPLICATION',
-    BUILT_IN = 'BUILT_IN',
-    ENVIRONMENT = 'ENVIRONMENT',
-    PROJECT = 'PROJECT',
-    CONTAINER = 'CONTAINER',
-    JOB = 'JOB'
-}
+export const APIVariableScopeEnum = {
+    APPLICATION: 'APPLICATION',
+    BUILT_IN: 'BUILT_IN',
+    ENVIRONMENT: 'ENVIRONMENT',
+    PROJECT: 'PROJECT',
+    CONTAINER: 'CONTAINER',
+    JOB: 'JOB'
+} as const;
+
+export type APIVariableScopeEnum = typeof APIVariableScopeEnum[keyof typeof APIVariableScopeEnum];
+
 
 /**
  * type of the environment variable (VALUE, FILE, ALIAS, OVERRIDE or BUIT_IN)  
@@ -42,13 +47,16 @@ export enum APIVariableScopeEnum {
  * @enum {string}
  */
 
-export enum APIVariableTypeEnum {
-    VALUE = 'VALUE',
-    ALIAS = 'ALIAS',
-    OVERRIDE = 'OVERRIDE',
-    BUILT_IN = 'BUILT_IN',
-    FILE = 'FILE'
-}
+export const APIVariableTypeEnum = {
+    VALUE: 'VALUE',
+    ALIAS: 'ALIAS',
+    OVERRIDE: 'OVERRIDE',
+    BUILT_IN: 'BUILT_IN',
+    FILE: 'FILE'
+} as const;
+
+export type APIVariableTypeEnum = typeof APIVariableTypeEnum[keyof typeof APIVariableTypeEnum];
+
 
 /**
  * 
@@ -138,10 +146,10 @@ export interface Application {
     'updated_at'?: string;
     /**
      * 
-     * @type {Array<ServiceStorageStorage>}
+     * @type {Array<ServiceStorageStorageInner>}
      * @memberof Application
      */
-    'storage'?: Array<ServiceStorageStorage>;
+    'storage'?: Array<ServiceStorageStorageInner>;
     /**
      * 
      * @type {ReferenceObject}
@@ -257,6 +265,8 @@ export interface Application {
      */
     'auto_deploy'?: boolean;
 }
+
+
 /**
  * 
  * @export
@@ -469,144 +479,19 @@ export interface ApplicationAdvancedSettings {
     'security.read_only_root_filesystem'?: boolean;
 }
 
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ApplicationAdvancedSettingsDeploymentAntiaffinityPodEnum {
-    PREFERRED = 'Preferred',
-    REQUIRRED = 'Requirred'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ApplicationAdvancedSettingsDeploymentUpdateStrategyTypeEnum {
-    ROLLING_UPDATE = 'RollingUpdate',
-    RECREATE = 'Recreate'
-}
+export const ApplicationAdvancedSettingsDeploymentAntiaffinityPodEnum = {
+    PREFERRED: 'Preferred',
+    REQUIRRED: 'Requirred'
+} as const;
 
-/**
- * 
- * @export
- * @interface ApplicationAllOf
- */
-export interface ApplicationAllOf {
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof ApplicationAllOf
-     */
-    'environment'?: ReferenceObject;
-    /**
-     * 
-     * @type {ApplicationGitRepository}
-     * @memberof ApplicationAllOf
-     */
-    'git_repository'?: ApplicationGitRepository;
-    /**
-     * Maximum cpu that can be allocated to the application based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof ApplicationAllOf
-     */
-    'maximum_cpu'?: number;
-    /**
-     * Maximum memory that can be allocated to the application based on organization cluster configuration. unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof ApplicationAllOf
-     */
-    'maximum_memory'?: number;
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof ApplicationAllOf
-     */
-    'name'?: string;
-    /**
-     * give a description to this application
-     * @type {string}
-     * @memberof ApplicationAllOf
-     */
-    'description'?: string | null;
-    /**
-     * 
-     * @type {BuildModeEnum}
-     * @memberof ApplicationAllOf
-     */
-    'build_mode'?: BuildModeEnum;
-    /**
-     * The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
-     * @type {string}
-     * @memberof ApplicationAllOf
-     */
-    'dockerfile_path'?: string | null;
-    /**
-     * 
-     * @type {BuildPackLanguageEnum}
-     * @memberof ApplicationAllOf
-     */
-    'buildpack_language'?: BuildPackLanguageEnum | null;
-    /**
-     * unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof ApplicationAllOf
-     */
-    'cpu'?: number;
-    /**
-     * unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof ApplicationAllOf
-     */
-    'memory'?: number;
-    /**
-     * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no application running. 
-     * @type {number}
-     * @memberof ApplicationAllOf
-     */
-    'min_running_instances'?: number;
-    /**
-     * Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: -1 means that there is no limit. 
-     * @type {number}
-     * @memberof ApplicationAllOf
-     */
-    'max_running_instances'?: number;
-    /**
-     * 
-     * @type {Healthcheck}
-     * @memberof ApplicationAllOf
-     */
-    'healthchecks': Healthcheck;
-    /**
-     * Specify if the environment preview option is activated or not for this application.   If activated, a preview environment will be automatically cloned at each pull request.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
-     * @type {boolean}
-     * @memberof ApplicationAllOf
-     */
-    'auto_preview'?: boolean;
-    /**
-     * 
-     * @type {Array<ServicePort>}
-     * @memberof ApplicationAllOf
-     */
-    'ports'?: Array<ServicePort>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ApplicationAllOf
-     */
-    'arguments'?: Array<string>;
-    /**
-     * optional entrypoint when launching container
-     * @type {string}
-     * @memberof ApplicationAllOf
-     */
-    'entrypoint'?: string;
-    /**
-     * Specify if the application will be automatically updated after receiving a new commit.
-     * @type {boolean}
-     * @memberof ApplicationAllOf
-     */
-    'auto_deploy'?: boolean;
-}
+export type ApplicationAdvancedSettingsDeploymentAntiaffinityPodEnum = typeof ApplicationAdvancedSettingsDeploymentAntiaffinityPodEnum[keyof typeof ApplicationAdvancedSettingsDeploymentAntiaffinityPodEnum];
+export const ApplicationAdvancedSettingsDeploymentUpdateStrategyTypeEnum = {
+    ROLLING_UPDATE: 'RollingUpdate',
+    RECREATE: 'Recreate'
+} as const;
+
+export type ApplicationAdvancedSettingsDeploymentUpdateStrategyTypeEnum = typeof ApplicationAdvancedSettingsDeploymentUpdateStrategyTypeEnum[keyof typeof ApplicationAdvancedSettingsDeploymentUpdateStrategyTypeEnum];
+
 /**
  * 
  * @export
@@ -662,6 +547,8 @@ export interface ApplicationCurrentScale {
      */
     'updated_at'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -705,6 +592,8 @@ export interface ApplicationDeploymentRestriction {
      */
     'value': string;
 }
+
+
 /**
  * 
  * @export
@@ -730,6 +619,8 @@ export interface ApplicationDeploymentRestrictionRequest {
      */
     'value': string;
 }
+
+
 /**
  * 
  * @export
@@ -751,10 +642,10 @@ export interface ApplicationDeploymentRestrictionResponseList {
 export interface ApplicationEditRequest {
     /**
      * 
-     * @type {Array<ServiceStorageRequestStorage>}
+     * @type {Array<ServiceStorageRequestStorageInner>}
      * @memberof ApplicationEditRequest
      */
-    'storage'?: Array<ServiceStorageRequestStorage>;
+    'storage'?: Array<ServiceStorageRequestStorageInner>;
     /**
      * name is case insensitive
      * @type {string}
@@ -852,109 +743,8 @@ export interface ApplicationEditRequest {
      */
     'auto_deploy'?: boolean | null;
 }
-/**
- * 
- * @export
- * @interface ApplicationEditRequestAllOf
- */
-export interface ApplicationEditRequestAllOf {
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof ApplicationEditRequestAllOf
-     */
-    'name'?: string;
-    /**
-     * give a description to this application
-     * @type {string}
-     * @memberof ApplicationEditRequestAllOf
-     */
-    'description'?: string;
-    /**
-     * 
-     * @type {ApplicationGitRepositoryRequest}
-     * @memberof ApplicationEditRequestAllOf
-     */
-    'git_repository'?: ApplicationGitRepositoryRequest;
-    /**
-     * 
-     * @type {BuildModeEnum}
-     * @memberof ApplicationEditRequestAllOf
-     */
-    'build_mode'?: BuildModeEnum;
-    /**
-     * The path of the associated Dockerfile
-     * @type {string}
-     * @memberof ApplicationEditRequestAllOf
-     */
-    'dockerfile_path'?: string;
-    /**
-     * 
-     * @type {BuildPackLanguageEnum}
-     * @memberof ApplicationEditRequestAllOf
-     */
-    'buildpack_language'?: BuildPackLanguageEnum | null;
-    /**
-     * unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof ApplicationEditRequestAllOf
-     */
-    'cpu'?: number;
-    /**
-     * unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof ApplicationEditRequestAllOf
-     */
-    'memory'?: number;
-    /**
-     * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no application running. 
-     * @type {number}
-     * @memberof ApplicationEditRequestAllOf
-     */
-    'min_running_instances'?: number;
-    /**
-     * Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: -1 means that there is no limit. 
-     * @type {number}
-     * @memberof ApplicationEditRequestAllOf
-     */
-    'max_running_instances'?: number;
-    /**
-     * 
-     * @type {Healthcheck}
-     * @memberof ApplicationEditRequestAllOf
-     */
-    'healthchecks': Healthcheck;
-    /**
-     * Specify if the environment preview option is activated or not for this application.   If activated, a preview environment will be automatically cloned at each pull request.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
-     * @type {boolean}
-     * @memberof ApplicationEditRequestAllOf
-     */
-    'auto_preview'?: boolean;
-    /**
-     * 
-     * @type {Array<ServicePort>}
-     * @memberof ApplicationEditRequestAllOf
-     */
-    'ports'?: Array<ServicePort>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ApplicationEditRequestAllOf
-     */
-    'arguments'?: Array<string>;
-    /**
-     * optional entrypoint when launching container
-     * @type {string}
-     * @memberof ApplicationEditRequestAllOf
-     */
-    'entrypoint'?: string;
-    /**
-     * Specify if the application will be automatically updated after receiving a new commit.
-     * @type {boolean}
-     * @memberof ApplicationEditRequestAllOf
-     */
-    'auto_deploy'?: boolean | null;
-}
+
+
 /**
  * 
  * @export
@@ -1028,6 +818,8 @@ export interface ApplicationGitRepository {
      */
     'deployed_commit_tag'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -1087,16 +879,16 @@ export interface ApplicationNetworkRequest {
 export interface ApplicationRequest {
     /**
      * 
-     * @type {Array<ServiceStorageRequestStorage>}
+     * @type {Array<ServiceStorageRequestStorageInner>}
      * @memberof ApplicationRequest
      */
-    'storage'?: Array<ServiceStorageRequestStorage>;
+    'storage'?: Array<ServiceStorageRequestStorageInner>;
     /**
      * 
-     * @type {Array<ServicePortRequestPorts>}
+     * @type {Array<ServicePortRequestPortsInner>}
      * @memberof ApplicationRequest
      */
-    'ports'?: Array<ServicePortRequestPorts>;
+    'ports'?: Array<ServicePortRequestPortsInner>;
     /**
      * name is case insensitive
      * @type {string}
@@ -1188,103 +980,8 @@ export interface ApplicationRequest {
      */
     'auto_deploy'?: boolean | null;
 }
-/**
- * 
- * @export
- * @interface ApplicationRequestAllOf
- */
-export interface ApplicationRequestAllOf {
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof ApplicationRequestAllOf
-     */
-    'name': string;
-    /**
-     * give a description to this application
-     * @type {string}
-     * @memberof ApplicationRequestAllOf
-     */
-    'description'?: string | null;
-    /**
-     * 
-     * @type {ApplicationGitRepositoryRequest}
-     * @memberof ApplicationRequestAllOf
-     */
-    'git_repository': ApplicationGitRepositoryRequest;
-    /**
-     * 
-     * @type {BuildModeEnum}
-     * @memberof ApplicationRequestAllOf
-     */
-    'build_mode'?: BuildModeEnum;
-    /**
-     * The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
-     * @type {string}
-     * @memberof ApplicationRequestAllOf
-     */
-    'dockerfile_path'?: string | null;
-    /**
-     * 
-     * @type {BuildPackLanguageEnum}
-     * @memberof ApplicationRequestAllOf
-     */
-    'buildpack_language'?: BuildPackLanguageEnum | null;
-    /**
-     * unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof ApplicationRequestAllOf
-     */
-    'cpu'?: number;
-    /**
-     * unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof ApplicationRequestAllOf
-     */
-    'memory'?: number;
-    /**
-     * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no application running. 
-     * @type {number}
-     * @memberof ApplicationRequestAllOf
-     */
-    'min_running_instances'?: number;
-    /**
-     * Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: -1 means that there is no limit. 
-     * @type {number}
-     * @memberof ApplicationRequestAllOf
-     */
-    'max_running_instances'?: number;
-    /**
-     * 
-     * @type {Healthcheck}
-     * @memberof ApplicationRequestAllOf
-     */
-    'healthchecks': Healthcheck;
-    /**
-     * Specify if the environment preview option is activated or not for this application.   If activated, a preview environment will be automatically cloned at each pull request.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
-     * @type {boolean}
-     * @memberof ApplicationRequestAllOf
-     */
-    'auto_preview'?: boolean;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ApplicationRequestAllOf
-     */
-    'arguments'?: Array<string>;
-    /**
-     * optional entrypoint when launching container
-     * @type {string}
-     * @memberof ApplicationRequestAllOf
-     */
-    'entrypoint'?: string;
-    /**
-     * Specify if the application will be automatically updated after receiving a new commit.
-     * @type {boolean}
-     * @memberof ApplicationRequestAllOf
-     */
-    'auto_deploy'?: boolean | null;
-}
+
+
 /**
  * 
  * @export
@@ -1312,10 +1009,10 @@ export interface AvailableContainerRegistryResponse {
     'kind'?: ContainerRegistryKindEnum;
     /**
      * 
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: any; }}
      * @memberof AvailableContainerRegistryResponse
      */
-    'required_config'?: { [key: string]: object; };
+    'required_config'?: { [key: string]: any; };
     /**
      * 
      * @type {boolean}
@@ -1323,6 +1020,8 @@ export interface AvailableContainerRegistryResponse {
      */
     'is_mandatory'?: boolean;
 }
+
+
 /**
  * 
  * @export
@@ -1401,19 +1100,6 @@ export interface Backup {
      * 
      * @type {Status}
      * @memberof Backup
-     */
-    'status'?: Status;
-}
-/**
- * 
- * @export
- * @interface BackupAllOf
- */
-export interface BackupAllOf {
-    /**
-     * 
-     * @type {Status}
-     * @memberof BackupAllOf
      */
     'status'?: Status;
 }
@@ -1753,10 +1439,13 @@ export interface BudgetThreshold {
  * @enum {string}
  */
 
-export enum BuildModeEnum {
-    BUILDPACKS = 'BUILDPACKS',
-    DOCKER = 'DOCKER'
-}
+export const BuildModeEnum = {
+    BUILDPACKS: 'BUILDPACKS',
+    DOCKER: 'DOCKER'
+} as const;
+
+export type BuildModeEnum = typeof BuildModeEnum[keyof typeof BuildModeEnum];
+
 
 /**
  * Development language of the application
@@ -1764,19 +1453,22 @@ export enum BuildModeEnum {
  * @enum {string}
  */
 
-export enum BuildPackLanguageEnum {
-    CLOJURE = 'CLOJURE',
-    GO = 'GO',
-    GRADLE = 'GRADLE',
-    GRAILS = 'GRAILS',
-    JAVA = 'JAVA',
-    JVM = 'JVM',
-    NODE_JS = 'NODE_JS',
-    PHP = 'PHP',
-    PLAY = 'PLAY',
-    PYTHON = 'PYTHON',
-    SCALA = 'SCALA'
-}
+export const BuildPackLanguageEnum = {
+    CLOJURE: 'CLOJURE',
+    GO: 'GO',
+    GRADLE: 'GRADLE',
+    GRAILS: 'GRAILS',
+    JAVA: 'JAVA',
+    JVM: 'JVM',
+    NODE_JS: 'NODE_JS',
+    PHP: 'PHP',
+    PLAY: 'PLAY',
+    PYTHON: 'PYTHON',
+    SCALA: 'SCALA'
+} as const;
+
+export type BuildPackLanguageEnum = typeof BuildPackLanguageEnum[keyof typeof BuildPackLanguageEnum];
+
 
 /**
  * 
@@ -1885,6 +1577,8 @@ export interface CloneRequest {
      */
     'apply_deployment_rule'?: boolean;
 }
+
+
 /**
  * 
  * @export
@@ -1922,11 +1616,14 @@ export interface CloudProvider {
  * @enum {string}
  */
 
-export enum CloudProviderEnum {
-    AWS = 'AWS',
-    DO = 'DO',
-    SCW = 'SCW'
-}
+export const CloudProviderEnum = {
+    AWS: 'AWS',
+    DO: 'DO',
+    SCW: 'SCW'
+} as const;
+
+export type CloudProviderEnum = typeof CloudProviderEnum[keyof typeof CloudProviderEnum];
+
 
 /**
  * 
@@ -2086,6 +1783,8 @@ export interface Cluster {
      */
     'deployment_status'?: ClusterDeploymentStatusEnum;
 }
+
+
 /**
  * 
  * @export
@@ -2203,142 +1902,13 @@ export interface ClusterAdvancedSettings {
     'pleco.resources_ttl'?: number;
 }
 
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ClusterAdvancedSettingsAwsEksEc2MetadataImdsEnum {
-    OPTIONAL = 'optional',
-    REQUIRED = 'required'
-}
+export const ClusterAdvancedSettingsAwsEksEc2MetadataImdsEnum = {
+    OPTIONAL: 'optional',
+    REQUIRED: 'required'
+} as const;
 
-/**
- * 
- * @export
- * @interface ClusterAllOf
- */
-export interface ClusterAllOf {
-    /**
-     * name is case-insensitive
-     * @type {string}
-     * @memberof ClusterAllOf
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterAllOf
-     */
-    'description'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterAllOf
-     */
-    'region': string;
-    /**
-     * 
-     * @type {CloudProviderEnum}
-     * @memberof ClusterAllOf
-     */
-    'cloud_provider': CloudProviderEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof ClusterAllOf
-     */
-    'min_running_nodes'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ClusterAllOf
-     */
-    'max_running_nodes'?: number;
-    /**
-     * Unit is in GB. The disk size to be used for the node configuration
-     * @type {number}
-     * @memberof ClusterAllOf
-     */
-    'disk_size'?: number;
-    /**
-     * the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType
-     * @type {string}
-     * @memberof ClusterAllOf
-     */
-    'instance_type'?: string;
-    /**
-     * 
-     * @type {KubernetesEnum}
-     * @memberof ClusterAllOf
-     */
-    'kubernetes'?: KubernetesEnum;
-    /**
-     * unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof ClusterAllOf
-     */
-    'cpu'?: number;
-    /**
-     * unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof ClusterAllOf
-     */
-    'memory'?: number;
-    /**
-     * This is an estimation of the cost this cluster will represent on your cloud proider bill, based on your current configuration
-     * @type {number}
-     * @memberof ClusterAllOf
-     */
-    'estimated_cloud_provider_cost'?: number;
-    /**
-     * 
-     * @type {ClusterStateEnum}
-     * @memberof ClusterAllOf
-     */
-    'status'?: ClusterStateEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ClusterAllOf
-     */
-    'has_access'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterAllOf
-     */
-    'version'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ClusterAllOf
-     */
-    'is_default'?: boolean;
-    /**
-     * specific flag to indicate that this cluster is a production one
-     * @type {boolean}
-     * @memberof ClusterAllOf
-     */
-    'production'?: boolean;
-    /**
-     * Indicate your public ssh_key to remotely connect to your EC2 instance.
-     * @type {Array<string>}
-     * @memberof ClusterAllOf
-     */
-    'ssh_keys'?: Array<string>;
-    /**
-     * 
-     * @type {Array<ClusterFeature>}
-     * @memberof ClusterAllOf
-     */
-    'features'?: Array<ClusterFeature>;
-    /**
-     * 
-     * @type {ClusterDeploymentStatusEnum}
-     * @memberof ClusterAllOf
-     */
-    'deployment_status'?: ClusterDeploymentStatusEnum;
-}
+export type ClusterAdvancedSettingsAwsEksEc2MetadataImdsEnum = typeof ClusterAdvancedSettingsAwsEksEc2MetadataImdsEnum[keyof typeof ClusterAdvancedSettingsAwsEksEc2MetadataImdsEnum];
+
 /**
  * 
  * @export
@@ -2364,6 +1934,8 @@ export interface ClusterCloudProviderInfo {
      */
     'region'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -2408,6 +1980,8 @@ export interface ClusterCloudProviderInfoRequest {
      */
     'region'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -2446,11 +2020,14 @@ export interface ClusterCredentialsResponseList {
  * @enum {string}
  */
 
-export enum ClusterDeleteMode {
-    DEFAULT = 'DEFAULT',
-    DELETE_CLUSTER_AND_QOVERY_CONFIG = 'DELETE_CLUSTER_AND_QOVERY_CONFIG',
-    DELETE_QOVERY_CONFIG = 'DELETE_QOVERY_CONFIG'
-}
+export const ClusterDeleteMode = {
+    DEFAULT: 'DEFAULT',
+    DELETE_CLUSTER_AND_QOVERY_CONFIG: 'DELETE_CLUSTER_AND_QOVERY_CONFIG',
+    DELETE_QOVERY_CONFIG: 'DELETE_QOVERY_CONFIG'
+} as const;
+
+export type ClusterDeleteMode = typeof ClusterDeleteMode[keyof typeof ClusterDeleteMode];
+
 
 /**
  * 
@@ -2458,11 +2035,14 @@ export enum ClusterDeleteMode {
  * @enum {string}
  */
 
-export enum ClusterDeploymentStatusEnum {
-    NEVER_DEPLOYED = 'NEVER_DEPLOYED',
-    OUT_OF_DATE = 'OUT_OF_DATE',
-    UP_TO_DATE = 'UP_TO_DATE'
-}
+export const ClusterDeploymentStatusEnum = {
+    NEVER_DEPLOYED: 'NEVER_DEPLOYED',
+    OUT_OF_DATE: 'OUT_OF_DATE',
+    UP_TO_DATE: 'UP_TO_DATE'
+} as const;
+
+export type ClusterDeploymentStatusEnum = typeof ClusterDeploymentStatusEnum[keyof typeof ClusterDeploymentStatusEnum];
+
 
 /**
  * 
@@ -2514,10 +2094,10 @@ export interface ClusterFeature {
     'value_type'?: ClusterFeatureValueTypeEnum;
     /**
      * 
-     * @type {string | boolean}
+     * @type {ClusterFeatureValue}
      * @memberof ClusterFeature
      */
-    'value'?: string | boolean | null;
+    'value'?: ClusterFeatureValue | null;
     /**
      * 
      * @type {boolean}
@@ -2526,19 +2106,23 @@ export interface ClusterFeature {
     'is_value_updatable'?: boolean;
     /**
      * 
-     * @type {Array<string | boolean>}
+     * @type {Array<ClusterFeatureAcceptedValuesInner>}
      * @memberof ClusterFeature
      */
-    'accepted_values'?: Array<string | boolean>;
+    'accepted_values'?: Array<ClusterFeatureAcceptedValuesInner>;
 }
 
+export const ClusterFeatureValueTypeEnum = {
+    BOOLEAN: 'BOOLEAN'
+} as const;
+
+export type ClusterFeatureValueTypeEnum = typeof ClusterFeatureValueTypeEnum[keyof typeof ClusterFeatureValueTypeEnum];
+
 /**
-    * @export
-    * @enum {string}
-    */
-export enum ClusterFeatureValueTypeEnum {
-    BOOLEAN = 'BOOLEAN'
-}
+ * @type ClusterFeatureAcceptedValuesInner
+ * @export
+ */
+export type ClusterFeatureAcceptedValuesInner = boolean | string;
 
 /**
  * 
@@ -2554,6 +2138,12 @@ export interface ClusterFeatureResponseList {
     'results'?: Array<ClusterFeature>;
 }
 /**
+ * @type ClusterFeatureValue
+ * @export
+ */
+export type ClusterFeatureValue = boolean | string;
+
+/**
  * 
  * @export
  * @interface ClusterInstanceTypeResponseList
@@ -2561,57 +2151,57 @@ export interface ClusterFeatureResponseList {
 export interface ClusterInstanceTypeResponseList {
     /**
      * 
-     * @type {Array<ClusterInstanceTypeResponseListResults>}
+     * @type {Array<ClusterInstanceTypeResponseListResultsInner>}
      * @memberof ClusterInstanceTypeResponseList
      */
-    'results'?: Array<ClusterInstanceTypeResponseListResults>;
+    'results'?: Array<ClusterInstanceTypeResponseListResultsInner>;
 }
 /**
  * 
  * @export
- * @interface ClusterInstanceTypeResponseListResults
+ * @interface ClusterInstanceTypeResponseListResultsInner
  */
-export interface ClusterInstanceTypeResponseListResults {
+export interface ClusterInstanceTypeResponseListResultsInner {
     /**
      * 
      * @type {string}
-     * @memberof ClusterInstanceTypeResponseListResults
+     * @memberof ClusterInstanceTypeResponseListResultsInner
      */
     'type': string;
     /**
      * 
      * @type {string}
-     * @memberof ClusterInstanceTypeResponseListResults
+     * @memberof ClusterInstanceTypeResponseListResultsInner
      */
     'name': string;
     /**
      * 
      * @type {number}
-     * @memberof ClusterInstanceTypeResponseListResults
+     * @memberof ClusterInstanceTypeResponseListResultsInner
      */
     'cpu': number;
     /**
      * 
      * @type {number}
-     * @memberof ClusterInstanceTypeResponseListResults
+     * @memberof ClusterInstanceTypeResponseListResultsInner
      */
     'ram_in_gb': number;
     /**
      * 
      * @type {string}
-     * @memberof ClusterInstanceTypeResponseListResults
+     * @memberof ClusterInstanceTypeResponseListResultsInner
      */
     'bandwidth_in_gbps': string;
     /**
      * 
      * @type {string}
-     * @memberof ClusterInstanceTypeResponseListResults
+     * @memberof ClusterInstanceTypeResponseListResultsInner
      */
     'bandwidth_guarantee': string;
     /**
      * 
      * @type {string}
-     * @memberof ClusterInstanceTypeResponseListResults
+     * @memberof ClusterInstanceTypeResponseListResultsInner
      */
     'architecture'?: string;
 }
@@ -2659,27 +2249,25 @@ export interface ClusterLogs {
     'details'?: ClusterLogsDetails;
 }
 
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ClusterLogsStepEnum {
-    LOAD_CONFIGURATION = 'LoadConfiguration',
-    CREATE = 'Create',
-    CREATED = 'Created',
-    CREATE_ERROR = 'CreateError',
-    PAUSE = 'Pause',
-    PAUSED = 'Paused',
-    PAUSE_ERROR = 'PauseError',
-    DELETE = 'Delete',
-    DELETED = 'Deleted',
-    DELETE_ERROR = 'DeleteError',
-    RETRIEVE_CLUSTER_CONFIG = 'RetrieveClusterConfig',
-    RETRIEVE_CLUSTER_RESOURCES = 'RetrieveClusterResources',
-    VALIDATE_SYSTEM_REQUIREMENTS = 'ValidateSystemRequirements',
-    UNDER_MIGRATION = 'UnderMigration',
-    UNKNOWN = 'Unknown'
-}
+export const ClusterLogsStepEnum = {
+    LOAD_CONFIGURATION: 'LoadConfiguration',
+    CREATE: 'Create',
+    CREATED: 'Created',
+    CREATE_ERROR: 'CreateError',
+    PAUSE: 'Pause',
+    PAUSED: 'Paused',
+    PAUSE_ERROR: 'PauseError',
+    DELETE: 'Delete',
+    DELETED: 'Deleted',
+    DELETE_ERROR: 'DeleteError',
+    RETRIEVE_CLUSTER_CONFIG: 'RetrieveClusterConfig',
+    RETRIEVE_CLUSTER_RESOURCES: 'RetrieveClusterResources',
+    VALIDATE_SYSTEM_REQUIREMENTS: 'ValidateSystemRequirements',
+    UNDER_MIGRATION: 'UnderMigration',
+    UNKNOWN: 'Unknown'
+} as const;
+
+export type ClusterLogsStepEnum = typeof ClusterLogsStepEnum[keyof typeof ClusterLogsStepEnum];
 
 /**
  * Present only for `info`, `warning` and `debug` logs
@@ -2969,29 +2557,31 @@ export interface ClusterRequest {
     'ssh_keys'?: Array<string>;
     /**
      * 
-     * @type {Array<ClusterRequestFeatures>}
+     * @type {Array<ClusterRequestFeaturesInner>}
      * @memberof ClusterRequest
      */
-    'features'?: Array<ClusterRequestFeatures>;
+    'features'?: Array<ClusterRequestFeaturesInner>;
 }
+
+
 /**
  * 
  * @export
- * @interface ClusterRequestFeatures
+ * @interface ClusterRequestFeaturesInner
  */
-export interface ClusterRequestFeatures {
+export interface ClusterRequestFeaturesInner {
     /**
      * 
      * @type {string}
-     * @memberof ClusterRequestFeatures
+     * @memberof ClusterRequestFeaturesInner
      */
     'id'?: string;
     /**
      * 
-     * @type {string | boolean}
-     * @memberof ClusterRequestFeatures
+     * @type {ClusterFeatureValue}
+     * @memberof ClusterRequestFeaturesInner
      */
-    'value'?: string | boolean | null;
+    'value'?: ClusterFeatureValue | null;
 }
 /**
  * 
@@ -3014,10 +2604,10 @@ export interface ClusterResponseList {
 export interface ClusterRoutingTable {
     /**
      * 
-     * @type {Array<ClusterRoutingTableResults>}
+     * @type {Array<ClusterRoutingTableResultsInner>}
      * @memberof ClusterRoutingTable
      */
-    'results'?: Array<ClusterRoutingTableResults>;
+    'results'?: Array<ClusterRoutingTableResultsInner>;
 }
 /**
  * 
@@ -3027,58 +2617,58 @@ export interface ClusterRoutingTable {
 export interface ClusterRoutingTableRequest {
     /**
      * 
-     * @type {Array<ClusterRoutingTableRequestRoutes>}
+     * @type {Array<ClusterRoutingTableRequestRoutesInner>}
      * @memberof ClusterRoutingTableRequest
      */
-    'routes': Array<ClusterRoutingTableRequestRoutes>;
+    'routes': Array<ClusterRoutingTableRequestRoutesInner>;
 }
 /**
  * 
  * @export
- * @interface ClusterRoutingTableRequestRoutes
+ * @interface ClusterRoutingTableRequestRoutesInner
  */
-export interface ClusterRoutingTableRequestRoutes {
+export interface ClusterRoutingTableRequestRoutesInner {
     /**
      * 
      * @type {string}
-     * @memberof ClusterRoutingTableRequestRoutes
+     * @memberof ClusterRoutingTableRequestRoutesInner
      */
     'destination': string;
     /**
      * 
      * @type {string}
-     * @memberof ClusterRoutingTableRequestRoutes
+     * @memberof ClusterRoutingTableRequestRoutesInner
      */
     'target': string;
     /**
      * 
      * @type {string}
-     * @memberof ClusterRoutingTableRequestRoutes
+     * @memberof ClusterRoutingTableRequestRoutesInner
      */
     'description': string;
 }
 /**
  * 
  * @export
- * @interface ClusterRoutingTableResults
+ * @interface ClusterRoutingTableResultsInner
  */
-export interface ClusterRoutingTableResults {
+export interface ClusterRoutingTableResultsInner {
     /**
      * 
      * @type {string}
-     * @memberof ClusterRoutingTableResults
+     * @memberof ClusterRoutingTableResultsInner
      */
     'destination'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ClusterRoutingTableResults
+     * @memberof ClusterRoutingTableResultsInner
      */
     'target'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ClusterRoutingTableResults
+     * @memberof ClusterRoutingTableResultsInner
      */
     'description'?: string;
 }
@@ -3088,31 +2678,34 @@ export interface ClusterRoutingTableResults {
  * @enum {string}
  */
 
-export enum ClusterStateEnum {
-    BUILDING = 'BUILDING',
-    BUILD_ERROR = 'BUILD_ERROR',
-    CANCELED = 'CANCELED',
-    CANCELING = 'CANCELING',
-    DELETED = 'DELETED',
-    DELETE_ERROR = 'DELETE_ERROR',
-    DELETE_QUEUED = 'DELETE_QUEUED',
-    DELETING = 'DELETING',
-    DEPLOYED = 'DEPLOYED',
-    DEPLOYING = 'DEPLOYING',
-    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
-    DEPLOYMENT_QUEUED = 'DEPLOYMENT_QUEUED',
-    QUEUED = 'QUEUED',
-    READY = 'READY',
-    STOPPED = 'STOPPED',
-    STOPPING = 'STOPPING',
-    STOP_ERROR = 'STOP_ERROR',
-    STOP_QUEUED = 'STOP_QUEUED',
-    RESTART_QUEUED = 'RESTART_QUEUED',
-    RESTARTING = 'RESTARTING',
-    RESTARTED = 'RESTARTED',
-    RESTART_ERROR = 'RESTART_ERROR',
-    INVALID_CREDENTIALS = 'INVALID_CREDENTIALS'
-}
+export const ClusterStateEnum = {
+    BUILDING: 'BUILDING',
+    BUILD_ERROR: 'BUILD_ERROR',
+    CANCELED: 'CANCELED',
+    CANCELING: 'CANCELING',
+    DELETED: 'DELETED',
+    DELETE_ERROR: 'DELETE_ERROR',
+    DELETE_QUEUED: 'DELETE_QUEUED',
+    DELETING: 'DELETING',
+    DEPLOYED: 'DEPLOYED',
+    DEPLOYING: 'DEPLOYING',
+    DEPLOYMENT_ERROR: 'DEPLOYMENT_ERROR',
+    DEPLOYMENT_QUEUED: 'DEPLOYMENT_QUEUED',
+    QUEUED: 'QUEUED',
+    READY: 'READY',
+    STOPPED: 'STOPPED',
+    STOPPING: 'STOPPING',
+    STOP_ERROR: 'STOP_ERROR',
+    STOP_QUEUED: 'STOP_QUEUED',
+    RESTART_QUEUED: 'RESTART_QUEUED',
+    RESTARTING: 'RESTARTING',
+    RESTARTED: 'RESTARTED',
+    RESTART_ERROR: 'RESTART_ERROR',
+    INVALID_CREDENTIALS: 'INVALID_CREDENTIALS'
+} as const;
+
+export type ClusterStateEnum = typeof ClusterStateEnum[keyof typeof ClusterStateEnum];
+
 
 /**
  * 
@@ -3139,6 +2732,8 @@ export interface ClusterStatus {
      */
     'is_deployed'?: boolean;
 }
+
+
 /**
  * 
  * @export
@@ -3170,6 +2765,8 @@ export interface ClusterStatusGet {
      */
     'last_execution_id'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -3240,12 +2837,6 @@ export interface Commit {
 export interface CommitPaginatedResponseList {
     /**
      * 
-     * @type {Array<Commit>}
-     * @memberof CommitPaginatedResponseList
-     */
-    'results'?: Array<Commit>;
-    /**
-     * 
      * @type {number}
      * @memberof CommitPaginatedResponseList
      */
@@ -3256,17 +2847,10 @@ export interface CommitPaginatedResponseList {
      * @memberof CommitPaginatedResponseList
      */
     'page_size': number;
-}
-/**
- * 
- * @export
- * @interface CommitPaginatedResponseListAllOf
- */
-export interface CommitPaginatedResponseListAllOf {
     /**
      * 
      * @type {Array<Commit>}
-     * @memberof CommitPaginatedResponseListAllOf
+     * @memberof CommitPaginatedResponseList
      */
     'results'?: Array<Commit>;
 }
@@ -3302,13 +2886,16 @@ export interface CommunityUsage {
  * @enum {string}
  */
 
-export enum CompanySizeEnum {
-    _1_10 = '1-10',
-    _11_50 = '11-50',
-    _51_200 = '51-200',
-    _201_500 = '201-500',
-    _500 = '500+'
-}
+export const CompanySizeEnum = {
+    _1_10: '1-10',
+    _11_50: '11-50',
+    _51_200: '51-200',
+    _201_500: '201-500',
+    _500: '500+'
+} as const;
+
+export type CompanySizeEnum = typeof CompanySizeEnum[keyof typeof CompanySizeEnum];
+
 
 /**
  * 
@@ -3504,22 +3091,18 @@ export interface ContainerAdvancedSettings {
     'security.read_only_root_filesystem'?: boolean;
 }
 
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ContainerAdvancedSettingsDeploymentAntiaffinityPodEnum {
-    PREFERRED = 'Preferred',
-    REQUIRRED = 'Requirred'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ContainerAdvancedSettingsDeploymentUpdateStrategyTypeEnum {
-    ROLLING_UPDATE = 'RollingUpdate',
-    RECREATE = 'Recreate'
-}
+export const ContainerAdvancedSettingsDeploymentAntiaffinityPodEnum = {
+    PREFERRED: 'Preferred',
+    REQUIRRED: 'Requirred'
+} as const;
+
+export type ContainerAdvancedSettingsDeploymentAntiaffinityPodEnum = typeof ContainerAdvancedSettingsDeploymentAntiaffinityPodEnum[keyof typeof ContainerAdvancedSettingsDeploymentAntiaffinityPodEnum];
+export const ContainerAdvancedSettingsDeploymentUpdateStrategyTypeEnum = {
+    ROLLING_UPDATE: 'RollingUpdate',
+    RECREATE: 'Recreate'
+} as const;
+
+export type ContainerAdvancedSettingsDeploymentUpdateStrategyTypeEnum = typeof ContainerAdvancedSettingsDeploymentUpdateStrategyTypeEnum[keyof typeof ContainerAdvancedSettingsDeploymentUpdateStrategyTypeEnum];
 
 /**
  * 
@@ -3576,6 +3159,8 @@ export interface ContainerCurrentScale {
      */
     'updated_at'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -3621,16 +3206,19 @@ export interface ContainerNetworkRequest {
  * @enum {string}
  */
 
-export enum ContainerRegistryKindEnum {
-    ECR = 'ECR',
-    SCALEWAY_CR = 'SCALEWAY_CR',
-    DOCKER_HUB = 'DOCKER_HUB',
-    GITHUB_CR = 'GITHUB_CR',
-    GITLAB_CR = 'GITLAB_CR',
-    PUBLIC_ECR = 'PUBLIC_ECR',
-    DOCR = 'DOCR',
-    GENERIC_CR = 'GENERIC_CR'
-}
+export const ContainerRegistryKindEnum = {
+    ECR: 'ECR',
+    SCALEWAY_CR: 'SCALEWAY_CR',
+    DOCKER_HUB: 'DOCKER_HUB',
+    GITHUB_CR: 'GITHUB_CR',
+    GITLAB_CR: 'GITLAB_CR',
+    PUBLIC_ECR: 'PUBLIC_ECR',
+    DOCR: 'DOCR',
+    GENERIC_CR: 'GENERIC_CR'
+} as const;
+
+export type ContainerRegistryKindEnum = typeof ContainerRegistryKindEnum[keyof typeof ContainerRegistryKindEnum];
+
 
 /**
  * 
@@ -3663,6 +3251,8 @@ export interface ContainerRegistryProviderDetailsResponse {
      */
     'kind': ContainerRegistryKindEnum;
 }
+
+
 /**
  * 
  * @export
@@ -3700,6 +3290,8 @@ export interface ContainerRegistryRequest {
      */
     'config': ContainerRegistryRequestConfig;
 }
+
+
 /**
  * This field is dependent of the container registry kind: * `ECR` needs in the config: region, access_key_id, secret_access_key * `SCALEWAY_CR` needs in the config: region, scaleway_access_key, scaleway_secret_key * `DOCKER_HUB` needs in the config (optional): username, password * `GITHUB_CR` needs in the config (optional): username, password * `GITLAB_CR` needs in the config (optional): username, password * `PUBLIC_ECR` doesn\'t need credentials info * `GENERIC_CR` needs in the config (optional): username, password * `DOCR` is not supported anymore 
  * @export
@@ -3799,47 +3391,43 @@ export interface ContainerRegistryResponse {
     'url'?: string;
     /**
      * 
-     * @type {Base & object}
+     * @type {ContainerRegistryResponseAllOfCluster}
      * @memberof ContainerRegistryResponse
      */
-    'cluster'?: Base & object;
+    'cluster'?: ContainerRegistryResponseAllOfCluster;
 }
+
+
 /**
  * 
  * @export
- * @interface ContainerRegistryResponseAllOf
+ * @interface ContainerRegistryResponseAllOfCluster
  */
-export interface ContainerRegistryResponseAllOf {
+export interface ContainerRegistryResponseAllOfCluster {
+    /**
+     * Id of the cluster of which the registry belongs to
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOfCluster
+     */
+    'id': string;
     /**
      * 
      * @type {string}
-     * @memberof ContainerRegistryResponseAllOf
+     * @memberof ContainerRegistryResponseAllOfCluster
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOfCluster
+     */
+    'updated_at'?: string;
+    /**
+     * Name of the cluster of which the registry belongs to
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOfCluster
      */
     'name'?: string;
-    /**
-     * 
-     * @type {ContainerRegistryKindEnum}
-     * @memberof ContainerRegistryResponseAllOf
-     */
-    'kind'?: ContainerRegistryKindEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContainerRegistryResponseAllOf
-     */
-    'description'?: string;
-    /**
-     * URL of the container registry
-     * @type {string}
-     * @memberof ContainerRegistryResponseAllOf
-     */
-    'url'?: string;
-    /**
-     * 
-     * @type {Base & object}
-     * @memberof ContainerRegistryResponseAllOf
-     */
-    'cluster'?: Base & object;
 }
 /**
  * 
@@ -3862,16 +3450,16 @@ export interface ContainerRegistryResponseList {
 export interface ContainerRequest {
     /**
      * 
-     * @type {Array<ServiceStorageRequestStorage>}
+     * @type {Array<ServiceStorageRequestStorageInner>}
      * @memberof ContainerRequest
      */
-    'storage'?: Array<ServiceStorageRequestStorage>;
+    'storage'?: Array<ServiceStorageRequestStorageInner>;
     /**
      * 
-     * @type {Array<ServicePortRequestPorts>}
+     * @type {Array<ServicePortRequestPortsInner>}
      * @memberof ContainerRequest
      */
-    'ports'?: Array<ServicePortRequestPorts>;
+    'ports'?: Array<ServicePortRequestPortsInner>;
     /**
      * name is case insensitive
      * @type {string}
@@ -3954,97 +3542,6 @@ export interface ContainerRequest {
      * Specify if the container will be automatically updated after receiving a new image tag.  The new image tag shall be communicated via the \"Auto Deploy container\" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments 
      * @type {boolean}
      * @memberof ContainerRequest
-     */
-    'auto_deploy'?: boolean | null;
-}
-/**
- * 
- * @export
- * @interface ContainerRequestAllOf
- */
-export interface ContainerRequestAllOf {
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof ContainerRequestAllOf
-     */
-    'name': string;
-    /**
-     * give a description to this container
-     * @type {string}
-     * @memberof ContainerRequestAllOf
-     */
-    'description'?: string;
-    /**
-     * id of the linked registry
-     * @type {string}
-     * @memberof ContainerRequestAllOf
-     */
-    'registry_id': string;
-    /**
-     * The image name pattern differs according to chosen container registry provider:   * `ECR`: `repository` * `SCALEWAY_CR`: `namespace/image` * `DOCKER_HUB`: `image` or `repository/image` * `PUBLIC_ECR`: `registry_alias/repository` 
-     * @type {string}
-     * @memberof ContainerRequestAllOf
-     */
-    'image_name': string;
-    /**
-     * tag of the image container
-     * @type {string}
-     * @memberof ContainerRequestAllOf
-     */
-    'tag': string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ContainerRequestAllOf
-     */
-    'arguments'?: Array<string>;
-    /**
-     * optional entrypoint when launching container
-     * @type {string}
-     * @memberof ContainerRequestAllOf
-     */
-    'entrypoint'?: string;
-    /**
-     * unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof ContainerRequestAllOf
-     */
-    'cpu'?: number;
-    /**
-     * unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof ContainerRequestAllOf
-     */
-    'memory'?: number;
-    /**
-     * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no container running. 
-     * @type {number}
-     * @memberof ContainerRequestAllOf
-     */
-    'min_running_instances'?: number;
-    /**
-     * Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: -1 means that there is no limit. 
-     * @type {number}
-     * @memberof ContainerRequestAllOf
-     */
-    'max_running_instances'?: number;
-    /**
-     * 
-     * @type {Healthcheck}
-     * @memberof ContainerRequestAllOf
-     */
-    'healthchecks': Healthcheck;
-    /**
-     * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
-     * @type {boolean}
-     * @memberof ContainerRequestAllOf
-     */
-    'auto_preview'?: boolean;
-    /**
-     * Specify if the container will be automatically updated after receiving a new image tag.  The new image tag shall be communicated via the \"Auto Deploy container\" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments 
-     * @type {boolean}
-     * @memberof ContainerRequestAllOf
      */
     'auto_deploy'?: boolean | null;
 }
@@ -4074,10 +3571,10 @@ export interface ContainerResponse {
     'updated_at'?: string;
     /**
      * 
-     * @type {Array<ServiceStorageStorage>}
+     * @type {Array<ServiceStorageStorageInner>}
      * @memberof ContainerResponse
      */
-    'storage'?: Array<ServiceStorageStorage>;
+    'storage'?: Array<ServiceStorageStorageInner>;
     /**
      * 
      * @type {ReferenceObject}
@@ -4184,121 +3681,6 @@ export interface ContainerResponse {
      * Specify if the container will be automatically updated after receiving a new image tag.  The new image tag shall be communicated via the \"Auto Deploy container\" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments 
      * @type {boolean}
      * @memberof ContainerResponse
-     */
-    'auto_deploy'?: boolean;
-}
-/**
- * 
- * @export
- * @interface ContainerResponseAllOf
- */
-export interface ContainerResponseAllOf {
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof ContainerResponseAllOf
-     */
-    'environment': ReferenceObject;
-    /**
-     * 
-     * @type {ContainerRegistryProviderDetailsResponse}
-     * @memberof ContainerResponseAllOf
-     */
-    'registry': ContainerRegistryProviderDetailsResponse;
-    /**
-     * Maximum cpu that can be allocated to the container based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof ContainerResponseAllOf
-     */
-    'maximum_cpu': number;
-    /**
-     * Maximum memory that can be allocated to the container based on organization cluster configuration. unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof ContainerResponseAllOf
-     */
-    'maximum_memory': number;
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof ContainerResponseAllOf
-     */
-    'name': string;
-    /**
-     * give a description to this container
-     * @type {string}
-     * @memberof ContainerResponseAllOf
-     */
-    'description'?: string;
-    /**
-     * name of the image container
-     * @type {string}
-     * @memberof ContainerResponseAllOf
-     */
-    'image_name': string;
-    /**
-     * tag of the image container
-     * @type {string}
-     * @memberof ContainerResponseAllOf
-     */
-    'tag': string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ContainerResponseAllOf
-     */
-    'arguments'?: Array<string>;
-    /**
-     * optional entrypoint when launching container
-     * @type {string}
-     * @memberof ContainerResponseAllOf
-     */
-    'entrypoint'?: string;
-    /**
-     * unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof ContainerResponseAllOf
-     */
-    'cpu': number;
-    /**
-     * unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof ContainerResponseAllOf
-     */
-    'memory': number;
-    /**
-     * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no container running. 
-     * @type {number}
-     * @memberof ContainerResponseAllOf
-     */
-    'min_running_instances': number;
-    /**
-     * Maximum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: -1 means that there is no limit. 
-     * @type {number}
-     * @memberof ContainerResponseAllOf
-     */
-    'max_running_instances': number;
-    /**
-     * 
-     * @type {Healthcheck}
-     * @memberof ContainerResponseAllOf
-     */
-    'healthchecks': Healthcheck;
-    /**
-     * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
-     * @type {boolean}
-     * @memberof ContainerResponseAllOf
-     */
-    'auto_preview': boolean;
-    /**
-     * 
-     * @type {Array<ServicePort>}
-     * @memberof ContainerResponseAllOf
-     */
-    'ports'?: Array<ServicePort>;
-    /**
-     * Specify if the container will be automatically updated after receiving a new image tag.  The new image tag shall be communicated via the \"Auto Deploy container\" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments 
-     * @type {boolean}
-     * @memberof ContainerResponseAllOf
      */
     'auto_deploy'?: boolean;
 }
@@ -4383,11 +3765,14 @@ export interface CostRange {
  * @enum {string}
  */
 
-export enum CreateEnvironmentModeEnum {
-    DEVELOPMENT = 'DEVELOPMENT',
-    PRODUCTION = 'PRODUCTION',
-    STAGING = 'STAGING'
-}
+export const CreateEnvironmentModeEnum = {
+    DEVELOPMENT: 'DEVELOPMENT',
+    PRODUCTION: 'PRODUCTION',
+    STAGING: 'STAGING'
+} as const;
+
+export type CreateEnvironmentModeEnum = typeof CreateEnvironmentModeEnum[keyof typeof CreateEnvironmentModeEnum];
+
 
 /**
  * 
@@ -4414,6 +3799,8 @@ export interface CreateEnvironmentRequest {
      */
     'mode'?: CreateEnvironmentModeEnum;
 }
+
+
 /**
  * 
  * @export
@@ -4582,6 +3969,8 @@ export interface CurrentCost {
      */
     'cost'?: Cost;
 }
+
+
 /**
  * 
  * @export
@@ -4631,31 +4020,8 @@ export interface CustomDomain {
      */
     'status'?: CustomDomainStatusEnum;
 }
-/**
- * 
- * @export
- * @interface CustomDomainAllOf
- */
-export interface CustomDomainAllOf {
-    /**
-     * URL provided by Qovery. You must create a CNAME on your DNS provider using that URL
-     * @type {string}
-     * @memberof CustomDomainAllOf
-     */
-    'validation_domain'?: string;
-    /**
-     * 
-     * @type {CustomDomainStatusEnum}
-     * @memberof CustomDomainAllOf
-     */
-    'status'?: CustomDomainStatusEnum;
-    /**
-     * to control if a certificate has to be generated for this custom domain by Qovery. The default value is `true`. This flag should be set to `false` if a CDN or other entities are managing the certificate for the specified domain and the traffic is proxied by the CDN to Qovery.
-     * @type {boolean}
-     * @memberof CustomDomainAllOf
-     */
-    'generate_certificate'?: boolean;
-}
+
+
 /**
  * 
  * @export
@@ -4694,9 +4060,12 @@ export interface CustomDomainResponseList {
  * @enum {string}
  */
 
-export enum CustomDomainStatusEnum {
-    VALIDATION_PENDING = 'VALIDATION_PENDING'
-}
+export const CustomDomainStatusEnum = {
+    VALIDATION_PENDING: 'VALIDATION_PENDING'
+} as const;
+
+export type CustomDomainStatusEnum = typeof CustomDomainStatusEnum[keyof typeof CustomDomainStatusEnum];
+
 
 /**
  * 
@@ -4819,66 +4188,22 @@ export interface Database {
      */
     'disk_encrypted'?: boolean;
 }
+
+
 /**
  * 
  * @export
  * @enum {string}
  */
 
-export enum DatabaseAccessibilityEnum {
-    PRIVATE = 'PRIVATE',
-    PUBLIC = 'PUBLIC'
-}
+export const DatabaseAccessibilityEnum = {
+    PRIVATE: 'PRIVATE',
+    PUBLIC: 'PUBLIC'
+} as const;
 
-/**
- * 
- * @export
- * @interface DatabaseAllOf
- */
-export interface DatabaseAllOf {
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof DatabaseAllOf
-     */
-    'environment'?: ReferenceObject;
-    /**
-     * 
-     * @type {string}
-     * @memberof DatabaseAllOf
-     */
-    'host'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof DatabaseAllOf
-     */
-    'port'?: number;
-    /**
-     * Maximum cpu that can be allocated to the database based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof DatabaseAllOf
-     */
-    'maximum_cpu'?: number;
-    /**
-     * Maximum memory that can be allocated to the database based on organization cluster configuration. unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof DatabaseAllOf
-     */
-    'maximum_memory'?: number;
-    /**
-     * indicates if the database disk is encrypted or not
-     * @type {boolean}
-     * @memberof DatabaseAllOf
-     */
-    'disk_encrypted'?: boolean;
-    /**
-     * Database instance type to be used for this database. The list of values can be retrieved via the endpoint /{CloudProvider}/managedDatabase/instanceType/{region}/{dbType}. This field is null for container DB.
-     * @type {string}
-     * @memberof DatabaseAllOf
-     */
-    'instance_type'?: string;
-}
+export type DatabaseAccessibilityEnum = typeof DatabaseAccessibilityEnum[keyof typeof DatabaseAccessibilityEnum];
+
+
 /**
  * 
  * @export
@@ -4898,6 +4223,8 @@ export interface DatabaseConfiguration {
      */
     'version'?: Array<DatabaseVersionMode>;
 }
+
+
 /**
  * 
  * @export
@@ -4979,6 +4306,8 @@ export interface DatabaseCurrentMetricCpu {
      */
     'status'?: ThresholdMetricStatusEnum;
 }
+
+
 /**
  * 
  * @export
@@ -5022,6 +4351,8 @@ export interface DatabaseCurrentMetricMemory {
      */
     'status'?: ThresholdMetricStatusEnum;
 }
+
+
 /**
  * 
  * @export
@@ -5065,6 +4396,8 @@ export interface DatabaseCurrentMetricStorage {
      */
     'status'?: ThresholdMetricStatusEnum;
 }
+
+
 /**
  * 
  * @export
@@ -5120,16 +4453,21 @@ export interface DatabaseEditRequest {
      */
     'instance_type'?: string;
 }
+
+
 /**
  * 
  * @export
  * @enum {string}
  */
 
-export enum DatabaseModeEnum {
-    CONTAINER = 'CONTAINER',
-    MANAGED = 'MANAGED'
-}
+export const DatabaseModeEnum = {
+    CONTAINER: 'CONTAINER',
+    MANAGED: 'MANAGED'
+} as const;
+
+export type DatabaseModeEnum = typeof DatabaseModeEnum[keyof typeof DatabaseModeEnum];
+
 
 /**
  * 
@@ -5198,6 +4536,8 @@ export interface DatabaseRequest {
      */
     'storage'?: number;
 }
+
+
 /**
  * 
  * @export
@@ -5217,12 +4557,15 @@ export interface DatabaseResponseList {
  * @enum {string}
  */
 
-export enum DatabaseTypeEnum {
-    MONGODB = 'MONGODB',
-    MYSQL = 'MYSQL',
-    POSTGRESQL = 'POSTGRESQL',
-    REDIS = 'REDIS'
-}
+export const DatabaseTypeEnum = {
+    MONGODB: 'MONGODB',
+    MYSQL: 'MYSQL',
+    POSTGRESQL: 'POSTGRESQL',
+    REDIS: 'REDIS'
+} as const;
+
+export type DatabaseTypeEnum = typeof DatabaseTypeEnum[keyof typeof DatabaseTypeEnum];
+
 
 /**
  * 
@@ -5243,6 +4586,21 @@ export interface DatabaseVersionMode {
      */
     'supported_mode'?: DatabaseModeEnum;
 }
+
+
+/**
+ * 
+ * @export
+ * @interface DeleteMemberRequest
+ */
+export interface DeleteMemberRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeleteMemberRequest
+     */
+    'user_id': string;
+}
 /**
  * 
  * @export
@@ -5251,10 +4609,10 @@ export interface DatabaseVersionMode {
 export interface DeployAllRequest {
     /**
      * 
-     * @type {Array<DeployAllRequestApplications>}
+     * @type {Array<DeployAllRequestApplicationsInner>}
      * @memberof DeployAllRequest
      */
-    'applications'?: Array<DeployAllRequestApplications>;
+    'applications'?: Array<DeployAllRequestApplicationsInner>;
     /**
      * 
      * @type {Array<string>}
@@ -5263,77 +4621,77 @@ export interface DeployAllRequest {
     'databases'?: Array<string>;
     /**
      * 
-     * @type {Array<DeployAllRequestContainers>}
+     * @type {Array<DeployAllRequestContainersInner>}
      * @memberof DeployAllRequest
      */
-    'containers'?: Array<DeployAllRequestContainers>;
+    'containers'?: Array<DeployAllRequestContainersInner>;
     /**
      * 
-     * @type {Array<DeployAllRequestJobs>}
+     * @type {Array<DeployAllRequestJobsInner>}
      * @memberof DeployAllRequest
      */
-    'jobs'?: Array<DeployAllRequestJobs>;
+    'jobs'?: Array<DeployAllRequestJobsInner>;
 }
 /**
  * 
  * @export
- * @interface DeployAllRequestApplications
+ * @interface DeployAllRequestApplicationsInner
  */
-export interface DeployAllRequestApplications {
+export interface DeployAllRequestApplicationsInner {
     /**
      * id of the application to be deployed.
      * @type {string}
-     * @memberof DeployAllRequestApplications
+     * @memberof DeployAllRequestApplicationsInner
      */
     'application_id': string;
     /**
      * Commit ID to deploy. Can be empty only if the service has been already deployed (in this case the service version won\'t be changed)
      * @type {string}
-     * @memberof DeployAllRequestApplications
+     * @memberof DeployAllRequestApplicationsInner
      */
     'git_commit_id'?: string;
 }
 /**
  * 
  * @export
- * @interface DeployAllRequestContainers
+ * @interface DeployAllRequestContainersInner
  */
-export interface DeployAllRequestContainers {
+export interface DeployAllRequestContainersInner {
     /**
      * id of the container to be updated.
      * @type {string}
-     * @memberof DeployAllRequestContainers
+     * @memberof DeployAllRequestContainersInner
      */
     'id': string;
     /**
      * new tag for the container. Can be empty only if the service has been already deployed (in this case the service version won\'t be changed)
      * @type {string}
-     * @memberof DeployAllRequestContainers
+     * @memberof DeployAllRequestContainersInner
      */
     'image_tag'?: string;
 }
 /**
  * 
  * @export
- * @interface DeployAllRequestJobs
+ * @interface DeployAllRequestJobsInner
  */
-export interface DeployAllRequestJobs {
+export interface DeployAllRequestJobsInner {
     /**
      * id of the job to be updated.
      * @type {string}
-     * @memberof DeployAllRequestJobs
+     * @memberof DeployAllRequestJobsInner
      */
     'id'?: string;
     /**
      * new tag for the job image. Use only if job is an image source. Can be empty only if the service has been already deployed (in this case the service version won\'t be changed)
      * @type {string}
-     * @memberof DeployAllRequestJobs
+     * @memberof DeployAllRequestJobsInner
      */
     'image_tag'?: string;
     /**
      * Commit ID to deploy. Use only if job is a repository source. Can be empty only if the service has been already deployed (in this case the service version won\'t be changed)
      * @type {string}
-     * @memberof DeployAllRequestJobs
+     * @memberof DeployAllRequestJobsInner
      */
     'git_commit_id'?: string;
 }
@@ -5393,31 +4751,8 @@ export interface DeploymentHistory {
      */
     'status'?: DeploymentHistoryStatusEnum;
 }
-/**
- * 
- * @export
- * @interface DeploymentHistoryAllOf
- */
-export interface DeploymentHistoryAllOf {
-    /**
-     * name of the service
-     * @type {string}
-     * @memberof DeploymentHistoryAllOf
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {Commit}
-     * @memberof DeploymentHistoryAllOf
-     */
-    'commit'?: Commit;
-    /**
-     * 
-     * @type {DeploymentHistoryStatusEnum}
-     * @memberof DeploymentHistoryAllOf
-     */
-    'status'?: DeploymentHistoryStatusEnum;
-}
+
+
 /**
  * 
  * @export
@@ -5461,31 +4796,8 @@ export interface DeploymentHistoryApplication {
      */
     'status'?: StateEnum;
 }
-/**
- * 
- * @export
- * @interface DeploymentHistoryApplicationAllOf
- */
-export interface DeploymentHistoryApplicationAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentHistoryApplicationAllOf
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {Commit}
-     * @memberof DeploymentHistoryApplicationAllOf
-     */
-    'commit'?: Commit;
-    /**
-     * 
-     * @type {StateEnum}
-     * @memberof DeploymentHistoryApplicationAllOf
-     */
-    'status'?: StateEnum;
-}
+
+
 /**
  * 
  * @export
@@ -5547,49 +4859,8 @@ export interface DeploymentHistoryContainer {
      */
     'entrypoint'?: string;
 }
-/**
- * 
- * @export
- * @interface DeploymentHistoryContainerAllOf
- */
-export interface DeploymentHistoryContainerAllOf {
-    /**
-     * name of the container
-     * @type {string}
-     * @memberof DeploymentHistoryContainerAllOf
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {StateEnum}
-     * @memberof DeploymentHistoryContainerAllOf
-     */
-    'status'?: StateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentHistoryContainerAllOf
-     */
-    'image_name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentHistoryContainerAllOf
-     */
-    'tag'?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof DeploymentHistoryContainerAllOf
-     */
-    'arguments'?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentHistoryContainerAllOf
-     */
-    'entrypoint'?: string;
-}
+
+
 /**
  * 
  * @export
@@ -5627,25 +4898,8 @@ export interface DeploymentHistoryDatabase {
      */
     'status'?: StateEnum;
 }
-/**
- * 
- * @export
- * @interface DeploymentHistoryDatabaseAllOf
- */
-export interface DeploymentHistoryDatabaseAllOf {
-    /**
-     * name of the service
-     * @type {string}
-     * @memberof DeploymentHistoryDatabaseAllOf
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {StateEnum}
-     * @memberof DeploymentHistoryDatabaseAllOf
-     */
-    'status'?: StateEnum;
-}
+
+
 /**
  * 
  * @export
@@ -5701,43 +4955,8 @@ export interface DeploymentHistoryEnvironment {
      */
     'jobs'?: Array<DeploymentHistoryJobResponse>;
 }
-/**
- * 
- * @export
- * @interface DeploymentHistoryEnvironmentAllOf
- */
-export interface DeploymentHistoryEnvironmentAllOf {
-    /**
-     * 
-     * @type {StateEnum}
-     * @memberof DeploymentHistoryEnvironmentAllOf
-     */
-    'status'?: StateEnum;
-    /**
-     * 
-     * @type {Array<DeploymentHistoryApplication>}
-     * @memberof DeploymentHistoryEnvironmentAllOf
-     */
-    'applications'?: Array<DeploymentHistoryApplication>;
-    /**
-     * 
-     * @type {Array<DeploymentHistoryContainer>}
-     * @memberof DeploymentHistoryEnvironmentAllOf
-     */
-    'containers'?: Array<DeploymentHistoryContainer>;
-    /**
-     * 
-     * @type {Array<DeploymentHistoryDatabase>}
-     * @memberof DeploymentHistoryEnvironmentAllOf
-     */
-    'databases'?: Array<DeploymentHistoryDatabase>;
-    /**
-     * 
-     * @type {Array<DeploymentHistoryJobResponse>}
-     * @memberof DeploymentHistoryEnvironmentAllOf
-     */
-    'jobs'?: Array<DeploymentHistoryJobResponse>;
-}
+
+
 /**
  * 
  * @export
@@ -5760,19 +4979,6 @@ export interface DeploymentHistoryEnvironmentPaginatedResponseList {
      * 
      * @type {Array<DeploymentHistoryEnvironment>}
      * @memberof DeploymentHistoryEnvironmentPaginatedResponseList
-     */
-    'results'?: Array<DeploymentHistoryEnvironment>;
-}
-/**
- * 
- * @export
- * @interface DeploymentHistoryEnvironmentPaginatedResponseListAllOf
- */
-export interface DeploymentHistoryEnvironmentPaginatedResponseListAllOf {
-    /**
-     * 
-     * @type {Array<DeploymentHistoryEnvironment>}
-     * @memberof DeploymentHistoryEnvironmentPaginatedResponseListAllOf
      */
     'results'?: Array<DeploymentHistoryEnvironment>;
 }
@@ -5849,61 +5055,8 @@ export interface DeploymentHistoryJobResponse {
      */
     'entrypoint'?: string;
 }
-/**
- * 
- * @export
- * @interface DeploymentHistoryJobResponseAllOf
- */
-export interface DeploymentHistoryJobResponseAllOf {
-    /**
-     * name of the job
-     * @type {string}
-     * @memberof DeploymentHistoryJobResponseAllOf
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {StateEnum}
-     * @memberof DeploymentHistoryJobResponseAllOf
-     */
-    'status'?: StateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentHistoryJobResponseAllOf
-     */
-    'image_name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentHistoryJobResponseAllOf
-     */
-    'tag'?: string;
-    /**
-     * 
-     * @type {Commit}
-     * @memberof DeploymentHistoryJobResponseAllOf
-     */
-    'commit'?: Commit;
-    /**
-     * 
-     * @type {DeploymentHistoryJobResponseAllOfSchedule}
-     * @memberof DeploymentHistoryJobResponseAllOf
-     */
-    'schedule'?: DeploymentHistoryJobResponseAllOfSchedule;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof DeploymentHistoryJobResponseAllOf
-     */
-    'arguments'?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentHistoryJobResponseAllOf
-     */
-    'entrypoint'?: string;
-}
+
+
 /**
  * 
  * @export
@@ -5923,6 +5076,8 @@ export interface DeploymentHistoryJobResponseAllOfSchedule {
      */
     'schedule_at'?: string | null;
 }
+
+
 /**
  * 
  * @export
@@ -5951,19 +5106,6 @@ export interface DeploymentHistoryPaginatedResponseList {
 /**
  * 
  * @export
- * @interface DeploymentHistoryPaginatedResponseListAllOf
- */
-export interface DeploymentHistoryPaginatedResponseListAllOf {
-    /**
-     * 
-     * @type {Array<DeploymentHistory>}
-     * @memberof DeploymentHistoryPaginatedResponseListAllOf
-     */
-    'results'?: Array<DeploymentHistory>;
-}
-/**
- * 
- * @export
  * @interface DeploymentHistoryResponseList
  */
 export interface DeploymentHistoryResponseList {
@@ -5980,10 +5122,13 @@ export interface DeploymentHistoryResponseList {
  * @enum {string}
  */
 
-export enum DeploymentHistoryStatusEnum {
-    FAILED = 'FAILED',
-    SUCCESS = 'SUCCESS'
-}
+export const DeploymentHistoryStatusEnum = {
+    FAILED: 'FAILED',
+    SUCCESS: 'SUCCESS'
+} as const;
+
+export type DeploymentHistoryStatusEnum = typeof DeploymentHistoryStatusEnum[keyof typeof DeploymentHistoryStatusEnum];
+
 
 /**
  * Match mode will rebuild app only if specified items are updated. Exclude mode will not rebuild app if specified items are updated.
@@ -5991,10 +5136,13 @@ export enum DeploymentHistoryStatusEnum {
  * @enum {string}
  */
 
-export enum DeploymentRestrictionModeEnum {
-    EXCLUDE = 'EXCLUDE',
-    MATCH = 'MATCH'
-}
+export const DeploymentRestrictionModeEnum = {
+    EXCLUDE: 'EXCLUDE',
+    MATCH: 'MATCH'
+} as const;
+
+export type DeploymentRestrictionModeEnum = typeof DeploymentRestrictionModeEnum[keyof typeof DeploymentRestrictionModeEnum];
+
 
 /**
  * 
@@ -6002,9 +5150,12 @@ export enum DeploymentRestrictionModeEnum {
  * @enum {string}
  */
 
-export enum DeploymentRestrictionTypeEnum {
-    PATH = 'PATH'
-}
+export const DeploymentRestrictionTypeEnum = {
+    PATH: 'PATH'
+} as const;
+
+export type DeploymentRestrictionTypeEnum = typeof DeploymentRestrictionTypeEnum[keyof typeof DeploymentRestrictionTypeEnum];
+
 
 /**
  * 
@@ -6067,6 +5218,8 @@ export interface DeploymentRuleRequest {
      */
     'weekdays'?: Array<WeekdayEnum> | null;
 }
+
+
 /**
  * 
  * @export
@@ -6144,43 +5297,6 @@ export interface DeploymentStageResponse {
 /**
  * 
  * @export
- * @interface DeploymentStageResponseAllOf
- */
-export interface DeploymentStageResponseAllOf {
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof DeploymentStageResponseAllOf
-     */
-    'environment': ReferenceObject;
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof DeploymentStageResponseAllOf
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentStageResponseAllOf
-     */
-    'description'?: string;
-    /**
-     * Position of the deployment stage within the environment
-     * @type {number}
-     * @memberof DeploymentStageResponseAllOf
-     */
-    'deployment_order'?: number;
-    /**
-     * 
-     * @type {Array<DeploymentStageServiceResponse>}
-     * @memberof DeploymentStageResponseAllOf
-     */
-    'services'?: Array<DeploymentStageServiceResponse>;
-}
-/**
- * 
- * @export
  * @interface DeploymentStageResponseList
  */
 export interface DeploymentStageResponseList {
@@ -6225,25 +5341,6 @@ export interface DeploymentStageServiceResponse {
      * type of the service (i.e APPLICATION, JOB, DATABASE, ...)
      * @type {string}
      * @memberof DeploymentStageServiceResponse
-     */
-    'service_type'?: string;
-}
-/**
- * 
- * @export
- * @interface DeploymentStageServiceResponseAllOf
- */
-export interface DeploymentStageServiceResponseAllOf {
-    /**
-     * id of the service attached to the stage
-     * @type {string}
-     * @memberof DeploymentStageServiceResponseAllOf
-     */
-    'service_id'?: string;
-    /**
-     * type of the service (i.e APPLICATION, JOB, DATABASE, ...)
-     * @type {string}
-     * @memberof DeploymentStageServiceResponseAllOf
      */
     'service_type'?: string;
 }
@@ -6395,55 +5492,8 @@ export interface Environment {
      */
     'cluster_name'?: string;
 }
-/**
- * 
- * @export
- * @interface EnvironmentAllOf
- */
-export interface EnvironmentAllOf {
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof EnvironmentAllOf
-     */
-    'name': string;
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof EnvironmentAllOf
-     */
-    'project'?: ReferenceObject;
-    /**
-     * uuid of the user that made the last update
-     * @type {string}
-     * @memberof EnvironmentAllOf
-     */
-    'last_updated_by'?: string;
-    /**
-     * 
-     * @type {EnvironmentAllOfCloudProvider}
-     * @memberof EnvironmentAllOf
-     */
-    'cloud_provider': EnvironmentAllOfCloudProvider;
-    /**
-     * 
-     * @type {EnvironmentModeEnum}
-     * @memberof EnvironmentAllOf
-     */
-    'mode': EnvironmentModeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentAllOf
-     */
-    'cluster_id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentAllOf
-     */
-    'cluster_name'?: string;
-}
+
+
 /**
  * 
  * @export
@@ -6524,6 +5574,8 @@ export interface EnvironmentApplicationsCurrentScale {
      */
     'updated_at'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -6545,27 +5597,27 @@ export interface EnvironmentApplicationsCurrentScaleResponseList {
 export interface EnvironmentApplicationsInstanceResponseList {
     /**
      * 
-     * @type {Array<EnvironmentApplicationsInstanceResponseListResults>}
+     * @type {Array<EnvironmentApplicationsInstanceResponseListResultsInner>}
      * @memberof EnvironmentApplicationsInstanceResponseList
      */
-    'results'?: Array<EnvironmentApplicationsInstanceResponseListResults>;
+    'results'?: Array<EnvironmentApplicationsInstanceResponseListResultsInner>;
 }
 /**
  * 
  * @export
- * @interface EnvironmentApplicationsInstanceResponseListResults
+ * @interface EnvironmentApplicationsInstanceResponseListResultsInner
  */
-export interface EnvironmentApplicationsInstanceResponseListResults {
+export interface EnvironmentApplicationsInstanceResponseListResultsInner {
     /**
      * 
      * @type {string}
-     * @memberof EnvironmentApplicationsInstanceResponseListResults
+     * @memberof EnvironmentApplicationsInstanceResponseListResultsInner
      */
     'application': string;
     /**
      * 
      * @type {Array<Instance>}
-     * @memberof EnvironmentApplicationsInstanceResponseListResults
+     * @memberof EnvironmentApplicationsInstanceResponseListResultsInner
      */
     'instances': Array<Instance>;
 }
@@ -6688,6 +5740,8 @@ export interface EnvironmentContainersCurrentScale {
      */
     'updated_at'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -6807,6 +5861,8 @@ export interface EnvironmentDatabasesCurrentMetricCpu {
      */
     'status'?: ThresholdMetricStatusEnum;
 }
+
+
 /**
  * 
  * @export
@@ -6850,6 +5906,8 @@ export interface EnvironmentDatabasesCurrentMetricMemory {
      */
     'status'?: ThresholdMetricStatusEnum;
 }
+
+
 /**
  * 
  * @export
@@ -6906,6 +5964,8 @@ export interface EnvironmentDatabasesCurrentMetricStorage {
      */
     'status'?: ThresholdMetricStatusEnum;
 }
+
+
 /**
  * 
  * @export
@@ -6970,55 +6030,6 @@ export interface EnvironmentDeploymentRule {
      * 
      * @type {Array<WeekdayEnum>}
      * @memberof EnvironmentDeploymentRule
-     */
-    'weekdays': Array<WeekdayEnum>;
-}
-/**
- * 
- * @export
- * @interface EnvironmentDeploymentRuleAllOf
- */
-export interface EnvironmentDeploymentRuleAllOf {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnvironmentDeploymentRuleAllOf
-     */
-    'on_demand_preview'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnvironmentDeploymentRuleAllOf
-     */
-    'auto_stop'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EnvironmentDeploymentRuleAllOf
-     */
-    'auto_preview'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentDeploymentRuleAllOf
-     */
-    'timezone': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentDeploymentRuleAllOf
-     */
-    'start_time': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentDeploymentRuleAllOf
-     */
-    'stop_time': string;
-    /**
-     * 
-     * @type {Array<WeekdayEnum>}
-     * @memberof EnvironmentDeploymentRuleAllOf
      */
     'weekdays': Array<WeekdayEnum>;
 }
@@ -7090,6 +6101,8 @@ export interface EnvironmentEditRequest {
      */
     'mode'?: CreateEnvironmentModeEnum;
 }
+
+
 /**
  * 
  * @export
@@ -7139,6 +6152,8 @@ export interface EnvironmentLog {
      */
     'hint'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -7161,19 +6176,6 @@ export interface EnvironmentLogPaginatedResponseList {
      * 
      * @type {Array<EnvironmentLog>}
      * @memberof EnvironmentLogPaginatedResponseList
-     */
-    'results'?: Array<EnvironmentLog>;
-}
-/**
- * 
- * @export
- * @interface EnvironmentLogPaginatedResponseListAllOf
- */
-export interface EnvironmentLogPaginatedResponseListAllOf {
-    /**
-     * 
-     * @type {Array<EnvironmentLog>}
-     * @memberof EnvironmentLogPaginatedResponseListAllOf
      */
     'results'?: Array<EnvironmentLog>;
 }
@@ -7215,17 +6217,22 @@ export interface EnvironmentLogScope {
      */
     'id'?: string;
 }
+
+
 /**
  * 
  * @export
  * @enum {string}
  */
 
-export enum EnvironmentLogTypeEnum {
-    APPLICATION = 'APPLICATION',
-    DATABASE = 'DATABASE',
-    ENVIRONMENT = 'ENVIRONMENT'
-}
+export const EnvironmentLogTypeEnum = {
+    APPLICATION: 'APPLICATION',
+    DATABASE: 'DATABASE',
+    ENVIRONMENT: 'ENVIRONMENT'
+} as const;
+
+export type EnvironmentLogTypeEnum = typeof EnvironmentLogTypeEnum[keyof typeof EnvironmentLogTypeEnum];
+
 
 /**
  * 
@@ -7432,12 +6439,15 @@ export interface EnvironmentLogsMessage {
  * @enum {string}
  */
 
-export enum EnvironmentModeEnum {
-    DEVELOPMENT = 'DEVELOPMENT',
-    PREVIEW = 'PREVIEW',
-    PRODUCTION = 'PRODUCTION',
-    STAGING = 'STAGING'
-}
+export const EnvironmentModeEnum = {
+    DEVELOPMENT: 'DEVELOPMENT',
+    PREVIEW: 'PREVIEW',
+    PRODUCTION: 'PRODUCTION',
+    STAGING: 'STAGING'
+} as const;
+
+export type EnvironmentModeEnum = typeof EnvironmentModeEnum[keyof typeof EnvironmentModeEnum];
+
 
 /**
  * 
@@ -7558,6 +6568,8 @@ export interface EnvironmentStatus {
      */
     'total_deployment_duration_in_seconds'?: number | null;
 }
+
+
 /**
  * 
  * @export
@@ -7731,6 +6743,8 @@ export interface EnvironmentVariable {
      */
     'owned_by'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -7774,61 +6788,8 @@ export interface EnvironmentVariableAlias {
      */
     'variable_type': APIVariableTypeEnum;
 }
-/**
- * 
- * @export
- * @interface EnvironmentVariableAllOf
- */
-export interface EnvironmentVariableAllOf {
-    /**
-     * 
-     * @type {EnvironmentVariableOverride}
-     * @memberof EnvironmentVariableAllOf
-     */
-    'overridden_variable'?: EnvironmentVariableOverride;
-    /**
-     * 
-     * @type {EnvironmentVariableAlias}
-     * @memberof EnvironmentVariableAllOf
-     */
-    'aliased_variable'?: EnvironmentVariableAlias;
-    /**
-     * 
-     * @type {APIVariableScopeEnum}
-     * @memberof EnvironmentVariableAllOf
-     */
-    'scope': APIVariableScopeEnum;
-    /**
-     * 
-     * @type {APIVariableTypeEnum}
-     * @memberof EnvironmentVariableAllOf
-     */
-    'variable_type'?: APIVariableTypeEnum;
-    /**
-     * present only for `BUILT_IN` variable
-     * @type {string}
-     * @memberof EnvironmentVariableAllOf
-     */
-    'service_id'?: string;
-    /**
-     * present only for `BUILT_IN` variable
-     * @type {string}
-     * @memberof EnvironmentVariableAllOf
-     */
-    'service_name'?: string;
-    /**
-     * 
-     * @type {LinkedServiceTypeEnum}
-     * @memberof EnvironmentVariableAllOf
-     */
-    'service_type'?: LinkedServiceTypeEnum;
-    /**
-     * Entity that created/own the variable (i.e: Qovery, Doppler)
-     * @type {string}
-     * @memberof EnvironmentVariableAllOf
-     */
-    'owned_by'?: string;
-}
+
+
 /**
  * 
  * @export
@@ -7891,6 +6852,8 @@ export interface EnvironmentVariableOverride {
      */
     'variable_type': APIVariableTypeEnum;
 }
+
+
 /**
  * 
  * @export
@@ -7987,43 +6950,6 @@ export interface Event {
 /**
  * 
  * @export
- * @interface EventAllOf
- */
-export interface EventAllOf {
-    /**
-     * 
-     * @type {User}
-     * @memberof EventAllOf
-     */
-    'user'?: User;
-    /**
-     * 
-     * @type {Commit}
-     * @memberof EventAllOf
-     */
-    'commit'?: Commit;
-    /**
-     * 
-     * @type {Status}
-     * @memberof EventAllOf
-     */
-    'status'?: Status;
-    /**
-     * DRAFT - we have to specify here all the possible events
-     * @type {string}
-     * @memberof EventAllOf
-     */
-    'type'?: string;
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof EventAllOf
-     */
-    'log'?: ReferenceObject;
-}
-/**
- * 
- * @export
  * @interface EventPaginatedResponseList
  */
 export interface EventPaginatedResponseList {
@@ -8043,19 +6969,6 @@ export interface EventPaginatedResponseList {
      * 
      * @type {Array<Event>}
      * @memberof EventPaginatedResponseList
-     */
-    'results'?: Array<Event>;
-}
-/**
- * 
- * @export
- * @interface EventPaginatedResponseListAllOf
- */
-export interface EventPaginatedResponseListAllOf {
-    /**
-     * 
-     * @type {Array<Event>}
-     * @memberof EventPaginatedResponseListAllOf
      */
     'results'?: Array<Event>;
 }
@@ -8153,11 +7066,14 @@ export interface GitAuthProviderResponseList {
  * @enum {string}
  */
 
-export enum GitProviderEnum {
-    BITBUCKET = 'BITBUCKET',
-    GITHUB = 'GITHUB',
-    GITLAB = 'GITLAB'
-}
+export const GitProviderEnum = {
+    BITBUCKET: 'BITBUCKET',
+    GITHUB: 'GITHUB',
+    GITLAB: 'GITLAB'
+} as const;
+
+export type GitProviderEnum = typeof GitProviderEnum[keyof typeof GitProviderEnum];
+
 
 /**
  * 
@@ -8257,19 +7173,6 @@ export interface Healthcheck {
 /**
  * 
  * @export
- * @interface InlineObject
- */
-export interface InlineObject {
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineObject
-     */
-    'user_id': string;
-}
-/**
- * 
- * @export
  * @interface Instance
  */
 export interface Instance {
@@ -8341,6 +7244,8 @@ export interface InstanceMemory {
      */
     'status'?: ThresholdMetricStatusEnum;
 }
+
+
 /**
  * 
  * @export
@@ -8433,67 +7338,8 @@ export interface InviteMember {
      */
     'role_name'?: string;
 }
-/**
- * 
- * @export
- * @interface InviteMemberAllOf
- */
-export interface InviteMemberAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof InviteMemberAllOf
-     */
-    'email': string;
-    /**
-     * 
-     * @type {InviteMemberRoleEnum}
-     * @memberof InviteMemberAllOf
-     */
-    'role': InviteMemberRoleEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof InviteMemberAllOf
-     */
-    'invitation_link': string;
-    /**
-     * 
-     * @type {InviteStatusEnum}
-     * @memberof InviteMemberAllOf
-     */
-    'invitation_status': InviteStatusEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof InviteMemberAllOf
-     */
-    'organization_name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InviteMemberAllOf
-     */
-    'inviter': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InviteMemberAllOf
-     */
-    'logo_url'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InviteMemberAllOf
-     */
-    'role_id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InviteMemberAllOf
-     */
-    'role_name'?: string;
-}
+
+
 /**
  * 
  * @export
@@ -8519,6 +7365,8 @@ export interface InviteMemberRequest {
      */
     'role_id'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -8538,12 +7386,15 @@ export interface InviteMemberResponseList {
  * @enum {string}
  */
 
-export enum InviteMemberRoleEnum {
-    ADMIN = 'ADMIN',
-    DEVELOPER = 'DEVELOPER',
-    OWNER = 'OWNER',
-    VIEWER = 'VIEWER'
-}
+export const InviteMemberRoleEnum = {
+    ADMIN: 'ADMIN',
+    DEVELOPER: 'DEVELOPER',
+    OWNER: 'OWNER',
+    VIEWER: 'VIEWER'
+} as const;
+
+export type InviteMemberRoleEnum = typeof InviteMemberRoleEnum[keyof typeof InviteMemberRoleEnum];
+
 
 /**
  * 
@@ -8551,10 +7402,13 @@ export enum InviteMemberRoleEnum {
  * @enum {string}
  */
 
-export enum InviteStatusEnum {
-    EXPIRED = 'EXPIRED',
-    PENDING = 'PENDING'
-}
+export const InviteStatusEnum = {
+    EXPIRED: 'EXPIRED',
+    PENDING: 'PENDING'
+} as const;
+
+export type InviteStatusEnum = typeof InviteStatusEnum[keyof typeof InviteStatusEnum];
+
 
 /**
  * 
@@ -8599,31 +7453,8 @@ export interface Invoice {
      */
     'status': InvoiceStatusEnum;
 }
-/**
- * 
- * @export
- * @interface InvoiceAllOf
- */
-export interface InvoiceAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof InvoiceAllOf
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InvoiceAllOf
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {InvoiceStatusEnum}
-     * @memberof InvoiceAllOf
-     */
-    'status': InvoiceStatusEnum;
-}
+
+
 /**
  * 
  * @export
@@ -8643,15 +7474,18 @@ export interface InvoiceResponseList {
  * @enum {string}
  */
 
-export enum InvoiceStatusEnum {
-    NOT_PAID = 'NOT_PAID',
-    PAID = 'PAID',
-    PAYMENT_DUE = 'PAYMENT_DUE',
-    PENDING = 'PENDING',
-    POSTED = 'POSTED',
-    UNKNOWN = 'UNKNOWN',
-    VOIDED = 'VOIDED'
-}
+export const InvoiceStatusEnum = {
+    NOT_PAID: 'NOT_PAID',
+    PAID: 'PAID',
+    PAYMENT_DUE: 'PAYMENT_DUE',
+    PENDING: 'PENDING',
+    POSTED: 'POSTED',
+    UNKNOWN: 'UNKNOWN',
+    VOIDED: 'VOIDED'
+} as const;
+
+export type InvoiceStatusEnum = typeof InvoiceStatusEnum[keyof typeof InvoiceStatusEnum];
+
 
 /**
  * 
@@ -8770,6 +7604,8 @@ export interface JobDeploymentRestrictionRequest {
      */
     'value': string;
 }
+
+
 /**
  * 
  * @export
@@ -8813,6 +7649,8 @@ export interface JobDeploymentRestrictionResponse {
      */
     'value': string;
 }
+
+
 /**
  * 
  * @export
@@ -8832,12 +7670,15 @@ export interface JobDeploymentRestrictionResponseList {
  * @enum {string}
  */
 
-export enum JobForceEvent {
-    START = 'START',
-    STOP = 'STOP',
-    DELETE = 'DELETE',
-    CRON = 'CRON'
-}
+export const JobForceEvent = {
+    START: 'START',
+    STOP: 'STOP',
+    DELETE: 'DELETE',
+    CRON: 'CRON'
+} as const;
+
+export type JobForceEvent = typeof JobForceEvent[keyof typeof JobForceEvent];
+
 
 /**
  * 
@@ -8915,85 +7756,6 @@ export interface JobRequest {
      * Specify if the job will be automatically updated after receiving a new image tag or a new commit according to the source type.  The new image tag shall be communicated via the \"Auto Deploy job\" endpoint https://api-doc.qovery.com/#tag/Jobs/operation/autoDeployJobEnvironments 
      * @type {boolean}
      * @memberof JobRequest
-     */
-    'auto_deploy'?: boolean | null;
-}
-/**
- * 
- * @export
- * @interface JobRequestAllOf
- */
-export interface JobRequestAllOf {
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof JobRequestAllOf
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof JobRequestAllOf
-     */
-    'description'?: string;
-    /**
-     * unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof JobRequestAllOf
-     */
-    'cpu'?: number;
-    /**
-     * unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof JobRequestAllOf
-     */
-    'memory'?: number;
-    /**
-     * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
-     * @type {number}
-     * @memberof JobRequestAllOf
-     */
-    'max_nb_restart'?: number;
-    /**
-     * Maximum number of seconds allowed for the job to run before killing it and mark it as failed 
-     * @type {number}
-     * @memberof JobRequestAllOf
-     */
-    'max_duration_seconds'?: number;
-    /**
-     * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
-     * @type {boolean}
-     * @memberof JobRequestAllOf
-     */
-    'auto_preview'?: boolean;
-    /**
-     * Port where to run readiness and liveliness probes checks. The port will not be exposed externally
-     * @type {number}
-     * @memberof JobRequestAllOf
-     */
-    'port'?: number | null;
-    /**
-     * 
-     * @type {JobRequestAllOfSource}
-     * @memberof JobRequestAllOf
-     */
-    'source'?: JobRequestAllOfSource;
-    /**
-     * 
-     * @type {Healthcheck}
-     * @memberof JobRequestAllOf
-     */
-    'healthchecks': Healthcheck;
-    /**
-     * 
-     * @type {JobRequestAllOfSchedule}
-     * @memberof JobRequestAllOf
-     */
-    'schedule'?: JobRequestAllOfSchedule;
-    /**
-     * Specify if the job will be automatically updated after receiving a new image tag or a new commit according to the source type.  The new image tag shall be communicated via the \"Auto Deploy job\" endpoint https://api-doc.qovery.com/#tag/Jobs/operation/autoDeployJobEnvironments 
-     * @type {boolean}
-     * @memberof JobRequestAllOf
      */
     'auto_deploy'?: boolean | null;
 }
@@ -9251,103 +8013,6 @@ export interface JobResponse {
     'auto_deploy'?: boolean;
 }
 /**
- * 
- * @export
- * @interface JobResponseAllOf
- */
-export interface JobResponseAllOf {
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof JobResponseAllOf
-     */
-    'environment': ReferenceObject;
-    /**
-     * Maximum cpu that can be allocated to the job based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof JobResponseAllOf
-     */
-    'maximum_cpu': number;
-    /**
-     * Maximum memory that can be allocated to the job based on organization cluster configuration. unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof JobResponseAllOf
-     */
-    'maximum_memory': number;
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof JobResponseAllOf
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof JobResponseAllOf
-     */
-    'description'?: string;
-    /**
-     * unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof JobResponseAllOf
-     */
-    'cpu': number;
-    /**
-     * unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof JobResponseAllOf
-     */
-    'memory': number;
-    /**
-     * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
-     * @type {number}
-     * @memberof JobResponseAllOf
-     */
-    'max_nb_restart'?: number;
-    /**
-     * Maximum number of seconds allowed for the job to run before killing it and mark it as failed 
-     * @type {number}
-     * @memberof JobResponseAllOf
-     */
-    'max_duration_seconds'?: number;
-    /**
-     * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
-     * @type {boolean}
-     * @memberof JobResponseAllOf
-     */
-    'auto_preview': boolean;
-    /**
-     * Port where to run readiness and liveliness probes checks. The port will not be exposed externally
-     * @type {number}
-     * @memberof JobResponseAllOf
-     */
-    'port'?: number | null;
-    /**
-     * 
-     * @type {JobResponseAllOfSource}
-     * @memberof JobResponseAllOf
-     */
-    'source'?: JobResponseAllOfSource;
-    /**
-     * 
-     * @type {Healthcheck}
-     * @memberof JobResponseAllOf
-     */
-    'healthchecks': Healthcheck;
-    /**
-     * 
-     * @type {JobResponseAllOfSchedule}
-     * @memberof JobResponseAllOf
-     */
-    'schedule'?: JobResponseAllOfSchedule;
-    /**
-     * Specify if the job will be automatically updated after receiving a new image tag or a new commit according to the source type.  The new image tag shall be communicated via the \"Auto Deploy job\" endpoint https://api-doc.qovery.com/#tag/Jobs/operation/autoDeployJobEnvironments 
-     * @type {boolean}
-     * @memberof JobResponseAllOf
-     */
-    'auto_deploy'?: boolean;
-}
-/**
  * If you want to define a Cron job, only the `cronjob` property must be filled   A Lifecycle job should contain at least one property `on_XXX` among the 3 properties: `on_start`, `on_stop`, `on_delete` 
  * @export
  * @interface JobResponseAllOfSchedule
@@ -9491,12 +8156,15 @@ export interface JobResponseList {
  * @enum {string}
  */
 
-export enum JobScheduleEvent {
-    ON_START = 'ON_START',
-    ON_STOP = 'ON_STOP',
-    ON_DELETE = 'ON_DELETE',
-    CRON = 'CRON'
-}
+export const JobScheduleEvent = {
+    ON_START: 'ON_START',
+    ON_STOP: 'ON_STOP',
+    ON_DELETE: 'ON_DELETE',
+    CRON: 'CRON'
+} as const;
+
+export type JobScheduleEvent = typeof JobScheduleEvent[keyof typeof JobScheduleEvent];
+
 
 /**
  * 
@@ -9517,10 +8185,13 @@ export interface Key {
  * @enum {string}
  */
 
-export enum KubernetesEnum {
-    K3_S = 'K3S',
-    MANAGED = 'MANAGED'
-}
+export const KubernetesEnum = {
+    K3_S: 'K3S',
+    MANAGED: 'MANAGED'
+} as const;
+
+export type KubernetesEnum = typeof KubernetesEnum[keyof typeof KubernetesEnum];
+
 
 /**
  * 
@@ -9578,13 +8249,91 @@ export interface LinkResponseList {
  * @enum {string}
  */
 
-export enum LinkedServiceTypeEnum {
-    APPLICATION = 'APPLICATION',
-    CONTAINER = 'CONTAINER',
-    DATABASE = 'DATABASE',
-    JOB = 'JOB'
-}
+export const LinkedServiceTypeEnum = {
+    APPLICATION: 'APPLICATION',
+    CONTAINER: 'CONTAINER',
+    DATABASE: 'DATABASE',
+    JOB: 'JOB'
+} as const;
 
+export type LinkedServiceTypeEnum = typeof LinkedServiceTypeEnum[keyof typeof LinkedServiceTypeEnum];
+
+
+/**
+ * 
+ * @export
+ * @interface ListContainerDeploymentHistory200Response
+ */
+export interface ListContainerDeploymentHistory200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof ListContainerDeploymentHistory200Response
+     */
+    'page': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListContainerDeploymentHistory200Response
+     */
+    'page_size': number;
+    /**
+     * 
+     * @type {Array<DeploymentHistoryContainer>}
+     * @memberof ListContainerDeploymentHistory200Response
+     */
+    'results'?: Array<DeploymentHistoryContainer>;
+}
+/**
+ * 
+ * @export
+ * @interface ListDatabaseDeploymentHistory200Response
+ */
+export interface ListDatabaseDeploymentHistory200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof ListDatabaseDeploymentHistory200Response
+     */
+    'page': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListDatabaseDeploymentHistory200Response
+     */
+    'page_size': number;
+    /**
+     * 
+     * @type {Array<DeploymentHistoryDatabase>}
+     * @memberof ListDatabaseDeploymentHistory200Response
+     */
+    'results'?: Array<DeploymentHistoryDatabase>;
+}
+/**
+ * 
+ * @export
+ * @interface ListJobDeploymentHistory200Response
+ */
+export interface ListJobDeploymentHistory200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof ListJobDeploymentHistory200Response
+     */
+    'page': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListJobDeploymentHistory200Response
+     */
+    'page_size': number;
+    /**
+     * 
+     * @type {Array<DeploymentHistoryJobResponse>}
+     * @memberof ListJobDeploymentHistory200Response
+     */
+    'results'?: Array<DeploymentHistoryJobResponse>;
+}
 /**
  * 
  * @export
@@ -9644,19 +8393,6 @@ export interface LogPaginatedResponseList {
      * 
      * @type {Array<Log>}
      * @memberof LogPaginatedResponseList
-     */
-    'results'?: Array<Log>;
-}
-/**
- * 
- * @export
- * @interface LogPaginatedResponseListAllOf
- */
-export interface LogPaginatedResponseListAllOf {
-    /**
-     * 
-     * @type {Array<Log>}
-     * @memberof LogPaginatedResponseListAllOf
      */
     'results'?: Array<Log>;
 }
@@ -9798,61 +8534,8 @@ export interface Member {
      */
     'role_id'?: string;
 }
-/**
- * 
- * @export
- * @interface MemberAllOf
- */
-export interface MemberAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof MemberAllOf
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MemberAllOf
-     */
-    'nickname'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MemberAllOf
-     */
-    'email': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MemberAllOf
-     */
-    'profile_picture_url'?: string;
-    /**
-     * last time the user was connected
-     * @type {string}
-     * @memberof MemberAllOf
-     */
-    'last_activity_at'?: string;
-    /**
-     * 
-     * @type {InviteMemberRoleEnum}
-     * @memberof MemberAllOf
-     */
-    'role'?: InviteMemberRoleEnum;
-    /**
-     * the role linked to the user
-     * @type {string}
-     * @memberof MemberAllOf
-     */
-    'role_name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MemberAllOf
-     */
-    'role_id'?: string;
-}
+
+
 /**
  * 
  * @export
@@ -10256,19 +8939,8 @@ export interface Organization {
      */
     'owner'?: string;
 }
-/**
- * 
- * @export
- * @interface OrganizationAllOf
- */
-export interface OrganizationAllOf {
-    /**
-     * uuid of the user owning the organization
-     * @type {string}
-     * @memberof OrganizationAllOf
-     */
-    'owner'?: string;
-}
+
+
 /**
  * 
  * @export
@@ -10315,37 +8987,6 @@ export interface OrganizationApiToken {
      * 
      * @type {string}
      * @memberof OrganizationApiToken
-     */
-    'role_id'?: string;
-}
-/**
- * 
- * @export
- * @interface OrganizationApiTokenAllOf
- */
-export interface OrganizationApiTokenAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenAllOf
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenAllOf
-     */
-    'description'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenAllOf
-     */
-    'role_name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenAllOf
      */
     'role_id'?: string;
 }
@@ -10407,43 +9048,6 @@ export interface OrganizationApiTokenCreate {
 /**
  * 
  * @export
- * @interface OrganizationApiTokenCreateAllOf
- */
-export interface OrganizationApiTokenCreateAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenCreateAllOf
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenCreateAllOf
-     */
-    'description'?: string;
-    /**
-     * the generated token to send in \'Authorization\' header prefixed by \'Token \'
-     * @type {string}
-     * @memberof OrganizationApiTokenCreateAllOf
-     */
-    'token'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenCreateAllOf
-     */
-    'role_name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationApiTokenCreateAllOf
-     */
-    'role_id'?: string;
-}
-/**
- * 
- * @export
  * @interface OrganizationApiTokenCreateRequest
  */
 export interface OrganizationApiTokenCreateRequest {
@@ -10472,6 +9076,8 @@ export interface OrganizationApiTokenCreateRequest {
      */
     'role_id': string | null;
 }
+
+
 /**
  * 
  * @export
@@ -10491,9 +9097,12 @@ export interface OrganizationApiTokenResponseList {
  * @enum {string}
  */
 
-export enum OrganizationApiTokenScope {
-    ADMIN = 'ADMIN'
-}
+export const OrganizationApiTokenScope = {
+    ADMIN: 'ADMIN'
+} as const;
+
+export type OrganizationApiTokenScope = typeof OrganizationApiTokenScope[keyof typeof OrganizationApiTokenScope];
+
 
 /**
  * 
@@ -10628,19 +9237,8 @@ export interface OrganizationCurrentCost {
      */
     'paid_usage'?: PaidUsage;
 }
-/**
- * 
- * @export
- * @interface OrganizationCurrentCostAllOf
- */
-export interface OrganizationCurrentCostAllOf {
-    /**
-     * 
-     * @type {PaidUsage}
-     * @memberof OrganizationCurrentCostAllOf
-     */
-    'paid_usage'?: PaidUsage;
-}
+
+
 /**
  * 
  * @export
@@ -10667,16 +9265,16 @@ export interface OrganizationCustomRole {
     'description'?: string;
     /**
      * 
-     * @type {Array<OrganizationCustomRoleClusterPermissions>}
+     * @type {Array<OrganizationCustomRoleClusterPermissionsInner>}
      * @memberof OrganizationCustomRole
      */
-    'cluster_permissions'?: Array<OrganizationCustomRoleClusterPermissions>;
+    'cluster_permissions'?: Array<OrganizationCustomRoleClusterPermissionsInner>;
     /**
      * 
-     * @type {Array<OrganizationCustomRoleProjectPermissions>}
+     * @type {Array<OrganizationCustomRoleProjectPermissionsInner>}
      * @memberof OrganizationCustomRole
      */
-    'project_permissions'?: Array<OrganizationCustomRoleProjectPermissions>;
+    'project_permissions'?: Array<OrganizationCustomRoleProjectPermissionsInner>;
 }
 /**
  * Indicates the permission for a target cluster, from the lowest to the highest: - `VIEWER` user has only read access on target cluster - `ENV_CREATOR` user can deploy on the cluster - `ADMIN` user can modify the cluster settings 
@@ -10684,37 +9282,42 @@ export interface OrganizationCustomRole {
  * @enum {string}
  */
 
-export enum OrganizationCustomRoleClusterPermission {
-    VIEWER = 'VIEWER',
-    ENV_CREATOR = 'ENV_CREATOR',
-    ADMIN = 'ADMIN'
-}
+export const OrganizationCustomRoleClusterPermission = {
+    VIEWER: 'VIEWER',
+    ENV_CREATOR: 'ENV_CREATOR',
+    ADMIN: 'ADMIN'
+} as const;
+
+export type OrganizationCustomRoleClusterPermission = typeof OrganizationCustomRoleClusterPermission[keyof typeof OrganizationCustomRoleClusterPermission];
+
 
 /**
  * 
  * @export
- * @interface OrganizationCustomRoleClusterPermissions
+ * @interface OrganizationCustomRoleClusterPermissionsInner
  */
-export interface OrganizationCustomRoleClusterPermissions {
+export interface OrganizationCustomRoleClusterPermissionsInner {
     /**
      * 
      * @type {string}
-     * @memberof OrganizationCustomRoleClusterPermissions
+     * @memberof OrganizationCustomRoleClusterPermissionsInner
      */
     'cluster_id'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OrganizationCustomRoleClusterPermissions
+     * @memberof OrganizationCustomRoleClusterPermissionsInner
      */
     'cluster_name'?: string;
     /**
      * 
      * @type {OrganizationCustomRoleClusterPermission}
-     * @memberof OrganizationCustomRoleClusterPermissions
+     * @memberof OrganizationCustomRoleClusterPermissionsInner
      */
     'permission'?: OrganizationCustomRoleClusterPermission;
 }
+
+
 /**
  * 
  * @export
@@ -10753,43 +9356,46 @@ export interface OrganizationCustomRoleList {
  * @enum {string}
  */
 
-export enum OrganizationCustomRoleProjectPermission {
-    NO_ACCESS = 'NO_ACCESS',
-    VIEWER = 'VIEWER',
-    DEPLOYER = 'DEPLOYER',
-    MANAGER = 'MANAGER'
-}
+export const OrganizationCustomRoleProjectPermission = {
+    NO_ACCESS: 'NO_ACCESS',
+    VIEWER: 'VIEWER',
+    DEPLOYER: 'DEPLOYER',
+    MANAGER: 'MANAGER'
+} as const;
+
+export type OrganizationCustomRoleProjectPermission = typeof OrganizationCustomRoleProjectPermission[keyof typeof OrganizationCustomRoleProjectPermission];
+
 
 /**
  * 
  * @export
- * @interface OrganizationCustomRoleProjectPermissions
+ * @interface OrganizationCustomRoleProjectPermissionsInner
  */
-export interface OrganizationCustomRoleProjectPermissions {
+export interface OrganizationCustomRoleProjectPermissionsInner {
     /**
      * 
      * @type {string}
-     * @memberof OrganizationCustomRoleProjectPermissions
+     * @memberof OrganizationCustomRoleProjectPermissionsInner
      */
     'project_id'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OrganizationCustomRoleProjectPermissions
+     * @memberof OrganizationCustomRoleProjectPermissionsInner
      */
     'project_name'?: string;
     /**
      * If `is_admin` is `true`, the user is: - automatically `MANAGER` for each environment type - allowed to manage project deployment rules - able to delete the project    Note that `permissions` can then be ignored for this project 
      * @type {boolean}
-     * @memberof OrganizationCustomRoleProjectPermissions
+     * @memberof OrganizationCustomRoleProjectPermissionsInner
      */
     'is_admin'?: boolean;
     /**
      * 
-     * @type {Array<OrganizationCustomRoleUpdateRequestPermissions>}
-     * @memberof OrganizationCustomRoleProjectPermissions
+     * @type {Array<OrganizationCustomRoleUpdateRequestProjectPermissionsInnerPermissionsInner>}
+     * @memberof OrganizationCustomRoleProjectPermissionsInner
      */
-    'permissions'?: Array<OrganizationCustomRoleUpdateRequestPermissions>;
+    'permissions'?: Array<OrganizationCustomRoleUpdateRequestProjectPermissionsInnerPermissionsInner>;
 }
 /**
  * 
@@ -10811,80 +9417,84 @@ export interface OrganizationCustomRoleUpdateRequest {
     'description'?: string;
     /**
      * Should contain an entry for every existing cluster
-     * @type {Array<OrganizationCustomRoleUpdateRequestClusterPermissions>}
+     * @type {Array<OrganizationCustomRoleUpdateRequestClusterPermissionsInner>}
      * @memberof OrganizationCustomRoleUpdateRequest
      */
-    'cluster_permissions': Array<OrganizationCustomRoleUpdateRequestClusterPermissions>;
+    'cluster_permissions': Array<OrganizationCustomRoleUpdateRequestClusterPermissionsInner>;
     /**
      * Should contain an entry for every existing project
-     * @type {Array<OrganizationCustomRoleUpdateRequestProjectPermissions>}
+     * @type {Array<OrganizationCustomRoleUpdateRequestProjectPermissionsInner>}
      * @memberof OrganizationCustomRoleUpdateRequest
      */
-    'project_permissions': Array<OrganizationCustomRoleUpdateRequestProjectPermissions>;
+    'project_permissions': Array<OrganizationCustomRoleUpdateRequestProjectPermissionsInner>;
 }
 /**
  * 
  * @export
- * @interface OrganizationCustomRoleUpdateRequestClusterPermissions
+ * @interface OrganizationCustomRoleUpdateRequestClusterPermissionsInner
  */
-export interface OrganizationCustomRoleUpdateRequestClusterPermissions {
+export interface OrganizationCustomRoleUpdateRequestClusterPermissionsInner {
     /**
      * 
      * @type {string}
-     * @memberof OrganizationCustomRoleUpdateRequestClusterPermissions
+     * @memberof OrganizationCustomRoleUpdateRequestClusterPermissionsInner
      */
     'cluster_id'?: string;
     /**
      * 
      * @type {OrganizationCustomRoleClusterPermission}
-     * @memberof OrganizationCustomRoleUpdateRequestClusterPermissions
+     * @memberof OrganizationCustomRoleUpdateRequestClusterPermissionsInner
      */
     'permission'?: OrganizationCustomRoleClusterPermission;
 }
+
+
 /**
  * 
  * @export
- * @interface OrganizationCustomRoleUpdateRequestPermissions
+ * @interface OrganizationCustomRoleUpdateRequestProjectPermissionsInner
  */
-export interface OrganizationCustomRoleUpdateRequestPermissions {
-    /**
-     * 
-     * @type {EnvironmentModeEnum}
-     * @memberof OrganizationCustomRoleUpdateRequestPermissions
-     */
-    'environment_type'?: EnvironmentModeEnum;
-    /**
-     * 
-     * @type {OrganizationCustomRoleProjectPermission}
-     * @memberof OrganizationCustomRoleUpdateRequestPermissions
-     */
-    'permission'?: OrganizationCustomRoleProjectPermission;
-}
-/**
- * 
- * @export
- * @interface OrganizationCustomRoleUpdateRequestProjectPermissions
- */
-export interface OrganizationCustomRoleUpdateRequestProjectPermissions {
+export interface OrganizationCustomRoleUpdateRequestProjectPermissionsInner {
     /**
      * 
      * @type {string}
-     * @memberof OrganizationCustomRoleUpdateRequestProjectPermissions
+     * @memberof OrganizationCustomRoleUpdateRequestProjectPermissionsInner
      */
     'project_id'?: string;
     /**
      * If `is_admin` is `true`, the user is: - automatically `MANAGER` for each environment type - allowed to manage project deployment rules - able to delete the project    Note that `permissions` can then be ignored for this project 
      * @type {boolean}
-     * @memberof OrganizationCustomRoleUpdateRequestProjectPermissions
+     * @memberof OrganizationCustomRoleUpdateRequestProjectPermissionsInner
      */
     'is_admin'?: boolean;
     /**
      * Mandatory if `is_admin` is `false`   Should contain an entry for every environment type: - `DEVELOPMENT` - `PREVIEW` - `STAGING` - `PRODUCTION` 
-     * @type {Array<OrganizationCustomRoleUpdateRequestPermissions>}
-     * @memberof OrganizationCustomRoleUpdateRequestProjectPermissions
+     * @type {Array<OrganizationCustomRoleUpdateRequestProjectPermissionsInnerPermissionsInner>}
+     * @memberof OrganizationCustomRoleUpdateRequestProjectPermissionsInner
      */
-    'permissions'?: Array<OrganizationCustomRoleUpdateRequestPermissions>;
+    'permissions'?: Array<OrganizationCustomRoleUpdateRequestProjectPermissionsInnerPermissionsInner>;
 }
+/**
+ * 
+ * @export
+ * @interface OrganizationCustomRoleUpdateRequestProjectPermissionsInnerPermissionsInner
+ */
+export interface OrganizationCustomRoleUpdateRequestProjectPermissionsInnerPermissionsInner {
+    /**
+     * 
+     * @type {EnvironmentModeEnum}
+     * @memberof OrganizationCustomRoleUpdateRequestProjectPermissionsInnerPermissionsInner
+     */
+    'environment_type'?: EnvironmentModeEnum;
+    /**
+     * 
+     * @type {OrganizationCustomRoleProjectPermission}
+     * @memberof OrganizationCustomRoleUpdateRequestProjectPermissionsInnerPermissionsInner
+     */
+    'permission'?: OrganizationCustomRoleProjectPermission;
+}
+
+
 /**
  * 
  * @export
@@ -10940,14 +9550,17 @@ export interface OrganizationEditRequest {
  * @enum {string}
  */
 
-export enum OrganizationEventOrigin {
-    API = 'API',
-    CLI = 'CLI',
-    CONSOLE = 'CONSOLE',
-    GIT = 'GIT',
-    QOVERY_INTERNAL = 'QOVERY_INTERNAL',
-    TERRAFORM_PROVIDER = 'TERRAFORM_PROVIDER'
-}
+export const OrganizationEventOrigin = {
+    API: 'API',
+    CLI: 'CLI',
+    CONSOLE: 'CONSOLE',
+    GIT: 'GIT',
+    QOVERY_INTERNAL: 'QOVERY_INTERNAL',
+    TERRAFORM_PROVIDER: 'TERRAFORM_PROVIDER'
+} as const;
+
+export type OrganizationEventOrigin = typeof OrganizationEventOrigin[keyof typeof OrganizationEventOrigin];
+
 
 /**
  * 
@@ -11040,6 +9653,8 @@ export interface OrganizationEventResponse {
      */
     'environment_name'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -11084,30 +9699,33 @@ export interface OrganizationEventResponseListLinks {
  * @enum {string}
  */
 
-export enum OrganizationEventSubTargetType {
-    ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
-    API_TOKEN = 'API_TOKEN',
-    BILLING_INFO = 'BILLING_INFO',
-    CLOUD_PROVIDER_CREDENTIALS = 'CLOUD_PROVIDER_CREDENTIALS',
-    CLUSTER_CREDENTIALS = 'CLUSTER_CREDENTIALS',
-    CLUSTER_ROUTING_TABLE = 'CLUSTER_ROUTING_TABLE',
-    CONFIG = 'CONFIG',
-    CREDIT_CARD = 'CREDIT_CARD',
-    CREDIT_CODE = 'CREDIT_CODE',
-    CUSTOM_DOMAIN = 'CUSTOM_DOMAIN',
-    CUSTOM_ROLE = 'CUSTOM_ROLE',
-    DEPLOYMENT_RULE = 'DEPLOYMENT_RULE',
-    DEPLOYMENT_STAGE = 'DEPLOYMENT_STAGE',
-    GITHUB_APP = 'GITHUB_APP',
-    GIT_REPOSITORY = 'GIT_REPOSITORY',
-    INVITATION = 'INVITATION',
-    MEMBER_ROLE = 'MEMBER_ROLE',
-    PLAN = 'PLAN',
-    SECRET = 'SECRET',
-    TERRAFORM = 'TERRAFORM',
-    TRANSFER_OWNERSHIP = 'TRANSFER_OWNERSHIP',
-    VARIABLE = 'VARIABLE'
-}
+export const OrganizationEventSubTargetType = {
+    ADVANCED_SETTINGS: 'ADVANCED_SETTINGS',
+    API_TOKEN: 'API_TOKEN',
+    BILLING_INFO: 'BILLING_INFO',
+    CLOUD_PROVIDER_CREDENTIALS: 'CLOUD_PROVIDER_CREDENTIALS',
+    CLUSTER_CREDENTIALS: 'CLUSTER_CREDENTIALS',
+    CLUSTER_ROUTING_TABLE: 'CLUSTER_ROUTING_TABLE',
+    CONFIG: 'CONFIG',
+    CREDIT_CARD: 'CREDIT_CARD',
+    CREDIT_CODE: 'CREDIT_CODE',
+    CUSTOM_DOMAIN: 'CUSTOM_DOMAIN',
+    CUSTOM_ROLE: 'CUSTOM_ROLE',
+    DEPLOYMENT_RULE: 'DEPLOYMENT_RULE',
+    DEPLOYMENT_STAGE: 'DEPLOYMENT_STAGE',
+    GITHUB_APP: 'GITHUB_APP',
+    GIT_REPOSITORY: 'GIT_REPOSITORY',
+    INVITATION: 'INVITATION',
+    MEMBER_ROLE: 'MEMBER_ROLE',
+    PLAN: 'PLAN',
+    SECRET: 'SECRET',
+    TERRAFORM: 'TERRAFORM',
+    TRANSFER_OWNERSHIP: 'TRANSFER_OWNERSHIP',
+    VARIABLE: 'VARIABLE'
+} as const;
+
+export type OrganizationEventSubTargetType = typeof OrganizationEventSubTargetType[keyof typeof OrganizationEventSubTargetType];
+
 
 /**
  * 
@@ -11128,19 +9746,22 @@ export interface OrganizationEventTargetResponseList {
  * @enum {string}
  */
 
-export enum OrganizationEventTargetType {
-    APPLICATION = 'APPLICATION',
-    CLUSTER = 'CLUSTER',
-    CONTAINER = 'CONTAINER',
-    CONTAINER_REGISTRY = 'CONTAINER_REGISTRY',
-    DATABASE = 'DATABASE',
-    ENVIRONMENT = 'ENVIRONMENT',
-    JOB = 'JOB',
-    MEMBERS_AND_ROLES = 'MEMBERS_AND_ROLES',
-    ORGANIZATION = 'ORGANIZATION',
-    PROJECT = 'PROJECT',
-    WEBHOOK = 'WEBHOOK'
-}
+export const OrganizationEventTargetType = {
+    APPLICATION: 'APPLICATION',
+    CLUSTER: 'CLUSTER',
+    CONTAINER: 'CONTAINER',
+    CONTAINER_REGISTRY: 'CONTAINER_REGISTRY',
+    DATABASE: 'DATABASE',
+    ENVIRONMENT: 'ENVIRONMENT',
+    JOB: 'JOB',
+    MEMBERS_AND_ROLES: 'MEMBERS_AND_ROLES',
+    ORGANIZATION: 'ORGANIZATION',
+    PROJECT: 'PROJECT',
+    WEBHOOK: 'WEBHOOK'
+} as const;
+
+export type OrganizationEventTargetType = typeof OrganizationEventTargetType[keyof typeof OrganizationEventTargetType];
+
 
 /**
  * Type of the organization event
@@ -11148,19 +9769,22 @@ export enum OrganizationEventTargetType {
  * @enum {string}
  */
 
-export enum OrganizationEventType {
-    CREATE = 'CREATE',
-    UPDATE = 'UPDATE',
-    DELETE = 'DELETE',
-    ACCEPT = 'ACCEPT',
-    EXPORT = 'EXPORT',
-    TRIGGER_DEPLOY = 'TRIGGER_DEPLOY',
-    TRIGGER_REDEPLOY = 'TRIGGER_REDEPLOY',
-    TRIGGER_STOP = 'TRIGGER_STOP',
-    TRIGGER_CANCEL = 'TRIGGER_CANCEL',
-    TRIGGER_RESTART = 'TRIGGER_RESTART',
-    TRIGGER_DELETE = 'TRIGGER_DELETE'
-}
+export const OrganizationEventType = {
+    CREATE: 'CREATE',
+    UPDATE: 'UPDATE',
+    DELETE: 'DELETE',
+    ACCEPT: 'ACCEPT',
+    EXPORT: 'EXPORT',
+    TRIGGER_DEPLOY: 'TRIGGER_DEPLOY',
+    TRIGGER_REDEPLOY: 'TRIGGER_REDEPLOY',
+    TRIGGER_STOP: 'TRIGGER_STOP',
+    TRIGGER_CANCEL: 'TRIGGER_CANCEL',
+    TRIGGER_RESTART: 'TRIGGER_RESTART',
+    TRIGGER_DELETE: 'TRIGGER_DELETE'
+} as const;
+
+export type OrganizationEventType = typeof OrganizationEventType[keyof typeof OrganizationEventType];
+
 
 /**
  * 
@@ -11255,6 +9879,8 @@ export interface OrganizationRequest {
      */
     'admin_emails'?: Array<string> | null;
 }
+
+
 /**
  * 
  * @export
@@ -11323,6 +9949,8 @@ export interface OrganizationWebhookCreateRequest {
      */
     'environment_types_filter'?: Array<EnvironmentModeEnum>;
 }
+
+
 /**
  * 
  * @export
@@ -11396,73 +10024,23 @@ export interface OrganizationWebhookCreateResponse {
      */
     'environment_types_filter'?: Array<EnvironmentModeEnum>;
 }
-/**
- * 
- * @export
- * @interface OrganizationWebhookCreateResponseAllOf
- */
-export interface OrganizationWebhookCreateResponseAllOf {
-    /**
-     * 
-     * @type {OrganizationWebhookKindEnum}
-     * @memberof OrganizationWebhookCreateResponseAllOf
-     */
-    'kind'?: OrganizationWebhookKindEnum;
-    /**
-     * Set the public HTTP or HTTPS endpoint that will receive the specified events. The target URL must starts with `http://` or `https://` 
-     * @type {string}
-     * @memberof OrganizationWebhookCreateResponseAllOf
-     */
-    'target_url'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof OrganizationWebhookCreateResponseAllOf
-     */
-    'target_secret_set'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationWebhookCreateResponseAllOf
-     */
-    'description'?: string;
-    /**
-     * Turn on or off your endpoint.
-     * @type {boolean}
-     * @memberof OrganizationWebhookCreateResponseAllOf
-     */
-    'enabled'?: boolean;
-    /**
-     * 
-     * @type {Array<OrganizationWebhookEventEnum>}
-     * @memberof OrganizationWebhookCreateResponseAllOf
-     */
-    'events'?: Array<OrganizationWebhookEventEnum>;
-    /**
-     * Specify the project names you want to filter to.  This webhook will be triggered only if the event is coming from the specified Project IDs. Notes: 1. Wildcard is accepted E.g. `product*`. 2. Name is case insensitive. 
-     * @type {Array<string>}
-     * @memberof OrganizationWebhookCreateResponseAllOf
-     */
-    'project_names_filter'?: Array<string>;
-    /**
-     * Specify the environment modes you want to filter to. This webhook will be triggered only if the event is coming from an environment with the specified mode. 
-     * @type {Array<EnvironmentModeEnum>}
-     * @memberof OrganizationWebhookCreateResponseAllOf
-     */
-    'environment_types_filter'?: Array<EnvironmentModeEnum>;
-}
+
+
 /**
  * Events to subscribe to and send to the `target_url`. - `DEPLOYMENT_STARTED` send an event when a deployment is started and going to be executed - `DEPLOYMENT_CANCELLED` send an event when a deployment is cancelled - `DEPLOYMENT_FAILURE` send an event when a deployment failed - `DEPLOYMENT_SUCCESSFUL` send an event when a deployment is successful 
  * @export
  * @enum {string}
  */
 
-export enum OrganizationWebhookEventEnum {
-    STARTED = 'DEPLOYMENT_STARTED',
-    CANCELLED = 'DEPLOYMENT_CANCELLED',
-    FAILURE = 'DEPLOYMENT_FAILURE',
-    SUCCESSFUL = 'DEPLOYMENT_SUCCESSFUL'
-}
+export const OrganizationWebhookEventEnum = {
+    STARTED: 'DEPLOYMENT_STARTED',
+    CANCELLED: 'DEPLOYMENT_CANCELLED',
+    FAILURE: 'DEPLOYMENT_FAILURE',
+    SUCCESSFUL: 'DEPLOYMENT_SUCCESSFUL'
+} as const;
+
+export type OrganizationWebhookEventEnum = typeof OrganizationWebhookEventEnum[keyof typeof OrganizationWebhookEventEnum];
+
 
 /**
  * Define the type of the webhook. `SLACK` is a special webhook type to push notifications directly to slack. The `target_url` must be a Slack compatible endpoint.
@@ -11470,10 +10048,13 @@ export enum OrganizationWebhookEventEnum {
  * @enum {string}
  */
 
-export enum OrganizationWebhookKindEnum {
-    STANDARD = 'STANDARD',
-    SLACK = 'SLACK'
-}
+export const OrganizationWebhookKindEnum = {
+    STANDARD: 'STANDARD',
+    SLACK: 'SLACK'
+} as const;
+
+export type OrganizationWebhookKindEnum = typeof OrganizationWebhookKindEnum[keyof typeof OrganizationWebhookKindEnum];
+
 
 /**
  * 
@@ -11548,6 +10129,8 @@ export interface OrganizationWebhookResponse {
      */
     'environment_types_filter'?: Array<EnvironmentModeEnum>;
 }
+
+
 /**
  * 
  * @export
@@ -11635,15 +10218,18 @@ export interface PaidUsage {
  * @enum {string}
  */
 
-export enum PlanEnum {
-    FREE = 'FREE',
-    TEAM = 'TEAM',
-    TEAM_YEARLY = 'TEAM_YEARLY',
-    ENTERPRISE = 'ENTERPRISE',
-    ENTERPRISE_YEARLY = 'ENTERPRISE_YEARLY',
-    PROFESSIONAL = 'PROFESSIONAL',
-    BUSINESS = 'BUSINESS'
-}
+export const PlanEnum = {
+    FREE: 'FREE',
+    TEAM: 'TEAM',
+    TEAM_YEARLY: 'TEAM_YEARLY',
+    ENTERPRISE: 'ENTERPRISE',
+    ENTERPRISE_YEARLY: 'ENTERPRISE_YEARLY',
+    PROFESSIONAL: 'PROFESSIONAL',
+    BUSINESS: 'BUSINESS'
+} as const;
+
+export type PlanEnum = typeof PlanEnum[keyof typeof PlanEnum];
+
 
 /**
  * 
@@ -11651,12 +10237,15 @@ export enum PlanEnum {
  * @enum {string}
  */
 
-export enum PortProtocolEnum {
-    HTTP = 'HTTP',
-    GRPC = 'GRPC',
-    TCP = 'TCP',
-    UDP = 'UDP'
-}
+export const PortProtocolEnum = {
+    HTTP: 'HTTP',
+    GRPC: 'GRPC',
+    TCP: 'TCP',
+    UDP: 'UDP'
+} as const;
+
+export type PortProtocolEnum = typeof PortProtocolEnum[keyof typeof PortProtocolEnum];
+
 
 /**
  * 
@@ -11854,31 +10443,6 @@ export interface Project {
 /**
  * 
  * @export
- * @interface ProjectAllOf
- */
-export interface ProjectAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectAllOf
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProjectAllOf
-     */
-    'description'?: string;
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof ProjectAllOf
-     */
-    'organization'?: ReferenceObject;
-}
-/**
- * 
- * @export
  * @interface ProjectCurrentCost
  */
 export interface ProjectCurrentCost {
@@ -11910,19 +10474,6 @@ export interface ProjectCurrentCost {
      * 
      * @type {Array<GenericObjectCurrentCost>}
      * @memberof ProjectCurrentCost
-     */
-    'environments'?: Array<GenericObjectCurrentCost>;
-}
-/**
- * 
- * @export
- * @interface ProjectCurrentCostAllOf
- */
-export interface ProjectCurrentCostAllOf {
-    /**
-     * 
-     * @type {Array<GenericObjectCurrentCost>}
-     * @memberof ProjectCurrentCostAllOf
      */
     'environments'?: Array<GenericObjectCurrentCost>;
 }
@@ -12030,19 +10581,8 @@ export interface ProjectDeploymentRule {
      */
     'priority_index'?: number;
 }
-/**
- * 
- * @export
- * @interface ProjectDeploymentRuleAllOf
- */
-export interface ProjectDeploymentRuleAllOf {
-    /**
-     * used to select the first deployment rule to match new created environments
-     * @type {number}
-     * @memberof ProjectDeploymentRuleAllOf
-     */
-    'priority_index'?: number;
-}
+
+
 /**
  * 
  * @export
@@ -12110,6 +10650,8 @@ export interface ProjectDeploymentRuleRequest {
      */
     'wildcard': string;
 }
+
+
 /**
  * 
  * @export
@@ -12287,6 +10829,8 @@ export interface ReferenceObjectStatus {
      */
     'steps'?: ServiceStepMetrics;
 }
+
+
 /**
  * 
  * @export
@@ -12364,13 +10908,11 @@ export interface RewardClaim {
     'code'?: string;
 }
 
-/**
-    * @export
-    * @enum {string}
-    */
-export enum RewardClaimTypeEnum {
-    INVITATION = 'INVITATION'
-}
+export const RewardClaimTypeEnum = {
+    INVITATION: 'INVITATION'
+} as const;
+
+export type RewardClaimTypeEnum = typeof RewardClaimTypeEnum[keyof typeof RewardClaimTypeEnum];
 
 /**
  * 
@@ -12482,6 +11024,8 @@ export interface Secret {
      */
     'owned_by'?: string;
 }
+
+
 /**
  * 
  * @export
@@ -12519,67 +11063,8 @@ export interface SecretAlias {
      */
     'variable_type': APIVariableTypeEnum;
 }
-/**
- * 
- * @export
- * @interface SecretAllOf
- */
-export interface SecretAllOf {
-    /**
-     * key is case sensitive
-     * @type {string}
-     * @memberof SecretAllOf
-     */
-    'key': string;
-    /**
-     * 
-     * @type {SecretOverride}
-     * @memberof SecretAllOf
-     */
-    'overridden_secret'?: SecretOverride;
-    /**
-     * 
-     * @type {SecretAlias}
-     * @memberof SecretAllOf
-     */
-    'aliased_secret'?: SecretAlias;
-    /**
-     * 
-     * @type {APIVariableScopeEnum}
-     * @memberof SecretAllOf
-     */
-    'scope': APIVariableScopeEnum;
-    /**
-     * 
-     * @type {APIVariableTypeEnum}
-     * @memberof SecretAllOf
-     */
-    'variable_type'?: APIVariableTypeEnum;
-    /**
-     * present only for `BUILT_IN` variable
-     * @type {string}
-     * @memberof SecretAllOf
-     */
-    'service_id'?: string;
-    /**
-     * present only for `BUILT_IN` variable
-     * @type {string}
-     * @memberof SecretAllOf
-     */
-    'service_name'?: string;
-    /**
-     * 
-     * @type {LinkedServiceTypeEnum}
-     * @memberof SecretAllOf
-     */
-    'service_type'?: LinkedServiceTypeEnum;
-    /**
-     * Entity that created/own the variable (i.e: Qovery, Doppler)
-     * @type {string}
-     * @memberof SecretAllOf
-     */
-    'owned_by'?: string;
-}
+
+
 /**
  * 
  * @export
@@ -12636,6 +11121,8 @@ export interface SecretOverride {
      */
     'variable_type': APIVariableTypeEnum;
 }
+
+
 /**
  * 
  * @export
@@ -12747,78 +11234,22 @@ export interface Service {
      */
     'to_update'?: boolean;
 }
-/**
- * 
- * @export
- * @interface ServiceAllOf
- */
-export interface ServiceAllOf {
-    /**
-     * 
-     * @type {ServiceTypeEnum}
-     * @memberof ServiceAllOf
-     */
-    'type'?: ServiceTypeEnum;
-    /**
-     * name of the service
-     * @type {string}
-     * @memberof ServiceAllOf
-     */
-    'name'?: string;
-    /**
-     * uuid of the associated service (application, database, job, gateway...)
-     * @type {string}
-     * @memberof ServiceAllOf
-     */
-    'id': string;
-    /**
-     * Git commit ID corresponding to the deployed version of the application
-     * @type {string}
-     * @memberof ServiceAllOf
-     */
-    'deployed_commit_id'?: string;
-    /**
-     * uuid of the user that made the last update
-     * @type {string}
-     * @memberof ServiceAllOf
-     */
-    'last_updated_by'?: string;
-    /**
-     * global overview of resources consumption of the service
-     * @type {number}
-     * @memberof ServiceAllOf
-     */
-    'consumed_resources_in_percent'?: number;
-    /**
-     * describes the typology of service (container, postgresl, redis...)
-     * @type {string}
-     * @memberof ServiceAllOf
-     */
-    'service_typology'?: string;
-    /**
-     * for databases this field exposes the database version
-     * @type {string}
-     * @memberof ServiceAllOf
-     */
-    'service_version'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ServiceAllOf
-     */
-    'to_update'?: boolean;
-}
+
+
 /**
  * 
  * @export
  * @enum {string}
  */
 
-export enum ServiceDeploymentStatusEnum {
-    NEVER_DEPLOYED = 'NEVER_DEPLOYED',
-    OUT_OF_DATE = 'OUT_OF_DATE',
-    UP_TO_DATE = 'UP_TO_DATE'
-}
+export const ServiceDeploymentStatusEnum = {
+    NEVER_DEPLOYED: 'NEVER_DEPLOYED',
+    OUT_OF_DATE: 'OUT_OF_DATE',
+    UP_TO_DATE: 'UP_TO_DATE'
+} as const;
+
+export type ServiceDeploymentStatusEnum = typeof ServiceDeploymentStatusEnum[keyof typeof ServiceDeploymentStatusEnum];
+
 
 /**
  * 
@@ -12869,6 +11300,8 @@ export interface ServicePort {
      */
     'protocol': PortProtocolEnum;
 }
+
+
 /**
  * 
  * @export
@@ -12877,54 +11310,56 @@ export interface ServicePort {
 export interface ServicePortRequest {
     /**
      * 
-     * @type {Array<ServicePortRequestPorts>}
+     * @type {Array<ServicePortRequestPortsInner>}
      * @memberof ServicePortRequest
      */
-    'ports'?: Array<ServicePortRequestPorts>;
+    'ports'?: Array<ServicePortRequestPortsInner>;
 }
 /**
  * 
  * @export
- * @interface ServicePortRequestPorts
+ * @interface ServicePortRequestPortsInner
  */
-export interface ServicePortRequestPorts {
+export interface ServicePortRequestPortsInner {
     /**
      * 
      * @type {string}
-     * @memberof ServicePortRequestPorts
+     * @memberof ServicePortRequestPortsInner
      */
     'name'?: string;
     /**
      * The listening port of your service.
      * @type {number}
-     * @memberof ServicePortRequestPorts
+     * @memberof ServicePortRequestPortsInner
      */
     'internal_port': number;
     /**
      * The exposed port for your service. This is optional. If not set a default port will be used.
      * @type {number}
-     * @memberof ServicePortRequestPorts
+     * @memberof ServicePortRequestPortsInner
      */
     'external_port'?: number;
     /**
      * Expose the port to the world
      * @type {boolean}
-     * @memberof ServicePortRequestPorts
+     * @memberof ServicePortRequestPortsInner
      */
     'publicly_accessible': boolean;
     /**
      * is the default port to use for domain
      * @type {boolean}
-     * @memberof ServicePortRequestPorts
+     * @memberof ServicePortRequestPortsInner
      */
     'is_default'?: boolean;
     /**
      * 
      * @type {PortProtocolEnum}
-     * @memberof ServicePortRequestPorts
+     * @memberof ServicePortRequestPortsInner
      */
     'protocol'?: PortProtocolEnum;
 }
+
+
 /**
  * 
  * @export
@@ -12963,22 +11398,27 @@ export interface ServiceStepMetric {
      */
     'duration_sec'?: number;
 }
+
+
 /**
  * The name of the deployment step at the service level: - REGISTRY_CREATE_REPOSITORY: The step to create the repository in the registry. - GIT_CLONE: The step to clone the source code repository.  - BUILD_QUEUEING: The queuing time preceding the actual building step. - BUILD: The step to build the source code. - DEPLOYMENT_QUEUEING: The queuing time preceding the actual deployment step. - DEPLOYMENT: The step to deploy the service.  - ROUTER_DEPLOYMENT: The step to deploy the router.  - MIRROR_IMAGE: The step to mirror the image to the private registry. 
  * @export
  * @enum {string}
  */
 
-export enum ServiceStepMetricNameEnum {
-    REGISTRY_CREATE_REPOSITORY = 'REGISTRY_CREATE_REPOSITORY',
-    GIT_CLONE = 'GIT_CLONE',
-    BUILD_QUEUEING = 'BUILD_QUEUEING',
-    BUILD = 'BUILD',
-    DEPLOYMENT_QUEUEING = 'DEPLOYMENT_QUEUEING',
-    DEPLOYMENT = 'DEPLOYMENT',
-    ROUTER_DEPLOYMENT = 'ROUTER_DEPLOYMENT',
-    MIRROR_IMAGE = 'MIRROR_IMAGE'
-}
+export const ServiceStepMetricNameEnum = {
+    REGISTRY_CREATE_REPOSITORY: 'REGISTRY_CREATE_REPOSITORY',
+    GIT_CLONE: 'GIT_CLONE',
+    BUILD_QUEUEING: 'BUILD_QUEUEING',
+    BUILD: 'BUILD',
+    DEPLOYMENT_QUEUEING: 'DEPLOYMENT_QUEUEING',
+    DEPLOYMENT: 'DEPLOYMENT',
+    ROUTER_DEPLOYMENT: 'ROUTER_DEPLOYMENT',
+    MIRROR_IMAGE: 'MIRROR_IMAGE'
+} as const;
+
+export type ServiceStepMetricNameEnum = typeof ServiceStepMetricNameEnum[keyof typeof ServiceStepMetricNameEnum];
+
 
 /**
  * 
@@ -13007,10 +11447,10 @@ export interface ServiceStepMetrics {
 export interface ServiceStorage {
     /**
      * 
-     * @type {Array<ServiceStorageStorage>}
+     * @type {Array<ServiceStorageStorageInner>}
      * @memberof ServiceStorage
      */
-    'storage'?: Array<ServiceStorageStorage>;
+    'storage'?: Array<ServiceStorageStorageInner>;
 }
 /**
  * 
@@ -13020,73 +11460,77 @@ export interface ServiceStorage {
 export interface ServiceStorageRequest {
     /**
      * 
-     * @type {Array<ServiceStorageRequestStorage>}
+     * @type {Array<ServiceStorageRequestStorageInner>}
      * @memberof ServiceStorageRequest
      */
-    'storage'?: Array<ServiceStorageRequestStorage>;
+    'storage'?: Array<ServiceStorageRequestStorageInner>;
 }
 /**
  * 
  * @export
- * @interface ServiceStorageRequestStorage
+ * @interface ServiceStorageRequestStorageInner
  */
-export interface ServiceStorageRequestStorage {
+export interface ServiceStorageRequestStorageInner {
     /**
      * 
      * @type {string}
-     * @memberof ServiceStorageRequestStorage
+     * @memberof ServiceStorageRequestStorageInner
      */
     'id'?: string;
     /**
      * 
      * @type {StorageTypeEnum}
-     * @memberof ServiceStorageRequestStorage
+     * @memberof ServiceStorageRequestStorageInner
      */
     'type': StorageTypeEnum;
     /**
      * unit is GB Minimum size is 4 GB 
      * @type {number}
-     * @memberof ServiceStorageRequestStorage
+     * @memberof ServiceStorageRequestStorageInner
      */
     'size': number;
     /**
      * 
      * @type {string}
-     * @memberof ServiceStorageRequestStorage
+     * @memberof ServiceStorageRequestStorageInner
      */
     'mount_point': string;
 }
+
+
 /**
  * 
  * @export
- * @interface ServiceStorageStorage
+ * @interface ServiceStorageStorageInner
  */
-export interface ServiceStorageStorage {
+export interface ServiceStorageStorageInner {
     /**
      * 
      * @type {string}
-     * @memberof ServiceStorageStorage
+     * @memberof ServiceStorageStorageInner
      */
     'id': string;
     /**
      * 
      * @type {StorageTypeEnum}
-     * @memberof ServiceStorageStorage
+     * @memberof ServiceStorageStorageInner
      */
     'type': StorageTypeEnum;
     /**
      * unit is GB
      * @type {number}
-     * @memberof ServiceStorageStorage
+     * @memberof ServiceStorageStorageInner
      */
     'size': number;
     /**
      * 
      * @type {string}
-     * @memberof ServiceStorageStorage
+     * @memberof ServiceStorageStorageInner
      */
     'mount_point': string;
 }
+
+
 /**
  * 
  * @export
@@ -13106,10 +11550,13 @@ export interface ServiceTotalNumber {
  * @enum {string}
  */
 
-export enum ServiceTypeEnum {
-    APPLICATION = 'APPLICATION',
-    DATABASE = 'DATABASE'
-}
+export const ServiceTypeEnum = {
+    APPLICATION: 'APPLICATION',
+    DATABASE: 'DATABASE'
+} as const;
+
+export type ServiceTypeEnum = typeof ServiceTypeEnum[keyof typeof ServiceTypeEnum];
+
 
 /**
  * 
@@ -13208,6 +11655,8 @@ export interface SignUp {
      */
     'dx_auth'?: boolean | null;
 }
+
+
 /**
  * 
  * @export
@@ -13287,6 +11736,8 @@ export interface SignUpRequest {
      */
     'dx_auth'?: boolean | null;
 }
+
+
 /**
  * 
  * @export
@@ -13337,16 +11788,21 @@ export interface StageStepMetric {
      */
     'duration_sec'?: number;
 }
+
+
 /**
  * The name of the deployment step at the stage level: - QUEUEING: The step preceding the actual stage deployment step. - PROVISION_BUILDER: The step to provision builders before the actual build. 
  * @export
  * @enum {string}
  */
 
-export enum StageStepMetricNameEnum {
-    QUEUEING = 'QUEUEING',
-    PROVISION_BUILDER = 'PROVISION_BUILDER'
-}
+export const StageStepMetricNameEnum = {
+    QUEUEING: 'QUEUEING',
+    PROVISION_BUILDER: 'PROVISION_BUILDER'
+} as const;
+
+export type StageStepMetricNameEnum = typeof StageStepMetricNameEnum[keyof typeof StageStepMetricNameEnum];
+
 
 /**
  * 
@@ -13373,30 +11829,33 @@ export interface StageStepMetrics {
  * @enum {string}
  */
 
-export enum StateEnum {
-    BUILDING = 'BUILDING',
-    BUILD_ERROR = 'BUILD_ERROR',
-    CANCELED = 'CANCELED',
-    CANCELING = 'CANCELING',
-    DELETED = 'DELETED',
-    DELETE_ERROR = 'DELETE_ERROR',
-    DELETE_QUEUED = 'DELETE_QUEUED',
-    DELETING = 'DELETING',
-    DEPLOYED = 'DEPLOYED',
-    DEPLOYING = 'DEPLOYING',
-    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
-    DEPLOYMENT_QUEUED = 'DEPLOYMENT_QUEUED',
-    QUEUED = 'QUEUED',
-    READY = 'READY',
-    STOPPED = 'STOPPED',
-    STOPPING = 'STOPPING',
-    STOP_ERROR = 'STOP_ERROR',
-    STOP_QUEUED = 'STOP_QUEUED',
-    RESTART_QUEUED = 'RESTART_QUEUED',
-    RESTARTING = 'RESTARTING',
-    RESTARTED = 'RESTARTED',
-    RESTART_ERROR = 'RESTART_ERROR'
-}
+export const StateEnum = {
+    BUILDING: 'BUILDING',
+    BUILD_ERROR: 'BUILD_ERROR',
+    CANCELED: 'CANCELED',
+    CANCELING: 'CANCELING',
+    DELETED: 'DELETED',
+    DELETE_ERROR: 'DELETE_ERROR',
+    DELETE_QUEUED: 'DELETE_QUEUED',
+    DELETING: 'DELETING',
+    DEPLOYED: 'DEPLOYED',
+    DEPLOYING: 'DEPLOYING',
+    DEPLOYMENT_ERROR: 'DEPLOYMENT_ERROR',
+    DEPLOYMENT_QUEUED: 'DEPLOYMENT_QUEUED',
+    QUEUED: 'QUEUED',
+    READY: 'READY',
+    STOPPED: 'STOPPED',
+    STOPPING: 'STOPPING',
+    STOP_ERROR: 'STOP_ERROR',
+    STOP_QUEUED: 'STOP_QUEUED',
+    RESTART_QUEUED: 'RESTART_QUEUED',
+    RESTARTING: 'RESTARTING',
+    RESTARTED: 'RESTARTED',
+    RESTART_ERROR: 'RESTART_ERROR'
+} as const;
+
+export type StateEnum = typeof StateEnum[keyof typeof StateEnum];
+
 
 /**
  * 
@@ -13441,27 +11900,32 @@ export interface Status {
      */
     'steps'?: ServiceStepMetrics;
 }
+
+
 /**
  * 
  * @export
  * @enum {string}
  */
 
-export enum StatusKindEnum {
-    CANCELED = 'CANCELED',
-    CANCELING = 'CANCELING',
-    DELETED = 'DELETED',
-    DELETE_ERROR = 'DELETE_ERROR',
-    DELETE_IN_PROGRESS = 'DELETE_IN_PROGRESS',
-    DEPLOYED = 'DEPLOYED',
-    DEPLOYMENT_ERROR = 'DEPLOYMENT_ERROR',
-    DEPLOYMENT_IN_PROGRESS = 'DEPLOYMENT_IN_PROGRESS',
-    ERROR = 'ERROR',
-    PAUSED = 'PAUSED',
-    PAUSE_ERROR = 'PAUSE_ERROR',
-    PAUSE_IN_PROGRESS = 'PAUSE_IN_PROGRESS',
-    WAITING = 'WAITING'
-}
+export const StatusKindEnum = {
+    CANCELED: 'CANCELED',
+    CANCELING: 'CANCELING',
+    DELETED: 'DELETED',
+    DELETE_ERROR: 'DELETE_ERROR',
+    DELETE_IN_PROGRESS: 'DELETE_IN_PROGRESS',
+    DEPLOYED: 'DEPLOYED',
+    DEPLOYMENT_ERROR: 'DEPLOYMENT_ERROR',
+    DEPLOYMENT_IN_PROGRESS: 'DEPLOYMENT_IN_PROGRESS',
+    ERROR: 'ERROR',
+    PAUSED: 'PAUSED',
+    PAUSE_ERROR: 'PAUSE_ERROR',
+    PAUSE_IN_PROGRESS: 'PAUSE_IN_PROGRESS',
+    WAITING: 'WAITING'
+} as const;
+
+export type StatusKindEnum = typeof StatusKindEnum[keyof typeof StatusKindEnum];
+
 
 /**
  * The status of completion for the step: - SUCCESS: The step completed successfully. - ERROR: The step completed with an error. - CANCEL: The step was canceled. - SKIP: The step was skipped because it was not necessary. 
@@ -13469,12 +11933,15 @@ export enum StatusKindEnum {
  * @enum {string}
  */
 
-export enum StepMetricStatusEnum {
-    SUCCESS = 'SUCCESS',
-    ERROR = 'ERROR',
-    CANCEL = 'CANCEL',
-    SKIP = 'SKIP'
-}
+export const StepMetricStatusEnum = {
+    SUCCESS: 'SUCCESS',
+    ERROR: 'ERROR',
+    CANCEL: 'CANCEL',
+    SKIP: 'SKIP'
+} as const;
+
+export type StepMetricStatusEnum = typeof StepMetricStatusEnum[keyof typeof StepMetricStatusEnum];
+
 
 /**
  * 
@@ -13531,6 +11998,8 @@ export interface StorageDisk {
      */
     'status'?: ThresholdMetricStatusEnum;
 }
+
+
 /**
  * 
  * @export
@@ -13550,9 +12019,12 @@ export interface StorageDiskResponseList {
  * @enum {string}
  */
 
-export enum StorageTypeEnum {
-    FAST_SSD = 'FAST_SSD'
-}
+export const StorageTypeEnum = {
+    FAST_SSD: 'FAST_SSD'
+} as const;
+
+export type StorageTypeEnum = typeof StorageTypeEnum[keyof typeof StorageTypeEnum];
+
 
 /**
  * 
@@ -13560,11 +12032,14 @@ export enum StorageTypeEnum {
  * @enum {string}
  */
 
-export enum ThresholdMetricStatusEnum {
-    ALERT = 'Alert',
-    OK = 'OK',
-    WARNING = 'Warning'
-}
+export const ThresholdMetricStatusEnum = {
+    ALERT: 'Alert',
+    OK: 'OK',
+    WARNING: 'Warning'
+} as const;
+
+export type ThresholdMetricStatusEnum = typeof ThresholdMetricStatusEnum[keyof typeof ThresholdMetricStatusEnum];
+
 
 /**
  * 
@@ -13585,11 +12060,14 @@ export interface TransferOwnershipRequest {
  * @enum {string}
  */
 
-export enum TypeOfUseEnum {
-    PERSONAL = 'PERSONAL',
-    SCHOOL = 'SCHOOL',
-    WORK = 'WORK'
-}
+export const TypeOfUseEnum = {
+    PERSONAL: 'PERSONAL',
+    SCHOOL: 'SCHOOL',
+    WORK: 'WORK'
+} as const;
+
+export type TypeOfUseEnum = typeof TypeOfUseEnum[keyof typeof TypeOfUseEnum];
+
 
 /**
  * 
@@ -13722,6 +12200,8 @@ export interface VariableAlias {
      */
     'variable_type': APIVariableTypeEnum;
 }
+
+
 /**
  * 
  * @export
@@ -13747,6 +12227,8 @@ export interface VariableAliasRequest {
      */
     'alias_parent_id': string;
 }
+
+
 /**
  * 
  * @export
@@ -13780,10 +12262,10 @@ export interface VariableImport {
     'total_variables_to_import': number;
     /**
      * 
-     * @type {Array<VariableImportSuccessfulImportedVariables>}
+     * @type {Array<VariableImportSuccessfulImportedVariablesInner>}
      * @memberof VariableImport
      */
-    'successful_imported_variables': Array<VariableImportSuccessfulImportedVariables>;
+    'successful_imported_variables': Array<VariableImportSuccessfulImportedVariablesInner>;
 }
 /**
  * 
@@ -13799,73 +12281,77 @@ export interface VariableImportRequest {
     'overwrite': boolean;
     /**
      * 
-     * @type {Array<VariableImportRequestVars>}
+     * @type {Array<VariableImportRequestVarsInner>}
      * @memberof VariableImportRequest
      */
-    'vars': Array<VariableImportRequestVars>;
+    'vars': Array<VariableImportRequestVarsInner>;
 }
 /**
  * 
  * @export
- * @interface VariableImportRequestVars
+ * @interface VariableImportRequestVarsInner
  */
-export interface VariableImportRequestVars {
+export interface VariableImportRequestVarsInner {
     /**
      * 
      * @type {string}
-     * @memberof VariableImportRequestVars
+     * @memberof VariableImportRequestVarsInner
      */
     'name': string;
     /**
      * 
      * @type {string}
-     * @memberof VariableImportRequestVars
+     * @memberof VariableImportRequestVarsInner
      */
     'value': string;
     /**
      * 
      * @type {APIVariableScopeEnum}
-     * @memberof VariableImportRequestVars
+     * @memberof VariableImportRequestVarsInner
      */
     'scope': APIVariableScopeEnum;
     /**
      * 
      * @type {boolean}
-     * @memberof VariableImportRequestVars
+     * @memberof VariableImportRequestVarsInner
      */
     'is_secret': boolean;
 }
+
+
 /**
  * 
  * @export
- * @interface VariableImportSuccessfulImportedVariables
+ * @interface VariableImportSuccessfulImportedVariablesInner
  */
-export interface VariableImportSuccessfulImportedVariables {
+export interface VariableImportSuccessfulImportedVariablesInner {
     /**
      * 
      * @type {string}
-     * @memberof VariableImportSuccessfulImportedVariables
+     * @memberof VariableImportSuccessfulImportedVariablesInner
      */
     'name': string;
     /**
      * Optional if the variable is secret
      * @type {string}
-     * @memberof VariableImportSuccessfulImportedVariables
+     * @memberof VariableImportSuccessfulImportedVariablesInner
      */
     'value'?: string;
     /**
      * 
      * @type {APIVariableScopeEnum}
-     * @memberof VariableImportSuccessfulImportedVariables
+     * @memberof VariableImportSuccessfulImportedVariablesInner
      */
     'scope': APIVariableScopeEnum;
     /**
      * 
      * @type {boolean}
-     * @memberof VariableImportSuccessfulImportedVariables
+     * @memberof VariableImportSuccessfulImportedVariablesInner
      */
     'is_secret': boolean;
 }
+
+
 /**
  * 
  * @export
@@ -13909,6 +12395,8 @@ export interface VariableOverride {
      */
     'variable_type': APIVariableTypeEnum;
 }
+
+
 /**
  * 
  * @export
@@ -13934,6 +12422,8 @@ export interface VariableOverrideRequest {
      */
     'override_parent_id': string;
 }
+
+
 /**
  * 
  * @export
@@ -13977,6 +12467,8 @@ export interface VariableRequest {
      */
     'variable_parent_id': string;
 }
+
+
 /**
  * 
  * @export
@@ -14050,61 +12542,8 @@ export interface VariableResponse {
      */
     'owned_by'?: string;
 }
-/**
- * 
- * @export
- * @interface VariableResponseAllOf
- */
-export interface VariableResponseAllOf {
-    /**
-     * 
-     * @type {VariableOverride}
-     * @memberof VariableResponseAllOf
-     */
-    'overridden_variable'?: VariableOverride;
-    /**
-     * 
-     * @type {VariableAlias}
-     * @memberof VariableResponseAllOf
-     */
-    'aliased_variable'?: VariableAlias;
-    /**
-     * 
-     * @type {APIVariableScopeEnum}
-     * @memberof VariableResponseAllOf
-     */
-    'scope': APIVariableScopeEnum;
-    /**
-     * 
-     * @type {APIVariableTypeEnum}
-     * @memberof VariableResponseAllOf
-     */
-    'variable_type'?: APIVariableTypeEnum;
-    /**
-     * The id of the service referenced by this variable. present only for `BUILT_IN` variable
-     * @type {string}
-     * @memberof VariableResponseAllOf
-     */
-    'service_id'?: string;
-    /**
-     * The name of the service referenced by this variable. present only for `BUILT_IN` variable
-     * @type {string}
-     * @memberof VariableResponseAllOf
-     */
-    'service_name'?: string;
-    /**
-     * 
-     * @type {LinkedServiceTypeEnum}
-     * @memberof VariableResponseAllOf
-     */
-    'service_type'?: LinkedServiceTypeEnum;
-    /**
-     * Entity that created/own the variable (i.e: Qovery, Doppler)
-     * @type {string}
-     * @memberof VariableResponseAllOf
-     */
-    'owned_by'?: string;
-}
+
+
 /**
  * 
  * @export
@@ -14150,15 +12589,18 @@ export interface VersionResponseList {
  * @enum {string}
  */
 
-export enum WeekdayEnum {
-    MONDAY = 'MONDAY',
-    TUESDAY = 'TUESDAY',
-    WEDNESDAY = 'WEDNESDAY',
-    THURSDAY = 'THURSDAY',
-    FRIDAY = 'FRIDAY',
-    SATURDAY = 'SATURDAY',
-    SUNDAY = 'SUNDAY'
-}
+export const WeekdayEnum = {
+    MONDAY: 'MONDAY',
+    TUESDAY: 'TUESDAY',
+    WEDNESDAY: 'WEDNESDAY',
+    THURSDAY: 'THURSDAY',
+    FRIDAY: 'FRIDAY',
+    SATURDAY: 'SATURDAY',
+    SUNDAY: 'SUNDAY'
+} as const;
+
+export type WeekdayEnum = typeof WeekdayEnum[keyof typeof WeekdayEnum];
+
 
 
 /**
@@ -14338,6 +12780,7 @@ export class AccountInfoApi extends BaseAPI {
         return AccountInfoApiFp(this.configuration).getAccountInformation(options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -14755,6 +13198,7 @@ export class ApplicationActionsApi extends BaseAPI {
 }
 
 
+
 /**
  * ApplicationConfigurationApi - axios parameter creator
  * @export
@@ -15103,6 +13547,7 @@ export class ApplicationConfigurationApi extends BaseAPI {
 }
 
 
+
 /**
  * ApplicationDeploymentHistoryApi - axios parameter creator
  * @export
@@ -15221,6 +13666,7 @@ export class ApplicationDeploymentHistoryApi extends BaseAPI {
         return ApplicationDeploymentHistoryApiFp(this.configuration).listApplicationDeploymentHistory(applicationId, startId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -15583,6 +14029,7 @@ export class ApplicationDeploymentRestrictionApi extends BaseAPI {
         return ApplicationDeploymentRestrictionApiFp(this.configuration).getApplicationDeploymentRestrictions(applicationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -16206,6 +14653,7 @@ export class ApplicationEnvironmentVariableApi extends BaseAPI {
 }
 
 
+
 /**
  * ApplicationEventApi - axios parameter creator
  * @export
@@ -16326,6 +14774,7 @@ export class ApplicationEventApi extends BaseAPI {
 }
 
 
+
 /**
  * ApplicationLogsApi - axios parameter creator
  * @export
@@ -16436,6 +14885,7 @@ export class ApplicationLogsApi extends BaseAPI {
         return ApplicationLogsApiFp(this.configuration).listApplicationLog(applicationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -17015,6 +15465,7 @@ export class ApplicationMainCallsApi extends BaseAPI {
         return ApplicationMainCallsApiFp(this.configuration).listApplicationLinks(applicationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -17613,6 +16064,7 @@ export class ApplicationMetricsApi extends BaseAPI {
 }
 
 
+
 /**
  * ApplicationSecretApi - axios parameter creator
  * @export
@@ -18151,6 +16603,7 @@ export class ApplicationSecretApi extends BaseAPI {
         return ApplicationSecretApiFp(this.configuration).listApplicationSecrets(applicationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -18790,6 +17243,7 @@ export class ApplicationsApi extends BaseAPI {
 }
 
 
+
 /**
  * BackupsApi - axios parameter creator
  * @export
@@ -19070,6 +17524,7 @@ export class BackupsApi extends BaseAPI {
         return BackupsApiFp(this.configuration).removeDatabaseBackup(databaseId, backupId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -20200,6 +18655,7 @@ export class BillingApi extends BaseAPI {
         return BillingApiFp(this.configuration).organizationDownloadAllInvoices(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -21569,6 +20025,7 @@ export class CloudProviderApi extends BaseAPI {
 }
 
 
+
 /**
  * CloudProviderCredentialsApi - axios parameter creator
  * @export
@@ -22820,6 +21277,7 @@ export class CloudProviderCredentialsApi extends BaseAPI {
         return CloudProviderCredentialsApiFp(this.configuration).listScalewayCredentials(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -24245,6 +22703,7 @@ export class ClustersApi extends BaseAPI {
 }
 
 
+
 /**
  * ContainerActionsApi - axios parameter creator
  * @export
@@ -24660,6 +23119,7 @@ export class ContainerActionsApi extends BaseAPI {
 }
 
 
+
 /**
  * ContainerConfigurationApi - axios parameter creator
  * @export
@@ -25006,6 +23466,7 @@ export class ContainerConfigurationApi extends BaseAPI {
         return ContainerConfigurationApiFp(this.configuration).getContainerNetwork(containerId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -25451,6 +23912,7 @@ export class ContainerCustomDomainApi extends BaseAPI {
 }
 
 
+
 /**
  * ContainerDeploymentHistoryApi - axios parameter creator
  * @export
@@ -25515,7 +23977,7 @@ export const ContainerDeploymentHistoryApiFp = function(configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listContainerDeploymentHistory(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationData & object>> {
+        async listContainerDeploymentHistory(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListContainerDeploymentHistory200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listContainerDeploymentHistory(containerId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -25536,7 +23998,7 @@ export const ContainerDeploymentHistoryApiFactory = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listContainerDeploymentHistory(containerId: string, options?: any): AxiosPromise<PaginationData & object> {
+        listContainerDeploymentHistory(containerId: string, options?: any): AxiosPromise<ListContainerDeploymentHistory200Response> {
             return localVarFp.listContainerDeploymentHistory(containerId, options).then((request) => request(axios, basePath));
         },
     };
@@ -25561,6 +24023,7 @@ export class ContainerDeploymentHistoryApi extends BaseAPI {
         return ContainerDeploymentHistoryApiFp(this.configuration).listContainerDeploymentHistory(containerId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -26184,6 +24647,7 @@ export class ContainerEnvironmentVariableApi extends BaseAPI {
 }
 
 
+
 /**
  * ContainerLogsApi - axios parameter creator
  * @export
@@ -26294,6 +24758,7 @@ export class ContainerLogsApi extends BaseAPI {
         return ContainerLogsApiFp(this.configuration).listContainerLog(containerId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -26711,6 +25176,7 @@ export class ContainerMainCallsApi extends BaseAPI {
 }
 
 
+
 /**
  * ContainerMetricsApi - axios parameter creator
  * @export
@@ -26969,6 +25435,7 @@ export class ContainerMetricsApi extends BaseAPI {
         return ContainerMetricsApiFp(this.configuration).getContainerCurrentStorageDisk(containerId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -27479,6 +25946,7 @@ export class ContainerRegistriesApi extends BaseAPI {
         return ContainerRegistriesApiFp(this.configuration).listContainerRegistry(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -28019,6 +26487,7 @@ export class ContainerSecretApi extends BaseAPI {
         return ContainerSecretApiFp(this.configuration).listContainerSecrets(containerId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -28827,6 +27296,7 @@ export class ContainersApi extends BaseAPI {
 }
 
 
+
 /**
  * CustomDomainApi - axios parameter creator
  * @export
@@ -29270,6 +27740,7 @@ export class CustomDomainApi extends BaseAPI {
 }
 
 
+
 /**
  * DatabaseActionsApi - axios parameter creator
  * @export
@@ -29678,6 +28149,7 @@ export class DatabaseActionsApi extends BaseAPI {
 }
 
 
+
 /**
  * DatabaseApplicationApi - axios parameter creator
  * @export
@@ -29871,6 +28343,7 @@ export class DatabaseApplicationApi extends BaseAPI {
 }
 
 
+
 /**
  * DatabaseDeploymentHistoryApi - axios parameter creator
  * @export
@@ -29941,7 +28414,7 @@ export const DatabaseDeploymentHistoryApiFp = function(configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listDatabaseDeploymentHistory(databaseId: string, startId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationData & object>> {
+        async listDatabaseDeploymentHistory(databaseId: string, startId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListDatabaseDeploymentHistory200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listDatabaseDeploymentHistory(databaseId, startId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -29963,7 +28436,7 @@ export const DatabaseDeploymentHistoryApiFactory = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listDatabaseDeploymentHistory(databaseId: string, startId?: string, options?: any): AxiosPromise<PaginationData & object> {
+        listDatabaseDeploymentHistory(databaseId: string, startId?: string, options?: any): AxiosPromise<ListDatabaseDeploymentHistory200Response> {
             return localVarFp.listDatabaseDeploymentHistory(databaseId, startId, options).then((request) => request(axios, basePath));
         },
     };
@@ -29989,6 +28462,7 @@ export class DatabaseDeploymentHistoryApi extends BaseAPI {
         return DatabaseDeploymentHistoryApiFp(this.configuration).listDatabaseDeploymentHistory(databaseId, startId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -30109,6 +28583,7 @@ export class DatabaseEventApi extends BaseAPI {
         return DatabaseEventApiFp(this.configuration).listDatabaseEvent(databaseId, startId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -30681,6 +29156,7 @@ export class DatabaseMainCallsApi extends BaseAPI {
 }
 
 
+
 /**
  * DatabaseMetricsApi - axios parameter creator
  * @export
@@ -31127,6 +29603,7 @@ export class DatabaseMetricsApi extends BaseAPI {
         return DatabaseMetricsApiFp(this.configuration).getDatabaseMetricStorage(databaseId, lastSeconds, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -31623,6 +30100,7 @@ export class DatabasesApi extends BaseAPI {
         return DatabasesApiFp(this.configuration).listEnvironmentDatabaseCurrentMetric(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -32364,6 +30842,7 @@ export class DeploymentStageMainCallsApi extends BaseAPI {
 }
 
 
+
 /**
  * EnvironmentApi - axios parameter creator
  * @export
@@ -32481,6 +30960,7 @@ export class EnvironmentApi extends BaseAPI {
         return EnvironmentApiFp(this.configuration).deployAllApplications(environmentId, deployAllRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -33296,6 +31776,7 @@ export class EnvironmentActionsApi extends BaseAPI {
 }
 
 
+
 /**
  * EnvironmentDeploymentHistoryApi - axios parameter creator
  * @export
@@ -33414,6 +31895,7 @@ export class EnvironmentDeploymentHistoryApi extends BaseAPI {
         return EnvironmentDeploymentHistoryApiFp(this.configuration).listEnvironmentDeploymentHistory(environmentId, startId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -33616,6 +32098,7 @@ export class EnvironmentDeploymentRuleApi extends BaseAPI {
 }
 
 
+
 /**
  * EnvironmentExportApi - axios parameter creator
  * @export
@@ -33686,7 +32169,7 @@ export const EnvironmentExportApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async exportEnvironmentConfigurationIntoTerraform(environmentId: string, exportSecrets?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+        async exportEnvironmentConfigurationIntoTerraform(environmentId: string, exportSecrets?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.exportEnvironmentConfigurationIntoTerraform(environmentId, exportSecrets, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -33708,7 +32191,7 @@ export const EnvironmentExportApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        exportEnvironmentConfigurationIntoTerraform(environmentId: string, exportSecrets?: boolean, options?: any): AxiosPromise<any> {
+        exportEnvironmentConfigurationIntoTerraform(environmentId: string, exportSecrets?: boolean, options?: any): AxiosPromise<File> {
             return localVarFp.exportEnvironmentConfigurationIntoTerraform(environmentId, exportSecrets, options).then((request) => request(axios, basePath));
         },
     };
@@ -33734,6 +32217,7 @@ export class EnvironmentExportApi extends BaseAPI {
         return EnvironmentExportApiFp(this.configuration).exportEnvironmentConfigurationIntoTerraform(environmentId, exportSecrets, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -33928,6 +32412,7 @@ export class EnvironmentLogsApi extends BaseAPI {
         return EnvironmentLogsApiFp(this.configuration).listEnvironmentLogs(environmentId, version, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -34417,6 +32902,7 @@ export class EnvironmentMainCallsApi extends BaseAPI {
         return EnvironmentMainCallsApiFp(this.configuration).getEnvironmentStatusesWithStages(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -34959,6 +33445,7 @@ export class EnvironmentSecretApi extends BaseAPI {
 }
 
 
+
 /**
  * EnvironmentVariableApi - axios parameter creator
  * @export
@@ -35499,6 +33986,7 @@ export class EnvironmentVariableApi extends BaseAPI {
 }
 
 
+
 /**
  * EnvironmentsApi - axios parameter creator
  * @export
@@ -35838,6 +34326,7 @@ export class EnvironmentsApi extends BaseAPI {
         return EnvironmentsApiFp(this.configuration).listEnvironment(projectId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -36399,6 +34888,7 @@ export class GitRepositoriesApi extends BaseAPI {
 }
 
 
+
 /**
  * GithubAppApi - axios parameter creator
  * @export
@@ -36598,6 +35088,7 @@ export class GithubAppApi extends BaseAPI {
         return GithubAppApiFp(this.configuration).organizationGithubAppDisconnect(organizationId, force, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -36965,6 +35456,7 @@ export class JobActionsApi extends BaseAPI {
 }
 
 
+
 /**
  * JobConfigurationApi - axios parameter creator
  * @export
@@ -37158,6 +35650,7 @@ export class JobConfigurationApi extends BaseAPI {
 }
 
 
+
 /**
  * JobDeploymentHistoryApi - axios parameter creator
  * @export
@@ -37222,7 +35715,7 @@ export const JobDeploymentHistoryApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listJobDeploymentHistory(jobId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationData & object>> {
+        async listJobDeploymentHistory(jobId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListJobDeploymentHistory200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listJobDeploymentHistory(jobId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -37243,7 +35736,7 @@ export const JobDeploymentHistoryApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listJobDeploymentHistory(jobId: string, options?: any): AxiosPromise<PaginationData & object> {
+        listJobDeploymentHistory(jobId: string, options?: any): AxiosPromise<ListJobDeploymentHistory200Response> {
             return localVarFp.listJobDeploymentHistory(jobId, options).then((request) => request(axios, basePath));
         },
     };
@@ -37268,6 +35761,7 @@ export class JobDeploymentHistoryApi extends BaseAPI {
         return JobDeploymentHistoryApiFp(this.configuration).listJobDeploymentHistory(jobId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -37630,6 +36124,7 @@ export class JobDeploymentRestrictionApi extends BaseAPI {
         return JobDeploymentRestrictionApiFp(this.configuration).getJobDeploymentRestrictions(jobId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -38253,6 +36748,7 @@ export class JobEnvironmentVariableApi extends BaseAPI {
 }
 
 
+
 /**
  * JobMainCallsApi - axios parameter creator
  * @export
@@ -38684,6 +37180,7 @@ export class JobMainCallsApi extends BaseAPI {
 }
 
 
+
 /**
  * JobMetricsApi - axios parameter creator
  * @export
@@ -38794,6 +37291,7 @@ export class JobMetricsApi extends BaseAPI {
         return JobMetricsApiFp(this.configuration).getJobCurrentInstance(jobId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -39336,6 +37834,7 @@ export class JobSecretApi extends BaseAPI {
 }
 
 
+
 /**
  * JobsApi - axios parameter creator
  * @export
@@ -39840,6 +38339,7 @@ export class JobsApi extends BaseAPI {
 }
 
 
+
 /**
  * MembersApi - axios parameter creator
  * @export
@@ -39895,11 +38395,11 @@ export const MembersApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary Remove a member
          * @param {string} organizationId Organization ID
-         * @param {InlineObject} [inlineObject] 
+         * @param {DeleteMemberRequest} [deleteMemberRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteMember: async (organizationId: string, inlineObject?: InlineObject, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteMember: async (organizationId: string, deleteMemberRequest?: DeleteMemberRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('deleteMember', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/member`
@@ -39929,7 +38429,7 @@ export const MembersApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(deleteMemberRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -40269,12 +38769,12 @@ export const MembersApiFp = function(configuration?: Configuration) {
          * 
          * @summary Remove a member
          * @param {string} organizationId Organization ID
-         * @param {InlineObject} [inlineObject] 
+         * @param {DeleteMemberRequest} [deleteMemberRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteMember(organizationId: string, inlineObject?: InlineObject, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMember(organizationId, inlineObject, options);
+        async deleteMember(organizationId: string, deleteMemberRequest?: DeleteMemberRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMember(organizationId, deleteMemberRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -40384,12 +38884,12 @@ export const MembersApiFactory = function (configuration?: Configuration, basePa
          * 
          * @summary Remove a member
          * @param {string} organizationId Organization ID
-         * @param {InlineObject} [inlineObject] 
+         * @param {DeleteMemberRequest} [deleteMemberRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteMember(organizationId: string, inlineObject?: InlineObject, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteMember(organizationId, inlineObject, options).then((request) => request(axios, basePath));
+        deleteMember(organizationId: string, deleteMemberRequest?: DeleteMemberRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteMember(organizationId, deleteMemberRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Edit an organization member role
@@ -40493,13 +38993,13 @@ export class MembersApi extends BaseAPI {
      * 
      * @summary Remove a member
      * @param {string} organizationId Organization ID
-     * @param {InlineObject} [inlineObject] 
+     * @param {DeleteMemberRequest} [deleteMemberRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MembersApi
      */
-    public deleteMember(organizationId: string, inlineObject?: InlineObject, options?: AxiosRequestConfig) {
-        return MembersApiFp(this.configuration).deleteMember(organizationId, inlineObject, options).then((request) => request(this.axios, this.basePath));
+    public deleteMember(organizationId: string, deleteMemberRequest?: DeleteMemberRequest, options?: AxiosRequestConfig) {
+        return MembersApiFp(this.configuration).deleteMember(organizationId, deleteMemberRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -40591,6 +39091,7 @@ export class MembersApi extends BaseAPI {
         return MembersApiFp(this.configuration).postOrganizationTransferOwnership(organizationId, transferOwnershipRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -41173,6 +39674,7 @@ export class OrganizationAccountGitRepositoriesApi extends BaseAPI {
 }
 
 
+
 /**
  * OrganizationApiTokenApi - axios parameter creator
  * @export
@@ -41445,6 +39947,7 @@ export class OrganizationApiTokenApi extends BaseAPI {
         return OrganizationApiTokenApiFp(this.configuration).listOrganizationApiTokens(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -41890,6 +40393,7 @@ export class OrganizationCustomRoleApi extends BaseAPI {
 }
 
 
+
 /**
  * OrganizationEventApi - axios parameter creator
  * @export
@@ -41900,8 +40404,8 @@ export const OrganizationEventApiAxiosParamCreator = function (configuration?: C
          * Get available event targets to filter events
          * @summary Get available event targets to filter events
          * @param {string} organizationId Organization ID
-         * @param {string} [fromTimestamp] Display targets available since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
-         * @param {string} [toTimestamp] Display targets triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string | null} [fromTimestamp] Display targets available since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string | null} [toTimestamp] Display targets triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
          * @param {OrganizationEventType} [eventType] 
          * @param {OrganizationEventTargetType} [targetType] 
          * @param {string} [triggeredBy] Information about the owner of the event (user name / apitoken / automatic action)
@@ -41911,7 +40415,7 @@ export const OrganizationEventApiAxiosParamCreator = function (configuration?: C
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationEventTargets: async (organizationId: string, fromTimestamp?: string, toTimestamp?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getOrganizationEventTargets: async (organizationId: string, fromTimestamp?: string | null, toTimestamp?: string | null, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('getOrganizationEventTargets', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/targets`
@@ -41981,21 +40485,21 @@ export const OrganizationEventApiAxiosParamCreator = function (configuration?: C
          * Get all events inside the organization
          * @summary Get all events inside the organization
          * @param {string} organizationId Organization ID
-         * @param {number} [pageSize] The number of events to display in the current page
-         * @param {string} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
-         * @param {string} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {number | null} [pageSize] The number of events to display in the current page
+         * @param {string | null} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string | null} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
          * @param {string} [continueToken] Token used to fetch the next page results The format is a timestamp with nano precision 
          * @param {string} [stepBackToken] Token used to fetch the previous page results The format is a timestamp with nano precision 
          * @param {OrganizationEventType} [eventType] 
          * @param {OrganizationEventTargetType} [targetType] 
-         * @param {string} [targetId] The target resource id to search.   Must be specified with the corresponding &#x60;target_type&#x60; 
+         * @param {string | null} [targetId] The target resource id to search.   Must be specified with the corresponding &#x60;target_type&#x60; 
          * @param {OrganizationEventSubTargetType} [subTargetType] 
          * @param {string} [triggeredBy] Information about the owner of the event (user name / apitoken / automatic action)
          * @param {OrganizationEventOrigin} [origin] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationEvents: async (organizationId: string, pageSize?: number, fromTimestamp?: string, toTimestamp?: string, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getOrganizationEvents: async (organizationId: string, pageSize?: number | null, fromTimestamp?: string | null, toTimestamp?: string | null, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string | null, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('getOrganizationEvents', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/events`
@@ -42087,8 +40591,8 @@ export const OrganizationEventApiFp = function(configuration?: Configuration) {
          * Get available event targets to filter events
          * @summary Get available event targets to filter events
          * @param {string} organizationId Organization ID
-         * @param {string} [fromTimestamp] Display targets available since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
-         * @param {string} [toTimestamp] Display targets triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string | null} [fromTimestamp] Display targets available since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string | null} [toTimestamp] Display targets triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
          * @param {OrganizationEventType} [eventType] 
          * @param {OrganizationEventTargetType} [targetType] 
          * @param {string} [triggeredBy] Information about the owner of the event (user name / apitoken / automatic action)
@@ -42098,7 +40602,7 @@ export const OrganizationEventApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganizationEventTargets(organizationId: string, fromTimestamp?: string, toTimestamp?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationEventTargetResponseList>> {
+        async getOrganizationEventTargets(organizationId: string, fromTimestamp?: string | null, toTimestamp?: string | null, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationEventTargetResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationEventTargets(organizationId, fromTimestamp, toTimestamp, eventType, targetType, triggeredBy, origin, projectId, environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -42106,21 +40610,21 @@ export const OrganizationEventApiFp = function(configuration?: Configuration) {
          * Get all events inside the organization
          * @summary Get all events inside the organization
          * @param {string} organizationId Organization ID
-         * @param {number} [pageSize] The number of events to display in the current page
-         * @param {string} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
-         * @param {string} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {number | null} [pageSize] The number of events to display in the current page
+         * @param {string | null} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string | null} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
          * @param {string} [continueToken] Token used to fetch the next page results The format is a timestamp with nano precision 
          * @param {string} [stepBackToken] Token used to fetch the previous page results The format is a timestamp with nano precision 
          * @param {OrganizationEventType} [eventType] 
          * @param {OrganizationEventTargetType} [targetType] 
-         * @param {string} [targetId] The target resource id to search.   Must be specified with the corresponding &#x60;target_type&#x60; 
+         * @param {string | null} [targetId] The target resource id to search.   Must be specified with the corresponding &#x60;target_type&#x60; 
          * @param {OrganizationEventSubTargetType} [subTargetType] 
          * @param {string} [triggeredBy] Information about the owner of the event (user name / apitoken / automatic action)
          * @param {OrganizationEventOrigin} [origin] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganizationEvents(organizationId: string, pageSize?: number, fromTimestamp?: string, toTimestamp?: string, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationEventResponseList>> {
+        async getOrganizationEvents(organizationId: string, pageSize?: number | null, fromTimestamp?: string | null, toTimestamp?: string | null, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string | null, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationEventResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationEvents(organizationId, pageSize, fromTimestamp, toTimestamp, continueToken, stepBackToken, eventType, targetType, targetId, subTargetType, triggeredBy, origin, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -42138,8 +40642,8 @@ export const OrganizationEventApiFactory = function (configuration?: Configurati
          * Get available event targets to filter events
          * @summary Get available event targets to filter events
          * @param {string} organizationId Organization ID
-         * @param {string} [fromTimestamp] Display targets available since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
-         * @param {string} [toTimestamp] Display targets triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string | null} [fromTimestamp] Display targets available since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string | null} [toTimestamp] Display targets triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
          * @param {OrganizationEventType} [eventType] 
          * @param {OrganizationEventTargetType} [targetType] 
          * @param {string} [triggeredBy] Information about the owner of the event (user name / apitoken / automatic action)
@@ -42149,28 +40653,28 @@ export const OrganizationEventApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationEventTargets(organizationId: string, fromTimestamp?: string, toTimestamp?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options?: any): AxiosPromise<OrganizationEventTargetResponseList> {
+        getOrganizationEventTargets(organizationId: string, fromTimestamp?: string | null, toTimestamp?: string | null, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options?: any): AxiosPromise<OrganizationEventTargetResponseList> {
             return localVarFp.getOrganizationEventTargets(organizationId, fromTimestamp, toTimestamp, eventType, targetType, triggeredBy, origin, projectId, environmentId, options).then((request) => request(axios, basePath));
         },
         /**
          * Get all events inside the organization
          * @summary Get all events inside the organization
          * @param {string} organizationId Organization ID
-         * @param {number} [pageSize] The number of events to display in the current page
-         * @param {string} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
-         * @param {string} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {number | null} [pageSize] The number of events to display in the current page
+         * @param {string | null} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string | null} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
          * @param {string} [continueToken] Token used to fetch the next page results The format is a timestamp with nano precision 
          * @param {string} [stepBackToken] Token used to fetch the previous page results The format is a timestamp with nano precision 
          * @param {OrganizationEventType} [eventType] 
          * @param {OrganizationEventTargetType} [targetType] 
-         * @param {string} [targetId] The target resource id to search.   Must be specified with the corresponding &#x60;target_type&#x60; 
+         * @param {string | null} [targetId] The target resource id to search.   Must be specified with the corresponding &#x60;target_type&#x60; 
          * @param {OrganizationEventSubTargetType} [subTargetType] 
          * @param {string} [triggeredBy] Information about the owner of the event (user name / apitoken / automatic action)
          * @param {OrganizationEventOrigin} [origin] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationEvents(organizationId: string, pageSize?: number, fromTimestamp?: string, toTimestamp?: string, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: any): AxiosPromise<OrganizationEventResponseList> {
+        getOrganizationEvents(organizationId: string, pageSize?: number | null, fromTimestamp?: string | null, toTimestamp?: string | null, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string | null, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: any): AxiosPromise<OrganizationEventResponseList> {
             return localVarFp.getOrganizationEvents(organizationId, pageSize, fromTimestamp, toTimestamp, continueToken, stepBackToken, eventType, targetType, targetId, subTargetType, triggeredBy, origin, options).then((request) => request(axios, basePath));
         },
     };
@@ -42187,8 +40691,8 @@ export class OrganizationEventApi extends BaseAPI {
      * Get available event targets to filter events
      * @summary Get available event targets to filter events
      * @param {string} organizationId Organization ID
-     * @param {string} [fromTimestamp] Display targets available since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
-     * @param {string} [toTimestamp] Display targets triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
+     * @param {string | null} [fromTimestamp] Display targets available since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
+     * @param {string | null} [toTimestamp] Display targets triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
      * @param {OrganizationEventType} [eventType] 
      * @param {OrganizationEventTargetType} [targetType] 
      * @param {string} [triggeredBy] Information about the owner of the event (user name / apitoken / automatic action)
@@ -42199,7 +40703,7 @@ export class OrganizationEventApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrganizationEventApi
      */
-    public getOrganizationEventTargets(organizationId: string, fromTimestamp?: string, toTimestamp?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options?: AxiosRequestConfig) {
+    public getOrganizationEventTargets(organizationId: string, fromTimestamp?: string | null, toTimestamp?: string | null, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options?: AxiosRequestConfig) {
         return OrganizationEventApiFp(this.configuration).getOrganizationEventTargets(organizationId, fromTimestamp, toTimestamp, eventType, targetType, triggeredBy, origin, projectId, environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -42207,14 +40711,14 @@ export class OrganizationEventApi extends BaseAPI {
      * Get all events inside the organization
      * @summary Get all events inside the organization
      * @param {string} organizationId Organization ID
-     * @param {number} [pageSize] The number of events to display in the current page
-     * @param {string} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
-     * @param {string} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
+     * @param {number | null} [pageSize] The number of events to display in the current page
+     * @param {string | null} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
+     * @param {string | null} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
      * @param {string} [continueToken] Token used to fetch the next page results The format is a timestamp with nano precision 
      * @param {string} [stepBackToken] Token used to fetch the previous page results The format is a timestamp with nano precision 
      * @param {OrganizationEventType} [eventType] 
      * @param {OrganizationEventTargetType} [targetType] 
-     * @param {string} [targetId] The target resource id to search.   Must be specified with the corresponding &#x60;target_type&#x60; 
+     * @param {string | null} [targetId] The target resource id to search.   Must be specified with the corresponding &#x60;target_type&#x60; 
      * @param {OrganizationEventSubTargetType} [subTargetType] 
      * @param {string} [triggeredBy] Information about the owner of the event (user name / apitoken / automatic action)
      * @param {OrganizationEventOrigin} [origin] 
@@ -42222,10 +40726,11 @@ export class OrganizationEventApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrganizationEventApi
      */
-    public getOrganizationEvents(organizationId: string, pageSize?: number, fromTimestamp?: string, toTimestamp?: string, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: AxiosRequestConfig) {
+    public getOrganizationEvents(organizationId: string, pageSize?: number | null, fromTimestamp?: string | null, toTimestamp?: string | null, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string | null, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: AxiosRequestConfig) {
         return OrganizationEventApiFp(this.configuration).getOrganizationEvents(organizationId, pageSize, fromTimestamp, toTimestamp, continueToken, stepBackToken, eventType, targetType, targetId, subTargetType, triggeredBy, origin, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -42710,6 +41215,7 @@ export class OrganizationMainCallsApi extends BaseAPI {
 }
 
 
+
 /**
  * OrganizationWebhookApi - axios parameter creator
  * @export
@@ -43151,6 +41657,7 @@ export class OrganizationWebhookApi extends BaseAPI {
         return OrganizationWebhookApiFp(this.configuration).listOrganizationWebHooks(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -43675,6 +42182,7 @@ export class ProjectDeploymentRuleApi extends BaseAPI {
         return ProjectDeploymentRuleApiFp(this.configuration).updateDeploymentRulesPriorityOrder(projectId, projectDeploymentRulesPriorityOrderRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -44217,6 +42725,7 @@ export class ProjectEnvironmentVariableApi extends BaseAPI {
 }
 
 
+
 /**
  * ProjectMainCallsApi - axios parameter creator
  * @export
@@ -44482,6 +42991,7 @@ export class ProjectMainCallsApi extends BaseAPI {
         return ProjectMainCallsApiFp(this.configuration).getProject(projectId, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -45024,6 +43534,7 @@ export class ProjectSecretApi extends BaseAPI {
 }
 
 
+
 /**
  * ProjectsApi - axios parameter creator
  * @export
@@ -45291,6 +43802,7 @@ export class ProjectsApi extends BaseAPI {
 }
 
 
+
 /**
  * ReferralRewardsApi - axios parameter creator
  * @export
@@ -45470,6 +43982,7 @@ export class ReferralRewardsApi extends BaseAPI {
 }
 
 
+
 /**
  * UserSignUpApi - axios parameter creator
  * @export
@@ -45647,6 +44160,7 @@ export class UserSignUpApi extends BaseAPI {
         return UserSignUpApiFp(this.configuration).getUserSignUp(options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
 /**
@@ -45879,11 +44393,11 @@ export const VariableMainCallsApiAxiosParamCreator = function (configuration?: C
          * @summary List variables
          * @param {string} [parentId] it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
          * @param {APIVariableScopeEnum} [scope] the type of the parent_id (application, project, environment etc..).
-         * @param {boolean} [isSecret] 
+         * @param {boolean | null} [isSecret] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listVariables: async (parentId?: string, scope?: APIVariableScopeEnum, isSecret?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listVariables: async (parentId?: string, scope?: APIVariableScopeEnum, isSecret?: boolean | null, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/variable`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -45999,11 +44513,11 @@ export const VariableMainCallsApiFp = function(configuration?: Configuration) {
          * @summary List variables
          * @param {string} [parentId] it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
          * @param {APIVariableScopeEnum} [scope] the type of the parent_id (application, project, environment etc..).
-         * @param {boolean} [isSecret] 
+         * @param {boolean | null} [isSecret] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listVariables(parentId?: string, scope?: APIVariableScopeEnum, isSecret?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VariableResponseList>> {
+        async listVariables(parentId?: string, scope?: APIVariableScopeEnum, isSecret?: boolean | null, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VariableResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listVariables(parentId, scope, isSecret, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -46075,11 +44589,11 @@ export const VariableMainCallsApiFactory = function (configuration?: Configurati
          * @summary List variables
          * @param {string} [parentId] it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
          * @param {APIVariableScopeEnum} [scope] the type of the parent_id (application, project, environment etc..).
-         * @param {boolean} [isSecret] 
+         * @param {boolean | null} [isSecret] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listVariables(parentId?: string, scope?: APIVariableScopeEnum, isSecret?: boolean, options?: any): AxiosPromise<VariableResponseList> {
+        listVariables(parentId?: string, scope?: APIVariableScopeEnum, isSecret?: boolean | null, options?: any): AxiosPromise<VariableResponseList> {
             return localVarFp.listVariables(parentId, scope, isSecret, options).then((request) => request(axios, basePath));
         },
     };
@@ -46160,14 +44674,15 @@ export class VariableMainCallsApi extends BaseAPI {
      * @summary List variables
      * @param {string} [parentId] it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
      * @param {APIVariableScopeEnum} [scope] the type of the parent_id (application, project, environment etc..).
-     * @param {boolean} [isSecret] 
+     * @param {boolean | null} [isSecret] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof VariableMainCallsApi
      */
-    public listVariables(parentId?: string, scope?: APIVariableScopeEnum, isSecret?: boolean, options?: AxiosRequestConfig) {
+    public listVariables(parentId?: string, scope?: APIVariableScopeEnum, isSecret?: boolean | null, options?: AxiosRequestConfig) {
         return VariableMainCallsApiFp(this.configuration).listVariables(parentId, scope, isSecret, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
 
 
