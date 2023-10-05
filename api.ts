@@ -9115,13 +9115,13 @@ export interface OrganizationAvailableRole {
      * @type {string}
      * @memberof OrganizationAvailableRole
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
      * @memberof OrganizationAvailableRole
      */
-    'name'?: string;
+    'name': string;
 }
 /**
  * 
