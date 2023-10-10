@@ -4743,7 +4743,7 @@ export interface DeploymentHistory {
      * @type {Commit}
      * @memberof DeploymentHistory
      */
-    'commit'?: Commit;
+    'commit'?: Commit | null;
     /**
      * 
      * @type {DeploymentHistoryStatusEnum}
@@ -4788,7 +4788,7 @@ export interface DeploymentHistoryApplication {
      * @type {Commit}
      * @memberof DeploymentHistoryApplication
      */
-    'commit'?: Commit;
+    'commit'?: Commit | null;
     /**
      * 
      * @type {StateEnum}
@@ -5035,7 +5035,7 @@ export interface DeploymentHistoryJobResponse {
      * @type {Commit}
      * @memberof DeploymentHistoryJobResponse
      */
-    'commit'?: Commit;
+    'commit'?: Commit | null;
     /**
      * 
      * @type {DeploymentHistoryJobResponseAllOfSchedule}
@@ -6719,13 +6719,13 @@ export interface EnvironmentVariable {
      */
     'variable_type'?: APIVariableTypeEnum;
     /**
-     * present only for `BUILT_IN` variable
+     * 
      * @type {string}
      * @memberof EnvironmentVariable
      */
     'service_id'?: string;
     /**
-     * present only for `BUILT_IN` variable
+     * 
      * @type {string}
      * @memberof EnvironmentVariable
      */
@@ -6927,7 +6927,7 @@ export interface Event {
      * @type {Commit}
      * @memberof Event
      */
-    'commit'?: Commit;
+    'commit'?: Commit | null;
     /**
      * 
      * @type {Status}
@@ -7162,13 +7162,13 @@ export interface Healthcheck {
      * @type {Probe}
      * @memberof Healthcheck
      */
-    'readiness_probe'?: Probe;
+    'readiness_probe'?: Probe | null;
     /**
      * 
      * @type {Probe}
      * @memberof Healthcheck
      */
-    'liveness_probe'?: Probe;
+    'liveness_probe'?: Probe | null;
 }
 /**
  * 
@@ -8244,7 +8244,7 @@ export interface LinkResponseList {
     'results'?: Array<Link>;
 }
 /**
- * type of the service (application, database, job, gateway...)   present only for `BUILT_IN` variable 
+ * type of the service (application, database, job, gateway...)
  * @export
  * @enum {string}
  */
@@ -9609,7 +9609,7 @@ export interface OrganizationEventResponse {
      * @type {OrganizationEventSubTargetType}
      * @memberof OrganizationEventResponse
      */
-    'sub_target_type'?: OrganizationEventSubTargetType;
+    'sub_target_type'?: OrganizationEventSubTargetType | null;
     /**
      * 
      * @type {string}
@@ -11000,13 +11000,13 @@ export interface Secret {
      */
     'variable_type'?: APIVariableTypeEnum;
     /**
-     * present only for `BUILT_IN` variable
+     * 
      * @type {string}
      * @memberof Secret
      */
     'service_id'?: string;
     /**
-     * present only for `BUILT_IN` variable
+     * 
      * @type {string}
      * @memberof Secret
      */
@@ -12518,13 +12518,13 @@ export interface VariableResponse {
      */
     'variable_type'?: APIVariableTypeEnum;
     /**
-     * The id of the service referenced by this variable. present only for `BUILT_IN` variable
+     * The id of the service referenced by this variable.
      * @type {string}
      * @memberof VariableResponse
      */
     'service_id'?: string;
     /**
-     * The name of the service referenced by this variable. present only for `BUILT_IN` variable
+     * The name of the service referenced by this variable.
      * @type {string}
      * @memberof VariableResponse
      */
