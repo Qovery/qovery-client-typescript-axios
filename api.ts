@@ -8117,25 +8117,25 @@ export interface JobResponseAllOfSourceImage {
      * @type {string}
      * @memberof JobResponseAllOfSourceImage
      */
-    'image_name'?: string;
+    'image_name': string;
     /**
      * tag of the image container
      * @type {string}
      * @memberof JobResponseAllOfSourceImage
      */
-    'tag'?: string;
+    'tag': string;
     /**
      * tag of the image container
      * @type {string}
      * @memberof JobResponseAllOfSourceImage
      */
-    'registry_id'?: string;
+    'registry_id': string;
     /**
      * 
      * @type {ContainerRegistryProviderDetailsResponse}
      * @memberof JobResponseAllOfSourceImage
      */
-    'registry'?: ContainerRegistryProviderDetailsResponse;
+    'registry': ContainerRegistryProviderDetailsResponse;
 }
 /**
  * 
