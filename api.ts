@@ -3582,17 +3582,35 @@ export interface ContainerResponse {
      */
     'storage'?: Array<ServiceStorageStorageInner>;
     /**
-     * 
-     * @type {ReferenceObject}
+     * The image name pattern differs according to chosen container registry provider: * `ECR`: `repository` * `SCALEWAY_CR`: `namespace/image` * `DOCKER_HUB`: `image` or `repository/image` * `PUBLIC_ECR`: `registry_alias/repository` 
+     * @type {string}
      * @memberof ContainerResponse
      */
-    'environment': ReferenceObject;
+    'image_name': string;
+    /**
+     * tag of the image container
+     * @type {string}
+     * @memberof ContainerResponse
+     */
+    'tag': string;
+    /**
+     * tag of the image container
+     * @type {string}
+     * @memberof ContainerResponse
+     */
+    'registry_id'?: string;
     /**
      * 
      * @type {ContainerRegistryProviderDetailsResponse}
      * @memberof ContainerResponse
      */
     'registry': ContainerRegistryProviderDetailsResponse;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof ContainerResponse
+     */
+    'environment': ReferenceObject;
     /**
      * Maximum cpu that can be allocated to the container based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -3617,18 +3635,6 @@ export interface ContainerResponse {
      * @memberof ContainerResponse
      */
     'description'?: string;
-    /**
-     * name of the image container
-     * @type {string}
-     * @memberof ContainerResponse
-     */
-    'image_name': string;
-    /**
-     * tag of the image container
-     * @type {string}
-     * @memberof ContainerResponse
-     */
-    'tag': string;
     /**
      * 
      * @type {Array<string>}
@@ -3702,6 +3708,37 @@ export interface ContainerResponseList {
      * @memberof ContainerResponseList
      */
     'results'?: Array<ContainerResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface ContainerSource
+ */
+export interface ContainerSource {
+    /**
+     * The image name pattern differs according to chosen container registry provider: * `ECR`: `repository` * `SCALEWAY_CR`: `namespace/image` * `DOCKER_HUB`: `image` or `repository/image` * `PUBLIC_ECR`: `registry_alias/repository` 
+     * @type {string}
+     * @memberof ContainerSource
+     */
+    'image_name': string;
+    /**
+     * tag of the image container
+     * @type {string}
+     * @memberof ContainerSource
+     */
+    'tag': string;
+    /**
+     * tag of the image container
+     * @type {string}
+     * @memberof ContainerSource
+     */
+    'registry_id'?: string;
+    /**
+     * 
+     * @type {ContainerRegistryProviderDetailsResponse}
+     * @memberof ContainerSource
+     */
+    'registry': ContainerRegistryProviderDetailsResponse;
 }
 /**
  * 
@@ -7998,7 +8035,7 @@ export interface JobResponse {
      * @type {JobResponseAllOfSource}
      * @memberof JobResponse
      */
-    'source'?: JobResponseAllOfSource;
+    'source': JobResponseAllOfSource;
     /**
      * 
      * @type {Healthcheck}
@@ -8075,73 +8112,55 @@ export interface JobResponseAllOfScheduleCronjob {
     'scheduled_at': string;
 }
 /**
+ * @type JobResponseAllOfSource
+ * @export
+ */
+export type JobResponseAllOfSource = JobResponseAllOfSourceOneOf | JobResponseAllOfSourceOneOf1;
+
+/**
  * 
  * @export
- * @interface JobResponseAllOfSource
+ * @interface JobResponseAllOfSourceOneOf
  */
-export interface JobResponseAllOfSource {
+export interface JobResponseAllOfSourceOneOf {
     /**
      * 
-     * @type {JobResponseAllOfSourceImage}
-     * @memberof JobResponseAllOfSource
+     * @type {ContainerSource}
+     * @memberof JobResponseAllOfSourceOneOf
      */
-    'image'?: JobResponseAllOfSourceImage | null;
-    /**
-     * 
-     * @type {JobResponseAllOfSourceDocker}
-     * @memberof JobResponseAllOfSource
-     */
-    'docker'?: JobResponseAllOfSourceDocker | null;
+    'image'?: ContainerSource;
 }
 /**
  * 
  * @export
- * @interface JobResponseAllOfSourceDocker
+ * @interface JobResponseAllOfSourceOneOf1
  */
-export interface JobResponseAllOfSourceDocker {
+export interface JobResponseAllOfSourceOneOf1 {
+    /**
+     * 
+     * @type {JobResponseAllOfSourceOneOf1Docker}
+     * @memberof JobResponseAllOfSourceOneOf1
+     */
+    'docker'?: JobResponseAllOfSourceOneOf1Docker;
+}
+/**
+ * 
+ * @export
+ * @interface JobResponseAllOfSourceOneOf1Docker
+ */
+export interface JobResponseAllOfSourceOneOf1Docker {
     /**
      * The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
      * @type {string}
-     * @memberof JobResponseAllOfSourceDocker
+     * @memberof JobResponseAllOfSourceOneOf1Docker
      */
     'dockerfile_path'?: string | null;
     /**
      * 
      * @type {ApplicationGitRepository}
-     * @memberof JobResponseAllOfSourceDocker
+     * @memberof JobResponseAllOfSourceOneOf1Docker
      */
     'git_repository'?: ApplicationGitRepository;
-}
-/**
- * 
- * @export
- * @interface JobResponseAllOfSourceImage
- */
-export interface JobResponseAllOfSourceImage {
-    /**
-     * The image name pattern differs according to chosen container registry provider:   * `ECR`: `repository` * `SCALEWAY_CR`: `namespace/image` * `DOCKER_HUB`: `image` or `repository/image` * `PUBLIC_ECR`: `registry_alias/repository` 
-     * @type {string}
-     * @memberof JobResponseAllOfSourceImage
-     */
-    'image_name': string;
-    /**
-     * tag of the image container
-     * @type {string}
-     * @memberof JobResponseAllOfSourceImage
-     */
-    'tag': string;
-    /**
-     * tag of the image container
-     * @type {string}
-     * @memberof JobResponseAllOfSourceImage
-     */
-    'registry_id': string;
-    /**
-     * 
-     * @type {ContainerRegistryProviderDetailsResponse}
-     * @memberof JobResponseAllOfSourceImage
-     */
-    'registry': ContainerRegistryProviderDetailsResponse;
 }
 /**
  * 
