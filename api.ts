@@ -1900,6 +1900,12 @@ export interface ClusterAdvancedSettings {
      * @deprecated
      */
     'pleco.resources_ttl'?: number;
+    /**
+     * 
+     * @type {RegistryMirroringModeEnum}
+     * @memberof ClusterAdvancedSettings
+     */
+    'registry.mirroring_mode'?: RegistryMirroringModeEnum;
 }
 
 export const ClusterAdvancedSettingsAwsEksEc2MetadataImdsEnum = {
@@ -10863,6 +10869,20 @@ export interface Referral {
      */
     'invitation_link'?: string;
 }
+/**
+ * Mirroring mode when deploying a service from a container registry - CLUSTER: This is not available on Scaleway. Images within the mirroring registry are organized by \"Qovery cluster\", meaning that the application deployed on the same cluster are all mirrored on the same repository. - SERVICE: Images within the mirroring registry are organized by \"Qovery service\", each service has its own repository 
+ * @export
+ * @enum {string}
+ */
+
+export const RegistryMirroringModeEnum = {
+    CLUSTER: 'CLUSTER',
+    SERVICE: 'SERVICE'
+} as const;
+
+export type RegistryMirroringModeEnum = typeof RegistryMirroringModeEnum[keyof typeof RegistryMirroringModeEnum];
+
+
 /**
  * 
  * @export
