@@ -5390,19 +5390,6 @@ export interface DeploymentStageServiceResponse {
 /**
  * 
  * @export
- * @interface DeploymentStageWithServiceStatusesList
- */
-export interface DeploymentStageWithServiceStatusesList {
-    /**
-     * 
-     * @type {Array<DeploymentStageWithServicesStatuses>}
-     * @memberof DeploymentStageWithServiceStatusesList
-     */
-    'results'?: Array<DeploymentStageWithServicesStatuses>;
-}
-/**
- * 
- * @export
  * @interface DeploymentStageWithServicesStatuses
  */
 export interface DeploymentStageWithServicesStatuses {
@@ -6677,10 +6664,10 @@ export interface EnvironmentStatusesWithStages {
     'environment'?: EnvironmentStatus;
     /**
      * 
-     * @type {DeploymentStageWithServiceStatusesList}
+     * @type {Array<DeploymentStageWithServicesStatuses>}
      * @memberof EnvironmentStatusesWithStages
      */
-    'stages'?: DeploymentStageWithServiceStatusesList;
+    'stages'?: Array<DeploymentStageWithServicesStatuses>;
 }
 /**
  * 
