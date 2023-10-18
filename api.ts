@@ -155,7 +155,7 @@ export interface Application {
      * @type {ReferenceObject}
      * @memberof Application
      */
-    'environment'?: ReferenceObject;
+    'environment': ReferenceObject;
     /**
      * 
      * @type {ApplicationGitRepository}
@@ -179,7 +179,7 @@ export interface Application {
      * @type {string}
      * @memberof Application
      */
-    'name'?: string;
+    'name': string;
     /**
      * give a description to this application
      * @type {string}
@@ -5490,7 +5490,7 @@ export interface Environment {
      * @type {ReferenceObject}
      * @memberof Environment
      */
-    'project'?: ReferenceObject;
+    'project': ReferenceObject;
     /**
      * uuid of the user that made the last update
      * @type {string}
