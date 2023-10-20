@@ -7235,6 +7235,19 @@ export interface GitTokenResponse {
 /**
  * 
  * @export
+ * @interface GitTokenResponseList
+ */
+export interface GitTokenResponseList {
+    /**
+     * 
+     * @type {Array<GitTokenResponse>}
+     * @memberof GitTokenResponseList
+     */
+    'results'?: Array<GitTokenResponse>;
+}
+/**
+ * 
+ * @export
  * @interface Healthcheck
  */
 export interface Healthcheck {
@@ -8396,19 +8409,6 @@ export interface ListJobDeploymentHistory200Response {
      * @memberof ListJobDeploymentHistory200Response
      */
     'results'?: Array<DeploymentHistoryJobResponse>;
-}
-/**
- * 
- * @export
- * @interface ListOrganizationGitTokens200Response
- */
-export interface ListOrganizationGitTokens200Response {
-    /**
-     * 
-     * @type {Array<GitTokenResponse>}
-     * @memberof ListOrganizationGitTokens200Response
-     */
-    'results'?: Array<GitTokenResponse>;
 }
 /**
  * 
@@ -41005,7 +41005,7 @@ export const OrganizationMainCallsApiFp = function(configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listOrganizationGitTokens(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListOrganizationGitTokens200Response>> {
+        async listOrganizationGitTokens(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitTokenResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizationGitTokens(organizationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -41086,7 +41086,7 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listOrganizationGitTokens(organizationId: string, options?: any): AxiosPromise<ListOrganizationGitTokens200Response> {
+        listOrganizationGitTokens(organizationId: string, options?: any): AxiosPromise<GitTokenResponseList> {
             return localVarFp.listOrganizationGitTokens(organizationId, options).then((request) => request(axios, basePath));
         },
     };
