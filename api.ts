@@ -4747,6 +4747,25 @@ export interface DeployAllRequestJobsInner {
 /**
  * 
  * @export
+ * @interface DeployHelmRequest
+ */
+export interface DeployHelmRequest {
+    /**
+     * version of the chart to deploy. Cannot be set if `git_commit_id` is defined 
+     * @type {string}
+     * @memberof DeployHelmRequest
+     */
+    'version'?: string;
+    /**
+     * Commit to deploy Cannot be set if `version` is defined 
+     * @type {string}
+     * @memberof DeployHelmRequest
+     */
+    'git_commit_id'?: string;
+}
+/**
+ * 
+ * @export
  * @interface DeployRequest
  */
 export interface DeployRequest {
@@ -7267,6 +7286,415 @@ export interface Healthcheck {
 /**
  * 
  * @export
+ * @interface HelmDeploymentRestrictionRequest
+ */
+export interface HelmDeploymentRestrictionRequest {
+    /**
+     * 
+     * @type {DeploymentRestrictionModeEnum}
+     * @memberof HelmDeploymentRestrictionRequest
+     */
+    'mode': DeploymentRestrictionModeEnum;
+    /**
+     * 
+     * @type {DeploymentRestrictionTypeEnum}
+     * @memberof HelmDeploymentRestrictionRequest
+     */
+    'type': DeploymentRestrictionTypeEnum;
+    /**
+     * For `PATH` restrictions, the value must not start with `/`
+     * @type {string}
+     * @memberof HelmDeploymentRestrictionRequest
+     */
+    'value': string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface HelmDeploymentRestrictionResponse
+ */
+export interface HelmDeploymentRestrictionResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmDeploymentRestrictionResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmDeploymentRestrictionResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmDeploymentRestrictionResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {DeploymentRestrictionModeEnum}
+     * @memberof HelmDeploymentRestrictionResponse
+     */
+    'mode': DeploymentRestrictionModeEnum;
+    /**
+     * 
+     * @type {DeploymentRestrictionTypeEnum}
+     * @memberof HelmDeploymentRestrictionResponse
+     */
+    'type': DeploymentRestrictionTypeEnum;
+    /**
+     * For `PATH` restrictions, the value must not start with `/`
+     * @type {string}
+     * @memberof HelmDeploymentRestrictionResponse
+     */
+    'value': string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface HelmDeploymentRestrictionResponseList
+ */
+export interface HelmDeploymentRestrictionResponseList {
+    /**
+     * 
+     * @type {Array<HelmDeploymentRestrictionResponse>}
+     * @memberof HelmDeploymentRestrictionResponseList
+     */
+    'results'?: Array<HelmDeploymentRestrictionResponse>;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const HelmForceEvent = {
+    DIFF: 'DIFF'
+} as const;
+
+export type HelmForceEvent = typeof HelmForceEvent[keyof typeof HelmForceEvent];
+
+
+/**
+ * 
+ * @export
+ * @interface HelmRequest
+ */
+export interface HelmRequest {
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof HelmRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRequest
+     */
+    'description'?: string;
+    /**
+     * Maximum number of seconds allowed for helm to run before killing it and mark it as failed 
+     * @type {number}
+     * @memberof HelmRequest
+     */
+    'timeout_sec'?: number;
+    /**
+     * Indicates if the \'environment preview option\' is enabled.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called or when a new commit is updated. If not specified, it takes the value of the `auto_preview` property from the associated environment. 
+     * @type {boolean}
+     * @memberof HelmRequest
+     */
+    'auto_preview'?: boolean | null;
+    /**
+     * Specify if the helm will be automatically updated after receiving a new image tag or a new commit according to the source type.  
+     * @type {boolean}
+     * @memberof HelmRequest
+     */
+    'auto_deploy'?: boolean;
+    /**
+     * 
+     * @type {HelmRequestAllOfSource}
+     * @memberof HelmRequest
+     */
+    'source'?: HelmRequestAllOfSource;
+    /**
+     * The extra arguments to pass to helm
+     * @type {Array<string>}
+     * @memberof HelmRequest
+     */
+    'arguments'?: Array<string>;
+    /**
+     * If we should allow the chart to deploy object outside his specified namespace. Setting this flag to true, requires special rights 
+     * @type {boolean}
+     * @memberof HelmRequest
+     */
+    'allow_cluster_wide_resources'?: boolean;
+    /**
+     * 
+     * @type {HelmRequestAllOfValuesOverride}
+     * @memberof HelmRequest
+     */
+    'values_override'?: HelmRequestAllOfValuesOverride;
+}
+/**
+ * 
+ * @export
+ * @interface HelmRequestAllOfSource
+ */
+export interface HelmRequestAllOfSource {
+    /**
+     * 
+     * @type {HelmRequestAllOfSourceGit}
+     * @memberof HelmRequestAllOfSource
+     */
+    'git'?: HelmRequestAllOfSourceGit | null;
+    /**
+     * 
+     * @type {HelmRequestAllOfSourceRepository}
+     * @memberof HelmRequestAllOfSource
+     */
+    'repository'?: HelmRequestAllOfSourceRepository | null;
+}
+/**
+ * 
+ * @export
+ * @interface HelmRequestAllOfSourceGit
+ */
+export interface HelmRequestAllOfSourceGit {
+    /**
+     * 
+     * @type {ApplicationGitRepositoryRequest}
+     * @memberof HelmRequestAllOfSourceGit
+     */
+    'git_repository'?: ApplicationGitRepositoryRequest;
+}
+/**
+ * 
+ * @export
+ * @interface HelmRequestAllOfSourceRepository
+ */
+export interface HelmRequestAllOfSourceRepository {
+    /**
+     * The id of the helm repository
+     * @type {string}
+     * @memberof HelmRequestAllOfSourceRepository
+     */
+    'repository'?: string | null;
+    /**
+     * The name of the chart in the repository
+     * @type {string}
+     * @memberof HelmRequestAllOfSourceRepository
+     */
+    'chart_name'?: string;
+    /**
+     * The version of the chart to use
+     * @type {string}
+     * @memberof HelmRequestAllOfSourceRepository
+     */
+    'chart_version'?: string;
+}
+/**
+ * Specify helm values you want to set or override 
+ * @export
+ * @interface HelmRequestAllOfValuesOverride
+ */
+export interface HelmRequestAllOfValuesOverride {
+    /**
+     * 
+     * @type {Array<Array<string>>}
+     * @memberof HelmRequestAllOfValuesOverride
+     */
+    'set'?: Array<Array<string>>;
+    /**
+     * 
+     * @type {Array<Array<string>>}
+     * @memberof HelmRequestAllOfValuesOverride
+     */
+    'set_string'?: Array<Array<string>>;
+    /**
+     * 
+     * @type {Array<Array<string>>}
+     * @memberof HelmRequestAllOfValuesOverride
+     */
+    'set_json'?: Array<Array<string>>;
+    /**
+     * 
+     * @type {HelmRequestAllOfValuesOverrideFile}
+     * @memberof HelmRequestAllOfValuesOverride
+     */
+    'file'?: HelmRequestAllOfValuesOverrideFile | null;
+}
+/**
+ * 
+ * @export
+ * @interface HelmRequestAllOfValuesOverrideFile
+ */
+export interface HelmRequestAllOfValuesOverrideFile {
+    /**
+     * 
+     * @type {HelmRequestAllOfValuesOverrideFileRaw}
+     * @memberof HelmRequestAllOfValuesOverrideFile
+     */
+    'raw'?: HelmRequestAllOfValuesOverrideFileRaw | null;
+    /**
+     * 
+     * @type {HelmRequestAllOfValuesOverrideFileGit}
+     * @memberof HelmRequestAllOfValuesOverrideFile
+     */
+    'git'?: HelmRequestAllOfValuesOverrideFileGit | null;
+}
+/**
+ * 
+ * @export
+ * @interface HelmRequestAllOfValuesOverrideFileGit
+ */
+export interface HelmRequestAllOfValuesOverrideFileGit {
+    /**
+     * 
+     * @type {ApplicationGitRepositoryRequest}
+     * @memberof HelmRequestAllOfValuesOverrideFileGit
+     */
+    'git_repository'?: ApplicationGitRepositoryRequest;
+    /**
+     * List of path inside your git repository to locate values file. Must start by a /
+     * @type {Array<string>}
+     * @memberof HelmRequestAllOfValuesOverrideFileGit
+     */
+    'paths'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface HelmRequestAllOfValuesOverrideFileRaw
+ */
+export interface HelmRequestAllOfValuesOverrideFileRaw {
+    /**
+     * 
+     * @type {Array<HelmRequestAllOfValuesOverrideFileRawValues>}
+     * @memberof HelmRequestAllOfValuesOverrideFileRaw
+     */
+    'values'?: Array<HelmRequestAllOfValuesOverrideFileRawValues>;
+}
+/**
+ * 
+ * @export
+ * @interface HelmRequestAllOfValuesOverrideFileRawValues
+ */
+export interface HelmRequestAllOfValuesOverrideFileRawValues {
+    /**
+     * The name of the value file
+     * @type {string}
+     * @memberof HelmRequestAllOfValuesOverrideFileRawValues
+     */
+    'name'?: string;
+    /**
+     * The content of the value file
+     * @type {string}
+     * @memberof HelmRequestAllOfValuesOverrideFileRawValues
+     */
+    'content'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface HelmResponse
+ */
+export interface HelmResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof HelmResponse
+     */
+    'environment': ReferenceObject;
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof HelmResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmResponse
+     */
+    'description'?: string;
+    /**
+     * Indicates if the \'environment preview option\' is enabled.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
+     * @type {boolean}
+     * @memberof HelmResponse
+     */
+    'auto_preview': boolean;
+    /**
+     * Specify if the service will be automatically updated after receiving a new image tag or a new commit according to the source type.  
+     * @type {boolean}
+     * @memberof HelmResponse
+     */
+    'auto_deploy': boolean;
+    /**
+     * 
+     * @type {HelmRequestAllOfSource}
+     * @memberof HelmResponse
+     */
+    'source': HelmRequestAllOfSource;
+    /**
+     * The extra arguments to pass to helm
+     * @type {Array<string>}
+     * @memberof HelmResponse
+     */
+    'arguments'?: Array<string>;
+    /**
+     * If we should allow the chart to deploy object outside his specified namespace. Setting this flag to true, requires special rights 
+     * @type {boolean}
+     * @memberof HelmResponse
+     */
+    'allow_cluster_wide_resources'?: boolean;
+    /**
+     * 
+     * @type {HelmRequestAllOfValuesOverride}
+     * @memberof HelmResponse
+     */
+    'values_override'?: HelmRequestAllOfValuesOverride;
+}
+/**
+ * 
+ * @export
+ * @interface HelmResponseList
+ */
+export interface HelmResponseList {
+    /**
+     * 
+     * @type {Array<HelmResponse>}
+     * @memberof HelmResponseList
+     */
+    'results'?: Array<HelmResponse>;
+}
+/**
+ * 
+ * @export
  * @interface Instance
  */
 export interface Instance {
@@ -8385,6 +8813,70 @@ export interface ListDatabaseDeploymentHistory200Response {
      */
     'results'?: Array<DeploymentHistoryDatabase>;
 }
+/**
+ * 
+ * @export
+ * @interface ListHelmDeploymentHistory200Response
+ */
+export interface ListHelmDeploymentHistory200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof ListHelmDeploymentHistory200Response
+     */
+    'page': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListHelmDeploymentHistory200Response
+     */
+    'page_size': number;
+    /**
+     * 
+     * @type {Array<ListHelmDeploymentHistory200ResponseAllOfResultsInner>}
+     * @memberof ListHelmDeploymentHistory200Response
+     */
+    'results'?: Array<ListHelmDeploymentHistory200ResponseAllOfResultsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface ListHelmDeploymentHistory200ResponseAllOfResultsInner
+ */
+export interface ListHelmDeploymentHistory200ResponseAllOfResultsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof ListHelmDeploymentHistory200ResponseAllOfResultsInner
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListHelmDeploymentHistory200ResponseAllOfResultsInner
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListHelmDeploymentHistory200ResponseAllOfResultsInner
+     */
+    'updated_at'?: string;
+    /**
+     * name of the helm
+     * @type {string}
+     * @memberof ListHelmDeploymentHistory200ResponseAllOfResultsInner
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {StateEnum}
+     * @memberof ListHelmDeploymentHistory200ResponseAllOfResultsInner
+     */
+    'status'?: StateEnum;
+}
+
+
 /**
  * 
  * @export
@@ -34934,6 +35426,1758 @@ export class GithubAppApi extends BaseAPI {
      */
     public organizationGithubAppDisconnect(organizationId: string, force?: boolean, options?: AxiosRequestConfig) {
         return GithubAppApiFp(this.configuration).organizationGithubAppDisconnect(organizationId, force, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * HelmApi - axios parameter creator
+ * @export
+ */
+export const HelmApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List default helm advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDefaultHelmAdvancedSettings: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/defaultHelmAdvancedSettings`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * HelmApi - functional programming interface
+ * @export
+ */
+export const HelmApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = HelmApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary List default helm advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDefaultHelmAdvancedSettings(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDefaultHelmAdvancedSettings(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * HelmApi - factory interface
+ * @export
+ */
+export const HelmApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = HelmApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary List default helm advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDefaultHelmAdvancedSettings(options?: any): AxiosPromise<object> {
+            return localVarFp.getDefaultHelmAdvancedSettings(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * HelmApi - object-oriented interface
+ * @export
+ * @class HelmApi
+ * @extends {BaseAPI}
+ */
+export class HelmApi extends BaseAPI {
+    /**
+     * 
+     * @summary List default helm advanced settings
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmApi
+     */
+    public getDefaultHelmAdvancedSettings(options?: AxiosRequestConfig) {
+        return HelmApiFp(this.configuration).getDefaultHelmAdvancedSettings(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * HelmActionsApi - axios parameter creator
+ * @export
+ */
+export const HelmActionsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
+         * @summary Deploy helm
+         * @param {string} helmId Helm ID
+         * @param {HelmForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned helm hasn\&#39;t the target event provided, the helm won\&#39;t be deployed. 
+         * @param {DeployHelmRequest} [deployHelmRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deployHelm: async (helmId: string, forceEvent?: HelmForceEvent, deployHelmRequest?: DeployHelmRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('deployHelm', 'helmId', helmId)
+            const localVarPath = `/helm/{helmId}/deploy`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (forceEvent !== undefined) {
+                localVarQueryParameter['forceEvent'] = forceEvent;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(deployHelmRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Redeploy helm
+         * @param {string} helmId Helm ID
+         * @param {HelmForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned helm hasn\&#39;t the target event provided, the helm won\&#39;t be deployed. 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        redeployHelm: async (helmId: string, forceEvent?: HelmForceEvent, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('redeployHelm', 'helmId', helmId)
+            const localVarPath = `/helm/{helmId}/redeploy`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (forceEvent !== undefined) {
+                localVarQueryParameter['forceEvent'] = forceEvent;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * **Deprecated** - Please use the \"Redeploy helm\" endpoint now
+         * @summary Deprecated - Restart helm
+         * @param {string} helmId Helm ID
+         * @param {HelmForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned helm hasn\&#39;t the target event provided, the helm won\&#39;t be deployed. 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restartHelm: async (helmId: string, forceEvent?: HelmForceEvent, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('restartHelm', 'helmId', helmId)
+            const localVarPath = `/helm/{helmId}/restart`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (forceEvent !== undefined) {
+                localVarQueryParameter['forceEvent'] = forceEvent;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Stop helm
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stopHelm: async (helmId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('stopHelm', 'helmId', helmId)
+            const localVarPath = `/helm/{helmId}/stop`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * HelmActionsApi - functional programming interface
+ * @export
+ */
+export const HelmActionsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = HelmActionsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
+         * @summary Deploy helm
+         * @param {string} helmId Helm ID
+         * @param {HelmForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned helm hasn\&#39;t the target event provided, the helm won\&#39;t be deployed. 
+         * @param {DeployHelmRequest} [deployHelmRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deployHelm(helmId: string, forceEvent?: HelmForceEvent, deployHelmRequest?: DeployHelmRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deployHelm(helmId, forceEvent, deployHelmRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Redeploy helm
+         * @param {string} helmId Helm ID
+         * @param {HelmForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned helm hasn\&#39;t the target event provided, the helm won\&#39;t be deployed. 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async redeployHelm(helmId: string, forceEvent?: HelmForceEvent, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.redeployHelm(helmId, forceEvent, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * **Deprecated** - Please use the \"Redeploy helm\" endpoint now
+         * @summary Deprecated - Restart helm
+         * @param {string} helmId Helm ID
+         * @param {HelmForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned helm hasn\&#39;t the target event provided, the helm won\&#39;t be deployed. 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async restartHelm(helmId: string, forceEvent?: HelmForceEvent, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.restartHelm(helmId, forceEvent, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Stop helm
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async stopHelm(helmId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.stopHelm(helmId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * HelmActionsApi - factory interface
+ * @export
+ */
+export const HelmActionsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = HelmActionsApiFp(configuration)
+    return {
+        /**
+         * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
+         * @summary Deploy helm
+         * @param {string} helmId Helm ID
+         * @param {HelmForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned helm hasn\&#39;t the target event provided, the helm won\&#39;t be deployed. 
+         * @param {DeployHelmRequest} [deployHelmRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deployHelm(helmId: string, forceEvent?: HelmForceEvent, deployHelmRequest?: DeployHelmRequest, options?: any): AxiosPromise<Status> {
+            return localVarFp.deployHelm(helmId, forceEvent, deployHelmRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Redeploy helm
+         * @param {string} helmId Helm ID
+         * @param {HelmForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned helm hasn\&#39;t the target event provided, the helm won\&#39;t be deployed. 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        redeployHelm(helmId: string, forceEvent?: HelmForceEvent, options?: any): AxiosPromise<Status> {
+            return localVarFp.redeployHelm(helmId, forceEvent, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * **Deprecated** - Please use the \"Redeploy helm\" endpoint now
+         * @summary Deprecated - Restart helm
+         * @param {string} helmId Helm ID
+         * @param {HelmForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned helm hasn\&#39;t the target event provided, the helm won\&#39;t be deployed. 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restartHelm(helmId: string, forceEvent?: HelmForceEvent, options?: any): AxiosPromise<Status> {
+            return localVarFp.restartHelm(helmId, forceEvent, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Stop helm
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stopHelm(helmId: string, options?: any): AxiosPromise<Status> {
+            return localVarFp.stopHelm(helmId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * HelmActionsApi - object-oriented interface
+ * @export
+ * @class HelmActionsApi
+ * @extends {BaseAPI}
+ */
+export class HelmActionsApi extends BaseAPI {
+    /**
+     * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
+     * @summary Deploy helm
+     * @param {string} helmId Helm ID
+     * @param {HelmForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned helm hasn\&#39;t the target event provided, the helm won\&#39;t be deployed. 
+     * @param {DeployHelmRequest} [deployHelmRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmActionsApi
+     */
+    public deployHelm(helmId: string, forceEvent?: HelmForceEvent, deployHelmRequest?: DeployHelmRequest, options?: AxiosRequestConfig) {
+        return HelmActionsApiFp(this.configuration).deployHelm(helmId, forceEvent, deployHelmRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Redeploy helm
+     * @param {string} helmId Helm ID
+     * @param {HelmForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned helm hasn\&#39;t the target event provided, the helm won\&#39;t be deployed. 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmActionsApi
+     */
+    public redeployHelm(helmId: string, forceEvent?: HelmForceEvent, options?: AxiosRequestConfig) {
+        return HelmActionsApiFp(this.configuration).redeployHelm(helmId, forceEvent, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * **Deprecated** - Please use the \"Redeploy helm\" endpoint now
+     * @summary Deprecated - Restart helm
+     * @param {string} helmId Helm ID
+     * @param {HelmForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned helm hasn\&#39;t the target event provided, the helm won\&#39;t be deployed. 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmActionsApi
+     */
+    public restartHelm(helmId: string, forceEvent?: HelmForceEvent, options?: AxiosRequestConfig) {
+        return HelmActionsApiFp(this.configuration).restartHelm(helmId, forceEvent, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Stop helm
+     * @param {string} helmId Helm ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmActionsApi
+     */
+    public stopHelm(helmId: string, options?: AxiosRequestConfig) {
+        return HelmActionsApiFp(this.configuration).stopHelm(helmId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * HelmConfigurationApi - axios parameter creator
+ * @export
+ */
+export const HelmConfigurationApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Edit advanced settings by returning table of advanced settings.
+         * @summary Edit advanced settings
+         * @param {string} helmId Helm ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editHelmAdvancedSettings: async (helmId: string, body?: object, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('editHelmAdvancedSettings', 'helmId', helmId)
+            const localVarPath = `/helm/{helmId}/advancedSettings`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get list and values of the advanced settings of the helm.
+         * @summary Get advanced settings
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHelmAdvancedSettings: async (helmId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('getHelmAdvancedSettings', 'helmId', helmId)
+            const localVarPath = `/helm/{helmId}/advancedSettings`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * HelmConfigurationApi - functional programming interface
+ * @export
+ */
+export const HelmConfigurationApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = HelmConfigurationApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Edit advanced settings by returning table of advanced settings.
+         * @summary Edit advanced settings
+         * @param {string} helmId Helm ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editHelmAdvancedSettings(helmId: string, body?: object, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editHelmAdvancedSettings(helmId, body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get list and values of the advanced settings of the helm.
+         * @summary Get advanced settings
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getHelmAdvancedSettings(helmId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getHelmAdvancedSettings(helmId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * HelmConfigurationApi - factory interface
+ * @export
+ */
+export const HelmConfigurationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = HelmConfigurationApiFp(configuration)
+    return {
+        /**
+         * Edit advanced settings by returning table of advanced settings.
+         * @summary Edit advanced settings
+         * @param {string} helmId Helm ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editHelmAdvancedSettings(helmId: string, body?: object, options?: any): AxiosPromise<object> {
+            return localVarFp.editHelmAdvancedSettings(helmId, body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get list and values of the advanced settings of the helm.
+         * @summary Get advanced settings
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHelmAdvancedSettings(helmId: string, options?: any): AxiosPromise<object> {
+            return localVarFp.getHelmAdvancedSettings(helmId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * HelmConfigurationApi - object-oriented interface
+ * @export
+ * @class HelmConfigurationApi
+ * @extends {BaseAPI}
+ */
+export class HelmConfigurationApi extends BaseAPI {
+    /**
+     * Edit advanced settings by returning table of advanced settings.
+     * @summary Edit advanced settings
+     * @param {string} helmId Helm ID
+     * @param {object} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmConfigurationApi
+     */
+    public editHelmAdvancedSettings(helmId: string, body?: object, options?: AxiosRequestConfig) {
+        return HelmConfigurationApiFp(this.configuration).editHelmAdvancedSettings(helmId, body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get list and values of the advanced settings of the helm.
+     * @summary Get advanced settings
+     * @param {string} helmId Helm ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmConfigurationApi
+     */
+    public getHelmAdvancedSettings(helmId: string, options?: AxiosRequestConfig) {
+        return HelmConfigurationApiFp(this.configuration).getHelmAdvancedSettings(helmId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * HelmDeploymentHistoryApi - axios parameter creator
+ * @export
+ */
+export const HelmDeploymentHistoryApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Returns the 20 last helm deployments
+         * @summary List helm deployments
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listHelmDeploymentHistory: async (helmId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('listHelmDeploymentHistory', 'helmId', helmId)
+            const localVarPath = `/helm/{helmId}/deploymentHistory`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * HelmDeploymentHistoryApi - functional programming interface
+ * @export
+ */
+export const HelmDeploymentHistoryApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = HelmDeploymentHistoryApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Returns the 20 last helm deployments
+         * @summary List helm deployments
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listHelmDeploymentHistory(helmId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListHelmDeploymentHistory200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listHelmDeploymentHistory(helmId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * HelmDeploymentHistoryApi - factory interface
+ * @export
+ */
+export const HelmDeploymentHistoryApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = HelmDeploymentHistoryApiFp(configuration)
+    return {
+        /**
+         * Returns the 20 last helm deployments
+         * @summary List helm deployments
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listHelmDeploymentHistory(helmId: string, options?: any): AxiosPromise<ListHelmDeploymentHistory200Response> {
+            return localVarFp.listHelmDeploymentHistory(helmId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * HelmDeploymentHistoryApi - object-oriented interface
+ * @export
+ * @class HelmDeploymentHistoryApi
+ * @extends {BaseAPI}
+ */
+export class HelmDeploymentHistoryApi extends BaseAPI {
+    /**
+     * Returns the 20 last helm deployments
+     * @summary List helm deployments
+     * @param {string} helmId Helm ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmDeploymentHistoryApi
+     */
+    public listHelmDeploymentHistory(helmId: string, options?: AxiosRequestConfig) {
+        return HelmDeploymentHistoryApiFp(this.configuration).listHelmDeploymentHistory(helmId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * HelmDeploymentRestrictionApi - axios parameter creator
+ * @export
+ */
+export const HelmDeploymentRestrictionApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Create a helm deployment restriction
+         * @summary Create a helm deployment restriction
+         * @param {string} helmId Helm ID
+         * @param {HelmDeploymentRestrictionRequest} [helmDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createHelmDeploymentRestriction: async (helmId: string, helmDeploymentRestrictionRequest?: HelmDeploymentRestrictionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('createHelmDeploymentRestriction', 'helmId', helmId)
+            const localVarPath = `/helm/{helmId}/deploymentRestriction`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(helmDeploymentRestrictionRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete a helm deployment restriction
+         * @summary Delete a helm deployment restriction
+         * @param {string} helmId Helm ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteHelmDeploymentRestriction: async (helmId: string, deploymentRestrictionId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('deleteHelmDeploymentRestriction', 'helmId', helmId)
+            // verify required parameter 'deploymentRestrictionId' is not null or undefined
+            assertParamExists('deleteHelmDeploymentRestriction', 'deploymentRestrictionId', deploymentRestrictionId)
+            const localVarPath = `/helm/{helmId}/deploymentRestriction/{deploymentRestrictionId}`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)))
+                .replace(`{${"deploymentRestrictionId"}}`, encodeURIComponent(String(deploymentRestrictionId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Edit a helm deployment restriction
+         * @summary Edit a helm deployment restriction
+         * @param {string} helmId Helm ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {HelmDeploymentRestrictionRequest} [helmDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editHelmDeploymentRestriction: async (helmId: string, deploymentRestrictionId: string, helmDeploymentRestrictionRequest?: HelmDeploymentRestrictionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('editHelmDeploymentRestriction', 'helmId', helmId)
+            // verify required parameter 'deploymentRestrictionId' is not null or undefined
+            assertParamExists('editHelmDeploymentRestriction', 'deploymentRestrictionId', deploymentRestrictionId)
+            const localVarPath = `/helm/{helmId}/deploymentRestriction/{deploymentRestrictionId}`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)))
+                .replace(`{${"deploymentRestrictionId"}}`, encodeURIComponent(String(deploymentRestrictionId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(helmDeploymentRestrictionRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get helm deployment restrictions
+         * @summary Get helm deployment restrictions
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHelmDeploymentRestrictions: async (helmId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('getHelmDeploymentRestrictions', 'helmId', helmId)
+            const localVarPath = `/helm/{helmId}/deploymentRestriction`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * HelmDeploymentRestrictionApi - functional programming interface
+ * @export
+ */
+export const HelmDeploymentRestrictionApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = HelmDeploymentRestrictionApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Create a helm deployment restriction
+         * @summary Create a helm deployment restriction
+         * @param {string} helmId Helm ID
+         * @param {HelmDeploymentRestrictionRequest} [helmDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createHelmDeploymentRestriction(helmId: string, helmDeploymentRestrictionRequest?: HelmDeploymentRestrictionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmDeploymentRestrictionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createHelmDeploymentRestriction(helmId, helmDeploymentRestrictionRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Delete a helm deployment restriction
+         * @summary Delete a helm deployment restriction
+         * @param {string} helmId Helm ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteHelmDeploymentRestriction(helmId: string, deploymentRestrictionId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteHelmDeploymentRestriction(helmId, deploymentRestrictionId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Edit a helm deployment restriction
+         * @summary Edit a helm deployment restriction
+         * @param {string} helmId Helm ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {HelmDeploymentRestrictionRequest} [helmDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editHelmDeploymentRestriction(helmId: string, deploymentRestrictionId: string, helmDeploymentRestrictionRequest?: HelmDeploymentRestrictionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmDeploymentRestrictionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editHelmDeploymentRestriction(helmId, deploymentRestrictionId, helmDeploymentRestrictionRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get helm deployment restrictions
+         * @summary Get helm deployment restrictions
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getHelmDeploymentRestrictions(helmId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmDeploymentRestrictionResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getHelmDeploymentRestrictions(helmId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * HelmDeploymentRestrictionApi - factory interface
+ * @export
+ */
+export const HelmDeploymentRestrictionApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = HelmDeploymentRestrictionApiFp(configuration)
+    return {
+        /**
+         * Create a helm deployment restriction
+         * @summary Create a helm deployment restriction
+         * @param {string} helmId Helm ID
+         * @param {HelmDeploymentRestrictionRequest} [helmDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createHelmDeploymentRestriction(helmId: string, helmDeploymentRestrictionRequest?: HelmDeploymentRestrictionRequest, options?: any): AxiosPromise<HelmDeploymentRestrictionResponse> {
+            return localVarFp.createHelmDeploymentRestriction(helmId, helmDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete a helm deployment restriction
+         * @summary Delete a helm deployment restriction
+         * @param {string} helmId Helm ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteHelmDeploymentRestriction(helmId: string, deploymentRestrictionId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteHelmDeploymentRestriction(helmId, deploymentRestrictionId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Edit a helm deployment restriction
+         * @summary Edit a helm deployment restriction
+         * @param {string} helmId Helm ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {HelmDeploymentRestrictionRequest} [helmDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editHelmDeploymentRestriction(helmId: string, deploymentRestrictionId: string, helmDeploymentRestrictionRequest?: HelmDeploymentRestrictionRequest, options?: any): AxiosPromise<HelmDeploymentRestrictionResponse> {
+            return localVarFp.editHelmDeploymentRestriction(helmId, deploymentRestrictionId, helmDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get helm deployment restrictions
+         * @summary Get helm deployment restrictions
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHelmDeploymentRestrictions(helmId: string, options?: any): AxiosPromise<HelmDeploymentRestrictionResponseList> {
+            return localVarFp.getHelmDeploymentRestrictions(helmId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * HelmDeploymentRestrictionApi - object-oriented interface
+ * @export
+ * @class HelmDeploymentRestrictionApi
+ * @extends {BaseAPI}
+ */
+export class HelmDeploymentRestrictionApi extends BaseAPI {
+    /**
+     * Create a helm deployment restriction
+     * @summary Create a helm deployment restriction
+     * @param {string} helmId Helm ID
+     * @param {HelmDeploymentRestrictionRequest} [helmDeploymentRestrictionRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmDeploymentRestrictionApi
+     */
+    public createHelmDeploymentRestriction(helmId: string, helmDeploymentRestrictionRequest?: HelmDeploymentRestrictionRequest, options?: AxiosRequestConfig) {
+        return HelmDeploymentRestrictionApiFp(this.configuration).createHelmDeploymentRestriction(helmId, helmDeploymentRestrictionRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete a helm deployment restriction
+     * @summary Delete a helm deployment restriction
+     * @param {string} helmId Helm ID
+     * @param {string} deploymentRestrictionId Deployment Restriction ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmDeploymentRestrictionApi
+     */
+    public deleteHelmDeploymentRestriction(helmId: string, deploymentRestrictionId: string, options?: AxiosRequestConfig) {
+        return HelmDeploymentRestrictionApiFp(this.configuration).deleteHelmDeploymentRestriction(helmId, deploymentRestrictionId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Edit a helm deployment restriction
+     * @summary Edit a helm deployment restriction
+     * @param {string} helmId Helm ID
+     * @param {string} deploymentRestrictionId Deployment Restriction ID
+     * @param {HelmDeploymentRestrictionRequest} [helmDeploymentRestrictionRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmDeploymentRestrictionApi
+     */
+    public editHelmDeploymentRestriction(helmId: string, deploymentRestrictionId: string, helmDeploymentRestrictionRequest?: HelmDeploymentRestrictionRequest, options?: AxiosRequestConfig) {
+        return HelmDeploymentRestrictionApiFp(this.configuration).editHelmDeploymentRestriction(helmId, deploymentRestrictionId, helmDeploymentRestrictionRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get helm deployment restrictions
+     * @summary Get helm deployment restrictions
+     * @param {string} helmId Helm ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmDeploymentRestrictionApi
+     */
+    public getHelmDeploymentRestrictions(helmId: string, options?: AxiosRequestConfig) {
+        return HelmDeploymentRestrictionApiFp(this.configuration).getHelmDeploymentRestrictions(helmId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * HelmMainCallsApi - axios parameter creator
+ * @export
+ */
+export const HelmMainCallsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * To delete the helm you must have the admin permission
+         * @summary Delete helm
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteHelm: async (helmId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('deleteHelm', 'helmId', helmId)
+            const localVarPath = `/helm/{helmId}`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * - To edit the helm you must have the admin permission. 
+         * @summary Edit helm
+         * @param {string} helmId Helm ID
+         * @param {HelmRequest} [helmRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editHelm: async (helmId: string, helmRequest?: HelmRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('editHelm', 'helmId', helmId)
+            const localVarPath = `/helm/{helmId}`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(helmRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get helm by ID
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHelm: async (helmId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('getHelm', 'helmId', helmId)
+            const localVarPath = `/helm/{helmId}`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get helm status
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHelmStatus: async (helmId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('getHelmStatus', 'helmId', helmId)
+            const localVarPath = `/helm/{helmId}/status`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * HelmMainCallsApi - functional programming interface
+ * @export
+ */
+export const HelmMainCallsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = HelmMainCallsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * To delete the helm you must have the admin permission
+         * @summary Delete helm
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteHelm(helmId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteHelm(helmId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * - To edit the helm you must have the admin permission. 
+         * @summary Edit helm
+         * @param {string} helmId Helm ID
+         * @param {HelmRequest} [helmRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editHelm(helmId: string, helmRequest?: HelmRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editHelm(helmId, helmRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get helm by ID
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getHelm(helmId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getHelm(helmId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get helm status
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getHelmStatus(helmId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getHelmStatus(helmId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * HelmMainCallsApi - factory interface
+ * @export
+ */
+export const HelmMainCallsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = HelmMainCallsApiFp(configuration)
+    return {
+        /**
+         * To delete the helm you must have the admin permission
+         * @summary Delete helm
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteHelm(helmId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteHelm(helmId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * - To edit the helm you must have the admin permission. 
+         * @summary Edit helm
+         * @param {string} helmId Helm ID
+         * @param {HelmRequest} [helmRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editHelm(helmId: string, helmRequest?: HelmRequest, options?: any): AxiosPromise<HelmResponse> {
+            return localVarFp.editHelm(helmId, helmRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get helm by ID
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHelm(helmId: string, options?: any): AxiosPromise<HelmResponse> {
+            return localVarFp.getHelm(helmId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get helm status
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHelmStatus(helmId: string, options?: any): AxiosPromise<Status> {
+            return localVarFp.getHelmStatus(helmId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * HelmMainCallsApi - object-oriented interface
+ * @export
+ * @class HelmMainCallsApi
+ * @extends {BaseAPI}
+ */
+export class HelmMainCallsApi extends BaseAPI {
+    /**
+     * To delete the helm you must have the admin permission
+     * @summary Delete helm
+     * @param {string} helmId Helm ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmMainCallsApi
+     */
+    public deleteHelm(helmId: string, options?: AxiosRequestConfig) {
+        return HelmMainCallsApiFp(this.configuration).deleteHelm(helmId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * - To edit the helm you must have the admin permission. 
+     * @summary Edit helm
+     * @param {string} helmId Helm ID
+     * @param {HelmRequest} [helmRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmMainCallsApi
+     */
+    public editHelm(helmId: string, helmRequest?: HelmRequest, options?: AxiosRequestConfig) {
+        return HelmMainCallsApiFp(this.configuration).editHelm(helmId, helmRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get helm by ID
+     * @param {string} helmId Helm ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmMainCallsApi
+     */
+    public getHelm(helmId: string, options?: AxiosRequestConfig) {
+        return HelmMainCallsApiFp(this.configuration).getHelm(helmId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get helm status
+     * @param {string} helmId Helm ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmMainCallsApi
+     */
+    public getHelmStatus(helmId: string, options?: AxiosRequestConfig) {
+        return HelmMainCallsApiFp(this.configuration).getHelmStatus(helmId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * HelmsApi - axios parameter creator
+ * @export
+ */
+export const HelmsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Create a helm
+         * @param {string} environmentId Environment ID
+         * @param {HelmRequest} [helmRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createHelm: async (environmentId: string, helmRequest?: HelmRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('createHelm', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/helm`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(helmRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns a list of helms with only their id and status.
+         * @summary List all environment helm statuses
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentHelmStatus: async (environmentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('getEnvironmentHelmStatus', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/helm/status`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List helms
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listHelms: async (environmentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('listHelms', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/helm`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * HelmsApi - functional programming interface
+ * @export
+ */
+export const HelmsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = HelmsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Create a helm
+         * @param {string} environmentId Environment ID
+         * @param {HelmRequest} [helmRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createHelm(environmentId: string, helmRequest?: HelmRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createHelm(environmentId, helmRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Returns a list of helms with only their id and status.
+         * @summary List all environment helm statuses
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEnvironmentHelmStatus(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReferenceObjectStatusResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentHelmStatus(environmentId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary List helms
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listHelms(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listHelms(environmentId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * HelmsApi - factory interface
+ * @export
+ */
+export const HelmsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = HelmsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Create a helm
+         * @param {string} environmentId Environment ID
+         * @param {HelmRequest} [helmRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createHelm(environmentId: string, helmRequest?: HelmRequest, options?: any): AxiosPromise<HelmResponse> {
+            return localVarFp.createHelm(environmentId, helmRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns a list of helms with only their id and status.
+         * @summary List all environment helm statuses
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentHelmStatus(environmentId: string, options?: any): AxiosPromise<ReferenceObjectStatusResponseList> {
+            return localVarFp.getEnvironmentHelmStatus(environmentId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List helms
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listHelms(environmentId: string, options?: any): AxiosPromise<HelmResponseList> {
+            return localVarFp.listHelms(environmentId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * HelmsApi - object-oriented interface
+ * @export
+ * @class HelmsApi
+ * @extends {BaseAPI}
+ */
+export class HelmsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create a helm
+     * @param {string} environmentId Environment ID
+     * @param {HelmRequest} [helmRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmsApi
+     */
+    public createHelm(environmentId: string, helmRequest?: HelmRequest, options?: AxiosRequestConfig) {
+        return HelmsApiFp(this.configuration).createHelm(environmentId, helmRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns a list of helms with only their id and status.
+     * @summary List all environment helm statuses
+     * @param {string} environmentId Environment ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmsApi
+     */
+    public getEnvironmentHelmStatus(environmentId: string, options?: AxiosRequestConfig) {
+        return HelmsApiFp(this.configuration).getEnvironmentHelmStatus(environmentId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List helms
+     * @param {string} environmentId Environment ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmsApi
+     */
+    public listHelms(environmentId: string, options?: AxiosRequestConfig) {
+        return HelmsApiFp(this.configuration).listHelms(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
