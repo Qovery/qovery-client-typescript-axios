@@ -817,6 +817,12 @@ export interface ApplicationGitRepository {
      * @memberof ApplicationGitRepository
      */
     'deployed_commit_tag'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplicationGitRepository
+     */
+    'git_token_id'?: string | null;
 }
 
 
