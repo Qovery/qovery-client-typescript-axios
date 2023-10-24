@@ -8880,9 +8880,40 @@ export interface ListHelmDeploymentHistory200ResponseAllOfResultsInner {
      * @memberof ListHelmDeploymentHistory200ResponseAllOfResultsInner
      */
     'status'?: StateEnum;
+    /**
+     * 
+     * @type {Commit}
+     * @memberof ListHelmDeploymentHistory200ResponseAllOfResultsInner
+     */
+    'commit'?: Commit | null;
+    /**
+     * 
+     * @type {ListHelmDeploymentHistory200ResponseAllOfResultsInnerAllOfRepository}
+     * @memberof ListHelmDeploymentHistory200ResponseAllOfResultsInner
+     */
+    'repository'?: ListHelmDeploymentHistory200ResponseAllOfResultsInnerAllOfRepository | null;
 }
 
 
+/**
+ * If the chart source if from a repository, the chart name and its version
+ * @export
+ * @interface ListHelmDeploymentHistory200ResponseAllOfResultsInnerAllOfRepository
+ */
+export interface ListHelmDeploymentHistory200ResponseAllOfResultsInnerAllOfRepository {
+    /**
+     * 
+     * @type {string}
+     * @memberof ListHelmDeploymentHistory200ResponseAllOfResultsInnerAllOfRepository
+     */
+    'chart_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListHelmDeploymentHistory200ResponseAllOfResultsInnerAllOfRepository
+     */
+    'version'?: string;
+}
 /**
  * 
  * @export
