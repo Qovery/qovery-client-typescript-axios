@@ -41279,12 +41279,12 @@ export const OrganizationAccountGitRepositoriesApiAxiosParamCreator = function (
          * 
          * @summary Get bitbucket branches of the specified repository
          * @param {string} organizationId Organization ID
-         * @param {string} [gitTokenId] The git token id that must be used for the application
          * @param {string} [name] The name of the repository where to retrieve the branches
+         * @param {string} [gitTokenId] The git token id that must be used for the application
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationBitbucketRepositoryBranches: async (organizationId: string, gitTokenId?: string, name?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getOrganizationBitbucketRepositoryBranches: async (organizationId: string, name?: string, gitTokenId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('getOrganizationBitbucketRepositoryBranches', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/account/bitbucket/repository/branch`
@@ -41307,12 +41307,12 @@ export const OrganizationAccountGitRepositoriesApiAxiosParamCreator = function (
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-            if (gitTokenId !== undefined) {
-                localVarQueryParameter['gitTokenId'] = gitTokenId;
-            }
-
             if (name !== undefined) {
                 localVarQueryParameter['name'] = name;
+            }
+
+            if (gitTokenId !== undefined) {
+                localVarQueryParameter['gitTokenId'] = gitTokenId;
             }
 
 
@@ -41417,12 +41417,12 @@ export const OrganizationAccountGitRepositoriesApiAxiosParamCreator = function (
          * 
          * @summary Get github branches of the specified repository
          * @param {string} organizationId Organization ID
-         * @param {string} [gitTokenId] The git token id that must be used for the application
          * @param {string} [name] The name of the repository where to retrieve the branches
+         * @param {string} [gitTokenId] The git token id that must be used for the application
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationGithubRepositoryBranches: async (organizationId: string, gitTokenId?: string, name?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getOrganizationGithubRepositoryBranches: async (organizationId: string, name?: string, gitTokenId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('getOrganizationGithubRepositoryBranches', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/account/github/repository/branch`
@@ -41445,12 +41445,12 @@ export const OrganizationAccountGitRepositoriesApiAxiosParamCreator = function (
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-            if (gitTokenId !== undefined) {
-                localVarQueryParameter['gitTokenId'] = gitTokenId;
-            }
-
             if (name !== undefined) {
                 localVarQueryParameter['name'] = name;
+            }
+
+            if (gitTokenId !== undefined) {
+                localVarQueryParameter['gitTokenId'] = gitTokenId;
             }
 
 
@@ -41514,12 +41514,12 @@ export const OrganizationAccountGitRepositoriesApiAxiosParamCreator = function (
          * 
          * @summary Get gitlab branches of the specified repository
          * @param {string} organizationId Organization ID
-         * @param {string} [gitTokenId] The git token id that must be used for the application
          * @param {string} [name] The name of the repository to retrieve the branches
+         * @param {string} [gitTokenId] The git token id that must be used for the application
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationGitlabRepositoryBranches: async (organizationId: string, gitTokenId?: string, name?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getOrganizationGitlabRepositoryBranches: async (organizationId: string, name?: string, gitTokenId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('getOrganizationGitlabRepositoryBranches', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/account/gitlab/repository/branch`
@@ -41542,12 +41542,12 @@ export const OrganizationAccountGitRepositoriesApiAxiosParamCreator = function (
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-            if (gitTokenId !== undefined) {
-                localVarQueryParameter['gitTokenId'] = gitTokenId;
-            }
-
             if (name !== undefined) {
                 localVarQueryParameter['name'] = name;
+            }
+
+            if (gitTokenId !== undefined) {
+                localVarQueryParameter['gitTokenId'] = gitTokenId;
             }
 
 
@@ -41587,13 +41587,13 @@ export const OrganizationAccountGitRepositoriesApiFp = function(configuration?: 
          * 
          * @summary Get bitbucket branches of the specified repository
          * @param {string} organizationId Organization ID
-         * @param {string} [gitTokenId] The git token id that must be used for the application
          * @param {string} [name] The name of the repository where to retrieve the branches
+         * @param {string} [gitTokenId] The git token id that must be used for the application
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganizationBitbucketRepositoryBranches(organizationId: string, gitTokenId?: string, name?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryBranchResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationBitbucketRepositoryBranches(organizationId, gitTokenId, name, options);
+        async getOrganizationBitbucketRepositoryBranches(organizationId: string, name?: string, gitTokenId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryBranchResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationBitbucketRepositoryBranches(organizationId, name, gitTokenId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -41623,13 +41623,13 @@ export const OrganizationAccountGitRepositoriesApiFp = function(configuration?: 
          * 
          * @summary Get github branches of the specified repository
          * @param {string} organizationId Organization ID
-         * @param {string} [gitTokenId] The git token id that must be used for the application
          * @param {string} [name] The name of the repository where to retrieve the branches
+         * @param {string} [gitTokenId] The git token id that must be used for the application
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganizationGithubRepositoryBranches(organizationId: string, gitTokenId?: string, name?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryBranchResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationGithubRepositoryBranches(organizationId, gitTokenId, name, options);
+        async getOrganizationGithubRepositoryBranches(organizationId: string, name?: string, gitTokenId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryBranchResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationGithubRepositoryBranches(organizationId, name, gitTokenId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -41648,13 +41648,13 @@ export const OrganizationAccountGitRepositoriesApiFp = function(configuration?: 
          * 
          * @summary Get gitlab branches of the specified repository
          * @param {string} organizationId Organization ID
-         * @param {string} [gitTokenId] The git token id that must be used for the application
          * @param {string} [name] The name of the repository to retrieve the branches
+         * @param {string} [gitTokenId] The git token id that must be used for the application
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganizationGitlabRepositoryBranches(organizationId: string, gitTokenId?: string, name?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryBranchResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationGitlabRepositoryBranches(organizationId, gitTokenId, name, options);
+        async getOrganizationGitlabRepositoryBranches(organizationId: string, name?: string, gitTokenId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryBranchResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationGitlabRepositoryBranches(organizationId, name, gitTokenId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -41682,13 +41682,13 @@ export const OrganizationAccountGitRepositoriesApiFactory = function (configurat
          * 
          * @summary Get bitbucket branches of the specified repository
          * @param {string} organizationId Organization ID
-         * @param {string} [gitTokenId] The git token id that must be used for the application
          * @param {string} [name] The name of the repository where to retrieve the branches
+         * @param {string} [gitTokenId] The git token id that must be used for the application
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationBitbucketRepositoryBranches(organizationId: string, gitTokenId?: string, name?: string, options?: any): AxiosPromise<GitRepositoryBranchResponseList> {
-            return localVarFp.getOrganizationBitbucketRepositoryBranches(organizationId, gitTokenId, name, options).then((request) => request(axios, basePath));
+        getOrganizationBitbucketRepositoryBranches(organizationId: string, name?: string, gitTokenId?: string, options?: any): AxiosPromise<GitRepositoryBranchResponseList> {
+            return localVarFp.getOrganizationBitbucketRepositoryBranches(organizationId, name, gitTokenId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -41715,13 +41715,13 @@ export const OrganizationAccountGitRepositoriesApiFactory = function (configurat
          * 
          * @summary Get github branches of the specified repository
          * @param {string} organizationId Organization ID
-         * @param {string} [gitTokenId] The git token id that must be used for the application
          * @param {string} [name] The name of the repository where to retrieve the branches
+         * @param {string} [gitTokenId] The git token id that must be used for the application
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationGithubRepositoryBranches(organizationId: string, gitTokenId?: string, name?: string, options?: any): AxiosPromise<GitRepositoryBranchResponseList> {
-            return localVarFp.getOrganizationGithubRepositoryBranches(organizationId, gitTokenId, name, options).then((request) => request(axios, basePath));
+        getOrganizationGithubRepositoryBranches(organizationId: string, name?: string, gitTokenId?: string, options?: any): AxiosPromise<GitRepositoryBranchResponseList> {
+            return localVarFp.getOrganizationGithubRepositoryBranches(organizationId, name, gitTokenId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -41738,13 +41738,13 @@ export const OrganizationAccountGitRepositoriesApiFactory = function (configurat
          * 
          * @summary Get gitlab branches of the specified repository
          * @param {string} organizationId Organization ID
-         * @param {string} [gitTokenId] The git token id that must be used for the application
          * @param {string} [name] The name of the repository to retrieve the branches
+         * @param {string} [gitTokenId] The git token id that must be used for the application
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationGitlabRepositoryBranches(organizationId: string, gitTokenId?: string, name?: string, options?: any): AxiosPromise<GitRepositoryBranchResponseList> {
-            return localVarFp.getOrganizationGitlabRepositoryBranches(organizationId, gitTokenId, name, options).then((request) => request(axios, basePath));
+        getOrganizationGitlabRepositoryBranches(organizationId: string, name?: string, gitTokenId?: string, options?: any): AxiosPromise<GitRepositoryBranchResponseList> {
+            return localVarFp.getOrganizationGitlabRepositoryBranches(organizationId, name, gitTokenId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -41773,14 +41773,14 @@ export class OrganizationAccountGitRepositoriesApi extends BaseAPI {
      * 
      * @summary Get bitbucket branches of the specified repository
      * @param {string} organizationId Organization ID
-     * @param {string} [gitTokenId] The git token id that must be used for the application
      * @param {string} [name] The name of the repository where to retrieve the branches
+     * @param {string} [gitTokenId] The git token id that must be used for the application
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationAccountGitRepositoriesApi
      */
-    public getOrganizationBitbucketRepositoryBranches(organizationId: string, gitTokenId?: string, name?: string, options?: AxiosRequestConfig) {
-        return OrganizationAccountGitRepositoriesApiFp(this.configuration).getOrganizationBitbucketRepositoryBranches(organizationId, gitTokenId, name, options).then((request) => request(this.axios, this.basePath));
+    public getOrganizationBitbucketRepositoryBranches(organizationId: string, name?: string, gitTokenId?: string, options?: AxiosRequestConfig) {
+        return OrganizationAccountGitRepositoriesApiFp(this.configuration).getOrganizationBitbucketRepositoryBranches(organizationId, name, gitTokenId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -41812,14 +41812,14 @@ export class OrganizationAccountGitRepositoriesApi extends BaseAPI {
      * 
      * @summary Get github branches of the specified repository
      * @param {string} organizationId Organization ID
-     * @param {string} [gitTokenId] The git token id that must be used for the application
      * @param {string} [name] The name of the repository where to retrieve the branches
+     * @param {string} [gitTokenId] The git token id that must be used for the application
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationAccountGitRepositoriesApi
      */
-    public getOrganizationGithubRepositoryBranches(organizationId: string, gitTokenId?: string, name?: string, options?: AxiosRequestConfig) {
-        return OrganizationAccountGitRepositoriesApiFp(this.configuration).getOrganizationGithubRepositoryBranches(organizationId, gitTokenId, name, options).then((request) => request(this.axios, this.basePath));
+    public getOrganizationGithubRepositoryBranches(organizationId: string, name?: string, gitTokenId?: string, options?: AxiosRequestConfig) {
+        return OrganizationAccountGitRepositoriesApiFp(this.configuration).getOrganizationGithubRepositoryBranches(organizationId, name, gitTokenId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -41839,14 +41839,14 @@ export class OrganizationAccountGitRepositoriesApi extends BaseAPI {
      * 
      * @summary Get gitlab branches of the specified repository
      * @param {string} organizationId Organization ID
-     * @param {string} [gitTokenId] The git token id that must be used for the application
      * @param {string} [name] The name of the repository to retrieve the branches
+     * @param {string} [gitTokenId] The git token id that must be used for the application
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationAccountGitRepositoriesApi
      */
-    public getOrganizationGitlabRepositoryBranches(organizationId: string, gitTokenId?: string, name?: string, options?: AxiosRequestConfig) {
-        return OrganizationAccountGitRepositoriesApiFp(this.configuration).getOrganizationGitlabRepositoryBranches(organizationId, gitTokenId, name, options).then((request) => request(this.axios, this.basePath));
+    public getOrganizationGitlabRepositoryBranches(organizationId: string, name?: string, gitTokenId?: string, options?: AxiosRequestConfig) {
+        return OrganizationAccountGitRepositoriesApiFp(this.configuration).getOrganizationGitlabRepositoryBranches(organizationId, name, gitTokenId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
