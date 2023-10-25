@@ -1918,6 +1918,54 @@ export interface ClusterAdvancedSettings {
      * @memberof ClusterAdvancedSettings
      */
     'registry.mirroring_mode'?: RegistryMirroringModeEnum;
+    /**
+     * vcpu request in millicores
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'nginx.vcpu.request_in_milli'?: number;
+    /**
+     * vcpu limit in millicores
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'nginx.vcpu.limit_in_milli'?: number;
+    /**
+     * memory request in MiB
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'nginx.memory.request_in_mib'?: number;
+    /**
+     * memory limit in MiB
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'nginx.memory.limit_in_mib'?: number;
+    /**
+     * hpa cpu threshold in percentage
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'nginx.hpa.cpu_utilization_percentage_threshold'?: number;
+    /**
+     * hpa memory threshold in percentage
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'nginx.hpa.memory_utilization_percentage_threshold'?: number;
+    /**
+     * hpa minimum number of instances
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'nginx.hpa.min_number_instances'?: number;
+    /**
+     * hpa maximum number of instances
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'nginx.hpa.max_number_instances'?: number;
 }
 
 export const ClusterAdvancedSettingsAwsEksEc2MetadataImdsEnum = {
