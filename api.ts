@@ -1923,13 +1923,13 @@ export interface ClusterAdvancedSettings {
      * @type {number}
      * @memberof ClusterAdvancedSettings
      */
-    'nginx.vcpu.request_in_milli'?: number;
+    'nginx.vcpu.request_in_milli_cpu'?: number;
     /**
      * vcpu limit in millicores
      * @type {number}
      * @memberof ClusterAdvancedSettings
      */
-    'nginx.vcpu.limit_in_milli'?: number;
+    'nginx.vcpu.limit_in_milli_cpu'?: number;
     /**
      * memory request in MiB
      * @type {number}
@@ -1948,12 +1948,6 @@ export interface ClusterAdvancedSettings {
      * @memberof ClusterAdvancedSettings
      */
     'nginx.hpa.cpu_utilization_percentage_threshold'?: number;
-    /**
-     * hpa memory threshold in percentage
-     * @type {number}
-     * @memberof ClusterAdvancedSettings
-     */
-    'nginx.hpa.memory_utilization_percentage_threshold'?: number;
     /**
      * hpa minimum number of instances
      * @type {number}
