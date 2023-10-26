@@ -823,6 +823,12 @@ export interface ApplicationGitRepository {
      * @memberof ApplicationGitRepository
      */
     'git_token_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplicationGitRepository
+     */
+    'git_token_name'?: string | null;
 }
 
 
