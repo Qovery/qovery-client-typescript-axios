@@ -7257,6 +7257,45 @@ export interface GitRepositoryResponseList {
 /**
  * 
  * @export
+ * @interface GitTokenRequest
+ */
+export interface GitTokenRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof GitTokenRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GitTokenRequest
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {GitProviderEnum}
+     * @memberof GitTokenRequest
+     */
+    'type': GitProviderEnum;
+    /**
+     * The token from your git provider side
+     * @type {string}
+     * @memberof GitTokenRequest
+     */
+    'token': string;
+    /**
+     * Mandatory only for BITBUCKET git provider, to allow us to fetch repositories at creation/edition of a service
+     * @type {string}
+     * @memberof GitTokenRequest
+     */
+    'workspace'?: string;
+}
+
+
+/**
+ * 
+ * @export
  * @interface GitTokenResponse
  */
 export interface GitTokenResponse {
@@ -7296,6 +7335,12 @@ export interface GitTokenResponse {
      * @memberof GitTokenResponse
      */
     'type': GitProviderEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof GitTokenResponse
+     */
+    'expired_at'?: string;
 }
 
 
@@ -42959,6 +43004,51 @@ export class OrganizationEventApi extends BaseAPI {
 export const OrganizationMainCallsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Create a new git token to be used as a git provider by a service
+         * @summary Create a git token
+         * @param {string} organizationId Organization ID
+         * @param {GitTokenRequest} [gitTokenRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createGitToken: async (organizationId: string, gitTokenRequest?: GitTokenRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('createGitToken', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/gitToken`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(gitTokenRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Create an organization
          * @param {OrganizationRequest} [organizationRequest] 
@@ -43000,6 +43090,51 @@ export const OrganizationMainCallsApiAxiosParamCreator = function (configuration
             };
         },
         /**
+         * 
+         * @summary Delete a git token
+         * @param {string} organizationId Organization ID
+         * @param {string} gitTokenId Git Token ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteGitToken: async (organizationId: string, gitTokenId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('deleteGitToken', 'organizationId', organizationId)
+            // verify required parameter 'gitTokenId' is not null or undefined
+            assertParamExists('deleteGitToken', 'gitTokenId', gitTokenId)
+            const localVarPath = `/organization/{organizationId}/gitToken/{gitTokenId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"gitTokenId"}}`, encodeURIComponent(String(gitTokenId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * To delete an organization you must have the admin permission
          * @summary Delete an organization
          * @param {string} organizationId Organization ID
@@ -43034,6 +43169,55 @@ export const OrganizationMainCallsApiAxiosParamCreator = function (configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Edit a git token
+         * @param {string} organizationId Organization ID
+         * @param {string} gitTokenId Git Token ID
+         * @param {GitTokenRequest} [gitTokenRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editGitToken: async (organizationId: string, gitTokenId: string, gitTokenRequest?: GitTokenRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('editGitToken', 'organizationId', organizationId)
+            // verify required parameter 'gitTokenId' is not null or undefined
+            assertParamExists('editGitToken', 'gitTokenId', gitTokenId)
+            const localVarPath = `/organization/{organizationId}/gitToken/{gitTokenId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"gitTokenId"}}`, encodeURIComponent(String(gitTokenId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(gitTokenRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -43256,6 +43440,18 @@ export const OrganizationMainCallsApiFp = function(configuration?: Configuration
     const localVarAxiosParamCreator = OrganizationMainCallsApiAxiosParamCreator(configuration)
     return {
         /**
+         * Create a new git token to be used as a git provider by a service
+         * @summary Create a git token
+         * @param {string} organizationId Organization ID
+         * @param {GitTokenRequest} [gitTokenRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createGitToken(organizationId: string, gitTokenRequest?: GitTokenRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitTokenResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createGitToken(organizationId, gitTokenRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * 
          * @summary Create an organization
          * @param {OrganizationRequest} [organizationRequest] 
@@ -43267,6 +43463,18 @@ export const OrganizationMainCallsApiFp = function(configuration?: Configuration
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @summary Delete a git token
+         * @param {string} organizationId Organization ID
+         * @param {string} gitTokenId Git Token ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteGitToken(organizationId: string, gitTokenId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteGitToken(organizationId, gitTokenId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * To delete an organization you must have the admin permission
          * @summary Delete an organization
          * @param {string} organizationId Organization ID
@@ -43275,6 +43483,19 @@ export const OrganizationMainCallsApiFp = function(configuration?: Configuration
          */
         async deleteOrganization(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOrganization(organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Edit a git token
+         * @param {string} organizationId Organization ID
+         * @param {string} gitTokenId Git Token ID
+         * @param {GitTokenRequest} [gitTokenRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editGitToken(organizationId: string, gitTokenId: string, gitTokenRequest?: GitTokenRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitTokenResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editGitToken(organizationId, gitTokenId, gitTokenRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -43343,6 +43564,17 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
     const localVarFp = OrganizationMainCallsApiFp(configuration)
     return {
         /**
+         * Create a new git token to be used as a git provider by a service
+         * @summary Create a git token
+         * @param {string} organizationId Organization ID
+         * @param {GitTokenRequest} [gitTokenRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createGitToken(organizationId: string, gitTokenRequest?: GitTokenRequest, options?: any): AxiosPromise<GitTokenResponse> {
+            return localVarFp.createGitToken(organizationId, gitTokenRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Create an organization
          * @param {OrganizationRequest} [organizationRequest] 
@@ -43353,6 +43585,17 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
             return localVarFp.createOrganization(organizationRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * 
+         * @summary Delete a git token
+         * @param {string} organizationId Organization ID
+         * @param {string} gitTokenId Git Token ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteGitToken(organizationId: string, gitTokenId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteGitToken(organizationId, gitTokenId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * To delete an organization you must have the admin permission
          * @summary Delete an organization
          * @param {string} organizationId Organization ID
@@ -43361,6 +43604,18 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
          */
         deleteOrganization(organizationId: string, options?: any): AxiosPromise<void> {
             return localVarFp.deleteOrganization(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Edit a git token
+         * @param {string} organizationId Organization ID
+         * @param {string} gitTokenId Git Token ID
+         * @param {GitTokenRequest} [gitTokenRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editGitToken(organizationId: string, gitTokenId: string, gitTokenRequest?: GitTokenRequest, options?: any): AxiosPromise<GitTokenResponse> {
+            return localVarFp.editGitToken(organizationId, gitTokenId, gitTokenRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * To edit an organization you must have the admin permission
@@ -43423,6 +43678,19 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
  */
 export class OrganizationMainCallsApi extends BaseAPI {
     /**
+     * Create a new git token to be used as a git provider by a service
+     * @summary Create a git token
+     * @param {string} organizationId Organization ID
+     * @param {GitTokenRequest} [gitTokenRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationMainCallsApi
+     */
+    public createGitToken(organizationId: string, gitTokenRequest?: GitTokenRequest, options?: AxiosRequestConfig) {
+        return OrganizationMainCallsApiFp(this.configuration).createGitToken(organizationId, gitTokenRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * 
      * @summary Create an organization
      * @param {OrganizationRequest} [organizationRequest] 
@@ -43435,6 +43703,19 @@ export class OrganizationMainCallsApi extends BaseAPI {
     }
 
     /**
+     * 
+     * @summary Delete a git token
+     * @param {string} organizationId Organization ID
+     * @param {string} gitTokenId Git Token ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationMainCallsApi
+     */
+    public deleteGitToken(organizationId: string, gitTokenId: string, options?: AxiosRequestConfig) {
+        return OrganizationMainCallsApiFp(this.configuration).deleteGitToken(organizationId, gitTokenId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * To delete an organization you must have the admin permission
      * @summary Delete an organization
      * @param {string} organizationId Organization ID
@@ -43444,6 +43725,20 @@ export class OrganizationMainCallsApi extends BaseAPI {
      */
     public deleteOrganization(organizationId: string, options?: AxiosRequestConfig) {
         return OrganizationMainCallsApiFp(this.configuration).deleteOrganization(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Edit a git token
+     * @param {string} organizationId Organization ID
+     * @param {string} gitTokenId Git Token ID
+     * @param {GitTokenRequest} [gitTokenRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationMainCallsApi
+     */
+    public editGitToken(organizationId: string, gitTokenId: string, gitTokenRequest?: GitTokenRequest, options?: AxiosRequestConfig) {
+        return OrganizationMainCallsApiFp(this.configuration).editGitToken(organizationId, gitTokenId, gitTokenRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
