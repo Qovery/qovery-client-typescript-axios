@@ -41370,6 +41370,52 @@ export const OrganizationAccountGitRepositoriesApiAxiosParamCreator = function (
         },
         /**
          * 
+         * @summary Get bitbucket repositories of the connected user
+         * @param {string} organizationId Organization ID
+         * @param {string} [gitTokenId] The git token id that must be used for the application
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationBitbucketRepositoriesTemp: async (organizationId: string, gitTokenId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOrganizationBitbucketRepositoriesTemp', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/account/bitbucket/repositoryTemp`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (gitTokenId !== undefined) {
+                localVarQueryParameter['gitTokenId'] = gitTokenId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get bitbucket branches of the specified repository
          * @param {string} organizationId Organization ID
          * @param {string} [name] The name of the repository where to retrieve the branches
@@ -41462,6 +41508,47 @@ export const OrganizationAccountGitRepositoriesApiAxiosParamCreator = function (
         },
         /**
          * 
+         * @summary Get git provider accounts
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationGitProviderAccountTemp: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOrganizationGitProviderAccountTemp', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/account/gitAuthProviderTemp`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get github repositories of the connected user
          * @param {string} organizationId Organization ID
          * @param {string} [gitTokenId] The git token id that must be used for the application
@@ -41472,6 +41559,52 @@ export const OrganizationAccountGitRepositoriesApiAxiosParamCreator = function (
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('getOrganizationGithubRepositories', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/account/github/repository`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (gitTokenId !== undefined) {
+                localVarQueryParameter['gitTokenId'] = gitTokenId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get github repositories of the connected user
+         * @param {string} organizationId Organization ID
+         * @param {string} [gitTokenId] The git token id that must be used for the application
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationGithubRepositoriesTemp: async (organizationId: string, gitTokenId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOrganizationGithubRepositoriesTemp', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/account/github/repositoryTemp`
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -41605,6 +41738,52 @@ export const OrganizationAccountGitRepositoriesApiAxiosParamCreator = function (
         },
         /**
          * 
+         * @summary Get gitlab repositories of the connected user
+         * @param {string} organizationId Organization ID
+         * @param {string} [gitTokenId] The git token id that must be used for the application
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationGitlabRepositoriesTemp: async (organizationId: string, gitTokenId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOrganizationGitlabRepositoriesTemp', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/account/gitlab/repositoryTemp`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (gitTokenId !== undefined) {
+                localVarQueryParameter['gitTokenId'] = gitTokenId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get gitlab branches of the specified repository
          * @param {string} organizationId Organization ID
          * @param {string} [name] The name of the repository to retrieve the branches
@@ -41678,6 +41857,18 @@ export const OrganizationAccountGitRepositoriesApiFp = function(configuration?: 
         },
         /**
          * 
+         * @summary Get bitbucket repositories of the connected user
+         * @param {string} organizationId Organization ID
+         * @param {string} [gitTokenId] The git token id that must be used for the application
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationBitbucketRepositoriesTemp(organizationId: string, gitTokenId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationBitbucketRepositoriesTemp(organizationId, gitTokenId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get bitbucket branches of the specified repository
          * @param {string} organizationId Organization ID
          * @param {string} [name] The name of the repository where to retrieve the branches
@@ -41702,6 +41893,17 @@ export const OrganizationAccountGitRepositoriesApiFp = function(configuration?: 
         },
         /**
          * 
+         * @summary Get git provider accounts
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationGitProviderAccountTemp(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitAuthProviderResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationGitProviderAccountTemp(organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get github repositories of the connected user
          * @param {string} organizationId Organization ID
          * @param {string} [gitTokenId] The git token id that must be used for the application
@@ -41710,6 +41912,18 @@ export const OrganizationAccountGitRepositoriesApiFp = function(configuration?: 
          */
         async getOrganizationGithubRepositories(organizationId: string, gitTokenId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationGithubRepositories(organizationId, gitTokenId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get github repositories of the connected user
+         * @param {string} organizationId Organization ID
+         * @param {string} [gitTokenId] The git token id that must be used for the application
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationGithubRepositoriesTemp(organizationId: string, gitTokenId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationGithubRepositoriesTemp(organizationId, gitTokenId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -41735,6 +41949,18 @@ export const OrganizationAccountGitRepositoriesApiFp = function(configuration?: 
          */
         async getOrganizationGitlabRepositories(organizationId: string, gitTokenId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationGitlabRepositories(organizationId, gitTokenId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get gitlab repositories of the connected user
+         * @param {string} organizationId Organization ID
+         * @param {string} [gitTokenId] The git token id that must be used for the application
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationGitlabRepositoriesTemp(organizationId: string, gitTokenId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationGitlabRepositoriesTemp(organizationId, gitTokenId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -41773,6 +41999,17 @@ export const OrganizationAccountGitRepositoriesApiFactory = function (configurat
         },
         /**
          * 
+         * @summary Get bitbucket repositories of the connected user
+         * @param {string} organizationId Organization ID
+         * @param {string} [gitTokenId] The git token id that must be used for the application
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationBitbucketRepositoriesTemp(organizationId: string, gitTokenId?: string, options?: any): AxiosPromise<GitRepositoryResponseList> {
+            return localVarFp.getOrganizationBitbucketRepositoriesTemp(organizationId, gitTokenId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get bitbucket branches of the specified repository
          * @param {string} organizationId Organization ID
          * @param {string} [name] The name of the repository where to retrieve the branches
@@ -41795,6 +42032,16 @@ export const OrganizationAccountGitRepositoriesApiFactory = function (configurat
         },
         /**
          * 
+         * @summary Get git provider accounts
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationGitProviderAccountTemp(organizationId: string, options?: any): AxiosPromise<GitAuthProviderResponseList> {
+            return localVarFp.getOrganizationGitProviderAccountTemp(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get github repositories of the connected user
          * @param {string} organizationId Organization ID
          * @param {string} [gitTokenId] The git token id that must be used for the application
@@ -41803,6 +42050,17 @@ export const OrganizationAccountGitRepositoriesApiFactory = function (configurat
          */
         getOrganizationGithubRepositories(organizationId: string, gitTokenId?: string, options?: any): AxiosPromise<GitRepositoryResponseList> {
             return localVarFp.getOrganizationGithubRepositories(organizationId, gitTokenId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get github repositories of the connected user
+         * @param {string} organizationId Organization ID
+         * @param {string} [gitTokenId] The git token id that must be used for the application
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationGithubRepositoriesTemp(organizationId: string, gitTokenId?: string, options?: any): AxiosPromise<GitRepositoryResponseList> {
+            return localVarFp.getOrganizationGithubRepositoriesTemp(organizationId, gitTokenId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -41826,6 +42084,17 @@ export const OrganizationAccountGitRepositoriesApiFactory = function (configurat
          */
         getOrganizationGitlabRepositories(organizationId: string, gitTokenId?: string, options?: any): AxiosPromise<GitRepositoryResponseList> {
             return localVarFp.getOrganizationGitlabRepositories(organizationId, gitTokenId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get gitlab repositories of the connected user
+         * @param {string} organizationId Organization ID
+         * @param {string} [gitTokenId] The git token id that must be used for the application
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationGitlabRepositoriesTemp(organizationId: string, gitTokenId?: string, options?: any): AxiosPromise<GitRepositoryResponseList> {
+            return localVarFp.getOrganizationGitlabRepositoriesTemp(organizationId, gitTokenId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -41864,6 +42133,19 @@ export class OrganizationAccountGitRepositoriesApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get bitbucket repositories of the connected user
+     * @param {string} organizationId Organization ID
+     * @param {string} [gitTokenId] The git token id that must be used for the application
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationAccountGitRepositoriesApi
+     */
+    public getOrganizationBitbucketRepositoriesTemp(organizationId: string, gitTokenId?: string, options?: AxiosRequestConfig) {
+        return OrganizationAccountGitRepositoriesApiFp(this.configuration).getOrganizationBitbucketRepositoriesTemp(organizationId, gitTokenId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Get bitbucket branches of the specified repository
      * @param {string} organizationId Organization ID
      * @param {string} [name] The name of the repository where to retrieve the branches
@@ -41890,6 +42172,18 @@ export class OrganizationAccountGitRepositoriesApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get git provider accounts
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationAccountGitRepositoriesApi
+     */
+    public getOrganizationGitProviderAccountTemp(organizationId: string, options?: AxiosRequestConfig) {
+        return OrganizationAccountGitRepositoriesApiFp(this.configuration).getOrganizationGitProviderAccountTemp(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Get github repositories of the connected user
      * @param {string} organizationId Organization ID
      * @param {string} [gitTokenId] The git token id that must be used for the application
@@ -41899,6 +42193,19 @@ export class OrganizationAccountGitRepositoriesApi extends BaseAPI {
      */
     public getOrganizationGithubRepositories(organizationId: string, gitTokenId?: string, options?: AxiosRequestConfig) {
         return OrganizationAccountGitRepositoriesApiFp(this.configuration).getOrganizationGithubRepositories(organizationId, gitTokenId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get github repositories of the connected user
+     * @param {string} organizationId Organization ID
+     * @param {string} [gitTokenId] The git token id that must be used for the application
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationAccountGitRepositoriesApi
+     */
+    public getOrganizationGithubRepositoriesTemp(organizationId: string, gitTokenId?: string, options?: AxiosRequestConfig) {
+        return OrganizationAccountGitRepositoriesApiFp(this.configuration).getOrganizationGithubRepositoriesTemp(organizationId, gitTokenId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -41926,6 +42233,19 @@ export class OrganizationAccountGitRepositoriesApi extends BaseAPI {
      */
     public getOrganizationGitlabRepositories(organizationId: string, gitTokenId?: string, options?: AxiosRequestConfig) {
         return OrganizationAccountGitRepositoriesApiFp(this.configuration).getOrganizationGitlabRepositories(organizationId, gitTokenId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get gitlab repositories of the connected user
+     * @param {string} organizationId Organization ID
+     * @param {string} [gitTokenId] The git token id that must be used for the application
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationAccountGitRepositoriesApi
+     */
+    public getOrganizationGitlabRepositoriesTemp(organizationId: string, gitTokenId?: string, options?: AxiosRequestConfig) {
+        return OrganizationAccountGitRepositoriesApiFp(this.configuration).getOrganizationGitlabRepositoriesTemp(organizationId, gitTokenId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
