@@ -7263,6 +7263,85 @@ export interface GitRepositoryResponseList {
 /**
  * 
  * @export
+ * @interface GitTokenAssociatedServiceResponse
+ */
+export interface GitTokenAssociatedServiceResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof GitTokenAssociatedServiceResponse
+     */
+    'project_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GitTokenAssociatedServiceResponse
+     */
+    'project_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GitTokenAssociatedServiceResponse
+     */
+    'environment_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GitTokenAssociatedServiceResponse
+     */
+    'environment_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GitTokenAssociatedServiceResponse
+     */
+    'service_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GitTokenAssociatedServiceResponse
+     */
+    'service_name': string;
+    /**
+     * 
+     * @type {GitTokenAssociatedServiceType}
+     * @memberof GitTokenAssociatedServiceResponse
+     */
+    'service_type': GitTokenAssociatedServiceType;
+}
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const GitTokenAssociatedServiceType = {
+    APPLICATION: 'APPLICATION',
+    JOB: 'JOB',
+    HELM: 'HELM'
+} as const;
+
+export type GitTokenAssociatedServiceType = typeof GitTokenAssociatedServiceType[keyof typeof GitTokenAssociatedServiceType];
+
+
+/**
+ * 
+ * @export
+ * @interface GitTokenAssociatedServicesResponseList
+ */
+export interface GitTokenAssociatedServicesResponseList {
+    /**
+     * 
+     * @type {Array<GitTokenAssociatedServiceResponse>}
+     * @memberof GitTokenAssociatedServicesResponseList
+     */
+    'results'?: Array<GitTokenAssociatedServiceResponse>;
+}
+/**
+ * 
+ * @export
  * @interface GitTokenRequest
  */
 export interface GitTokenRequest {
@@ -7347,6 +7426,12 @@ export interface GitTokenResponse {
      * @memberof GitTokenResponse
      */
     'expired_at'?: string;
+    /**
+     * The number of services using this git token
+     * @type {number}
+     * @memberof GitTokenResponse
+     */
+    'associated_services_count': number;
 }
 
 
@@ -43596,6 +43681,51 @@ export const OrganizationMainCallsApiAxiosParamCreator = function (configuration
             };
         },
         /**
+         * Get organization git tokens associated services
+         * @summary Get organization git token associated services
+         * @param {string} organizationId Organization ID
+         * @param {string} gitTokenId Git Token ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitTokenAssociatedServices: async (organizationId: string, gitTokenId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getGitTokenAssociatedServices', 'organizationId', organizationId)
+            // verify required parameter 'gitTokenId' is not null or undefined
+            assertParamExists('getGitTokenAssociatedServices', 'gitTokenId', gitTokenId)
+            const localVarPath = `/organization/{organizationId}/gitToken/{gitTokenId}/associatedServices`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"gitTokenId"}}`, encodeURIComponent(String(gitTokenId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Get organization by ID
          * @param {string} organizationId Organization ID
@@ -43607,6 +43737,51 @@ export const OrganizationMainCallsApiAxiosParamCreator = function (configuration
             assertParamExists('getOrganization', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}`
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get organization git tokens
+         * @summary Get organization git token
+         * @param {string} organizationId Organization ID
+         * @param {string} gitTokenId Git Token ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationGitTokens: async (organizationId: string, gitTokenId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOrganizationGitTokens', 'organizationId', organizationId)
+            // verify required parameter 'gitTokenId' is not null or undefined
+            assertParamExists('getOrganizationGitTokens', 'gitTokenId', gitTokenId)
+            const localVarPath = `/organization/{organizationId}/gitToken/{gitTokenId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"gitTokenId"}}`, encodeURIComponent(String(gitTokenId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -43837,6 +44012,18 @@ export const OrganizationMainCallsApiFp = function(configuration?: Configuration
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Get organization git tokens associated services
+         * @summary Get organization git token associated services
+         * @param {string} organizationId Organization ID
+         * @param {string} gitTokenId Git Token ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGitTokenAssociatedServices(organizationId: string, gitTokenId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitTokenAssociatedServicesResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitTokenAssociatedServices(organizationId, gitTokenId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * 
          * @summary Get organization by ID
          * @param {string} organizationId Organization ID
@@ -43845,6 +44032,18 @@ export const OrganizationMainCallsApiFp = function(configuration?: Configuration
          */
         async getOrganization(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Organization>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganization(organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get organization git tokens
+         * @summary Get organization git token
+         * @param {string} organizationId Organization ID
+         * @param {string} gitTokenId Git Token ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationGitTokens(organizationId: string, gitTokenId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitTokenResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationGitTokens(organizationId, gitTokenId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -43955,6 +44154,17 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
             return localVarFp.editOrganization(organizationId, organizationEditRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * Get organization git tokens associated services
+         * @summary Get organization git token associated services
+         * @param {string} organizationId Organization ID
+         * @param {string} gitTokenId Git Token ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitTokenAssociatedServices(organizationId: string, gitTokenId: string, options?: any): AxiosPromise<GitTokenAssociatedServicesResponseList> {
+            return localVarFp.getGitTokenAssociatedServices(organizationId, gitTokenId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Get organization by ID
          * @param {string} organizationId Organization ID
@@ -43963,6 +44173,17 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
          */
         getOrganization(organizationId: string, options?: any): AxiosPromise<Organization> {
             return localVarFp.getOrganization(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get organization git tokens
+         * @summary Get organization git token
+         * @param {string} organizationId Organization ID
+         * @param {string} gitTokenId Git Token ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationGitTokens(organizationId: string, gitTokenId: string, options?: any): AxiosPromise<GitTokenResponse> {
+            return localVarFp.getOrganizationGitTokens(organizationId, gitTokenId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -44081,6 +44302,19 @@ export class OrganizationMainCallsApi extends BaseAPI {
     }
 
     /**
+     * Get organization git tokens associated services
+     * @summary Get organization git token associated services
+     * @param {string} organizationId Organization ID
+     * @param {string} gitTokenId Git Token ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationMainCallsApi
+     */
+    public getGitTokenAssociatedServices(organizationId: string, gitTokenId: string, options?: AxiosRequestConfig) {
+        return OrganizationMainCallsApiFp(this.configuration).getGitTokenAssociatedServices(organizationId, gitTokenId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * 
      * @summary Get organization by ID
      * @param {string} organizationId Organization ID
@@ -44090,6 +44324,19 @@ export class OrganizationMainCallsApi extends BaseAPI {
      */
     public getOrganization(organizationId: string, options?: AxiosRequestConfig) {
         return OrganizationMainCallsApiFp(this.configuration).getOrganization(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get organization git tokens
+     * @summary Get organization git token
+     * @param {string} organizationId Organization ID
+     * @param {string} gitTokenId Git Token ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationMainCallsApi
+     */
+    public getOrganizationGitTokens(organizationId: string, gitTokenId: string, options?: AxiosRequestConfig) {
+        return OrganizationMainCallsApiFp(this.configuration).getOrganizationGitTokens(organizationId, gitTokenId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
