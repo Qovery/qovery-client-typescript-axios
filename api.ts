@@ -5498,6 +5498,12 @@ export interface DeploymentStageWithServicesStatuses {
     'databases'?: Array<Status>;
     /**
      * 
+     * @type {Array<Status>}
+     * @memberof DeploymentStageWithServicesStatuses
+     */
+    'helms'?: Array<Status>;
+    /**
+     * 
      * @type {Stage}
      * @memberof DeploymentStageWithServicesStatuses
      */
