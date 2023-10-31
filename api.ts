@@ -7433,6 +7433,12 @@ export interface GitTokenResponse {
      */
     'expired_at'?: string;
     /**
+     * Mandatory only for BITBUCKET git provider
+     * @type {string}
+     * @memberof GitTokenResponse
+     */
+    'workspace'?: string;
+    /**
      * The number of services using this git token
      * @type {number}
      * @memberof GitTokenResponse
