@@ -5054,6 +5054,18 @@ export interface DeploymentHistoryEnvironment {
     'status'?: StateEnum;
     /**
      * 
+     * @type {OrganizationEventOrigin}
+     * @memberof DeploymentHistoryEnvironment
+     */
+    'origin'?: OrganizationEventOrigin;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryEnvironment
+     */
+    'triggered_by'?: string;
+    /**
+     * 
      * @type {Array<DeploymentHistoryApplication>}
      * @memberof DeploymentHistoryEnvironment
      */
@@ -6682,6 +6694,18 @@ export interface EnvironmentStatus {
      * @memberof EnvironmentStatus
      */
     'total_deployment_duration_in_seconds'?: number | null;
+    /**
+     * 
+     * @type {OrganizationEventOrigin}
+     * @memberof EnvironmentStatus
+     */
+    'origin'?: OrganizationEventOrigin;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentStatus
+     */
+    'triggered_by'?: string;
 }
 
 
