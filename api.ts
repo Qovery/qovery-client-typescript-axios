@@ -7652,6 +7652,134 @@ export type HelmRepositoryKindEnum = typeof HelmRepositoryKindEnum[keyof typeof 
 /**
  * 
  * @export
+ * @interface HelmRepositoryRequest
+ */
+export interface HelmRepositoryRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {HelmRepositoryKindEnum}
+     * @memberof HelmRepositoryRequest
+     */
+    'kind': HelmRepositoryKindEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryRequest
+     */
+    'description'?: string;
+    /**
+     * URL of the helm chart repository: * For `OCI`: it must start by oci:// * For `HTTPS`: it must be start by https:// 
+     * @type {string}
+     * @memberof HelmRepositoryRequest
+     */
+    'url'?: string;
+    /**
+     * 
+     * @type {HelmRepositoryRequestConfig}
+     * @memberof HelmRepositoryRequest
+     */
+    'config': HelmRepositoryRequestConfig;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface HelmRepositoryRequestConfig
+ */
+export interface HelmRepositoryRequestConfig {
+    /**
+     * Bypass tls certificate verification when connecting to repository
+     * @type {boolean}
+     * @memberof HelmRepositoryRequestConfig
+     */
+    'skip_tls_verification'?: boolean;
+    /**
+     * Required if the repository is private
+     * @type {string}
+     * @memberof HelmRepositoryRequestConfig
+     */
+    'login'?: string;
+    /**
+     * Required if the repository is private
+     * @type {string}
+     * @memberof HelmRepositoryRequestConfig
+     */
+    'password'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface HelmRepositoryResponse
+ */
+export interface HelmRepositoryResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryResponse
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {HelmRepositoryKindEnum}
+     * @memberof HelmRepositoryResponse
+     */
+    'kind'?: HelmRepositoryKindEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryResponse
+     */
+    'description'?: string;
+    /**
+     * URL of the helm repository
+     * @type {string}
+     * @memberof HelmRepositoryResponse
+     */
+    'url'?: string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface HelmRepositoryResponseList
+ */
+export interface HelmRepositoryResponseList {
+    /**
+     * 
+     * @type {Array<HelmRepositoryResponse>}
+     * @memberof HelmRepositoryResponseList
+     */
+    'results'?: Array<HelmRepositoryResponse>;
+}
+/**
+ * 
+ * @export
  * @interface HelmRequest
  */
 export interface HelmRequest {
