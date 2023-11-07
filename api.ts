@@ -7876,10 +7876,10 @@ export interface HelmResponse {
     'auto_deploy': boolean;
     /**
      * 
-     * @type {HelmRequestAllOfSource}
+     * @type {HelmResponseAllOfSource}
      * @memberof HelmResponse
      */
-    'source': HelmRequestAllOfSource;
+    'source': HelmResponseAllOfSource;
     /**
      * The extra arguments to pass to helm
      * @type {Array<string>}
@@ -7898,6 +7898,75 @@ export interface HelmResponse {
      * @memberof HelmResponse
      */
     'values_override'?: HelmRequestAllOfValuesOverride;
+}
+/**
+ * 
+ * @export
+ * @interface HelmResponseAllOfSource
+ */
+export interface HelmResponseAllOfSource {
+    /**
+     * 
+     * @type {HelmRequestAllOfSourceGit}
+     * @memberof HelmResponseAllOfSource
+     */
+    'git'?: HelmRequestAllOfSourceGit | null;
+    /**
+     * 
+     * @type {HelmResponseAllOfSourceRepository}
+     * @memberof HelmResponseAllOfSource
+     */
+    'repository'?: HelmResponseAllOfSourceRepository | null;
+}
+/**
+ * 
+ * @export
+ * @interface HelmResponseAllOfSourceRepository
+ */
+export interface HelmResponseAllOfSourceRepository {
+    /**
+     * The name of the chart in the repository
+     * @type {string}
+     * @memberof HelmResponseAllOfSourceRepository
+     */
+    'chart_name'?: string;
+    /**
+     * The version of the chart to use
+     * @type {string}
+     * @memberof HelmResponseAllOfSourceRepository
+     */
+    'chart_version'?: string;
+    /**
+     * 
+     * @type {HelmResponseAllOfSourceRepositoryRepository}
+     * @memberof HelmResponseAllOfSourceRepository
+     */
+    'repository'?: HelmResponseAllOfSourceRepositoryRepository;
+}
+/**
+ * 
+ * @export
+ * @interface HelmResponseAllOfSourceRepositoryRepository
+ */
+export interface HelmResponseAllOfSourceRepositoryRepository {
+    /**
+     * The id of the helm repository
+     * @type {string}
+     * @memberof HelmResponseAllOfSourceRepositoryRepository
+     */
+    'id'?: string;
+    /**
+     * The name of the helm repository
+     * @type {string}
+     * @memberof HelmResponseAllOfSourceRepositoryRepository
+     */
+    'name'?: string;
+    /**
+     * The url the helm repository
+     * @type {string}
+     * @memberof HelmResponseAllOfSourceRepositoryRepository
+     */
+    'url'?: string;
 }
 /**
  * 
