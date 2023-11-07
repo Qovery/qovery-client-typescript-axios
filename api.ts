@@ -1050,6 +1050,46 @@ export interface AvailableContainerRegistryResponseList {
 /**
  * 
  * @export
+ * @interface AvailableHelmRepositoryResponse
+ */
+export interface AvailableHelmRepositoryResponse {
+    /**
+     * 
+     * @type {HelmRepositoryKindEnum}
+     * @memberof AvailableHelmRepositoryResponse
+     */
+    'kind'?: HelmRepositoryKindEnum;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof AvailableHelmRepositoryResponse
+     */
+    'required_config'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AvailableHelmRepositoryResponse
+     */
+    'is_mandatory'?: boolean;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface AvailableHelmRepositoryResponseList
+ */
+export interface AvailableHelmRepositoryResponseList {
+    /**
+     * 
+     * @type {Array<AvailableHelmRepositoryResponse>}
+     * @memberof AvailableHelmRepositoryResponseList
+     */
+    'results'?: Array<AvailableHelmRepositoryResponse>;
+}
+/**
+ * 
+ * @export
  * @interface AwsCredentialsRequest
  */
 export interface AwsCredentialsRequest {
@@ -7593,6 +7633,20 @@ export const HelmForceEvent = {
 } as const;
 
 export type HelmForceEvent = typeof HelmForceEvent[keyof typeof HelmForceEvent];
+
+
+/**
+ * The type of your helm repository
+ * @export
+ * @enum {string}
+ */
+
+export const HelmRepositoryKindEnum = {
+    HTTPS: 'HTTPS',
+    OCI: 'OCI'
+} as const;
+
+export type HelmRepositoryKindEnum = typeof HelmRepositoryKindEnum[keyof typeof HelmRepositoryKindEnum];
 
 
 /**
