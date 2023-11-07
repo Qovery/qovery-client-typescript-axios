@@ -406,17 +406,11 @@ export interface ApplicationAdvancedSettings {
      */
     'network.ingress.proxy_read_timeout_seconds'?: number;
     /**
-     * Allows to enable or disable nginx `proxy-buffering`
-     * @type {string}
-     * @memberof ApplicationAdvancedSettings
-     */
-    'network.ingress.proxy_buffering'?: string;
-    /**
      * Allows to enable or disable nginx `proxy-request-buffering`
      * @type {string}
      * @memberof ApplicationAdvancedSettings
      */
-    'network.ingress.proxy_request_buffering'?: string;
+    'network.ingress.proxy_buffering'?: string;
     /**
      * list of source ranges to allow access to ingress proxy.  This property can be used to whitelist source IP ranges for ingress proxy. The value is a comma separated list of CIDRs, e.g. 10.0.0.0/24,172.10.0.1 To allow all source ranges, set 0.0.0.0/0. 
      * @type {string}
@@ -14200,7 +14194,7 @@ export const ApplicationConfigurationApiAxiosParamCreator = function (configurat
             };
         },
         /**
-         * Get list and values of the advanced settings of the application.
+         * Get list and values of the advanced settings of the application. Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/) 
          * @summary Get advanced settings
          * @param {string} applicationId Application ID
          * @param {*} [options] Override http request option.
@@ -14316,7 +14310,7 @@ export const ApplicationConfigurationApiFp = function(configuration?: Configurat
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get list and values of the advanced settings of the application.
+         * Get list and values of the advanced settings of the application. Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/) 
          * @summary Get advanced settings
          * @param {string} applicationId Application ID
          * @param {*} [options] Override http request option.
@@ -14370,7 +14364,7 @@ export const ApplicationConfigurationApiFactory = function (configuration?: Conf
             return localVarFp.editApplicationNetwork(applicationId, applicationNetworkRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get list and values of the advanced settings of the application.
+         * Get list and values of the advanced settings of the application. Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/) 
          * @summary Get advanced settings
          * @param {string} applicationId Application ID
          * @param {*} [options] Override http request option.
@@ -14426,7 +14420,7 @@ export class ApplicationConfigurationApi extends BaseAPI {
     }
 
     /**
-     * Get list and values of the advanced settings of the application.
+     * Get list and values of the advanced settings of the application. Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/) 
      * @summary Get advanced settings
      * @param {string} applicationId Application ID
      * @param {*} [options] Override http request option.
@@ -17486,7 +17480,7 @@ export const ApplicationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)
          * @summary List default application advanced settings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17762,7 +17756,7 @@ export const ApplicationsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         * Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)
          * @summary List default application advanced settings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17859,7 +17853,7 @@ export const ApplicationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.createApplication(environmentId, applicationRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)
          * @summary List default application advanced settings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17954,7 +17948,7 @@ export class ApplicationsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)
      * @summary List default application advanced settings
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -22357,7 +22351,7 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Get list and values of the advanced settings of the cluster.
+         * Get the list and values of the advanced settings of the cluster. Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/cluster-advanced-settings/) 
          * @summary Get advanced settings
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
@@ -22492,7 +22486,7 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/cluster-advanced-settings/)
          * @summary List default cluster advanced settings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -22926,7 +22920,7 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get list and values of the advanced settings of the cluster.
+         * Get the list and values of the advanced settings of the cluster. Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/cluster-advanced-settings/) 
          * @summary Get advanced settings
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
@@ -22962,7 +22956,7 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         * Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/cluster-advanced-settings/)
          * @summary List default cluster advanced settings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23135,7 +23129,7 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.editRoutingTable(organizationId, clusterId, clusterRoutingTableRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get list and values of the advanced settings of the cluster.
+         * Get the list and values of the advanced settings of the cluster. Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/cluster-advanced-settings/) 
          * @summary Get advanced settings
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
@@ -23168,7 +23162,7 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getClusterStatus(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/cluster-advanced-settings/)
          * @summary List default cluster advanced settings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23345,7 +23339,7 @@ export class ClustersApi extends BaseAPI {
     }
 
     /**
-     * Get list and values of the advanced settings of the cluster.
+     * Get the list and values of the advanced settings of the cluster. Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/cluster-advanced-settings/) 
      * @summary Get advanced settings
      * @param {string} organizationId Organization ID
      * @param {string} clusterId Cluster ID
@@ -23384,7 +23378,7 @@ export class ClustersApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/cluster-advanced-settings/)
      * @summary List default cluster advanced settings
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -24000,7 +23994,7 @@ export const ContainerConfigurationApiAxiosParamCreator = function (configuratio
             };
         },
         /**
-         * Get list and values of the advanced settings of the container.
+         * Get list and values of the advanced settings of the container. Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/) 
          * @summary Get advanced settings
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
@@ -24116,7 +24110,7 @@ export const ContainerConfigurationApiFp = function(configuration?: Configuratio
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get list and values of the advanced settings of the container.
+         * Get list and values of the advanced settings of the container. Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/) 
          * @summary Get advanced settings
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
@@ -24170,7 +24164,7 @@ export const ContainerConfigurationApiFactory = function (configuration?: Config
             return localVarFp.editContainerNetwork(containerId, containerNetworkRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get list and values of the advanced settings of the container.
+         * Get list and values of the advanced settings of the container. Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/) 
          * @summary Get advanced settings
          * @param {string} containerId Container ID
          * @param {*} [options] Override http request option.
@@ -24226,7 +24220,7 @@ export class ContainerConfigurationApi extends BaseAPI {
     }
 
     /**
-     * Get list and values of the advanced settings of the container.
+     * Get list and values of the advanced settings of the container. Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/) 
      * @summary Get advanced settings
      * @param {string} containerId Container ID
      * @param {*} [options] Override http request option.
@@ -27460,7 +27454,7 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)
          * @summary List default container advanced settings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -27764,7 +27758,7 @@ export const ContainersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         * Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)
          * @summary List default container advanced settings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -27884,7 +27878,7 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
             return localVarFp.getContainerRegistryContainerStatus(organizationId, containerRegistryId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)
          * @summary List default container advanced settings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -28006,7 +28000,7 @@ export class ContainersApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)
      * @summary List default container advanced settings
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -37923,7 +37917,7 @@ export const JobConfigurationApiAxiosParamCreator = function (configuration?: Co
             };
         },
         /**
-         * Get list and values of the advanced settings of the job.
+         * Get list and values of the advanced settings of the job. Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/) 
          * @summary Get advanced settings
          * @param {string} jobId Job ID
          * @param {*} [options] Override http request option.
@@ -37986,7 +37980,7 @@ export const JobConfigurationApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get list and values of the advanced settings of the job.
+         * Get list and values of the advanced settings of the job. Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/) 
          * @summary Get advanced settings
          * @param {string} jobId Job ID
          * @param {*} [options] Override http request option.
@@ -38018,7 +38012,7 @@ export const JobConfigurationApiFactory = function (configuration?: Configuratio
             return localVarFp.editJobAdvancedSettings(jobId, jobAdvancedSettings, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get list and values of the advanced settings of the job.
+         * Get list and values of the advanced settings of the job. Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/) 
          * @summary Get advanced settings
          * @param {string} jobId Job ID
          * @param {*} [options] Override http request option.
@@ -38051,7 +38045,7 @@ export class JobConfigurationApi extends BaseAPI {
     }
 
     /**
-     * Get list and values of the advanced settings of the job.
+     * Get list and values of the advanced settings of the job. Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/) 
      * @summary Get advanced settings
      * @param {string} jobId Job ID
      * @param {*} [options] Override http request option.
@@ -40391,7 +40385,7 @@ export const JobsApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Default values for each setting is available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)
          * @summary List default job advanced settings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -40561,7 +40555,7 @@ export const JobsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         * Default values for each setting is available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)
          * @summary List default job advanced settings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -40637,7 +40631,7 @@ export const JobsApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.createJob(environmentId, jobRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Default values for each setting is available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)
          * @summary List default job advanced settings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -40716,7 +40710,7 @@ export class JobsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Default values for each setting is available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)
      * @summary List default job advanced settings
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
