@@ -37414,6 +37414,503 @@ export class HelmMainCallsApi extends BaseAPI {
 
 
 /**
+ * HelmRepositoriesApi - axios parameter creator
+ * @export
+ */
+export const HelmRepositoriesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Create a helm repository
+         * @param {string} organizationId Organization ID
+         * @param {HelmRepositoryRequest} [helmRepositoryRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createHelmRepository: async (organizationId: string, helmRepositoryRequest?: HelmRepositoryRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('createHelmRepository', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/helmRepository`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(helmRepositoryRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a helm repository
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteHelmRepository: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('deleteHelmRepository', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/helmRepository/{helmRepositoryId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Edit a helm repository
+         * @param {string} organizationId Organization ID
+         * @param {HelmRepositoryRequest} [helmRepositoryRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editHelmRepository: async (organizationId: string, helmRepositoryRequest?: HelmRepositoryRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('editHelmRepository', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/helmRepository/{helmRepositoryId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(helmRepositoryRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a helm repository
+         * @param {string} organizationId Organization ID
+         * @param {string} helmRepositoryId Helm chart repository ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHelmRepository: async (organizationId: string, helmRepositoryId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getHelmRepository', 'organizationId', organizationId)
+            // verify required parameter 'helmRepositoryId' is not null or undefined
+            assertParamExists('getHelmRepository', 'helmRepositoryId', helmRepositoryId)
+            const localVarPath = `/organization/{organizationId}/helmRepository/{helmRepositoryId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"helmRepositoryId"}}`, encodeURIComponent(String(helmRepositoryId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List supported helm repository by Qovery and get the mandatory authentification configuration.
+         * @summary List supported helm repository
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAvailableHelmRepository: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/availableHelmRepository`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List organization helm repositories
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listHelmRepository: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listHelmRepository', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/helmRepository`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * HelmRepositoriesApi - functional programming interface
+ * @export
+ */
+export const HelmRepositoriesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = HelmRepositoriesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Create a helm repository
+         * @param {string} organizationId Organization ID
+         * @param {HelmRepositoryRequest} [helmRepositoryRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createHelmRepository(organizationId: string, helmRepositoryRequest?: HelmRepositoryRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmRepositoryResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createHelmRepository(organizationId, helmRepositoryRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete a helm repository
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteHelmRepository(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteHelmRepository(organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Edit a helm repository
+         * @param {string} organizationId Organization ID
+         * @param {HelmRepositoryRequest} [helmRepositoryRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editHelmRepository(organizationId: string, helmRepositoryRequest?: HelmRepositoryRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmRepositoryResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editHelmRepository(organizationId, helmRepositoryRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get a helm repository
+         * @param {string} organizationId Organization ID
+         * @param {string} helmRepositoryId Helm chart repository ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getHelmRepository(organizationId: string, helmRepositoryId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmRepositoryResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getHelmRepository(organizationId, helmRepositoryId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * List supported helm repository by Qovery and get the mandatory authentification configuration.
+         * @summary List supported helm repository
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listAvailableHelmRepository(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AvailableHelmRepositoryResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAvailableHelmRepository(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary List organization helm repositories
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listHelmRepository(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmRepositoryResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listHelmRepository(organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * HelmRepositoriesApi - factory interface
+ * @export
+ */
+export const HelmRepositoriesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = HelmRepositoriesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Create a helm repository
+         * @param {string} organizationId Organization ID
+         * @param {HelmRepositoryRequest} [helmRepositoryRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createHelmRepository(organizationId: string, helmRepositoryRequest?: HelmRepositoryRequest, options?: any): AxiosPromise<HelmRepositoryResponse> {
+            return localVarFp.createHelmRepository(organizationId, helmRepositoryRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete a helm repository
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteHelmRepository(organizationId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteHelmRepository(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Edit a helm repository
+         * @param {string} organizationId Organization ID
+         * @param {HelmRepositoryRequest} [helmRepositoryRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editHelmRepository(organizationId: string, helmRepositoryRequest?: HelmRepositoryRequest, options?: any): AxiosPromise<HelmRepositoryResponse> {
+            return localVarFp.editHelmRepository(organizationId, helmRepositoryRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get a helm repository
+         * @param {string} organizationId Organization ID
+         * @param {string} helmRepositoryId Helm chart repository ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHelmRepository(organizationId: string, helmRepositoryId: string, options?: any): AxiosPromise<HelmRepositoryResponse> {
+            return localVarFp.getHelmRepository(organizationId, helmRepositoryId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List supported helm repository by Qovery and get the mandatory authentification configuration.
+         * @summary List supported helm repository
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAvailableHelmRepository(options?: any): AxiosPromise<AvailableHelmRepositoryResponseList> {
+            return localVarFp.listAvailableHelmRepository(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List organization helm repositories
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listHelmRepository(organizationId: string, options?: any): AxiosPromise<HelmRepositoryResponseList> {
+            return localVarFp.listHelmRepository(organizationId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * HelmRepositoriesApi - object-oriented interface
+ * @export
+ * @class HelmRepositoriesApi
+ * @extends {BaseAPI}
+ */
+export class HelmRepositoriesApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create a helm repository
+     * @param {string} organizationId Organization ID
+     * @param {HelmRepositoryRequest} [helmRepositoryRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmRepositoriesApi
+     */
+    public createHelmRepository(organizationId: string, helmRepositoryRequest?: HelmRepositoryRequest, options?: AxiosRequestConfig) {
+        return HelmRepositoriesApiFp(this.configuration).createHelmRepository(organizationId, helmRepositoryRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete a helm repository
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmRepositoriesApi
+     */
+    public deleteHelmRepository(organizationId: string, options?: AxiosRequestConfig) {
+        return HelmRepositoriesApiFp(this.configuration).deleteHelmRepository(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Edit a helm repository
+     * @param {string} organizationId Organization ID
+     * @param {HelmRepositoryRequest} [helmRepositoryRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmRepositoriesApi
+     */
+    public editHelmRepository(organizationId: string, helmRepositoryRequest?: HelmRepositoryRequest, options?: AxiosRequestConfig) {
+        return HelmRepositoriesApiFp(this.configuration).editHelmRepository(organizationId, helmRepositoryRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get a helm repository
+     * @param {string} organizationId Organization ID
+     * @param {string} helmRepositoryId Helm chart repository ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmRepositoriesApi
+     */
+    public getHelmRepository(organizationId: string, helmRepositoryId: string, options?: AxiosRequestConfig) {
+        return HelmRepositoriesApiFp(this.configuration).getHelmRepository(organizationId, helmRepositoryId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List supported helm repository by Qovery and get the mandatory authentification configuration.
+     * @summary List supported helm repository
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmRepositoriesApi
+     */
+    public listAvailableHelmRepository(options?: AxiosRequestConfig) {
+        return HelmRepositoriesApiFp(this.configuration).listAvailableHelmRepository(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List organization helm repositories
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmRepositoriesApi
+     */
+    public listHelmRepository(organizationId: string, options?: AxiosRequestConfig) {
+        return HelmRepositoriesApiFp(this.configuration).listHelmRepository(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * HelmsApi - axios parameter creator
  * @export
  */
