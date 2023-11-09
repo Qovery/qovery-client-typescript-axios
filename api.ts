@@ -4030,6 +4030,12 @@ export interface CreditCard {
      * @memberof CreditCard
      */
     'is_expired': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreditCard
+     */
+    'brand': string;
 }
 /**
  * 
