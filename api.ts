@@ -8082,73 +8082,99 @@ export interface HelmResponse {
     'values_override': HelmRequestAllOfValuesOverride;
 }
 /**
+ * @type HelmResponseAllOfSource
+ * @export
+ */
+export type HelmResponseAllOfSource = HelmResponseAllOfSourceOneOf | HelmResponseAllOfSourceOneOf1;
+
+/**
  * 
  * @export
- * @interface HelmResponseAllOfSource
+ * @interface HelmResponseAllOfSourceOneOf
  */
-export interface HelmResponseAllOfSource {
+export interface HelmResponseAllOfSourceOneOf {
     /**
      * 
-     * @type {HelmRequestAllOfSourceGit}
-     * @memberof HelmResponseAllOfSource
+     * @type {HelmResponseAllOfSourceOneOfGit}
+     * @memberof HelmResponseAllOfSourceOneOf
      */
-    'git'?: HelmRequestAllOfSourceGit | null;
-    /**
-     * 
-     * @type {HelmResponseAllOfSourceRepository}
-     * @memberof HelmResponseAllOfSource
-     */
-    'repository'?: HelmResponseAllOfSourceRepository | null;
+    'git'?: HelmResponseAllOfSourceOneOfGit;
 }
 /**
  * 
  * @export
- * @interface HelmResponseAllOfSourceRepository
+ * @interface HelmResponseAllOfSourceOneOf1
  */
-export interface HelmResponseAllOfSourceRepository {
+export interface HelmResponseAllOfSourceOneOf1 {
+    /**
+     * 
+     * @type {HelmResponseAllOfSourceOneOf1Repository}
+     * @memberof HelmResponseAllOfSourceOneOf1
+     */
+    'repository'?: HelmResponseAllOfSourceOneOf1Repository;
+}
+/**
+ * 
+ * @export
+ * @interface HelmResponseAllOfSourceOneOf1Repository
+ */
+export interface HelmResponseAllOfSourceOneOf1Repository {
     /**
      * The name of the chart in the repository
      * @type {string}
-     * @memberof HelmResponseAllOfSourceRepository
+     * @memberof HelmResponseAllOfSourceOneOf1Repository
      */
     'chart_name'?: string;
     /**
      * The version of the chart to use
      * @type {string}
-     * @memberof HelmResponseAllOfSourceRepository
+     * @memberof HelmResponseAllOfSourceOneOf1Repository
      */
     'chart_version'?: string;
     /**
      * 
-     * @type {HelmResponseAllOfSourceRepositoryRepository}
-     * @memberof HelmResponseAllOfSourceRepository
+     * @type {HelmResponseAllOfSourceOneOf1RepositoryRepository}
+     * @memberof HelmResponseAllOfSourceOneOf1Repository
      */
-    'repository'?: HelmResponseAllOfSourceRepositoryRepository;
+    'repository'?: HelmResponseAllOfSourceOneOf1RepositoryRepository;
 }
 /**
  * 
  * @export
- * @interface HelmResponseAllOfSourceRepositoryRepository
+ * @interface HelmResponseAllOfSourceOneOf1RepositoryRepository
  */
-export interface HelmResponseAllOfSourceRepositoryRepository {
+export interface HelmResponseAllOfSourceOneOf1RepositoryRepository {
     /**
      * The id of the helm repository
      * @type {string}
-     * @memberof HelmResponseAllOfSourceRepositoryRepository
+     * @memberof HelmResponseAllOfSourceOneOf1RepositoryRepository
      */
     'id'?: string;
     /**
      * The name of the helm repository
      * @type {string}
-     * @memberof HelmResponseAllOfSourceRepositoryRepository
+     * @memberof HelmResponseAllOfSourceOneOf1RepositoryRepository
      */
     'name'?: string;
     /**
      * The url the helm repository
      * @type {string}
-     * @memberof HelmResponseAllOfSourceRepositoryRepository
+     * @memberof HelmResponseAllOfSourceOneOf1RepositoryRepository
      */
     'url'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface HelmResponseAllOfSourceOneOfGit
+ */
+export interface HelmResponseAllOfSourceOneOfGit {
+    /**
+     * 
+     * @type {ApplicationGitRepositoryRequest}
+     * @memberof HelmResponseAllOfSourceOneOfGit
+     */
+    'git_repository'?: ApplicationGitRepositoryRequest;
 }
 /**
  * 
