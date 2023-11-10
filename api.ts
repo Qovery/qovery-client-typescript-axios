@@ -7818,19 +7818,19 @@ export interface HelmRequest {
      * @type {boolean}
      * @memberof HelmRequest
      */
-    'auto_deploy'?: boolean;
+    'auto_deploy': boolean;
     /**
      * 
      * @type {HelmRequestAllOfSource}
      * @memberof HelmRequest
      */
-    'source'?: HelmRequestAllOfSource;
+    'source': HelmRequestAllOfSource;
     /**
      * The extra arguments to pass to helm
      * @type {Array<string>}
      * @memberof HelmRequest
      */
-    'arguments'?: Array<string>;
+    'arguments': Array<string>;
     /**
      * If we should allow the chart to deploy object outside his specified namespace. Setting this flag to true, requires special rights 
      * @type {boolean}
@@ -7842,7 +7842,7 @@ export interface HelmRequest {
      * @type {HelmRequestAllOfValuesOverride}
      * @memberof HelmRequest
      */
-    'values_override'?: HelmRequestAllOfValuesOverride;
+    'values_override': HelmRequestAllOfValuesOverride;
 }
 /**
  * 
@@ -8067,19 +8067,19 @@ export interface HelmResponse {
      * @type {Array<string>}
      * @memberof HelmResponse
      */
-    'arguments'?: Array<string>;
+    'arguments': Array<string>;
     /**
      * If we should allow the chart to deploy object outside his specified namespace. Setting this flag to true, requires special rights 
      * @type {boolean}
      * @memberof HelmResponse
      */
-    'allow_cluster_wide_resources'?: boolean;
+    'allow_cluster_wide_resources': boolean;
     /**
      * 
      * @type {HelmRequestAllOfValuesOverride}
      * @memberof HelmResponse
      */
-    'values_override'?: HelmRequestAllOfValuesOverride;
+    'values_override': HelmRequestAllOfValuesOverride;
 }
 /**
  * 
