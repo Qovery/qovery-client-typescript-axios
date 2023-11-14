@@ -13607,6 +13607,18 @@ export interface VariableResponse {
     'updated_at'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof VariableResponse
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableResponse
+     */
+    'value': string | null;
+    /**
+     * 
      * @type {VariableOverride}
      * @memberof VariableResponse
      */
