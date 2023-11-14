@@ -48118,13 +48118,17 @@ export const VariableMainCallsApiAxiosParamCreator = function (configuration?: C
         /**
          * Returns a list of variables. The result can be filtered by using the query parameters.
          * @summary List variables
-         * @param {string} [parentId] it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
-         * @param {APIVariableScopeEnum} [scope] the type of the parent_id (application, project, environment etc..).
+         * @param {string} parentId it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
+         * @param {APIVariableScopeEnum} scope the type of the parent_id (application, project, environment etc..).
          * @param {boolean | null} [isSecret] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listVariables: async (parentId?: string, scope?: APIVariableScopeEnum, isSecret?: boolean | null, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listVariables: async (parentId: string, scope: APIVariableScopeEnum, isSecret?: boolean | null, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'parentId' is not null or undefined
+            assertParamExists('listVariables', 'parentId', parentId)
+            // verify required parameter 'scope' is not null or undefined
+            assertParamExists('listVariables', 'scope', scope)
             const localVarPath = `/variable`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -48238,13 +48242,13 @@ export const VariableMainCallsApiFp = function(configuration?: Configuration) {
         /**
          * Returns a list of variables. The result can be filtered by using the query parameters.
          * @summary List variables
-         * @param {string} [parentId] it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
-         * @param {APIVariableScopeEnum} [scope] the type of the parent_id (application, project, environment etc..).
+         * @param {string} parentId it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
+         * @param {APIVariableScopeEnum} scope the type of the parent_id (application, project, environment etc..).
          * @param {boolean | null} [isSecret] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listVariables(parentId?: string, scope?: APIVariableScopeEnum, isSecret?: boolean | null, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VariableResponseList>> {
+        async listVariables(parentId: string, scope: APIVariableScopeEnum, isSecret?: boolean | null, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VariableResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listVariables(parentId, scope, isSecret, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -48314,13 +48318,13 @@ export const VariableMainCallsApiFactory = function (configuration?: Configurati
         /**
          * Returns a list of variables. The result can be filtered by using the query parameters.
          * @summary List variables
-         * @param {string} [parentId] it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
-         * @param {APIVariableScopeEnum} [scope] the type of the parent_id (application, project, environment etc..).
+         * @param {string} parentId it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
+         * @param {APIVariableScopeEnum} scope the type of the parent_id (application, project, environment etc..).
          * @param {boolean | null} [isSecret] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listVariables(parentId?: string, scope?: APIVariableScopeEnum, isSecret?: boolean | null, options?: any): AxiosPromise<VariableResponseList> {
+        listVariables(parentId: string, scope: APIVariableScopeEnum, isSecret?: boolean | null, options?: any): AxiosPromise<VariableResponseList> {
             return localVarFp.listVariables(parentId, scope, isSecret, options).then((request) => request(axios, basePath));
         },
     };
@@ -48399,14 +48403,14 @@ export class VariableMainCallsApi extends BaseAPI {
     /**
      * Returns a list of variables. The result can be filtered by using the query parameters.
      * @summary List variables
-     * @param {string} [parentId] it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
-     * @param {APIVariableScopeEnum} [scope] the type of the parent_id (application, project, environment etc..).
+     * @param {string} parentId it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
+     * @param {APIVariableScopeEnum} scope the type of the parent_id (application, project, environment etc..).
      * @param {boolean | null} [isSecret] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof VariableMainCallsApi
      */
-    public listVariables(parentId?: string, scope?: APIVariableScopeEnum, isSecret?: boolean | null, options?: AxiosRequestConfig) {
+    public listVariables(parentId: string, scope: APIVariableScopeEnum, isSecret?: boolean | null, options?: AxiosRequestConfig) {
         return VariableMainCallsApiFp(this.configuration).listVariables(parentId, scope, isSecret, options).then((request) => request(this.axios, this.basePath));
     }
 }
