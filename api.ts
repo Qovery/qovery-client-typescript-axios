@@ -13619,6 +13619,12 @@ export interface VariableResponse {
     'value': string | null;
     /**
      * 
+     * @type {string}
+     * @memberof VariableResponse
+     */
+    'mount_path'?: string | null;
+    /**
+     * 
      * @type {VariableOverride}
      * @memberof VariableResponse
      */
