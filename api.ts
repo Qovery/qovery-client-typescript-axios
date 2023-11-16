@@ -9255,7 +9255,8 @@ export const LinkedServiceTypeEnum = {
     APPLICATION: 'APPLICATION',
     CONTAINER: 'CONTAINER',
     DATABASE: 'DATABASE',
-    JOB: 'JOB'
+    JOB: 'JOB',
+    HELM: 'HELM'
 } as const;
 
 export type LinkedServiceTypeEnum = typeof LinkedServiceTypeEnum[keyof typeof LinkedServiceTypeEnum];
@@ -12669,6 +12670,22 @@ export const ServiceTypeEnum = {
 } as const;
 
 export type ServiceTypeEnum = typeof ServiceTypeEnum[keyof typeof ServiceTypeEnum];
+
+
+/**
+ * type of the service
+ * @export
+ * @enum {string}
+ */
+
+export const ServiceTypeForVariableEnum = {
+    APPLICATION: 'APPLICATION',
+    CONTAINER: 'CONTAINER',
+    JOB: 'JOB',
+    HELM: 'HELM'
+} as const;
+
+export type ServiceTypeForVariableEnum = typeof ServiceTypeForVariableEnum[keyof typeof ServiceTypeForVariableEnum];
 
 
 /**
@@ -48138,16 +48155,16 @@ export const VariableMainCallsApiAxiosParamCreator = function (configuration?: C
          * Import environment variables in a defined scope, with a defined visibility.
          * @summary Import variables
          * @param {string} serviceId service id
-         * @param {APIVariableScopeEnum} scope scope
+         * @param {ServiceTypeForVariableEnum} serviceType service type
          * @param {VariableImportRequest} [variableImportRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        importEnvironmentVariables: async (serviceId: string, scope: APIVariableScopeEnum, variableImportRequest?: VariableImportRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        importEnvironmentVariables: async (serviceId: string, serviceType: ServiceTypeForVariableEnum, variableImportRequest?: VariableImportRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'serviceId' is not null or undefined
             assertParamExists('importEnvironmentVariables', 'serviceId', serviceId)
-            // verify required parameter 'scope' is not null or undefined
-            assertParamExists('importEnvironmentVariables', 'scope', scope)
+            // verify required parameter 'serviceType' is not null or undefined
+            assertParamExists('importEnvironmentVariables', 'serviceType', serviceType)
             const localVarPath = `/variable/import`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -48171,8 +48188,8 @@ export const VariableMainCallsApiAxiosParamCreator = function (configuration?: C
                 localVarQueryParameter['service_id'] = serviceId;
             }
 
-            if (scope !== undefined) {
-                localVarQueryParameter['scope'] = scope;
+            if (serviceType !== undefined) {
+                localVarQueryParameter['service_type'] = serviceType;
             }
 
 
@@ -48317,13 +48334,13 @@ export const VariableMainCallsApiFp = function(configuration?: Configuration) {
          * Import environment variables in a defined scope, with a defined visibility.
          * @summary Import variables
          * @param {string} serviceId service id
-         * @param {APIVariableScopeEnum} scope scope
+         * @param {ServiceTypeForVariableEnum} serviceType service type
          * @param {VariableImportRequest} [variableImportRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async importEnvironmentVariables(serviceId: string, scope: APIVariableScopeEnum, variableImportRequest?: VariableImportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VariableImport>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.importEnvironmentVariables(serviceId, scope, variableImportRequest, options);
+        async importEnvironmentVariables(serviceId: string, serviceType: ServiceTypeForVariableEnum, variableImportRequest?: VariableImportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VariableImport>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.importEnvironmentVariables(serviceId, serviceType, variableImportRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -48406,13 +48423,13 @@ export const VariableMainCallsApiFactory = function (configuration?: Configurati
          * Import environment variables in a defined scope, with a defined visibility.
          * @summary Import variables
          * @param {string} serviceId service id
-         * @param {APIVariableScopeEnum} scope scope
+         * @param {ServiceTypeForVariableEnum} serviceType service type
          * @param {VariableImportRequest} [variableImportRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        importEnvironmentVariables(serviceId: string, scope: APIVariableScopeEnum, variableImportRequest?: VariableImportRequest, options?: any): AxiosPromise<VariableImport> {
-            return localVarFp.importEnvironmentVariables(serviceId, scope, variableImportRequest, options).then((request) => request(axios, basePath));
+        importEnvironmentVariables(serviceId: string, serviceType: ServiceTypeForVariableEnum, variableImportRequest?: VariableImportRequest, options?: any): AxiosPromise<VariableImport> {
+            return localVarFp.importEnvironmentVariables(serviceId, serviceType, variableImportRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a list of variables. The result can be filtered by using the query parameters.
@@ -48503,14 +48520,14 @@ export class VariableMainCallsApi extends BaseAPI {
      * Import environment variables in a defined scope, with a defined visibility.
      * @summary Import variables
      * @param {string} serviceId service id
-     * @param {APIVariableScopeEnum} scope scope
+     * @param {ServiceTypeForVariableEnum} serviceType service type
      * @param {VariableImportRequest} [variableImportRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof VariableMainCallsApi
      */
-    public importEnvironmentVariables(serviceId: string, scope: APIVariableScopeEnum, variableImportRequest?: VariableImportRequest, options?: AxiosRequestConfig) {
-        return VariableMainCallsApiFp(this.configuration).importEnvironmentVariables(serviceId, scope, variableImportRequest, options).then((request) => request(this.axios, this.basePath));
+    public importEnvironmentVariables(serviceId: string, serviceType: ServiceTypeForVariableEnum, variableImportRequest?: VariableImportRequest, options?: AxiosRequestConfig) {
+        return VariableMainCallsApiFp(this.configuration).importEnvironmentVariables(serviceId, serviceType, variableImportRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
