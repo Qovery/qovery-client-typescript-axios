@@ -35,7 +35,8 @@ export const APIVariableScopeEnum = {
     ENVIRONMENT: 'ENVIRONMENT',
     PROJECT: 'PROJECT',
     CONTAINER: 'CONTAINER',
-    JOB: 'JOB'
+    JOB: 'JOB',
+    HELM: 'HELM'
 } as const;
 
 export type APIVariableScopeEnum = typeof APIVariableScopeEnum[keyof typeof APIVariableScopeEnum];
@@ -48134,6 +48135,61 @@ export const VariableMainCallsApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
+         * Import environment variables in a defined scope, with a defined visibility.
+         * @summary Import variables
+         * @param {string} serviceId service id
+         * @param {APIVariableScopeEnum} scope scope
+         * @param {VariableImportRequest} [variableImportRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        importEnvironmentVariables: async (serviceId: string, scope: APIVariableScopeEnum, variableImportRequest?: VariableImportRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'serviceId' is not null or undefined
+            assertParamExists('importEnvironmentVariables', 'serviceId', serviceId)
+            // verify required parameter 'scope' is not null or undefined
+            assertParamExists('importEnvironmentVariables', 'scope', scope)
+            const localVarPath = `/variable/import`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (serviceId !== undefined) {
+                localVarQueryParameter['service_id'] = serviceId;
+            }
+
+            if (scope !== undefined) {
+                localVarQueryParameter['scope'] = scope;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(variableImportRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns a list of variables. The result can be filtered by using the query parameters.
          * @summary List variables
          * @param {string} parentId it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
@@ -48258,6 +48314,19 @@ export const VariableMainCallsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Import environment variables in a defined scope, with a defined visibility.
+         * @summary Import variables
+         * @param {string} serviceId service id
+         * @param {APIVariableScopeEnum} scope scope
+         * @param {VariableImportRequest} [variableImportRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async importEnvironmentVariables(serviceId: string, scope: APIVariableScopeEnum, variableImportRequest?: VariableImportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VariableImport>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.importEnvironmentVariables(serviceId, scope, variableImportRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Returns a list of variables. The result can be filtered by using the query parameters.
          * @summary List variables
          * @param {string} parentId it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
@@ -48332,6 +48401,18 @@ export const VariableMainCallsApiFactory = function (configuration?: Configurati
          */
         editVariable(variableId: string, variableEditRequest: VariableEditRequest, options?: any): AxiosPromise<VariableResponse> {
             return localVarFp.editVariable(variableId, variableEditRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Import environment variables in a defined scope, with a defined visibility.
+         * @summary Import variables
+         * @param {string} serviceId service id
+         * @param {APIVariableScopeEnum} scope scope
+         * @param {VariableImportRequest} [variableImportRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        importEnvironmentVariables(serviceId: string, scope: APIVariableScopeEnum, variableImportRequest?: VariableImportRequest, options?: any): AxiosPromise<VariableImport> {
+            return localVarFp.importEnvironmentVariables(serviceId, scope, variableImportRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a list of variables. The result can be filtered by using the query parameters.
@@ -48416,6 +48497,20 @@ export class VariableMainCallsApi extends BaseAPI {
      */
     public editVariable(variableId: string, variableEditRequest: VariableEditRequest, options?: AxiosRequestConfig) {
         return VariableMainCallsApiFp(this.configuration).editVariable(variableId, variableEditRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Import environment variables in a defined scope, with a defined visibility.
+     * @summary Import variables
+     * @param {string} serviceId service id
+     * @param {APIVariableScopeEnum} scope scope
+     * @param {VariableImportRequest} [variableImportRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VariableMainCallsApi
+     */
+    public importEnvironmentVariables(serviceId: string, scope: APIVariableScopeEnum, variableImportRequest?: VariableImportRequest, options?: AxiosRequestConfig) {
+        return VariableMainCallsApiFp(this.configuration).importEnvironmentVariables(serviceId, scope, variableImportRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
