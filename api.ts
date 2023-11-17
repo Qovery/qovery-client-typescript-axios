@@ -7643,6 +7643,78 @@ export type HelmForceEvent = typeof HelmForceEvent[keyof typeof HelmForceEvent];
 
 
 /**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const HelmPortProtocolEnum = {
+    HTTP: 'HTTP',
+    GRPC: 'GRPC'
+} as const;
+
+export type HelmPortProtocolEnum = typeof HelmPortProtocolEnum[keyof typeof HelmPortProtocolEnum];
+
+
+/**
+ * 
+ * @export
+ * @interface HelmPortRequest
+ */
+export interface HelmPortRequest {
+    /**
+     * 
+     * @type {Array<HelmPortRequestPortsInner>}
+     * @memberof HelmPortRequest
+     */
+    'ports'?: Array<HelmPortRequestPortsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface HelmPortRequestPortsInner
+ */
+export interface HelmPortRequestPortsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmPortRequestPortsInner
+     */
+    'name'?: string;
+    /**
+     * The listening port of your service.
+     * @type {number}
+     * @memberof HelmPortRequestPortsInner
+     */
+    'internal_port': number;
+    /**
+     * The exposed port for your service. This is optional. If not set a default port will be used.
+     * @type {number}
+     * @memberof HelmPortRequestPortsInner
+     */
+    'external_port'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmPortRequestPortsInner
+     */
+    'service_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmPortRequestPortsInner
+     */
+    'namespace'?: string;
+    /**
+     * 
+     * @type {HelmPortProtocolEnum}
+     * @memberof HelmPortRequestPortsInner
+     */
+    'protocol'?: HelmPortProtocolEnum;
+}
+
+
+/**
  * The type of your helm repository
  * @export
  * @enum {string}
@@ -7790,6 +7862,12 @@ export interface HelmRepositoryResponseList {
  * @interface HelmRequest
  */
 export interface HelmRequest {
+    /**
+     * 
+     * @type {Array<HelmPortRequestPortsInner>}
+     * @memberof HelmRequest
+     */
+    'ports'?: Array<HelmPortRequestPortsInner>;
     /**
      * name is case insensitive
      * @type {string}
@@ -8052,11 +8130,17 @@ export interface HelmResponse {
      */
     'auto_preview': boolean;
     /**
-     * Specify if the service will be automatically updated after receiving a new image tag or a new commit according to the source type.  
+     * Specify if the service will be automatically updated after receiving a new image tag or a new commit according to the source type. 
      * @type {boolean}
      * @memberof HelmResponse
      */
     'auto_deploy': boolean;
+    /**
+     * 
+     * @type {Array<HelmResponseAllOfPorts>}
+     * @memberof HelmResponse
+     */
+    'ports'?: Array<HelmResponseAllOfPorts>;
     /**
      * 
      * @type {HelmResponseAllOfSource}
@@ -8082,6 +8166,57 @@ export interface HelmResponse {
      */
     'values_override': HelmRequestAllOfValuesOverride;
 }
+/**
+ * 
+ * @export
+ * @interface HelmResponseAllOfPorts
+ */
+export interface HelmResponseAllOfPorts {
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmResponseAllOfPorts
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmResponseAllOfPorts
+     */
+    'name'?: string;
+    /**
+     * The listening port of your service.
+     * @type {number}
+     * @memberof HelmResponseAllOfPorts
+     */
+    'internal_port': number;
+    /**
+     * The exposed port for your service. This is optional. If not set a default port will be used.
+     * @type {number}
+     * @memberof HelmResponseAllOfPorts
+     */
+    'external_port'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmResponseAllOfPorts
+     */
+    'service_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmResponseAllOfPorts
+     */
+    'namespace'?: string;
+    /**
+     * 
+     * @type {HelmPortProtocolEnum}
+     * @memberof HelmResponseAllOfPorts
+     */
+    'protocol': HelmPortProtocolEnum;
+}
+
+
 /**
  * @type HelmResponseAllOfSource
  * @export
