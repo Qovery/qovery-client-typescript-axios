@@ -1241,6 +1241,166 @@ export interface Base {
 /**
  * 
  * @export
+ * @interface BaseJobResponse
+ */
+export interface BaseJobResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseJobResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseJobResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseJobResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof BaseJobResponse
+     */
+    'environment': ReferenceObject;
+    /**
+     * Maximum cpu that can be allocated to the job based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof BaseJobResponse
+     */
+    'maximum_cpu': number;
+    /**
+     * Maximum memory that can be allocated to the job based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof BaseJobResponse
+     */
+    'maximum_memory': number;
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof BaseJobResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseJobResponse
+     */
+    'description'?: string;
+    /**
+     * unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof BaseJobResponse
+     */
+    'cpu': number;
+    /**
+     * unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof BaseJobResponse
+     */
+    'memory': number;
+    /**
+     * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
+     * @type {number}
+     * @memberof BaseJobResponse
+     */
+    'max_nb_restart'?: number;
+    /**
+     * Maximum number of seconds allowed for the job to run before killing it and mark it as failed 
+     * @type {number}
+     * @memberof BaseJobResponse
+     */
+    'max_duration_seconds'?: number;
+    /**
+     * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
+     * @type {boolean}
+     * @memberof BaseJobResponse
+     */
+    'auto_preview': boolean;
+    /**
+     * Port where to run readiness and liveliness probes checks. The port will not be exposed externally
+     * @type {number}
+     * @memberof BaseJobResponse
+     */
+    'port'?: number | null;
+    /**
+     * 
+     * @type {BaseJobResponseAllOfSource}
+     * @memberof BaseJobResponse
+     */
+    'source': BaseJobResponseAllOfSource;
+    /**
+     * 
+     * @type {Healthcheck}
+     * @memberof BaseJobResponse
+     */
+    'healthchecks': Healthcheck;
+    /**
+     * Specify if the job will be automatically updated after receiving a new image tag or a new commit according to the source type.  The new image tag shall be communicated via the \"Auto Deploy job\" endpoint https://api-doc.qovery.com/#tag/Jobs/operation/autoDeployJobEnvironments 
+     * @type {boolean}
+     * @memberof BaseJobResponse
+     */
+    'auto_deploy'?: boolean;
+}
+/**
+ * @type BaseJobResponseAllOfSource
+ * @export
+ */
+export type BaseJobResponseAllOfSource = BaseJobResponseAllOfSourceOneOf | BaseJobResponseAllOfSourceOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface BaseJobResponseAllOfSourceOneOf
+ */
+export interface BaseJobResponseAllOfSourceOneOf {
+    /**
+     * 
+     * @type {ContainerSource}
+     * @memberof BaseJobResponseAllOfSourceOneOf
+     */
+    'image'?: ContainerSource;
+}
+/**
+ * 
+ * @export
+ * @interface BaseJobResponseAllOfSourceOneOf1
+ */
+export interface BaseJobResponseAllOfSourceOneOf1 {
+    /**
+     * 
+     * @type {BaseJobResponseAllOfSourceOneOf1Docker}
+     * @memberof BaseJobResponseAllOfSourceOneOf1
+     */
+    'docker'?: BaseJobResponseAllOfSourceOneOf1Docker;
+}
+/**
+ * 
+ * @export
+ * @interface BaseJobResponseAllOfSourceOneOf1Docker
+ */
+export interface BaseJobResponseAllOfSourceOneOf1Docker {
+    /**
+     * The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+     * @type {string}
+     * @memberof BaseJobResponseAllOfSourceOneOf1Docker
+     */
+    'dockerfile_path'?: string | null;
+    /**
+     * 
+     * @type {ApplicationGitRepository}
+     * @memberof BaseJobResponseAllOfSourceOneOf1Docker
+     */
+    'git_repository'?: ApplicationGitRepository;
+}
+/**
+ * 
+ * @export
  * @interface BillingEnd
  */
 export interface BillingEnd {
@@ -4081,6 +4241,172 @@ export interface CreditCardResponseList {
      * @memberof CreditCardResponseList
      */
     'results'?: Array<CreditCard>;
+}
+/**
+ * 
+ * @export
+ * @interface CronJobResponse
+ */
+export interface CronJobResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof CronJobResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CronJobResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CronJobResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof CronJobResponse
+     */
+    'environment': ReferenceObject;
+    /**
+     * Maximum cpu that can be allocated to the job based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof CronJobResponse
+     */
+    'maximum_cpu': number;
+    /**
+     * Maximum memory that can be allocated to the job based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof CronJobResponse
+     */
+    'maximum_memory': number;
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof CronJobResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CronJobResponse
+     */
+    'description'?: string;
+    /**
+     * unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof CronJobResponse
+     */
+    'cpu': number;
+    /**
+     * unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof CronJobResponse
+     */
+    'memory': number;
+    /**
+     * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
+     * @type {number}
+     * @memberof CronJobResponse
+     */
+    'max_nb_restart'?: number;
+    /**
+     * Maximum number of seconds allowed for the job to run before killing it and mark it as failed 
+     * @type {number}
+     * @memberof CronJobResponse
+     */
+    'max_duration_seconds'?: number;
+    /**
+     * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
+     * @type {boolean}
+     * @memberof CronJobResponse
+     */
+    'auto_preview': boolean;
+    /**
+     * Port where to run readiness and liveliness probes checks. The port will not be exposed externally
+     * @type {number}
+     * @memberof CronJobResponse
+     */
+    'port'?: number | null;
+    /**
+     * 
+     * @type {BaseJobResponseAllOfSource}
+     * @memberof CronJobResponse
+     */
+    'source': BaseJobResponseAllOfSource;
+    /**
+     * 
+     * @type {Healthcheck}
+     * @memberof CronJobResponse
+     */
+    'healthchecks': Healthcheck;
+    /**
+     * Specify if the job will be automatically updated after receiving a new image tag or a new commit according to the source type.  The new image tag shall be communicated via the \"Auto Deploy job\" endpoint https://api-doc.qovery.com/#tag/Jobs/operation/autoDeployJobEnvironments 
+     * @type {boolean}
+     * @memberof CronJobResponse
+     */
+    'auto_deploy'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CronJobResponse
+     */
+    'job_type': CronJobResponseJobTypeEnum;
+    /**
+     * 
+     * @type {CronJobResponseAllOfSchedule}
+     * @memberof CronJobResponse
+     */
+    'schedule': CronJobResponseAllOfSchedule;
+}
+
+export const CronJobResponseJobTypeEnum = {
+    CRON: 'CRON'
+} as const;
+
+export type CronJobResponseJobTypeEnum = typeof CronJobResponseJobTypeEnum[keyof typeof CronJobResponseJobTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface CronJobResponseAllOfSchedule
+ */
+export interface CronJobResponseAllOfSchedule {
+    /**
+     * 
+     * @type {CronJobResponseAllOfScheduleCronjob}
+     * @memberof CronJobResponseAllOfSchedule
+     */
+    'cronjob'?: CronJobResponseAllOfScheduleCronjob;
+}
+/**
+ * 
+ * @export
+ * @interface CronJobResponseAllOfScheduleCronjob
+ */
+export interface CronJobResponseAllOfScheduleCronjob {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CronJobResponseAllOfScheduleCronjob
+     */
+    'arguments'?: Array<string>;
+    /**
+     * optional entrypoint when launching container
+     * @type {string}
+     * @memberof CronJobResponseAllOfScheduleCronjob
+     */
+    'entrypoint'?: string;
+    /**
+     * Can only be set if the event is CRON.   Represent the cron format for the job schedule without seconds.   For example: `* * * * *` represent the cron to launch the job every minute.   See https://crontab.guru/ to WISIWIG interface.   Timezone is UT 
+     * @type {string}
+     * @memberof CronJobResponseAllOfScheduleCronjob
+     */
+    'scheduled_at': string;
 }
 /**
  * 
@@ -9053,227 +9379,11 @@ export interface JobRequestAllOfSourceImage {
     'registry_id'?: string;
 }
 /**
- * 
- * @export
- * @interface JobResponse
- */
-export interface JobResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof JobResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof JobResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof JobResponse
-     */
-    'updated_at'?: string;
-    /**
-     * 
-     * @type {ReferenceObject}
-     * @memberof JobResponse
-     */
-    'environment': ReferenceObject;
-    /**
-     * Maximum cpu that can be allocated to the job based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof JobResponse
-     */
-    'maximum_cpu': number;
-    /**
-     * Maximum memory that can be allocated to the job based on organization cluster configuration. unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof JobResponse
-     */
-    'maximum_memory': number;
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof JobResponse
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof JobResponse
-     */
-    'description'?: string;
-    /**
-     * unit is millicores (m). 1000m = 1 cpu
-     * @type {number}
-     * @memberof JobResponse
-     */
-    'cpu': number;
-    /**
-     * unit is MB. 1024 MB = 1GB
-     * @type {number}
-     * @memberof JobResponse
-     */
-    'memory': number;
-    /**
-     * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
-     * @type {number}
-     * @memberof JobResponse
-     */
-    'max_nb_restart'?: number;
-    /**
-     * Maximum number of seconds allowed for the job to run before killing it and mark it as failed 
-     * @type {number}
-     * @memberof JobResponse
-     */
-    'max_duration_seconds'?: number;
-    /**
-     * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
-     * @type {boolean}
-     * @memberof JobResponse
-     */
-    'auto_preview': boolean;
-    /**
-     * Port where to run readiness and liveliness probes checks. The port will not be exposed externally
-     * @type {number}
-     * @memberof JobResponse
-     */
-    'port'?: number | null;
-    /**
-     * 
-     * @type {JobResponseAllOfSource}
-     * @memberof JobResponse
-     */
-    'source': JobResponseAllOfSource;
-    /**
-     * 
-     * @type {Healthcheck}
-     * @memberof JobResponse
-     */
-    'healthchecks': Healthcheck;
-    /**
-     * 
-     * @type {JobResponseAllOfSchedule}
-     * @memberof JobResponse
-     */
-    'schedule'?: JobResponseAllOfSchedule;
-    /**
-     * Specify if the job will be automatically updated after receiving a new image tag or a new commit according to the source type.  The new image tag shall be communicated via the \"Auto Deploy job\" endpoint https://api-doc.qovery.com/#tag/Jobs/operation/autoDeployJobEnvironments 
-     * @type {boolean}
-     * @memberof JobResponse
-     */
-    'auto_deploy'?: boolean;
-}
-/**
- * If you want to define a Cron job, only the `cronjob` property must be filled   A Lifecycle job should contain at least one property `on_XXX` among the 3 properties: `on_start`, `on_stop`, `on_delete` 
- * @export
- * @interface JobResponseAllOfSchedule
- */
-export interface JobResponseAllOfSchedule {
-    /**
-     * 
-     * @type {JobRequestAllOfScheduleOnStart}
-     * @memberof JobResponseAllOfSchedule
-     */
-    'on_start'?: JobRequestAllOfScheduleOnStart;
-    /**
-     * 
-     * @type {JobRequestAllOfScheduleOnStart}
-     * @memberof JobResponseAllOfSchedule
-     */
-    'on_stop'?: JobRequestAllOfScheduleOnStart;
-    /**
-     * 
-     * @type {JobRequestAllOfScheduleOnStart}
-     * @memberof JobResponseAllOfSchedule
-     */
-    'on_delete'?: JobRequestAllOfScheduleOnStart;
-    /**
-     * 
-     * @type {JobResponseAllOfScheduleCronjob}
-     * @memberof JobResponseAllOfSchedule
-     */
-    'cronjob'?: JobResponseAllOfScheduleCronjob;
-}
-/**
- * 
- * @export
- * @interface JobResponseAllOfScheduleCronjob
- */
-export interface JobResponseAllOfScheduleCronjob {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof JobResponseAllOfScheduleCronjob
-     */
-    'arguments'?: Array<string>;
-    /**
-     * optional entrypoint when launching container
-     * @type {string}
-     * @memberof JobResponseAllOfScheduleCronjob
-     */
-    'entrypoint'?: string;
-    /**
-     * Can only be set if the event is CRON.   Represent the cron format for the job schedule without seconds.   For example: `* * * * *` represent the cron to launch the job every minute.   See https://crontab.guru/ to WISIWIG interface.   Timezone is UT 
-     * @type {string}
-     * @memberof JobResponseAllOfScheduleCronjob
-     */
-    'scheduled_at': string;
-}
-/**
- * @type JobResponseAllOfSource
+ * @type JobResponse
  * @export
  */
-export type JobResponseAllOfSource = JobResponseAllOfSourceOneOf | JobResponseAllOfSourceOneOf1;
+export type JobResponse = { job_type: 'CRON' } & CronJobResponse | { job_type: 'LIFECYCLE' } & LifecycleJobResponse;
 
-/**
- * 
- * @export
- * @interface JobResponseAllOfSourceOneOf
- */
-export interface JobResponseAllOfSourceOneOf {
-    /**
-     * 
-     * @type {ContainerSource}
-     * @memberof JobResponseAllOfSourceOneOf
-     */
-    'image'?: ContainerSource;
-}
-/**
- * 
- * @export
- * @interface JobResponseAllOfSourceOneOf1
- */
-export interface JobResponseAllOfSourceOneOf1 {
-    /**
-     * 
-     * @type {JobResponseAllOfSourceOneOf1Docker}
-     * @memberof JobResponseAllOfSourceOneOf1
-     */
-    'docker'?: JobResponseAllOfSourceOneOf1Docker;
-}
-/**
- * 
- * @export
- * @interface JobResponseAllOfSourceOneOf1Docker
- */
-export interface JobResponseAllOfSourceOneOf1Docker {
-    /**
-     * The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
-     * @type {string}
-     * @memberof JobResponseAllOfSourceOneOf1Docker
-     */
-    'dockerfile_path'?: string | null;
-    /**
-     * 
-     * @type {ApplicationGitRepository}
-     * @memberof JobResponseAllOfSourceOneOf1Docker
-     */
-    'git_repository'?: ApplicationGitRepository;
-}
 /**
  * 
  * @export
@@ -9330,6 +9440,159 @@ export const KubernetesEnum = {
 export type KubernetesEnum = typeof KubernetesEnum[keyof typeof KubernetesEnum];
 
 
+/**
+ * 
+ * @export
+ * @interface LifecycleJobResponse
+ */
+export interface LifecycleJobResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof LifecycleJobResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LifecycleJobResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LifecycleJobResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof LifecycleJobResponse
+     */
+    'environment': ReferenceObject;
+    /**
+     * Maximum cpu that can be allocated to the job based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof LifecycleJobResponse
+     */
+    'maximum_cpu': number;
+    /**
+     * Maximum memory that can be allocated to the job based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof LifecycleJobResponse
+     */
+    'maximum_memory': number;
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof LifecycleJobResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LifecycleJobResponse
+     */
+    'description'?: string;
+    /**
+     * unit is millicores (m). 1000m = 1 cpu
+     * @type {number}
+     * @memberof LifecycleJobResponse
+     */
+    'cpu': number;
+    /**
+     * unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof LifecycleJobResponse
+     */
+    'memory': number;
+    /**
+     * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
+     * @type {number}
+     * @memberof LifecycleJobResponse
+     */
+    'max_nb_restart'?: number;
+    /**
+     * Maximum number of seconds allowed for the job to run before killing it and mark it as failed 
+     * @type {number}
+     * @memberof LifecycleJobResponse
+     */
+    'max_duration_seconds'?: number;
+    /**
+     * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
+     * @type {boolean}
+     * @memberof LifecycleJobResponse
+     */
+    'auto_preview': boolean;
+    /**
+     * Port where to run readiness and liveliness probes checks. The port will not be exposed externally
+     * @type {number}
+     * @memberof LifecycleJobResponse
+     */
+    'port'?: number | null;
+    /**
+     * 
+     * @type {BaseJobResponseAllOfSource}
+     * @memberof LifecycleJobResponse
+     */
+    'source': BaseJobResponseAllOfSource;
+    /**
+     * 
+     * @type {Healthcheck}
+     * @memberof LifecycleJobResponse
+     */
+    'healthchecks': Healthcheck;
+    /**
+     * Specify if the job will be automatically updated after receiving a new image tag or a new commit according to the source type.  The new image tag shall be communicated via the \"Auto Deploy job\" endpoint https://api-doc.qovery.com/#tag/Jobs/operation/autoDeployJobEnvironments 
+     * @type {boolean}
+     * @memberof LifecycleJobResponse
+     */
+    'auto_deploy'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof LifecycleJobResponse
+     */
+    'job_type': LifecycleJobResponseJobTypeEnum;
+    /**
+     * 
+     * @type {LifecycleJobResponseAllOfSchedule}
+     * @memberof LifecycleJobResponse
+     */
+    'schedule': LifecycleJobResponseAllOfSchedule;
+}
+
+export const LifecycleJobResponseJobTypeEnum = {
+    LIFECYCLE: 'LIFECYCLE'
+} as const;
+
+export type LifecycleJobResponseJobTypeEnum = typeof LifecycleJobResponseJobTypeEnum[keyof typeof LifecycleJobResponseJobTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface LifecycleJobResponseAllOfSchedule
+ */
+export interface LifecycleJobResponseAllOfSchedule {
+    /**
+     * 
+     * @type {JobRequestAllOfScheduleOnStart}
+     * @memberof LifecycleJobResponseAllOfSchedule
+     */
+    'on_start'?: JobRequestAllOfScheduleOnStart;
+    /**
+     * 
+     * @type {JobRequestAllOfScheduleOnStart}
+     * @memberof LifecycleJobResponseAllOfSchedule
+     */
+    'on_stop'?: JobRequestAllOfScheduleOnStart;
+    /**
+     * 
+     * @type {JobRequestAllOfScheduleOnStart}
+     * @memberof LifecycleJobResponseAllOfSchedule
+     */
+    'on_delete'?: JobRequestAllOfScheduleOnStart;
+}
 /**
  * 
  * @export
