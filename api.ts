@@ -4626,7 +4626,7 @@ export interface Database {
      * @type {ReferenceObject}
      * @memberof Database
      */
-    'environment'?: ReferenceObject;
+    'environment': ReferenceObject;
     /**
      * 
      * @type {string}
