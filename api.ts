@@ -7971,6 +7971,37 @@ export type HelmForceEvent = typeof HelmForceEvent[keyof typeof HelmForceEvent];
 /**
  * 
  * @export
+ * @interface HelmGitRepositoryRequest
+ */
+export interface HelmGitRepositoryRequest {
+    /**
+     * application git repository URL
+     * @type {string}
+     * @memberof HelmGitRepositoryRequest
+     */
+    'url': string;
+    /**
+     * Name of the branch to use. This is optional If not specified, then the branch used is the `main` or `master` one 
+     * @type {string}
+     * @memberof HelmGitRepositoryRequest
+     */
+    'branch'?: string;
+    /**
+     * indicates the root path of the application.
+     * @type {string}
+     * @memberof HelmGitRepositoryRequest
+     */
+    'root_path'?: string;
+    /**
+     * The git token id on Qovery side
+     * @type {string}
+     * @memberof HelmGitRepositoryRequest
+     */
+    'git_token_id'?: string | null;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -8257,52 +8288,39 @@ export interface HelmRequest {
 export interface HelmRequestAllOfSource {
     /**
      * 
-     * @type {HelmRequestAllOfSourceGit}
+     * @type {HelmGitRepositoryRequest}
      * @memberof HelmRequestAllOfSource
      */
-    'git'?: HelmRequestAllOfSourceGit | null;
+    'git_repository'?: HelmGitRepositoryRequest | null;
     /**
      * 
-     * @type {HelmRequestAllOfSourceRepository}
+     * @type {HelmRequestAllOfSourceHelmRepository}
      * @memberof HelmRequestAllOfSource
      */
-    'repository'?: HelmRequestAllOfSourceRepository | null;
+    'helm_repository'?: HelmRequestAllOfSourceHelmRepository | null;
 }
 /**
  * 
  * @export
- * @interface HelmRequestAllOfSourceGit
+ * @interface HelmRequestAllOfSourceHelmRepository
  */
-export interface HelmRequestAllOfSourceGit {
-    /**
-     * 
-     * @type {ApplicationGitRepositoryRequest}
-     * @memberof HelmRequestAllOfSourceGit
-     */
-    'git_repository'?: ApplicationGitRepositoryRequest;
-}
-/**
- * 
- * @export
- * @interface HelmRequestAllOfSourceRepository
- */
-export interface HelmRequestAllOfSourceRepository {
+export interface HelmRequestAllOfSourceHelmRepository {
     /**
      * The id of the helm repository
      * @type {string}
-     * @memberof HelmRequestAllOfSourceRepository
+     * @memberof HelmRequestAllOfSourceHelmRepository
      */
     'repository'?: string | null;
     /**
      * The name of the chart in the repository
      * @type {string}
-     * @memberof HelmRequestAllOfSourceRepository
+     * @memberof HelmRequestAllOfSourceHelmRepository
      */
     'chart_name'?: string;
     /**
      * The version of the chart to use
      * @type {string}
-     * @memberof HelmRequestAllOfSourceRepository
+     * @memberof HelmRequestAllOfSourceHelmRepository
      */
     'chart_version'?: string;
 }
