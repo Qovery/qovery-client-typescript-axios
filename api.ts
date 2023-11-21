@@ -7063,17 +7063,35 @@ export interface EnvironmentStatus {
     'total_deployment_duration_in_seconds'?: number | null;
     /**
      * 
-     * @type {OrganizationEventOrigin}
+     * @type {EnvironmentStatusEventOriginEnum}
      * @memberof EnvironmentStatus
      */
-    'origin'?: OrganizationEventOrigin;
+    'origin'?: EnvironmentStatusEventOriginEnum | null;
     /**
      * 
      * @type {string}
      * @memberof EnvironmentStatus
      */
-    'triggered_by'?: string;
+    'triggered_by'?: string | null;
 }
+
+
+/**
+ * Origin of the organization event
+ * @export
+ * @enum {string}
+ */
+
+export const EnvironmentStatusEventOriginEnum = {
+    API: 'API',
+    CLI: 'CLI',
+    CONSOLE: 'CONSOLE',
+    GIT: 'GIT',
+    QOVERY_INTERNAL: 'QOVERY_INTERNAL',
+    TERRAFORM_PROVIDER: 'TERRAFORM_PROVIDER'
+} as const;
+
+export type EnvironmentStatusEventOriginEnum = typeof EnvironmentStatusEventOriginEnum[keyof typeof EnvironmentStatusEventOriginEnum];
 
 
 /**
