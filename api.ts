@@ -1686,112 +1686,55 @@ export type BuildPackLanguageEnum = typeof BuildPackLanguageEnum[keyof typeof Bu
 /**
  * 
  * @export
- * @interface CloneApplicationRequest
+ * @interface CloneEnvironmentRequest
  */
-export interface CloneApplicationRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CloneApplicationRequest
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CloneApplicationRequest
-     */
-    'environment_id': string;
-}
-/**
- * 
- * @export
- * @interface CloneContainerRequest
- */
-export interface CloneContainerRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CloneContainerRequest
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CloneContainerRequest
-     */
-    'environment_id': string;
-}
-/**
- * 
- * @export
- * @interface CloneDatabaseRequest
- */
-export interface CloneDatabaseRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CloneDatabaseRequest
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CloneDatabaseRequest
-     */
-    'environment_id': string;
-}
-/**
- * 
- * @export
- * @interface CloneJobRequest
- */
-export interface CloneJobRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CloneJobRequest
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CloneJobRequest
-     */
-    'environment_id': string;
-}
-/**
- * 
- * @export
- * @interface CloneRequest
- */
-export interface CloneRequest {
+export interface CloneEnvironmentRequest {
     /**
      * name is case insensitive
      * @type {string}
-     * @memberof CloneRequest
+     * @memberof CloneEnvironmentRequest
      */
     'name': string;
     /**
      * 
      * @type {string}
-     * @memberof CloneRequest
+     * @memberof CloneEnvironmentRequest
      */
     'cluster_id'?: string;
     /**
      * 
      * @type {EnvironmentModeEnum}
-     * @memberof CloneRequest
+     * @memberof CloneEnvironmentRequest
      */
     'mode'?: EnvironmentModeEnum;
     /**
      * 
      * @type {boolean}
-     * @memberof CloneRequest
+     * @memberof CloneEnvironmentRequest
      */
     'apply_deployment_rule'?: boolean;
 }
 
 
+/**
+ * 
+ * @export
+ * @interface CloneServiceRequest
+ */
+export interface CloneServiceRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CloneServiceRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CloneServiceRequest
+     */
+    'environment_id': string;
+}
 /**
  * 
  * @export
@@ -18171,11 +18114,11 @@ export const ApplicationsApiAxiosParamCreator = function (configuration?: Config
          * This will create a new application with the same configuration on the targeted environment Id.
          * @summary Clone application
          * @param {string} applicationId Application ID
-         * @param {CloneApplicationRequest} [cloneApplicationRequest] 
+         * @param {CloneServiceRequest} [cloneServiceRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloneApplication: async (applicationId: string, cloneApplicationRequest?: CloneApplicationRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloneApplication: async (applicationId: string, cloneServiceRequest?: CloneServiceRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'applicationId' is not null or undefined
             assertParamExists('cloneApplication', 'applicationId', applicationId)
             const localVarPath = `/application/{applicationId}/clone`
@@ -18205,7 +18148,7 @@ export const ApplicationsApiAxiosParamCreator = function (configuration?: Config
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(cloneApplicationRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(cloneServiceRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -18513,12 +18456,12 @@ export const ApplicationsApiFp = function(configuration?: Configuration) {
          * This will create a new application with the same configuration on the targeted environment Id.
          * @summary Clone application
          * @param {string} applicationId Application ID
-         * @param {CloneApplicationRequest} [cloneApplicationRequest] 
+         * @param {CloneServiceRequest} [cloneServiceRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloneApplication(applicationId: string, cloneApplicationRequest?: CloneApplicationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Application>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloneApplication(applicationId, cloneApplicationRequest, options);
+        async cloneApplication(applicationId: string, cloneServiceRequest?: CloneServiceRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Application>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloneApplication(applicationId, cloneServiceRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -18612,12 +18555,12 @@ export const ApplicationsApiFactory = function (configuration?: Configuration, b
          * This will create a new application with the same configuration on the targeted environment Id.
          * @summary Clone application
          * @param {string} applicationId Application ID
-         * @param {CloneApplicationRequest} [cloneApplicationRequest] 
+         * @param {CloneServiceRequest} [cloneServiceRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloneApplication(applicationId: string, cloneApplicationRequest?: CloneApplicationRequest, options?: any): AxiosPromise<Application> {
-            return localVarFp.cloneApplication(applicationId, cloneApplicationRequest, options).then((request) => request(axios, basePath));
+        cloneApplication(applicationId: string, cloneServiceRequest?: CloneServiceRequest, options?: any): AxiosPromise<Application> {
+            return localVarFp.cloneApplication(applicationId, cloneServiceRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -18703,13 +18646,13 @@ export class ApplicationsApi extends BaseAPI {
      * This will create a new application with the same configuration on the targeted environment Id.
      * @summary Clone application
      * @param {string} applicationId Application ID
-     * @param {CloneApplicationRequest} [cloneApplicationRequest] 
+     * @param {CloneServiceRequest} [cloneServiceRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApplicationsApi
      */
-    public cloneApplication(applicationId: string, cloneApplicationRequest?: CloneApplicationRequest, options?: AxiosRequestConfig) {
-        return ApplicationsApiFp(this.configuration).cloneApplication(applicationId, cloneApplicationRequest, options).then((request) => request(this.axios, this.basePath));
+    public cloneApplication(applicationId: string, cloneServiceRequest?: CloneServiceRequest, options?: AxiosRequestConfig) {
+        return ApplicationsApiFp(this.configuration).cloneApplication(applicationId, cloneServiceRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -28100,11 +28043,11 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
          * This will create a new container with the same configuration on the targeted environment Id.
          * @summary Clone container
          * @param {string} containerId Container ID
-         * @param {CloneContainerRequest} [cloneContainerRequest] 
+         * @param {CloneServiceRequest} [cloneServiceRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloneContainer: async (containerId: string, cloneContainerRequest?: CloneContainerRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloneContainer: async (containerId: string, cloneServiceRequest?: CloneServiceRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'containerId' is not null or undefined
             assertParamExists('cloneContainer', 'containerId', containerId)
             const localVarPath = `/container/{containerId}/clone`
@@ -28134,7 +28077,7 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(cloneContainerRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(cloneServiceRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -28503,12 +28446,12 @@ export const ContainersApiFp = function(configuration?: Configuration) {
          * This will create a new container with the same configuration on the targeted environment Id.
          * @summary Clone container
          * @param {string} containerId Container ID
-         * @param {CloneContainerRequest} [cloneContainerRequest] 
+         * @param {CloneServiceRequest} [cloneServiceRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloneContainer(containerId: string, cloneContainerRequest?: CloneContainerRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloneContainer(containerId, cloneContainerRequest, options);
+        async cloneContainer(containerId: string, cloneServiceRequest?: CloneServiceRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloneContainer(containerId, cloneServiceRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -28626,12 +28569,12 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
          * This will create a new container with the same configuration on the targeted environment Id.
          * @summary Clone container
          * @param {string} containerId Container ID
-         * @param {CloneContainerRequest} [cloneContainerRequest] 
+         * @param {CloneServiceRequest} [cloneServiceRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloneContainer(containerId: string, cloneContainerRequest?: CloneContainerRequest, options?: any): AxiosPromise<ContainerResponse> {
-            return localVarFp.cloneContainer(containerId, cloneContainerRequest, options).then((request) => request(axios, basePath));
+        cloneContainer(containerId: string, cloneServiceRequest?: CloneServiceRequest, options?: any): AxiosPromise<ContainerResponse> {
+            return localVarFp.cloneContainer(containerId, cloneServiceRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -28742,13 +28685,13 @@ export class ContainersApi extends BaseAPI {
      * This will create a new container with the same configuration on the targeted environment Id.
      * @summary Clone container
      * @param {string} containerId Container ID
-     * @param {CloneContainerRequest} [cloneContainerRequest] 
+     * @param {CloneServiceRequest} [cloneServiceRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContainersApi
      */
-    public cloneContainer(containerId: string, cloneContainerRequest?: CloneContainerRequest, options?: AxiosRequestConfig) {
-        return ContainersApiFp(this.configuration).cloneContainer(containerId, cloneContainerRequest, options).then((request) => request(this.axios, this.basePath));
+    public cloneContainer(containerId: string, cloneServiceRequest?: CloneServiceRequest, options?: AxiosRequestConfig) {
+        return ContainersApiFp(this.configuration).cloneContainer(containerId, cloneServiceRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -31050,11 +30993,11 @@ export const DatabasesApiAxiosParamCreator = function (configuration?: Configura
          * This will create a new database with the same configuration on the targeted environment Id.
          * @summary Clone database
          * @param {string} databaseId Database ID
-         * @param {CloneDatabaseRequest} [cloneDatabaseRequest] 
+         * @param {CloneServiceRequest} [cloneServiceRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloneDatabase: async (databaseId: string, cloneDatabaseRequest?: CloneDatabaseRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloneDatabase: async (databaseId: string, cloneServiceRequest?: CloneServiceRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'databaseId' is not null or undefined
             assertParamExists('cloneDatabase', 'databaseId', databaseId)
             const localVarPath = `/database/{databaseId}/clone`
@@ -31084,7 +31027,7 @@ export const DatabasesApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(cloneDatabaseRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(cloneServiceRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -31314,12 +31257,12 @@ export const DatabasesApiFp = function(configuration?: Configuration) {
          * This will create a new database with the same configuration on the targeted environment Id.
          * @summary Clone database
          * @param {string} databaseId Database ID
-         * @param {CloneDatabaseRequest} [cloneDatabaseRequest] 
+         * @param {CloneServiceRequest} [cloneServiceRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloneDatabase(databaseId: string, cloneDatabaseRequest?: CloneDatabaseRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Database>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloneDatabase(databaseId, cloneDatabaseRequest, options);
+        async cloneDatabase(databaseId: string, cloneServiceRequest?: CloneServiceRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Database>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloneDatabase(databaseId, cloneServiceRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -31392,12 +31335,12 @@ export const DatabasesApiFactory = function (configuration?: Configuration, base
          * This will create a new database with the same configuration on the targeted environment Id.
          * @summary Clone database
          * @param {string} databaseId Database ID
-         * @param {CloneDatabaseRequest} [cloneDatabaseRequest] 
+         * @param {CloneServiceRequest} [cloneServiceRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloneDatabase(databaseId: string, cloneDatabaseRequest?: CloneDatabaseRequest, options?: any): AxiosPromise<Database> {
-            return localVarFp.cloneDatabase(databaseId, cloneDatabaseRequest, options).then((request) => request(axios, basePath));
+        cloneDatabase(databaseId: string, cloneServiceRequest?: CloneServiceRequest, options?: any): AxiosPromise<Database> {
+            return localVarFp.cloneDatabase(databaseId, cloneServiceRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -31464,13 +31407,13 @@ export class DatabasesApi extends BaseAPI {
      * This will create a new database with the same configuration on the targeted environment Id.
      * @summary Clone database
      * @param {string} databaseId Database ID
-     * @param {CloneDatabaseRequest} [cloneDatabaseRequest] 
+     * @param {CloneServiceRequest} [cloneServiceRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DatabasesApi
      */
-    public cloneDatabase(databaseId: string, cloneDatabaseRequest?: CloneDatabaseRequest, options?: AxiosRequestConfig) {
-        return DatabasesApiFp(this.configuration).cloneDatabase(databaseId, cloneDatabaseRequest, options).then((request) => request(this.axios, this.basePath));
+    public cloneDatabase(databaseId: string, cloneServiceRequest?: CloneServiceRequest, options?: AxiosRequestConfig) {
+        return DatabasesApiFp(this.configuration).cloneDatabase(databaseId, cloneServiceRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -32448,11 +32391,11 @@ export const EnvironmentActionsApiAxiosParamCreator = function (configuration?: 
          * You must provide a name. This will create a new environment, with the same configuration, and same applications and databases. Database data is not cloned.
          * @summary Clone environment
          * @param {string} environmentId Environment ID
-         * @param {CloneRequest} [cloneRequest] 
+         * @param {CloneEnvironmentRequest} [cloneEnvironmentRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloneEnvironment: async (environmentId: string, cloneRequest?: CloneRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloneEnvironment: async (environmentId: string, cloneEnvironmentRequest?: CloneEnvironmentRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'environmentId' is not null or undefined
             assertParamExists('cloneEnvironment', 'environmentId', environmentId)
             const localVarPath = `/environment/{environmentId}/clone`
@@ -32482,7 +32425,7 @@ export const EnvironmentActionsApiAxiosParamCreator = function (configuration?: 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(cloneRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(cloneEnvironmentRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -32858,12 +32801,12 @@ export const EnvironmentActionsApiFp = function(configuration?: Configuration) {
          * You must provide a name. This will create a new environment, with the same configuration, and same applications and databases. Database data is not cloned.
          * @summary Clone environment
          * @param {string} environmentId Environment ID
-         * @param {CloneRequest} [cloneRequest] 
+         * @param {CloneEnvironmentRequest} [cloneEnvironmentRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloneEnvironment(environmentId: string, cloneRequest?: CloneRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Environment>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloneEnvironment(environmentId, cloneRequest, options);
+        async cloneEnvironment(environmentId: string, cloneEnvironmentRequest?: CloneEnvironmentRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Environment>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloneEnvironment(environmentId, cloneEnvironmentRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -32982,12 +32925,12 @@ export const EnvironmentActionsApiFactory = function (configuration?: Configurat
          * You must provide a name. This will create a new environment, with the same configuration, and same applications and databases. Database data is not cloned.
          * @summary Clone environment
          * @param {string} environmentId Environment ID
-         * @param {CloneRequest} [cloneRequest] 
+         * @param {CloneEnvironmentRequest} [cloneEnvironmentRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloneEnvironment(environmentId: string, cloneRequest?: CloneRequest, options?: any): AxiosPromise<Environment> {
-            return localVarFp.cloneEnvironment(environmentId, cloneRequest, options).then((request) => request(axios, basePath));
+        cloneEnvironment(environmentId: string, cloneEnvironmentRequest?: CloneEnvironmentRequest, options?: any): AxiosPromise<Environment> {
+            return localVarFp.cloneEnvironment(environmentId, cloneEnvironmentRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Delete selected services
@@ -33099,13 +33042,13 @@ export class EnvironmentActionsApi extends BaseAPI {
      * You must provide a name. This will create a new environment, with the same configuration, and same applications and databases. Database data is not cloned.
      * @summary Clone environment
      * @param {string} environmentId Environment ID
-     * @param {CloneRequest} [cloneRequest] 
+     * @param {CloneEnvironmentRequest} [cloneEnvironmentRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EnvironmentActionsApi
      */
-    public cloneEnvironment(environmentId: string, cloneRequest?: CloneRequest, options?: AxiosRequestConfig) {
-        return EnvironmentActionsApiFp(this.configuration).cloneEnvironment(environmentId, cloneRequest, options).then((request) => request(this.axios, this.basePath));
+    public cloneEnvironment(environmentId: string, cloneEnvironmentRequest?: CloneEnvironmentRequest, options?: AxiosRequestConfig) {
+        return EnvironmentActionsApiFp(this.configuration).cloneEnvironment(environmentId, cloneEnvironmentRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -41647,11 +41590,11 @@ export const JobsApiAxiosParamCreator = function (configuration?: Configuration)
          * This will create a new job with the same configuration on the targeted environment Id.
          * @summary Clone job
          * @param {string} jobId Job ID
-         * @param {CloneJobRequest} [cloneJobRequest] 
+         * @param {CloneServiceRequest} [cloneServiceRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloneJob: async (jobId: string, cloneJobRequest?: CloneJobRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloneJob: async (jobId: string, cloneServiceRequest?: CloneServiceRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'jobId' is not null or undefined
             assertParamExists('cloneJob', 'jobId', jobId)
             const localVarPath = `/job/{jobId}/clone`
@@ -41681,7 +41624,7 @@ export const JobsApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(cloneJobRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(cloneServiceRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -41883,12 +41826,12 @@ export const JobsApiFp = function(configuration?: Configuration) {
          * This will create a new job with the same configuration on the targeted environment Id.
          * @summary Clone job
          * @param {string} jobId Job ID
-         * @param {CloneJobRequest} [cloneJobRequest] 
+         * @param {CloneServiceRequest} [cloneServiceRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloneJob(jobId: string, cloneJobRequest?: CloneJobRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JobResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloneJob(jobId, cloneJobRequest, options);
+        async cloneJob(jobId: string, cloneServiceRequest?: CloneServiceRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JobResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloneJob(jobId, cloneServiceRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -41961,12 +41904,12 @@ export const JobsApiFactory = function (configuration?: Configuration, basePath?
          * This will create a new job with the same configuration on the targeted environment Id.
          * @summary Clone job
          * @param {string} jobId Job ID
-         * @param {CloneJobRequest} [cloneJobRequest] 
+         * @param {CloneServiceRequest} [cloneServiceRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloneJob(jobId: string, cloneJobRequest?: CloneJobRequest, options?: any): AxiosPromise<JobResponse> {
-            return localVarFp.cloneJob(jobId, cloneJobRequest, options).then((request) => request(axios, basePath));
+        cloneJob(jobId: string, cloneServiceRequest?: CloneServiceRequest, options?: any): AxiosPromise<JobResponse> {
+            return localVarFp.cloneJob(jobId, cloneServiceRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -42036,13 +41979,13 @@ export class JobsApi extends BaseAPI {
      * This will create a new job with the same configuration on the targeted environment Id.
      * @summary Clone job
      * @param {string} jobId Job ID
-     * @param {CloneJobRequest} [cloneJobRequest] 
+     * @param {CloneServiceRequest} [cloneServiceRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof JobsApi
      */
-    public cloneJob(jobId: string, cloneJobRequest?: CloneJobRequest, options?: AxiosRequestConfig) {
-        return JobsApiFp(this.configuration).cloneJob(jobId, cloneJobRequest, options).then((request) => request(this.axios, this.basePath));
+    public cloneJob(jobId: string, cloneServiceRequest?: CloneServiceRequest, options?: AxiosRequestConfig) {
+        return JobsApiFp(this.configuration).cloneJob(jobId, cloneServiceRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
