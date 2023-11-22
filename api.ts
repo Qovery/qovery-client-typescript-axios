@@ -8299,46 +8299,59 @@ export interface HelmRequest {
     'values_override': HelmRequestAllOfValuesOverride;
 }
 /**
+ * @type HelmRequestAllOfSource
+ * @export
+ */
+export type HelmRequestAllOfSource = HelmRequestAllOfSourceOneOf | HelmRequestAllOfSourceOneOf1;
+
+/**
  * 
  * @export
- * @interface HelmRequestAllOfSource
+ * @interface HelmRequestAllOfSourceOneOf
  */
-export interface HelmRequestAllOfSource {
+export interface HelmRequestAllOfSourceOneOf {
     /**
      * 
      * @type {HelmGitRepositoryRequest}
-     * @memberof HelmRequestAllOfSource
+     * @memberof HelmRequestAllOfSourceOneOf
      */
-    'git_repository'?: HelmGitRepositoryRequest | null;
-    /**
-     * 
-     * @type {HelmRequestAllOfSourceHelmRepository}
-     * @memberof HelmRequestAllOfSource
-     */
-    'helm_repository'?: HelmRequestAllOfSourceHelmRepository | null;
+    'git_repository'?: HelmGitRepositoryRequest;
 }
 /**
  * 
  * @export
- * @interface HelmRequestAllOfSourceHelmRepository
+ * @interface HelmRequestAllOfSourceOneOf1
  */
-export interface HelmRequestAllOfSourceHelmRepository {
+export interface HelmRequestAllOfSourceOneOf1 {
+    /**
+     * 
+     * @type {HelmRequestAllOfSourceOneOf1HelmRepository}
+     * @memberof HelmRequestAllOfSourceOneOf1
+     */
+    'helm_repository'?: HelmRequestAllOfSourceOneOf1HelmRepository;
+}
+/**
+ * 
+ * @export
+ * @interface HelmRequestAllOfSourceOneOf1HelmRepository
+ */
+export interface HelmRequestAllOfSourceOneOf1HelmRepository {
     /**
      * The id of the helm repository
      * @type {string}
-     * @memberof HelmRequestAllOfSourceHelmRepository
+     * @memberof HelmRequestAllOfSourceOneOf1HelmRepository
      */
     'repository'?: string | null;
     /**
      * The name of the chart in the repository
      * @type {string}
-     * @memberof HelmRequestAllOfSourceHelmRepository
+     * @memberof HelmRequestAllOfSourceOneOf1HelmRepository
      */
     'chart_name'?: string;
     /**
      * The version of the chart to use
      * @type {string}
-     * @memberof HelmRequestAllOfSourceHelmRepository
+     * @memberof HelmRequestAllOfSourceOneOf1HelmRepository
      */
     'chart_version'?: string;
 }
@@ -8387,29 +8400,10 @@ export interface HelmRequestAllOfValuesOverrideFile {
     'raw'?: HelmRequestAllOfValuesOverrideFileRaw | null;
     /**
      * 
-     * @type {HelmRequestAllOfValuesOverrideFileGit}
+     * @type {HelmValuesGitRepositoryRequest}
      * @memberof HelmRequestAllOfValuesOverrideFile
      */
-    'git'?: HelmRequestAllOfValuesOverrideFileGit | null;
-}
-/**
- * 
- * @export
- * @interface HelmRequestAllOfValuesOverrideFileGit
- */
-export interface HelmRequestAllOfValuesOverrideFileGit {
-    /**
-     * 
-     * @type {ApplicationGitRepositoryRequest}
-     * @memberof HelmRequestAllOfValuesOverrideFileGit
-     */
-    'git_repository'?: ApplicationGitRepositoryRequest;
-    /**
-     * List of path inside your git repository to locate values file. Must start by a /
-     * @type {Array<string>}
-     * @memberof HelmRequestAllOfValuesOverrideFileGit
-     */
-    'paths'?: Array<string>;
+    'git_repository'?: HelmValuesGitRepositoryRequest;
 }
 /**
  * 
@@ -8523,10 +8517,10 @@ export interface HelmResponse {
     'allow_cluster_wide_resources': boolean;
     /**
      * 
-     * @type {HelmRequestAllOfValuesOverride}
+     * @type {HelmResponseAllOfValuesOverride}
      * @memberof HelmResponse
      */
-    'values_override': HelmRequestAllOfValuesOverride;
+    'values_override': HelmResponseAllOfValuesOverride;
 }
 /**
  * 
@@ -8675,6 +8669,75 @@ export interface HelmResponseAllOfSourceOneOfGit {
     'git_repository'?: ApplicationGitRepositoryRequest;
 }
 /**
+ * Specify helm values you want to set or override 
+ * @export
+ * @interface HelmResponseAllOfValuesOverride
+ */
+export interface HelmResponseAllOfValuesOverride {
+    /**
+     * 
+     * @type {Array<Array<string>>}
+     * @memberof HelmResponseAllOfValuesOverride
+     */
+    'set'?: Array<Array<string>>;
+    /**
+     * 
+     * @type {Array<Array<string>>}
+     * @memberof HelmResponseAllOfValuesOverride
+     */
+    'set_string'?: Array<Array<string>>;
+    /**
+     * 
+     * @type {Array<Array<string>>}
+     * @memberof HelmResponseAllOfValuesOverride
+     */
+    'set_json'?: Array<Array<string>>;
+    /**
+     * 
+     * @type {HelmResponseAllOfValuesOverrideFile}
+     * @memberof HelmResponseAllOfValuesOverride
+     */
+    'file'?: HelmResponseAllOfValuesOverrideFile | null;
+}
+/**
+ * 
+ * @export
+ * @interface HelmResponseAllOfValuesOverrideFile
+ */
+export interface HelmResponseAllOfValuesOverrideFile {
+    /**
+     * 
+     * @type {HelmRequestAllOfValuesOverrideFileRaw}
+     * @memberof HelmResponseAllOfValuesOverrideFile
+     */
+    'raw'?: HelmRequestAllOfValuesOverrideFileRaw | null;
+    /**
+     * 
+     * @type {HelmResponseAllOfValuesOverrideFileGit}
+     * @memberof HelmResponseAllOfValuesOverrideFile
+     */
+    'git'?: HelmResponseAllOfValuesOverrideFileGit | null;
+}
+/**
+ * 
+ * @export
+ * @interface HelmResponseAllOfValuesOverrideFileGit
+ */
+export interface HelmResponseAllOfValuesOverrideFileGit {
+    /**
+     * 
+     * @type {ApplicationGitRepositoryRequest}
+     * @memberof HelmResponseAllOfValuesOverrideFileGit
+     */
+    'git_repository'?: ApplicationGitRepositoryRequest;
+    /**
+     * List of path inside your git repository to locate values file. Must start by a /
+     * @type {Array<string>}
+     * @memberof HelmResponseAllOfValuesOverrideFileGit
+     */
+    'paths'?: Array<string>;
+}
+/**
  * 
  * @export
  * @interface HelmResponseList
@@ -8686,6 +8749,37 @@ export interface HelmResponseList {
      * @memberof HelmResponseList
      */
     'results'?: Array<HelmResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface HelmValuesGitRepositoryRequest
+ */
+export interface HelmValuesGitRepositoryRequest {
+    /**
+     * application git repository URL
+     * @type {string}
+     * @memberof HelmValuesGitRepositoryRequest
+     */
+    'url': string;
+    /**
+     * Name of the branch to use. This is optional If not specified, then the branch used is the `main` or `master` one 
+     * @type {string}
+     * @memberof HelmValuesGitRepositoryRequest
+     */
+    'branch': string;
+    /**
+     * List of path inside your git repository to locate values file. Must start by a /
+     * @type {Array<string>}
+     * @memberof HelmValuesGitRepositoryRequest
+     */
+    'paths': Array<string>;
+    /**
+     * The git token id on Qovery side
+     * @type {string}
+     * @memberof HelmValuesGitRepositoryRequest
+     */
+    'git_token_id'?: string | null;
 }
 /**
  * 
