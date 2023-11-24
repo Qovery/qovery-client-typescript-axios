@@ -38163,14 +38163,18 @@ export const HelmRepositoriesApiAxiosParamCreator = function (configuration?: Co
          * 
          * @summary Delete a helm repository
          * @param {string} organizationId Organization ID
+         * @param {string} helmRepositoryId Helm chart repository ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteHelmRepository: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteHelmRepository: async (organizationId: string, helmRepositoryId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('deleteHelmRepository', 'organizationId', organizationId)
+            // verify required parameter 'helmRepositoryId' is not null or undefined
+            assertParamExists('deleteHelmRepository', 'helmRepositoryId', helmRepositoryId)
             const localVarPath = `/organization/{organizationId}/helmRepository/{helmRepositoryId}`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"helmRepositoryId"}}`, encodeURIComponent(String(helmRepositoryId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -38204,15 +38208,19 @@ export const HelmRepositoriesApiAxiosParamCreator = function (configuration?: Co
          * 
          * @summary Edit a helm repository
          * @param {string} organizationId Organization ID
+         * @param {string} helmRepositoryId Helm chart repository ID
          * @param {HelmRepositoryRequest} [helmRepositoryRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editHelmRepository: async (organizationId: string, helmRepositoryRequest?: HelmRepositoryRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        editHelmRepository: async (organizationId: string, helmRepositoryId: string, helmRepositoryRequest?: HelmRepositoryRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('editHelmRepository', 'organizationId', organizationId)
+            // verify required parameter 'helmRepositoryId' is not null or undefined
+            assertParamExists('editHelmRepository', 'helmRepositoryId', helmRepositoryId)
             const localVarPath = `/organization/{organizationId}/helmRepository/{helmRepositoryId}`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"helmRepositoryId"}}`, encodeURIComponent(String(helmRepositoryId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -38394,23 +38402,25 @@ export const HelmRepositoriesApiFp = function(configuration?: Configuration) {
          * 
          * @summary Delete a helm repository
          * @param {string} organizationId Organization ID
+         * @param {string} helmRepositoryId Helm chart repository ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteHelmRepository(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteHelmRepository(organizationId, options);
+        async deleteHelmRepository(organizationId: string, helmRepositoryId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteHelmRepository(organizationId, helmRepositoryId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Edit a helm repository
          * @param {string} organizationId Organization ID
+         * @param {string} helmRepositoryId Helm chart repository ID
          * @param {HelmRepositoryRequest} [helmRepositoryRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editHelmRepository(organizationId: string, helmRepositoryRequest?: HelmRepositoryRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmRepositoryResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.editHelmRepository(organizationId, helmRepositoryRequest, options);
+        async editHelmRepository(organizationId: string, helmRepositoryId: string, helmRepositoryRequest?: HelmRepositoryRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmRepositoryResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editHelmRepository(organizationId, helmRepositoryId, helmRepositoryRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -38471,22 +38481,24 @@ export const HelmRepositoriesApiFactory = function (configuration?: Configuratio
          * 
          * @summary Delete a helm repository
          * @param {string} organizationId Organization ID
+         * @param {string} helmRepositoryId Helm chart repository ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteHelmRepository(organizationId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteHelmRepository(organizationId, options).then((request) => request(axios, basePath));
+        deleteHelmRepository(organizationId: string, helmRepositoryId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteHelmRepository(organizationId, helmRepositoryId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Edit a helm repository
          * @param {string} organizationId Organization ID
+         * @param {string} helmRepositoryId Helm chart repository ID
          * @param {HelmRepositoryRequest} [helmRepositoryRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editHelmRepository(organizationId: string, helmRepositoryRequest?: HelmRepositoryRequest, options?: any): AxiosPromise<HelmRepositoryResponse> {
-            return localVarFp.editHelmRepository(organizationId, helmRepositoryRequest, options).then((request) => request(axios, basePath));
+        editHelmRepository(organizationId: string, helmRepositoryId: string, helmRepositoryRequest?: HelmRepositoryRequest, options?: any): AxiosPromise<HelmRepositoryResponse> {
+            return localVarFp.editHelmRepository(organizationId, helmRepositoryId, helmRepositoryRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -38545,25 +38557,27 @@ export class HelmRepositoriesApi extends BaseAPI {
      * 
      * @summary Delete a helm repository
      * @param {string} organizationId Organization ID
+     * @param {string} helmRepositoryId Helm chart repository ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof HelmRepositoriesApi
      */
-    public deleteHelmRepository(organizationId: string, options?: AxiosRequestConfig) {
-        return HelmRepositoriesApiFp(this.configuration).deleteHelmRepository(organizationId, options).then((request) => request(this.axios, this.basePath));
+    public deleteHelmRepository(organizationId: string, helmRepositoryId: string, options?: AxiosRequestConfig) {
+        return HelmRepositoriesApiFp(this.configuration).deleteHelmRepository(organizationId, helmRepositoryId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Edit a helm repository
      * @param {string} organizationId Organization ID
+     * @param {string} helmRepositoryId Helm chart repository ID
      * @param {HelmRepositoryRequest} [helmRepositoryRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof HelmRepositoriesApi
      */
-    public editHelmRepository(organizationId: string, helmRepositoryRequest?: HelmRepositoryRequest, options?: AxiosRequestConfig) {
-        return HelmRepositoriesApiFp(this.configuration).editHelmRepository(organizationId, helmRepositoryRequest, options).then((request) => request(this.axios, this.basePath));
+    public editHelmRepository(organizationId: string, helmRepositoryId: string, helmRepositoryRequest?: HelmRepositoryRequest, options?: AxiosRequestConfig) {
+        return HelmRepositoriesApiFp(this.configuration).editHelmRepository(organizationId, helmRepositoryId, helmRepositoryRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
