@@ -3418,7 +3418,8 @@ export const ContainerRegistryKindEnum = {
     GITLAB_CR: 'GITLAB_CR',
     PUBLIC_ECR: 'PUBLIC_ECR',
     DOCR: 'DOCR',
-    GENERIC_CR: 'GENERIC_CR'
+    GENERIC_CR: 'GENERIC_CR',
+    GCP_ARTIFACT_REGISTRY: 'GCP_ARTIFACT_REGISTRY'
 } as const;
 
 export type ContainerRegistryKindEnum = typeof ContainerRegistryKindEnum[keyof typeof ContainerRegistryKindEnum];
