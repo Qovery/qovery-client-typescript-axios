@@ -1019,19 +1019,19 @@ export interface AvailableContainerRegistryResponse {
      * @type {ContainerRegistryKindEnum}
      * @memberof AvailableContainerRegistryResponse
      */
-    'kind'?: ContainerRegistryKindEnum;
+    'kind': ContainerRegistryKindEnum;
     /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof AvailableContainerRegistryResponse
      */
-    'required_config'?: { [key: string]: any; };
+    'required_config': { [key: string]: any; };
     /**
      * 
      * @type {boolean}
      * @memberof AvailableContainerRegistryResponse
      */
-    'is_mandatory'?: boolean;
+    'is_mandatory': boolean;
 }
 
 
@@ -1059,19 +1059,19 @@ export interface AvailableHelmRepositoryResponse {
      * @type {HelmRepositoryKindEnum}
      * @memberof AvailableHelmRepositoryResponse
      */
-    'kind'?: HelmRepositoryKindEnum;
+    'kind': HelmRepositoryKindEnum;
     /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof AvailableHelmRepositoryResponse
      */
-    'required_config'?: { [key: string]: any; };
+    'required_config': { [key: string]: any; };
     /**
      * 
      * @type {boolean}
      * @memberof AvailableHelmRepositoryResponse
      */
-    'is_mandatory'?: boolean;
+    'is_mandatory': boolean;
 }
 
 
