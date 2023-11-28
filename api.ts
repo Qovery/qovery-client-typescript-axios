@@ -37786,6 +37786,52 @@ export const HelmMainCallsApiAxiosParamCreator = function (configuration?: Confi
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Returns list of the last 100 commits made on the repository linked to helm
+         * @summary List last helm commits
+         * @param {string} helmId Helm ID
+         * @param {string} [of] Source of git commit. Can be \&#39;chart\&#39; or \&#39;values\&#39;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listHelmCommit: async (helmId: string, of?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('listHelmCommit', 'helmId', helmId)
+            const localVarPath = `/helm/{helmId}/commit`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (of !== undefined) {
+                localVarQueryParameter['of'] = of;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -37841,6 +37887,18 @@ export const HelmMainCallsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getHelmStatus(helmId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * Returns list of the last 100 commits made on the repository linked to helm
+         * @summary List last helm commits
+         * @param {string} helmId Helm ID
+         * @param {string} [of] Source of git commit. Can be \&#39;chart\&#39; or \&#39;values\&#39;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listHelmCommit(helmId: string, of?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommitResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listHelmCommit(helmId, of, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -37891,6 +37949,17 @@ export const HelmMainCallsApiFactory = function (configuration?: Configuration, 
          */
         getHelmStatus(helmId: string, options?: any): AxiosPromise<Status> {
             return localVarFp.getHelmStatus(helmId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns list of the last 100 commits made on the repository linked to helm
+         * @summary List last helm commits
+         * @param {string} helmId Helm ID
+         * @param {string} [of] Source of git commit. Can be \&#39;chart\&#39; or \&#39;values\&#39;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listHelmCommit(helmId: string, of?: string, options?: any): AxiosPromise<CommitResponseList> {
+            return localVarFp.listHelmCommit(helmId, of, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -37949,6 +38018,19 @@ export class HelmMainCallsApi extends BaseAPI {
      */
     public getHelmStatus(helmId: string, options?: AxiosRequestConfig) {
         return HelmMainCallsApiFp(this.configuration).getHelmStatus(helmId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns list of the last 100 commits made on the repository linked to helm
+     * @summary List last helm commits
+     * @param {string} helmId Helm ID
+     * @param {string} [of] Source of git commit. Can be \&#39;chart\&#39; or \&#39;values\&#39;
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmMainCallsApi
+     */
+    public listHelmCommit(helmId: string, of?: string, options?: AxiosRequestConfig) {
+        return HelmMainCallsApiFp(this.configuration).listHelmCommit(helmId, of, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
