@@ -12437,19 +12437,25 @@ export interface ScalewayCredentialsRequest {
      * @type {string}
      * @memberof ScalewayCredentialsRequest
      */
-    'scaleway_access_key'?: string;
+    'scaleway_access_key': string;
     /**
      * 
      * @type {string}
      * @memberof ScalewayCredentialsRequest
      */
-    'scaleway_secret_key'?: string;
+    'scaleway_secret_key': string;
     /**
      * 
      * @type {string}
      * @memberof ScalewayCredentialsRequest
      */
-    'scaleway_project_id'?: string;
+    'scaleway_project_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScalewayCredentialsRequest
+     */
+    'scaleway_organization_id': string;
 }
 /**
  * 
