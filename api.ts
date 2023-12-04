@@ -5122,11 +5122,17 @@ export interface DeployHelmRequest {
      */
     'version'?: string;
     /**
-     * Commit to deploy Cannot be set if `version` is defined 
+     * Commit to deploy for chart source. Cannot be set if `version` is defined 
      * @type {string}
      * @memberof DeployHelmRequest
      */
     'git_commit_id'?: string;
+    /**
+     * Commit to deploy for values override 
+     * @type {string}
+     * @memberof DeployHelmRequest
+     */
+    'values_override_git_commit_id'?: string;
 }
 /**
  * 
