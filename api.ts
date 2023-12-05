@@ -2821,35 +2821,10 @@ export interface ClusterRoutingTable {
 export interface ClusterRoutingTableRequest {
     /**
      * 
-     * @type {Array<ClusterRoutingTableRequestRoutesInner>}
+     * @type {Array<ClusterRoutingTableResultsInner>}
      * @memberof ClusterRoutingTableRequest
      */
-    'routes': Array<ClusterRoutingTableRequestRoutesInner>;
-}
-/**
- * 
- * @export
- * @interface ClusterRoutingTableRequestRoutesInner
- */
-export interface ClusterRoutingTableRequestRoutesInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterRoutingTableRequestRoutesInner
-     */
-    'destination': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterRoutingTableRequestRoutesInner
-     */
-    'target': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterRoutingTableRequestRoutesInner
-     */
-    'description': string;
+    'routes': Array<ClusterRoutingTableResultsInner>;
 }
 /**
  * 
@@ -2862,19 +2837,19 @@ export interface ClusterRoutingTableResultsInner {
      * @type {string}
      * @memberof ClusterRoutingTableResultsInner
      */
-    'destination'?: string;
+    'destination': string;
     /**
      * 
      * @type {string}
      * @memberof ClusterRoutingTableResultsInner
      */
-    'target'?: string;
+    'target': string;
     /**
      * 
      * @type {string}
      * @memberof ClusterRoutingTableResultsInner
      */
-    'description'?: string;
+    'description': string;
 }
 /**
  * 
