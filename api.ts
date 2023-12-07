@@ -23026,6 +23026,51 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Get cluster kubeconfig
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusterKubeconfig: async (organizationId: string, clusterId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getClusterKubeconfig', 'organizationId', organizationId)
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('getClusterKubeconfig', 'clusterId', clusterId)
+            const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/kubeconfig`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Know if a cluster is ready to be deployed or not
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
@@ -23562,6 +23607,18 @@ export const ClustersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get cluster kubeconfig
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getClusterKubeconfig(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterKubeconfig(organizationId, clusterId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Know if a cluster is ready to be deployed or not
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
@@ -23767,6 +23824,17 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          */
         getClusterAdvancedSettings(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterAdvancedSettings> {
             return localVarFp.getClusterAdvancedSettings(organizationId, clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get cluster kubeconfig
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusterKubeconfig(organizationId: string, clusterId: string, options?: any): AxiosPromise<string> {
+            return localVarFp.getClusterKubeconfig(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -23978,6 +24046,19 @@ export class ClustersApi extends BaseAPI {
      */
     public getClusterAdvancedSettings(organizationId: string, clusterId: string, options?: AxiosRequestConfig) {
         return ClustersApiFp(this.configuration).getClusterAdvancedSettings(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get cluster kubeconfig
+     * @param {string} organizationId Organization ID
+     * @param {string} clusterId Cluster ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClustersApi
+     */
+    public getClusterKubeconfig(organizationId: string, clusterId: string, options?: AxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).getClusterKubeconfig(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
