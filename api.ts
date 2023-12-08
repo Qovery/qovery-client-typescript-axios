@@ -8011,13 +8011,43 @@ export interface HelmRepositoryRequestConfig {
      * @type {string}
      * @memberof HelmRepositoryRequestConfig
      */
-    'login'?: string;
+    'username'?: string;
     /**
      * Required if the repository is private
      * @type {string}
      * @memberof HelmRepositoryRequestConfig
      */
     'password'?: string;
+    /**
+     * Required if kind is `ECR` or `PUBLIC_ECR`
+     * @type {string}
+     * @memberof HelmRepositoryRequestConfig
+     */
+    'access_key_id'?: string;
+    /**
+     * Required if kind is `ECR` or `PUBLIC_ECR`
+     * @type {string}
+     * @memberof HelmRepositoryRequestConfig
+     */
+    'secret_access_key'?: string;
+    /**
+     * Required if kind is `ECR` or `SCALEWAY_CR`
+     * @type {string}
+     * @memberof HelmRepositoryRequestConfig
+     */
+    'region'?: string;
+    /**
+     * Required if kind is `SCALEWAY_CR`
+     * @type {string}
+     * @memberof HelmRepositoryRequestConfig
+     */
+    'scaleway_access_key'?: string;
+    /**
+     * Required if kind is `SCALEWAY_CR`
+     * @type {string}
+     * @memberof HelmRepositoryRequestConfig
+     */
+    'scaleway_secret_key'?: string;
 }
 /**
  * 
