@@ -7942,7 +7942,14 @@ export interface HelmPortRequestPortsInner {
 
 export const HelmRepositoryKindEnum = {
     HTTPS: 'HTTPS',
-    OCI: 'OCI'
+    OCI_PUBLIC: 'OCI_PUBLIC',
+    OCI_ECR: 'OCI_ECR',
+    OCI_SCALEWAY_CR: 'OCI_SCALEWAY_CR',
+    OCI_DOCKER_HUB: 'OCI_DOCKER_HUB',
+    OCI_PUBLIC_ECR: 'OCI_PUBLIC_ECR',
+    OCI_GENERIC_CR: 'OCI_GENERIC_CR',
+    OCI_GITHUB_CR: 'OCI_GITHUB_CR',
+    OCI_GITLAB_CR: 'OCI_GITLAB_CR'
 } as const;
 
 export type HelmRepositoryKindEnum = typeof HelmRepositoryKindEnum[keyof typeof HelmRepositoryKindEnum];
