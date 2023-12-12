@@ -12855,6 +12855,12 @@ export interface ServicePortRequestPortsInner {
      * @type {string}
      * @memberof ServicePortRequestPortsInner
      */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ServicePortRequestPortsInner
+     */
     'name'?: string;
     /**
      * The listening port of your service.
