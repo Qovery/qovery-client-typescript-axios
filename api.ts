@@ -8096,6 +8096,12 @@ export interface HelmRepositoryResponse {
      * @memberof HelmRepositoryResponse
      */
     'url'?: string;
+    /**
+     * Bypass tls certificate verification when connecting to repository
+     * @type {boolean}
+     * @memberof HelmRepositoryResponse
+     */
+    'skip_tls_verification'?: boolean;
 }
 
 
