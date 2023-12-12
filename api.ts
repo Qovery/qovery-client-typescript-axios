@@ -7985,6 +7985,12 @@ export interface HelmRepositoryRequest {
      */
     'url'?: string;
     /**
+     * Bypass tls certificate verification when connecting to repository
+     * @type {boolean}
+     * @memberof HelmRepositoryRequest
+     */
+    'skip_tls_verification': boolean;
+    /**
      * 
      * @type {HelmRepositoryRequestConfig}
      * @memberof HelmRepositoryRequest
@@ -7999,12 +8005,6 @@ export interface HelmRepositoryRequest {
  * @interface HelmRepositoryRequestConfig
  */
 export interface HelmRepositoryRequestConfig {
-    /**
-     * Bypass tls certificate verification when connecting to repository
-     * @type {boolean}
-     * @memberof HelmRepositoryRequestConfig
-     */
-    'skip_tls_verification'?: boolean;
     /**
      * Required if the repository is private
      * @type {string}
