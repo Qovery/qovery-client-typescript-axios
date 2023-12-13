@@ -8367,6 +8367,12 @@ export interface HelmResponse {
      */
     'description'?: string;
     /**
+     * Maximum number of seconds allowed for helm to run before killing it and mark it as failed 
+     * @type {number}
+     * @memberof HelmResponse
+     */
+    'timeout_sec'?: number;
+    /**
      * Indicates if the \'environment preview option\' is enabled.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
      * @type {boolean}
      * @memberof HelmResponse
