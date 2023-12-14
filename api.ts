@@ -1775,7 +1775,8 @@ export interface CloudProvider {
 export const CloudProviderEnum = {
     AWS: 'AWS',
     DO: 'DO',
-    SCW: 'SCW'
+    SCW: 'SCW',
+    GCP: 'GCP'
 } as const;
 
 export type CloudProviderEnum = typeof CloudProviderEnum[keyof typeof CloudProviderEnum];
@@ -7340,6 +7341,25 @@ export interface EnvironmentVariableResponseList {
      * @memberof EnvironmentVariableResponseList
      */
     'results'?: Array<EnvironmentVariable>;
+}
+/**
+ * 
+ * @export
+ * @interface GcpCredentialsRequest
+ */
+export interface GcpCredentialsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof GcpCredentialsRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GcpCredentialsRequest
+     */
+    'json_credentials': string;
 }
 /**
  * 
@@ -20632,6 +20652,121 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
+         * @summary List GCP features available
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listGcpFeatures: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/gcp/clusterFeature`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List GCP GKE available instance types
+         * @param {string} region region name
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listGcpGkeInstanceType: async (region: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'region' is not null or undefined
+            assertParamExists('listGcpGkeInstanceType', 'region', region)
+            const localVarPath = `/gcp/instanceType/{region}`
+                .replace(`{${"region"}}`, encodeURIComponent(String(region)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List GCP regions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listGcpRegions: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/gcp/region`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary List Scaleway available managed database instance types
          * @param {string} databaseType Database type
          * @param {*} [options] Override http request option.
@@ -21008,6 +21143,37 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List GCP features available
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listGcpFeatures(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterFeatureResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listGcpFeatures(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary List GCP GKE available instance types
+         * @param {string} region region name
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listGcpGkeInstanceType(region: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterInstanceTypeResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listGcpGkeInstanceType(region, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary List GCP regions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listGcpRegions(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterRegionResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listGcpRegions(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary List Scaleway available managed database instance types
          * @param {string} databaseType Database type
          * @param {*} [options] Override http request option.
@@ -21200,6 +21366,34 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
          */
         listDORegions(options?: any): AxiosPromise<ClusterRegionResponseList> {
             return localVarFp.listDORegions(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List GCP features available
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listGcpFeatures(options?: any): AxiosPromise<ClusterFeatureResponseList> {
+            return localVarFp.listGcpFeatures(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List GCP GKE available instance types
+         * @param {string} region region name
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listGcpGkeInstanceType(region: string, options?: any): AxiosPromise<ClusterInstanceTypeResponseList> {
+            return localVarFp.listGcpGkeInstanceType(region, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List GCP regions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listGcpRegions(options?: any): AxiosPromise<ClusterRegionResponseList> {
+            return localVarFp.listGcpRegions(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -21418,6 +21612,40 @@ export class CloudProviderApi extends BaseAPI {
 
     /**
      * 
+     * @summary List GCP features available
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderApi
+     */
+    public listGcpFeatures(options?: AxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listGcpFeatures(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List GCP GKE available instance types
+     * @param {string} region region name
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderApi
+     */
+    public listGcpGkeInstanceType(region: string, options?: AxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listGcpGkeInstanceType(region, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List GCP regions
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderApi
+     */
+    public listGcpRegions(options?: AxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listGcpRegions(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary List Scaleway available managed database instance types
      * @param {string} databaseType Database type
      * @param {*} [options] Override http request option.
@@ -21585,6 +21813,51 @@ export const CloudProviderCredentialsApiAxiosParamCreator = function (configurat
         },
         /**
          * 
+         * @summary Create GCP credentials set
+         * @param {string} organizationId Organization ID
+         * @param {GcpCredentialsRequest} [gcpCredentialsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createGCPCredentials: async (organizationId: string, gcpCredentialsRequest?: GcpCredentialsRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('createGCPCredentials', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/gcp/credentials`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(gcpCredentialsRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Create Scaleway credentials set
          * @param {string} organizationId Organization ID
          * @param {ScalewayCredentialsRequest} [scalewayCredentialsRequest] 
@@ -21687,6 +21960,51 @@ export const CloudProviderCredentialsApiAxiosParamCreator = function (configurat
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('deleteDOCredentials', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/digitalOcean/credentials/{credentialsId}`
+                .replace(`{${"credentialsId"}}`, encodeURIComponent(String(credentialsId)))
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a set of GCP credentials
+         * @param {string} credentialsId Credentials ID
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteGcpCredentials: async (credentialsId: string, organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'credentialsId' is not null or undefined
+            assertParamExists('deleteGcpCredentials', 'credentialsId', credentialsId)
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('deleteGcpCredentials', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/gcp/credentials/{credentialsId}`
                 .replace(`{${"credentialsId"}}`, encodeURIComponent(String(credentialsId)))
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -21863,6 +22181,55 @@ export const CloudProviderCredentialsApiAxiosParamCreator = function (configurat
         },
         /**
          * 
+         * @summary Edit a set of GCP credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {GcpCredentialsRequest} [gcpCredentialsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editGcpCredentials: async (organizationId: string, credentialsId: string, gcpCredentialsRequest?: GcpCredentialsRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('editGcpCredentials', 'organizationId', organizationId)
+            // verify required parameter 'credentialsId' is not null or undefined
+            assertParamExists('editGcpCredentials', 'credentialsId', credentialsId)
+            const localVarPath = `/organization/{organizationId}/gcp/credentials/{credentialsId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"credentialsId"}}`, encodeURIComponent(String(credentialsId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(gcpCredentialsRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Edit a set of Scaleway credentials
          * @param {string} organizationId Organization ID
          * @param {string} credentialsId Credentials ID
@@ -21969,6 +22336,51 @@ export const CloudProviderCredentialsApiAxiosParamCreator = function (configurat
             // verify required parameter 'credentialsId' is not null or undefined
             assertParamExists('getDOCredentials', 'credentialsId', credentialsId)
             const localVarPath = `/organization/{organizationId}/digitalOcean/credentials/{credentialsId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"credentialsId"}}`, encodeURIComponent(String(credentialsId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a set of GCP credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGcpCredentials: async (organizationId: string, credentialsId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getGcpCredentials', 'organizationId', organizationId)
+            // verify required parameter 'credentialsId' is not null or undefined
+            assertParamExists('getGcpCredentials', 'credentialsId', credentialsId)
+            const localVarPath = `/organization/{organizationId}/gcp/credentials/{credentialsId}`
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
                 .replace(`{${"credentialsId"}}`, encodeURIComponent(String(credentialsId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -22129,6 +22541,47 @@ export const CloudProviderCredentialsApiAxiosParamCreator = function (configurat
         },
         /**
          * 
+         * @summary List GCP credentials
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listGcpCredentials: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listGcpCredentials', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/gcp/credentials`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary List Scaleway credentials
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
@@ -22204,6 +22657,18 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
         },
         /**
          * 
+         * @summary Create GCP credentials set
+         * @param {string} organizationId Organization ID
+         * @param {GcpCredentialsRequest} [gcpCredentialsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createGCPCredentials(organizationId: string, gcpCredentialsRequest?: GcpCredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentials>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createGCPCredentials(organizationId, gcpCredentialsRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Create Scaleway credentials set
          * @param {string} organizationId Organization ID
          * @param {ScalewayCredentialsRequest} [scalewayCredentialsRequest] 
@@ -22236,6 +22701,18 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
          */
         async deleteDOCredentials(credentialsId: string, organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDOCredentials(credentialsId, organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete a set of GCP credentials
+         * @param {string} credentialsId Credentials ID
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteGcpCredentials(credentialsId: string, organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteGcpCredentials(credentialsId, organizationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -22278,6 +22755,19 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
         },
         /**
          * 
+         * @summary Edit a set of GCP credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {GcpCredentialsRequest} [gcpCredentialsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editGcpCredentials(organizationId: string, credentialsId: string, gcpCredentialsRequest?: GcpCredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentials>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editGcpCredentials(organizationId, credentialsId, gcpCredentialsRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Edit a set of Scaleway credentials
          * @param {string} organizationId Organization ID
          * @param {string} credentialsId Credentials ID
@@ -22315,6 +22805,18 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
         },
         /**
          * 
+         * @summary Get a set of GCP credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGcpCredentials(organizationId: string, credentialsId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentials>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGcpCredentials(organizationId, credentialsId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get a set of Scaleway credentials
          * @param {string} organizationId Organization ID
          * @param {string} credentialsId Credentials ID
@@ -22345,6 +22847,17 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
          */
         async listDOCredentials(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentialsResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listDOCredentials(organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary List GCP credentials
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listGcpCredentials(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentialsResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listGcpCredentials(organizationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -22392,6 +22905,17 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
         },
         /**
          * 
+         * @summary Create GCP credentials set
+         * @param {string} organizationId Organization ID
+         * @param {GcpCredentialsRequest} [gcpCredentialsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createGCPCredentials(organizationId: string, gcpCredentialsRequest?: GcpCredentialsRequest, options?: any): AxiosPromise<ClusterCredentials> {
+            return localVarFp.createGCPCredentials(organizationId, gcpCredentialsRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Create Scaleway credentials set
          * @param {string} organizationId Organization ID
          * @param {ScalewayCredentialsRequest} [scalewayCredentialsRequest] 
@@ -22422,6 +22946,17 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
          */
         deleteDOCredentials(credentialsId: string, organizationId: string, options?: any): AxiosPromise<void> {
             return localVarFp.deleteDOCredentials(credentialsId, organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete a set of GCP credentials
+         * @param {string} credentialsId Credentials ID
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteGcpCredentials(credentialsId: string, organizationId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteGcpCredentials(credentialsId, organizationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -22460,6 +22995,18 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
         },
         /**
          * 
+         * @summary Edit a set of GCP credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {GcpCredentialsRequest} [gcpCredentialsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editGcpCredentials(organizationId: string, credentialsId: string, gcpCredentialsRequest?: GcpCredentialsRequest, options?: any): AxiosPromise<ClusterCredentials> {
+            return localVarFp.editGcpCredentials(organizationId, credentialsId, gcpCredentialsRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Edit a set of Scaleway credentials
          * @param {string} organizationId Organization ID
          * @param {string} credentialsId Credentials ID
@@ -22494,6 +23041,17 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
         },
         /**
          * 
+         * @summary Get a set of GCP credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGcpCredentials(organizationId: string, credentialsId: string, options?: any): AxiosPromise<ClusterCredentials> {
+            return localVarFp.getGcpCredentials(organizationId, credentialsId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get a set of Scaleway credentials
          * @param {string} organizationId Organization ID
          * @param {string} credentialsId Credentials ID
@@ -22522,6 +23080,16 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
          */
         listDOCredentials(organizationId: string, options?: any): AxiosPromise<ClusterCredentialsResponseList> {
             return localVarFp.listDOCredentials(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List GCP credentials
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listGcpCredentials(organizationId: string, options?: any): AxiosPromise<ClusterCredentialsResponseList> {
+            return localVarFp.listGcpCredentials(organizationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -22571,6 +23139,19 @@ export class CloudProviderCredentialsApi extends BaseAPI {
 
     /**
      * 
+     * @summary Create GCP credentials set
+     * @param {string} organizationId Organization ID
+     * @param {GcpCredentialsRequest} [gcpCredentialsRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderCredentialsApi
+     */
+    public createGCPCredentials(organizationId: string, gcpCredentialsRequest?: GcpCredentialsRequest, options?: AxiosRequestConfig) {
+        return CloudProviderCredentialsApiFp(this.configuration).createGCPCredentials(organizationId, gcpCredentialsRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Create Scaleway credentials set
      * @param {string} organizationId Organization ID
      * @param {ScalewayCredentialsRequest} [scalewayCredentialsRequest] 
@@ -22606,6 +23187,19 @@ export class CloudProviderCredentialsApi extends BaseAPI {
      */
     public deleteDOCredentials(credentialsId: string, organizationId: string, options?: AxiosRequestConfig) {
         return CloudProviderCredentialsApiFp(this.configuration).deleteDOCredentials(credentialsId, organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete a set of GCP credentials
+     * @param {string} credentialsId Credentials ID
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderCredentialsApi
+     */
+    public deleteGcpCredentials(credentialsId: string, organizationId: string, options?: AxiosRequestConfig) {
+        return CloudProviderCredentialsApiFp(this.configuration).deleteGcpCredentials(credentialsId, organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -22651,6 +23245,20 @@ export class CloudProviderCredentialsApi extends BaseAPI {
 
     /**
      * 
+     * @summary Edit a set of GCP credentials
+     * @param {string} organizationId Organization ID
+     * @param {string} credentialsId Credentials ID
+     * @param {GcpCredentialsRequest} [gcpCredentialsRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderCredentialsApi
+     */
+    public editGcpCredentials(organizationId: string, credentialsId: string, gcpCredentialsRequest?: GcpCredentialsRequest, options?: AxiosRequestConfig) {
+        return CloudProviderCredentialsApiFp(this.configuration).editGcpCredentials(organizationId, credentialsId, gcpCredentialsRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Edit a set of Scaleway credentials
      * @param {string} organizationId Organization ID
      * @param {string} credentialsId Credentials ID
@@ -22691,6 +23299,19 @@ export class CloudProviderCredentialsApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get a set of GCP credentials
+     * @param {string} organizationId Organization ID
+     * @param {string} credentialsId Credentials ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderCredentialsApi
+     */
+    public getGcpCredentials(organizationId: string, credentialsId: string, options?: AxiosRequestConfig) {
+        return CloudProviderCredentialsApiFp(this.configuration).getGcpCredentials(organizationId, credentialsId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Get a set of Scaleway credentials
      * @param {string} organizationId Organization ID
      * @param {string} credentialsId Credentials ID
@@ -22724,6 +23345,18 @@ export class CloudProviderCredentialsApi extends BaseAPI {
      */
     public listDOCredentials(organizationId: string, options?: AxiosRequestConfig) {
         return CloudProviderCredentialsApiFp(this.configuration).listDOCredentials(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List GCP credentials
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderCredentialsApi
+     */
+    public listGcpCredentials(organizationId: string, options?: AxiosRequestConfig) {
+        return CloudProviderCredentialsApiFp(this.configuration).listGcpCredentials(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
