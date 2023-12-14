@@ -9457,7 +9457,8 @@ export interface Key {
 
 export const KubernetesEnum = {
     K3_S: 'K3S',
-    MANAGED: 'MANAGED'
+    MANAGED: 'MANAGED',
+    SELF_MANAGED: 'SELF_MANAGED'
 } as const;
 
 export type KubernetesEnum = typeof KubernetesEnum[keyof typeof KubernetesEnum];
