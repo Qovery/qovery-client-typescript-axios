@@ -21819,9 +21819,9 @@ export const CloudProviderCredentialsApiAxiosParamCreator = function (configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createGCPCredentials: async (organizationId: string, gcpCredentialsRequest?: GcpCredentialsRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createGcpCredentials: async (organizationId: string, gcpCredentialsRequest?: GcpCredentialsRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
-            assertParamExists('createGCPCredentials', 'organizationId', organizationId)
+            assertParamExists('createGcpCredentials', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/gcp/credentials`
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -22663,8 +22663,8 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createGCPCredentials(organizationId: string, gcpCredentialsRequest?: GcpCredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentials>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createGCPCredentials(organizationId, gcpCredentialsRequest, options);
+        async createGcpCredentials(organizationId: string, gcpCredentialsRequest?: GcpCredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentials>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createGcpCredentials(organizationId, gcpCredentialsRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -22911,8 +22911,8 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createGCPCredentials(organizationId: string, gcpCredentialsRequest?: GcpCredentialsRequest, options?: any): AxiosPromise<ClusterCredentials> {
-            return localVarFp.createGCPCredentials(organizationId, gcpCredentialsRequest, options).then((request) => request(axios, basePath));
+        createGcpCredentials(organizationId: string, gcpCredentialsRequest?: GcpCredentialsRequest, options?: any): AxiosPromise<ClusterCredentials> {
+            return localVarFp.createGcpCredentials(organizationId, gcpCredentialsRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -23146,8 +23146,8 @@ export class CloudProviderCredentialsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CloudProviderCredentialsApi
      */
-    public createGCPCredentials(organizationId: string, gcpCredentialsRequest?: GcpCredentialsRequest, options?: AxiosRequestConfig) {
-        return CloudProviderCredentialsApiFp(this.configuration).createGCPCredentials(organizationId, gcpCredentialsRequest, options).then((request) => request(this.axios, this.basePath));
+    public createGcpCredentials(organizationId: string, gcpCredentialsRequest?: GcpCredentialsRequest, options?: AxiosRequestConfig) {
+        return CloudProviderCredentialsApiFp(this.configuration).createGcpCredentials(organizationId, gcpCredentialsRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
