@@ -8097,7 +8097,7 @@ export interface HelmRepositoryResponse {
      * @type {string}
      * @memberof HelmRepositoryResponse
      */
-    'name'?: string;
+    'name': string;
     /**
      * 
      * @type {HelmRepositoryKindEnum}
