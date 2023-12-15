@@ -7359,7 +7359,7 @@ export interface GcpCredentialsRequest {
      * @type {string}
      * @memberof GcpCredentialsRequest
      */
-    'json_credentials': string;
+    'gcp_credentials': string;
 }
 /**
  * 
