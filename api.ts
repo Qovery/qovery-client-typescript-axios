@@ -7069,6 +7069,12 @@ export interface EnvironmentStatuses {
      * @memberof EnvironmentStatuses
      */
     'databases'?: Array<Status>;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof EnvironmentStatuses
+     */
+    'helms'?: Array<Status>;
 }
 /**
  * 
@@ -28762,51 +28768,6 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * This will create a new helm with the same configuration on the targeted environment Id.
-         * @summary Clone helm
-         * @param {string} helmId Helm ID
-         * @param {CloneServiceRequest} [cloneServiceRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloneHelm: async (helmId: string, cloneServiceRequest?: CloneServiceRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'helmId' is not null or undefined
-            assertParamExists('cloneHelm', 'helmId', helmId)
-            const localVarPath = `/helm/{helmId}/clone`
-                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(cloneServiceRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * 
          * @summary Create a container
          * @param {string} environmentId Environment ID
@@ -29177,18 +29138,6 @@ export const ContainersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * This will create a new helm with the same configuration on the targeted environment Id.
-         * @summary Clone helm
-         * @param {string} helmId Helm ID
-         * @param {CloneServiceRequest} [cloneServiceRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloneHelm(helmId: string, cloneServiceRequest?: CloneServiceRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloneHelm(helmId, cloneServiceRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * 
          * @summary Create a container
          * @param {string} environmentId Environment ID
@@ -29311,17 +29260,6 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
             return localVarFp.cloneContainer(containerId, cloneServiceRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * This will create a new helm with the same configuration on the targeted environment Id.
-         * @summary Clone helm
-         * @param {string} helmId Helm ID
-         * @param {CloneServiceRequest} [cloneServiceRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloneHelm(helmId: string, cloneServiceRequest?: CloneServiceRequest, options?: any): AxiosPromise<HelmResponse> {
-            return localVarFp.cloneHelm(helmId, cloneServiceRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
          * 
          * @summary Create a container
          * @param {string} environmentId Environment ID
@@ -29437,19 +29375,6 @@ export class ContainersApi extends BaseAPI {
      */
     public cloneContainer(containerId: string, cloneServiceRequest?: CloneServiceRequest, options?: AxiosRequestConfig) {
         return ContainersApiFp(this.configuration).cloneContainer(containerId, cloneServiceRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * This will create a new helm with the same configuration on the targeted environment Id.
-     * @summary Clone helm
-     * @param {string} helmId Helm ID
-     * @param {CloneServiceRequest} [cloneServiceRequest] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainersApi
-     */
-    public cloneHelm(helmId: string, cloneServiceRequest?: CloneServiceRequest, options?: AxiosRequestConfig) {
-        return ContainersApiFp(this.configuration).cloneHelm(helmId, cloneServiceRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -39384,6 +39309,51 @@ export class HelmRepositoriesApi extends BaseAPI {
 export const HelmsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * This will create a new helm with the same configuration on the targeted environment Id.
+         * @summary Clone helm
+         * @param {string} helmId Helm ID
+         * @param {CloneServiceRequest} [cloneServiceRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloneHelm: async (helmId: string, cloneServiceRequest?: CloneServiceRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('cloneHelm', 'helmId', helmId)
+            const localVarPath = `/helm/{helmId}/clone`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cloneServiceRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Create a helm
          * @param {string} environmentId Environment ID
@@ -39566,6 +39536,18 @@ export const HelmsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = HelmsApiAxiosParamCreator(configuration)
     return {
         /**
+         * This will create a new helm with the same configuration on the targeted environment Id.
+         * @summary Clone helm
+         * @param {string} helmId Helm ID
+         * @param {CloneServiceRequest} [cloneServiceRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloneHelm(helmId: string, cloneServiceRequest?: CloneServiceRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloneHelm(helmId, cloneServiceRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * 
          * @summary Create a helm
          * @param {string} environmentId Environment ID
@@ -39622,6 +39604,17 @@ export const HelmsApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = HelmsApiFp(configuration)
     return {
         /**
+         * This will create a new helm with the same configuration on the targeted environment Id.
+         * @summary Clone helm
+         * @param {string} helmId Helm ID
+         * @param {CloneServiceRequest} [cloneServiceRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloneHelm(helmId: string, cloneServiceRequest?: CloneServiceRequest, options?: any): AxiosPromise<HelmResponse> {
+            return localVarFp.cloneHelm(helmId, cloneServiceRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Create a helm
          * @param {string} environmentId Environment ID
@@ -39673,6 +39666,19 @@ export const HelmsApiFactory = function (configuration?: Configuration, basePath
  * @extends {BaseAPI}
  */
 export class HelmsApi extends BaseAPI {
+    /**
+     * This will create a new helm with the same configuration on the targeted environment Id.
+     * @summary Clone helm
+     * @param {string} helmId Helm ID
+     * @param {CloneServiceRequest} [cloneServiceRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmsApi
+     */
+    public cloneHelm(helmId: string, cloneServiceRequest?: CloneServiceRequest, options?: AxiosRequestConfig) {
+        return HelmsApiFp(this.configuration).cloneHelm(helmId, cloneServiceRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Create a helm
