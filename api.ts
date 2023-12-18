@@ -5088,31 +5088,6 @@ export interface DeployAllRequestJobsInner {
 /**
  * 
  * @export
- * @interface DeployHelmRequest
- */
-export interface DeployHelmRequest {
-    /**
-     * version of the chart to deploy. Cannot be set if `git_commit_id` is defined 
-     * @type {string}
-     * @memberof DeployHelmRequest
-     */
-    'version'?: string;
-    /**
-     * Commit to deploy for chart source. Cannot be set if `version` is defined 
-     * @type {string}
-     * @memberof DeployHelmRequest
-     */
-    'git_commit_id'?: string;
-    /**
-     * Commit to deploy for values override 
-     * @type {string}
-     * @memberof DeployHelmRequest
-     */
-    'values_override_git_commit_id'?: string;
-}
-/**
- * 
- * @export
  * @interface DeployRequest
  */
 export interface DeployRequest {
@@ -6912,6 +6887,12 @@ export interface EnvironmentServiceIdsAllRequest {
      * @memberof EnvironmentServiceIdsAllRequest
      */
     'job_ids'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof EnvironmentServiceIdsAllRequest
+     */
+    'helm_ids'?: Array<string>;
 }
 /**
  * 
@@ -7758,6 +7739,31 @@ export interface HelmDefaultValuesRequest {
      * @memberof HelmDefaultValuesRequest
      */
     'source': HelmRequestAllOfSource;
+}
+/**
+ * 
+ * @export
+ * @interface HelmDeployRequest
+ */
+export interface HelmDeployRequest {
+    /**
+     * version of the chart to deploy. Cannot be set if `git_commit_id` is defined 
+     * @type {string}
+     * @memberof HelmDeployRequest
+     */
+    'chart_version'?: string;
+    /**
+     * Commit to deploy for chart source. Cannot be set if `version` is defined 
+     * @type {string}
+     * @memberof HelmDeployRequest
+     */
+    'git_commit_id'?: string;
+    /**
+     * Commit to deploy for values override 
+     * @type {string}
+     * @memberof HelmDeployRequest
+     */
+    'values_override_git_commit_id'?: string;
 }
 /**
  * 
@@ -37300,11 +37306,11 @@ export const HelmActionsApiAxiosParamCreator = function (configuration?: Configu
          * @summary Deploy helm
          * @param {string} helmId Helm ID
          * @param {HelmForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned helm hasn\&#39;t the target event provided, the helm won\&#39;t be deployed. 
-         * @param {DeployHelmRequest} [deployHelmRequest] 
+         * @param {HelmDeployRequest} [helmDeployRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployHelm: async (helmId: string, forceEvent?: HelmForceEvent, deployHelmRequest?: DeployHelmRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deployHelm: async (helmId: string, forceEvent?: HelmForceEvent, helmDeployRequest?: HelmDeployRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'helmId' is not null or undefined
             assertParamExists('deployHelm', 'helmId', helmId)
             const localVarPath = `/helm/{helmId}/deploy`
@@ -37338,7 +37344,7 @@ export const HelmActionsApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(deployHelmRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(helmDeployRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -37493,12 +37499,12 @@ export const HelmActionsApiFp = function(configuration?: Configuration) {
          * @summary Deploy helm
          * @param {string} helmId Helm ID
          * @param {HelmForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned helm hasn\&#39;t the target event provided, the helm won\&#39;t be deployed. 
-         * @param {DeployHelmRequest} [deployHelmRequest] 
+         * @param {HelmDeployRequest} [helmDeployRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deployHelm(helmId: string, forceEvent?: HelmForceEvent, deployHelmRequest?: DeployHelmRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deployHelm(helmId, forceEvent, deployHelmRequest, options);
+        async deployHelm(helmId: string, forceEvent?: HelmForceEvent, helmDeployRequest?: HelmDeployRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deployHelm(helmId, forceEvent, helmDeployRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -37551,12 +37557,12 @@ export const HelmActionsApiFactory = function (configuration?: Configuration, ba
          * @summary Deploy helm
          * @param {string} helmId Helm ID
          * @param {HelmForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned helm hasn\&#39;t the target event provided, the helm won\&#39;t be deployed. 
-         * @param {DeployHelmRequest} [deployHelmRequest] 
+         * @param {HelmDeployRequest} [helmDeployRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployHelm(helmId: string, forceEvent?: HelmForceEvent, deployHelmRequest?: DeployHelmRequest, options?: any): AxiosPromise<Status> {
-            return localVarFp.deployHelm(helmId, forceEvent, deployHelmRequest, options).then((request) => request(axios, basePath));
+        deployHelm(helmId: string, forceEvent?: HelmForceEvent, helmDeployRequest?: HelmDeployRequest, options?: any): AxiosPromise<Status> {
+            return localVarFp.deployHelm(helmId, forceEvent, helmDeployRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -37605,13 +37611,13 @@ export class HelmActionsApi extends BaseAPI {
      * @summary Deploy helm
      * @param {string} helmId Helm ID
      * @param {HelmForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned helm hasn\&#39;t the target event provided, the helm won\&#39;t be deployed. 
-     * @param {DeployHelmRequest} [deployHelmRequest] 
+     * @param {HelmDeployRequest} [helmDeployRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof HelmActionsApi
      */
-    public deployHelm(helmId: string, forceEvent?: HelmForceEvent, deployHelmRequest?: DeployHelmRequest, options?: AxiosRequestConfig) {
-        return HelmActionsApiFp(this.configuration).deployHelm(helmId, forceEvent, deployHelmRequest, options).then((request) => request(this.axios, this.basePath));
+    public deployHelm(helmId: string, forceEvent?: HelmForceEvent, helmDeployRequest?: HelmDeployRequest, options?: AxiosRequestConfig) {
+        return HelmActionsApiFp(this.configuration).deployHelm(helmId, forceEvent, helmDeployRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
