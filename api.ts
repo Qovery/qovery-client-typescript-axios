@@ -8535,19 +8535,19 @@ export interface HelmResponseAllOfSourceOneOf1Repository {
      * @type {string}
      * @memberof HelmResponseAllOfSourceOneOf1Repository
      */
-    'chart_name'?: string;
+    'chart_name': string;
     /**
      * The version of the chart to use
      * @type {string}
      * @memberof HelmResponseAllOfSourceOneOf1Repository
      */
-    'chart_version'?: string;
+    'chart_version': string;
     /**
      * 
      * @type {HelmResponseAllOfSourceOneOf1RepositoryRepository}
      * @memberof HelmResponseAllOfSourceOneOf1Repository
      */
-    'repository'?: HelmResponseAllOfSourceOneOf1RepositoryRepository;
+    'repository': HelmResponseAllOfSourceOneOf1RepositoryRepository;
 }
 /**
  * 
@@ -8560,19 +8560,19 @@ export interface HelmResponseAllOfSourceOneOf1RepositoryRepository {
      * @type {string}
      * @memberof HelmResponseAllOfSourceOneOf1RepositoryRepository
      */
-    'id'?: string;
+    'id': string;
     /**
      * The name of the helm repository
      * @type {string}
      * @memberof HelmResponseAllOfSourceOneOf1RepositoryRepository
      */
-    'name'?: string;
+    'name': string;
     /**
      * The url the helm repository
      * @type {string}
      * @memberof HelmResponseAllOfSourceOneOf1RepositoryRepository
      */
-    'url'?: string;
+    'url': string;
 }
 /**
  * 
@@ -8626,10 +8626,10 @@ export interface HelmResponseAllOfValuesOverride {
 export interface HelmResponseAllOfValuesOverrideFile {
     /**
      * 
-     * @type {HelmRequestAllOfValuesOverrideFileRaw}
+     * @type {HelmResponseAllOfValuesOverrideFileRaw}
      * @memberof HelmResponseAllOfValuesOverrideFile
      */
-    'raw'?: HelmRequestAllOfValuesOverrideFileRaw | null;
+    'raw'?: HelmResponseAllOfValuesOverrideFileRaw | null;
     /**
      * 
      * @type {HelmResponseAllOfValuesOverrideFileGit}
@@ -8648,13 +8648,45 @@ export interface HelmResponseAllOfValuesOverrideFileGit {
      * @type {ApplicationGitRepositoryRequest}
      * @memberof HelmResponseAllOfValuesOverrideFileGit
      */
-    'git_repository'?: ApplicationGitRepositoryRequest;
+    'git_repository': ApplicationGitRepositoryRequest;
     /**
      * List of path inside your git repository to locate values file. Must start by a /
      * @type {Array<string>}
      * @memberof HelmResponseAllOfValuesOverrideFileGit
      */
-    'paths'?: Array<string>;
+    'paths': Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface HelmResponseAllOfValuesOverrideFileRaw
+ */
+export interface HelmResponseAllOfValuesOverrideFileRaw {
+    /**
+     * 
+     * @type {Array<HelmResponseAllOfValuesOverrideFileRawValues>}
+     * @memberof HelmResponseAllOfValuesOverrideFileRaw
+     */
+    'values': Array<HelmResponseAllOfValuesOverrideFileRawValues>;
+}
+/**
+ * 
+ * @export
+ * @interface HelmResponseAllOfValuesOverrideFileRawValues
+ */
+export interface HelmResponseAllOfValuesOverrideFileRawValues {
+    /**
+     * The name of the value file
+     * @type {string}
+     * @memberof HelmResponseAllOfValuesOverrideFileRawValues
+     */
+    'name': string;
+    /**
+     * The content of the value file
+     * @type {string}
+     * @memberof HelmResponseAllOfValuesOverrideFileRawValues
+     */
+    'content': string;
 }
 /**
  * 
