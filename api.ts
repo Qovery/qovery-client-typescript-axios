@@ -5021,6 +5021,12 @@ export interface DeployAllRequest {
      * @memberof DeployAllRequest
      */
     'jobs'?: Array<DeployAllRequestJobsInner>;
+    /**
+     * 
+     * @type {Array<DeployAllRequestHelmsInner>}
+     * @memberof DeployAllRequest
+     */
+    'helms'?: Array<DeployAllRequestHelmsInner>;
 }
 /**
  * 
@@ -5059,6 +5065,37 @@ export interface DeployAllRequestContainersInner {
      * @memberof DeployAllRequestContainersInner
      */
     'image_tag'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface DeployAllRequestHelmsInner
+ */
+export interface DeployAllRequestHelmsInner {
+    /**
+     * id of the helm to be updated.
+     * @type {string}
+     * @memberof DeployAllRequestHelmsInner
+     */
+    'id'?: string;
+    /**
+     * The new chart version for the Helm source. Use this only if the helm has a Helm repository source.
+     * @type {string}
+     * @memberof DeployAllRequestHelmsInner
+     */
+    'chart_version'?: string;
+    /**
+     * The commit Id to deploy. Use this only if the helm has a Git repository source.
+     * @type {string}
+     * @memberof DeployAllRequestHelmsInner
+     */
+    'git_commit_id'?: string;
+    /**
+     * The commit Id of the override values to deploy. Use only if the helm has a Git override values repository.
+     * @type {string}
+     * @memberof DeployAllRequestHelmsInner
+     */
+    'values_override_git_commit_id'?: string;
 }
 /**
  * 
