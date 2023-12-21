@@ -37233,112 +37233,6 @@ export class GithubAppApi extends BaseAPI {
 
 
 /**
- * HelmApi - axios parameter creator
- * @export
- */
-export const HelmApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary List default helm advanced settings
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDefaultHelmAdvancedSettings: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/defaultHelmAdvancedSettings`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * HelmApi - functional programming interface
- * @export
- */
-export const HelmApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = HelmApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @summary List default helm advanced settings
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getDefaultHelmAdvancedSettings(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDefaultHelmAdvancedSettings(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * HelmApi - factory interface
- * @export
- */
-export const HelmApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = HelmApiFp(configuration)
-    return {
-        /**
-         * 
-         * @summary List default helm advanced settings
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDefaultHelmAdvancedSettings(options?: any): AxiosPromise<object> {
-            return localVarFp.getDefaultHelmAdvancedSettings(options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * HelmApi - object-oriented interface
- * @export
- * @class HelmApi
- * @extends {BaseAPI}
- */
-export class HelmApi extends BaseAPI {
-    /**
-     * 
-     * @summary List default helm advanced settings
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof HelmApi
-     */
-    public getDefaultHelmAdvancedSettings(options?: AxiosRequestConfig) {
-        return HelmApiFp(this.configuration).getDefaultHelmAdvancedSettings(options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
  * HelmActionsApi - axios parameter creator
  * @export
  */
@@ -39525,6 +39419,43 @@ export const HelmsApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * 
+         * @summary List default helm advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDefaultHelmAdvancedSettings: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/defaultHelmAdvancedSettings`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns a list of helms with only their id and status.
          * @summary List all environment helm statuses
          * @param {string} environmentId Environment ID
@@ -39653,6 +39584,16 @@ export const HelmsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @summary List default helm advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDefaultHelmAdvancedSettings(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDefaultHelmAdvancedSettings(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Returns a list of helms with only their id and status.
          * @summary List all environment helm statuses
          * @param {string} environmentId Environment ID
@@ -39716,6 +39657,15 @@ export const HelmsApiFactory = function (configuration?: Configuration, basePath
          */
         createHelmDefaultValues(environmentId: string, helmDefaultValuesRequest?: HelmDefaultValuesRequest, options?: any): AxiosPromise<string> {
             return localVarFp.createHelmDefaultValues(environmentId, helmDefaultValuesRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List default helm advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDefaultHelmAdvancedSettings(options?: any): AxiosPromise<object> {
+            return localVarFp.getDefaultHelmAdvancedSettings(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a list of helms with only their id and status.
@@ -39784,6 +39734,17 @@ export class HelmsApi extends BaseAPI {
      */
     public createHelmDefaultValues(environmentId: string, helmDefaultValuesRequest?: HelmDefaultValuesRequest, options?: AxiosRequestConfig) {
         return HelmsApiFp(this.configuration).createHelmDefaultValues(environmentId, helmDefaultValuesRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List default helm advanced settings
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmsApi
+     */
+    public getDefaultHelmAdvancedSettings(options?: AxiosRequestConfig) {
+        return HelmsApiFp(this.configuration).getDefaultHelmAdvancedSettings(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
