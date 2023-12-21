@@ -5393,6 +5393,12 @@ export interface DeploymentHistoryEnvironment {
      * @memberof DeploymentHistoryEnvironment
      */
     'jobs'?: Array<DeploymentHistoryJobResponse>;
+    /**
+     * 
+     * @type {Array<DeploymentHistoryHelmResponse>}
+     * @memberof DeploymentHistoryEnvironment
+     */
+    'helms'?: Array<DeploymentHistoryHelmResponse>;
 }
 
 
@@ -5420,6 +5426,76 @@ export interface DeploymentHistoryEnvironmentPaginatedResponseList {
      * @memberof DeploymentHistoryEnvironmentPaginatedResponseList
      */
     'results'?: Array<DeploymentHistoryEnvironment>;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentHistoryHelmResponse
+ */
+export interface DeploymentHistoryHelmResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryHelmResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryHelmResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryHelmResponse
+     */
+    'updated_at'?: string;
+    /**
+     * name of the helm
+     * @type {string}
+     * @memberof DeploymentHistoryHelmResponse
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {StateEnum}
+     * @memberof DeploymentHistoryHelmResponse
+     */
+    'status'?: StateEnum;
+    /**
+     * 
+     * @type {Commit}
+     * @memberof DeploymentHistoryHelmResponse
+     */
+    'commit'?: Commit | null;
+    /**
+     * 
+     * @type {DeploymentHistoryHelmResponseAllOfRepository}
+     * @memberof DeploymentHistoryHelmResponse
+     */
+    'repository'?: DeploymentHistoryHelmResponseAllOfRepository | null;
+}
+
+
+/**
+ * If the chart source if from a repository, the chart name and its version
+ * @export
+ * @interface DeploymentHistoryHelmResponseAllOfRepository
+ */
+export interface DeploymentHistoryHelmResponseAllOfRepository {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryHelmResponseAllOfRepository
+     */
+    'chart_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryHelmResponseAllOfRepository
+     */
+    'chart_version'?: string;
 }
 /**
  * 
@@ -9855,80 +9931,10 @@ export interface ListHelmDeploymentHistory200Response {
     'page_size': number;
     /**
      * 
-     * @type {Array<ListHelmDeploymentHistory200ResponseAllOfResultsInner>}
+     * @type {Array<DeploymentHistoryHelmResponse>}
      * @memberof ListHelmDeploymentHistory200Response
      */
-    'results'?: Array<ListHelmDeploymentHistory200ResponseAllOfResultsInner>;
-}
-/**
- * 
- * @export
- * @interface ListHelmDeploymentHistory200ResponseAllOfResultsInner
- */
-export interface ListHelmDeploymentHistory200ResponseAllOfResultsInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof ListHelmDeploymentHistory200ResponseAllOfResultsInner
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ListHelmDeploymentHistory200ResponseAllOfResultsInner
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ListHelmDeploymentHistory200ResponseAllOfResultsInner
-     */
-    'updated_at'?: string;
-    /**
-     * name of the helm
-     * @type {string}
-     * @memberof ListHelmDeploymentHistory200ResponseAllOfResultsInner
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {StateEnum}
-     * @memberof ListHelmDeploymentHistory200ResponseAllOfResultsInner
-     */
-    'status'?: StateEnum;
-    /**
-     * 
-     * @type {Commit}
-     * @memberof ListHelmDeploymentHistory200ResponseAllOfResultsInner
-     */
-    'commit'?: Commit | null;
-    /**
-     * 
-     * @type {ListHelmDeploymentHistory200ResponseAllOfResultsInnerAllOfRepository}
-     * @memberof ListHelmDeploymentHistory200ResponseAllOfResultsInner
-     */
-    'repository'?: ListHelmDeploymentHistory200ResponseAllOfResultsInnerAllOfRepository | null;
-}
-
-
-/**
- * If the chart source if from a repository, the chart name and its version
- * @export
- * @interface ListHelmDeploymentHistory200ResponseAllOfResultsInnerAllOfRepository
- */
-export interface ListHelmDeploymentHistory200ResponseAllOfResultsInnerAllOfRepository {
-    /**
-     * 
-     * @type {string}
-     * @memberof ListHelmDeploymentHistory200ResponseAllOfResultsInnerAllOfRepository
-     */
-    'chart_name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ListHelmDeploymentHistory200ResponseAllOfResultsInnerAllOfRepository
-     */
-    'version'?: string;
+    'results'?: Array<DeploymentHistoryHelmResponse>;
 }
 /**
  * 
