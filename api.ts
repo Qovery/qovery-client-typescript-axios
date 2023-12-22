@@ -14230,6 +14230,12 @@ export interface VariableResponse {
      * @memberof VariableResponse
      */
     'owned_by'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof VariableResponse
+     */
+    'is_secret': boolean;
 }
 
 
