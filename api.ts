@@ -8143,6 +8143,25 @@ export interface HelmGitRepositoryRequest {
 /**
  * 
  * @export
+ * @interface HelmKeyValue
+ */
+export interface HelmKeyValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmKeyValue
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmKeyValue
+     */
+    'value': string;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -8528,22 +8547,22 @@ export interface HelmRequestAllOfSourceOneOf1HelmRepository {
 export interface HelmRequestAllOfValuesOverride {
     /**
      * 
-     * @type {Array<Array<string>>}
+     * @type {Array<HelmKeyValue>}
      * @memberof HelmRequestAllOfValuesOverride
      */
-    'set'?: Array<Array<string>>;
+    'set'?: Array<HelmKeyValue>;
     /**
      * 
-     * @type {Array<Array<string>>}
+     * @type {Array<HelmKeyValue>}
      * @memberof HelmRequestAllOfValuesOverride
      */
-    'set_string'?: Array<Array<string>>;
+    'set_string'?: Array<HelmKeyValue>;
     /**
      * 
-     * @type {Array<Array<string>>}
+     * @type {Array<HelmKeyValue>}
      * @memberof HelmRequestAllOfValuesOverride
      */
-    'set_json'?: Array<Array<string>>;
+    'set_json'?: Array<HelmKeyValue>;
     /**
      * 
      * @type {HelmRequestAllOfValuesOverrideFile}
@@ -8847,22 +8866,22 @@ export interface HelmResponseAllOfSourceOneOfGit {
 export interface HelmResponseAllOfValuesOverride {
     /**
      * 
-     * @type {Array<Array<string>>}
+     * @type {Array<HelmKeyValue>}
      * @memberof HelmResponseAllOfValuesOverride
      */
-    'set'?: Array<Array<string>>;
+    'set'?: Array<HelmKeyValue>;
     /**
      * 
-     * @type {Array<Array<string>>}
+     * @type {Array<HelmKeyValue>}
      * @memberof HelmResponseAllOfValuesOverride
      */
-    'set_string'?: Array<Array<string>>;
+    'set_string'?: Array<HelmKeyValue>;
     /**
      * 
-     * @type {Array<Array<string>>}
+     * @type {Array<HelmKeyValue>}
      * @memberof HelmResponseAllOfValuesOverride
      */
-    'set_json'?: Array<Array<string>>;
+    'set_json'?: Array<HelmKeyValue>;
     /**
      * 
      * @type {HelmResponseAllOfValuesOverrideFile}
