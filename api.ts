@@ -8143,25 +8143,6 @@ export interface HelmGitRepositoryRequest {
 /**
  * 
  * @export
- * @interface HelmKeyValue
- */
-export interface HelmKeyValue {
-    /**
-     * 
-     * @type {string}
-     * @memberof HelmKeyValue
-     */
-    'key': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof HelmKeyValue
-     */
-    'value': string;
-}
-/**
- * 
- * @export
  * @enum {string}
  */
 
@@ -8546,23 +8527,23 @@ export interface HelmRequestAllOfSourceOneOf1HelmRepository {
  */
 export interface HelmRequestAllOfValuesOverride {
     /**
-     * 
-     * @type {Array<HelmKeyValue>}
+     * The input is in json array format: [ [$KEY,$VALUE], [...] ]
+     * @type {Array<Array<string>>}
      * @memberof HelmRequestAllOfValuesOverride
      */
-    'set'?: Array<HelmKeyValue>;
+    'set'?: Array<Array<string>>;
     /**
-     * 
-     * @type {Array<HelmKeyValue>}
+     * The input is in json array format: [ [$KEY,$VALUE], [...] ]
+     * @type {Array<Array<string>>}
      * @memberof HelmRequestAllOfValuesOverride
      */
-    'set_string'?: Array<HelmKeyValue>;
+    'set_string'?: Array<Array<string>>;
     /**
-     * 
-     * @type {Array<HelmKeyValue>}
+     * The input is in json array format: [ [$KEY,$VALUE], [...] ]
+     * @type {Array<Array<string>>}
      * @memberof HelmRequestAllOfValuesOverride
      */
-    'set_json'?: Array<HelmKeyValue>;
+    'set_json'?: Array<Array<string>>;
     /**
      * 
      * @type {HelmRequestAllOfValuesOverrideFile}
@@ -8865,23 +8846,23 @@ export interface HelmResponseAllOfSourceOneOfGit {
  */
 export interface HelmResponseAllOfValuesOverride {
     /**
-     * 
-     * @type {Array<HelmKeyValue>}
+     * The input is in json array format: [ [$KEY,$VALUE], [...] ]
+     * @type {Array<Array<string>>}
      * @memberof HelmResponseAllOfValuesOverride
      */
-    'set'?: Array<HelmKeyValue>;
+    'set'?: Array<Array<string>>;
     /**
-     * 
-     * @type {Array<HelmKeyValue>}
+     * The input is in json array format: [ [$KEY,$VALUE], [...] ]
+     * @type {Array<Array<string>>}
      * @memberof HelmResponseAllOfValuesOverride
      */
-    'set_string'?: Array<HelmKeyValue>;
+    'set_string'?: Array<Array<string>>;
     /**
-     * 
-     * @type {Array<HelmKeyValue>}
+     * The input is in json array format: [ [$KEY,$VALUE], [...] ]
+     * @type {Array<Array<string>>}
      * @memberof HelmResponseAllOfValuesOverride
      */
-    'set_json'?: Array<HelmKeyValue>;
+    'set_json'?: Array<Array<string>>;
     /**
      * 
      * @type {HelmResponseAllOfValuesOverrideFile}
