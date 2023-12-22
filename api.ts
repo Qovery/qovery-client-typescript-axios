@@ -7843,6 +7843,139 @@ export interface Healthcheck {
 /**
  * 
  * @export
+ * @interface HelmAdvancedSettings
+ */
+export interface HelmAdvancedSettings {
+    /**
+     * 
+     * @type {number}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.proxy_body_size_mb'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.enable_cors'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.cors_allow_origin'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.cors_allow_methods'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.cors_allow_headers'?: string;
+    /**
+     * header buffer size used while reading response header from upstream
+     * @type {number}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.proxy_buffer_size_kb'?: number;
+    /**
+     * Limits the maximum time (in seconds) during which requests can be processed through one keepalive connection
+     * @type {number}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.keepalive_time_seconds'?: number;
+    /**
+     * Sets a timeout (in seconds) during which an idle keepalive connection to an upstream server will stay open.
+     * @type {number}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.keepalive_timeout_seconds'?: number;
+    /**
+     * Sets a timeout (in seconds) for transmitting a response to the client
+     * @type {number}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.send_timeout_seconds'?: number;
+    /**
+     * Sets a timeout (in seconds) for establishing a connection to a proxied server
+     * @type {number}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.proxy_connect_timeout_seconds'?: number;
+    /**
+     * Sets a timeout (in seconds) for transmitting a request to the proxied server
+     * @type {number}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.proxy_send_timeout_seconds'?: number;
+    /**
+     * Sets a timeout (in seconds) for reading a response from the proxied server
+     * @type {number}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.proxy_read_timeout_seconds'?: number;
+    /**
+     * Allows to enable or disable nginx `proxy-buffering`
+     * @type {string}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.proxy_buffering'?: string;
+    /**
+     * Allows to enable or disable nginx `proxy-request-buffering`
+     * @type {string}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.proxy_request_buffering'?: string;
+    /**
+     * Sets a timeout (in seconds) for transmitting a request to the grpc server
+     * @type {number}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.grpc_send_timeout_seconds'?: number;
+    /**
+     * Sets a timeout (in seconds) for transmitting a request to the grpc server
+     * @type {number}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.grpc_read_timeout_seconds'?: number;
+    /**
+     * list of source ranges to allow access to ingress proxy.  This property can be used to whitelist source IP ranges for ingress proxy. The value is a comma separated list of CIDRs, e.g. 10.0.0.0/24,172.10.0.1 To allow all source ranges, set 0.0.0.0/0. 
+     * @type {string}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.whitelist_source_range'?: string;
+    /**
+     * list of source ranges to deny access to ingress proxy.  This property can be used to blacklist source IP ranges for ingress proxy. The value is a comma separated list of CIDRs, e.g. 10.0.0.0/24,172.10.0.1 
+     * @type {string}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.denylist_source_range'?: string;
+    /**
+     * Allows to define response headers
+     * @type {string}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.extra_headers'?: string;
+    /**
+     * Set the name of an environment variable to use as a basic authentication (`login:crypted_password`) from `htpasswd` command. You can add multiples comma separated values. 
+     * @type {string}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.basic_auth_env_var'?: string;
+    /**
+     * Enable the load balancer to bind a user\'s session to a specific target. This ensures that all requests from the user during the session are sent to the same target 
+     * @type {boolean}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.enable_sticky_session'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface HelmDefaultValuesRequest
  */
 export interface HelmDefaultValuesRequest {
@@ -37614,11 +37747,11 @@ export const HelmConfigurationApiAxiosParamCreator = function (configuration?: C
          * Edit advanced settings by returning table of advanced settings.
          * @summary Edit advanced settings
          * @param {string} helmId Helm ID
-         * @param {object} [body] 
+         * @param {HelmAdvancedSettings} [helmAdvancedSettings] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editHelmAdvancedSettings: async (helmId: string, body?: object, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        editHelmAdvancedSettings: async (helmId: string, helmAdvancedSettings?: HelmAdvancedSettings, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'helmId' is not null or undefined
             assertParamExists('editHelmAdvancedSettings', 'helmId', helmId)
             const localVarPath = `/helm/{helmId}/advancedSettings`
@@ -37648,7 +37781,7 @@ export const HelmConfigurationApiAxiosParamCreator = function (configuration?: C
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(helmAdvancedSettings, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -37710,12 +37843,12 @@ export const HelmConfigurationApiFp = function(configuration?: Configuration) {
          * Edit advanced settings by returning table of advanced settings.
          * @summary Edit advanced settings
          * @param {string} helmId Helm ID
-         * @param {object} [body] 
+         * @param {HelmAdvancedSettings} [helmAdvancedSettings] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editHelmAdvancedSettings(helmId: string, body?: object, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.editHelmAdvancedSettings(helmId, body, options);
+        async editHelmAdvancedSettings(helmId: string, helmAdvancedSettings?: HelmAdvancedSettings, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmAdvancedSettings>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editHelmAdvancedSettings(helmId, helmAdvancedSettings, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -37725,7 +37858,7 @@ export const HelmConfigurationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getHelmAdvancedSettings(helmId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async getHelmAdvancedSettings(helmId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmAdvancedSettings>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getHelmAdvancedSettings(helmId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -37743,12 +37876,12 @@ export const HelmConfigurationApiFactory = function (configuration?: Configurati
          * Edit advanced settings by returning table of advanced settings.
          * @summary Edit advanced settings
          * @param {string} helmId Helm ID
-         * @param {object} [body] 
+         * @param {HelmAdvancedSettings} [helmAdvancedSettings] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editHelmAdvancedSettings(helmId: string, body?: object, options?: any): AxiosPromise<object> {
-            return localVarFp.editHelmAdvancedSettings(helmId, body, options).then((request) => request(axios, basePath));
+        editHelmAdvancedSettings(helmId: string, helmAdvancedSettings?: HelmAdvancedSettings, options?: any): AxiosPromise<HelmAdvancedSettings> {
+            return localVarFp.editHelmAdvancedSettings(helmId, helmAdvancedSettings, options).then((request) => request(axios, basePath));
         },
         /**
          * Get list and values of the advanced settings of the helm.
@@ -37757,7 +37890,7 @@ export const HelmConfigurationApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getHelmAdvancedSettings(helmId: string, options?: any): AxiosPromise<object> {
+        getHelmAdvancedSettings(helmId: string, options?: any): AxiosPromise<HelmAdvancedSettings> {
             return localVarFp.getHelmAdvancedSettings(helmId, options).then((request) => request(axios, basePath));
         },
     };
@@ -37774,13 +37907,13 @@ export class HelmConfigurationApi extends BaseAPI {
      * Edit advanced settings by returning table of advanced settings.
      * @summary Edit advanced settings
      * @param {string} helmId Helm ID
-     * @param {object} [body] 
+     * @param {HelmAdvancedSettings} [helmAdvancedSettings] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof HelmConfigurationApi
      */
-    public editHelmAdvancedSettings(helmId: string, body?: object, options?: AxiosRequestConfig) {
-        return HelmConfigurationApiFp(this.configuration).editHelmAdvancedSettings(helmId, body, options).then((request) => request(this.axios, this.basePath));
+    public editHelmAdvancedSettings(helmId: string, helmAdvancedSettings?: HelmAdvancedSettings, options?: AxiosRequestConfig) {
+        return HelmConfigurationApiFp(this.configuration).editHelmAdvancedSettings(helmId, helmAdvancedSettings, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -39595,7 +39728,7 @@ export const HelmsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDefaultHelmAdvancedSettings(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async getDefaultHelmAdvancedSettings(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmAdvancedSettings>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDefaultHelmAdvancedSettings(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -39670,7 +39803,7 @@ export const HelmsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDefaultHelmAdvancedSettings(options?: any): AxiosPromise<object> {
+        getDefaultHelmAdvancedSettings(options?: any): AxiosPromise<HelmAdvancedSettings> {
             return localVarFp.getDefaultHelmAdvancedSettings(options).then((request) => request(axios, basePath));
         },
         /**
