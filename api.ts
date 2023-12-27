@@ -8897,10 +8897,10 @@ export interface HelmResponseAllOfValuesOverrideFile {
 export interface HelmResponseAllOfValuesOverrideFileGit {
     /**
      * 
-     * @type {ApplicationGitRepositoryRequest}
+     * @type {ApplicationGitRepository}
      * @memberof HelmResponseAllOfValuesOverrideFileGit
      */
-    'git_repository': ApplicationGitRepositoryRequest;
+    'git_repository': ApplicationGitRepository;
     /**
      * List of path inside your git repository to locate values file. Must start by a /
      * @type {Array<string>}
