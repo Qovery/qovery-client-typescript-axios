@@ -8834,10 +8834,10 @@ export interface HelmResponseAllOfSourceOneOf1RepositoryRepository {
 export interface HelmResponseAllOfSourceOneOfGit {
     /**
      * 
-     * @type {ApplicationGitRepositoryRequest}
+     * @type {ApplicationGitRepository}
      * @memberof HelmResponseAllOfSourceOneOfGit
      */
-    'git_repository'?: ApplicationGitRepositoryRequest;
+    'git_repository'?: ApplicationGitRepository;
 }
 /**
  * Specify helm values you want to set or override 
