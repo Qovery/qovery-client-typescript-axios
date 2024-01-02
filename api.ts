@@ -2761,6 +2761,12 @@ export interface ClusterRequest {
      */
     'ssh_keys'?: Array<string>;
     /**
+     * If the cluster is a self managed one. The kubeconfig to use to connect to it
+     * @type {string}
+     * @memberof ClusterRequest
+     */
+    'kubeconfig'?: string;
+    /**
      * 
      * @type {Array<ClusterRequestFeaturesInner>}
      * @memberof ClusterRequest
