@@ -4214,6 +4214,12 @@ export interface CronJobResponseAllOfScheduleCronjob {
      */
     'entrypoint'?: string;
     /**
+     * tz identifier at which the schedule at will be executed
+     * @type {string}
+     * @memberof CronJobResponseAllOfScheduleCronjob
+     */
+    'timezone': string;
+    /**
      * Can only be set if the event is CRON.   Represent the cron format for the job schedule without seconds.   For example: `* * * * *` represent the cron to launch the job every minute.   See https://crontab.guru/ to WISIWIG interface.   Timezone is UT 
      * @type {string}
      * @memberof CronJobResponseAllOfScheduleCronjob
@@ -8850,6 +8856,12 @@ export interface JobRequestAllOfScheduleCronjob {
      * @memberof JobRequestAllOfScheduleCronjob
      */
     'entrypoint'?: string;
+    /**
+     * Specify a timezone identifier to run the schedule at. By default Etc/UTC
+     * @type {string}
+     * @memberof JobRequestAllOfScheduleCronjob
+     */
+    'timezone'?: string;
     /**
      * Can only be set if the event is CRON.   Represent the cron format for the job schedule without seconds.   For example: `* * * * *` represent the cron to launch the job every minute.   See https://crontab.guru/ to WISIWIG interface.   Timezone is UTC 
      * @type {string}
