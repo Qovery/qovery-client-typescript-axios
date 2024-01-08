@@ -1717,7 +1717,6 @@ export interface CloudProvider {
 
 export const CloudProviderEnum = {
     AWS: 'AWS',
-    DO: 'DO',
     SCW: 'SCW',
     GCP: 'GCP'
 } as const;
