@@ -3284,6 +3284,7 @@ export const ContainerRegistryKindEnum = {
     GITHUB_CR: 'GITHUB_CR',
     GITLAB_CR: 'GITLAB_CR',
     PUBLIC_ECR: 'PUBLIC_ECR',
+    DOCR: 'DOCR',
     GENERIC_CR: 'GENERIC_CR',
     GCP_ARTIFACT_REGISTRY: 'GCP_ARTIFACT_REGISTRY'
 } as const;
