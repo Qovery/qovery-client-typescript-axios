@@ -2662,6 +2662,12 @@ export interface ClusterRequest {
     'cloud_provider': CloudProviderEnum;
     /**
      * 
+     * @type {ClusterCloudProviderInfoRequest}
+     * @memberof ClusterRequest
+     */
+    'cloud_provider_credentials'?: ClusterCloudProviderInfoRequest;
+    /**
+     * 
      * @type {number}
      * @memberof ClusterRequest
      */
