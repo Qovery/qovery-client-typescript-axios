@@ -7163,6 +7163,12 @@ export interface Healthcheck {
  */
 export interface HelmAdvancedSettings {
     /**
+     * disable custom domain check when deploying a helm
+     * @type {boolean}
+     * @memberof HelmAdvancedSettings
+     */
+    'deployment.custom_domain_check_enabled'?: boolean;
+    /**
      * 
      * @type {number}
      * @memberof HelmAdvancedSettings
