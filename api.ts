@@ -7887,16 +7887,35 @@ export interface HelmRequestAllOfValuesOverride {
 export interface HelmRequestAllOfValuesOverrideFile {
     /**
      * 
+     * @type {HelmRequestAllOfValuesOverrideFileGit}
+     * @memberof HelmRequestAllOfValuesOverrideFile
+     */
+    'git'?: HelmRequestAllOfValuesOverrideFileGit | null;
+    /**
+     * 
      * @type {HelmRequestAllOfValuesOverrideFileRaw}
      * @memberof HelmRequestAllOfValuesOverrideFile
      */
     'raw'?: HelmRequestAllOfValuesOverrideFileRaw | null;
+}
+/**
+ * 
+ * @export
+ * @interface HelmRequestAllOfValuesOverrideFileGit
+ */
+export interface HelmRequestAllOfValuesOverrideFileGit {
     /**
      * 
-     * @type {HelmValuesGitRepositoryRequest}
-     * @memberof HelmRequestAllOfValuesOverrideFile
+     * @type {ApplicationGitRepositoryRequest}
+     * @memberof HelmRequestAllOfValuesOverrideFileGit
      */
-    'git_repository'?: HelmValuesGitRepositoryRequest;
+    'git_repository': ApplicationGitRepositoryRequest;
+    /**
+     * List of path inside your git repository to locate values file. Must start by a /
+     * @type {Array<string>}
+     * @memberof HelmRequestAllOfValuesOverrideFileGit
+     */
+    'paths': Array<string>;
 }
 /**
  * 
@@ -8286,37 +8305,6 @@ export interface HelmResponseList {
      * @memberof HelmResponseList
      */
     'results'?: Array<HelmResponse>;
-}
-/**
- * 
- * @export
- * @interface HelmValuesGitRepositoryRequest
- */
-export interface HelmValuesGitRepositoryRequest {
-    /**
-     * application git repository URL
-     * @type {string}
-     * @memberof HelmValuesGitRepositoryRequest
-     */
-    'url': string;
-    /**
-     * Name of the branch to use. This is optional If not specified, then the branch used is the `main` or `master` one 
-     * @type {string}
-     * @memberof HelmValuesGitRepositoryRequest
-     */
-    'branch': string;
-    /**
-     * List of path inside your git repository to locate values file. Must start by a /
-     * @type {Array<string>}
-     * @memberof HelmValuesGitRepositoryRequest
-     */
-    'paths': Array<string>;
-    /**
-     * The git token id on Qovery side
-     * @type {string}
-     * @memberof HelmValuesGitRepositoryRequest
-     */
-    'git_token_id'?: string | null;
 }
 /**
  * 
