@@ -700,25 +700,25 @@ export interface ApplicationGitRepository {
      * @type {GitProviderEnum}
      * @memberof ApplicationGitRepository
      */
-    'provider'?: GitProviderEnum;
+    'provider': GitProviderEnum;
     /**
      * 
      * @type {string}
      * @memberof ApplicationGitRepository
      */
-    'owner'?: string;
+    'owner': string;
     /**
      * 
      * @type {string}
      * @memberof ApplicationGitRepository
      */
-    'url'?: string;
+    'url': string;
     /**
      * repository name
      * @type {string}
      * @memberof ApplicationGitRepository
      */
-    'name'?: string;
+    'name': string;
     /**
      * 
      * @type {string}
