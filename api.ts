@@ -12181,6 +12181,12 @@ export interface ServiceStepMetrics {
      */
     'total_duration_sec'?: number | null;
     /**
+     * The total duration in seconds of the service deployment without queuing steps.
+     * @type {number}
+     * @memberof ServiceStepMetrics
+     */
+    'total_computing_duration_sec'?: number;
+    /**
      * A list of metrics for deployment steps of the service.
      * @type {Array<ServiceStepMetric>}
      * @memberof ServiceStepMetrics
