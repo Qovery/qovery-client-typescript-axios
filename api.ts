@@ -1762,6 +1762,12 @@ export interface Cluster {
      */
     'updated_at'?: string;
     /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof Cluster
+     */
+    'organization'?: ReferenceObject;
+    /**
      * name is case-insensitive
      * @type {string}
      * @memberof Cluster
