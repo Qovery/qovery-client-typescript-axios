@@ -5717,6 +5717,12 @@ export interface Environment {
      * @type {ReferenceObject}
      * @memberof Environment
      */
+    'organization'?: ReferenceObject;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof Environment
+     */
     'project': ReferenceObject;
     /**
      * uuid of the user that made the last update
