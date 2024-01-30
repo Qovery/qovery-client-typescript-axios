@@ -1766,7 +1766,7 @@ export interface Cluster {
      * @type {ReferenceObject}
      * @memberof Cluster
      */
-    'organization'?: ReferenceObject;
+    'organization': ReferenceObject;
     /**
      * name is case-insensitive
      * @type {string}
@@ -5717,7 +5717,7 @@ export interface Environment {
      * @type {ReferenceObject}
      * @memberof Environment
      */
-    'organization'?: ReferenceObject;
+    'organization': ReferenceObject;
     /**
      * 
      * @type {ReferenceObject}
