@@ -11172,7 +11172,7 @@ export interface Project {
      * @type {ReferenceObject}
      * @memberof Project
      */
-    'organization'?: ReferenceObject;
+    'organization': ReferenceObject;
 }
 /**
  * 
