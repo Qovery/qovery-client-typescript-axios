@@ -1357,6 +1357,19 @@ export interface BillingEnd {
 /**
  * 
  * @export
+ * @interface BillingExternalId
+ */
+export interface BillingExternalId {
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingExternalId
+     */
+    'id'?: string;
+}
+/**
+ * 
+ * @export
  * @interface BillingInfo
  */
 export interface BillingInfo {
@@ -17585,6 +17598,47 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * This endpoint returns the external ID of the organization\'s billing account. 
+         * @summary Get organization billing external ID
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationBillingExternalId: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOrganizationBillingExternalId', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/billingExternalId`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Get organization billing info
          * @param {string} organizationId Organization ID
@@ -18003,6 +18057,17 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * This endpoint returns the external ID of the organization\'s billing account. 
+         * @summary Get organization billing external ID
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationBillingExternalId(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingExternalId>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationBillingExternalId(organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * 
          * @summary Get organization billing info
          * @param {string} organizationId Organization ID
@@ -18167,6 +18232,16 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          */
         getClusterCurrentCost(organizationId: string, clusterId: string, options?: any): AxiosPromise<CostRange> {
             return localVarFp.getClusterCurrentCost(organizationId, clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * This endpoint returns the external ID of the organization\'s billing account. 
+         * @summary Get organization billing external ID
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationBillingExternalId(organizationId: string, options?: any): AxiosPromise<BillingExternalId> {
+            return localVarFp.getOrganizationBillingExternalId(organizationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -18336,6 +18411,18 @@ export class BillingApi extends BaseAPI {
      */
     public getClusterCurrentCost(organizationId: string, clusterId: string, options?: AxiosRequestConfig) {
         return BillingApiFp(this.configuration).getClusterCurrentCost(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * This endpoint returns the external ID of the organization\'s billing account. 
+     * @summary Get organization billing external ID
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public getOrganizationBillingExternalId(organizationId: string, options?: AxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getOrganizationBillingExternalId(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
