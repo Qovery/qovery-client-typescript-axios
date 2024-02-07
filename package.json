@@ -1,6 +1,6 @@
 {
   "name": "qovery-typescript-axios",
-  "version": "v1.1.357",
+  "version": "1.0.3",
   "description": "OpenAPI client for qovery-typescript-axios",
   "author": "OpenAPI-Generator Contributors",
   "repository": {
@@ -24,7 +24,7 @@
     "prepare": "npm run build"
   },
   "dependencies": {
-    "axios": "^0.27.2"
+    "axios": "^1.6.1"
   },
   "devDependencies": {
     "@types/node": "^12.11.5",
