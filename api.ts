@@ -11603,19 +11603,19 @@ export interface RebootServicesRequest {
      * @type {Array<string>}
      * @memberof RebootServicesRequest
      */
-    'applicationIds'?: Array<string>;
+    'application_ids'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof RebootServicesRequest
      */
-    'databaseIds'?: Array<string>;
+    'database_ids'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof RebootServicesRequest
      */
-    'containerIds'?: Array<string>;
+    'container_ids'?: Array<string>;
 }
 /**
  * 
