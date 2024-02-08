@@ -2293,6 +2293,91 @@ export type ClusterFeatureAcceptedValuesInner = boolean | string;
 /**
  * 
  * @export
+ * @interface ClusterFeatureAwsExistingVpc
+ */
+export interface ClusterFeatureAwsExistingVpc {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeatureAwsExistingVpc
+     */
+    'aws_vpc_eks_id': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterFeatureAwsExistingVpc
+     */
+    'eks_subnets_zone_a_ids': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterFeatureAwsExistingVpc
+     */
+    'eks_subnets_zone_b_ids': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterFeatureAwsExistingVpc
+     */
+    'eks_subnets_zone_c_ids': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterFeatureAwsExistingVpc
+     */
+    'documentdb_subnets_zone_a_ids'?: Array<string> | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterFeatureAwsExistingVpc
+     */
+    'documentdb_subnets_zone_b_ids'?: Array<string> | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterFeatureAwsExistingVpc
+     */
+    'documentdb_subnets_zone_c_ids'?: Array<string> | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterFeatureAwsExistingVpc
+     */
+    'elasticache_subnets_zone_a_ids'?: Array<string> | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterFeatureAwsExistingVpc
+     */
+    'elasticache_subnets_zone_b_ids'?: Array<string> | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterFeatureAwsExistingVpc
+     */
+    'elasticache_subnets_zone_c_ids'?: Array<string> | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterFeatureAwsExistingVpc
+     */
+    'rds_subnets_zone_a_ids'?: Array<string> | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterFeatureAwsExistingVpc
+     */
+    'rds_subnets_zone_b_ids'?: Array<string> | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterFeatureAwsExistingVpc
+     */
+    'rds_subnets_zone_c_ids'?: Array<string> | null;
+}
+/**
+ * 
+ * @export
  * @interface ClusterFeatureResponseList
  */
 export interface ClusterFeatureResponseList {
@@ -2765,93 +2850,8 @@ export interface ClusterRequestFeaturesInner {
  * @type ClusterRequestFeaturesInnerValue
  * @export
  */
-export type ClusterRequestFeaturesInnerValue = ClusterRequestFeaturesInnerValueOneOf | boolean | string;
+export type ClusterRequestFeaturesInnerValue = ClusterFeatureAwsExistingVpc | boolean | string;
 
-/**
- * 
- * @export
- * @interface ClusterRequestFeaturesInnerValueOneOf
- */
-export interface ClusterRequestFeaturesInnerValueOneOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterRequestFeaturesInnerValueOneOf
-     */
-    'aws_vpc_eks_id': string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ClusterRequestFeaturesInnerValueOneOf
-     */
-    'eks_subnets_zone_a_ids': Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ClusterRequestFeaturesInnerValueOneOf
-     */
-    'eks_subnets_zone_b_ids': Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ClusterRequestFeaturesInnerValueOneOf
-     */
-    'eks_subnets_zone_c_ids': Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ClusterRequestFeaturesInnerValueOneOf
-     */
-    'documentdb_subnets_zone_a_ids'?: Array<string> | null;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ClusterRequestFeaturesInnerValueOneOf
-     */
-    'documentdb_subnets_zone_b_ids'?: Array<string> | null;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ClusterRequestFeaturesInnerValueOneOf
-     */
-    'documentdb_subnets_zone_c_ids'?: Array<string> | null;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ClusterRequestFeaturesInnerValueOneOf
-     */
-    'elasticache_subnets_zone_a_ids'?: Array<string> | null;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ClusterRequestFeaturesInnerValueOneOf
-     */
-    'elasticache_subnets_zone_b_ids'?: Array<string> | null;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ClusterRequestFeaturesInnerValueOneOf
-     */
-    'elasticache_subnets_zone_c_ids'?: Array<string> | null;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ClusterRequestFeaturesInnerValueOneOf
-     */
-    'rds_subnets_zone_a_ids'?: Array<string> | null;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ClusterRequestFeaturesInnerValueOneOf
-     */
-    'rds_subnets_zone_b_ids'?: Array<string> | null;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ClusterRequestFeaturesInnerValueOneOf
-     */
-    'rds_subnets_zone_c_ids'?: Array<string> | null;
-}
 /**
  * 
  * @export
