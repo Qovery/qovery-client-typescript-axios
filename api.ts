@@ -2392,7 +2392,7 @@ export interface ClusterFeatureResponseList {
  * @type ClusterFeatureValue
  * @export
  */
-export type ClusterFeatureValue = boolean | string;
+export type ClusterFeatureValue = ClusterFeatureAwsExistingVpc | boolean | string;
 
 /**
  * 
@@ -2841,17 +2841,11 @@ export interface ClusterRequestFeaturesInner {
     'id'?: string;
     /**
      * 
-     * @type {ClusterRequestFeaturesInnerValue}
+     * @type {ClusterFeatureValue}
      * @memberof ClusterRequestFeaturesInner
      */
-    'value'?: ClusterRequestFeaturesInnerValue | null;
+    'value'?: ClusterFeatureValue | null;
 }
-/**
- * @type ClusterRequestFeaturesInnerValue
- * @export
- */
-export type ClusterRequestFeaturesInnerValue = ClusterFeatureAwsExistingVpc | boolean | string;
-
 /**
  * 
  * @export
