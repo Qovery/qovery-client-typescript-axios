@@ -12534,6 +12534,12 @@ export interface SignUp {
      * @memberof SignUp
      */
     'dx_auth'?: boolean | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUp
+     */
+    'infrastructure_hosting'?: string | null;
 }
 
 
@@ -12615,6 +12621,12 @@ export interface SignUpRequest {
      * @memberof SignUpRequest
      */
     'dx_auth'?: boolean | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUpRequest
+     */
+    'infrastructure_hosting'?: string | null;
 }
 
 
