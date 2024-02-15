@@ -21349,6 +21349,55 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * 
+         * @summary Edit cluster kubeconfig
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {string} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editClusterKubeconfig: async (organizationId: string, clusterId: string, body?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('editClusterKubeconfig', 'organizationId', organizationId)
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('editClusterKubeconfig', 'clusterId', clusterId)
+            const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/kubeconfig`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/x-yaml';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Edit routing table by returning updated table.
          * @summary Edit routing table
          * @param {string} organizationId Organization ID
@@ -22044,6 +22093,19 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @summary Edit cluster kubeconfig
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {string} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editClusterKubeconfig(organizationId: string, clusterId: string, body?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editClusterKubeconfig(organizationId, clusterId, body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Edit routing table by returning updated table.
          * @summary Edit routing table
          * @param {string} organizationId Organization ID
@@ -22278,6 +22340,18 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.editClusterAdvancedSettings(organizationId, clusterId, clusterAdvancedSettings, options).then((request) => request(axios, basePath));
         },
         /**
+         * 
+         * @summary Edit cluster kubeconfig
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {string} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editClusterKubeconfig(organizationId: string, clusterId: string, body?: string, options?: any): AxiosPromise<void> {
+            return localVarFp.editClusterKubeconfig(organizationId, clusterId, body, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Edit routing table by returning updated table.
          * @summary Edit routing table
          * @param {string} organizationId Organization ID
@@ -22505,6 +22579,20 @@ export class ClustersApi extends BaseAPI {
      */
     public editClusterAdvancedSettings(organizationId: string, clusterId: string, clusterAdvancedSettings?: ClusterAdvancedSettings, options?: AxiosRequestConfig) {
         return ClustersApiFp(this.configuration).editClusterAdvancedSettings(organizationId, clusterId, clusterAdvancedSettings, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Edit cluster kubeconfig
+     * @param {string} organizationId Organization ID
+     * @param {string} clusterId Cluster ID
+     * @param {string} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClustersApi
+     */
+    public editClusterKubeconfig(organizationId: string, clusterId: string, body?: string, options?: AxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).editClusterKubeconfig(organizationId, clusterId, body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
