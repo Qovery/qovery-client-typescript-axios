@@ -4354,11 +4354,11 @@ export interface CurrentCost {
      */
     'remaining_trial_day'?: number;
     /**
-     * 
-     * @type {RemainingCredits}
+     * date when the current plan will be renewed
+     * @type {string}
      * @memberof CurrentCost
      */
-    'remaining_credits'?: RemainingCredits;
+    'renewal_at'?: string | null;
     /**
      * 
      * @type {Cost}
@@ -10049,23 +10049,17 @@ export interface OrganizationCurrentCost {
      */
     'remaining_trial_day'?: number;
     /**
-     * 
-     * @type {RemainingCredits}
+     * date when the current plan will be renewed
+     * @type {string}
      * @memberof OrganizationCurrentCost
      */
-    'remaining_credits'?: RemainingCredits;
+    'renewal_at'?: string | null;
     /**
      * 
      * @type {Cost}
      * @memberof OrganizationCurrentCost
      */
     'cost'?: Cost;
-    /**
-     * 
-     * @type {PaidUsage}
-     * @memberof OrganizationCurrentCost
-     */
-    'paid_usage'?: PaidUsage;
 }
 
 
@@ -10994,55 +10988,6 @@ export interface PaginationData {
      * @memberof PaginationData
      */
     'page_size': number;
-}
-/**
- * 
- * @export
- * @interface PaidUsage
- */
-export interface PaidUsage {
-    /**
-     * 
-     * @type {number}
-     * @memberof PaidUsage
-     */
-    'max_deployments_per_month'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PaidUsage
-     */
-    'consumed_deployments'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PaidUsage
-     */
-    'monthly_plan_cost'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PaidUsage
-     */
-    'monthly_plan_cost_in_cents'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PaidUsage
-     */
-    'remaining_deployments'?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof PaidUsage
-     */
-    'deployments_exceeded'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof PaidUsage
-     */
-    'renewal_at'?: string | null;
 }
 /**
  * BUSINESS & PROFESSIONAL are deprecated
