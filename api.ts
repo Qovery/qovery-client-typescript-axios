@@ -9969,6 +9969,50 @@ export interface OrganizationAvailableRoleList {
 /**
  * 
  * @export
+ * @interface OrganizationBillingUsageReportRequest
+ */
+export interface OrganizationBillingUsageReportRequest {
+    /**
+     * The start date of the report
+     * @type {string}
+     * @memberof OrganizationBillingUsageReportRequest
+     */
+    'from'?: string;
+    /**
+     * The end date of the report
+     * @type {string}
+     * @memberof OrganizationBillingUsageReportRequest
+     */
+    'to'?: string;
+    /**
+     * The number of seconds the report will be publicly available
+     * @type {number}
+     * @memberof OrganizationBillingUsageReportRequest
+     */
+    'report_expiration_in_seconds'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationBillingUsageReportResponse
+ */
+export interface OrganizationBillingUsageReportResponse {
+    /**
+     * The URL of the report
+     * @type {string}
+     * @memberof OrganizationBillingUsageReportResponse
+     */
+    'report_url'?: string;
+    /**
+     * The URL to delete the report. Use this URL to pro-actively delete the report before it expires
+     * @type {string}
+     * @memberof OrganizationBillingUsageReportResponse
+     */
+    'delete_report_url'?: string;
+}
+/**
+ * 
+ * @export
  * @interface OrganizationChangePlanRequest
  */
 export interface OrganizationChangePlanRequest {
@@ -17595,6 +17639,51 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * 
+         * @summary Generate organization billing usage report
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationBillingUsageReportRequest} [organizationBillingUsageReportRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        generateBillingUsageReport: async (organizationId: string, organizationBillingUsageReportRequest?: OrganizationBillingUsageReportRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('generateBillingUsageReport', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/billingUsageReport`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organizationBillingUsageReportRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Get your cluster cost range. We are unable to give a precise cost of your infrastructure at the moment. But Qovery guarantees that the cost of your cluster will not exceed the max range. 
          * @summary Get cluster current cost
          * @param {string} organizationId Organization ID
@@ -18087,6 +18176,18 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @summary Generate organization billing usage report
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationBillingUsageReportRequest} [organizationBillingUsageReportRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async generateBillingUsageReport(organizationId: string, organizationBillingUsageReportRequest?: OrganizationBillingUsageReportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationBillingUsageReportResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.generateBillingUsageReport(organizationId, organizationBillingUsageReportRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Get your cluster cost range. We are unable to give a precise cost of your infrastructure at the moment. But Qovery guarantees that the cost of your cluster will not exceed the max range. 
          * @summary Get cluster current cost
          * @param {string} organizationId Organization ID
@@ -18265,6 +18366,17 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.editOrganizationBillingInfo(organizationId, billingInfoRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * 
+         * @summary Generate organization billing usage report
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationBillingUsageReportRequest} [organizationBillingUsageReportRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        generateBillingUsageReport(organizationId: string, organizationBillingUsageReportRequest?: OrganizationBillingUsageReportRequest, options?: any): AxiosPromise<OrganizationBillingUsageReportResponse> {
+            return localVarFp.generateBillingUsageReport(organizationId, organizationBillingUsageReportRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Get your cluster cost range. We are unable to give a precise cost of your infrastructure at the moment. But Qovery guarantees that the cost of your cluster will not exceed the max range. 
          * @summary Get cluster current cost
          * @param {string} organizationId Organization ID
@@ -18440,6 +18552,19 @@ export class BillingApi extends BaseAPI {
      */
     public editOrganizationBillingInfo(organizationId: string, billingInfoRequest?: BillingInfoRequest, options?: AxiosRequestConfig) {
         return BillingApiFp(this.configuration).editOrganizationBillingInfo(organizationId, billingInfoRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Generate organization billing usage report
+     * @param {string} organizationId Organization ID
+     * @param {OrganizationBillingUsageReportRequest} [organizationBillingUsageReportRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public generateBillingUsageReport(organizationId: string, organizationBillingUsageReportRequest?: OrganizationBillingUsageReportRequest, options?: AxiosRequestConfig) {
+        return BillingApiFp(this.configuration).generateBillingUsageReport(organizationId, organizationBillingUsageReportRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
