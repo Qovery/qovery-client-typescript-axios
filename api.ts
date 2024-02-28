@@ -186,7 +186,7 @@ export interface Application {
      * @type {string}
      * @memberof Application
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {BuildModeEnum}
@@ -613,7 +613,7 @@ export interface ApplicationEditRequest {
      * @type {string}
      * @memberof ApplicationEditRequest
      */
-    'dockerfile_path'?: string;
+    'dockerfile_path'?: string | null;
     /**
      * 
      * @type {BuildPackLanguageEnum}
