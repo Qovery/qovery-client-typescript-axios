@@ -9977,19 +9977,19 @@ export interface OrganizationBillingUsageReportRequest {
      * @type {string}
      * @memberof OrganizationBillingUsageReportRequest
      */
-    'from'?: string;
+    'from': string;
     /**
      * The end date of the report
      * @type {string}
      * @memberof OrganizationBillingUsageReportRequest
      */
-    'to'?: string;
+    'to': string;
     /**
      * The number of seconds the report will be publicly available
      * @type {number}
      * @memberof OrganizationBillingUsageReportRequest
      */
-    'report_expiration_in_seconds'?: number;
+    'report_expiration_in_seconds': number;
 }
 /**
  * 
