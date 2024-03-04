@@ -467,6 +467,12 @@ export interface ApplicationAdvancedSettings {
      */
     'security.service_account_name'?: string;
     /**
+     * Automount Kubernetes service account token to have access to Kubernetes API from pods 
+     * @type {boolean}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'security.automount_service_account_token'?: boolean;
+    /**
      * Mounts the container\'s root filesystem as read-only 
      * @type {boolean}
      * @memberof ApplicationAdvancedSettings
@@ -3321,6 +3327,12 @@ export interface ContainerAdvancedSettings {
      * @memberof ContainerAdvancedSettings
      */
     'hpa.cpu.average_utilization_percent'?: number;
+    /**
+     * Automount Kubernetes service account token to have access to Kubernetes API from pods 
+     * @type {boolean}
+     * @memberof ContainerAdvancedSettings
+     */
+    'security.automount_service_account_token'?: boolean;
     /**
      * Mounts the container\'s root filesystem as read-only 
      * @type {boolean}
@@ -8710,6 +8722,12 @@ export interface JobAdvancedSettings {
      * @memberof JobAdvancedSettings
      */
     'security.service_account_name'?: string;
+    /**
+     * Automount Kubernetes service account token to have access to Kubernetes API from pods 
+     * @type {boolean}
+     * @memberof JobAdvancedSettings
+     */
+    'security.automount_service_account_token'?: boolean;
     /**
      * Mounts the container\'s root filesystem as read-only 
      * @type {boolean}
