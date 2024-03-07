@@ -7124,7 +7124,8 @@ export interface GitTokenAssociatedServiceResponse {
 
 export const GitTokenAssociatedServiceType = {
     APPLICATION: 'APPLICATION',
-    JOB: 'JOB',
+    CRON: 'CRON',
+    LIFECYCLE: 'LIFECYCLE',
     HELM: 'HELM'
 } as const;
 
