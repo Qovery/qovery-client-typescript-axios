@@ -2384,6 +2384,49 @@ export interface ClusterFeatureAwsExistingVpc {
 /**
  * 
  * @export
+ * @interface ClusterFeatureGcpExistingVpc
+ */
+export interface ClusterFeatureGcpExistingVpc {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeatureGcpExistingVpc
+     */
+    'vpc_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeatureGcpExistingVpc
+     */
+    'vpc_project_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeatureGcpExistingVpc
+     */
+    'subnetwork_name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeatureGcpExistingVpc
+     */
+    'ip_range_services_name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeatureGcpExistingVpc
+     */
+    'ip_range_pods_name'?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterFeatureGcpExistingVpc
+     */
+    'additional_ip_range_pods_names'?: Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface ClusterFeatureResponseList
  */
 export interface ClusterFeatureResponseList {
@@ -2398,7 +2441,7 @@ export interface ClusterFeatureResponseList {
  * @type ClusterFeatureValue
  * @export
  */
-export type ClusterFeatureValue = ClusterFeatureAwsExistingVpc | boolean | string;
+export type ClusterFeatureValue = ClusterFeatureAwsExistingVpc | ClusterFeatureGcpExistingVpc | boolean | string;
 
 /**
  * 
