@@ -1737,7 +1737,8 @@ export interface CloudProvider {
 export const CloudProviderEnum = {
     AWS: 'AWS',
     SCW: 'SCW',
-    GCP: 'GCP'
+    GCP: 'GCP',
+    ON_PREMISE: 'ON_PREMISE'
 } as const;
 
 export type CloudProviderEnum = typeof CloudProviderEnum[keyof typeof CloudProviderEnum];
