@@ -9989,6 +9989,18 @@ export interface OrganizationAnnotationsGroupResponse {
      * @type {string}
      * @memberof OrganizationAnnotationsGroupResponse
      */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAnnotationsGroupResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAnnotationsGroupResponse
+     */
     'name': string;
     /**
      * 
@@ -14231,14 +14243,18 @@ export const ApplicationAnnotationsGroupApiAxiosParamCreator = function (configu
          * Add annotations group to application
          * @summary Add annotations group to application
          * @param {string} applicationId Application ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addAnnotationsGroupToApplication: async (applicationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        addAnnotationsGroupToApplication: async (applicationId: string, annotationsGroupId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'applicationId' is not null or undefined
             assertParamExists('addAnnotationsGroupToApplication', 'applicationId', applicationId)
+            // verify required parameter 'annotationsGroupId' is not null or undefined
+            assertParamExists('addAnnotationsGroupToApplication', 'annotationsGroupId', annotationsGroupId)
             const localVarPath = `/application/{applicationId}/annotationsGroup/{annotationsGroupId}`
-                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
+                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)))
+                .replace(`{${"annotationsGroupId"}}`, encodeURIComponent(String(annotationsGroupId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -14272,14 +14288,18 @@ export const ApplicationAnnotationsGroupApiAxiosParamCreator = function (configu
          * Delete annotations group to application
          * @summary Delete annotations group to application
          * @param {string} applicationId Application ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAnnotationsGroupToApplication: async (applicationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteAnnotationsGroupToApplication: async (applicationId: string, annotationsGroupId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'applicationId' is not null or undefined
             assertParamExists('deleteAnnotationsGroupToApplication', 'applicationId', applicationId)
+            // verify required parameter 'annotationsGroupId' is not null or undefined
+            assertParamExists('deleteAnnotationsGroupToApplication', 'annotationsGroupId', annotationsGroupId)
             const localVarPath = `/application/{applicationId}/annotationsGroup/{annotationsGroupId}`
-                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
+                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)))
+                .replace(`{${"annotationsGroupId"}}`, encodeURIComponent(String(annotationsGroupId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -14364,22 +14384,24 @@ export const ApplicationAnnotationsGroupApiFp = function(configuration?: Configu
          * Add annotations group to application
          * @summary Add annotations group to application
          * @param {string} applicationId Application ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addAnnotationsGroupToApplication(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addAnnotationsGroupToApplication(applicationId, options);
+        async addAnnotationsGroupToApplication(applicationId: string, annotationsGroupId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addAnnotationsGroupToApplication(applicationId, annotationsGroupId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Delete annotations group to application
          * @summary Delete annotations group to application
          * @param {string} applicationId Application ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAnnotationsGroupToApplication(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAnnotationsGroupToApplication(applicationId, options);
+        async deleteAnnotationsGroupToApplication(applicationId: string, annotationsGroupId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAnnotationsGroupToApplication(applicationId, annotationsGroupId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -14407,21 +14429,23 @@ export const ApplicationAnnotationsGroupApiFactory = function (configuration?: C
          * Add annotations group to application
          * @summary Add annotations group to application
          * @param {string} applicationId Application ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addAnnotationsGroupToApplication(applicationId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.addAnnotationsGroupToApplication(applicationId, options).then((request) => request(axios, basePath));
+        addAnnotationsGroupToApplication(applicationId: string, annotationsGroupId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.addAnnotationsGroupToApplication(applicationId, annotationsGroupId, options).then((request) => request(axios, basePath));
         },
         /**
          * Delete annotations group to application
          * @summary Delete annotations group to application
          * @param {string} applicationId Application ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAnnotationsGroupToApplication(applicationId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteAnnotationsGroupToApplication(applicationId, options).then((request) => request(axios, basePath));
+        deleteAnnotationsGroupToApplication(applicationId: string, annotationsGroupId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteAnnotationsGroupToApplication(applicationId, annotationsGroupId, options).then((request) => request(axios, basePath));
         },
         /**
          * List application annotations group
@@ -14447,24 +14471,26 @@ export class ApplicationAnnotationsGroupApi extends BaseAPI {
      * Add annotations group to application
      * @summary Add annotations group to application
      * @param {string} applicationId Application ID
+     * @param {string} annotationsGroupId Organization annotations group ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApplicationAnnotationsGroupApi
      */
-    public addAnnotationsGroupToApplication(applicationId: string, options?: AxiosRequestConfig) {
-        return ApplicationAnnotationsGroupApiFp(this.configuration).addAnnotationsGroupToApplication(applicationId, options).then((request) => request(this.axios, this.basePath));
+    public addAnnotationsGroupToApplication(applicationId: string, annotationsGroupId: string, options?: AxiosRequestConfig) {
+        return ApplicationAnnotationsGroupApiFp(this.configuration).addAnnotationsGroupToApplication(applicationId, annotationsGroupId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Delete annotations group to application
      * @summary Delete annotations group to application
      * @param {string} applicationId Application ID
+     * @param {string} annotationsGroupId Organization annotations group ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApplicationAnnotationsGroupApi
      */
-    public deleteAnnotationsGroupToApplication(applicationId: string, options?: AxiosRequestConfig) {
-        return ApplicationAnnotationsGroupApiFp(this.configuration).deleteAnnotationsGroupToApplication(applicationId, options).then((request) => request(this.axios, this.basePath));
+    public deleteAnnotationsGroupToApplication(applicationId: string, annotationsGroupId: string, options?: AxiosRequestConfig) {
+        return ApplicationAnnotationsGroupApiFp(this.configuration).deleteAnnotationsGroupToApplication(applicationId, annotationsGroupId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -23737,14 +23763,18 @@ export const ContainerAnnotationsGroupApiAxiosParamCreator = function (configura
          * Add annotations group to container
          * @summary Add annotations group to container
          * @param {string} containerId Container ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addAnnotationsGroupToContainer: async (containerId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        addAnnotationsGroupToContainer: async (containerId: string, annotationsGroupId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'containerId' is not null or undefined
             assertParamExists('addAnnotationsGroupToContainer', 'containerId', containerId)
+            // verify required parameter 'annotationsGroupId' is not null or undefined
+            assertParamExists('addAnnotationsGroupToContainer', 'annotationsGroupId', annotationsGroupId)
             const localVarPath = `/container/{containerId}/annotationsGroup/{annotationsGroupId}`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
+                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)))
+                .replace(`{${"annotationsGroupId"}}`, encodeURIComponent(String(annotationsGroupId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -23778,14 +23808,18 @@ export const ContainerAnnotationsGroupApiAxiosParamCreator = function (configura
          * Delete annotations group to container
          * @summary Delete annotations group to container
          * @param {string} containerId Container ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAnnotationsGroupToContainer: async (containerId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteAnnotationsGroupToContainer: async (containerId: string, annotationsGroupId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'containerId' is not null or undefined
             assertParamExists('deleteAnnotationsGroupToContainer', 'containerId', containerId)
+            // verify required parameter 'annotationsGroupId' is not null or undefined
+            assertParamExists('deleteAnnotationsGroupToContainer', 'annotationsGroupId', annotationsGroupId)
             const localVarPath = `/container/{containerId}/annotationsGroup/{annotationsGroupId}`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
+                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)))
+                .replace(`{${"annotationsGroupId"}}`, encodeURIComponent(String(annotationsGroupId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -23870,22 +23904,24 @@ export const ContainerAnnotationsGroupApiFp = function(configuration?: Configura
          * Add annotations group to container
          * @summary Add annotations group to container
          * @param {string} containerId Container ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addAnnotationsGroupToContainer(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addAnnotationsGroupToContainer(containerId, options);
+        async addAnnotationsGroupToContainer(containerId: string, annotationsGroupId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addAnnotationsGroupToContainer(containerId, annotationsGroupId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Delete annotations group to container
          * @summary Delete annotations group to container
          * @param {string} containerId Container ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAnnotationsGroupToContainer(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAnnotationsGroupToContainer(containerId, options);
+        async deleteAnnotationsGroupToContainer(containerId: string, annotationsGroupId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAnnotationsGroupToContainer(containerId, annotationsGroupId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -23913,21 +23949,23 @@ export const ContainerAnnotationsGroupApiFactory = function (configuration?: Con
          * Add annotations group to container
          * @summary Add annotations group to container
          * @param {string} containerId Container ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addAnnotationsGroupToContainer(containerId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.addAnnotationsGroupToContainer(containerId, options).then((request) => request(axios, basePath));
+        addAnnotationsGroupToContainer(containerId: string, annotationsGroupId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.addAnnotationsGroupToContainer(containerId, annotationsGroupId, options).then((request) => request(axios, basePath));
         },
         /**
          * Delete annotations group to container
          * @summary Delete annotations group to container
          * @param {string} containerId Container ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAnnotationsGroupToContainer(containerId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteAnnotationsGroupToContainer(containerId, options).then((request) => request(axios, basePath));
+        deleteAnnotationsGroupToContainer(containerId: string, annotationsGroupId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteAnnotationsGroupToContainer(containerId, annotationsGroupId, options).then((request) => request(axios, basePath));
         },
         /**
          * List container annotations group
@@ -23953,24 +23991,26 @@ export class ContainerAnnotationsGroupApi extends BaseAPI {
      * Add annotations group to container
      * @summary Add annotations group to container
      * @param {string} containerId Container ID
+     * @param {string} annotationsGroupId Organization annotations group ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContainerAnnotationsGroupApi
      */
-    public addAnnotationsGroupToContainer(containerId: string, options?: AxiosRequestConfig) {
-        return ContainerAnnotationsGroupApiFp(this.configuration).addAnnotationsGroupToContainer(containerId, options).then((request) => request(this.axios, this.basePath));
+    public addAnnotationsGroupToContainer(containerId: string, annotationsGroupId: string, options?: AxiosRequestConfig) {
+        return ContainerAnnotationsGroupApiFp(this.configuration).addAnnotationsGroupToContainer(containerId, annotationsGroupId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Delete annotations group to container
      * @summary Delete annotations group to container
      * @param {string} containerId Container ID
+     * @param {string} annotationsGroupId Organization annotations group ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContainerAnnotationsGroupApi
      */
-    public deleteAnnotationsGroupToContainer(containerId: string, options?: AxiosRequestConfig) {
-        return ContainerAnnotationsGroupApiFp(this.configuration).deleteAnnotationsGroupToContainer(containerId, options).then((request) => request(this.axios, this.basePath));
+    public deleteAnnotationsGroupToContainer(containerId: string, annotationsGroupId: string, options?: AxiosRequestConfig) {
+        return ContainerAnnotationsGroupApiFp(this.configuration).deleteAnnotationsGroupToContainer(containerId, annotationsGroupId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -28545,14 +28585,18 @@ export const DatabaseAnnotationsGroupApiAxiosParamCreator = function (configurat
          * Add annotations group to database
          * @summary Add annotations group to database
          * @param {string} databaseId Database ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addAnnotationsGroupToDatabase: async (databaseId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        addAnnotationsGroupToDatabase: async (databaseId: string, annotationsGroupId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'databaseId' is not null or undefined
             assertParamExists('addAnnotationsGroupToDatabase', 'databaseId', databaseId)
+            // verify required parameter 'annotationsGroupId' is not null or undefined
+            assertParamExists('addAnnotationsGroupToDatabase', 'annotationsGroupId', annotationsGroupId)
             const localVarPath = `/database/{databaseId}/annotationsGroup/{annotationsGroupId}`
-                .replace(`{${"databaseId"}}`, encodeURIComponent(String(databaseId)));
+                .replace(`{${"databaseId"}}`, encodeURIComponent(String(databaseId)))
+                .replace(`{${"annotationsGroupId"}}`, encodeURIComponent(String(annotationsGroupId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -28586,14 +28630,18 @@ export const DatabaseAnnotationsGroupApiAxiosParamCreator = function (configurat
          * Delete annotations group to database
          * @summary Delete annotations group to database
          * @param {string} databaseId Database ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAnnotationsGroupToDatabase: async (databaseId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteAnnotationsGroupToDatabase: async (databaseId: string, annotationsGroupId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'databaseId' is not null or undefined
             assertParamExists('deleteAnnotationsGroupToDatabase', 'databaseId', databaseId)
+            // verify required parameter 'annotationsGroupId' is not null or undefined
+            assertParamExists('deleteAnnotationsGroupToDatabase', 'annotationsGroupId', annotationsGroupId)
             const localVarPath = `/database/{databaseId}/annotationsGroup/{annotationsGroupId}`
-                .replace(`{${"databaseId"}}`, encodeURIComponent(String(databaseId)));
+                .replace(`{${"databaseId"}}`, encodeURIComponent(String(databaseId)))
+                .replace(`{${"annotationsGroupId"}}`, encodeURIComponent(String(annotationsGroupId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -28678,22 +28726,24 @@ export const DatabaseAnnotationsGroupApiFp = function(configuration?: Configurat
          * Add annotations group to database
          * @summary Add annotations group to database
          * @param {string} databaseId Database ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addAnnotationsGroupToDatabase(databaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addAnnotationsGroupToDatabase(databaseId, options);
+        async addAnnotationsGroupToDatabase(databaseId: string, annotationsGroupId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addAnnotationsGroupToDatabase(databaseId, annotationsGroupId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Delete annotations group to database
          * @summary Delete annotations group to database
          * @param {string} databaseId Database ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAnnotationsGroupToDatabase(databaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAnnotationsGroupToDatabase(databaseId, options);
+        async deleteAnnotationsGroupToDatabase(databaseId: string, annotationsGroupId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAnnotationsGroupToDatabase(databaseId, annotationsGroupId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -28721,21 +28771,23 @@ export const DatabaseAnnotationsGroupApiFactory = function (configuration?: Conf
          * Add annotations group to database
          * @summary Add annotations group to database
          * @param {string} databaseId Database ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addAnnotationsGroupToDatabase(databaseId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.addAnnotationsGroupToDatabase(databaseId, options).then((request) => request(axios, basePath));
+        addAnnotationsGroupToDatabase(databaseId: string, annotationsGroupId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.addAnnotationsGroupToDatabase(databaseId, annotationsGroupId, options).then((request) => request(axios, basePath));
         },
         /**
          * Delete annotations group to database
          * @summary Delete annotations group to database
          * @param {string} databaseId Database ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAnnotationsGroupToDatabase(databaseId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteAnnotationsGroupToDatabase(databaseId, options).then((request) => request(axios, basePath));
+        deleteAnnotationsGroupToDatabase(databaseId: string, annotationsGroupId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteAnnotationsGroupToDatabase(databaseId, annotationsGroupId, options).then((request) => request(axios, basePath));
         },
         /**
          * List database annotations group
@@ -28761,24 +28813,26 @@ export class DatabaseAnnotationsGroupApi extends BaseAPI {
      * Add annotations group to database
      * @summary Add annotations group to database
      * @param {string} databaseId Database ID
+     * @param {string} annotationsGroupId Organization annotations group ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DatabaseAnnotationsGroupApi
      */
-    public addAnnotationsGroupToDatabase(databaseId: string, options?: AxiosRequestConfig) {
-        return DatabaseAnnotationsGroupApiFp(this.configuration).addAnnotationsGroupToDatabase(databaseId, options).then((request) => request(this.axios, this.basePath));
+    public addAnnotationsGroupToDatabase(databaseId: string, annotationsGroupId: string, options?: AxiosRequestConfig) {
+        return DatabaseAnnotationsGroupApiFp(this.configuration).addAnnotationsGroupToDatabase(databaseId, annotationsGroupId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Delete annotations group to database
      * @summary Delete annotations group to database
      * @param {string} databaseId Database ID
+     * @param {string} annotationsGroupId Organization annotations group ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DatabaseAnnotationsGroupApi
      */
-    public deleteAnnotationsGroupToDatabase(databaseId: string, options?: AxiosRequestConfig) {
-        return DatabaseAnnotationsGroupApiFp(this.configuration).deleteAnnotationsGroupToDatabase(databaseId, options).then((request) => request(this.axios, this.basePath));
+    public deleteAnnotationsGroupToDatabase(databaseId: string, annotationsGroupId: string, options?: AxiosRequestConfig) {
+        return DatabaseAnnotationsGroupApiFp(this.configuration).deleteAnnotationsGroupToDatabase(databaseId, annotationsGroupId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -38262,14 +38316,18 @@ export const JobAnnotationsGroupApiAxiosParamCreator = function (configuration?:
          * Delete annotations group to job
          * @summary Delete annotations group to job
          * @param {string} jobId Job ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAnnotationsGroupToJob: async (jobId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteAnnotationsGroupToJob: async (jobId: string, annotationsGroupId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'jobId' is not null or undefined
             assertParamExists('deleteAnnotationsGroupToJob', 'jobId', jobId)
+            // verify required parameter 'annotationsGroupId' is not null or undefined
+            assertParamExists('deleteAnnotationsGroupToJob', 'annotationsGroupId', annotationsGroupId)
             const localVarPath = `/job/{jobId}/annotationsGroup/{annotationsGroupId}`
-                .replace(`{${"jobId"}}`, encodeURIComponent(String(jobId)));
+                .replace(`{${"jobId"}}`, encodeURIComponent(String(jobId)))
+                .replace(`{${"annotationsGroupId"}}`, encodeURIComponent(String(annotationsGroupId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -38366,11 +38424,12 @@ export const JobAnnotationsGroupApiFp = function(configuration?: Configuration) 
          * Delete annotations group to job
          * @summary Delete annotations group to job
          * @param {string} jobId Job ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAnnotationsGroupToJob(jobId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAnnotationsGroupToJob(jobId, options);
+        async deleteAnnotationsGroupToJob(jobId: string, annotationsGroupId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAnnotationsGroupToJob(jobId, annotationsGroupId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -38409,11 +38468,12 @@ export const JobAnnotationsGroupApiFactory = function (configuration?: Configura
          * Delete annotations group to job
          * @summary Delete annotations group to job
          * @param {string} jobId Job ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAnnotationsGroupToJob(jobId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteAnnotationsGroupToJob(jobId, options).then((request) => request(axios, basePath));
+        deleteAnnotationsGroupToJob(jobId: string, annotationsGroupId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteAnnotationsGroupToJob(jobId, annotationsGroupId, options).then((request) => request(axios, basePath));
         },
         /**
          * List job annotations group
@@ -38452,12 +38512,13 @@ export class JobAnnotationsGroupApi extends BaseAPI {
      * Delete annotations group to job
      * @summary Delete annotations group to job
      * @param {string} jobId Job ID
+     * @param {string} annotationsGroupId Organization annotations group ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof JobAnnotationsGroupApi
      */
-    public deleteAnnotationsGroupToJob(jobId: string, options?: AxiosRequestConfig) {
-        return JobAnnotationsGroupApiFp(this.configuration).deleteAnnotationsGroupToJob(jobId, options).then((request) => request(this.axios, this.basePath));
+    public deleteAnnotationsGroupToJob(jobId: string, annotationsGroupId: string, options?: AxiosRequestConfig) {
+        return JobAnnotationsGroupApiFp(this.configuration).deleteAnnotationsGroupToJob(jobId, annotationsGroupId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -42683,14 +42744,18 @@ export const OrganizationAnnotationsGroupApiAxiosParamCreator = function (config
          * Delete organization annotations group
          * @summary Delete organization annotations group
          * @param {string} organizationId Organization ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteOrganizationAnnotationsGroup: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteOrganizationAnnotationsGroup: async (organizationId: string, annotationsGroupId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('deleteOrganizationAnnotationsGroup', 'organizationId', organizationId)
+            // verify required parameter 'annotationsGroupId' is not null or undefined
+            assertParamExists('deleteOrganizationAnnotationsGroup', 'annotationsGroupId', annotationsGroupId)
             const localVarPath = `/organization/{organizationId}/annotationsGroups/{annotationsGroupId}`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"annotationsGroupId"}}`, encodeURIComponent(String(annotationsGroupId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -42724,14 +42789,18 @@ export const OrganizationAnnotationsGroupApiAxiosParamCreator = function (config
          * Edit organization annotations group
          * @summary Edit organization annotations group
          * @param {string} organizationId Organization ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editOrganizationAnnotationsGroup: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        editOrganizationAnnotationsGroup: async (organizationId: string, annotationsGroupId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('editOrganizationAnnotationsGroup', 'organizationId', organizationId)
+            // verify required parameter 'annotationsGroupId' is not null or undefined
+            assertParamExists('editOrganizationAnnotationsGroup', 'annotationsGroupId', annotationsGroupId)
             const localVarPath = `/organization/{organizationId}/annotationsGroups/{annotationsGroupId}`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"annotationsGroupId"}}`, encodeURIComponent(String(annotationsGroupId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -42765,14 +42834,18 @@ export const OrganizationAnnotationsGroupApiAxiosParamCreator = function (config
          * Get organization annotations group
          * @summary Get organization annotations group
          * @param {string} organizationId Organization ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationAnnotationsGroup: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getOrganizationAnnotationsGroup: async (organizationId: string, annotationsGroupId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('getOrganizationAnnotationsGroup', 'organizationId', organizationId)
+            // verify required parameter 'annotationsGroupId' is not null or undefined
+            assertParamExists('getOrganizationAnnotationsGroup', 'annotationsGroupId', annotationsGroupId)
             const localVarPath = `/organization/{organizationId}/annotationsGroups/{annotationsGroupId}`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"annotationsGroupId"}}`, encodeURIComponent(String(annotationsGroupId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -42806,14 +42879,18 @@ export const OrganizationAnnotationsGroupApiAxiosParamCreator = function (config
          * Get organization annotations group associated items
          * @summary Get organization annotations group associated items
          * @param {string} organizationId Organization ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationAnnotationsGroupAssociatedItems: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getOrganizationAnnotationsGroupAssociatedItems: async (organizationId: string, annotationsGroupId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('getOrganizationAnnotationsGroupAssociatedItems', 'organizationId', organizationId)
+            // verify required parameter 'annotationsGroupId' is not null or undefined
+            assertParamExists('getOrganizationAnnotationsGroupAssociatedItems', 'annotationsGroupId', annotationsGroupId)
             const localVarPath = `/organization/{organizationId}/annotationsGroups/{annotationsGroupId}/associatedItems`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"annotationsGroupId"}}`, encodeURIComponent(String(annotationsGroupId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -42910,44 +42987,48 @@ export const OrganizationAnnotationsGroupApiFp = function(configuration?: Config
          * Delete organization annotations group
          * @summary Delete organization annotations group
          * @param {string} organizationId Organization ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteOrganizationAnnotationsGroup(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOrganizationAnnotationsGroup(organizationId, options);
+        async deleteOrganizationAnnotationsGroup(organizationId: string, annotationsGroupId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOrganizationAnnotationsGroup(organizationId, annotationsGroupId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Edit organization annotations group
          * @summary Edit organization annotations group
          * @param {string} organizationId Organization ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editOrganizationAnnotationsGroup(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationAnnotationsGroupResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.editOrganizationAnnotationsGroup(organizationId, options);
+        async editOrganizationAnnotationsGroup(organizationId: string, annotationsGroupId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationAnnotationsGroupResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editOrganizationAnnotationsGroup(organizationId, annotationsGroupId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Get organization annotations group
          * @summary Get organization annotations group
          * @param {string} organizationId Organization ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganizationAnnotationsGroup(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationAnnotationsGroupResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationAnnotationsGroup(organizationId, options);
+        async getOrganizationAnnotationsGroup(organizationId: string, annotationsGroupId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationAnnotationsGroupResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationAnnotationsGroup(organizationId, annotationsGroupId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Get organization annotations group associated items
          * @summary Get organization annotations group associated items
          * @param {string} organizationId Organization ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganizationAnnotationsGroupAssociatedItems(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationAnnotationsGroupAssociatedItemsResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationAnnotationsGroupAssociatedItems(organizationId, options);
+        async getOrganizationAnnotationsGroupAssociatedItems(organizationId: string, annotationsGroupId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationAnnotationsGroupAssociatedItemsResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationAnnotationsGroupAssociatedItems(organizationId, annotationsGroupId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -42986,41 +43067,45 @@ export const OrganizationAnnotationsGroupApiFactory = function (configuration?: 
          * Delete organization annotations group
          * @summary Delete organization annotations group
          * @param {string} organizationId Organization ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteOrganizationAnnotationsGroup(organizationId: string, options?: any): AxiosPromise<void> {
-            return localVarFp.deleteOrganizationAnnotationsGroup(organizationId, options).then((request) => request(axios, basePath));
+        deleteOrganizationAnnotationsGroup(organizationId: string, annotationsGroupId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteOrganizationAnnotationsGroup(organizationId, annotationsGroupId, options).then((request) => request(axios, basePath));
         },
         /**
          * Edit organization annotations group
          * @summary Edit organization annotations group
          * @param {string} organizationId Organization ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editOrganizationAnnotationsGroup(organizationId: string, options?: any): AxiosPromise<OrganizationAnnotationsGroupResponse> {
-            return localVarFp.editOrganizationAnnotationsGroup(organizationId, options).then((request) => request(axios, basePath));
+        editOrganizationAnnotationsGroup(organizationId: string, annotationsGroupId: string, options?: any): AxiosPromise<OrganizationAnnotationsGroupResponse> {
+            return localVarFp.editOrganizationAnnotationsGroup(organizationId, annotationsGroupId, options).then((request) => request(axios, basePath));
         },
         /**
          * Get organization annotations group
          * @summary Get organization annotations group
          * @param {string} organizationId Organization ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationAnnotationsGroup(organizationId: string, options?: any): AxiosPromise<OrganizationAnnotationsGroupResponse> {
-            return localVarFp.getOrganizationAnnotationsGroup(organizationId, options).then((request) => request(axios, basePath));
+        getOrganizationAnnotationsGroup(organizationId: string, annotationsGroupId: string, options?: any): AxiosPromise<OrganizationAnnotationsGroupResponse> {
+            return localVarFp.getOrganizationAnnotationsGroup(organizationId, annotationsGroupId, options).then((request) => request(axios, basePath));
         },
         /**
          * Get organization annotations group associated items
          * @summary Get organization annotations group associated items
          * @param {string} organizationId Organization ID
+         * @param {string} annotationsGroupId Organization annotations group ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationAnnotationsGroupAssociatedItems(organizationId: string, options?: any): AxiosPromise<OrganizationAnnotationsGroupAssociatedItemsResponseList> {
-            return localVarFp.getOrganizationAnnotationsGroupAssociatedItems(organizationId, options).then((request) => request(axios, basePath));
+        getOrganizationAnnotationsGroupAssociatedItems(organizationId: string, annotationsGroupId: string, options?: any): AxiosPromise<OrganizationAnnotationsGroupAssociatedItemsResponseList> {
+            return localVarFp.getOrganizationAnnotationsGroupAssociatedItems(organizationId, annotationsGroupId, options).then((request) => request(axios, basePath));
         },
         /**
          * List organization annotations group
@@ -43059,48 +43144,52 @@ export class OrganizationAnnotationsGroupApi extends BaseAPI {
      * Delete organization annotations group
      * @summary Delete organization annotations group
      * @param {string} organizationId Organization ID
+     * @param {string} annotationsGroupId Organization annotations group ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationAnnotationsGroupApi
      */
-    public deleteOrganizationAnnotationsGroup(organizationId: string, options?: AxiosRequestConfig) {
-        return OrganizationAnnotationsGroupApiFp(this.configuration).deleteOrganizationAnnotationsGroup(organizationId, options).then((request) => request(this.axios, this.basePath));
+    public deleteOrganizationAnnotationsGroup(organizationId: string, annotationsGroupId: string, options?: AxiosRequestConfig) {
+        return OrganizationAnnotationsGroupApiFp(this.configuration).deleteOrganizationAnnotationsGroup(organizationId, annotationsGroupId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Edit organization annotations group
      * @summary Edit organization annotations group
      * @param {string} organizationId Organization ID
+     * @param {string} annotationsGroupId Organization annotations group ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationAnnotationsGroupApi
      */
-    public editOrganizationAnnotationsGroup(organizationId: string, options?: AxiosRequestConfig) {
-        return OrganizationAnnotationsGroupApiFp(this.configuration).editOrganizationAnnotationsGroup(organizationId, options).then((request) => request(this.axios, this.basePath));
+    public editOrganizationAnnotationsGroup(organizationId: string, annotationsGroupId: string, options?: AxiosRequestConfig) {
+        return OrganizationAnnotationsGroupApiFp(this.configuration).editOrganizationAnnotationsGroup(organizationId, annotationsGroupId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get organization annotations group
      * @summary Get organization annotations group
      * @param {string} organizationId Organization ID
+     * @param {string} annotationsGroupId Organization annotations group ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationAnnotationsGroupApi
      */
-    public getOrganizationAnnotationsGroup(organizationId: string, options?: AxiosRequestConfig) {
-        return OrganizationAnnotationsGroupApiFp(this.configuration).getOrganizationAnnotationsGroup(organizationId, options).then((request) => request(this.axios, this.basePath));
+    public getOrganizationAnnotationsGroup(organizationId: string, annotationsGroupId: string, options?: AxiosRequestConfig) {
+        return OrganizationAnnotationsGroupApiFp(this.configuration).getOrganizationAnnotationsGroup(organizationId, annotationsGroupId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get organization annotations group associated items
      * @summary Get organization annotations group associated items
      * @param {string} organizationId Organization ID
+     * @param {string} annotationsGroupId Organization annotations group ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationAnnotationsGroupApi
      */
-    public getOrganizationAnnotationsGroupAssociatedItems(organizationId: string, options?: AxiosRequestConfig) {
-        return OrganizationAnnotationsGroupApiFp(this.configuration).getOrganizationAnnotationsGroupAssociatedItems(organizationId, options).then((request) => request(this.axios, this.basePath));
+    public getOrganizationAnnotationsGroupAssociatedItems(organizationId: string, annotationsGroupId: string, options?: AxiosRequestConfig) {
+        return OrganizationAnnotationsGroupApiFp(this.configuration).getOrganizationAnnotationsGroupAssociatedItems(organizationId, annotationsGroupId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
