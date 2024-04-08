@@ -10035,20 +10035,20 @@ export interface OrganizationAnnotationsGroupResponseList {
  */
 
 export const OrganizationAnnotationsGroupScopeEnum = {
-    PERSISTENT_VOLUME_CLAIMS: 'PERSISTENT_VOLUME_CLAIMS,',
-    REPLICA_SETS: 'REPLICA_SETS,',
-    DEPLOYMENTS: 'DEPLOYMENTS,',
-    STATEFUL_SETS: 'STATEFUL_SETS,',
-    SERVICES: 'SERVICES,',
-    INGRESS: 'INGRESS,',
-    HPA: 'HPA,',
-    ENDPOINTS: 'ENDPOINTS,',
-    PODS: 'PODS,',
-    PERSISTENT_VOLUMES: 'PERSISTENT_VOLUMES,',
-    SECRETS: 'SECRETS,',
-    CONFIG_MAPS: 'CONFIG_MAPS,',
-    JOBS: 'JOBS,',
-    CRON_JOBS: 'CRON_JOBS,'
+    PERSISTENT_VOLUME_CLAIMS: 'PERSISTENT_VOLUME_CLAIMS',
+    REPLICA_SETS: 'REPLICA_SETS',
+    DEPLOYMENTS: 'DEPLOYMENTS',
+    STATEFUL_SETS: 'STATEFUL_SETS',
+    SERVICES: 'SERVICES',
+    INGRESS: 'INGRESS',
+    HPA: 'HPA',
+    ENDPOINTS: 'ENDPOINTS',
+    PODS: 'PODS',
+    PERSISTENT_VOLUMES: 'PERSISTENT_VOLUMES',
+    SECRETS: 'SECRETS',
+    CONFIG_MAPS: 'CONFIG_MAPS',
+    JOBS: 'JOBS',
+    CRON_JOBS: 'CRON_JOBS'
 } as const;
 
 export type OrganizationAnnotationsGroupScopeEnum = typeof OrganizationAnnotationsGroupScopeEnum[keyof typeof OrganizationAnnotationsGroupScopeEnum];
@@ -42790,10 +42790,11 @@ export const OrganizationAnnotationsGroupApiAxiosParamCreator = function (config
          * @summary Edit organization annotations group
          * @param {string} organizationId Organization ID
          * @param {string} annotationsGroupId Organization annotations group ID
+         * @param {OrganizationAnnotationsGroupCreateRequest} [organizationAnnotationsGroupCreateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editOrganizationAnnotationsGroup: async (organizationId: string, annotationsGroupId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        editOrganizationAnnotationsGroup: async (organizationId: string, annotationsGroupId: string, organizationAnnotationsGroupCreateRequest?: OrganizationAnnotationsGroupCreateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('editOrganizationAnnotationsGroup', 'organizationId', organizationId)
             // verify required parameter 'annotationsGroupId' is not null or undefined
@@ -42821,9 +42822,12 @@ export const OrganizationAnnotationsGroupApiAxiosParamCreator = function (config
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organizationAnnotationsGroupCreateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -43000,11 +43004,12 @@ export const OrganizationAnnotationsGroupApiFp = function(configuration?: Config
          * @summary Edit organization annotations group
          * @param {string} organizationId Organization ID
          * @param {string} annotationsGroupId Organization annotations group ID
+         * @param {OrganizationAnnotationsGroupCreateRequest} [organizationAnnotationsGroupCreateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async editOrganizationAnnotationsGroup(organizationId: string, annotationsGroupId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationAnnotationsGroupResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.editOrganizationAnnotationsGroup(organizationId, annotationsGroupId, options);
+        async editOrganizationAnnotationsGroup(organizationId: string, annotationsGroupId: string, organizationAnnotationsGroupCreateRequest?: OrganizationAnnotationsGroupCreateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationAnnotationsGroupResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editOrganizationAnnotationsGroup(organizationId, annotationsGroupId, organizationAnnotationsGroupCreateRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -43079,11 +43084,12 @@ export const OrganizationAnnotationsGroupApiFactory = function (configuration?: 
          * @summary Edit organization annotations group
          * @param {string} organizationId Organization ID
          * @param {string} annotationsGroupId Organization annotations group ID
+         * @param {OrganizationAnnotationsGroupCreateRequest} [organizationAnnotationsGroupCreateRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        editOrganizationAnnotationsGroup(organizationId: string, annotationsGroupId: string, options?: any): AxiosPromise<OrganizationAnnotationsGroupResponse> {
-            return localVarFp.editOrganizationAnnotationsGroup(organizationId, annotationsGroupId, options).then((request) => request(axios, basePath));
+        editOrganizationAnnotationsGroup(organizationId: string, annotationsGroupId: string, organizationAnnotationsGroupCreateRequest?: OrganizationAnnotationsGroupCreateRequest, options?: any): AxiosPromise<OrganizationAnnotationsGroupResponse> {
+            return localVarFp.editOrganizationAnnotationsGroup(organizationId, annotationsGroupId, organizationAnnotationsGroupCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Get organization annotations group
@@ -43158,12 +43164,13 @@ export class OrganizationAnnotationsGroupApi extends BaseAPI {
      * @summary Edit organization annotations group
      * @param {string} organizationId Organization ID
      * @param {string} annotationsGroupId Organization annotations group ID
+     * @param {OrganizationAnnotationsGroupCreateRequest} [organizationAnnotationsGroupCreateRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationAnnotationsGroupApi
      */
-    public editOrganizationAnnotationsGroup(organizationId: string, annotationsGroupId: string, options?: AxiosRequestConfig) {
-        return OrganizationAnnotationsGroupApiFp(this.configuration).editOrganizationAnnotationsGroup(organizationId, annotationsGroupId, options).then((request) => request(this.axios, this.basePath));
+    public editOrganizationAnnotationsGroup(organizationId: string, annotationsGroupId: string, organizationAnnotationsGroupCreateRequest?: OrganizationAnnotationsGroupCreateRequest, options?: AxiosRequestConfig) {
+        return OrganizationAnnotationsGroupApiFp(this.configuration).editOrganizationAnnotationsGroup(organizationId, annotationsGroupId, organizationAnnotationsGroupCreateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
