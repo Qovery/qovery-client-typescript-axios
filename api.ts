@@ -10035,18 +10035,13 @@ export interface OrganizationAnnotationsGroupResponseList {
  */
 
 export const OrganizationAnnotationsGroupScopeEnum = {
-    PERSISTENT_VOLUME_CLAIMS: 'PERSISTENT_VOLUME_CLAIMS',
-    REPLICA_SETS: 'REPLICA_SETS',
     DEPLOYMENTS: 'DEPLOYMENTS',
     STATEFUL_SETS: 'STATEFUL_SETS',
     SERVICES: 'SERVICES',
     INGRESS: 'INGRESS',
     HPA: 'HPA',
-    ENDPOINTS: 'ENDPOINTS',
     PODS: 'PODS',
-    PERSISTENT_VOLUMES: 'PERSISTENT_VOLUMES',
     SECRETS: 'SECRETS',
-    CONFIG_MAPS: 'CONFIG_MAPS',
     JOBS: 'JOBS',
     CRON_JOBS: 'CRON_JOBS'
 } as const;
