@@ -13613,7 +13613,7 @@ export interface VariableResponse {
      * @type {APIVariableTypeEnum}
      * @memberof VariableResponse
      */
-    'variable_type'?: APIVariableTypeEnum;
+    'variable_type': APIVariableTypeEnum;
     /**
      * The id of the service referenced by this variable.
      * @type {string}
