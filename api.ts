@@ -6786,7 +6786,7 @@ export interface EnvironmentVariable {
      * @type {APIVariableTypeEnum}
      * @memberof EnvironmentVariable
      */
-    'variable_type'?: APIVariableTypeEnum;
+    'variable_type': APIVariableTypeEnum;
     /**
      * 
      * @type {string}
