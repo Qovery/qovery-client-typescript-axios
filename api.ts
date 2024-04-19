@@ -4395,7 +4395,7 @@ export interface CronJobResponseAllOfSchedule {
      * @type {CronJobResponseAllOfScheduleCronjob}
      * @memberof CronJobResponseAllOfSchedule
      */
-    'cronjob'?: CronJobResponseAllOfScheduleCronjob;
+    'cronjob': CronJobResponseAllOfScheduleCronjob;
 }
 /**
  * 
