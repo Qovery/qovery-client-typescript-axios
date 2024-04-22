@@ -304,10 +304,10 @@ export interface Application {
     'auto_deploy'?: boolean;
     /**
      * 
-     * @type {OrganizationAnnotationsGroupResponseList}
+     * @type {Array<OrganizationAnnotationsGroupResponse>}
      * @memberof Application
      */
-    'annotations_groups'?: OrganizationAnnotationsGroupResponseList;
+    'annotations_groups'?: Array<OrganizationAnnotationsGroupResponse>;
 }
 
 
@@ -3990,10 +3990,10 @@ export interface ContainerResponse {
     'auto_deploy'?: boolean;
     /**
      * 
-     * @type {OrganizationAnnotationsGroupResponseList}
+     * @type {Array<OrganizationAnnotationsGroupResponse>}
      * @memberof ContainerResponse
      */
-    'annotations_groups'?: OrganizationAnnotationsGroupResponseList;
+    'annotations_groups'?: Array<OrganizationAnnotationsGroupResponse>;
 }
 /**
  * 
@@ -4408,10 +4408,10 @@ export interface CronJobResponse {
     'schedule': CronJobResponseAllOfSchedule;
     /**
      * 
-     * @type {OrganizationAnnotationsGroupResponseList}
+     * @type {Array<OrganizationAnnotationsGroupResponse>}
      * @memberof CronJobResponse
      */
-    'annotations_groups'?: OrganizationAnnotationsGroupResponseList;
+    'annotations_groups'?: Array<OrganizationAnnotationsGroupResponse>;
 }
 
 export const CronJobResponseJobTypeEnum = {
@@ -4721,10 +4721,10 @@ export interface Database {
     'disk_encrypted'?: boolean;
     /**
      * 
-     * @type {OrganizationAnnotationsGroupResponseList}
+     * @type {Array<OrganizationAnnotationsGroupResponse>}
      * @memberof Database
      */
-    'annotations_groups'?: OrganizationAnnotationsGroupResponseList;
+    'annotations_groups'?: Array<OrganizationAnnotationsGroupResponse>;
 }
 
 
@@ -9411,10 +9411,10 @@ export interface LifecycleJobResponse {
     'schedule': LifecycleJobResponseAllOfSchedule;
     /**
      * 
-     * @type {OrganizationAnnotationsGroupResponseList}
+     * @type {Array<OrganizationAnnotationsGroupResponse>}
      * @memberof LifecycleJobResponse
      */
-    'annotations_groups'?: OrganizationAnnotationsGroupResponseList;
+    'annotations_groups'?: Array<OrganizationAnnotationsGroupResponse>;
 }
 
 export const LifecycleJobResponseJobTypeEnum = {
@@ -10086,19 +10086,6 @@ export interface OrganizationAnnotationsGroupResponse {
      * @memberof OrganizationAnnotationsGroupResponse
      */
     'scopes': Array<OrganizationAnnotationsGroupScopeEnum>;
-}
-/**
- * 
- * @export
- * @interface OrganizationAnnotationsGroupResponseList
- */
-export interface OrganizationAnnotationsGroupResponseList {
-    /**
-     * 
-     * @type {Array<OrganizationAnnotationsGroupResponse>}
-     * @memberof OrganizationAnnotationsGroupResponseList
-     */
-    'results'?: Array<OrganizationAnnotationsGroupResponse>;
 }
 /**
  * Annotations Group Scope
@@ -14478,7 +14465,7 @@ export const ApplicationAnnotationsGroupApiFp = function(configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listApplicationAnnotationsGroup(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationAnnotationsGroupResponseList>> {
+        async listApplicationAnnotationsGroup(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrganizationAnnotationsGroupResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listApplicationAnnotationsGroup(applicationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -14521,7 +14508,7 @@ export const ApplicationAnnotationsGroupApiFactory = function (configuration?: C
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listApplicationAnnotationsGroup(applicationId: string, options?: any): AxiosPromise<OrganizationAnnotationsGroupResponseList> {
+        listApplicationAnnotationsGroup(applicationId: string, options?: any): AxiosPromise<Array<OrganizationAnnotationsGroupResponse>> {
             return localVarFp.listApplicationAnnotationsGroup(applicationId, options).then((request) => request(axios, basePath));
         },
     };
@@ -23998,7 +23985,7 @@ export const ContainerAnnotationsGroupApiFp = function(configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listContainerAnnotationsGroup(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationAnnotationsGroupResponseList>> {
+        async listContainerAnnotationsGroup(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrganizationAnnotationsGroupResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listContainerAnnotationsGroup(containerId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -24041,7 +24028,7 @@ export const ContainerAnnotationsGroupApiFactory = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listContainerAnnotationsGroup(containerId: string, options?: any): AxiosPromise<OrganizationAnnotationsGroupResponseList> {
+        listContainerAnnotationsGroup(containerId: string, options?: any): AxiosPromise<Array<OrganizationAnnotationsGroupResponse>> {
             return localVarFp.listContainerAnnotationsGroup(containerId, options).then((request) => request(axios, basePath));
         },
     };
@@ -28820,7 +28807,7 @@ export const DatabaseAnnotationsGroupApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listDatabaseAnnotationsGroup(databaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationAnnotationsGroupResponseList>> {
+        async listDatabaseAnnotationsGroup(databaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrganizationAnnotationsGroupResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listDatabaseAnnotationsGroup(databaseId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -28863,7 +28850,7 @@ export const DatabaseAnnotationsGroupApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listDatabaseAnnotationsGroup(databaseId: string, options?: any): AxiosPromise<OrganizationAnnotationsGroupResponseList> {
+        listDatabaseAnnotationsGroup(databaseId: string, options?: any): AxiosPromise<Array<OrganizationAnnotationsGroupResponse>> {
             return localVarFp.listDatabaseAnnotationsGroup(databaseId, options).then((request) => request(axios, basePath));
         },
     };
@@ -38506,7 +38493,7 @@ export const JobAnnotationsGroupApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listJobAnnotationsGroup(jobId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationAnnotationsGroupResponseList>> {
+        async listJobAnnotationsGroup(jobId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrganizationAnnotationsGroupResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listJobAnnotationsGroup(jobId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -38549,7 +38536,7 @@ export const JobAnnotationsGroupApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listJobAnnotationsGroup(jobId: string, options?: any): AxiosPromise<OrganizationAnnotationsGroupResponseList> {
+        listJobAnnotationsGroup(jobId: string, options?: any): AxiosPromise<Array<OrganizationAnnotationsGroupResponse>> {
             return localVarFp.listJobAnnotationsGroup(jobId, options).then((request) => request(axios, basePath));
         },
     };
@@ -43110,7 +43097,7 @@ export const OrganizationAnnotationsGroupApiFp = function(configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listOrganizationAnnotationsGroup(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationAnnotationsGroupResponseList>> {
+        async listOrganizationAnnotationsGroup(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrganizationAnnotationsGroupResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizationAnnotationsGroup(organizationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -43187,7 +43174,7 @@ export const OrganizationAnnotationsGroupApiFactory = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listOrganizationAnnotationsGroup(organizationId: string, options?: any): AxiosPromise<OrganizationAnnotationsGroupResponseList> {
+        listOrganizationAnnotationsGroup(organizationId: string, options?: any): AxiosPromise<Array<OrganizationAnnotationsGroupResponse>> {
             return localVarFp.listOrganizationAnnotationsGroup(organizationId, options).then((request) => request(axios, basePath));
         },
     };
