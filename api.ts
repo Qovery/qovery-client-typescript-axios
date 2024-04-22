@@ -9618,6 +9618,19 @@ export interface ListJobDeploymentHistory200Response {
 /**
  * 
  * @export
+ * @interface ListOrganizationAnnotationsGroup200Response
+ */
+export interface ListOrganizationAnnotationsGroup200Response {
+    /**
+     * 
+     * @type {Array<OrganizationAnnotationsGroupResponse>}
+     * @memberof ListOrganizationAnnotationsGroup200Response
+     */
+    'results'?: Array<OrganizationAnnotationsGroupResponse>;
+}
+/**
+ * 
+ * @export
  * @interface Log
  */
 export interface Log {
@@ -14383,47 +14396,6 @@ export const ApplicationAnnotationsGroupApiAxiosParamCreator = function (configu
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * List application annotations group
-         * @summary List application annotations group
-         * @param {string} applicationId Application ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listApplicationAnnotationsGroup: async (applicationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'applicationId' is not null or undefined
-            assertParamExists('listApplicationAnnotationsGroup', 'applicationId', applicationId)
-            const localVarPath = `/application/{applicationId}/annotationsGroup`
-                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -14458,17 +14430,6 @@ export const ApplicationAnnotationsGroupApiFp = function(configuration?: Configu
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAnnotationsGroupToApplication(applicationId, annotationsGroupId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-        /**
-         * List application annotations group
-         * @summary List application annotations group
-         * @param {string} applicationId Application ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listApplicationAnnotationsGroup(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrganizationAnnotationsGroupResponse>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listApplicationAnnotationsGroup(applicationId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
     }
 };
 
@@ -14500,16 +14461,6 @@ export const ApplicationAnnotationsGroupApiFactory = function (configuration?: C
          */
         deleteAnnotationsGroupToApplication(applicationId: string, annotationsGroupId: string, options?: any): AxiosPromise<void> {
             return localVarFp.deleteAnnotationsGroupToApplication(applicationId, annotationsGroupId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * List application annotations group
-         * @summary List application annotations group
-         * @param {string} applicationId Application ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listApplicationAnnotationsGroup(applicationId: string, options?: any): AxiosPromise<Array<OrganizationAnnotationsGroupResponse>> {
-            return localVarFp.listApplicationAnnotationsGroup(applicationId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -14545,18 +14496,6 @@ export class ApplicationAnnotationsGroupApi extends BaseAPI {
      */
     public deleteAnnotationsGroupToApplication(applicationId: string, annotationsGroupId: string, options?: AxiosRequestConfig) {
         return ApplicationAnnotationsGroupApiFp(this.configuration).deleteAnnotationsGroupToApplication(applicationId, annotationsGroupId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * List application annotations group
-     * @summary List application annotations group
-     * @param {string} applicationId Application ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApplicationAnnotationsGroupApi
-     */
-    public listApplicationAnnotationsGroup(applicationId: string, options?: AxiosRequestConfig) {
-        return ApplicationAnnotationsGroupApiFp(this.configuration).listApplicationAnnotationsGroup(applicationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -23903,47 +23842,6 @@ export const ContainerAnnotationsGroupApiAxiosParamCreator = function (configura
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * List container annotations group
-         * @summary List container annotations group
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listContainerAnnotationsGroup: async (containerId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('listContainerAnnotationsGroup', 'containerId', containerId)
-            const localVarPath = `/container/{containerId}/annotationsGroup`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -23978,17 +23876,6 @@ export const ContainerAnnotationsGroupApiFp = function(configuration?: Configura
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAnnotationsGroupToContainer(containerId, annotationsGroupId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-        /**
-         * List container annotations group
-         * @summary List container annotations group
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listContainerAnnotationsGroup(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrganizationAnnotationsGroupResponse>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listContainerAnnotationsGroup(containerId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
     }
 };
 
@@ -24020,16 +23907,6 @@ export const ContainerAnnotationsGroupApiFactory = function (configuration?: Con
          */
         deleteAnnotationsGroupToContainer(containerId: string, annotationsGroupId: string, options?: any): AxiosPromise<void> {
             return localVarFp.deleteAnnotationsGroupToContainer(containerId, annotationsGroupId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * List container annotations group
-         * @summary List container annotations group
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listContainerAnnotationsGroup(containerId: string, options?: any): AxiosPromise<Array<OrganizationAnnotationsGroupResponse>> {
-            return localVarFp.listContainerAnnotationsGroup(containerId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -24065,18 +23942,6 @@ export class ContainerAnnotationsGroupApi extends BaseAPI {
      */
     public deleteAnnotationsGroupToContainer(containerId: string, annotationsGroupId: string, options?: AxiosRequestConfig) {
         return ContainerAnnotationsGroupApiFp(this.configuration).deleteAnnotationsGroupToContainer(containerId, annotationsGroupId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * List container annotations group
-     * @summary List container annotations group
-     * @param {string} containerId Container ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerAnnotationsGroupApi
-     */
-    public listContainerAnnotationsGroup(containerId: string, options?: AxiosRequestConfig) {
-        return ContainerAnnotationsGroupApiFp(this.configuration).listContainerAnnotationsGroup(containerId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -28725,47 +28590,6 @@ export const DatabaseAnnotationsGroupApiAxiosParamCreator = function (configurat
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * List database annotations group
-         * @summary List database annotations group
-         * @param {string} databaseId Database ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listDatabaseAnnotationsGroup: async (databaseId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'databaseId' is not null or undefined
-            assertParamExists('listDatabaseAnnotationsGroup', 'databaseId', databaseId)
-            const localVarPath = `/database/{databaseId}/annotationsGroup`
-                .replace(`{${"databaseId"}}`, encodeURIComponent(String(databaseId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -28800,17 +28624,6 @@ export const DatabaseAnnotationsGroupApiFp = function(configuration?: Configurat
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAnnotationsGroupToDatabase(databaseId, annotationsGroupId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-        /**
-         * List database annotations group
-         * @summary List database annotations group
-         * @param {string} databaseId Database ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listDatabaseAnnotationsGroup(databaseId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrganizationAnnotationsGroupResponse>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listDatabaseAnnotationsGroup(databaseId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
     }
 };
 
@@ -28842,16 +28655,6 @@ export const DatabaseAnnotationsGroupApiFactory = function (configuration?: Conf
          */
         deleteAnnotationsGroupToDatabase(databaseId: string, annotationsGroupId: string, options?: any): AxiosPromise<void> {
             return localVarFp.deleteAnnotationsGroupToDatabase(databaseId, annotationsGroupId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * List database annotations group
-         * @summary List database annotations group
-         * @param {string} databaseId Database ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listDatabaseAnnotationsGroup(databaseId: string, options?: any): AxiosPromise<Array<OrganizationAnnotationsGroupResponse>> {
-            return localVarFp.listDatabaseAnnotationsGroup(databaseId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -28887,18 +28690,6 @@ export class DatabaseAnnotationsGroupApi extends BaseAPI {
      */
     public deleteAnnotationsGroupToDatabase(databaseId: string, annotationsGroupId: string, options?: AxiosRequestConfig) {
         return DatabaseAnnotationsGroupApiFp(this.configuration).deleteAnnotationsGroupToDatabase(databaseId, annotationsGroupId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * List database annotations group
-     * @summary List database annotations group
-     * @param {string} databaseId Database ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DatabaseAnnotationsGroupApi
-     */
-    public listDatabaseAnnotationsGroup(databaseId: string, options?: AxiosRequestConfig) {
-        return DatabaseAnnotationsGroupApiFp(this.configuration).listDatabaseAnnotationsGroup(databaseId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -38411,47 +38202,6 @@ export const JobAnnotationsGroupApiAxiosParamCreator = function (configuration?:
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * List job annotations group
-         * @summary List job annotations group
-         * @param {string} jobId Job ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listJobAnnotationsGroup: async (jobId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'jobId' is not null or undefined
-            assertParamExists('listJobAnnotationsGroup', 'jobId', jobId)
-            const localVarPath = `/job/{jobId}/annotationsGroup`
-                .replace(`{${"jobId"}}`, encodeURIComponent(String(jobId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -38486,17 +38236,6 @@ export const JobAnnotationsGroupApiFp = function(configuration?: Configuration) 
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAnnotationsGroupToJob(jobId, annotationsGroupId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-        /**
-         * List job annotations group
-         * @summary List job annotations group
-         * @param {string} jobId Job ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listJobAnnotationsGroup(jobId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrganizationAnnotationsGroupResponse>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listJobAnnotationsGroup(jobId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
     }
 };
 
@@ -38528,16 +38267,6 @@ export const JobAnnotationsGroupApiFactory = function (configuration?: Configura
          */
         deleteAnnotationsGroupToJob(jobId: string, annotationsGroupId: string, options?: any): AxiosPromise<void> {
             return localVarFp.deleteAnnotationsGroupToJob(jobId, annotationsGroupId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * List job annotations group
-         * @summary List job annotations group
-         * @param {string} jobId Job ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listJobAnnotationsGroup(jobId: string, options?: any): AxiosPromise<Array<OrganizationAnnotationsGroupResponse>> {
-            return localVarFp.listJobAnnotationsGroup(jobId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -38573,18 +38302,6 @@ export class JobAnnotationsGroupApi extends BaseAPI {
      */
     public deleteAnnotationsGroupToJob(jobId: string, annotationsGroupId: string, options?: AxiosRequestConfig) {
         return JobAnnotationsGroupApiFp(this.configuration).deleteAnnotationsGroupToJob(jobId, annotationsGroupId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * List job annotations group
-     * @summary List job annotations group
-     * @param {string} jobId Job ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof JobAnnotationsGroupApi
-     */
-    public listJobAnnotationsGroup(jobId: string, options?: AxiosRequestConfig) {
-        return JobAnnotationsGroupApiFp(this.configuration).listJobAnnotationsGroup(jobId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -43097,7 +42814,7 @@ export const OrganizationAnnotationsGroupApiFp = function(configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listOrganizationAnnotationsGroup(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrganizationAnnotationsGroupResponse>>> {
+        async listOrganizationAnnotationsGroup(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListOrganizationAnnotationsGroup200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizationAnnotationsGroup(organizationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -43174,7 +42891,7 @@ export const OrganizationAnnotationsGroupApiFactory = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listOrganizationAnnotationsGroup(organizationId: string, options?: any): AxiosPromise<Array<OrganizationAnnotationsGroupResponse>> {
+        listOrganizationAnnotationsGroup(organizationId: string, options?: any): AxiosPromise<ListOrganizationAnnotationsGroup200Response> {
             return localVarFp.listOrganizationAnnotationsGroup(organizationId, options).then((request) => request(axios, basePath));
         },
     };
