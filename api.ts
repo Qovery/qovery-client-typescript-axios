@@ -302,6 +302,12 @@ export interface Application {
      * @memberof Application
      */
     'auto_deploy'?: boolean;
+    /**
+     * 
+     * @type {OrganizationAnnotationsGroupResponseList}
+     * @memberof Application
+     */
+    'annotations_groups'?: OrganizationAnnotationsGroupResponseList;
 }
 
 
@@ -723,6 +729,12 @@ export interface ApplicationEditRequest {
      * @memberof ApplicationEditRequest
      */
     'auto_deploy'?: boolean | null;
+    /**
+     * list of id of the annotations groups
+     * @type {Array<string>}
+     * @memberof ApplicationEditRequest
+     */
+    'annotations_group_ids'?: Array<string>;
 }
 
 
@@ -978,6 +990,12 @@ export interface ApplicationRequest {
      * @memberof ApplicationRequest
      */
     'auto_deploy'?: boolean | null;
+    /**
+     * list of id of the annotations groups
+     * @type {Array<string>}
+     * @memberof ApplicationRequest
+     */
+    'annotations_group_ids'?: Array<string>;
 }
 
 
@@ -3819,6 +3837,12 @@ export interface ContainerRequest {
      * @memberof ContainerRequest
      */
     'auto_deploy'?: boolean | null;
+    /**
+     * list of id of the annotations groups
+     * @type {Array<string>}
+     * @memberof ContainerRequest
+     */
+    'annotations_group_ids'?: Array<string>;
 }
 /**
  * 
@@ -3964,6 +3988,12 @@ export interface ContainerResponse {
      * @memberof ContainerResponse
      */
     'auto_deploy'?: boolean;
+    /**
+     * 
+     * @type {OrganizationAnnotationsGroupResponseList}
+     * @memberof ContainerResponse
+     */
+    'annotations_groups'?: OrganizationAnnotationsGroupResponseList;
 }
 /**
  * 
@@ -4376,6 +4406,12 @@ export interface CronJobResponse {
      * @memberof CronJobResponse
      */
     'schedule': CronJobResponseAllOfSchedule;
+    /**
+     * 
+     * @type {OrganizationAnnotationsGroupResponseList}
+     * @memberof CronJobResponse
+     */
+    'annotations_groups'?: OrganizationAnnotationsGroupResponseList;
 }
 
 export const CronJobResponseJobTypeEnum = {
@@ -4642,6 +4678,12 @@ export interface Database {
      */
     'storage'?: number;
     /**
+     * list of id of the annotations groups
+     * @type {Array<string>}
+     * @memberof Database
+     */
+    'annotations_group_ids'?: Array<string>;
+    /**
      * 
      * @type {ReferenceObject}
      * @memberof Database
@@ -4677,6 +4719,12 @@ export interface Database {
      * @memberof Database
      */
     'disk_encrypted'?: boolean;
+    /**
+     * 
+     * @type {OrganizationAnnotationsGroupResponseList}
+     * @memberof Database
+     */
+    'annotations_groups'?: OrganizationAnnotationsGroupResponseList;
 }
 
 
@@ -4782,6 +4830,12 @@ export interface DatabaseEditRequest {
      * @memberof DatabaseEditRequest
      */
     'instance_type'?: string;
+    /**
+     * list of id of the annotations groups
+     * @type {Array<string>}
+     * @memberof DatabaseEditRequest
+     */
+    'annotations_group_ids'?: Array<string>;
 }
 
 
@@ -4865,6 +4919,12 @@ export interface DatabaseRequest {
      * @memberof DatabaseRequest
      */
     'storage'?: number;
+    /**
+     * list of id of the annotations groups
+     * @type {Array<string>}
+     * @memberof DatabaseRequest
+     */
+    'annotations_group_ids'?: Array<string>;
 }
 
 
@@ -9015,6 +9075,12 @@ export interface JobRequest {
      * @memberof JobRequest
      */
     'auto_deploy'?: boolean | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof JobRequest
+     */
+    'annotations_group_ids'?: Array<string>;
 }
 /**
  * If you want to define a Cron job, only the `cronjob` property must be filled   A Lifecycle job should contain at least one property `on_XXX` among the 3 properties: `on_start`, `on_stop`, `on_delete` 
@@ -9343,6 +9409,12 @@ export interface LifecycleJobResponse {
      * @memberof LifecycleJobResponse
      */
     'schedule': LifecycleJobResponseAllOfSchedule;
+    /**
+     * 
+     * @type {OrganizationAnnotationsGroupResponseList}
+     * @memberof LifecycleJobResponse
+     */
+    'annotations_groups'?: OrganizationAnnotationsGroupResponseList;
 }
 
 export const LifecycleJobResponseJobTypeEnum = {
