@@ -730,11 +730,11 @@ export interface ApplicationEditRequest {
      */
     'auto_deploy'?: boolean | null;
     /**
-     * list of id of the annotations groups
-     * @type {Array<string>}
+     * 
+     * @type {Array<ServiceAnnotationRequest>}
      * @memberof ApplicationEditRequest
      */
-    'annotations_group_ids'?: Array<string>;
+    'annotations_groups'?: Array<ServiceAnnotationRequest>;
 }
 
 
@@ -991,11 +991,11 @@ export interface ApplicationRequest {
      */
     'auto_deploy'?: boolean | null;
     /**
-     * list of id of the annotations groups
-     * @type {Array<string>}
+     * 
+     * @type {Array<ServiceAnnotationRequest>}
      * @memberof ApplicationRequest
      */
-    'annotations_group_ids'?: Array<string>;
+    'annotations_groups'?: Array<ServiceAnnotationRequest>;
 }
 
 
@@ -3838,11 +3838,11 @@ export interface ContainerRequest {
      */
     'auto_deploy'?: boolean | null;
     /**
-     * list of id of the annotations groups
-     * @type {Array<string>}
+     * 
+     * @type {Array<ServiceAnnotationRequest>}
      * @memberof ContainerRequest
      */
-    'annotations_group_ids'?: Array<string>;
+    'annotations_groups'?: Array<ServiceAnnotationRequest>;
 }
 /**
  * 
@@ -4678,11 +4678,11 @@ export interface Database {
      */
     'storage'?: number;
     /**
-     * list of id of the annotations groups
-     * @type {Array<string>}
+     * 
+     * @type {Array<OrganizationAnnotationsGroupResponse>}
      * @memberof Database
      */
-    'annotations_group_ids'?: Array<string>;
+    'annotations_groups'?: Array<OrganizationAnnotationsGroupResponse>;
     /**
      * 
      * @type {ReferenceObject}
@@ -4719,12 +4719,6 @@ export interface Database {
      * @memberof Database
      */
     'disk_encrypted'?: boolean;
-    /**
-     * 
-     * @type {Array<OrganizationAnnotationsGroupResponse>}
-     * @memberof Database
-     */
-    'annotations_groups'?: Array<OrganizationAnnotationsGroupResponse>;
 }
 
 
@@ -4831,11 +4825,11 @@ export interface DatabaseEditRequest {
      */
     'instance_type'?: string;
     /**
-     * list of id of the annotations groups
-     * @type {Array<string>}
+     * 
+     * @type {Array<ServiceAnnotationRequest>}
      * @memberof DatabaseEditRequest
      */
-    'annotations_group_ids'?: Array<string>;
+    'annotations_groups'?: Array<ServiceAnnotationRequest>;
 }
 
 
@@ -4920,11 +4914,11 @@ export interface DatabaseRequest {
      */
     'storage'?: number;
     /**
-     * list of id of the annotations groups
-     * @type {Array<string>}
+     * 
+     * @type {Array<ServiceAnnotationRequest>}
      * @memberof DatabaseRequest
      */
-    'annotations_group_ids'?: Array<string>;
+    'annotations_groups'?: Array<ServiceAnnotationRequest>;
 }
 
 
@@ -9077,10 +9071,10 @@ export interface JobRequest {
     'auto_deploy'?: boolean | null;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<ServiceAnnotationRequest>}
      * @memberof JobRequest
      */
-    'annotations_group_ids'?: Array<string>;
+    'annotations_groups'?: Array<ServiceAnnotationRequest>;
 }
 /**
  * If you want to define a Cron job, only the `cronjob` property must be filled   A Lifecycle job should contain at least one property `on_XXX` among the 3 properties: `on_start`, `on_stop`, `on_delete` 
@@ -12427,6 +12421,19 @@ export interface Service {
 }
 
 
+/**
+ * 
+ * @export
+ * @interface ServiceAnnotationRequest
+ */
+export interface ServiceAnnotationRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ServiceAnnotationRequest
+     */
+    'id': string;
+}
 /**
  * 
  * @export
