@@ -147,12 +147,13 @@ export interface Annotation {
  */
 
 export const AnnotationsGroupAssociatedItemType = {
-    APPLICATION: 'APPLICATION,',
-    DATABASE: 'DATABASE,',
-    CONTAINER: 'CONTAINER,',
-    JOB: 'JOB,',
-    ENVIRONMENT: 'ENVIRONMENT,',
-    CLUSTER: 'CLUSTER,'
+    APPLICATION: 'APPLICATION',
+    DATABASE: 'DATABASE',
+    CONTAINER: 'CONTAINER',
+    LIFECYLE: 'LIFECYLE',
+    ENVIRONMENT: 'ENVIRONMENT',
+    CLUSTER: 'CLUSTER',
+    CRON: 'CRON'
 } as const;
 
 export type AnnotationsGroupAssociatedItemType = typeof AnnotationsGroupAssociatedItemType[keyof typeof AnnotationsGroupAssociatedItemType];
@@ -9617,10 +9618,10 @@ export interface ListJobDeploymentHistory200Response {
 export interface ListOrganizationAnnotationsGroup200Response {
     /**
      * 
-     * @type {Array<OrganizationAnnotationsGroupResponse>}
+     * @type {Array<OrganizationAnnotationsGroupEnrichedResponse>}
      * @memberof ListOrganizationAnnotationsGroup200Response
      */
-    'results'?: Array<OrganizationAnnotationsGroupResponse>;
+    'results'?: Array<OrganizationAnnotationsGroupEnrichedResponse>;
 }
 /**
  * 
@@ -10050,6 +10051,55 @@ export interface OrganizationAnnotationsGroupCreateRequest {
      * @memberof OrganizationAnnotationsGroupCreateRequest
      */
     'scopes': Array<OrganizationAnnotationsGroupScopeEnum>;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationAnnotationsGroupEnrichedResponse
+ */
+export interface OrganizationAnnotationsGroupEnrichedResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAnnotationsGroupEnrichedResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAnnotationsGroupEnrichedResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAnnotationsGroupEnrichedResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAnnotationsGroupEnrichedResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {Array<Annotation>}
+     * @memberof OrganizationAnnotationsGroupEnrichedResponse
+     */
+    'annotations': Array<Annotation>;
+    /**
+     * 
+     * @type {Array<OrganizationAnnotationsGroupScopeEnum>}
+     * @memberof OrganizationAnnotationsGroupEnrichedResponse
+     */
+    'scopes': Array<OrganizationAnnotationsGroupScopeEnum>;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrganizationAnnotationsGroupEnrichedResponse
+     */
+    'associated_items_count'?: number;
 }
 /**
  * 
