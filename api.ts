@@ -3587,7 +3587,7 @@ export interface ContainerRegistryRequest {
 
 
 /**
- * This field is dependent of the container registry kind: * `ECR` needs in the config: region, access_key_id, secret_access_key * `SCALEWAY_CR` needs in the config: region, scaleway_access_key, scaleway_secret_key * `DOCKER_HUB` needs in the config (optional): username, password * `GITHUB_CR` needs in the config (optional): username, password * `GITLAB_CR` needs in the config (optional): username, password * `PUBLIC_ECR` doesn\'t need credentials info * `GENERIC_CR` needs in the config (optional): username, password * `DOCR` is not supported anymore 
+ * This field is dependent of the container registry kind: * `ECR` needs in the config: region, access_key_id, secret_access_key * `SCALEWAY_CR` needs in the config: region, scaleway_access_key, scaleway_secret_key * `GCP_ARTIFACT_REGISTRY` needs in the config: region, json_credentials * `DOCKER_HUB` needs in the config (optional): username, password * `GITHUB_CR` needs in the config (optional): username, password * `GITLAB_CR` needs in the config (optional): username, password * `PUBLIC_ECR` doesn\'t need credentials info * `GENERIC_CR` needs in the config (optional): username, password * `DOCR` is not supported anymore 
  * @export
  * @interface ContainerRegistryRequestConfig
  */
@@ -3622,6 +3622,12 @@ export interface ContainerRegistryRequestConfig {
      * @memberof ContainerRegistryRequestConfig
      */
     'scaleway_secret_key'?: string;
+    /**
+     * Required if kind is `GCP_ARTIFACT_REGISTRY`
+     * @type {string}
+     * @memberof ContainerRegistryRequestConfig
+     */
+    'json_credentials'?: string;
     /**
      * optional, for kind `DOCKER_HUB`   We encourage you to set credentials for Docker Hub due to the limits on the pull rate 
      * @type {string}
