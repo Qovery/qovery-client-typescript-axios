@@ -1940,6 +1940,12 @@ export interface Cluster {
      */
     'is_default'?: boolean;
     /**
+     * specific flag to indicate that this cluster is a demo one
+     * @type {boolean}
+     * @memberof Cluster
+     */
+    'is_demo'?: boolean;
+    /**
      * specific flag to indicate that this cluster is a production one
      * @type {boolean}
      * @memberof Cluster
@@ -2918,12 +2924,6 @@ export interface ClusterRequest {
      * @memberof ClusterRequest
      */
     'ssh_keys'?: Array<string>;
-    /**
-     * If the cluster is a self managed one. The kubeconfig to use to connect to it
-     * @type {string}
-     * @memberof ClusterRequest
-     */
-    'kubeconfig'?: string;
     /**
      * 
      * @type {Array<ClusterRequestFeaturesInner>}
