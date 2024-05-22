@@ -9879,6 +9879,19 @@ export interface Name {
 /**
  * 
  * @export
+ * @interface OnPremiseCredentialsRequest
+ */
+export interface OnPremiseCredentialsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof OnPremiseCredentialsRequest
+     */
+    'name': string;
+}
+/**
+ * 
+ * @export
  * @interface Organization
  */
 export interface Organization {
@@ -20436,6 +20449,51 @@ export const CloudProviderCredentialsApiAxiosParamCreator = function (configurat
         },
         /**
          * 
+         * @summary Create OnPremise credentials set
+         * @param {string} organizationId Organization ID
+         * @param {OnPremiseCredentialsRequest} [onPremiseCredentialsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOnPremiseCredentials: async (organizationId: string, onPremiseCredentialsRequest?: OnPremiseCredentialsRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('createOnPremiseCredentials', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/onPremise/credentials`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(onPremiseCredentialsRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Create Scaleway credentials set
          * @param {string} organizationId Organization ID
          * @param {ScalewayCredentialsRequest} [scalewayCredentialsRequest] 
@@ -20538,6 +20596,51 @@ export const CloudProviderCredentialsApiAxiosParamCreator = function (configurat
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('deleteGcpCredentials', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/gcp/credentials/{credentialsId}`
+                .replace(`{${"credentialsId"}}`, encodeURIComponent(String(credentialsId)))
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a set of OnPremise credentials
+         * @param {string} credentialsId Credentials ID
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteOnPremiseCredentials: async (credentialsId: string, organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'credentialsId' is not null or undefined
+            assertParamExists('deleteOnPremiseCredentials', 'credentialsId', credentialsId)
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('deleteOnPremiseCredentials', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/onPremise/credentials/{credentialsId}`
                 .replace(`{${"credentialsId"}}`, encodeURIComponent(String(credentialsId)))
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -20714,6 +20817,55 @@ export const CloudProviderCredentialsApiAxiosParamCreator = function (configurat
         },
         /**
          * 
+         * @summary Edit a set of OnPremise credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {OnPremiseCredentialsRequest} [onPremiseCredentialsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editOnPremiseCredentials: async (organizationId: string, credentialsId: string, onPremiseCredentialsRequest?: OnPremiseCredentialsRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('editOnPremiseCredentials', 'organizationId', organizationId)
+            // verify required parameter 'credentialsId' is not null or undefined
+            assertParamExists('editOnPremiseCredentials', 'credentialsId', credentialsId)
+            const localVarPath = `/organization/{organizationId}/onPremise/credentials/{credentialsId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"credentialsId"}}`, encodeURIComponent(String(credentialsId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(onPremiseCredentialsRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Edit a set of Scaleway credentials
          * @param {string} organizationId Organization ID
          * @param {string} credentialsId Credentials ID
@@ -20820,6 +20972,51 @@ export const CloudProviderCredentialsApiAxiosParamCreator = function (configurat
             // verify required parameter 'credentialsId' is not null or undefined
             assertParamExists('getGcpCredentials', 'credentialsId', credentialsId)
             const localVarPath = `/organization/{organizationId}/gcp/credentials/{credentialsId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"credentialsId"}}`, encodeURIComponent(String(credentialsId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a set of OnPremise credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOnPremiseCredentials: async (organizationId: string, credentialsId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOnPremiseCredentials', 'organizationId', organizationId)
+            // verify required parameter 'credentialsId' is not null or undefined
+            assertParamExists('getOnPremiseCredentials', 'credentialsId', credentialsId)
+            const localVarPath = `/organization/{organizationId}/onPremise/credentials/{credentialsId}`
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
                 .replace(`{${"credentialsId"}}`, encodeURIComponent(String(credentialsId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -20980,6 +21177,47 @@ export const CloudProviderCredentialsApiAxiosParamCreator = function (configurat
         },
         /**
          * 
+         * @summary List OnPremise credentials
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOnPremiseCredentials: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listOnPremiseCredentials', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/onPremise/credentials`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary List Scaleway credentials
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
@@ -21055,6 +21293,18 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
         },
         /**
          * 
+         * @summary Create OnPremise credentials set
+         * @param {string} organizationId Organization ID
+         * @param {OnPremiseCredentialsRequest} [onPremiseCredentialsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createOnPremiseCredentials(organizationId: string, onPremiseCredentialsRequest?: OnPremiseCredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentials>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createOnPremiseCredentials(organizationId, onPremiseCredentialsRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Create Scaleway credentials set
          * @param {string} organizationId Organization ID
          * @param {ScalewayCredentialsRequest} [scalewayCredentialsRequest] 
@@ -21087,6 +21337,18 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
          */
         async deleteGcpCredentials(credentialsId: string, organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteGcpCredentials(credentialsId, organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete a set of OnPremise credentials
+         * @param {string} credentialsId Credentials ID
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteOnPremiseCredentials(credentialsId: string, organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOnPremiseCredentials(credentialsId, organizationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -21129,6 +21391,19 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
         },
         /**
          * 
+         * @summary Edit a set of OnPremise credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {OnPremiseCredentialsRequest} [onPremiseCredentialsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editOnPremiseCredentials(organizationId: string, credentialsId: string, onPremiseCredentialsRequest?: OnPremiseCredentialsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentials>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editOnPremiseCredentials(organizationId, credentialsId, onPremiseCredentialsRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Edit a set of Scaleway credentials
          * @param {string} organizationId Organization ID
          * @param {string} credentialsId Credentials ID
@@ -21166,6 +21441,18 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
         },
         /**
          * 
+         * @summary Get a set of OnPremise credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOnPremiseCredentials(organizationId: string, credentialsId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentials>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOnPremiseCredentials(organizationId, credentialsId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get a set of Scaleway credentials
          * @param {string} organizationId Organization ID
          * @param {string} credentialsId Credentials ID
@@ -21196,6 +21483,17 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
          */
         async listGcpCredentials(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentialsResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listGcpCredentials(organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary List OnPremise credentials
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listOnPremiseCredentials(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentialsResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listOnPremiseCredentials(organizationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -21243,6 +21541,17 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
         },
         /**
          * 
+         * @summary Create OnPremise credentials set
+         * @param {string} organizationId Organization ID
+         * @param {OnPremiseCredentialsRequest} [onPremiseCredentialsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOnPremiseCredentials(organizationId: string, onPremiseCredentialsRequest?: OnPremiseCredentialsRequest, options?: any): AxiosPromise<ClusterCredentials> {
+            return localVarFp.createOnPremiseCredentials(organizationId, onPremiseCredentialsRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Create Scaleway credentials set
          * @param {string} organizationId Organization ID
          * @param {ScalewayCredentialsRequest} [scalewayCredentialsRequest] 
@@ -21273,6 +21582,17 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
          */
         deleteGcpCredentials(credentialsId: string, organizationId: string, options?: any): AxiosPromise<void> {
             return localVarFp.deleteGcpCredentials(credentialsId, organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete a set of OnPremise credentials
+         * @param {string} credentialsId Credentials ID
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteOnPremiseCredentials(credentialsId: string, organizationId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteOnPremiseCredentials(credentialsId, organizationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -21311,6 +21631,18 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
         },
         /**
          * 
+         * @summary Edit a set of OnPremise credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {OnPremiseCredentialsRequest} [onPremiseCredentialsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editOnPremiseCredentials(organizationId: string, credentialsId: string, onPremiseCredentialsRequest?: OnPremiseCredentialsRequest, options?: any): AxiosPromise<ClusterCredentials> {
+            return localVarFp.editOnPremiseCredentials(organizationId, credentialsId, onPremiseCredentialsRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Edit a set of Scaleway credentials
          * @param {string} organizationId Organization ID
          * @param {string} credentialsId Credentials ID
@@ -21345,6 +21677,17 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
         },
         /**
          * 
+         * @summary Get a set of OnPremise credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOnPremiseCredentials(organizationId: string, credentialsId: string, options?: any): AxiosPromise<ClusterCredentials> {
+            return localVarFp.getOnPremiseCredentials(organizationId, credentialsId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get a set of Scaleway credentials
          * @param {string} organizationId Organization ID
          * @param {string} credentialsId Credentials ID
@@ -21373,6 +21716,16 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
          */
         listGcpCredentials(organizationId: string, options?: any): AxiosPromise<ClusterCredentialsResponseList> {
             return localVarFp.listGcpCredentials(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List OnPremise credentials
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOnPremiseCredentials(organizationId: string, options?: any): AxiosPromise<ClusterCredentialsResponseList> {
+            return localVarFp.listOnPremiseCredentials(organizationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -21422,6 +21775,19 @@ export class CloudProviderCredentialsApi extends BaseAPI {
 
     /**
      * 
+     * @summary Create OnPremise credentials set
+     * @param {string} organizationId Organization ID
+     * @param {OnPremiseCredentialsRequest} [onPremiseCredentialsRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderCredentialsApi
+     */
+    public createOnPremiseCredentials(organizationId: string, onPremiseCredentialsRequest?: OnPremiseCredentialsRequest, options?: AxiosRequestConfig) {
+        return CloudProviderCredentialsApiFp(this.configuration).createOnPremiseCredentials(organizationId, onPremiseCredentialsRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Create Scaleway credentials set
      * @param {string} organizationId Organization ID
      * @param {ScalewayCredentialsRequest} [scalewayCredentialsRequest] 
@@ -21457,6 +21823,19 @@ export class CloudProviderCredentialsApi extends BaseAPI {
      */
     public deleteGcpCredentials(credentialsId: string, organizationId: string, options?: AxiosRequestConfig) {
         return CloudProviderCredentialsApiFp(this.configuration).deleteGcpCredentials(credentialsId, organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete a set of OnPremise credentials
+     * @param {string} credentialsId Credentials ID
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderCredentialsApi
+     */
+    public deleteOnPremiseCredentials(credentialsId: string, organizationId: string, options?: AxiosRequestConfig) {
+        return CloudProviderCredentialsApiFp(this.configuration).deleteOnPremiseCredentials(credentialsId, organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -21502,6 +21881,20 @@ export class CloudProviderCredentialsApi extends BaseAPI {
 
     /**
      * 
+     * @summary Edit a set of OnPremise credentials
+     * @param {string} organizationId Organization ID
+     * @param {string} credentialsId Credentials ID
+     * @param {OnPremiseCredentialsRequest} [onPremiseCredentialsRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderCredentialsApi
+     */
+    public editOnPremiseCredentials(organizationId: string, credentialsId: string, onPremiseCredentialsRequest?: OnPremiseCredentialsRequest, options?: AxiosRequestConfig) {
+        return CloudProviderCredentialsApiFp(this.configuration).editOnPremiseCredentials(organizationId, credentialsId, onPremiseCredentialsRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Edit a set of Scaleway credentials
      * @param {string} organizationId Organization ID
      * @param {string} credentialsId Credentials ID
@@ -21542,6 +21935,19 @@ export class CloudProviderCredentialsApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get a set of OnPremise credentials
+     * @param {string} organizationId Organization ID
+     * @param {string} credentialsId Credentials ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderCredentialsApi
+     */
+    public getOnPremiseCredentials(organizationId: string, credentialsId: string, options?: AxiosRequestConfig) {
+        return CloudProviderCredentialsApiFp(this.configuration).getOnPremiseCredentials(organizationId, credentialsId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Get a set of Scaleway credentials
      * @param {string} organizationId Organization ID
      * @param {string} credentialsId Credentials ID
@@ -21575,6 +21981,18 @@ export class CloudProviderCredentialsApi extends BaseAPI {
      */
     public listGcpCredentials(organizationId: string, options?: AxiosRequestConfig) {
         return CloudProviderCredentialsApiFp(this.configuration).listGcpCredentials(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List OnPremise credentials
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderCredentialsApi
+     */
+    public listOnPremiseCredentials(organizationId: string, options?: AxiosRequestConfig) {
+        return CloudProviderCredentialsApiFp(this.configuration).listOnPremiseCredentials(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
