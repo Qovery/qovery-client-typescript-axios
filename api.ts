@@ -5937,6 +5937,50 @@ export interface DoCredentialsRequest {
 /**
  * 
  * @export
+ * @interface DockerfileCheckRequest
+ */
+export interface DockerfileCheckRequest {
+    /**
+     * 
+     * @type {GitRepository}
+     * @memberof DockerfileCheckRequest
+     */
+    'git_repository': GitRepository;
+    /**
+     * path of the dockerfile with root_path as base path
+     * @type {string}
+     * @memberof DockerfileCheckRequest
+     */
+    'dockerfile_path': string;
+}
+/**
+ * 
+ * @export
+ * @interface DockerfileCheckResponse
+ */
+export interface DockerfileCheckResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof DockerfileCheckResponse
+     */
+    'dockerfile_path': string;
+    /**
+     * All ARG variable declared in the Dockerfile
+     * @type {Array<string>}
+     * @memberof DockerfileCheckResponse
+     */
+    'arg'?: Array<string>;
+    /**
+     * All image repositories we found declared in the Dockerfile
+     * @type {Array<string>}
+     * @memberof DockerfileCheckResponse
+     */
+    'repositories'?: Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface Environment
  */
 export interface Environment {
@@ -30629,6 +30673,51 @@ export class DeploymentStageMainCallsApi extends BaseAPI {
 export const EnvironmentApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * 
+         * @summary Check dockerfile configuration is correct
+         * @param {string} environmentId Environment ID
+         * @param {DockerfileCheckRequest} [dockerfileCheckRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkDockerfile: async (environmentId: string, dockerfileCheckRequest?: DockerfileCheckRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('checkDockerfile', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/checkDockerfile`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(dockerfileCheckRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Start a deployment of the environment. Any of the services within the chosen environment based on the following rule: a service is deployed only if a new version is specified in the payload for that application/container or if there was a change in its configuration that needs to be applied (vCPU,RAM etc..)
          * @summary Deploy applications
          * @param {string} environmentId Environment ID
@@ -30684,6 +30773,18 @@ export const EnvironmentApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = EnvironmentApiAxiosParamCreator(configuration)
     return {
         /**
+         * 
+         * @summary Check dockerfile configuration is correct
+         * @param {string} environmentId Environment ID
+         * @param {DockerfileCheckRequest} [dockerfileCheckRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async checkDockerfile(environmentId: string, dockerfileCheckRequest?: DockerfileCheckRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DockerfileCheckResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkDockerfile(environmentId, dockerfileCheckRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Start a deployment of the environment. Any of the services within the chosen environment based on the following rule: a service is deployed only if a new version is specified in the payload for that application/container or if there was a change in its configuration that needs to be applied (vCPU,RAM etc..)
          * @summary Deploy applications
          * @param {string} environmentId Environment ID
@@ -30706,6 +30807,17 @@ export const EnvironmentApiFactory = function (configuration?: Configuration, ba
     const localVarFp = EnvironmentApiFp(configuration)
     return {
         /**
+         * 
+         * @summary Check dockerfile configuration is correct
+         * @param {string} environmentId Environment ID
+         * @param {DockerfileCheckRequest} [dockerfileCheckRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkDockerfile(environmentId: string, dockerfileCheckRequest?: DockerfileCheckRequest, options?: any): AxiosPromise<DockerfileCheckResponse> {
+            return localVarFp.checkDockerfile(environmentId, dockerfileCheckRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Start a deployment of the environment. Any of the services within the chosen environment based on the following rule: a service is deployed only if a new version is specified in the payload for that application/container or if there was a change in its configuration that needs to be applied (vCPU,RAM etc..)
          * @summary Deploy applications
          * @param {string} environmentId Environment ID
@@ -30726,6 +30838,19 @@ export const EnvironmentApiFactory = function (configuration?: Configuration, ba
  * @extends {BaseAPI}
  */
 export class EnvironmentApi extends BaseAPI {
+    /**
+     * 
+     * @summary Check dockerfile configuration is correct
+     * @param {string} environmentId Environment ID
+     * @param {DockerfileCheckRequest} [dockerfileCheckRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentApi
+     */
+    public checkDockerfile(environmentId: string, dockerfileCheckRequest?: DockerfileCheckRequest, options?: AxiosRequestConfig) {
+        return EnvironmentApiFp(this.configuration).checkDockerfile(environmentId, dockerfileCheckRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Start a deployment of the environment. Any of the services within the chosen environment based on the following rule: a service is deployed only if a new version is specified in the payload for that application/container or if there was a change in its configuration that needs to be applied (vCPU,RAM etc..)
      * @summary Deploy applications
