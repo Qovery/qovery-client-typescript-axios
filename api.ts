@@ -9337,6 +9337,50 @@ export type KubernetesEnum = typeof KubernetesEnum[keyof typeof KubernetesEnum];
 /**
  * 
  * @export
+ * @interface Label
+ */
+export interface Label {
+    /**
+     * 
+     * @type {string}
+     * @memberof Label
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Label
+     */
+    'value': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Label
+     */
+    'propagate_to_cloud_provider': boolean;
+}
+/**
+ * Labels Group Associated Item Type
+ * @export
+ * @enum {string}
+ */
+
+export const LabelsGroupAssociatedItemType = {
+    APPLICATION: 'APPLICATION',
+    DATABASE: 'DATABASE',
+    CONTAINER: 'CONTAINER',
+    LIFECYCLE: 'LIFECYCLE',
+    ENVIRONMENT: 'ENVIRONMENT',
+    CLUSTER: 'CLUSTER',
+    CRON: 'CRON'
+} as const;
+
+export type LabelsGroupAssociatedItemType = typeof LabelsGroupAssociatedItemType[keyof typeof LabelsGroupAssociatedItemType];
+
+
+/**
+ * 
+ * @export
  * @interface LifecycleJobResponse
  */
 export interface LifecycleJobResponse {
@@ -9672,6 +9716,19 @@ export interface ListOrganizationAnnotationsGroup200Response {
      * @memberof ListOrganizationAnnotationsGroup200Response
      */
     'results'?: Array<OrganizationAnnotationsGroupEnrichedResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface ListOrganizationLabelsGroup200Response
+ */
+export interface ListOrganizationLabelsGroup200Response {
+    /**
+     * 
+     * @type {Array<OrganizationLabelsGroupEnrichedResponse>}
+     * @memberof ListOrganizationLabelsGroup200Response
+     */
+    'results'?: Array<OrganizationLabelsGroupEnrichedResponse>;
 }
 /**
  * 
@@ -11150,6 +11207,181 @@ export interface OrganizationJobAutoDeployRequest {
      * @memberof OrganizationJobAutoDeployRequest
      */
     'tag'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationLabelsGroupAssociatedItemsResponseList
+ */
+export interface OrganizationLabelsGroupAssociatedItemsResponseList {
+    /**
+     * 
+     * @type {Array<OrganizationLabelsGroupAssociatedItemsResponseListResultsInner>}
+     * @memberof OrganizationLabelsGroupAssociatedItemsResponseList
+     */
+    'results'?: Array<OrganizationLabelsGroupAssociatedItemsResponseListResultsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationLabelsGroupAssociatedItemsResponseListResultsInner
+ */
+export interface OrganizationLabelsGroupAssociatedItemsResponseListResultsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationLabelsGroupAssociatedItemsResponseListResultsInner
+     */
+    'cluster_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationLabelsGroupAssociatedItemsResponseListResultsInner
+     */
+    'cluster_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationLabelsGroupAssociatedItemsResponseListResultsInner
+     */
+    'project_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationLabelsGroupAssociatedItemsResponseListResultsInner
+     */
+    'project_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationLabelsGroupAssociatedItemsResponseListResultsInner
+     */
+    'environment_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationLabelsGroupAssociatedItemsResponseListResultsInner
+     */
+    'environment_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationLabelsGroupAssociatedItemsResponseListResultsInner
+     */
+    'item_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationLabelsGroupAssociatedItemsResponseListResultsInner
+     */
+    'item_name': string;
+    /**
+     * 
+     * @type {LabelsGroupAssociatedItemType}
+     * @memberof OrganizationLabelsGroupAssociatedItemsResponseListResultsInner
+     */
+    'item_type': LabelsGroupAssociatedItemType;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface OrganizationLabelsGroupCreateRequest
+ */
+export interface OrganizationLabelsGroupCreateRequest {
+    /**
+     * name of the labels group
+     * @type {string}
+     * @memberof OrganizationLabelsGroupCreateRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {Array<Label>}
+     * @memberof OrganizationLabelsGroupCreateRequest
+     */
+    'labels': Array<Label>;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationLabelsGroupEnrichedResponse
+ */
+export interface OrganizationLabelsGroupEnrichedResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationLabelsGroupEnrichedResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationLabelsGroupEnrichedResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationLabelsGroupEnrichedResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationLabelsGroupEnrichedResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {Array<Label>}
+     * @memberof OrganizationLabelsGroupEnrichedResponse
+     */
+    'labels': Array<Label>;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrganizationLabelsGroupEnrichedResponse
+     */
+    'associated_items_count'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationLabelsGroupResponse
+ */
+export interface OrganizationLabelsGroupResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationLabelsGroupResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationLabelsGroupResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationLabelsGroupResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationLabelsGroupResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {Array<Label>}
+     * @memberof OrganizationLabelsGroupResponse
+     */
+    'labels': Array<Label>;
 }
 /**
  * 
@@ -43840,6 +44072,531 @@ export class OrganizationEventApi extends BaseAPI {
      */
     public getOrganizationEvents(organizationId: string, pageSize?: number | null, fromTimestamp?: string | null, toTimestamp?: string | null, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string | null, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: AxiosRequestConfig) {
         return OrganizationEventApiFp(this.configuration).getOrganizationEvents(organizationId, pageSize, fromTimestamp, toTimestamp, continueToken, stepBackToken, eventType, targetType, targetId, subTargetType, triggeredBy, origin, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * OrganizationLabelsGroupApi - axios parameter creator
+ * @export
+ */
+export const OrganizationLabelsGroupApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Create an organization labels group
+         * @summary Create an organization labels group
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationLabelsGroupCreateRequest} [organizationLabelsGroupCreateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrganizationLabelsGroup: async (organizationId: string, organizationLabelsGroupCreateRequest?: OrganizationLabelsGroupCreateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('createOrganizationLabelsGroup', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/labelsGroups`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organizationLabelsGroupCreateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete organization labels group
+         * @summary Delete organization labels group
+         * @param {string} organizationId Organization ID
+         * @param {string} labelsGroupId Organization labels group ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteOrganizationLabelsGroup: async (organizationId: string, labelsGroupId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('deleteOrganizationLabelsGroup', 'organizationId', organizationId)
+            // verify required parameter 'labelsGroupId' is not null or undefined
+            assertParamExists('deleteOrganizationLabelsGroup', 'labelsGroupId', labelsGroupId)
+            const localVarPath = `/organization/{organizationId}/labelsGroups/{labelsGroupId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"labelsGroupId"}}`, encodeURIComponent(String(labelsGroupId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Edit organization labels group
+         * @summary Edit organization labels group
+         * @param {string} organizationId Organization ID
+         * @param {string} labelsGroupId Organization labels group ID
+         * @param {OrganizationLabelsGroupCreateRequest} [organizationLabelsGroupCreateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editOrganizationLabelsGroup: async (organizationId: string, labelsGroupId: string, organizationLabelsGroupCreateRequest?: OrganizationLabelsGroupCreateRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('editOrganizationLabelsGroup', 'organizationId', organizationId)
+            // verify required parameter 'labelsGroupId' is not null or undefined
+            assertParamExists('editOrganizationLabelsGroup', 'labelsGroupId', labelsGroupId)
+            const localVarPath = `/organization/{organizationId}/labelsGroups/{labelsGroupId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"labelsGroupId"}}`, encodeURIComponent(String(labelsGroupId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organizationLabelsGroupCreateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get organization labels group associated items
+         * @summary Get organization labels group associated items
+         * @param {string} organizationId Organization ID
+         * @param {string} labelsGroupId Organization labels group ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationLabelsGroupAssociatedItems: async (organizationId: string, labelsGroupId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOrganizationLabelsGroupAssociatedItems', 'organizationId', organizationId)
+            // verify required parameter 'labelsGroupId' is not null or undefined
+            assertParamExists('getOrganizationLabelsGroupAssociatedItems', 'labelsGroupId', labelsGroupId)
+            const localVarPath = `/organization/{organizationId}/labelsGroups/{labelsGroupId}/associatedItems`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"labelsGroupId"}}`, encodeURIComponent(String(labelsGroupId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get organization labels group
+         * @summary Get organization labels group
+         * @param {string} organizationId Organization ID
+         * @param {string} labelsGroupId Organization labels group ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationLabelssGroup: async (organizationId: string, labelsGroupId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOrganizationLabelssGroup', 'organizationId', organizationId)
+            // verify required parameter 'labelsGroupId' is not null or undefined
+            assertParamExists('getOrganizationLabelssGroup', 'labelsGroupId', labelsGroupId)
+            const localVarPath = `/organization/{organizationId}/labelsGroups/{labelsGroupId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"labelsGroupId"}}`, encodeURIComponent(String(labelsGroupId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List organization labels group
+         * @summary List organization labels group
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationLabelsGroup: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listOrganizationLabelsGroup', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/labelsGroups`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * OrganizationLabelsGroupApi - functional programming interface
+ * @export
+ */
+export const OrganizationLabelsGroupApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = OrganizationLabelsGroupApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Create an organization labels group
+         * @summary Create an organization labels group
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationLabelsGroupCreateRequest} [organizationLabelsGroupCreateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createOrganizationLabelsGroup(organizationId: string, organizationLabelsGroupCreateRequest?: OrganizationLabelsGroupCreateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationLabelsGroupResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createOrganizationLabelsGroup(organizationId, organizationLabelsGroupCreateRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Delete organization labels group
+         * @summary Delete organization labels group
+         * @param {string} organizationId Organization ID
+         * @param {string} labelsGroupId Organization labels group ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteOrganizationLabelsGroup(organizationId: string, labelsGroupId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOrganizationLabelsGroup(organizationId, labelsGroupId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Edit organization labels group
+         * @summary Edit organization labels group
+         * @param {string} organizationId Organization ID
+         * @param {string} labelsGroupId Organization labels group ID
+         * @param {OrganizationLabelsGroupCreateRequest} [organizationLabelsGroupCreateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editOrganizationLabelsGroup(organizationId: string, labelsGroupId: string, organizationLabelsGroupCreateRequest?: OrganizationLabelsGroupCreateRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationLabelsGroupResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editOrganizationLabelsGroup(organizationId, labelsGroupId, organizationLabelsGroupCreateRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get organization labels group associated items
+         * @summary Get organization labels group associated items
+         * @param {string} organizationId Organization ID
+         * @param {string} labelsGroupId Organization labels group ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationLabelsGroupAssociatedItems(organizationId: string, labelsGroupId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationLabelsGroupAssociatedItemsResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationLabelsGroupAssociatedItems(organizationId, labelsGroupId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get organization labels group
+         * @summary Get organization labels group
+         * @param {string} organizationId Organization ID
+         * @param {string} labelsGroupId Organization labels group ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationLabelssGroup(organizationId: string, labelsGroupId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationLabelsGroupResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationLabelssGroup(organizationId, labelsGroupId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * List organization labels group
+         * @summary List organization labels group
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listOrganizationLabelsGroup(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListOrganizationLabelsGroup200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizationLabelsGroup(organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * OrganizationLabelsGroupApi - factory interface
+ * @export
+ */
+export const OrganizationLabelsGroupApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = OrganizationLabelsGroupApiFp(configuration)
+    return {
+        /**
+         * Create an organization labels group
+         * @summary Create an organization labels group
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationLabelsGroupCreateRequest} [organizationLabelsGroupCreateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrganizationLabelsGroup(organizationId: string, organizationLabelsGroupCreateRequest?: OrganizationLabelsGroupCreateRequest, options?: any): AxiosPromise<OrganizationLabelsGroupResponse> {
+            return localVarFp.createOrganizationLabelsGroup(organizationId, organizationLabelsGroupCreateRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete organization labels group
+         * @summary Delete organization labels group
+         * @param {string} organizationId Organization ID
+         * @param {string} labelsGroupId Organization labels group ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteOrganizationLabelsGroup(organizationId: string, labelsGroupId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteOrganizationLabelsGroup(organizationId, labelsGroupId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Edit organization labels group
+         * @summary Edit organization labels group
+         * @param {string} organizationId Organization ID
+         * @param {string} labelsGroupId Organization labels group ID
+         * @param {OrganizationLabelsGroupCreateRequest} [organizationLabelsGroupCreateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editOrganizationLabelsGroup(organizationId: string, labelsGroupId: string, organizationLabelsGroupCreateRequest?: OrganizationLabelsGroupCreateRequest, options?: any): AxiosPromise<OrganizationLabelsGroupResponse> {
+            return localVarFp.editOrganizationLabelsGroup(organizationId, labelsGroupId, organizationLabelsGroupCreateRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get organization labels group associated items
+         * @summary Get organization labels group associated items
+         * @param {string} organizationId Organization ID
+         * @param {string} labelsGroupId Organization labels group ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationLabelsGroupAssociatedItems(organizationId: string, labelsGroupId: string, options?: any): AxiosPromise<OrganizationLabelsGroupAssociatedItemsResponseList> {
+            return localVarFp.getOrganizationLabelsGroupAssociatedItems(organizationId, labelsGroupId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get organization labels group
+         * @summary Get organization labels group
+         * @param {string} organizationId Organization ID
+         * @param {string} labelsGroupId Organization labels group ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationLabelssGroup(organizationId: string, labelsGroupId: string, options?: any): AxiosPromise<OrganizationLabelsGroupResponse> {
+            return localVarFp.getOrganizationLabelssGroup(organizationId, labelsGroupId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List organization labels group
+         * @summary List organization labels group
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationLabelsGroup(organizationId: string, options?: any): AxiosPromise<ListOrganizationLabelsGroup200Response> {
+            return localVarFp.listOrganizationLabelsGroup(organizationId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * OrganizationLabelsGroupApi - object-oriented interface
+ * @export
+ * @class OrganizationLabelsGroupApi
+ * @extends {BaseAPI}
+ */
+export class OrganizationLabelsGroupApi extends BaseAPI {
+    /**
+     * Create an organization labels group
+     * @summary Create an organization labels group
+     * @param {string} organizationId Organization ID
+     * @param {OrganizationLabelsGroupCreateRequest} [organizationLabelsGroupCreateRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationLabelsGroupApi
+     */
+    public createOrganizationLabelsGroup(organizationId: string, organizationLabelsGroupCreateRequest?: OrganizationLabelsGroupCreateRequest, options?: AxiosRequestConfig) {
+        return OrganizationLabelsGroupApiFp(this.configuration).createOrganizationLabelsGroup(organizationId, organizationLabelsGroupCreateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete organization labels group
+     * @summary Delete organization labels group
+     * @param {string} organizationId Organization ID
+     * @param {string} labelsGroupId Organization labels group ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationLabelsGroupApi
+     */
+    public deleteOrganizationLabelsGroup(organizationId: string, labelsGroupId: string, options?: AxiosRequestConfig) {
+        return OrganizationLabelsGroupApiFp(this.configuration).deleteOrganizationLabelsGroup(organizationId, labelsGroupId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Edit organization labels group
+     * @summary Edit organization labels group
+     * @param {string} organizationId Organization ID
+     * @param {string} labelsGroupId Organization labels group ID
+     * @param {OrganizationLabelsGroupCreateRequest} [organizationLabelsGroupCreateRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationLabelsGroupApi
+     */
+    public editOrganizationLabelsGroup(organizationId: string, labelsGroupId: string, organizationLabelsGroupCreateRequest?: OrganizationLabelsGroupCreateRequest, options?: AxiosRequestConfig) {
+        return OrganizationLabelsGroupApiFp(this.configuration).editOrganizationLabelsGroup(organizationId, labelsGroupId, organizationLabelsGroupCreateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get organization labels group associated items
+     * @summary Get organization labels group associated items
+     * @param {string} organizationId Organization ID
+     * @param {string} labelsGroupId Organization labels group ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationLabelsGroupApi
+     */
+    public getOrganizationLabelsGroupAssociatedItems(organizationId: string, labelsGroupId: string, options?: AxiosRequestConfig) {
+        return OrganizationLabelsGroupApiFp(this.configuration).getOrganizationLabelsGroupAssociatedItems(organizationId, labelsGroupId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get organization labels group
+     * @summary Get organization labels group
+     * @param {string} organizationId Organization ID
+     * @param {string} labelsGroupId Organization labels group ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationLabelsGroupApi
+     */
+    public getOrganizationLabelssGroup(organizationId: string, labelsGroupId: string, options?: AxiosRequestConfig) {
+        return OrganizationLabelsGroupApiFp(this.configuration).getOrganizationLabelssGroup(organizationId, labelsGroupId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List organization labels group
+     * @summary List organization labels group
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationLabelsGroupApi
+     */
+    public listOrganizationLabelsGroup(organizationId: string, options?: AxiosRequestConfig) {
+        return OrganizationLabelsGroupApiFp(this.configuration).listOrganizationLabelsGroup(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
