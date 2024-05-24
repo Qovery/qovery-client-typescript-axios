@@ -2135,6 +2135,12 @@ export interface ClusterAdvancedSettings {
      * @memberof ClusterAdvancedSettings
      */
     'nginx.hpa.max_number_instances'?: number;
+    /**
+     * storage class name to use to provision pvc
+     * @type {string}
+     * @memberof ClusterAdvancedSettings
+     */
+    'storageclass.fast_ssd'?: string;
 }
 
 export const ClusterAdvancedSettingsAwsEksEc2MetadataImdsEnum = {
