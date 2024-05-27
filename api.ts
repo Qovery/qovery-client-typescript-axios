@@ -309,6 +309,12 @@ export interface Application {
      * @memberof Application
      */
     'annotations_groups'?: Array<OrganizationAnnotationsGroupResponse>;
+    /**
+     * 
+     * @type {Array<OrganizationLabelsGroupResponse>}
+     * @memberof Application
+     */
+    'labels_groups'?: Array<OrganizationLabelsGroupResponse>;
 }
 
 
@@ -736,6 +742,12 @@ export interface ApplicationEditRequest {
      * @memberof ApplicationEditRequest
      */
     'annotations_groups'?: Array<ServiceAnnotationRequest>;
+    /**
+     * 
+     * @type {Array<ServiceLabelRequest>}
+     * @memberof ApplicationEditRequest
+     */
+    'labels_groups'?: Array<ServiceLabelRequest>;
 }
 
 
@@ -997,6 +1009,12 @@ export interface ApplicationRequest {
      * @memberof ApplicationRequest
      */
     'annotations_groups'?: Array<ServiceAnnotationRequest>;
+    /**
+     * 
+     * @type {Array<ServiceLabelRequest>}
+     * @memberof ApplicationRequest
+     */
+    'labels_groups'?: Array<ServiceLabelRequest>;
 }
 
 
@@ -3856,6 +3874,12 @@ export interface ContainerRequest {
      * @memberof ContainerRequest
      */
     'annotations_groups'?: Array<ServiceAnnotationRequest>;
+    /**
+     * 
+     * @type {Array<ServiceLabelRequest>}
+     * @memberof ContainerRequest
+     */
+    'labels_groups'?: Array<ServiceLabelRequest>;
 }
 /**
  * 
@@ -4007,6 +4031,12 @@ export interface ContainerResponse {
      * @memberof ContainerResponse
      */
     'annotations_groups'?: Array<OrganizationAnnotationsGroupResponse>;
+    /**
+     * 
+     * @type {Array<OrganizationLabelsGroupResponse>}
+     * @memberof ContainerResponse
+     */
+    'labels_groups'?: Array<OrganizationLabelsGroupResponse>;
 }
 /**
  * 
@@ -4698,6 +4728,12 @@ export interface Database {
     'annotations_groups'?: Array<OrganizationAnnotationsGroupResponse>;
     /**
      * 
+     * @type {Array<OrganizationLabelsGroupResponse>}
+     * @memberof Database
+     */
+    'labels_groups'?: Array<OrganizationLabelsGroupResponse>;
+    /**
+     * 
      * @type {ReferenceObject}
      * @memberof Database
      */
@@ -4843,6 +4879,12 @@ export interface DatabaseEditRequest {
      * @memberof DatabaseEditRequest
      */
     'annotations_groups'?: Array<ServiceAnnotationRequest>;
+    /**
+     * 
+     * @type {Array<ServiceLabelRequest>}
+     * @memberof DatabaseEditRequest
+     */
+    'labels_groups'?: Array<ServiceLabelRequest>;
 }
 
 
@@ -4932,6 +4974,12 @@ export interface DatabaseRequest {
      * @memberof DatabaseRequest
      */
     'annotations_groups'?: Array<ServiceAnnotationRequest>;
+    /**
+     * 
+     * @type {Array<ServiceLabelRequest>}
+     * @memberof DatabaseRequest
+     */
+    'labels_groups'?: Array<ServiceLabelRequest>;
 }
 
 
@@ -12800,6 +12848,19 @@ export const ServiceDeploymentStatusEnum = {
 export type ServiceDeploymentStatusEnum = typeof ServiceDeploymentStatusEnum[keyof typeof ServiceDeploymentStatusEnum];
 
 
+/**
+ * 
+ * @export
+ * @interface ServiceLabelRequest
+ */
+export interface ServiceLabelRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ServiceLabelRequest
+     */
+    'id': string;
+}
 /**
  * 
  * @export
