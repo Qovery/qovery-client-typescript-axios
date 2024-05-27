@@ -2331,20 +2331,47 @@ export interface ClusterFeature {
      * 
      * @type {number}
      * @memberof ClusterFeature
+     * @deprecated
      */
     'cost_per_month_in_cents'?: number | null;
     /**
      * 
      * @type {number}
      * @memberof ClusterFeature
+     * @deprecated
      */
     'cost_per_month'?: number | null;
     /**
      * 
      * @type {string}
      * @memberof ClusterFeature
+     * @deprecated
      */
     'currency_code'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterFeature
+     */
+    'is_cloud_provider_paying_feature'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeature
+     */
+    'cloud_provider_feature_documentation'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterFeature
+     */
+    'is_qovery_paying_feature'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeature
+     */
+    'qovery_feature_documentation'?: string | null;
     /**
      * 
      * @type {string}
