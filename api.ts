@@ -6023,10 +6023,10 @@ export interface DoCredentialsRequest {
 export interface DockerfileCheckRequest {
     /**
      * 
-     * @type {GitRepository}
+     * @type {ApplicationGitRepositoryRequest}
      * @memberof DockerfileCheckRequest
      */
-    'git_repository': GitRepository;
+    'git_repository': ApplicationGitRepositoryRequest;
     /**
      * path of the dockerfile with root_path as base path
      * @type {string}
