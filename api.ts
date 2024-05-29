@@ -1977,10 +1977,10 @@ export interface Cluster {
     'ssh_keys'?: Array<string>;
     /**
      * 
-     * @type {Array<ClusterFeature>}
+     * @type {Array<ClusterFeatureResponse>}
      * @memberof Cluster
      */
-    'features'?: Array<ClusterFeature>;
+    'features'?: Array<ClusterFeatureResponse>;
     /**
      * 
      * @type {ClusterDeploymentStatusEnum}
@@ -2306,113 +2306,6 @@ export type ClusterDeploymentStatusEnum = typeof ClusterDeploymentStatusEnum[key
 /**
  * 
  * @export
- * @interface ClusterFeature
- */
-export interface ClusterFeature {
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterFeature
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterFeature
-     */
-    'title'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterFeature
-     */
-    'description'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof ClusterFeature
-     * @deprecated
-     */
-    'cost_per_month_in_cents'?: number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof ClusterFeature
-     * @deprecated
-     */
-    'cost_per_month'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterFeature
-     * @deprecated
-     */
-    'currency_code'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ClusterFeature
-     */
-    'is_cloud_provider_paying_feature'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterFeature
-     */
-    'cloud_provider_feature_documentation'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ClusterFeature
-     */
-    'is_qovery_paying_feature'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterFeature
-     */
-    'qovery_feature_documentation'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterFeature
-     */
-    'value_type'?: ClusterFeatureValueTypeEnum;
-    /**
-     * 
-     * @type {ClusterFeatureValue}
-     * @memberof ClusterFeature
-     */
-    'value'?: ClusterFeatureValue | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ClusterFeature
-     */
-    'is_value_updatable'?: boolean;
-    /**
-     * 
-     * @type {Array<ClusterFeatureAcceptedValuesInner>}
-     * @memberof ClusterFeature
-     */
-    'accepted_values'?: Array<ClusterFeatureAcceptedValuesInner>;
-}
-
-export const ClusterFeatureValueTypeEnum = {
-    BOOLEAN: 'BOOLEAN'
-} as const;
-
-export type ClusterFeatureValueTypeEnum = typeof ClusterFeatureValueTypeEnum[keyof typeof ClusterFeatureValueTypeEnum];
-
-/**
- * @type ClusterFeatureAcceptedValuesInner
- * @export
- */
-export type ClusterFeatureAcceptedValuesInner = boolean | string;
-
-/**
- * 
- * @export
  * @interface ClusterFeatureAwsExistingVpc
  */
 export interface ClusterFeatureAwsExistingVpc {
@@ -2498,6 +2391,48 @@ export interface ClusterFeatureAwsExistingVpc {
 /**
  * 
  * @export
+ * @interface ClusterFeatureAwsExistingVpcResponse
+ */
+export interface ClusterFeatureAwsExistingVpcResponse {
+    /**
+     * 
+     * @type {ClusterFeatureResponseTypeEnum}
+     * @memberof ClusterFeatureAwsExistingVpcResponse
+     */
+    'type': ClusterFeatureResponseTypeEnum;
+    /**
+     * 
+     * @type {ClusterFeatureAwsExistingVpc}
+     * @memberof ClusterFeatureAwsExistingVpcResponse
+     */
+    'value': ClusterFeatureAwsExistingVpc;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ClusterFeatureBooleanResponse
+ */
+export interface ClusterFeatureBooleanResponse {
+    /**
+     * 
+     * @type {ClusterFeatureResponseTypeEnum}
+     * @memberof ClusterFeatureBooleanResponse
+     */
+    'type': ClusterFeatureResponseTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterFeatureBooleanResponse
+     */
+    'value': boolean;
+}
+
+
+/**
+ * 
+ * @export
  * @interface ClusterFeatureGcpExistingVpc
  */
 export interface ClusterFeatureGcpExistingVpc {
@@ -2541,21 +2476,186 @@ export interface ClusterFeatureGcpExistingVpc {
 /**
  * 
  * @export
+ * @interface ClusterFeatureGcpExistingVpcResponse
+ */
+export interface ClusterFeatureGcpExistingVpcResponse {
+    /**
+     * 
+     * @type {ClusterFeatureResponseTypeEnum}
+     * @memberof ClusterFeatureGcpExistingVpcResponse
+     */
+    'type': ClusterFeatureResponseTypeEnum;
+    /**
+     * 
+     * @type {ClusterFeatureGcpExistingVpc}
+     * @memberof ClusterFeatureGcpExistingVpcResponse
+     */
+    'value': ClusterFeatureGcpExistingVpc;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ClusterFeatureResponse
+ */
+export interface ClusterFeatureResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeatureResponse
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeatureResponse
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeatureResponse
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterFeatureResponse
+     * @deprecated
+     */
+    'cost_per_month_in_cents'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterFeatureResponse
+     * @deprecated
+     */
+    'cost_per_month'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeatureResponse
+     * @deprecated
+     */
+    'currency_code'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterFeatureResponse
+     */
+    'is_cloud_provider_paying_feature'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeatureResponse
+     */
+    'cloud_provider_feature_documentation'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterFeatureResponse
+     */
+    'is_qovery_paying_feature'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeatureResponse
+     */
+    'qovery_feature_documentation'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeatureResponse
+     */
+    'value_type'?: ClusterFeatureResponseValueTypeEnum;
+    /**
+     * 
+     * @type {ClusterFeatureResponseValueObject}
+     * @memberof ClusterFeatureResponse
+     */
+    'value_object'?: ClusterFeatureResponseValueObject | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterFeatureResponse
+     */
+    'is_value_updatable'?: boolean;
+    /**
+     * 
+     * @type {Array<ClusterFeatureResponseAcceptedValuesInner>}
+     * @memberof ClusterFeatureResponse
+     */
+    'accepted_values'?: Array<ClusterFeatureResponseAcceptedValuesInner>;
+}
+
+export const ClusterFeatureResponseValueTypeEnum = {
+    BOOLEAN: 'BOOLEAN'
+} as const;
+
+export type ClusterFeatureResponseValueTypeEnum = typeof ClusterFeatureResponseValueTypeEnum[keyof typeof ClusterFeatureResponseValueTypeEnum];
+
+/**
+ * @type ClusterFeatureResponseAcceptedValuesInner
+ * @export
+ */
+export type ClusterFeatureResponseAcceptedValuesInner = boolean | string;
+
+/**
+ * 
+ * @export
  * @interface ClusterFeatureResponseList
  */
 export interface ClusterFeatureResponseList {
     /**
      * 
-     * @type {Array<ClusterFeature>}
+     * @type {Array<ClusterFeatureResponse>}
      * @memberof ClusterFeatureResponseList
      */
-    'results'?: Array<ClusterFeature>;
+    'results'?: Array<ClusterFeatureResponse>;
 }
 /**
- * @type ClusterFeatureValue
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ClusterFeatureResponseTypeEnum = {
+    STRING: 'STRING',
+    BOOLEAN: 'BOOLEAN',
+    AWS_USER_PROVIDED_NETWORK: 'AWS_USER_PROVIDED_NETWORK',
+    GCP_USER_PROVIDED_NETWORK: 'GCP_USER_PROVIDED_NETWORK'
+} as const;
+
+export type ClusterFeatureResponseTypeEnum = typeof ClusterFeatureResponseTypeEnum[keyof typeof ClusterFeatureResponseTypeEnum];
+
+
+/**
+ * @type ClusterFeatureResponseValueObject
  * @export
  */
-export type ClusterFeatureValue = ClusterFeatureAwsExistingVpc | ClusterFeatureGcpExistingVpc | boolean | string;
+export type ClusterFeatureResponseValueObject = { type: 'AWS_USER_PROVIDED_NETWORK' } & ClusterFeatureAwsExistingVpcResponse | { type: 'BOOLEAN' } & ClusterFeatureBooleanResponse | { type: 'GCP_USER_PROVIDED_NETWORK' } & ClusterFeatureGcpExistingVpcResponse | { type: 'STRING' } & ClusterFeatureStringResponse;
+
+/**
+ * 
+ * @export
+ * @interface ClusterFeatureStringResponse
+ */
+export interface ClusterFeatureStringResponse {
+    /**
+     * 
+     * @type {ClusterFeatureResponseTypeEnum}
+     * @memberof ClusterFeatureStringResponse
+     */
+    'type': ClusterFeatureResponseTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeatureStringResponse
+     */
+    'value': string;
+}
+
 
 /**
  * 
@@ -2998,11 +3098,17 @@ export interface ClusterRequestFeaturesInner {
     'id'?: string;
     /**
      * 
-     * @type {ClusterFeatureValue}
+     * @type {ClusterRequestFeaturesInnerValue}
      * @memberof ClusterRequestFeaturesInner
      */
-    'value'?: ClusterFeatureValue | null;
+    'value'?: ClusterRequestFeaturesInnerValue | null;
 }
+/**
+ * @type ClusterRequestFeaturesInnerValue
+ * @export
+ */
+export type ClusterRequestFeaturesInnerValue = ClusterFeatureAwsExistingVpc | ClusterFeatureGcpExistingVpc | boolean | string;
+
 /**
  * 
  * @export
