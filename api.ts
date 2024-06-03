@@ -3519,6 +3519,31 @@ export interface ContainerDeployRequest {
 /**
  * 
  * @export
+ * @interface ContainerImageCheckRequest
+ */
+export interface ContainerImageCheckRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerImageCheckRequest
+     */
+    'registry_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerImageCheckRequest
+     */
+    'image_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerImageCheckRequest
+     */
+    'tag': string;
+}
+/**
+ * 
+ * @export
  * @interface ContainerNetwork
  */
 export interface ContainerNetwork {
@@ -7142,6 +7167,25 @@ export interface GitAuthProviderResponseList {
 /**
  * 
  * @export
+ * @interface GitFileCheckRequest
+ */
+export interface GitFileCheckRequest {
+    /**
+     * 
+     * @type {HelmGitRepositoryRequest}
+     * @memberof GitFileCheckRequest
+     */
+    'git_repository': HelmGitRepositoryRequest;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof GitFileCheckRequest
+     */
+    'files': Array<string>;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -7582,6 +7626,19 @@ export interface HelmAdvancedSettings {
      * @memberof HelmAdvancedSettings
      */
     'network.ingress.enable_sticky_session'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface HelmCheckRequest
+ */
+export interface HelmCheckRequest {
+    /**
+     * 
+     * @type {HelmGitRepositoryRequest}
+     * @memberof HelmCheckRequest
+     */
+    'git_repository': HelmGitRepositoryRequest;
 }
 /**
  * 
@@ -30932,6 +30989,51 @@ export const EnvironmentApiAxiosParamCreator = function (configuration?: Configu
     return {
         /**
          * 
+         * @summary Check container image configuration is correct
+         * @param {string} environmentId Environment ID
+         * @param {ContainerImageCheckRequest} [containerImageCheckRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkContainerImage: async (environmentId: string, containerImageCheckRequest?: ContainerImageCheckRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('checkContainerImage', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/checkContainerImage`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(containerImageCheckRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Check dockerfile configuration is correct
          * @param {string} environmentId Environment ID
          * @param {DockerfileCheckRequest} [dockerfileCheckRequest] 
@@ -30969,6 +31071,96 @@ export const EnvironmentApiAxiosParamCreator = function (configuration?: Configu
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(dockerfileCheckRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Check git file configuration is correct
+         * @param {string} environmentId Environment ID
+         * @param {GitFileCheckRequest} [gitFileCheckRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkGitFile: async (environmentId: string, gitFileCheckRequest?: GitFileCheckRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('checkGitFile', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/checkGitFile`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(gitFileCheckRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Check helm repository configuration is correct
+         * @param {string} environmentId Environment ID
+         * @param {HelmCheckRequest} [helmCheckRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkHelmRepository: async (environmentId: string, helmCheckRequest?: HelmCheckRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('checkHelmRepository', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/checkHelmRepository`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(helmCheckRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -31032,6 +31224,18 @@ export const EnvironmentApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Check container image configuration is correct
+         * @param {string} environmentId Environment ID
+         * @param {ContainerImageCheckRequest} [containerImageCheckRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async checkContainerImage(environmentId: string, containerImageCheckRequest?: ContainerImageCheckRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkContainerImage(environmentId, containerImageCheckRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Check dockerfile configuration is correct
          * @param {string} environmentId Environment ID
          * @param {DockerfileCheckRequest} [dockerfileCheckRequest] 
@@ -31040,6 +31244,30 @@ export const EnvironmentApiFp = function(configuration?: Configuration) {
          */
         async checkDockerfile(environmentId: string, dockerfileCheckRequest?: DockerfileCheckRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DockerfileCheckResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.checkDockerfile(environmentId, dockerfileCheckRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Check git file configuration is correct
+         * @param {string} environmentId Environment ID
+         * @param {GitFileCheckRequest} [gitFileCheckRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async checkGitFile(environmentId: string, gitFileCheckRequest?: GitFileCheckRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkGitFile(environmentId, gitFileCheckRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Check helm repository configuration is correct
+         * @param {string} environmentId Environment ID
+         * @param {HelmCheckRequest} [helmCheckRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async checkHelmRepository(environmentId: string, helmCheckRequest?: HelmCheckRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkHelmRepository(environmentId, helmCheckRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -31066,6 +31294,17 @@ export const EnvironmentApiFactory = function (configuration?: Configuration, ba
     return {
         /**
          * 
+         * @summary Check container image configuration is correct
+         * @param {string} environmentId Environment ID
+         * @param {ContainerImageCheckRequest} [containerImageCheckRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkContainerImage(environmentId: string, containerImageCheckRequest?: ContainerImageCheckRequest, options?: any): AxiosPromise<object> {
+            return localVarFp.checkContainerImage(environmentId, containerImageCheckRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Check dockerfile configuration is correct
          * @param {string} environmentId Environment ID
          * @param {DockerfileCheckRequest} [dockerfileCheckRequest] 
@@ -31074,6 +31313,28 @@ export const EnvironmentApiFactory = function (configuration?: Configuration, ba
          */
         checkDockerfile(environmentId: string, dockerfileCheckRequest?: DockerfileCheckRequest, options?: any): AxiosPromise<DockerfileCheckResponse> {
             return localVarFp.checkDockerfile(environmentId, dockerfileCheckRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Check git file configuration is correct
+         * @param {string} environmentId Environment ID
+         * @param {GitFileCheckRequest} [gitFileCheckRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkGitFile(environmentId: string, gitFileCheckRequest?: GitFileCheckRequest, options?: any): AxiosPromise<object> {
+            return localVarFp.checkGitFile(environmentId, gitFileCheckRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Check helm repository configuration is correct
+         * @param {string} environmentId Environment ID
+         * @param {HelmCheckRequest} [helmCheckRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkHelmRepository(environmentId: string, helmCheckRequest?: HelmCheckRequest, options?: any): AxiosPromise<object> {
+            return localVarFp.checkHelmRepository(environmentId, helmCheckRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Start a deployment of the environment. Any of the services within the chosen environment based on the following rule: a service is deployed only if a new version is specified in the payload for that application/container or if there was a change in its configuration that needs to be applied (vCPU,RAM etc..)
@@ -31098,6 +31359,19 @@ export const EnvironmentApiFactory = function (configuration?: Configuration, ba
 export class EnvironmentApi extends BaseAPI {
     /**
      * 
+     * @summary Check container image configuration is correct
+     * @param {string} environmentId Environment ID
+     * @param {ContainerImageCheckRequest} [containerImageCheckRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentApi
+     */
+    public checkContainerImage(environmentId: string, containerImageCheckRequest?: ContainerImageCheckRequest, options?: AxiosRequestConfig) {
+        return EnvironmentApiFp(this.configuration).checkContainerImage(environmentId, containerImageCheckRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Check dockerfile configuration is correct
      * @param {string} environmentId Environment ID
      * @param {DockerfileCheckRequest} [dockerfileCheckRequest] 
@@ -31107,6 +31381,32 @@ export class EnvironmentApi extends BaseAPI {
      */
     public checkDockerfile(environmentId: string, dockerfileCheckRequest?: DockerfileCheckRequest, options?: AxiosRequestConfig) {
         return EnvironmentApiFp(this.configuration).checkDockerfile(environmentId, dockerfileCheckRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Check git file configuration is correct
+     * @param {string} environmentId Environment ID
+     * @param {GitFileCheckRequest} [gitFileCheckRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentApi
+     */
+    public checkGitFile(environmentId: string, gitFileCheckRequest?: GitFileCheckRequest, options?: AxiosRequestConfig) {
+        return EnvironmentApiFp(this.configuration).checkGitFile(environmentId, gitFileCheckRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Check helm repository configuration is correct
+     * @param {string} environmentId Environment ID
+     * @param {HelmCheckRequest} [helmCheckRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentApi
+     */
+    public checkHelmRepository(environmentId: string, helmCheckRequest?: HelmCheckRequest, options?: AxiosRequestConfig) {
+        return EnvironmentApiFp(this.configuration).checkHelmRepository(environmentId, helmCheckRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
