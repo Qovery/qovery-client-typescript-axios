@@ -8805,6 +8805,38 @@ export interface HelmResponseList {
 /**
  * 
  * @export
+ * @interface HelmVersionResponse
+ */
+export interface HelmVersionResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmVersionResponse
+     */
+    'chart_name'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof HelmVersionResponse
+     */
+    'versions'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface HelmVersionResponseList
+ */
+export interface HelmVersionResponseList {
+    /**
+     * 
+     * @type {Array<HelmVersionResponse>}
+     * @memberof HelmVersionResponseList
+     */
+    'results'?: Array<HelmVersionResponse>;
+}
+/**
+ * 
+ * @export
  * @interface InviteMember
  */
 export interface InviteMember {
@@ -37396,6 +37428,56 @@ export const HelmRepositoriesApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
+         * @summary List helm charts contained inside the repository
+         * @param {string} organizationId Organization ID
+         * @param {string} helmRepositoryId Helm chart repository ID
+         * @param {string} [chartName] Helm chart name to filter the result on
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHelmCharts: async (organizationId: string, helmRepositoryId: string, chartName?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getHelmCharts', 'organizationId', organizationId)
+            // verify required parameter 'helmRepositoryId' is not null or undefined
+            assertParamExists('getHelmCharts', 'helmRepositoryId', helmRepositoryId)
+            const localVarPath = `/organization/{organizationId}/helmRepository/{helmRepositoryId}/charts`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"helmRepositoryId"}}`, encodeURIComponent(String(helmRepositoryId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (chartName !== undefined) {
+                localVarQueryParameter['chartName'] = chartName;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get a helm repository
          * @param {string} organizationId Organization ID
          * @param {string} helmRepositoryId Helm chart repository ID
@@ -37566,6 +37648,19 @@ export const HelmRepositoriesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List helm charts contained inside the repository
+         * @param {string} organizationId Organization ID
+         * @param {string} helmRepositoryId Helm chart repository ID
+         * @param {string} [chartName] Helm chart name to filter the result on
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getHelmCharts(organizationId: string, helmRepositoryId: string, chartName?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmVersionResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getHelmCharts(organizationId, helmRepositoryId, chartName, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get a helm repository
          * @param {string} organizationId Organization ID
          * @param {string} helmRepositoryId Helm chart repository ID
@@ -37640,6 +37735,18 @@ export const HelmRepositoriesApiFactory = function (configuration?: Configuratio
          */
         editHelmRepository(organizationId: string, helmRepositoryId: string, helmRepositoryRequest?: HelmRepositoryRequest, options?: any): AxiosPromise<HelmRepositoryResponse> {
             return localVarFp.editHelmRepository(organizationId, helmRepositoryId, helmRepositoryRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List helm charts contained inside the repository
+         * @param {string} organizationId Organization ID
+         * @param {string} helmRepositoryId Helm chart repository ID
+         * @param {string} [chartName] Helm chart name to filter the result on
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHelmCharts(organizationId: string, helmRepositoryId: string, chartName?: string, options?: any): AxiosPromise<HelmVersionResponseList> {
+            return localVarFp.getHelmCharts(organizationId, helmRepositoryId, chartName, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -37719,6 +37826,20 @@ export class HelmRepositoriesApi extends BaseAPI {
      */
     public editHelmRepository(organizationId: string, helmRepositoryId: string, helmRepositoryRequest?: HelmRepositoryRequest, options?: AxiosRequestConfig) {
         return HelmRepositoriesApiFp(this.configuration).editHelmRepository(organizationId, helmRepositoryId, helmRepositoryRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List helm charts contained inside the repository
+     * @param {string} organizationId Organization ID
+     * @param {string} helmRepositoryId Helm chart repository ID
+     * @param {string} [chartName] Helm chart name to filter the result on
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmRepositoriesApi
+     */
+    public getHelmCharts(organizationId: string, helmRepositoryId: string, chartName?: string, options?: AxiosRequestConfig) {
+        return HelmRepositoriesApiFp(this.configuration).getHelmCharts(organizationId, helmRepositoryId, chartName, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
