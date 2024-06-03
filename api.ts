@@ -4218,6 +4218,38 @@ export interface ContainerSource {
 /**
  * 
  * @export
+ * @interface ContainerVersionResponse
+ */
+export interface ContainerVersionResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerVersionResponse
+     */
+    'image_name'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ContainerVersionResponse
+     */
+    'versions'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface ContainerVersionResponseList
+ */
+export interface ContainerVersionResponseList {
+    /**
+     * 
+     * @type {Array<ContainerVersionResponse>}
+     * @memberof ContainerVersionResponseList
+     */
+    'results'?: Array<ContainerVersionResponse>;
+}
+/**
+ * 
+ * @export
  * @interface Cost
  */
 export interface Cost {
@@ -26782,6 +26814,58 @@ export const ContainerRegistriesApiAxiosParamCreator = function (configuration?:
             };
         },
         /**
+         * 
+         * @summary List image version for a container registry
+         * @param {string} organizationId Organization ID
+         * @param {string} containerRegistryId Container Registry ID
+         * @param {string} imageName container image name
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getContainerVersions: async (organizationId: string, containerRegistryId: string, imageName: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getContainerVersions', 'organizationId', organizationId)
+            // verify required parameter 'containerRegistryId' is not null or undefined
+            assertParamExists('getContainerVersions', 'containerRegistryId', containerRegistryId)
+            // verify required parameter 'imageName' is not null or undefined
+            assertParamExists('getContainerVersions', 'imageName', imageName)
+            const localVarPath = `/organization/{organizationId}/containerRegistry/{containerRegistryId}/images`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"containerRegistryId"}}`, encodeURIComponent(String(containerRegistryId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (imageName !== undefined) {
+                localVarQueryParameter['imageName'] = imageName;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * List supported container registries by Qovery and get the mandatory authentification configuration.
          * @summary List supported container registries
          * @param {*} [options] Override http request option.
@@ -26919,6 +27003,19 @@ export const ContainerRegistriesApiFp = function(configuration?: Configuration) 
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @summary List image version for a container registry
+         * @param {string} organizationId Organization ID
+         * @param {string} containerRegistryId Container Registry ID
+         * @param {string} imageName container image name
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getContainerVersions(organizationId: string, containerRegistryId: string, imageName: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerVersionResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getContainerVersions(organizationId, containerRegistryId, imageName, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * List supported container registries by Qovery and get the mandatory authentification configuration.
          * @summary List supported container registries
          * @param {*} [options] Override http request option.
@@ -26993,6 +27090,18 @@ export const ContainerRegistriesApiFactory = function (configuration?: Configura
          */
         getContainerRegistry(organizationId: string, containerRegistryId: string, options?: any): AxiosPromise<ContainerRegistryResponse> {
             return localVarFp.getContainerRegistry(organizationId, containerRegistryId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List image version for a container registry
+         * @param {string} organizationId Organization ID
+         * @param {string} containerRegistryId Container Registry ID
+         * @param {string} imageName container image name
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getContainerVersions(organizationId: string, containerRegistryId: string, imageName: string, options?: any): AxiosPromise<ContainerVersionResponseList> {
+            return localVarFp.getContainerVersions(organizationId, containerRegistryId, imageName, options).then((request) => request(axios, basePath));
         },
         /**
          * List supported container registries by Qovery and get the mandatory authentification configuration.
@@ -27074,6 +27183,20 @@ export class ContainerRegistriesApi extends BaseAPI {
      */
     public getContainerRegistry(organizationId: string, containerRegistryId: string, options?: AxiosRequestConfig) {
         return ContainerRegistriesApiFp(this.configuration).getContainerRegistry(organizationId, containerRegistryId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List image version for a container registry
+     * @param {string} organizationId Organization ID
+     * @param {string} containerRegistryId Container Registry ID
+     * @param {string} imageName container image name
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContainerRegistriesApi
+     */
+    public getContainerVersions(organizationId: string, containerRegistryId: string, imageName: string, options?: AxiosRequestConfig) {
+        return ContainerRegistriesApiFp(this.configuration).getContainerVersions(organizationId, containerRegistryId, imageName, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
