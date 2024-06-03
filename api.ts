@@ -1424,19 +1424,6 @@ export interface BaseJobResponseAllOfSourceOneOf1Docker {
 /**
  * 
  * @export
- * @interface BillingEnd
- */
-export interface BillingEnd {
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingEnd
-     */
-    'billing_ended_on'?: string;
-}
-/**
- * 
- * @export
  * @interface BillingExternalId
  */
 export interface BillingExternalId {
@@ -1584,38 +1571,6 @@ export interface BillingInfoRequest {
 /**
  * 
  * @export
- * @interface BillingPeriod
- */
-export interface BillingPeriod {
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingPeriod
-     */
-    'billing_started_on'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingPeriod
-     */
-    'billing_ended_on'?: string;
-}
-/**
- * 
- * @export
- * @interface BillingStart
- */
-export interface BillingStart {
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingStart
-     */
-    'billing_started_on'?: string;
-}
-/**
- * 
- * @export
  * @interface BillingStatus
  */
 export interface BillingStatus {
@@ -1654,31 +1609,6 @@ export interface Budget {
      * 
      * @type {string}
      * @memberof Budget
-     */
-    'currency_code'?: string;
-}
-/**
- * 
- * @export
- * @interface BudgetThreshold
- */
-export interface BudgetThreshold {
-    /**
-     * 
-     * @type {number}
-     * @memberof BudgetThreshold
-     */
-    'total_in_cents'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof BudgetThreshold
-     */
-    'total'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof BudgetThreshold
      */
     'currency_code'?: string;
 }
@@ -3333,31 +3263,6 @@ export interface Commit {
 /**
  * 
  * @export
- * @interface CommitPaginatedResponseList
- */
-export interface CommitPaginatedResponseList {
-    /**
-     * 
-     * @type {number}
-     * @memberof CommitPaginatedResponseList
-     */
-    'page': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof CommitPaginatedResponseList
-     */
-    'page_size': number;
-    /**
-     * 
-     * @type {Array<Commit>}
-     * @memberof CommitPaginatedResponseList
-     */
-    'results'?: Array<Commit>;
-}
-/**
- * 
- * @export
  * @interface CommitResponseList
  */
 export interface CommitResponseList {
@@ -3367,19 +3272,6 @@ export interface CommitResponseList {
      * @memberof CommitResponseList
      */
     'results'?: Array<Commit>;
-}
-/**
- * 
- * @export
- * @interface CommunityUsage
- */
-export interface CommunityUsage {
-    /**
-     * 
-     * @type {Array<ProjectCurrentCost>}
-     * @memberof CommunityUsage
-     */
-    'projects'?: Array<ProjectCurrentCost>;
 }
 /**
  * 
@@ -5841,19 +5733,6 @@ export interface DeploymentHistoryPaginatedResponseList {
 /**
  * 
  * @export
- * @interface DeploymentHistoryResponseList
- */
-export interface DeploymentHistoryResponseList {
-    /**
-     * 
-     * @type {Array<DeploymentHistory>}
-     * @memberof DeploymentHistoryResponseList
-     */
-    'results'?: Array<DeploymentHistory>;
-}
-/**
- * 
- * @export
  * @enum {string}
  */
 
@@ -5890,69 +5769,6 @@ export const DeploymentRestrictionTypeEnum = {
 } as const;
 
 export type DeploymentRestrictionTypeEnum = typeof DeploymentRestrictionTypeEnum[keyof typeof DeploymentRestrictionTypeEnum];
-
-
-/**
- * 
- * @export
- * @interface DeploymentRuleRequest
- */
-export interface DeploymentRuleRequest {
-    /**
-     * name is case insensitive
-     * @type {string}
-     * @memberof DeploymentRuleRequest
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentRuleRequest
-     */
-    'description'?: string;
-    /**
-     * 
-     * @type {EnvironmentModeEnum}
-     * @memberof DeploymentRuleRequest
-     */
-    'mode': EnvironmentModeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentRuleRequest
-     */
-    'cluster': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DeploymentRuleRequest
-     */
-    'auto_stop': boolean;
-    /**
-     * specify value only if auto_stop = false
-     * @type {string}
-     * @memberof DeploymentRuleRequest
-     */
-    'timezone'?: string;
-    /**
-     * specify value only if auto_stop = false
-     * @type {string}
-     * @memberof DeploymentRuleRequest
-     */
-    'start_time'?: string | null;
-    /**
-     * specify value only if auto_stop = false
-     * @type {string}
-     * @memberof DeploymentRuleRequest
-     */
-    'stop_time'?: string | null;
-    /**
-     * specify value only if auto_stop = false
-     * @type {Array<WeekdayEnum>}
-     * @memberof DeploymentRuleRequest
-     */
-    'weekdays'?: Array<WeekdayEnum> | null;
-}
 
 
 /**
@@ -6121,37 +5937,6 @@ export interface DeploymentStageWithServicesStatuses {
      * @memberof DeploymentStageWithServicesStatuses
      */
     'stage'?: Stage;
-}
-/**
- * 
- * @export
- * @interface DoCredentialsRequest
- */
-export interface DoCredentialsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof DoCredentialsRequest
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DoCredentialsRequest
-     */
-    'token'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DoCredentialsRequest
-     */
-    'spaces_access_id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DoCredentialsRequest
-     */
-    'spaces_secret_key'?: string;
 }
 /**
  * 
@@ -6505,31 +6290,6 @@ export interface EnvironmentLog {
 }
 
 
-/**
- * 
- * @export
- * @interface EnvironmentLogPaginatedResponseList
- */
-export interface EnvironmentLogPaginatedResponseList {
-    /**
-     * 
-     * @type {number}
-     * @memberof EnvironmentLogPaginatedResponseList
-     */
-    'page': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof EnvironmentLogPaginatedResponseList
-     */
-    'page_size': number;
-    /**
-     * 
-     * @type {Array<EnvironmentLog>}
-     * @memberof EnvironmentLogPaginatedResponseList
-     */
-    'results'?: Array<EnvironmentLog>;
-}
 /**
  * 
  * @export
@@ -10021,31 +9781,6 @@ export interface Log {
 /**
  * 
  * @export
- * @interface LogPaginatedResponseList
- */
-export interface LogPaginatedResponseList {
-    /**
-     * 
-     * @type {number}
-     * @memberof LogPaginatedResponseList
-     */
-    'page': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof LogPaginatedResponseList
-     */
-    'page_size': number;
-    /**
-     * 
-     * @type {Array<Log>}
-     * @memberof LogPaginatedResponseList
-     */
-    'results'?: Array<Log>;
-}
-/**
- * 
- * @export
  * @interface LogResponseList
  */
 export interface LogResponseList {
@@ -10214,19 +9949,6 @@ export interface MemberRoleUpdateRequest {
      * @memberof MemberRoleUpdateRequest
      */
     'role_id': string;
-}
-/**
- * 
- * @export
- * @interface Name
- */
-export interface Name {
-    /**
-     * 
-     * @type {string}
-     * @memberof Name
-     */
-    'name': string;
 }
 /**
  * 
@@ -12641,31 +12363,6 @@ export type RegistryMirroringModeEnum = typeof RegistryMirroringModeEnum[keyof t
 /**
  * 
  * @export
- * @interface RemainingCredits
- */
-export interface RemainingCredits {
-    /**
-     * 
-     * @type {number}
-     * @memberof RemainingCredits
-     */
-    'total_in_cents': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RemainingCredits
-     */
-    'total': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof RemainingCredits
-     */
-    'currency_code': string;
-}
-/**
- * 
- * @export
  * @interface RewardClaim
  */
 export interface RewardClaim {
@@ -13173,19 +12870,6 @@ export interface ServicePortRequestPortsInner {
 }
 
 
-/**
- * 
- * @export
- * @interface ServiceResponseList
- */
-export interface ServiceResponseList {
-    /**
-     * 
-     * @type {Array<Service>}
-     * @memberof ServiceResponseList
-     */
-    'results'?: Array<Service>;
-}
 /**
  * 
  * @export
@@ -13836,19 +13520,6 @@ export const TypeOfUseEnum = {
 export type TypeOfUseEnum = typeof TypeOfUseEnum[keyof typeof TypeOfUseEnum];
 
 
-/**
- * 
- * @export
- * @interface UnexpectedError
- */
-export interface UnexpectedError {
-    /**
-     * 
-     * @type {string}
-     * @memberof UnexpectedError
-     */
-    'message': string;
-}
 /**
  * 
  * @export
