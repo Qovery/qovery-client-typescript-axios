@@ -9251,17 +9251,17 @@ export interface JobRequestAllOfSource {
  */
 export interface JobRequestAllOfSourceDocker {
     /**
-     * The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
-     * @type {string}
-     * @memberof JobRequestAllOfSourceDocker
-     */
-    'dockerfile_path'?: string | null;
-    /**
      * 
      * @type {ApplicationGitRepositoryRequest}
      * @memberof JobRequestAllOfSourceDocker
      */
     'git_repository'?: ApplicationGitRepositoryRequest;
+    /**
+     * The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+     * @type {string}
+     * @memberof JobRequestAllOfSourceDocker
+     */
+    'dockerfile_path'?: string | null;
     /**
      * The content of your dockerfile if it is not stored inside your git repository
      * @type {string}
@@ -9329,6 +9329,31 @@ export const JobScheduleEvent = {
 export type JobScheduleEvent = typeof JobScheduleEvent[keyof typeof JobScheduleEvent];
 
 
+/**
+ * 
+ * @export
+ * @interface JobSourceDockerResponse
+ */
+export interface JobSourceDockerResponse {
+    /**
+     * 
+     * @type {ApplicationGitRepository}
+     * @memberof JobSourceDockerResponse
+     */
+    'git_repository'?: ApplicationGitRepository;
+    /**
+     * The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
+     * @type {string}
+     * @memberof JobSourceDockerResponse
+     */
+    'dockerfile_path'?: string | null;
+    /**
+     * The content of your dockerfile if it is not stored inside your git repository
+     * @type {string}
+     * @memberof JobSourceDockerResponse
+     */
+    'dockerfile_raw'?: string | null;
+}
 /**
  * 
  * @export
