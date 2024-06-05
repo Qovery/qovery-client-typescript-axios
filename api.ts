@@ -1353,10 +1353,10 @@ export interface BaseJobResponse {
     'port'?: number | null;
     /**
      * 
-     * @type {BaseJobResponseAllOfSource}
+     * @type {}
      * @memberof BaseJobResponse
      */
-    'source': BaseJobResponseAllOfSource;
+    'source':  | null;
     /**
      * 
      * @type {Healthcheck}
@@ -1369,57 +1369,6 @@ export interface BaseJobResponse {
      * @memberof BaseJobResponse
      */
     'auto_deploy'?: boolean;
-}
-/**
- * @type BaseJobResponseAllOfSource
- * @export
- */
-export type BaseJobResponseAllOfSource = BaseJobResponseAllOfSourceOneOf | BaseJobResponseAllOfSourceOneOf1;
-
-/**
- * 
- * @export
- * @interface BaseJobResponseAllOfSourceOneOf
- */
-export interface BaseJobResponseAllOfSourceOneOf {
-    /**
-     * 
-     * @type {ContainerSource}
-     * @memberof BaseJobResponseAllOfSourceOneOf
-     */
-    'image'?: ContainerSource;
-}
-/**
- * 
- * @export
- * @interface BaseJobResponseAllOfSourceOneOf1
- */
-export interface BaseJobResponseAllOfSourceOneOf1 {
-    /**
-     * 
-     * @type {BaseJobResponseAllOfSourceOneOf1Docker}
-     * @memberof BaseJobResponseAllOfSourceOneOf1
-     */
-    'docker'?: BaseJobResponseAllOfSourceOneOf1Docker;
-}
-/**
- * 
- * @export
- * @interface BaseJobResponseAllOfSourceOneOf1Docker
- */
-export interface BaseJobResponseAllOfSourceOneOf1Docker {
-    /**
-     * The path of the associated Dockerfile. Only if you are using build_mode = DOCKER
-     * @type {string}
-     * @memberof BaseJobResponseAllOfSourceOneOf1Docker
-     */
-    'dockerfile_path'?: string | null;
-    /**
-     * 
-     * @type {ApplicationGitRepository}
-     * @memberof BaseJobResponseAllOfSourceOneOf1Docker
-     */
-    'git_repository'?: ApplicationGitRepository;
 }
 /**
  * 
@@ -4503,10 +4452,10 @@ export interface CronJobResponse {
     'port'?: number | null;
     /**
      * 
-     * @type {BaseJobResponseAllOfSource}
+     * @type {}
      * @memberof CronJobResponse
      */
-    'source': BaseJobResponseAllOfSource;
+    'source':  | null;
     /**
      * 
      * @type {Healthcheck}
@@ -9313,6 +9262,12 @@ export interface JobRequestAllOfSourceDocker {
      * @memberof JobRequestAllOfSourceDocker
      */
     'git_repository'?: ApplicationGitRepositoryRequest;
+    /**
+     * The content of your dockerfile if it is not stored inside your git repository
+     * @type {string}
+     * @memberof JobRequestAllOfSourceDocker
+     */
+    'dockerfile_raw'?: string | null;
 }
 /**
  * 
@@ -9538,10 +9493,10 @@ export interface LifecycleJobResponse {
     'port'?: number | null;
     /**
      * 
-     * @type {BaseJobResponseAllOfSource}
+     * @type {}
      * @memberof LifecycleJobResponse
      */
-    'source': BaseJobResponseAllOfSource;
+    'source':  | null;
     /**
      * 
      * @type {Healthcheck}
