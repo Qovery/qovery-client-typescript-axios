@@ -31911,7 +31911,7 @@ export const EnvironmentActionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deployAllServices(environmentId: string, deployAllRequest?: DeployAllRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+        async deployAllServices(environmentId: string, deployAllRequest?: DeployAllRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deployAllServices(environmentId, deployAllRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -32022,7 +32022,7 @@ export const EnvironmentActionsApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployAllServices(environmentId: string, deployAllRequest?: DeployAllRequest, options?: any): AxiosPromise<Status> {
+        deployAllServices(environmentId: string, deployAllRequest?: DeployAllRequest, options?: any): AxiosPromise<EnvironmentStatus> {
             return localVarFp.deployAllServices(environmentId, deployAllRequest, options).then((request) => request(axios, basePath));
         },
         /**
