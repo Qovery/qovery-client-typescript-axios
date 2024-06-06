@@ -2376,6 +2376,54 @@ export interface ClusterFeatureGcpExistingVpcResponse {
 /**
  * 
  * @export
+ * @interface ClusterFeatureKarpenterParameters
+ */
+export interface ClusterFeatureKarpenterParameters {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterFeatureKarpenterParameters
+     */
+    'spot_enabled': boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterFeatureKarpenterParameters
+     */
+    'disk_size_in_gib': number;
+    /**
+     * 
+     * @type {CpuArchitectureEnum}
+     * @memberof ClusterFeatureKarpenterParameters
+     */
+    'default_service_architecture': CpuArchitectureEnum;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ClusterFeatureKarpenterParametersResponse
+ */
+export interface ClusterFeatureKarpenterParametersResponse {
+    /**
+     * 
+     * @type {ClusterFeatureResponseTypeEnum}
+     * @memberof ClusterFeatureKarpenterParametersResponse
+     */
+    'type': ClusterFeatureResponseTypeEnum;
+    /**
+     * 
+     * @type {ClusterFeatureKarpenterParameters}
+     * @memberof ClusterFeatureKarpenterParametersResponse
+     */
+    'value': ClusterFeatureKarpenterParameters;
+}
+
+
+/**
+ * 
+ * @export
  * @interface ClusterFeatureResponse
  */
 export interface ClusterFeatureResponse {
@@ -2503,7 +2551,8 @@ export const ClusterFeatureResponseTypeEnum = {
     STRING: 'STRING',
     BOOLEAN: 'BOOLEAN',
     AWS_USER_PROVIDED_NETWORK: 'AWS_USER_PROVIDED_NETWORK',
-    GCP_USER_PROVIDED_NETWORK: 'GCP_USER_PROVIDED_NETWORK'
+    GCP_USER_PROVIDED_NETWORK: 'GCP_USER_PROVIDED_NETWORK',
+    KARPENTER: 'KARPENTER'
 } as const;
 
 export type ClusterFeatureResponseTypeEnum = typeof ClusterFeatureResponseTypeEnum[keyof typeof ClusterFeatureResponseTypeEnum];
@@ -2513,7 +2562,7 @@ export type ClusterFeatureResponseTypeEnum = typeof ClusterFeatureResponseTypeEn
  * @type ClusterFeatureResponseValueObject
  * @export
  */
-export type ClusterFeatureResponseValueObject = { type: 'AWS_USER_PROVIDED_NETWORK' } & ClusterFeatureAwsExistingVpcResponse | { type: 'BOOLEAN' } & ClusterFeatureBooleanResponse | { type: 'GCP_USER_PROVIDED_NETWORK' } & ClusterFeatureGcpExistingVpcResponse | { type: 'STRING' } & ClusterFeatureStringResponse;
+export type ClusterFeatureResponseValueObject = { type: 'AWS_USER_PROVIDED_NETWORK' } & ClusterFeatureAwsExistingVpcResponse | { type: 'BOOLEAN' } & ClusterFeatureBooleanResponse | { type: 'GCP_USER_PROVIDED_NETWORK' } & ClusterFeatureGcpExistingVpcResponse | { type: 'KARPENTER' } & ClusterFeatureKarpenterParametersResponse | { type: 'STRING' } & ClusterFeatureStringResponse;
 
 /**
  * 
@@ -2986,7 +3035,7 @@ export interface ClusterRequestFeaturesInner {
  * @type ClusterRequestFeaturesInnerValue
  * @export
  */
-export type ClusterRequestFeaturesInnerValue = ClusterFeatureAwsExistingVpc | ClusterFeatureGcpExistingVpc | boolean | string;
+export type ClusterRequestFeaturesInnerValue = ClusterFeatureAwsExistingVpc | ClusterFeatureGcpExistingVpc | ClusterFeatureKarpenterParameters | boolean | string;
 
 /**
  * 
@@ -4175,6 +4224,20 @@ export interface CostRange {
      */
     'currency_code': string;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const CpuArchitectureEnum = {
+    AMD64: 'AMD64',
+    ARM64: 'ARM64'
+} as const;
+
+export type CpuArchitectureEnum = typeof CpuArchitectureEnum[keyof typeof CpuArchitectureEnum];
+
+
 /**
  * 
  * @export
