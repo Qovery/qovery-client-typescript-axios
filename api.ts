@@ -10046,6 +10046,33 @@ export interface Organization {
      * @memberof Organization
      */
     'owner'?: string;
+    /**
+     * 
+     * @type {OrganizationAllOfOrganizationPlan}
+     * @memberof Organization
+     */
+    'organization_plan'?: OrganizationAllOfOrganizationPlan;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface OrganizationAllOfOrganizationPlan
+ */
+export interface OrganizationAllOfOrganizationPlan {
+    /**
+     * 
+     * @type {PlanEnum}
+     * @memberof OrganizationAllOfOrganizationPlan
+     */
+    'plan'?: PlanEnum;
+    /**
+     * audit logs maximum period available in days
+     * @type {number}
+     * @memberof OrganizationAllOfOrganizationPlan
+     */
+    'audit_logs_retention_in_days'?: number;
 }
 
 
