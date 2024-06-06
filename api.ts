@@ -8311,10 +8311,10 @@ export interface HelmResponse {
     'ports'?: Array<HelmResponseAllOfPorts>;
     /**
      * 
-     * @type {HelmResponseAllOfSource}
+     * @type {}
      * @memberof HelmResponse
      */
-    'source': HelmResponseAllOfSource;
+    'source':  | null;
     /**
      * The extra arguments to pass to helm
      * @type {Array<string>}
@@ -8391,101 +8391,6 @@ export interface HelmResponseAllOfPorts {
 }
 
 
-/**
- * @type HelmResponseAllOfSource
- * @export
- */
-export type HelmResponseAllOfSource = HelmResponseAllOfSourceOneOf | HelmResponseAllOfSourceOneOf1;
-
-/**
- * 
- * @export
- * @interface HelmResponseAllOfSourceOneOf
- */
-export interface HelmResponseAllOfSourceOneOf {
-    /**
-     * 
-     * @type {HelmResponseAllOfSourceOneOfGit}
-     * @memberof HelmResponseAllOfSourceOneOf
-     */
-    'git'?: HelmResponseAllOfSourceOneOfGit;
-}
-/**
- * 
- * @export
- * @interface HelmResponseAllOfSourceOneOf1
- */
-export interface HelmResponseAllOfSourceOneOf1 {
-    /**
-     * 
-     * @type {HelmResponseAllOfSourceOneOf1Repository}
-     * @memberof HelmResponseAllOfSourceOneOf1
-     */
-    'repository'?: HelmResponseAllOfSourceOneOf1Repository;
-}
-/**
- * 
- * @export
- * @interface HelmResponseAllOfSourceOneOf1Repository
- */
-export interface HelmResponseAllOfSourceOneOf1Repository {
-    /**
-     * The name of the chart in the repository
-     * @type {string}
-     * @memberof HelmResponseAllOfSourceOneOf1Repository
-     */
-    'chart_name': string;
-    /**
-     * The version of the chart to use
-     * @type {string}
-     * @memberof HelmResponseAllOfSourceOneOf1Repository
-     */
-    'chart_version': string;
-    /**
-     * 
-     * @type {HelmResponseAllOfSourceOneOf1RepositoryRepository}
-     * @memberof HelmResponseAllOfSourceOneOf1Repository
-     */
-    'repository': HelmResponseAllOfSourceOneOf1RepositoryRepository;
-}
-/**
- * 
- * @export
- * @interface HelmResponseAllOfSourceOneOf1RepositoryRepository
- */
-export interface HelmResponseAllOfSourceOneOf1RepositoryRepository {
-    /**
-     * The id of the helm repository
-     * @type {string}
-     * @memberof HelmResponseAllOfSourceOneOf1RepositoryRepository
-     */
-    'id': string;
-    /**
-     * The name of the helm repository
-     * @type {string}
-     * @memberof HelmResponseAllOfSourceOneOf1RepositoryRepository
-     */
-    'name': string;
-    /**
-     * The url the helm repository
-     * @type {string}
-     * @memberof HelmResponseAllOfSourceOneOf1RepositoryRepository
-     */
-    'url': string;
-}
-/**
- * 
- * @export
- * @interface HelmResponseAllOfSourceOneOfGit
- */
-export interface HelmResponseAllOfSourceOneOfGit {
-    /**
-     * 
-     * @type {ApplicationGitRepository}
-     * @memberof HelmResponseAllOfSourceOneOfGit
-     */
-    'git_repository'?: ApplicationGitRepository;
-}
 /**
  * Specify helm values you want to set or override 
  * @export
@@ -8599,6 +8504,69 @@ export interface HelmResponseList {
      * @memberof HelmResponseList
      */
     'results'?: Array<HelmResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface HelmSourceGitResponse
+ */
+export interface HelmSourceGitResponse {
+    /**
+     * 
+     * @type {ApplicationGitRepository}
+     * @memberof HelmSourceGitResponse
+     */
+    'git_repository': ApplicationGitRepository;
+}
+/**
+ * 
+ * @export
+ * @interface HelmSourceRepositoryResponse
+ */
+export interface HelmSourceRepositoryResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmSourceRepositoryResponse
+     */
+    'chart_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmSourceRepositoryResponse
+     */
+    'chart_version': string;
+    /**
+     * 
+     * @type {HelmSourceRepositoryResponseRepository}
+     * @memberof HelmSourceRepositoryResponse
+     */
+    'repository': HelmSourceRepositoryResponseRepository;
+}
+/**
+ * 
+ * @export
+ * @interface HelmSourceRepositoryResponseRepository
+ */
+export interface HelmSourceRepositoryResponseRepository {
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmSourceRepositoryResponseRepository
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmSourceRepositoryResponseRepository
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmSourceRepositoryResponseRepository
+     */
+    'url': string;
 }
 /**
  * 
