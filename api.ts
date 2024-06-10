@@ -349,6 +349,18 @@ export interface ApplicationAdvancedSettings {
      */
     'deployment.antiaffinity.pod'?: ApplicationAdvancedSettingsDeploymentAntiaffinityPodEnum;
     /**
+     * Allows you to run a command after the application is started. The command should be a shell command or script.
+     * @type {Array<string>}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'deployment.lifecycle.post_start_exec_command'?: Array<string>;
+    /**
+     * Allows you to run a command before the application is stopped. The command should be a shell command or script. Qovery requires the sh shell by default and sets a sleep of 15 seconds to let Nginx update its config. Avoiding error codes returned during a rolling update.
+     * @type {Array<string>}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'deployment.lifecycle.pre_stop_exec_command'?: Array<string>;
+    /**
      * * `RollingUpdate` gracefully rollout new versions, and automatically rollback if the new version fails to start * `Recreate` stop all current versions and create new ones once all old ones have been shutdown 
      * @type {string}
      * @memberof ApplicationAdvancedSettings
