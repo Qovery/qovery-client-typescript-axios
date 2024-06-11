@@ -3821,7 +3821,7 @@ export interface ContainerRegistryResponse {
  */
 export interface ContainerRegistryResponseAllOfCluster {
     /**
-     * Id of the cluster of which the registry belongs to
+     * 
      * @type {string}
      * @memberof ContainerRegistryResponseAllOfCluster
      */
@@ -3831,19 +3831,7 @@ export interface ContainerRegistryResponseAllOfCluster {
      * @type {string}
      * @memberof ContainerRegistryResponseAllOfCluster
      */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContainerRegistryResponseAllOfCluster
-     */
-    'updated_at'?: string;
-    /**
-     * Name of the cluster of which the registry belongs to
-     * @type {string}
-     * @memberof ContainerRegistryResponseAllOfCluster
-     */
-    'name'?: string;
+    'name': string;
 }
 /**
  * 
