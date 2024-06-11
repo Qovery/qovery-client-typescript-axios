@@ -1365,10 +1365,10 @@ export interface BaseJobResponse {
     'port'?: number | null;
     /**
      * 
-     * @type {}
+     * @type {BaseJobResponseAllOfSource}
      * @memberof BaseJobResponse
      */
-    'source':  | null;
+    'source': BaseJobResponseAllOfSource;
     /**
      * 
      * @type {Healthcheck}
@@ -1381,6 +1381,38 @@ export interface BaseJobResponse {
      * @memberof BaseJobResponse
      */
     'auto_deploy'?: boolean;
+}
+/**
+ * @type BaseJobResponseAllOfSource
+ * @export
+ */
+export type BaseJobResponseAllOfSource = BaseJobResponseAllOfSourceOneOf | BaseJobResponseAllOfSourceOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface BaseJobResponseAllOfSourceOneOf
+ */
+export interface BaseJobResponseAllOfSourceOneOf {
+    /**
+     * 
+     * @type {ContainerSource}
+     * @memberof BaseJobResponseAllOfSourceOneOf
+     */
+    'image': ContainerSource;
+}
+/**
+ * 
+ * @export
+ * @interface BaseJobResponseAllOfSourceOneOf1
+ */
+export interface BaseJobResponseAllOfSourceOneOf1 {
+    /**
+     * 
+     * @type {JobSourceDockerResponse}
+     * @memberof BaseJobResponseAllOfSourceOneOf1
+     */
+    'docker': JobSourceDockerResponse;
 }
 /**
  * 
@@ -4527,10 +4559,10 @@ export interface CronJobResponse {
     'port'?: number | null;
     /**
      * 
-     * @type {}
+     * @type {BaseJobResponseAllOfSource}
      * @memberof CronJobResponse
      */
-    'source':  | null;
+    'source': BaseJobResponseAllOfSource;
     /**
      * 
      * @type {Healthcheck}
@@ -8392,10 +8424,10 @@ export interface HelmResponse {
     'ports'?: Array<HelmResponseAllOfPorts>;
     /**
      * 
-     * @type {}
+     * @type {HelmResponseAllOfSource}
      * @memberof HelmResponse
      */
-    'source':  | null;
+    'source': HelmResponseAllOfSource;
     /**
      * The extra arguments to pass to helm
      * @type {Array<string>}
@@ -8472,6 +8504,38 @@ export interface HelmResponseAllOfPorts {
 }
 
 
+/**
+ * @type HelmResponseAllOfSource
+ * @export
+ */
+export type HelmResponseAllOfSource = HelmResponseAllOfSourceOneOf | HelmResponseAllOfSourceOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface HelmResponseAllOfSourceOneOf
+ */
+export interface HelmResponseAllOfSourceOneOf {
+    /**
+     * 
+     * @type {HelmSourceGitResponse}
+     * @memberof HelmResponseAllOfSourceOneOf
+     */
+    'git'?: HelmSourceGitResponse;
+}
+/**
+ * 
+ * @export
+ * @interface HelmResponseAllOfSourceOneOf1
+ */
+export interface HelmResponseAllOfSourceOneOf1 {
+    /**
+     * 
+     * @type {HelmSourceRepositoryResponse}
+     * @memberof HelmResponseAllOfSourceOneOf1
+     */
+    'repository'?: HelmSourceRepositoryResponse;
+}
 /**
  * Specify helm values you want to set or override 
  * @export
@@ -9573,10 +9637,10 @@ export interface LifecycleJobResponse {
     'port'?: number | null;
     /**
      * 
-     * @type {}
+     * @type {BaseJobResponseAllOfSource}
      * @memberof LifecycleJobResponse
      */
-    'source':  | null;
+    'source': BaseJobResponseAllOfSource;
     /**
      * 
      * @type {Healthcheck}
