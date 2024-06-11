@@ -8509,7 +8509,7 @@ export interface HelmResponseAllOfSourceOneOf {
      * @type {HelmSourceGitResponse}
      * @memberof HelmResponseAllOfSourceOneOf
      */
-    'git'?: HelmSourceGitResponse;
+    'git': HelmSourceGitResponse;
 }
 /**
  * 
@@ -8522,7 +8522,7 @@ export interface HelmResponseAllOfSourceOneOf1 {
      * @type {HelmSourceRepositoryResponse}
      * @memberof HelmResponseAllOfSourceOneOf1
      */
-    'repository'?: HelmSourceRepositoryResponse;
+    'repository': HelmSourceRepositoryResponse;
 }
 /**
  * Specify helm values you want to set or override 
