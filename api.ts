@@ -4561,6 +4561,12 @@ export interface CronJobResponse {
      * @memberof CronJobResponse
      */
     'annotations_groups'?: Array<OrganizationAnnotationsGroupResponse>;
+    /**
+     * 
+     * @type {Array<OrganizationLabelsGroupResponse>}
+     * @memberof CronJobResponse
+     */
+    'labels_groups'?: Array<OrganizationLabelsGroupResponse>;
 }
 
 export const CronJobResponseJobTypeEnum = {
@@ -9186,6 +9192,12 @@ export interface JobRequest {
      * @memberof JobRequest
      */
     'annotations_groups'?: Array<ServiceAnnotationRequest>;
+    /**
+     * 
+     * @type {Array<ServiceLabelRequest>}
+     * @memberof JobRequest
+     */
+    'labels_groups'?: Array<ServiceLabelRequest>;
 }
 /**
  * If you want to define a Cron job, only the `cronjob` property must be filled   A Lifecycle job should contain at least one property `on_XXX` among the 3 properties: `on_start`, `on_stop`, `on_delete` 
@@ -9595,6 +9607,12 @@ export interface LifecycleJobResponse {
      * @memberof LifecycleJobResponse
      */
     'annotations_groups'?: Array<OrganizationAnnotationsGroupResponse>;
+    /**
+     * 
+     * @type {Array<OrganizationLabelsGroupResponse>}
+     * @memberof LifecycleJobResponse
+     */
+    'labels_groups'?: Array<OrganizationLabelsGroupResponse>;
 }
 
 export const LifecycleJobResponseJobTypeEnum = {
