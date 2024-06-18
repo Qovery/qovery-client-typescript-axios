@@ -1645,6 +1645,19 @@ export type BuildPackLanguageEnum = typeof BuildPackLanguageEnum[keyof typeof Bu
 /**
  * 
  * @export
+ * @interface CancelEnvironmentDeploymentRequest
+ */
+export interface CancelEnvironmentDeploymentRequest {
+    /**
+     * Force cancel everything running in this environment if set to true (e.q lifecycle jobs triggered during the deployment).
+     * @type {boolean}
+     * @memberof CancelEnvironmentDeploymentRequest
+     */
+    'force_cancel'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface CloneEnvironmentRequest
  */
 export interface CloneEnvironmentRequest {
@@ -31555,10 +31568,11 @@ export const EnvironmentActionsApiAxiosParamCreator = function (configuration?: 
          * Cancel the current deployment of your environment.
          * @summary Cancel environment deployment
          * @param {string} environmentId Environment ID
+         * @param {CancelEnvironmentDeploymentRequest} [cancelEnvironmentDeploymentRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelEnvironmentDeployment: async (environmentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cancelEnvironmentDeployment: async (environmentId: string, cancelEnvironmentDeploymentRequest?: CancelEnvironmentDeploymentRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'environmentId' is not null or undefined
             assertParamExists('cancelEnvironmentDeployment', 'environmentId', environmentId)
             const localVarPath = `/environment/{environmentId}/cancelDeployment`
@@ -31583,9 +31597,12 @@ export const EnvironmentActionsApiAxiosParamCreator = function (configuration?: 
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cancelEnvironmentDeploymentRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -31954,11 +31971,12 @@ export const EnvironmentActionsApiFp = function(configuration?: Configuration) {
          * Cancel the current deployment of your environment.
          * @summary Cancel environment deployment
          * @param {string} environmentId Environment ID
+         * @param {CancelEnvironmentDeploymentRequest} [cancelEnvironmentDeploymentRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cancelEnvironmentDeployment(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentStatus>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cancelEnvironmentDeployment(environmentId, options);
+        async cancelEnvironmentDeployment(environmentId: string, cancelEnvironmentDeploymentRequest?: CancelEnvironmentDeploymentRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentStatus>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cancelEnvironmentDeployment(environmentId, cancelEnvironmentDeploymentRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -32068,11 +32086,12 @@ export const EnvironmentActionsApiFactory = function (configuration?: Configurat
          * Cancel the current deployment of your environment.
          * @summary Cancel environment deployment
          * @param {string} environmentId Environment ID
+         * @param {CancelEnvironmentDeploymentRequest} [cancelEnvironmentDeploymentRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelEnvironmentDeployment(environmentId: string, options?: any): AxiosPromise<EnvironmentStatus> {
-            return localVarFp.cancelEnvironmentDeployment(environmentId, options).then((request) => request(axios, basePath));
+        cancelEnvironmentDeployment(environmentId: string, cancelEnvironmentDeploymentRequest?: CancelEnvironmentDeploymentRequest, options?: any): AxiosPromise<EnvironmentStatus> {
+            return localVarFp.cancelEnvironmentDeployment(environmentId, cancelEnvironmentDeploymentRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * You must provide a name. This will create a new environment, with the same configuration, and same applications and databases. Database data is not cloned.
@@ -32173,12 +32192,13 @@ export class EnvironmentActionsApi extends BaseAPI {
      * Cancel the current deployment of your environment.
      * @summary Cancel environment deployment
      * @param {string} environmentId Environment ID
+     * @param {CancelEnvironmentDeploymentRequest} [cancelEnvironmentDeploymentRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EnvironmentActionsApi
      */
-    public cancelEnvironmentDeployment(environmentId: string, options?: AxiosRequestConfig) {
-        return EnvironmentActionsApiFp(this.configuration).cancelEnvironmentDeployment(environmentId, options).then((request) => request(this.axios, this.basePath));
+    public cancelEnvironmentDeployment(environmentId: string, cancelEnvironmentDeploymentRequest?: CancelEnvironmentDeploymentRequest, options?: AxiosRequestConfig) {
+        return EnvironmentActionsApiFp(this.configuration).cancelEnvironmentDeployment(environmentId, cancelEnvironmentDeploymentRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
