@@ -12537,14 +12537,14 @@ export interface Referral {
     'invitation_link'?: string;
 }
 /**
- * Mirroring mode when deploying a service from a container registry - CLUSTER: This is not available on Scaleway. Images within the mirroring registry are organized by \"Qovery cluster\", meaning that the application deployed on the same cluster are all mirrored on the same repository. - SERVICE: Images within the mirroring registry are organized by \"Qovery service\", each service has its own repository 
+ * Mirroring mode when deploying a service from a container registry - Cluster: This is not available on Scaleway. Images within the mirroring registry are organized by \"Qovery cluster\", meaning that the application deployed on the same cluster are all mirrored on the same repository. - Service: Images within the mirroring registry are organized by \"Qovery service\", each service has its own repository 
  * @export
  * @enum {string}
  */
 
 export const RegistryMirroringModeEnum = {
-    CLUSTER: 'CLUSTER',
-    SERVICE: 'SERVICE'
+    CLUSTER: 'Cluster',
+    SERVICE: 'Service'
 } as const;
 
 export type RegistryMirroringModeEnum = typeof RegistryMirroringModeEnum[keyof typeof RegistryMirroringModeEnum];
