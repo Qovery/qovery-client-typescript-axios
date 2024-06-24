@@ -9194,6 +9194,21 @@ export type JobForceEvent = typeof JobForceEvent[keyof typeof JobForceEvent];
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export const JobLifecycleTypeEnum = {
+    GENERIC: 'GENERIC',
+    TERRAFORM: 'TERRAFORM',
+    CLOUDFORMATION: 'CLOUDFORMATION'
+} as const;
+
+export type JobLifecycleTypeEnum = typeof JobLifecycleTypeEnum[keyof typeof JobLifecycleTypeEnum];
+
+
+/**
+ * 
+ * @export
  * @interface JobRequest
  */
 export interface JobRequest {
@@ -9312,7 +9327,15 @@ export interface JobRequestAllOfSchedule {
      * @memberof JobRequestAllOfSchedule
      */
     'cronjob'?: JobRequestAllOfScheduleCronjob;
+    /**
+     * 
+     * @type {JobLifecycleTypeEnum}
+     * @memberof JobRequestAllOfSchedule
+     */
+    'lifecycle_type'?: JobLifecycleTypeEnum;
 }
+
+
 /**
  * 
  * @export
@@ -9728,7 +9751,15 @@ export interface LifecycleJobResponseAllOfSchedule {
      * @memberof LifecycleJobResponseAllOfSchedule
      */
     'on_delete'?: JobRequestAllOfScheduleOnStart;
+    /**
+     * 
+     * @type {JobLifecycleTypeEnum}
+     * @memberof LifecycleJobResponseAllOfSchedule
+     */
+    'lifecycle_type'?: JobLifecycleTypeEnum;
 }
+
+
 /**
  * 
  * @export
