@@ -2323,6 +2323,24 @@ export interface ClusterFeatureAwsExistingVpc {
      * @memberof ClusterFeatureAwsExistingVpc
      */
     'rds_subnets_zone_c_ids'?: Array<string> | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterFeatureAwsExistingVpc
+     */
+    'eks_karpenter_fargate_subnets_zone_a_ids'?: Array<string> | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterFeatureAwsExistingVpc
+     */
+    'eks_karpenter_fargate_subnets_zone_b_ids'?: Array<string> | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterFeatureAwsExistingVpc
+     */
+    'eks_karpenter_fargate_subnets_zone_c_ids'?: Array<string> | null;
 }
 /**
  * 
