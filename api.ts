@@ -1658,6 +1658,51 @@ export interface CancelEnvironmentDeploymentRequest {
 /**
  * 
  * @export
+ * @interface CleanFailedJob200Response
+ */
+export interface CleanFailedJob200Response {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CleanFailedJob200Response
+     */
+    'clean_kubernetes_jobs'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface CleanFailedJobs200Response
+ */
+export interface CleanFailedJobs200Response {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CleanFailedJobs200Response
+     */
+    'clean_job_ids'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CleanFailedJobs200Response
+     */
+    'clean_kubernetes_jobs'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface CleanFailedJobsRequest
+ */
+export interface CleanFailedJobsRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CleanFailedJobsRequest
+     */
+    'job_ids'?: Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface CloneEnvironmentRequest
  */
 export interface CloneEnvironmentRequest {
@@ -31659,6 +31704,51 @@ export const EnvironmentActionsApiAxiosParamCreator = function (configuration?: 
             };
         },
         /**
+         * 
+         * @summary Clean failed jobs within an environment
+         * @param {string} environmentId 
+         * @param {CleanFailedJobsRequest} [cleanFailedJobsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cleanFailedJobs: async (environmentId: string, cleanFailedJobsRequest?: CleanFailedJobsRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('cleanFailedJobs', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/cleanFailedJobs`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cleanFailedJobsRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * You must provide a name. This will create a new environment, with the same configuration, and same applications and databases. Database data is not cloned.
          * @summary Clone environment
          * @param {string} environmentId Environment ID
@@ -32029,6 +32119,18 @@ export const EnvironmentActionsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @summary Clean failed jobs within an environment
+         * @param {string} environmentId 
+         * @param {CleanFailedJobsRequest} [cleanFailedJobsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cleanFailedJobs(environmentId: string, cleanFailedJobsRequest?: CleanFailedJobsRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CleanFailedJobs200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cleanFailedJobs(environmentId, cleanFailedJobsRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * You must provide a name. This will create a new environment, with the same configuration, and same applications and databases. Database data is not cloned.
          * @summary Clone environment
          * @param {string} environmentId Environment ID
@@ -32143,6 +32245,17 @@ export const EnvironmentActionsApiFactory = function (configuration?: Configurat
             return localVarFp.cancelEnvironmentDeployment(environmentId, cancelEnvironmentDeploymentRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * 
+         * @summary Clean failed jobs within an environment
+         * @param {string} environmentId 
+         * @param {CleanFailedJobsRequest} [cleanFailedJobsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cleanFailedJobs(environmentId: string, cleanFailedJobsRequest?: CleanFailedJobsRequest, options?: any): AxiosPromise<CleanFailedJobs200Response> {
+            return localVarFp.cleanFailedJobs(environmentId, cleanFailedJobsRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * You must provide a name. This will create a new environment, with the same configuration, and same applications and databases. Database data is not cloned.
          * @summary Clone environment
          * @param {string} environmentId Environment ID
@@ -32248,6 +32361,19 @@ export class EnvironmentActionsApi extends BaseAPI {
      */
     public cancelEnvironmentDeployment(environmentId: string, cancelEnvironmentDeploymentRequest?: CancelEnvironmentDeploymentRequest, options?: AxiosRequestConfig) {
         return EnvironmentActionsApiFp(this.configuration).cancelEnvironmentDeployment(environmentId, cancelEnvironmentDeploymentRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Clean failed jobs within an environment
+     * @param {string} environmentId 
+     * @param {CleanFailedJobsRequest} [cleanFailedJobsRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentActionsApi
+     */
+    public cleanFailedJobs(environmentId: string, cleanFailedJobsRequest?: CleanFailedJobsRequest, options?: AxiosRequestConfig) {
+        return EnvironmentActionsApiFp(this.configuration).cleanFailedJobs(environmentId, cleanFailedJobsRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -38668,6 +38794,47 @@ export class HelmsApi extends BaseAPI {
 export const JobActionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * 
+         * @summary Clean a failed job
+         * @param {string} jobId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cleanFailedJob: async (jobId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'jobId' is not null or undefined
+            assertParamExists('cleanFailedJob', 'jobId', jobId)
+            const localVarPath = `/job/{jobId}/cleanFailedJob`
+                .replace(`{${"jobId"}}`, encodeURIComponent(String(jobId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
          * @summary Deploy job
          * @param {string} jobId Job ID
@@ -38815,6 +38982,17 @@ export const JobActionsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = JobActionsApiAxiosParamCreator(configuration)
     return {
         /**
+         * 
+         * @summary Clean a failed job
+         * @param {string} jobId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cleanFailedJob(jobId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CleanFailedJob200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cleanFailedJob(jobId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
          * @summary Deploy job
          * @param {string} jobId Job ID
@@ -38861,6 +39039,16 @@ export const JobActionsApiFactory = function (configuration?: Configuration, bas
     const localVarFp = JobActionsApiFp(configuration)
     return {
         /**
+         * 
+         * @summary Clean a failed job
+         * @param {string} jobId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cleanFailedJob(jobId: string, options?: any): AxiosPromise<CleanFailedJob200Response> {
+            return localVarFp.cleanFailedJob(jobId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
          * @summary Deploy job
          * @param {string} jobId Job ID
@@ -38903,6 +39091,18 @@ export const JobActionsApiFactory = function (configuration?: Configuration, bas
  * @extends {BaseAPI}
  */
 export class JobActionsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Clean a failed job
+     * @param {string} jobId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobActionsApi
+     */
+    public cleanFailedJob(jobId: string, options?: AxiosRequestConfig) {
+        return JobActionsApiFp(this.configuration).cleanFailedJob(jobId, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
      * @summary Deploy job
