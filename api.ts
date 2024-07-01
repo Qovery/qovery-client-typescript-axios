@@ -9808,6 +9808,195 @@ export interface LifecycleJobResponseAllOfSchedule {
 /**
  * 
  * @export
+ * @interface LifecycleTemplateListResponse
+ */
+export interface LifecycleTemplateListResponse {
+    /**
+     * 
+     * @type {Array<LifecycleTemplateListResponseResultsInner>}
+     * @memberof LifecycleTemplateListResponse
+     */
+    'results': Array<LifecycleTemplateListResponseResultsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface LifecycleTemplateListResponseResultsInner
+ */
+export interface LifecycleTemplateListResponseResultsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof LifecycleTemplateListResponseResultsInner
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LifecycleTemplateListResponseResultsInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LifecycleTemplateListResponseResultsInner
+     */
+    'description': string;
+}
+/**
+ * 
+ * @export
+ * @interface LifecycleTemplateResponse
+ */
+export interface LifecycleTemplateResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof LifecycleTemplateResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LifecycleTemplateResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LifecycleTemplateResponse
+     */
+    'description': string;
+    /**
+     * location of the template
+     * @type {string}
+     * @memberof LifecycleTemplateResponse
+     */
+    'sourceUrl': string;
+    /**
+     * 
+     * @type {CloudProviderEnum}
+     * @memberof LifecycleTemplateResponse
+     */
+    'cloud_provider': CloudProviderEnum;
+    /**
+     * lis of pre-defined command for each event
+     * @type {Array<LifecycleTemplateResponseEventsInner>}
+     * @memberof LifecycleTemplateResponse
+     */
+    'events': Array<LifecycleTemplateResponseEventsInner>;
+    /**
+     * 
+     * @type {LifecycleTemplateResponseResources}
+     * @memberof LifecycleTemplateResponse
+     */
+    'resources': LifecycleTemplateResponseResources;
+    /**
+     * 
+     * @type {LifecycleTemplateResponseVariables}
+     * @memberof LifecycleTemplateResponse
+     */
+    'variables': LifecycleTemplateResponseVariables;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface LifecycleTemplateResponseEventsInner
+ */
+export interface LifecycleTemplateResponseEventsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof LifecycleTemplateResponseEventsInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LifecycleTemplateResponseEventsInner
+     */
+    'entrpoint'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof LifecycleTemplateResponseEventsInner
+     */
+    'command': Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface LifecycleTemplateResponseResources
+ */
+export interface LifecycleTemplateResponseResources {
+    /**
+     * 
+     * @type {number}
+     * @memberof LifecycleTemplateResponseResources
+     */
+    'cpu_milli': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof LifecycleTemplateResponseResources
+     */
+    'ram_mib': number;
+}
+/**
+ * Variables to inject at the creation of this lifecycle job
+ * @export
+ * @interface LifecycleTemplateResponseVariables
+ */
+export interface LifecycleTemplateResponseVariables {
+    /**
+     * 
+     * @type {string}
+     * @memberof LifecycleTemplateResponseVariables
+     */
+    'name': string;
+    /**
+     * Short description to explain the purpose of the variable 
+     * @type {string}
+     * @memberof LifecycleTemplateResponseVariables
+     */
+    'description': string;
+    /**
+     * Default value for the variable
+     * @type {string}
+     * @memberof LifecycleTemplateResponseVariables
+     */
+    'default': string;
+    /**
+     * If the variable should be injected as a secret
+     * @type {boolean}
+     * @memberof LifecycleTemplateResponseVariables
+     */
+    'is_secret': boolean;
+    /**
+     * 
+     * @type {LifecycleTemplateResponseVariablesFile}
+     * @memberof LifecycleTemplateResponseVariables
+     */
+    'file'?: LifecycleTemplateResponseVariablesFile;
+}
+/**
+ * If present, the variable should be a file instead of a raw value 
+ * @export
+ * @interface LifecycleTemplateResponseVariablesFile
+ */
+export interface LifecycleTemplateResponseVariablesFile {
+    /**
+     * 
+     * @type {string}
+     * @memberof LifecycleTemplateResponseVariablesFile
+     */
+    'path': string;
+}
+/**
+ * 
+ * @export
  * @interface Link
  */
 export interface Link {
@@ -30463,6 +30652,200 @@ export class DatabasesApi extends BaseAPI {
      */
     public listEnvironmentDatabaseConfig(environmentId: string, options?: AxiosRequestConfig) {
         return DatabasesApiFp(this.configuration).listEnvironmentDatabaseConfig(environmentId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * DefaultApi - axios parameter creator
+ * @export
+ */
+export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get specific lifecycle tempalte
+         * @param {string} environmentId 
+         * @param {string} lifecycleTemplateId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentLifecycleTemplate: async (environmentId: string, lifecycleTemplateId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('getEnvironmentLifecycleTemplate', 'environmentId', environmentId)
+            // verify required parameter 'lifecycleTemplateId' is not null or undefined
+            assertParamExists('getEnvironmentLifecycleTemplate', 'lifecycleTemplateId', lifecycleTemplateId)
+            const localVarPath = `/environment/{environmentId}/lifecycleTemplate/{lifecycleTemplateId}`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)))
+                .replace(`{${"lifecycleTemplateId"}}`, encodeURIComponent(String(lifecycleTemplateId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Your GET endpoint
+         * @param {string} environmentId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentLifecycleTemplates: async (environmentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('getEnvironmentLifecycleTemplates', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/lifecycleTemplate`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * DefaultApi - functional programming interface
+ * @export
+ */
+export const DefaultApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get specific lifecycle tempalte
+         * @param {string} environmentId 
+         * @param {string} lifecycleTemplateId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEnvironmentLifecycleTemplate(environmentId: string, lifecycleTemplateId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LifecycleTemplateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentLifecycleTemplate(environmentId, lifecycleTemplateId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Your GET endpoint
+         * @param {string} environmentId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEnvironmentLifecycleTemplates(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LifecycleTemplateListResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentLifecycleTemplates(environmentId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * DefaultApi - factory interface
+ * @export
+ */
+export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = DefaultApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get specific lifecycle tempalte
+         * @param {string} environmentId 
+         * @param {string} lifecycleTemplateId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentLifecycleTemplate(environmentId: string, lifecycleTemplateId: string, options?: any): AxiosPromise<LifecycleTemplateResponse> {
+            return localVarFp.getEnvironmentLifecycleTemplate(environmentId, lifecycleTemplateId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Your GET endpoint
+         * @param {string} environmentId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentLifecycleTemplates(environmentId: string, options?: any): AxiosPromise<LifecycleTemplateListResponse> {
+            return localVarFp.getEnvironmentLifecycleTemplates(environmentId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * DefaultApi - object-oriented interface
+ * @export
+ * @class DefaultApi
+ * @extends {BaseAPI}
+ */
+export class DefaultApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get specific lifecycle tempalte
+     * @param {string} environmentId 
+     * @param {string} lifecycleTemplateId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getEnvironmentLifecycleTemplate(environmentId: string, lifecycleTemplateId: string, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getEnvironmentLifecycleTemplate(environmentId, lifecycleTemplateId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Your GET endpoint
+     * @param {string} environmentId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getEnvironmentLifecycleTemplates(environmentId: string, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getEnvironmentLifecycleTemplates(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
