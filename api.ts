@@ -7112,6 +7112,18 @@ export interface EnvironmentVariableEditRequest {
      * @memberof EnvironmentVariableEditRequest
      */
     'value'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentVariableEditRequest
+     */
+    'mount_path'?: string | null;
+    /**
+     * optional variable description (255 characters maximum)
+     * @type {string}
+     * @memberof EnvironmentVariableEditRequest
+     */
+    'description'?: string | null;
 }
 /**
  * 
@@ -14137,6 +14149,12 @@ export interface VariableAliasRequest {
      * @memberof VariableAliasRequest
      */
     'alias_parent_id': string;
+    /**
+     * optional variable description (255 characters maximum)
+     * @type {string}
+     * @memberof VariableAliasRequest
+     */
+    'description'?: string | null;
 }
 
 
@@ -14158,6 +14176,12 @@ export interface VariableEditRequest {
      * @memberof VariableEditRequest
      */
     'value': string;
+    /**
+     * optional variable description (255 characters maximum)
+     * @type {string}
+     * @memberof VariableEditRequest
+     */
+    'description'?: string | null;
 }
 /**
  * 
@@ -14332,6 +14356,12 @@ export interface VariableOverrideRequest {
      * @memberof VariableOverrideRequest
      */
     'override_parent_id': string;
+    /**
+     * optional variable description (255 characters maximum)
+     * @type {string}
+     * @memberof VariableOverrideRequest
+     */
+    'description'?: string | null;
 }
 
 
@@ -14377,6 +14407,12 @@ export interface VariableRequest {
      * @memberof VariableRequest
      */
     'variable_parent_id': string;
+    /**
+     * optional variable description (255 characters maximum)
+     * @type {string}
+     * @memberof VariableRequest
+     */
+    'description'?: string | null;
 }
 
 
@@ -14476,6 +14512,12 @@ export interface VariableResponse {
      * @memberof VariableResponse
      */
     'is_secret': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableResponse
+     */
+    'description'?: string;
 }
 
 
