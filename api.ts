@@ -6999,6 +6999,12 @@ export interface EnvironmentVariable {
      */
     'mount_path'?: string | null;
     /**
+     * optional variable description (255 characters maximum)
+     * @type {string}
+     * @memberof EnvironmentVariable
+     */
+    'description'?: string | null;
+    /**
      * 
      * @type {EnvironmentVariableOverride}
      * @memberof EnvironmentVariable
@@ -7194,6 +7200,12 @@ export interface EnvironmentVariableRequest {
      * @memberof EnvironmentVariableRequest
      */
     'mount_path'?: string | null;
+    /**
+     * optional variable description (255 characters maximum)
+     * @type {string}
+     * @memberof EnvironmentVariableRequest
+     */
+    'description'?: string | null;
 }
 /**
  * 
@@ -9584,6 +9596,12 @@ export interface Key {
      * @memberof Key
      */
     'key': string;
+    /**
+     * optional variable description (255 characters maximum)
+     * @type {string}
+     * @memberof Key
+     */
+    'description'?: string | null;
 }
 /**
  * 
@@ -14079,6 +14097,12 @@ export interface Value {
      * @memberof Value
      */
     'value'?: string;
+    /**
+     * optional variable description (255 characters maximum)
+     * @type {string}
+     * @memberof Value
+     */
+    'description'?: string | null;
 }
 /**
  * 
