@@ -13004,6 +13004,12 @@ export interface Secret {
      * @memberof Secret
      */
     'owned_by'?: string;
+    /**
+     * optional variable description (255 characters maximum)
+     * @type {string}
+     * @memberof Secret
+     */
+    'description'?: string | null;
 }
 
 
@@ -13043,6 +13049,12 @@ export interface SecretAlias {
      * @memberof SecretAlias
      */
     'variable_type': APIVariableTypeEnum;
+    /**
+     * optional variable description (255 characters maximum)
+     * @type {string}
+     * @memberof SecretAlias
+     */
+    'description'?: string | null;
 }
 
 
@@ -13064,6 +13076,12 @@ export interface SecretEditRequest {
      * @memberof SecretEditRequest
      */
     'key': string;
+    /**
+     * optional variable description (255 characters maximum)
+     * @type {string}
+     * @memberof SecretEditRequest
+     */
+    'description'?: string | null;
 }
 /**
  * 
@@ -13101,6 +13119,12 @@ export interface SecretOverride {
      * @memberof SecretOverride
      */
     'variable_type': APIVariableTypeEnum;
+    /**
+     * optional variable description (255 characters maximum)
+     * @type {string}
+     * @memberof SecretOverride
+     */
+    'description'?: string | null;
 }
 
 
@@ -13128,6 +13152,12 @@ export interface SecretRequest {
      * @memberof SecretRequest
      */
     'mount_path'?: string | null;
+    /**
+     * optional variable description (255 character maximum)
+     * @type {string}
+     * @memberof SecretRequest
+     */
+    'description'?: string | null;
 }
 /**
  * 
