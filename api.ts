@@ -11646,7 +11646,9 @@ export const OrganizationEventType = {
     TRIGGER_STOP: 'TRIGGER_STOP',
     TRIGGER_CANCEL: 'TRIGGER_CANCEL',
     TRIGGER_RESTART: 'TRIGGER_RESTART',
-    TRIGGER_DELETE: 'TRIGGER_DELETE'
+    TRIGGER_DELETE: 'TRIGGER_DELETE',
+    SHELL: 'SHELL',
+    PORT_FORWARD: 'PORT_FORWARD'
 } as const;
 
 export type OrganizationEventType = typeof OrganizationEventType[keyof typeof OrganizationEventType];
