@@ -315,6 +315,12 @@ export interface Application {
      * @memberof Application
      */
     'labels_groups'?: Array<OrganizationLabelsGroupResponse>;
+    /**
+     * Icon URI representing the application.
+     * @type {string}
+     * @memberof Application
+     */
+    'icon_uri': string;
 }
 
 
@@ -1027,6 +1033,12 @@ export interface ApplicationRequest {
      * @memberof ApplicationRequest
      */
     'labels_groups'?: Array<ServiceLabelRequest>;
+    /**
+     * Icon URI representing the application.
+     * @type {string}
+     * @memberof ApplicationRequest
+     */
+    'icon_uri'?: string;
 }
 
 
@@ -1381,6 +1393,12 @@ export interface BaseJobResponse {
      * @memberof BaseJobResponse
      */
     'auto_deploy'?: boolean;
+    /**
+     * Icon URI representing the job.
+     * @type {string}
+     * @memberof BaseJobResponse
+     */
+    'icon_uri': string;
 }
 /**
  * @type BaseJobResponseAllOfSource
@@ -4036,6 +4054,12 @@ export interface ContainerRequest {
      * @memberof ContainerRequest
      */
     'labels_groups'?: Array<ServiceLabelRequest>;
+    /**
+     * Icon URI representing the container.
+     * @type {string}
+     * @memberof ContainerRequest
+     */
+    'icon_uri'?: string;
 }
 /**
  * 
@@ -4193,6 +4217,12 @@ export interface ContainerResponse {
      * @memberof ContainerResponse
      */
     'labels_groups'?: Array<OrganizationLabelsGroupResponse>;
+    /**
+     * Icon URI representing the container.
+     * @type {string}
+     * @memberof ContainerResponse
+     */
+    'icon_uri': string;
 }
 /**
  * 
@@ -4640,6 +4670,12 @@ export interface CronJobResponse {
      */
     'auto_deploy'?: boolean;
     /**
+     * Icon URI representing the job.
+     * @type {string}
+     * @memberof CronJobResponse
+     */
+    'icon_uri': string;
+    /**
      * 
      * @type {string}
      * @memberof CronJobResponse
@@ -4941,6 +4977,12 @@ export interface Database {
      */
     'labels_groups'?: Array<OrganizationLabelsGroupResponse>;
     /**
+     * Icon URI representing the database.
+     * @type {string}
+     * @memberof Database
+     */
+    'icon_uri'?: string;
+    /**
      * 
      * @type {ReferenceObject}
      * @memberof Database
@@ -5188,6 +5230,12 @@ export interface DatabaseRequest {
      * @memberof DatabaseRequest
      */
     'labels_groups'?: Array<ServiceLabelRequest>;
+    /**
+     * Icon URI representing the database.
+     * @type {string}
+     * @memberof DatabaseRequest
+     */
+    'icon_uri'?: string;
 }
 
 
@@ -8285,6 +8333,12 @@ export interface HelmRequest {
      * @memberof HelmRequest
      */
     'values_override': HelmRequestAllOfValuesOverride;
+    /**
+     * Icon URI representing the helm service.
+     * @type {string}
+     * @memberof HelmRequest
+     */
+    'icon_uri'?: string;
 }
 /**
  * @type HelmRequestAllOfSource
@@ -8534,6 +8588,12 @@ export interface HelmResponse {
      * @memberof HelmResponse
      */
     'values_override': HelmResponseAllOfValuesOverride;
+    /**
+     * Icon URI representing the helm service.
+     * @type {string}
+     * @memberof HelmResponse
+     */
+    'icon_uri': string;
 }
 /**
  * 
@@ -9365,6 +9425,12 @@ export interface JobRequest {
      * @memberof JobRequest
      */
     'labels_groups'?: Array<ServiceLabelRequest>;
+    /**
+     * Icon URI representing the job.
+     * @type {string}
+     * @memberof JobRequest
+     */
+    'icon_uri'?: string;
 }
 /**
  * If you want to define a Cron job, only the `cronjob` property must be filled   A Lifecycle job should contain at least one property `on_XXX` among the 3 properties: `on_start`, `on_stop`, `on_delete` 
@@ -9770,6 +9836,12 @@ export interface LifecycleJobResponse {
      * @memberof LifecycleJobResponse
      */
     'auto_deploy'?: boolean;
+    /**
+     * Icon URI representing the job.
+     * @type {string}
+     * @memberof LifecycleJobResponse
+     */
+    'icon_uri': string;
     /**
      * 
      * @type {string}
