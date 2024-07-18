@@ -766,6 +766,12 @@ export interface ApplicationEditRequest {
      * @memberof ApplicationEditRequest
      */
     'labels_groups'?: Array<ServiceLabelRequest>;
+    /**
+     * Icon URI representing the application.
+     * @type {string}
+     * @memberof ApplicationEditRequest
+     */
+    'icon_uri'?: string;
 }
 
 
@@ -4981,7 +4987,7 @@ export interface Database {
      * @type {string}
      * @memberof Database
      */
-    'icon_uri'?: string;
+    'icon_uri': string;
     /**
      * 
      * @type {ReferenceObject}
@@ -5135,6 +5141,12 @@ export interface DatabaseEditRequest {
      * @memberof DatabaseEditRequest
      */
     'labels_groups'?: Array<ServiceLabelRequest>;
+    /**
+     * Icon URI representing the database.
+     * @type {string}
+     * @memberof DatabaseEditRequest
+     */
+    'icon_uri'?: string;
 }
 
 
