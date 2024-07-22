@@ -4827,6 +4827,12 @@ export interface CustomDomain {
      */
     'generate_certificate': boolean;
     /**
+     * Indicates if the custom domain is behind a CDN (i.e Cloudflare). This will condition the way we are checking CNAME before & during a deployment: * If `true` then we only check the domain points to an IP * If `false` then we check that the domain resolves to the correct service Load Balancer 
+     * @type {boolean}
+     * @memberof CustomDomain
+     */
+    'use_cdn'?: boolean;
+    /**
      * URL provided by Qovery. You must create a CNAME on your DNS provider using that URL
      * @type {string}
      * @memberof CustomDomain
@@ -4859,6 +4865,12 @@ export interface CustomDomainRequest {
      * @memberof CustomDomainRequest
      */
     'generate_certificate': boolean;
+    /**
+     * Indicates if the custom domain is behind a CDN (i.e Cloudflare). This will condition the way we are checking CNAME before & during a deployment: * If `true` then we only check the domain points to an IP * If `false` then we check that the domain resolves to the correct service Load Balancer 
+     * @type {boolean}
+     * @memberof CustomDomainRequest
+     */
+    'use_cdn'?: boolean;
 }
 /**
  * 
