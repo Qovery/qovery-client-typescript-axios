@@ -10024,11 +10024,11 @@ export interface LifecycleTemplateResponse {
      */
     'resources': LifecycleTemplateResponseResources;
     /**
-     * 
-     * @type {LifecycleTemplateResponseVariables}
+     * Variables to inject at the creation of this lifecycle job
+     * @type {Array<LifecycleTemplateResponseVariablesInner>}
      * @memberof LifecycleTemplateResponse
      */
-    'variables': LifecycleTemplateResponseVariables;
+    'variables': Array<LifecycleTemplateResponseVariablesInner>;
     /**
      * Dockerfile of the template
      * @type {string}
@@ -10083,52 +10083,52 @@ export interface LifecycleTemplateResponseResources {
     'ram_mib': number;
 }
 /**
- * Variables to inject at the creation of this lifecycle job
+ * 
  * @export
- * @interface LifecycleTemplateResponseVariables
+ * @interface LifecycleTemplateResponseVariablesInner
  */
-export interface LifecycleTemplateResponseVariables {
+export interface LifecycleTemplateResponseVariablesInner {
     /**
      * 
      * @type {string}
-     * @memberof LifecycleTemplateResponseVariables
+     * @memberof LifecycleTemplateResponseVariablesInner
      */
     'name': string;
     /**
-     * Short description to explain the purpose of the variable 
+     * Short description to explain the purpose of the variable
      * @type {string}
-     * @memberof LifecycleTemplateResponseVariables
+     * @memberof LifecycleTemplateResponseVariablesInner
      */
     'description': string;
     /**
      * Default value for the variable
      * @type {string}
-     * @memberof LifecycleTemplateResponseVariables
+     * @memberof LifecycleTemplateResponseVariablesInner
      */
     'default': string;
     /**
      * If the variable should be injected as a secret
-     * @type {boolean}
-     * @memberof LifecycleTemplateResponseVariables
+     * @type {string}
+     * @memberof LifecycleTemplateResponseVariablesInner
      */
-    'is_secret': boolean;
+    'is_secret': string;
     /**
      * 
-     * @type {LifecycleTemplateResponseVariablesFile}
-     * @memberof LifecycleTemplateResponseVariables
+     * @type {LifecycleTemplateResponseVariablesInnerFile}
+     * @memberof LifecycleTemplateResponseVariablesInner
      */
-    'file'?: LifecycleTemplateResponseVariablesFile;
+    'file'?: LifecycleTemplateResponseVariablesInnerFile;
 }
 /**
- * If present, the variable should be a file instead of a raw value 
+ * If present, the variable should be a file instead of a raw value
  * @export
- * @interface LifecycleTemplateResponseVariablesFile
+ * @interface LifecycleTemplateResponseVariablesInnerFile
  */
-export interface LifecycleTemplateResponseVariablesFile {
+export interface LifecycleTemplateResponseVariablesInnerFile {
     /**
      * 
      * @type {string}
-     * @memberof LifecycleTemplateResponseVariablesFile
+     * @memberof LifecycleTemplateResponseVariablesInnerFile
      */
     'path': string;
 }
