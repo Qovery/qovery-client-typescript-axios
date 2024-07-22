@@ -10017,6 +10017,12 @@ export interface LifecycleTemplateResponse {
      * @memberof LifecycleTemplateResponse
      */
     'variables': LifecycleTemplateResponseVariables;
+    /**
+     * Dockerfile of the template
+     * @type {string}
+     * @memberof LifecycleTemplateResponse
+     */
+    'dockerfile': string;
 }
 
 
