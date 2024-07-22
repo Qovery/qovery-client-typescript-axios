@@ -10108,10 +10108,10 @@ export interface LifecycleTemplateResponseVariablesInner {
     'default': string;
     /**
      * If the variable should be injected as a secret
-     * @type {string}
+     * @type {boolean}
      * @memberof LifecycleTemplateResponseVariablesInner
      */
-    'is_secret': string;
+    'is_secret': boolean;
     /**
      * 
      * @type {LifecycleTemplateResponseVariablesInnerFile}
