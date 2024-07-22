@@ -10055,7 +10055,7 @@ export interface LifecycleTemplateResponseEventsInner {
      * @type {string}
      * @memberof LifecycleTemplateResponseEventsInner
      */
-    'entrpoint'?: string;
+    'entrypoint'?: string;
     /**
      * 
      * @type {Array<string>}
