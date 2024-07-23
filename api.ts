@@ -3782,10 +3782,10 @@ export interface ContainerRegistryAssociatedServicesResponse {
 export interface ContainerRegistryAssociatedServicesResponseList {
     /**
      * 
-     * @type {ContainerRegistryAssociatedServicesResponse}
+     * @type {Array<ContainerRegistryAssociatedServicesResponse>}
      * @memberof ContainerRegistryAssociatedServicesResponseList
      */
-    'results'?: ContainerRegistryAssociatedServicesResponse;
+    'results'?: Array<ContainerRegistryAssociatedServicesResponse>;
 }
 /**
  * The type of your container registry
@@ -8192,6 +8192,83 @@ export interface HelmPortRequestPortsInner {
 
 
 /**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const HelmRepositoryAssociatedServiceType = {
+    HELM: 'HELM'
+} as const;
+
+export type HelmRepositoryAssociatedServiceType = typeof HelmRepositoryAssociatedServiceType[keyof typeof HelmRepositoryAssociatedServiceType];
+
+
+/**
+ * 
+ * @export
+ * @interface HelmRepositoryAssociatedServicesResponse
+ */
+export interface HelmRepositoryAssociatedServicesResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryAssociatedServicesResponse
+     */
+    'project_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryAssociatedServicesResponse
+     */
+    'project_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryAssociatedServicesResponse
+     */
+    'environment_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryAssociatedServicesResponse
+     */
+    'environment_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryAssociatedServicesResponse
+     */
+    'service_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryAssociatedServicesResponse
+     */
+    'service_name': string;
+    /**
+     * 
+     * @type {HelmRepositoryAssociatedServiceType}
+     * @memberof HelmRepositoryAssociatedServicesResponse
+     */
+    'service_type': HelmRepositoryAssociatedServiceType;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface HelmRepositoryAssociatedServicesResponseList
+ */
+export interface HelmRepositoryAssociatedServicesResponseList {
+    /**
+     * 
+     * @type {Array<HelmRepositoryAssociatedServicesResponse>}
+     * @memberof HelmRepositoryAssociatedServicesResponseList
+     */
+    'results'?: Array<HelmRepositoryAssociatedServicesResponse>;
+}
+/**
  * The type of your helm repository
  * @export
  * @enum {string}
@@ -8359,6 +8436,12 @@ export interface HelmRepositoryResponse {
      * @memberof HelmRepositoryResponse
      */
     'skip_tls_verification'?: boolean;
+    /**
+     * The number of services using this helm repository
+     * @type {number}
+     * @memberof HelmRepositoryResponse
+     */
+    'associated_services_count'?: number;
 }
 
 
@@ -30998,6 +31081,51 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Get organization helm repository associated services
+         * @summary Get organization helm repository associated services
+         * @param {string} organizationId 
+         * @param {string} helmRepositoryId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHelmRepositoryAssociatedServices: async (organizationId: string, helmRepositoryId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getHelmRepositoryAssociatedServices', 'organizationId', organizationId)
+            // verify required parameter 'helmRepositoryId' is not null or undefined
+            assertParamExists('getHelmRepositoryAssociatedServices', 'helmRepositoryId', helmRepositoryId)
+            const localVarPath = `/organization/{organizationId}/helmRepository/{helmRepositoryId}/associatedServices`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"helmRepositoryId"}}`, encodeURIComponent(String(helmRepositoryId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -31018,6 +31146,18 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          */
         async getContainerRegistryAssociatedServices(organizationId: string, containerRegistryId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerRegistryAssociatedServicesResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getContainerRegistryAssociatedServices(organizationId, containerRegistryId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get organization helm repository associated services
+         * @summary Get organization helm repository associated services
+         * @param {string} organizationId 
+         * @param {string} helmRepositoryId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getHelmRepositoryAssociatedServices(organizationId: string, helmRepositoryId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmRepositoryAssociatedServicesResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getHelmRepositoryAssociatedServices(organizationId, helmRepositoryId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -31041,6 +31181,17 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         getContainerRegistryAssociatedServices(organizationId: string, containerRegistryId: string, options?: any): AxiosPromise<ContainerRegistryAssociatedServicesResponseList> {
             return localVarFp.getContainerRegistryAssociatedServices(organizationId, containerRegistryId, options).then((request) => request(axios, basePath));
         },
+        /**
+         * Get organization helm repository associated services
+         * @summary Get organization helm repository associated services
+         * @param {string} organizationId 
+         * @param {string} helmRepositoryId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHelmRepositoryAssociatedServices(organizationId: string, helmRepositoryId: string, options?: any): AxiosPromise<HelmRepositoryAssociatedServicesResponseList> {
+            return localVarFp.getHelmRepositoryAssociatedServices(organizationId, helmRepositoryId, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -31062,6 +31213,19 @@ export class DefaultApi extends BaseAPI {
      */
     public getContainerRegistryAssociatedServices(organizationId: string, containerRegistryId: string, options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).getContainerRegistryAssociatedServices(organizationId, containerRegistryId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get organization helm repository associated services
+     * @summary Get organization helm repository associated services
+     * @param {string} organizationId 
+     * @param {string} helmRepositoryId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getHelmRepositoryAssociatedServices(organizationId: string, helmRepositoryId: string, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getHelmRepositoryAssociatedServices(organizationId, helmRepositoryId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
