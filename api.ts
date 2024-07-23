@@ -3710,6 +3710,84 @@ export interface ContainerNetworkRequest {
     'sticky_session'?: boolean;
 }
 /**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ContainerRegistryAssociatedServiceType = {
+    CONTAINER: 'CONTAINER',
+    JOB: 'JOB'
+} as const;
+
+export type ContainerRegistryAssociatedServiceType = typeof ContainerRegistryAssociatedServiceType[keyof typeof ContainerRegistryAssociatedServiceType];
+
+
+/**
+ * 
+ * @export
+ * @interface ContainerRegistryAssociatedServicesResponse
+ */
+export interface ContainerRegistryAssociatedServicesResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryAssociatedServicesResponse
+     */
+    'project_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryAssociatedServicesResponse
+     */
+    'project_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryAssociatedServicesResponse
+     */
+    'environment_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryAssociatedServicesResponse
+     */
+    'environment_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryAssociatedServicesResponse
+     */
+    'service_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryAssociatedServicesResponse
+     */
+    'service_name': string;
+    /**
+     * 
+     * @type {ContainerRegistryAssociatedServiceType}
+     * @memberof ContainerRegistryAssociatedServicesResponse
+     */
+    'service_type': ContainerRegistryAssociatedServiceType;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ContainerRegistryAssociatedServicesResponseList
+ */
+export interface ContainerRegistryAssociatedServicesResponseList {
+    /**
+     * 
+     * @type {ContainerRegistryAssociatedServicesResponse}
+     * @memberof ContainerRegistryAssociatedServicesResponseList
+     */
+    'results'?: ContainerRegistryAssociatedServicesResponse;
+}
+/**
  * The type of your container registry
  * @export
  * @enum {string}
@@ -3911,6 +3989,12 @@ export interface ContainerRegistryResponse {
      * @memberof ContainerRegistryResponse
      */
     'cluster'?: ContainerRegistryResponseAllOfCluster;
+    /**
+     * The number of services using this container registry
+     * @type {number}
+     * @memberof ContainerRegistryResponse
+     */
+    'associated_services_count'?: number;
 }
 
 
@@ -30858,6 +30942,126 @@ export class DatabasesApi extends BaseAPI {
      */
     public listEnvironmentDatabaseConfig(environmentId: string, options?: AxiosRequestConfig) {
         return DatabasesApiFp(this.configuration).listEnvironmentDatabaseConfig(environmentId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * DefaultApi - axios parameter creator
+ * @export
+ */
+export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Get organization container registry associated services
+         * @summary Get organization container registry associated services
+         * @param {string} organizationId 
+         * @param {string} containerRegistryId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getContainerRegistryAssociatedServices: async (organizationId: string, containerRegistryId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getContainerRegistryAssociatedServices', 'organizationId', organizationId)
+            // verify required parameter 'containerRegistryId' is not null or undefined
+            assertParamExists('getContainerRegistryAssociatedServices', 'containerRegistryId', containerRegistryId)
+            const localVarPath = `/organization/{organizationId}/containerRegistry/{containerRegistryId}/associatedServices`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"containerRegistryId"}}`, encodeURIComponent(String(containerRegistryId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * DefaultApi - functional programming interface
+ * @export
+ */
+export const DefaultApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Get organization container registry associated services
+         * @summary Get organization container registry associated services
+         * @param {string} organizationId 
+         * @param {string} containerRegistryId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getContainerRegistryAssociatedServices(organizationId: string, containerRegistryId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerRegistryAssociatedServicesResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getContainerRegistryAssociatedServices(organizationId, containerRegistryId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * DefaultApi - factory interface
+ * @export
+ */
+export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = DefaultApiFp(configuration)
+    return {
+        /**
+         * Get organization container registry associated services
+         * @summary Get organization container registry associated services
+         * @param {string} organizationId 
+         * @param {string} containerRegistryId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getContainerRegistryAssociatedServices(organizationId: string, containerRegistryId: string, options?: any): AxiosPromise<ContainerRegistryAssociatedServicesResponseList> {
+            return localVarFp.getContainerRegistryAssociatedServices(organizationId, containerRegistryId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * DefaultApi - object-oriented interface
+ * @export
+ * @class DefaultApi
+ * @extends {BaseAPI}
+ */
+export class DefaultApi extends BaseAPI {
+    /**
+     * Get organization container registry associated services
+     * @summary Get organization container registry associated services
+     * @param {string} organizationId 
+     * @param {string} containerRegistryId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getContainerRegistryAssociatedServices(organizationId: string, containerRegistryId: string, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getContainerRegistryAssociatedServices(organizationId, containerRegistryId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
