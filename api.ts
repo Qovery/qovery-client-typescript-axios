@@ -31032,207 +31032,6 @@ export class DatabasesApi extends BaseAPI {
 
 
 /**
- * DefaultApi - axios parameter creator
- * @export
- */
-export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Get organization container registry associated services
-         * @summary Get organization container registry associated services
-         * @param {string} organizationId 
-         * @param {string} containerRegistryId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getContainerRegistryAssociatedServices: async (organizationId: string, containerRegistryId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            assertParamExists('getContainerRegistryAssociatedServices', 'organizationId', organizationId)
-            // verify required parameter 'containerRegistryId' is not null or undefined
-            assertParamExists('getContainerRegistryAssociatedServices', 'containerRegistryId', containerRegistryId)
-            const localVarPath = `/organization/{organizationId}/containerRegistry/{containerRegistryId}/associatedServices`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
-                .replace(`{${"containerRegistryId"}}`, encodeURIComponent(String(containerRegistryId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get organization helm repository associated services
-         * @summary Get organization helm repository associated services
-         * @param {string} organizationId 
-         * @param {string} helmRepositoryId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getHelmRepositoryAssociatedServices: async (organizationId: string, helmRepositoryId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            assertParamExists('getHelmRepositoryAssociatedServices', 'organizationId', organizationId)
-            // verify required parameter 'helmRepositoryId' is not null or undefined
-            assertParamExists('getHelmRepositoryAssociatedServices', 'helmRepositoryId', helmRepositoryId)
-            const localVarPath = `/organization/{organizationId}/helmRepository/{helmRepositoryId}/associatedServices`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
-                .replace(`{${"helmRepositoryId"}}`, encodeURIComponent(String(helmRepositoryId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * DefaultApi - functional programming interface
- * @export
- */
-export const DefaultApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * Get organization container registry associated services
-         * @summary Get organization container registry associated services
-         * @param {string} organizationId 
-         * @param {string} containerRegistryId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getContainerRegistryAssociatedServices(organizationId: string, containerRegistryId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerRegistryAssociatedServicesResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getContainerRegistryAssociatedServices(organizationId, containerRegistryId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Get organization helm repository associated services
-         * @summary Get organization helm repository associated services
-         * @param {string} organizationId 
-         * @param {string} helmRepositoryId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getHelmRepositoryAssociatedServices(organizationId: string, helmRepositoryId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmRepositoryAssociatedServicesResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getHelmRepositoryAssociatedServices(organizationId, helmRepositoryId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * DefaultApi - factory interface
- * @export
- */
-export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = DefaultApiFp(configuration)
-    return {
-        /**
-         * Get organization container registry associated services
-         * @summary Get organization container registry associated services
-         * @param {string} organizationId 
-         * @param {string} containerRegistryId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getContainerRegistryAssociatedServices(organizationId: string, containerRegistryId: string, options?: any): AxiosPromise<ContainerRegistryAssociatedServicesResponseList> {
-            return localVarFp.getContainerRegistryAssociatedServices(organizationId, containerRegistryId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Get organization helm repository associated services
-         * @summary Get organization helm repository associated services
-         * @param {string} organizationId 
-         * @param {string} helmRepositoryId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getHelmRepositoryAssociatedServices(organizationId: string, helmRepositoryId: string, options?: any): AxiosPromise<HelmRepositoryAssociatedServicesResponseList> {
-            return localVarFp.getHelmRepositoryAssociatedServices(organizationId, helmRepositoryId, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * DefaultApi - object-oriented interface
- * @export
- * @class DefaultApi
- * @extends {BaseAPI}
- */
-export class DefaultApi extends BaseAPI {
-    /**
-     * Get organization container registry associated services
-     * @summary Get organization container registry associated services
-     * @param {string} organizationId 
-     * @param {string} containerRegistryId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public getContainerRegistryAssociatedServices(organizationId: string, containerRegistryId: string, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getContainerRegistryAssociatedServices(organizationId, containerRegistryId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get organization helm repository associated services
-     * @summary Get organization helm repository associated services
-     * @param {string} organizationId 
-     * @param {string} helmRepositoryId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public getHelmRepositoryAssociatedServices(organizationId: string, helmRepositoryId: string, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getHelmRepositoryAssociatedServices(organizationId, helmRepositoryId, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
  * DeploymentStageMainCallsApi - axios parameter creator
  * @export
  */
@@ -46637,6 +46436,51 @@ export const OrganizationMainCallsApiAxiosParamCreator = function (configuration
             };
         },
         /**
+         * Get organization container registry associated services
+         * @summary Get organization container registry associated services
+         * @param {string} organizationId 
+         * @param {string} containerRegistryId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getContainerRegistryAssociatedServices: async (organizationId: string, containerRegistryId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getContainerRegistryAssociatedServices', 'organizationId', organizationId)
+            // verify required parameter 'containerRegistryId' is not null or undefined
+            assertParamExists('getContainerRegistryAssociatedServices', 'containerRegistryId', containerRegistryId)
+            const localVarPath = `/organization/{organizationId}/containerRegistry/{containerRegistryId}/associatedServices`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"containerRegistryId"}}`, encodeURIComponent(String(containerRegistryId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Get organization git tokens associated services
          * @summary Get organization git token associated services
          * @param {string} organizationId Organization ID
@@ -46652,6 +46496,51 @@ export const OrganizationMainCallsApiAxiosParamCreator = function (configuration
             const localVarPath = `/organization/{organizationId}/gitToken/{gitTokenId}/associatedServices`
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
                 .replace(`{${"gitTokenId"}}`, encodeURIComponent(String(gitTokenId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get organization helm repository associated services
+         * @summary Get organization helm repository associated services
+         * @param {string} organizationId 
+         * @param {string} helmRepositoryId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHelmRepositoryAssociatedServices: async (organizationId: string, helmRepositoryId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getHelmRepositoryAssociatedServices', 'organizationId', organizationId)
+            // verify required parameter 'helmRepositoryId' is not null or undefined
+            assertParamExists('getHelmRepositoryAssociatedServices', 'helmRepositoryId', helmRepositoryId)
+            const localVarPath = `/organization/{organizationId}/helmRepository/{helmRepositoryId}/associatedServices`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"helmRepositoryId"}}`, encodeURIComponent(String(helmRepositoryId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -46968,6 +46857,18 @@ export const OrganizationMainCallsApiFp = function(configuration?: Configuration
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Get organization container registry associated services
+         * @summary Get organization container registry associated services
+         * @param {string} organizationId 
+         * @param {string} containerRegistryId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getContainerRegistryAssociatedServices(organizationId: string, containerRegistryId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerRegistryAssociatedServicesResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getContainerRegistryAssociatedServices(organizationId, containerRegistryId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Get organization git tokens associated services
          * @summary Get organization git token associated services
          * @param {string} organizationId Organization ID
@@ -46977,6 +46878,18 @@ export const OrganizationMainCallsApiFp = function(configuration?: Configuration
          */
         async getGitTokenAssociatedServices(organizationId: string, gitTokenId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitTokenAssociatedServicesResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGitTokenAssociatedServices(organizationId, gitTokenId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get organization helm repository associated services
+         * @summary Get organization helm repository associated services
+         * @param {string} organizationId 
+         * @param {string} helmRepositoryId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getHelmRepositoryAssociatedServices(organizationId: string, helmRepositoryId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmRepositoryAssociatedServicesResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getHelmRepositoryAssociatedServices(organizationId, helmRepositoryId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -47110,6 +47023,17 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
             return localVarFp.editOrganization(organizationId, organizationEditRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * Get organization container registry associated services
+         * @summary Get organization container registry associated services
+         * @param {string} organizationId 
+         * @param {string} containerRegistryId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getContainerRegistryAssociatedServices(organizationId: string, containerRegistryId: string, options?: any): AxiosPromise<ContainerRegistryAssociatedServicesResponseList> {
+            return localVarFp.getContainerRegistryAssociatedServices(organizationId, containerRegistryId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Get organization git tokens associated services
          * @summary Get organization git token associated services
          * @param {string} organizationId Organization ID
@@ -47119,6 +47043,17 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
          */
         getGitTokenAssociatedServices(organizationId: string, gitTokenId: string, options?: any): AxiosPromise<GitTokenAssociatedServicesResponseList> {
             return localVarFp.getGitTokenAssociatedServices(organizationId, gitTokenId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get organization helm repository associated services
+         * @summary Get organization helm repository associated services
+         * @param {string} organizationId 
+         * @param {string} helmRepositoryId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHelmRepositoryAssociatedServices(organizationId: string, helmRepositoryId: string, options?: any): AxiosPromise<HelmRepositoryAssociatedServicesResponseList> {
+            return localVarFp.getHelmRepositoryAssociatedServices(organizationId, helmRepositoryId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -47258,6 +47193,19 @@ export class OrganizationMainCallsApi extends BaseAPI {
     }
 
     /**
+     * Get organization container registry associated services
+     * @summary Get organization container registry associated services
+     * @param {string} organizationId 
+     * @param {string} containerRegistryId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationMainCallsApi
+     */
+    public getContainerRegistryAssociatedServices(organizationId: string, containerRegistryId: string, options?: AxiosRequestConfig) {
+        return OrganizationMainCallsApiFp(this.configuration).getContainerRegistryAssociatedServices(organizationId, containerRegistryId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Get organization git tokens associated services
      * @summary Get organization git token associated services
      * @param {string} organizationId Organization ID
@@ -47268,6 +47216,19 @@ export class OrganizationMainCallsApi extends BaseAPI {
      */
     public getGitTokenAssociatedServices(organizationId: string, gitTokenId: string, options?: AxiosRequestConfig) {
         return OrganizationMainCallsApiFp(this.configuration).getGitTokenAssociatedServices(organizationId, gitTokenId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get organization helm repository associated services
+     * @summary Get organization helm repository associated services
+     * @param {string} organizationId 
+     * @param {string} helmRepositoryId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationMainCallsApi
+     */
+    public getHelmRepositoryAssociatedServices(organizationId: string, helmRepositoryId: string, options?: AxiosRequestConfig) {
+        return OrganizationMainCallsApiFp(this.configuration).getHelmRepositoryAssociatedServices(organizationId, helmRepositoryId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
