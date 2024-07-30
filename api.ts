@@ -3717,7 +3717,8 @@ export interface ContainerNetworkRequest {
 
 export const ContainerRegistryAssociatedServiceType = {
     CONTAINER: 'CONTAINER',
-    JOB: 'JOB'
+    LIFECYCLE: 'LIFECYCLE',
+    CRON: 'CRON'
 } as const;
 
 export type ContainerRegistryAssociatedServiceType = typeof ContainerRegistryAssociatedServiceType[keyof typeof ContainerRegistryAssociatedServiceType];
