@@ -1144,6 +1144,44 @@ export interface AvailableHelmRepositoryResponseList {
 /**
  * 
  * @export
+ * @interface AwsClusterCredentials
+ */
+export interface AwsClusterCredentials {
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsClusterCredentials
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsClusterCredentials
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsClusterCredentials
+     */
+    'access_key_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsClusterCredentials
+     */
+    'object_type': AwsClusterCredentialsObjectTypeEnum;
+}
+
+export const AwsClusterCredentialsObjectTypeEnum = {
+    AWS: 'AWS'
+} as const;
+
+export type AwsClusterCredentialsObjectTypeEnum = typeof AwsClusterCredentialsObjectTypeEnum[keyof typeof AwsClusterCredentialsObjectTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface AwsCredentialsRequest
  */
 export interface AwsCredentialsRequest {
@@ -2247,24 +2285,11 @@ export interface ClusterCloudProviderInfoRequest {
 
 
 /**
- * 
+ * @type ClusterCredentials
  * @export
- * @interface ClusterCredentials
  */
-export interface ClusterCredentials {
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterCredentials
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterCredentials
-     */
-    'name': string;
-}
+export type ClusterCredentials = { object_type: 'AWS' } & AwsClusterCredentials | { object_type: 'OTHER' } & GenericClusterCredentials | { object_type: 'SCW' } & ScalewayClusterCredentials;
+
 /**
  * 
  * @export
@@ -7396,6 +7421,38 @@ export interface GcpCredentialsRequest {
      */
     'gcp_credentials': string;
 }
+/**
+ * 
+ * @export
+ * @interface GenericClusterCredentials
+ */
+export interface GenericClusterCredentials {
+    /**
+     * 
+     * @type {string}
+     * @memberof GenericClusterCredentials
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GenericClusterCredentials
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GenericClusterCredentials
+     */
+    'object_type': GenericClusterCredentialsObjectTypeEnum;
+}
+
+export const GenericClusterCredentialsObjectTypeEnum = {
+    OTHER: 'OTHER'
+} as const;
+
+export type GenericClusterCredentialsObjectTypeEnum = typeof GenericClusterCredentialsObjectTypeEnum[keyof typeof GenericClusterCredentialsObjectTypeEnum];
+
 /**
  * 
  * @export
@@ -13167,6 +13224,44 @@ export const RewardClaimTypeEnum = {
 } as const;
 
 export type RewardClaimTypeEnum = typeof RewardClaimTypeEnum[keyof typeof RewardClaimTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface ScalewayClusterCredentials
+ */
+export interface ScalewayClusterCredentials {
+    /**
+     * 
+     * @type {string}
+     * @memberof ScalewayClusterCredentials
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScalewayClusterCredentials
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScalewayClusterCredentials
+     */
+    'scaleway_access_key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScalewayClusterCredentials
+     */
+    'object_type': ScalewayClusterCredentialsObjectTypeEnum;
+}
+
+export const ScalewayClusterCredentialsObjectTypeEnum = {
+    SCW: 'SCW'
+} as const;
+
+export type ScalewayClusterCredentialsObjectTypeEnum = typeof ScalewayClusterCredentialsObjectTypeEnum[keyof typeof ScalewayClusterCredentialsObjectTypeEnum];
 
 /**
  * 
