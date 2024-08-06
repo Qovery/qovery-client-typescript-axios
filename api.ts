@@ -4021,6 +4021,12 @@ export interface ContainerRegistryResponse {
      * @memberof ContainerRegistryResponse
      */
     'associated_services_count'?: number;
+    /**
+     * 
+     * @type {ContainerRegistryResponseAllOfConfig}
+     * @memberof ContainerRegistryResponse
+     */
+    'config'?: ContainerRegistryResponseAllOfConfig;
 }
 
 
@@ -4042,6 +4048,37 @@ export interface ContainerRegistryResponseAllOfCluster {
      * @memberof ContainerRegistryResponseAllOfCluster
      */
     'name': string;
+}
+/**
+ * 
+ * @export
+ * @interface ContainerRegistryResponseAllOfConfig
+ */
+export interface ContainerRegistryResponseAllOfConfig {
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOfConfig
+     */
+    'username'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOfConfig
+     */
+    'region'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOfConfig
+     */
+    'scaleway_access_key'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOfConfig
+     */
+    'access_key_id'?: string;
 }
 /**
  * 
@@ -8500,9 +8537,46 @@ export interface HelmRepositoryResponse {
      * @memberof HelmRepositoryResponse
      */
     'associated_services_count'?: number;
+    /**
+     * 
+     * @type {HelmRepositoryResponseAllOfConfig}
+     * @memberof HelmRepositoryResponse
+     */
+    'config'?: HelmRepositoryResponseAllOfConfig;
 }
 
 
+/**
+ * 
+ * @export
+ * @interface HelmRepositoryResponseAllOfConfig
+ */
+export interface HelmRepositoryResponseAllOfConfig {
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryResponseAllOfConfig
+     */
+    'username'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryResponseAllOfConfig
+     */
+    'region'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryResponseAllOfConfig
+     */
+    'access_key_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryResponseAllOfConfig
+     */
+    'scaleway_access_key'?: string;
+}
 /**
  * 
  * @export
