@@ -10317,6 +10317,12 @@ export interface LifecycleTemplateResponse {
      */
     'max_duration_in_minutes': number;
     /**
+     * Job max allowed duration in secondes. After this allowed time, the job is going to be killed.
+     * @type {number}
+     * @memberof LifecycleTemplateResponse
+     */
+    'max_duration_in_sec': number;
+    /**
      * 
      * @type {LifecycleTemplateResponseResources}
      * @memberof LifecycleTemplateResponse
