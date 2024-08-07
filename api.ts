@@ -11974,6 +11974,12 @@ export interface OrganizationEventResponse {
      * @memberof OrganizationEventResponse
      */
     'environment_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationEventResponse
+     */
+    'user_agent'?: string | null;
 }
 
 
