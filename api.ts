@@ -29200,7 +29200,7 @@ export const CustomDomainApiAxiosParamCreator = function (configuration?: Config
         checkApplicationCustomDomain: async (applicationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'applicationId' is not null or undefined
             assertParamExists('checkApplicationCustomDomain', 'applicationId', applicationId)
-            const localVarPath = `/application/{applicationId}/customDomain/check`
+            const localVarPath = `/application/{applicationId}/checkCustomDomain`
                 .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -29241,7 +29241,7 @@ export const CustomDomainApiAxiosParamCreator = function (configuration?: Config
         checkContainerCustomDomain: async (containerId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'containerId' is not null or undefined
             assertParamExists('checkContainerCustomDomain', 'containerId', containerId)
-            const localVarPath = `/container/{containerId}/customDomain/check`
+            const localVarPath = `/container/{containerId}/checkCustomDomain`
                 .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -29282,7 +29282,7 @@ export const CustomDomainApiAxiosParamCreator = function (configuration?: Config
         checkHelmCustomDomain: async (helmId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'helmId' is not null or undefined
             assertParamExists('checkHelmCustomDomain', 'helmId', helmId)
-            const localVarPath = `/helm/{helmId}/customDomain/check`
+            const localVarPath = `/helm/{helmId}/checkCustomDomain`
                 .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
