@@ -1720,6 +1720,63 @@ export interface CancelEnvironmentDeploymentRequest {
 /**
  * 
  * @export
+ * @interface CheckedCustomDomainResponse
+ */
+export interface CheckedCustomDomainResponse {
+    /**
+     * domain name checked
+     * @type {string}
+     * @memberof CheckedCustomDomainResponse
+     */
+    'domain_name': string;
+    /**
+     * 
+     * @type {CheckedCustomDomainStatus}
+     * @memberof CheckedCustomDomainResponse
+     */
+    'status': CheckedCustomDomainStatus;
+    /**
+     * optional field containing information about failure check
+     * @type {string}
+     * @memberof CheckedCustomDomainResponse
+     */
+    'error_details'?: string | null;
+}
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const CheckedCustomDomainStatus = {
+    RESOLVES_TO_IP: 'RESOLVES_TO_IP',
+    MATCHES_LOAD_BALANCER_HOST: 'MATCHES_LOAD_BALANCER_HOST',
+    DOMAIN_NOT_CONFIGURED: 'DOMAIN_NOT_CONFIGURED',
+    DOMAIN_LINKED_TO_WRONG_HOST: 'DOMAIN_LINKED_TO_WRONG_HOST',
+    GENERIC_FAILURE: 'GENERIC_FAILURE'
+} as const;
+
+export type CheckedCustomDomainStatus = typeof CheckedCustomDomainStatus[keyof typeof CheckedCustomDomainStatus];
+
+
+/**
+ * 
+ * @export
+ * @interface CheckedCustomDomainsResponse
+ */
+export interface CheckedCustomDomainsResponse {
+    /**
+     * 
+     * @type {Array<CheckedCustomDomainResponse>}
+     * @memberof CheckedCustomDomainsResponse
+     */
+    'results': Array<CheckedCustomDomainResponse>;
+}
+/**
+ * 
+ * @export
  * @interface CleanFailedJob200Response
  */
 export interface CleanFailedJob200Response {
@@ -29128,6 +29185,129 @@ export class ContainersApi extends BaseAPI {
 export const CustomDomainApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * 
+         * @summary Check Application Custom Domain
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkApplicationCustomDomain: async (applicationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'applicationId' is not null or undefined
+            assertParamExists('checkApplicationCustomDomain', 'applicationId', applicationId)
+            const localVarPath = `/application/{applicationId}/customDomain/check`
+                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Check Container Custom Domain
+         * @param {string} containerId Container ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkContainerCustomDomain: async (containerId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'containerId' is not null or undefined
+            assertParamExists('checkContainerCustomDomain', 'containerId', containerId)
+            const localVarPath = `/container/{containerId}/customDomain/check`
+                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Check Helm Custom Domain
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkHelmCustomDomain: async (helmId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('checkHelmCustomDomain', 'helmId', helmId)
+            const localVarPath = `/helm/{helmId}/customDomain/check`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Add a custom domain to this application in order not to use qovery autogenerated domain
          * @summary Add custom domain to the application.
          * @param {string} applicationId Application ID
@@ -29363,6 +29543,39 @@ export const CustomDomainApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CustomDomainApiAxiosParamCreator(configuration)
     return {
         /**
+         * 
+         * @summary Check Application Custom Domain
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async checkApplicationCustomDomain(applicationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckedCustomDomainsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkApplicationCustomDomain(applicationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Check Container Custom Domain
+         * @param {string} containerId Container ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async checkContainerCustomDomain(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckedCustomDomainsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkContainerCustomDomain(containerId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Check Helm Custom Domain
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async checkHelmCustomDomain(helmId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckedCustomDomainsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkHelmCustomDomain(helmId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Add a custom domain to this application in order not to use qovery autogenerated domain
          * @summary Add custom domain to the application.
          * @param {string} applicationId Application ID
@@ -29433,6 +29646,36 @@ export const CustomDomainApiFactory = function (configuration?: Configuration, b
     const localVarFp = CustomDomainApiFp(configuration)
     return {
         /**
+         * 
+         * @summary Check Application Custom Domain
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkApplicationCustomDomain(applicationId: string, options?: any): AxiosPromise<CheckedCustomDomainsResponse> {
+            return localVarFp.checkApplicationCustomDomain(applicationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Check Container Custom Domain
+         * @param {string} containerId Container ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkContainerCustomDomain(containerId: string, options?: any): AxiosPromise<CheckedCustomDomainsResponse> {
+            return localVarFp.checkContainerCustomDomain(containerId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Check Helm Custom Domain
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkHelmCustomDomain(helmId: string, options?: any): AxiosPromise<CheckedCustomDomainsResponse> {
+            return localVarFp.checkHelmCustomDomain(helmId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Add a custom domain to this application in order not to use qovery autogenerated domain
          * @summary Add custom domain to the application.
          * @param {string} applicationId Application ID
@@ -29497,6 +29740,42 @@ export const CustomDomainApiFactory = function (configuration?: Configuration, b
  * @extends {BaseAPI}
  */
 export class CustomDomainApi extends BaseAPI {
+    /**
+     * 
+     * @summary Check Application Custom Domain
+     * @param {string} applicationId Application ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomDomainApi
+     */
+    public checkApplicationCustomDomain(applicationId: string, options?: AxiosRequestConfig) {
+        return CustomDomainApiFp(this.configuration).checkApplicationCustomDomain(applicationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Check Container Custom Domain
+     * @param {string} containerId Container ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomDomainApi
+     */
+    public checkContainerCustomDomain(containerId: string, options?: AxiosRequestConfig) {
+        return CustomDomainApiFp(this.configuration).checkContainerCustomDomain(containerId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Check Helm Custom Domain
+     * @param {string} helmId Helm ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomDomainApi
+     */
+    public checkHelmCustomDomain(helmId: string, options?: AxiosRequestConfig) {
+        return CustomDomainApiFp(this.configuration).checkHelmCustomDomain(helmId, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Add a custom domain to this application in order not to use qovery autogenerated domain
      * @summary Add custom domain to the application.
