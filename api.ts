@@ -7282,6 +7282,12 @@ export interface EnvironmentVariable {
     'description'?: string | null;
     /**
      * 
+     * @type {boolean}
+     * @memberof EnvironmentVariable
+     */
+    'enable_interpolation_in_file'?: boolean | null;
+    /**
+     * 
      * @type {EnvironmentVariableOverride}
      * @memberof EnvironmentVariable
      */
@@ -7406,6 +7412,12 @@ export interface EnvironmentVariableEditRequest {
      * @memberof EnvironmentVariableEditRequest
      */
     'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnvironmentVariableEditRequest
+     */
+    'enable_interpolation_in_file'?: boolean | null;
 }
 /**
  * 
@@ -7482,6 +7494,12 @@ export interface EnvironmentVariableRequest {
      * @memberof EnvironmentVariableRequest
      */
     'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnvironmentVariableRequest
+     */
+    'enable_interpolation_in_file'?: boolean | null;
 }
 /**
  * 
@@ -10048,6 +10066,12 @@ export interface Key {
      * @memberof Key
      */
     'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Key
+     */
+    'enable_interpolation_in_file'?: boolean | null;
 }
 /**
  * 
@@ -13529,6 +13553,12 @@ export interface Secret {
      * @memberof Secret
      */
     'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Secret
+     */
+    'enable_interpolation_in_file'?: boolean | null;
 }
 
 
@@ -13574,6 +13604,12 @@ export interface SecretAlias {
      * @memberof SecretAlias
      */
     'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SecretAlias
+     */
+    'enable_interpolatin_in_file'?: boolean | null;
 }
 
 
@@ -13601,6 +13637,12 @@ export interface SecretEditRequest {
      * @memberof SecretEditRequest
      */
     'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SecretEditRequest
+     */
+    'enable_interpolation_in_file'?: boolean | null;
 }
 /**
  * 
@@ -13644,6 +13686,12 @@ export interface SecretOverride {
      * @memberof SecretOverride
      */
     'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SecretOverride
+     */
+    'enable_interpolation_in_file'?: boolean | null;
 }
 
 
@@ -13677,6 +13725,12 @@ export interface SecretRequest {
      * @memberof SecretRequest
      */
     'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SecretRequest
+     */
+    'enable_interpolation_in_file'?: boolean | null;
 }
 /**
  * 
@@ -14652,6 +14706,12 @@ export interface Value {
      * @memberof Value
      */
     'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Value
+     */
+    'enable_interpolation_in_file'?: boolean | null;
 }
 /**
  * 
@@ -14728,6 +14788,12 @@ export interface VariableAliasRequest {
      * @memberof VariableAliasRequest
      */
     'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof VariableAliasRequest
+     */
+    'enable_interpolation_in_file'?: boolean | null;
 }
 
 
@@ -14935,6 +15001,12 @@ export interface VariableOverrideRequest {
      * @memberof VariableOverrideRequest
      */
     'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof VariableOverrideRequest
+     */
+    'enable_interpolation_in_file'?: boolean | null;
 }
 
 
