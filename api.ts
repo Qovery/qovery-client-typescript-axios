@@ -13609,7 +13609,7 @@ export interface SecretAlias {
      * @type {boolean}
      * @memberof SecretAlias
      */
-    'enable_interpolatin_in_file'?: boolean | null;
+    'enable_interpolation_in_file'?: boolean | null;
 }
 
 
@@ -15058,6 +15058,12 @@ export interface VariableRequest {
      * @memberof VariableRequest
      */
     'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof VariableRequest
+     */
+    'enable_interpolation_in_file'?: boolean | null;
 }
 
 
@@ -15163,6 +15169,12 @@ export interface VariableResponse {
      * @memberof VariableResponse
      */
     'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableResponse
+     */
+    'enable_interpolation_in_file'?: string;
 }
 
 
