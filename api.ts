@@ -15171,10 +15171,10 @@ export interface VariableResponse {
     'description'?: string;
     /**
      * 
-     * @type {string}
+     * @type {boolean}
      * @memberof VariableResponse
      */
-    'enable_interpolation_in_file'?: string;
+    'enable_interpolation_in_file'?: boolean;
 }
 
 
