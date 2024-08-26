@@ -10511,6 +10511,12 @@ export interface LifecycleTemplateResponseVariablesInnerFile {
      * @memberof LifecycleTemplateResponseVariablesInnerFile
      */
     'path': string;
+    /**
+     * if we should interpolate variable inside the file
+     * @type {boolean}
+     * @memberof LifecycleTemplateResponseVariablesInnerFile
+     */
+    'enable_interpolation'?: boolean;
 }
 /**
  * 
