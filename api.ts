@@ -13430,6 +13430,18 @@ export interface ScalewayClusterCredentials {
      * @memberof ScalewayClusterCredentials
      */
     'object_type': ScalewayClusterCredentialsObjectTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScalewayClusterCredentials
+     */
+    'scaleway_project_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScalewayClusterCredentials
+     */
+    'scaleway_organization_id': string;
 }
 
 export const ScalewayClusterCredentialsObjectTypeEnum = {
