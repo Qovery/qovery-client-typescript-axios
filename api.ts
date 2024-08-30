@@ -23979,7 +23979,7 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
             if (withTokenFromCli !== undefined) {
-                localVarQueryParameter['withTokenFromCli'] = withTokenFromCli;
+                localVarQueryParameter['with_token_from_cli'] = withTokenFromCli;
             }
 
 
