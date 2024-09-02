@@ -3386,37 +3386,16 @@ export interface ClusterStatus {
      * @memberof ClusterStatus
      */
     'is_deployed'?: boolean;
-}
-
-
-/**
- * 
- * @export
- * @interface ClusterStatusGet
- */
-export interface ClusterStatusGet {
     /**
      * 
      * @type {string}
-     * @memberof ClusterStatusGet
+     * @memberof ClusterStatus
      */
-    'cluster_id'?: string;
-    /**
-     * 
-     * @type {ClusterStateEnum}
-     * @memberof ClusterStatusGet
-     */
-    'status'?: ClusterStateEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ClusterStatusGet
-     */
-    'is_deployed'?: boolean;
+    'next_k8s_available_version'?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof ClusterStatusGet
+     * @memberof ClusterStatus
      */
     'last_execution_id'?: string;
 }
@@ -3430,10 +3409,10 @@ export interface ClusterStatusGet {
 export interface ClusterStatusResponseList {
     /**
      * 
-     * @type {Array<ClusterStatusGet>}
+     * @type {Array<ClusterStatus>}
      * @memberof ClusterStatusResponseList
      */
-    'results'?: Array<ClusterStatusGet>;
+    'results'?: Array<ClusterStatus>;
 }
 /**
  * 
@@ -24476,6 +24455,47 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * allows to upgrade a cluster to next available kubernetes version
+         * @summary Upgrade a cluster
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        upgradeCluster: async (clusterId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('upgradeCluster', 'clusterId', clusterId)
+            const localVarPath = `/cluster/{clusterId}/upgrade`
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -24620,7 +24640,7 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getClusterStatus(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatusGet>> {
+        async getClusterStatus(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterStatus(organizationId, clusterId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -24727,6 +24747,17 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          */
         async stopCluster(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.stopCluster(organizationId, clusterId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * allows to upgrade a cluster to next available kubernetes version
+         * @summary Upgrade a cluster
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async upgradeCluster(clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatus>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.upgradeCluster(clusterId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -24863,7 +24894,7 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getClusterStatus(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterStatusGet> {
+        getClusterStatus(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterStatus> {
             return localVarFp.getClusterStatus(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -24961,6 +24992,16 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          */
         stopCluster(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterStatus> {
             return localVarFp.stopCluster(organizationId, clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * allows to upgrade a cluster to next available kubernetes version
+         * @summary Upgrade a cluster
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        upgradeCluster(clusterId: string, options?: any): AxiosPromise<ClusterStatus> {
+            return localVarFp.upgradeCluster(clusterId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -25233,6 +25274,18 @@ export class ClustersApi extends BaseAPI {
      */
     public stopCluster(organizationId: string, clusterId: string, options?: AxiosRequestConfig) {
         return ClustersApiFp(this.configuration).stopCluster(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * allows to upgrade a cluster to next available kubernetes version
+     * @summary Upgrade a cluster
+     * @param {string} clusterId Cluster ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClustersApi
+     */
+    public upgradeCluster(clusterId: string, options?: AxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).upgradeCluster(clusterId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
