@@ -10190,6 +10190,19 @@ export interface KubernetesServicePort {
 /**
  * 
  * @export
+ * @interface KubernetesServiceResponseList
+ */
+export interface KubernetesServiceResponseList {
+    /**
+     * 
+     * @type {Array<KubernetesService>}
+     * @memberof KubernetesServiceResponseList
+     */
+    'results'?: Array<KubernetesService>;
+}
+/**
+ * 
+ * @export
  * @interface KubernetesServiceSpec
  */
 export interface KubernetesServiceSpec {
@@ -38992,7 +39005,7 @@ export const HelmMainCallsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getHelmKubernetesServices(helmId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<KubernetesService>>> {
+        async getHelmKubernetesServices(helmId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KubernetesServiceResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getHelmKubernetesServices(helmId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -39078,7 +39091,7 @@ export const HelmMainCallsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getHelmKubernetesServices(helmId: string, options?: any): AxiosPromise<Array<KubernetesService>> {
+        getHelmKubernetesServices(helmId: string, options?: any): AxiosPromise<KubernetesServiceResponseList> {
             return localVarFp.getHelmKubernetesServices(helmId, options).then((request) => request(axios, basePath));
         },
         /**
