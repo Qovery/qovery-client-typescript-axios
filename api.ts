@@ -31849,47 +31849,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Get helm kubernetes services
-         * @summary Get helm kubernetes services
-         * @param {string} helmId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getHelmKubernetesServices: async (helmId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'helmId' is not null or undefined
-            assertParamExists('getHelmKubernetesServices', 'helmId', helmId)
-            const localVarPath = `/helm/{helmId}/listServices`
-                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -31909,17 +31868,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          */
         async getClusterTokenByClusterId(clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetClusterTokenByClusterId200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterTokenByClusterId(clusterId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Get helm kubernetes services
-         * @summary Get helm kubernetes services
-         * @param {string} helmId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getHelmKubernetesServices(helmId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<KubernetesService>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getHelmKubernetesServices(helmId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -31942,16 +31890,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         getClusterTokenByClusterId(clusterId: string, options?: any): AxiosPromise<GetClusterTokenByClusterId200Response> {
             return localVarFp.getClusterTokenByClusterId(clusterId, options).then((request) => request(axios, basePath));
         },
-        /**
-         * Get helm kubernetes services
-         * @summary Get helm kubernetes services
-         * @param {string} helmId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getHelmKubernetesServices(helmId: string, options?: any): AxiosPromise<Array<KubernetesService>> {
-            return localVarFp.getHelmKubernetesServices(helmId, options).then((request) => request(axios, basePath));
-        },
     };
 };
 
@@ -31972,18 +31910,6 @@ export class DefaultApi extends BaseAPI {
      */
     public getClusterTokenByClusterId(clusterId: string, options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).getClusterTokenByClusterId(clusterId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get helm kubernetes services
-     * @summary Get helm kubernetes services
-     * @param {string} helmId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public getHelmKubernetesServices(helmId: string, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getHelmKubernetesServices(helmId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -38847,6 +38773,47 @@ export const HelmMainCallsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
+         * Get helm kubernetes services
+         * @summary Get helm kubernetes services
+         * @param {string} helmId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHelmKubernetesServices: async (helmId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('getHelmKubernetesServices', 'helmId', helmId)
+            const localVarPath = `/helm/{helmId}/listServices`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Get helm status
          * @param {string} helmId Helm ID
@@ -39019,6 +38986,17 @@ export const HelmMainCallsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Get helm kubernetes services
+         * @summary Get helm kubernetes services
+         * @param {string} helmId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getHelmKubernetesServices(helmId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<KubernetesService>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getHelmKubernetesServices(helmId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * 
          * @summary Get helm status
          * @param {string} helmId Helm ID
@@ -39092,6 +39070,16 @@ export const HelmMainCallsApiFactory = function (configuration?: Configuration, 
          */
         getHelm(helmId: string, options?: any): AxiosPromise<HelmResponse> {
             return localVarFp.getHelm(helmId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get helm kubernetes services
+         * @summary Get helm kubernetes services
+         * @param {string} helmId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHelmKubernetesServices(helmId: string, options?: any): AxiosPromise<Array<KubernetesService>> {
+            return localVarFp.getHelmKubernetesServices(helmId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -39169,6 +39157,18 @@ export class HelmMainCallsApi extends BaseAPI {
      */
     public getHelm(helmId: string, options?: AxiosRequestConfig) {
         return HelmMainCallsApiFp(this.configuration).getHelm(helmId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get helm kubernetes services
+     * @summary Get helm kubernetes services
+     * @param {string} helmId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmMainCallsApi
+     */
+    public getHelmKubernetesServices(helmId: string, options?: AxiosRequestConfig) {
+        return HelmMainCallsApiFp(this.configuration).getHelmKubernetesServices(helmId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
