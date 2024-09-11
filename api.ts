@@ -8368,12 +8368,6 @@ export interface HelmPortRequestPortsInner {
      * @type {string}
      * @memberof HelmPortRequestPortsInner
      */
-    'service_name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof HelmPortRequestPortsInner
-     */
     'namespace'?: string;
     /**
      * 
@@ -8387,6 +8381,227 @@ export interface HelmPortRequestPortsInner {
      * @memberof HelmPortRequestPortsInner
      */
     'is_default'?: boolean;
+    /**
+     * 
+     * @type {Array<KubernetesSelector>}
+     * @memberof HelmPortRequestPortsInner
+     */
+    'service_selectors'?: Array<KubernetesSelector>;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmPortRequestPortsInner
+     */
+    'service_name'?: string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface HelmPortRequestPortsInnerAllOfOneOf
+ */
+export interface HelmPortRequestPortsInnerAllOfOneOf {
+    /**
+     * 
+     * @type {Array<KubernetesSelector>}
+     * @memberof HelmPortRequestPortsInnerAllOfOneOf
+     */
+    'service_selectors'?: Array<KubernetesSelector>;
+}
+/**
+ * 
+ * @export
+ * @interface HelmPortRequestPortsInnerAllOfOneOf1
+ */
+export interface HelmPortRequestPortsInnerAllOfOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmPortRequestPortsInnerAllOfOneOf1
+     */
+    'service_name'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface HelmPortResponseBase
+ */
+export interface HelmPortResponseBase {
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmPortResponseBase
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmPortResponseBase
+     */
+    'port_type': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmPortResponseBase
+     */
+    'name'?: string;
+    /**
+     * The listening port of your service.
+     * @type {number}
+     * @memberof HelmPortResponseBase
+     */
+    'internal_port': number;
+    /**
+     * The exposed port for your service. This is optional. If not set a default port will be used.
+     * @type {number}
+     * @memberof HelmPortResponseBase
+     */
+    'external_port'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmPortResponseBase
+     */
+    'namespace'?: string;
+    /**
+     * 
+     * @type {HelmPortProtocolEnum}
+     * @memberof HelmPortResponseBase
+     */
+    'protocol': HelmPortProtocolEnum;
+    /**
+     * is the default port to use for domain
+     * @type {boolean}
+     * @memberof HelmPortResponseBase
+     */
+    'is_default'?: boolean;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface HelmPortResponseWithServiceName
+ */
+export interface HelmPortResponseWithServiceName {
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmPortResponseWithServiceName
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmPortResponseWithServiceName
+     */
+    'port_type': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmPortResponseWithServiceName
+     */
+    'name'?: string;
+    /**
+     * The listening port of your service.
+     * @type {number}
+     * @memberof HelmPortResponseWithServiceName
+     */
+    'internal_port': number;
+    /**
+     * The exposed port for your service. This is optional. If not set a default port will be used.
+     * @type {number}
+     * @memberof HelmPortResponseWithServiceName
+     */
+    'external_port'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmPortResponseWithServiceName
+     */
+    'namespace'?: string;
+    /**
+     * 
+     * @type {HelmPortProtocolEnum}
+     * @memberof HelmPortResponseWithServiceName
+     */
+    'protocol': HelmPortProtocolEnum;
+    /**
+     * is the default port to use for domain
+     * @type {boolean}
+     * @memberof HelmPortResponseWithServiceName
+     */
+    'is_default'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmPortResponseWithServiceName
+     */
+    'service_name': string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface HelmPortResponseWithServiceSelectors
+ */
+export interface HelmPortResponseWithServiceSelectors {
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmPortResponseWithServiceSelectors
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmPortResponseWithServiceSelectors
+     */
+    'port_type': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmPortResponseWithServiceSelectors
+     */
+    'name'?: string;
+    /**
+     * The listening port of your service.
+     * @type {number}
+     * @memberof HelmPortResponseWithServiceSelectors
+     */
+    'internal_port': number;
+    /**
+     * The exposed port for your service. This is optional. If not set a default port will be used.
+     * @type {number}
+     * @memberof HelmPortResponseWithServiceSelectors
+     */
+    'external_port'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmPortResponseWithServiceSelectors
+     */
+    'namespace'?: string;
+    /**
+     * 
+     * @type {HelmPortProtocolEnum}
+     * @memberof HelmPortResponseWithServiceSelectors
+     */
+    'protocol': HelmPortProtocolEnum;
+    /**
+     * is the default port to use for domain
+     * @type {boolean}
+     * @memberof HelmPortResponseWithServiceSelectors
+     */
+    'is_default'?: boolean;
+    /**
+     * 
+     * @type {Array<KubernetesSelector>}
+     * @memberof HelmPortResponseWithServiceSelectors
+     */
+    'service_selectors': Array<KubernetesSelector>;
 }
 
 
@@ -8987,10 +9202,10 @@ export interface HelmResponse {
     'auto_deploy': boolean;
     /**
      * 
-     * @type {Array<HelmResponseAllOfPorts>}
+     * @type {Array<HelmResponseAllOfPortsInner>}
      * @memberof HelmResponse
      */
-    'ports'?: Array<HelmResponseAllOfPorts>;
+    'ports'?: Array<HelmResponseAllOfPortsInner>;
     /**
      * 
      * @type {HelmResponseAllOfSource}
@@ -9023,61 +9238,10 @@ export interface HelmResponse {
     'icon_uri': string;
 }
 /**
- * 
+ * @type HelmResponseAllOfPortsInner
  * @export
- * @interface HelmResponseAllOfPorts
  */
-export interface HelmResponseAllOfPorts {
-    /**
-     * 
-     * @type {string}
-     * @memberof HelmResponseAllOfPorts
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof HelmResponseAllOfPorts
-     */
-    'name'?: string;
-    /**
-     * The listening port of your service.
-     * @type {number}
-     * @memberof HelmResponseAllOfPorts
-     */
-    'internal_port': number;
-    /**
-     * The exposed port for your service. This is optional. If not set a default port will be used.
-     * @type {number}
-     * @memberof HelmResponseAllOfPorts
-     */
-    'external_port'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof HelmResponseAllOfPorts
-     */
-    'service_name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof HelmResponseAllOfPorts
-     */
-    'namespace'?: string;
-    /**
-     * 
-     * @type {HelmPortProtocolEnum}
-     * @memberof HelmResponseAllOfPorts
-     */
-    'protocol': HelmPortProtocolEnum;
-    /**
-     * is the default port to use for domain
-     * @type {boolean}
-     * @memberof HelmResponseAllOfPorts
-     */
-    'is_default'?: boolean;
-}
-
+export type HelmResponseAllOfPortsInner = { port_type: 'SERVICE_NAME' } & HelmPortResponseWithServiceName | { port_type: 'SERVICE_SELECTORS' } & HelmPortResponseWithServiceSelectors;
 
 /**
  * @type HelmResponseAllOfSource
