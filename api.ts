@@ -2133,6 +2133,12 @@ export interface ClusterAdvancedSettings {
      */
     'cloud_provider.container_registry.tags'?: { [key: string]: string; };
     /**
+     * Enable the AWS ALB controller to manage the load balancer for the cluster. Note: Changing this feature will create a 10 min max downtime on your application\'s public access (time to delete, replace and propagate DNS of the new load balancer) and will requiere to update all services with TCP/UDP open ports.
+     * @type {boolean}
+     * @memberof ClusterAdvancedSettings
+     */
+    'aws.eks.enable_alb_controller'?: boolean;
+    /**
      * Select the size of the main load_balancer (only effective for Scaleway)
      * @type {string}
      * @memberof ClusterAdvancedSettings
