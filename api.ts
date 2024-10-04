@@ -3997,6 +3997,12 @@ export interface ContainerRegistryRequestConfig {
      */
     'scaleway_secret_key'?: string;
     /**
+     * Required if kind is `SCALEWAY_CR`
+     * @type {string}
+     * @memberof ContainerRegistryRequestConfig
+     */
+    'scaleway_project_id'?: string;
+    /**
      * Required if kind is `GCP_ARTIFACT_REGISTRY`
      * @type {string}
      * @memberof ContainerRegistryRequestConfig
@@ -4127,6 +4133,12 @@ export interface ContainerRegistryResponseAllOfConfig {
      * @memberof ContainerRegistryResponseAllOfConfig
      */
     'scaleway_access_key'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOfConfig
+     */
+    'scaleway_project_id'?: string;
     /**
      * 
      * @type {string}
