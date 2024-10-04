@@ -2272,7 +2272,7 @@ export interface ClusterAdvancedSettings {
      */
     'qovery.static_ip_mode'?: boolean;
     /**
-     * Set custom sources to public access endpoint Use CIDR notation to specify an IP address range  (for example, [\'203.0.113.5/32\',\'203.0.100/32\'])
+     * Set custom sources to public access endpoint. Use CIDR notation to specify an IP address range  (for example, [\'203.0.113.5/32\',\'203.0.100/32\'])
      * @type {Array<string>}
      * @memberof ClusterAdvancedSettings
      */
