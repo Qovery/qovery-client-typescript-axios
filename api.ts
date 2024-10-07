@@ -8825,6 +8825,12 @@ export interface HelmRepositoryRequestConfig {
      * @memberof HelmRepositoryRequestConfig
      */
     'scaleway_secret_key'?: string;
+    /**
+     * Required if kind is `SCALEWAY_CR`
+     * @type {string}
+     * @memberof HelmRepositoryRequestConfig
+     */
+    'scaleway_project_id'?: string;
 }
 /**
  * 
@@ -8925,6 +8931,12 @@ export interface HelmRepositoryResponseAllOfConfig {
      * @memberof HelmRepositoryResponseAllOfConfig
      */
     'scaleway_access_key'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryResponseAllOfConfig
+     */
+    'scaleway_project_id'?: string;
 }
 /**
  * 
