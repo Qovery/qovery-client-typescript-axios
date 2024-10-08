@@ -2832,6 +2832,74 @@ export interface ClusterFeatureStringResponse {
 /**
  * 
  * @export
+ * @interface ClusterInstanceAttributes
+ */
+export interface ClusterInstanceAttributes {
+    /**
+     * The category of the instance.
+     * @type {string}
+     * @memberof ClusterInstanceAttributes
+     */
+    'instance_category'?: string;
+    /**
+     * The generation of the instance.
+     * @type {number}
+     * @memberof ClusterInstanceAttributes
+     */
+    'instance_generation'?: number;
+    /**
+     * The family or series of the instance.
+     * @type {string}
+     * @memberof ClusterInstanceAttributes
+     */
+    'instance_family'?: string;
+    /**
+     * Specifies the size of the instance within its family.
+     * @type {string}
+     * @memberof ClusterInstanceAttributes
+     */
+    'instance_size'?: string;
+    /**
+     * The instance has sufficient resources to be chosen as a standalone instance in a cluster.
+     * @type {boolean}
+     * @memberof ClusterInstanceAttributes
+     */
+    'meets_resource_reqs'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterInstanceGpuInfo
+ */
+export interface ClusterInstanceGpuInfo {
+    /**
+     * The number of GPUs included in the instance.
+     * @type {number}
+     * @memberof ClusterInstanceGpuInfo
+     */
+    'count'?: number;
+    /**
+     * The model name of the GPU.
+     * @type {string}
+     * @memberof ClusterInstanceGpuInfo
+     */
+    'name'?: string;
+    /**
+     * The manufacturer of the GPUs in the instance.
+     * @type {string}
+     * @memberof ClusterInstanceGpuInfo
+     */
+    'manufacturer'?: string;
+    /**
+     * The total GPU memory available.
+     * @type {string}
+     * @memberof ClusterInstanceGpuInfo
+     */
+    'memory_in_mib'?: string;
+}
+/**
+ * 
+ * @export
  * @interface ClusterInstanceTypeResponseList
  */
 export interface ClusterInstanceTypeResponseList {
@@ -2890,6 +2958,18 @@ export interface ClusterInstanceTypeResponseListResultsInner {
      * @memberof ClusterInstanceTypeResponseListResultsInner
      */
     'architecture'?: string;
+    /**
+     * 
+     * @type {ClusterInstanceGpuInfo}
+     * @memberof ClusterInstanceTypeResponseListResultsInner
+     */
+    'gpu_info'?: ClusterInstanceGpuInfo;
+    /**
+     * 
+     * @type {ClusterInstanceAttributes}
+     * @memberof ClusterInstanceTypeResponseListResultsInner
+     */
+    'attributes'?: ClusterInstanceAttributes;
 }
 /**
  * 
