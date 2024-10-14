@@ -2641,6 +2641,12 @@ export interface ClusterFeatureKarpenterParameters {
      * @memberof ClusterFeatureKarpenterParameters
      */
     'default_service_architecture': CpuArchitectureEnum;
+    /**
+     * 
+     * @type {KarpenterNodePool}
+     * @memberof ClusterFeatureKarpenterParameters
+     */
+    'qovery_node_pools'?: KarpenterNodePool;
 }
 
 
@@ -10363,6 +10369,74 @@ export interface JobSourceDockerResponse {
      */
     'dockerfile_raw'?: string | null;
 }
+/**
+ * 
+ * @export
+ * @interface KarpenterNodePool
+ */
+export interface KarpenterNodePool {
+    /**
+     * 
+     * @type {Array<KarpenterNodePoolRequirement>}
+     * @memberof KarpenterNodePool
+     */
+    'requirements': Array<KarpenterNodePoolRequirement>;
+}
+/**
+ * 
+ * @export
+ * @interface KarpenterNodePoolRequirement
+ */
+export interface KarpenterNodePoolRequirement {
+    /**
+     * 
+     * @type {KarpenterNodePoolRequirementKey}
+     * @memberof KarpenterNodePoolRequirement
+     */
+    'key': KarpenterNodePoolRequirementKey;
+    /**
+     * 
+     * @type {KarpenterNodePoolRequirementOperator}
+     * @memberof KarpenterNodePoolRequirement
+     */
+    'operator': KarpenterNodePoolRequirementOperator;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof KarpenterNodePoolRequirement
+     */
+    'values': Array<string>;
+}
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const KarpenterNodePoolRequirementKey = {
+    INSTANCE_FAMILY: 'InstanceFamily',
+    INSTANCE_SIZE: 'InstanceSize',
+    ARCH: 'Arch'
+} as const;
+
+export type KarpenterNodePoolRequirementKey = typeof KarpenterNodePoolRequirementKey[keyof typeof KarpenterNodePoolRequirementKey];
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const KarpenterNodePoolRequirementOperator = {
+    IN: 'In'
+} as const;
+
+export type KarpenterNodePoolRequirementOperator = typeof KarpenterNodePoolRequirementOperator[keyof typeof KarpenterNodePoolRequirementOperator];
+
+
 /**
  * 
  * @export
