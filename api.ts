@@ -15329,7 +15329,7 @@ export interface VariableEditRequest {
      * @type {string}
      * @memberof VariableEditRequest
      */
-    'value': string;
+    'value'?: string | null;
     /**
      * optional variable description (255 characters maximum)
      * @type {string}
