@@ -7313,7 +7313,34 @@ export interface EnvironmentStatusesWithStages {
      * @memberof EnvironmentStatusesWithStages
      */
     'stages'?: Array<DeploymentStageWithServicesStatuses>;
+    /**
+     * 
+     * @type {EnvironmentStatusesWithStagesPreCheckStage}
+     * @memberof EnvironmentStatusesWithStages
+     */
+    'pre_check_stage'?: EnvironmentStatusesWithStagesPreCheckStage;
 }
+/**
+ * 
+ * @export
+ * @interface EnvironmentStatusesWithStagesPreCheckStage
+ */
+export interface EnvironmentStatusesWithStagesPreCheckStage {
+    /**
+     * 
+     * @type {StepMetricStatusEnum}
+     * @memberof EnvironmentStatusesWithStagesPreCheckStage
+     */
+    'status'?: StepMetricStatusEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof EnvironmentStatusesWithStagesPreCheckStage
+     */
+    'total_duration_sec'?: number;
+}
+
+
 /**
  * 
  * @export
@@ -14914,7 +14941,39 @@ export interface Stage {
      * @memberof Stage
      */
     'steps'?: StageStepMetrics;
+    /**
+     * 
+     * @type {string}
+     * @memberof Stage
+     */
+    'description': string;
+    /**
+     * 
+     * @type {StageStatusEnum}
+     * @memberof Stage
+     */
+    'status'?: StageStatusEnum;
 }
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const StageStatusEnum = {
+    QUEUED: 'QUEUED',
+    ONGOING: 'ONGOING',
+    DONE: 'DONE',
+    ERROR: 'ERROR',
+    SKIPPED: 'SKIPPED',
+    CANCELED: 'CANCELED'
+} as const;
+
+export type StageStatusEnum = typeof StageStatusEnum[keyof typeof StageStatusEnum];
+
+
 /**
  * 
  * @export
