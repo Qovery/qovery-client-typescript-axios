@@ -2149,7 +2149,7 @@ export interface ClusterAdvancedSettings {
      * @type {boolean}
      * @memberof ClusterAdvancedSettings
      */
-    'database.postgresql.deny_public_access'?: boolean;
+    'database.postgresql.deny_any_access'?: boolean;
     /**
      * List of CIDRs allowed to access the PostgreSQL database
      * @type {Array<string>}
@@ -2161,7 +2161,7 @@ export interface ClusterAdvancedSettings {
      * @type {boolean}
      * @memberof ClusterAdvancedSettings
      */
-    'database.mysql.deny_public_access'?: boolean;
+    'database.mysql.deny_any_access'?: boolean;
     /**
      * List of CIDRs allowed to access the MySql database
      * @type {Array<string>}
@@ -2173,7 +2173,7 @@ export interface ClusterAdvancedSettings {
      * @type {boolean}
      * @memberof ClusterAdvancedSettings
      */
-    'database.mongodb.deny_public_access'?: boolean;
+    'database.mongodb.deny_any_access'?: boolean;
     /**
      * List of CIDRs allowed to access the MongoDB/DocumentDB database
      * @type {Array<string>}
@@ -2185,7 +2185,7 @@ export interface ClusterAdvancedSettings {
      * @type {boolean}
      * @memberof ClusterAdvancedSettings
      */
-    'database.redis.deny_public_access'?: boolean;
+    'database.redis.deny_any_access'?: boolean;
     /**
      * List of CIDRs allowed to access the Redis database
      * @type {Array<string>}
