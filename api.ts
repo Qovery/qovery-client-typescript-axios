@@ -15395,6 +15395,12 @@ export interface VariableEditRequest {
      * @memberof VariableEditRequest
      */
     'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof VariableEditRequest
+     */
+    'enable_interpolation_in_file'?: boolean | null;
 }
 /**
  * 
