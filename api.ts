@@ -43,7 +43,7 @@ export type APIVariableScopeEnum = typeof APIVariableScopeEnum[keyof typeof APIV
 
 
 /**
- * type of the environment variable (VALUE, FILE, ALIAS, OVERRIDE or BUIT_IN)  
+ * type of the environment variable (VALUE, FILE, ALIAS, OVERRIDE or BUIT_IN) 
  * @export
  * @enum {string}
  */
@@ -900,7 +900,7 @@ export interface ApplicationGitRepositoryRequest {
  */
 export interface ApplicationNetwork {
     /**
-     * Specify if the sticky session option (also called persistant session) is activated or not for this application. If activated, user will be redirected by the load balancer to the same instance each time he access to the application.  
+     * Specify if the sticky session option (also called persistant session) is activated or not for this application. If activated, user will be redirected by the load balancer to the same instance each time he access to the application. 
      * @type {boolean}
      * @memberof ApplicationNetwork
      */
@@ -913,7 +913,7 @@ export interface ApplicationNetwork {
  */
 export interface ApplicationNetworkRequest {
     /**
-     * Specify if the sticky session option (also called persistant session) is activated or not for this application. If activated, user will be redirected by the load balancer to the same instance each time he access to the application.  
+     * Specify if the sticky session option (also called persistant session) is activated or not for this application. If activated, user will be redirected by the load balancer to the same instance each time he access to the application. 
      * @type {boolean}
      * @memberof ApplicationNetworkRequest
      */
@@ -1745,7 +1745,7 @@ export interface CheckedCustomDomainResponse {
 
 
 /**
- * This enum represents the final status for your domain. There are 2 successful statuses:   * `RESOLVES_TO_IP`: we succeeded to resolve an IP to your domain. This is the successful final status for custom domains where `use_cdn` is `true`   * `MATCHES_LOAD_BALANCER_HOST`: we succeeded to lookup CNAMEs & found that it matches your cluser Load Balancer host. This is the successful final status for custom domain where `use_cdn` is `false`   * `DOMAIN_NOT_CONFIGURED`: the domain is not configured, look at the `error_details` field for more information    * `DOMAIN_LINKED_TO_WRONG_HOST`: the domain has CNAME(s) that matches a different host than your Load Balancer one   * `GENERIC_FAILURE`: an error occured when attempting to validate your domain, look at the `error_details` field for more information  
+ * This enum represents the final status for your domain. There are 2 successful statuses:   * `RESOLVES_TO_IP`: we succeeded to resolve an IP to your domain. This is the successful final status for custom domains where `use_cdn` is `true`   * `MATCHES_LOAD_BALANCER_HOST`: we succeeded to lookup CNAMEs & found that it matches your cluser Load Balancer host. This is the successful final status for custom domain where `use_cdn` is `false`   * `DOMAIN_NOT_CONFIGURED`: the domain is not configured, look at the `error_details` field for more information    * `DOMAIN_LINKED_TO_WRONG_HOST`: the domain has CNAME(s) that matches a different host than your Load Balancer one   * `GENERIC_FAILURE`: an error occured when attempting to validate your domain, look at the `error_details` field for more information 
  * @export
  * @enum {string}
  */
@@ -3855,7 +3855,7 @@ export interface ContainerImageCheckRequest {
  */
 export interface ContainerNetwork {
     /**
-     * Specify if the sticky session option (also called persistant session) is activated or not for this container. If activated, user will be redirected by the load balancer to the same instance each time he access to the container.  
+     * Specify if the sticky session option (also called persistant session) is activated or not for this container. If activated, user will be redirected by the load balancer to the same instance each time he access to the container. 
      * @type {boolean}
      * @memberof ContainerNetwork
      */
@@ -3868,7 +3868,7 @@ export interface ContainerNetwork {
  */
 export interface ContainerNetworkRequest {
     /**
-     * Specify if the sticky session option (also called persistant session) is activated or not for this container. If activated, user will be redirected by the load balancer to the same instance each time he access to the container.  
+     * Specify if the sticky session option (also called persistant session) is activated or not for this container. If activated, user will be redirected by the load balancer to the same instance each time he access to the container. 
      * @type {boolean}
      * @memberof ContainerNetworkRequest
      */
@@ -5862,6 +5862,39 @@ export interface DeploymentHistoryApplication {
 /**
  * 
  * @export
+ * @interface DeploymentHistoryAuditingData
+ */
+export interface DeploymentHistoryAuditingData {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryAuditingData
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryAuditingData
+     */
+    'updated_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryAuditingData
+     */
+    'triggered_by': string;
+    /**
+     * 
+     * @type {OrganizationEventOrigin}
+     * @memberof DeploymentHistoryAuditingData
+     */
+    'origin'?: OrganizationEventOrigin;
+}
+
+
+/**
+ * 
+ * @export
  * @interface DeploymentHistoryContainer
  */
 export interface DeploymentHistoryContainer {
@@ -6064,6 +6097,95 @@ export interface DeploymentHistoryEnvironmentPaginatedResponseList {
 /**
  * 
  * @export
+ * @interface DeploymentHistoryEnvironmentPaginatedResponseListV2
+ */
+export interface DeploymentHistoryEnvironmentPaginatedResponseListV2 {
+    /**
+     * 
+     * @type {number}
+     * @memberof DeploymentHistoryEnvironmentPaginatedResponseListV2
+     */
+    'page': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DeploymentHistoryEnvironmentPaginatedResponseListV2
+     */
+    'page_size': number;
+    /**
+     * 
+     * @type {Array<DeploymentHistoryEnvironment>}
+     * @memberof DeploymentHistoryEnvironmentPaginatedResponseListV2
+     */
+    'results'?: Array<DeploymentHistoryEnvironment>;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentHistoryEnvironmentV2
+ */
+export interface DeploymentHistoryEnvironmentV2 {
+    /**
+     * 
+     * @type {DeploymentHistoryEnvironmentV2Identifier}
+     * @memberof DeploymentHistoryEnvironmentV2
+     */
+    'identifier': DeploymentHistoryEnvironmentV2Identifier;
+    /**
+     * 
+     * @type {DeploymentHistoryAuditingData}
+     * @memberof DeploymentHistoryEnvironmentV2
+     */
+    'auditing_data': DeploymentHistoryAuditingData;
+    /**
+     * 
+     * @type {StateEnum}
+     * @memberof DeploymentHistoryEnvironmentV2
+     */
+    'status': StateEnum;
+    /**
+     * 
+     * @type {DeploymentHistoryTriggerAction}
+     * @memberof DeploymentHistoryEnvironmentV2
+     */
+    'trigger_action': DeploymentHistoryTriggerAction;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryEnvironmentV2
+     */
+    'total_duration': string;
+    /**
+     * 
+     * @type {Array<DeploymentHistoryStage>}
+     * @memberof DeploymentHistoryEnvironmentV2
+     */
+    'stages': Array<DeploymentHistoryStage>;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface DeploymentHistoryEnvironmentV2Identifier
+ */
+export interface DeploymentHistoryEnvironmentV2Identifier {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryEnvironmentV2Identifier
+     */
+    'execution_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryEnvironmentV2Identifier
+     */
+    'environment_id': string;
+}
+/**
+ * 
+ * @export
  * @interface DeploymentHistoryHelmResponse
  */
 export interface DeploymentHistoryHelmResponse {
@@ -6255,6 +6377,288 @@ export interface DeploymentHistoryPaginatedResponseList {
 /**
  * 
  * @export
+ * @interface DeploymentHistoryService
+ */
+export interface DeploymentHistoryService {
+    /**
+     * 
+     * @type {DeploymentHistoryServiceIdentifier}
+     * @memberof DeploymentHistoryService
+     */
+    'identifier': DeploymentHistoryServiceIdentifier;
+    /**
+     * 
+     * @type {StateEnum}
+     * @memberof DeploymentHistoryService
+     */
+    'status': StateEnum;
+    /**
+     * 
+     * @type {DeploymentHistoryAuditingData}
+     * @memberof DeploymentHistoryService
+     */
+    'auditing_data': DeploymentHistoryAuditingData;
+    /**
+     * 
+     * @type {DeploymentHistoryServiceDetails}
+     * @memberof DeploymentHistoryService
+     */
+    'details': DeploymentHistoryServiceDetails;
+}
+
+
+/**
+ * @type DeploymentHistoryServiceDetails
+ * @export
+ */
+export type DeploymentHistoryServiceDetails = DeploymentHistoryServiceDetailsOneOf | DeploymentHistoryServiceDetailsOneOf1 | DeploymentHistoryServiceDetailsOneOf2 | DeploymentHistoryServiceDetailsOneOf3;
+
+/**
+ * ApplicationDeploymentHistoryData
+ * @export
+ * @interface DeploymentHistoryServiceDetailsOneOf
+ */
+export interface DeploymentHistoryServiceDetailsOneOf {
+    /**
+     * 
+     * @type {Commit}
+     * @memberof DeploymentHistoryServiceDetailsOneOf
+     */
+    'commit': Commit | null;
+}
+/**
+ * ContainerDeploymentHistoryData
+ * @export
+ * @interface DeploymentHistoryServiceDetailsOneOf1
+ */
+export interface DeploymentHistoryServiceDetailsOneOf1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryServiceDetailsOneOf1
+     */
+    'image_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryServiceDetailsOneOf1
+     */
+    'tag': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof DeploymentHistoryServiceDetailsOneOf1
+     */
+    'arguments': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryServiceDetailsOneOf1
+     */
+    'entrypoint'?: string;
+}
+/**
+ * JobDeploymentHistoryDetails
+ * @export
+ * @interface DeploymentHistoryServiceDetailsOneOf2
+ */
+export interface DeploymentHistoryServiceDetailsOneOf2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryServiceDetailsOneOf2
+     */
+    'image_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryServiceDetailsOneOf2
+     */
+    'tag': string;
+    /**
+     * 
+     * @type {Commit}
+     * @memberof DeploymentHistoryServiceDetailsOneOf2
+     */
+    'commit'?: Commit | null;
+    /**
+     * 
+     * @type {DeploymentHistoryServiceDetailsOneOf2Schedule}
+     * @memberof DeploymentHistoryServiceDetailsOneOf2
+     */
+    'schedule'?: DeploymentHistoryServiceDetailsOneOf2Schedule;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentHistoryServiceDetailsOneOf2Schedule
+ */
+export interface DeploymentHistoryServiceDetailsOneOf2Schedule {
+    /**
+     * 
+     * @type {JobLifecyleSchedule}
+     * @memberof DeploymentHistoryServiceDetailsOneOf2Schedule
+     */
+    'on_start'?: JobLifecyleSchedule;
+    /**
+     * 
+     * @type {JobLifecyleSchedule}
+     * @memberof DeploymentHistoryServiceDetailsOneOf2Schedule
+     */
+    'on_stop'?: JobLifecyleSchedule;
+    /**
+     * 
+     * @type {JobLifecyleSchedule}
+     * @memberof DeploymentHistoryServiceDetailsOneOf2Schedule
+     */
+    'on_delete'?: JobLifecyleSchedule;
+    /**
+     * 
+     * @type {JobCronSchedule}
+     * @memberof DeploymentHistoryServiceDetailsOneOf2Schedule
+     */
+    'cron_job'?: JobCronSchedule;
+    /**
+     * 
+     * @type {JobLifecycleTypeEnum}
+     * @memberof DeploymentHistoryServiceDetailsOneOf2Schedule
+     */
+    'lifecycle_type'?: JobLifecycleTypeEnum;
+}
+
+
+/**
+ * HelmDeploymentHistoryDetails
+ * @export
+ * @interface DeploymentHistoryServiceDetailsOneOf3
+ */
+export interface DeploymentHistoryServiceDetailsOneOf3 {
+    /**
+     * 
+     * @type {Commit}
+     * @memberof DeploymentHistoryServiceDetailsOneOf3
+     */
+    'commit'?: Commit | null;
+    /**
+     * 
+     * @type {DeploymentHistoryServiceDetailsOneOf3Repository}
+     * @memberof DeploymentHistoryServiceDetailsOneOf3
+     */
+    'repository'?: DeploymentHistoryServiceDetailsOneOf3Repository;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentHistoryServiceDetailsOneOf3Repository
+ */
+export interface DeploymentHistoryServiceDetailsOneOf3Repository {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryServiceDetailsOneOf3Repository
+     */
+    'chart_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryServiceDetailsOneOf3Repository
+     */
+    'chart_version'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentHistoryServiceIdentifier
+ */
+export interface DeploymentHistoryServiceIdentifier {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryServiceIdentifier
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryServiceIdentifier
+     */
+    'service_id': string;
+    /**
+     * 
+     * @type {ServiceTypeEnum}
+     * @memberof DeploymentHistoryServiceIdentifier
+     */
+    'service_type': ServiceTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryServiceIdentifier
+     */
+    'execution_id'?: string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface DeploymentHistoryServicePaginatedResponseListV2
+ */
+export interface DeploymentHistoryServicePaginatedResponseListV2 {
+    /**
+     * 
+     * @type {number}
+     * @memberof DeploymentHistoryServicePaginatedResponseListV2
+     */
+    'page': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DeploymentHistoryServicePaginatedResponseListV2
+     */
+    'page_size': number;
+    /**
+     * 
+     * @type {Array<DeploymentHistoryService>}
+     * @memberof DeploymentHistoryServicePaginatedResponseListV2
+     */
+    'results'?: Array<DeploymentHistoryService>;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentHistoryStage
+ */
+export interface DeploymentHistoryStage {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryStage
+     */
+    'name': string;
+    /**
+     * 
+     * @type {StageStatusEnum}
+     * @memberof DeploymentHistoryStage
+     */
+    'status': StageStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryStage
+     */
+    'duration': string;
+    /**
+     * 
+     * @type {Array<DeploymentHistoryService>}
+     * @memberof DeploymentHistoryStage
+     */
+    'services': Array<DeploymentHistoryService>;
+}
+
+
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -6264,6 +6668,23 @@ export const DeploymentHistoryStatusEnum = {
 } as const;
 
 export type DeploymentHistoryStatusEnum = typeof DeploymentHistoryStatusEnum[keyof typeof DeploymentHistoryStatusEnum];
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const DeploymentHistoryTriggerAction = {
+    DEPLOY: 'DEPLOY',
+    DELETE: 'DELETE',
+    RESTART: 'RESTART',
+    STOP: 'STOP',
+    UNKNOWN: 'UNKNOWN'
+} as const;
+
+export type DeploymentHistoryTriggerAction = typeof DeploymentHistoryTriggerAction[keyof typeof DeploymentHistoryTriggerAction];
 
 
 /**
@@ -9101,7 +9522,7 @@ export interface HelmRequest {
      */
     'auto_preview'?: boolean | null;
     /**
-     * Specify if the helm will be automatically updated after receiving a new image tag or a new commit according to the source type.  
+     * Specify if the helm will be automatically updated after receiving a new image tag or a new commit according to the source type. 
      * @type {boolean}
      * @memberof HelmRequest
      */
@@ -9949,6 +10370,37 @@ export interface JobAdvancedSettings {
 /**
  * 
  * @export
+ * @interface JobCronSchedule
+ */
+export interface JobCronSchedule {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof JobCronSchedule
+     */
+    'arguments': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof JobCronSchedule
+     */
+    'entrypoint'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JobCronSchedule
+     */
+    'scheduled_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JobCronSchedule
+     */
+    'timezone': string;
+}
+/**
+ * 
+ * @export
  * @interface JobDeployRequest
  */
 export interface JobDeployRequest {
@@ -10081,6 +10533,25 @@ export const JobLifecycleTypeEnum = {
 export type JobLifecycleTypeEnum = typeof JobLifecycleTypeEnum[keyof typeof JobLifecycleTypeEnum];
 
 
+/**
+ * 
+ * @export
+ * @interface JobLifecyleSchedule
+ */
+export interface JobLifecyleSchedule {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof JobLifecyleSchedule
+     */
+    'arguments': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof JobLifecyleSchedule
+     */
+    'entrypoint'?: string;
+}
 /**
  * 
  * @export
@@ -10356,7 +10827,7 @@ export interface JobResponseList {
     'results'?: Array<JobResponse>;
 }
 /**
- * On which event the job is going to run.   ON_START means when a deployment is requested for the environment   ON_STOP means when a stop of the environment is requested   ON_DELETE means when an environment delete is requested   CRON means at a scheduled interval   
+ * On which event the job is going to run.   ON_START means when a deployment is requested for the environment   ON_STOP means when a stop of the environment is requested   ON_DELETE means when an environment delete is requested   CRON means at a scheduled interval 
  * @export
  * @enum {string}
  */
@@ -14703,7 +15174,11 @@ export interface ServiceTotalNumber {
 
 export const ServiceTypeEnum = {
     APPLICATION: 'APPLICATION',
-    DATABASE: 'DATABASE'
+    DATABASE: 'DATABASE',
+    CONTAINER: 'CONTAINER',
+    JOB: 'JOB',
+    HELM: 'HELM',
+    ROUTER: 'ROUTER'
 } as const;
 
 export type ServiceTypeEnum = typeof ServiceTypeEnum[keyof typeof ServiceTypeEnum];
@@ -17258,6 +17733,52 @@ export const ApplicationDeploymentHistoryApiAxiosParamCreator = function (config
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. You can also filter by status (FAILED or SUCCESS), and git_commit_id
+         * @summary List application deploys
+         * @param {string} applicationId Application ID
+         * @param {string} [startId] Starting point after which to return results
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listApplicationDeploymentHistoryV2: async (applicationId: string, startId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'applicationId' is not null or undefined
+            assertParamExists('listApplicationDeploymentHistoryV2', 'applicationId', applicationId)
+            const localVarPath = `/application/{applicationId}/deploymentHistoryV2`
+                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (startId !== undefined) {
+                localVarQueryParameter['startId'] = startId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -17278,6 +17799,18 @@ export const ApplicationDeploymentHistoryApiFp = function(configuration?: Config
          */
         async listApplicationDeploymentHistory(applicationId: string, startId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryPaginatedResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listApplicationDeploymentHistory(applicationId, startId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. You can also filter by status (FAILED or SUCCESS), and git_commit_id
+         * @summary List application deploys
+         * @param {string} applicationId Application ID
+         * @param {string} [startId] Starting point after which to return results
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listApplicationDeploymentHistoryV2(applicationId: string, startId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listApplicationDeploymentHistoryV2(applicationId, startId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -17301,6 +17834,17 @@ export const ApplicationDeploymentHistoryApiFactory = function (configuration?: 
         listApplicationDeploymentHistory(applicationId: string, startId?: string, options?: any): AxiosPromise<DeploymentHistoryPaginatedResponseList> {
             return localVarFp.listApplicationDeploymentHistory(applicationId, startId, options).then((request) => request(axios, basePath));
         },
+        /**
+         * By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. You can also filter by status (FAILED or SUCCESS), and git_commit_id
+         * @summary List application deploys
+         * @param {string} applicationId Application ID
+         * @param {string} [startId] Starting point after which to return results
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listApplicationDeploymentHistoryV2(applicationId: string, startId?: string, options?: any): AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2> {
+            return localVarFp.listApplicationDeploymentHistoryV2(applicationId, startId, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -17322,6 +17866,19 @@ export class ApplicationDeploymentHistoryApi extends BaseAPI {
      */
     public listApplicationDeploymentHistory(applicationId: string, startId?: string, options?: AxiosRequestConfig) {
         return ApplicationDeploymentHistoryApiFp(this.configuration).listApplicationDeploymentHistory(applicationId, startId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. You can also filter by status (FAILED or SUCCESS), and git_commit_id
+     * @summary List application deploys
+     * @param {string} applicationId Application ID
+     * @param {string} [startId] Starting point after which to return results
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApplicationDeploymentHistoryApi
+     */
+    public listApplicationDeploymentHistoryV2(applicationId: string, startId?: string, options?: AxiosRequestConfig) {
+        return ApplicationDeploymentHistoryApiFp(this.configuration).listApplicationDeploymentHistoryV2(applicationId, startId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -27503,6 +28060,47 @@ export const ContainerDeploymentHistoryApiAxiosParamCreator = function (configur
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Returns the 20 last container deployments
+         * @summary List container deployments
+         * @param {string} containerId Container ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listContainerDeploymentHistoryV2: async (containerId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'containerId' is not null or undefined
+            assertParamExists('listContainerDeploymentHistoryV2', 'containerId', containerId)
+            const localVarPath = `/container/{containerId}/deploymentHistoryV2`
+                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -27522,6 +28120,17 @@ export const ContainerDeploymentHistoryApiFp = function(configuration?: Configur
          */
         async listContainerDeploymentHistory(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListContainerDeploymentHistory200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listContainerDeploymentHistory(containerId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Returns the 20 last container deployments
+         * @summary List container deployments
+         * @param {string} containerId Container ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listContainerDeploymentHistoryV2(containerId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listContainerDeploymentHistoryV2(containerId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -27544,6 +28153,16 @@ export const ContainerDeploymentHistoryApiFactory = function (configuration?: Co
         listContainerDeploymentHistory(containerId: string, options?: any): AxiosPromise<ListContainerDeploymentHistory200Response> {
             return localVarFp.listContainerDeploymentHistory(containerId, options).then((request) => request(axios, basePath));
         },
+        /**
+         * Returns the 20 last container deployments
+         * @summary List container deployments
+         * @param {string} containerId Container ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listContainerDeploymentHistoryV2(containerId: string, options?: any): AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2> {
+            return localVarFp.listContainerDeploymentHistoryV2(containerId, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -27564,6 +28183,18 @@ export class ContainerDeploymentHistoryApi extends BaseAPI {
      */
     public listContainerDeploymentHistory(containerId: string, options?: AxiosRequestConfig) {
         return ContainerDeploymentHistoryApiFp(this.configuration).listContainerDeploymentHistory(containerId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the 20 last container deployments
+     * @summary List container deployments
+     * @param {string} containerId Container ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContainerDeploymentHistoryApi
+     */
+    public listContainerDeploymentHistoryV2(containerId: string, options?: AxiosRequestConfig) {
+        return ContainerDeploymentHistoryApiFp(this.configuration).listContainerDeploymentHistoryV2(containerId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -31103,6 +31734,52 @@ export const DatabaseDeploymentHistoryApiAxiosParamCreator = function (configura
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * By default it returns the 20 last results. The response is paginated.
+         * @summary List database deploys
+         * @param {string} databaseId Database ID
+         * @param {string} [startId] Starting point after which to return results
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listDatabaseDeploymentHistoryV2: async (databaseId: string, startId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'databaseId' is not null or undefined
+            assertParamExists('listDatabaseDeploymentHistoryV2', 'databaseId', databaseId)
+            const localVarPath = `/database/{databaseId}/deploymentHistoryV2`
+                .replace(`{${"databaseId"}}`, encodeURIComponent(String(databaseId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (startId !== undefined) {
+                localVarQueryParameter['startId'] = startId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -31123,6 +31800,18 @@ export const DatabaseDeploymentHistoryApiFp = function(configuration?: Configura
          */
         async listDatabaseDeploymentHistory(databaseId: string, startId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListDatabaseDeploymentHistory200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listDatabaseDeploymentHistory(databaseId, startId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * By default it returns the 20 last results. The response is paginated.
+         * @summary List database deploys
+         * @param {string} databaseId Database ID
+         * @param {string} [startId] Starting point after which to return results
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listDatabaseDeploymentHistoryV2(databaseId: string, startId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listDatabaseDeploymentHistoryV2(databaseId, startId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -31146,6 +31835,17 @@ export const DatabaseDeploymentHistoryApiFactory = function (configuration?: Con
         listDatabaseDeploymentHistory(databaseId: string, startId?: string, options?: any): AxiosPromise<ListDatabaseDeploymentHistory200Response> {
             return localVarFp.listDatabaseDeploymentHistory(databaseId, startId, options).then((request) => request(axios, basePath));
         },
+        /**
+         * By default it returns the 20 last results. The response is paginated.
+         * @summary List database deploys
+         * @param {string} databaseId Database ID
+         * @param {string} [startId] Starting point after which to return results
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listDatabaseDeploymentHistoryV2(databaseId: string, startId?: string, options?: any): AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2> {
+            return localVarFp.listDatabaseDeploymentHistoryV2(databaseId, startId, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -31167,6 +31867,19 @@ export class DatabaseDeploymentHistoryApi extends BaseAPI {
      */
     public listDatabaseDeploymentHistory(databaseId: string, startId?: string, options?: AxiosRequestConfig) {
         return DatabaseDeploymentHistoryApiFp(this.configuration).listDatabaseDeploymentHistory(databaseId, startId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * By default it returns the 20 last results. The response is paginated.
+     * @summary List database deploys
+     * @param {string} databaseId Database ID
+     * @param {string} [startId] Starting point after which to return results
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DatabaseDeploymentHistoryApi
+     */
+    public listDatabaseDeploymentHistoryV2(databaseId: string, startId?: string, options?: AxiosRequestConfig) {
+        return DatabaseDeploymentHistoryApiFp(this.configuration).listDatabaseDeploymentHistoryV2(databaseId, startId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -34343,6 +35056,52 @@ export const EnvironmentDeploymentHistoryApiAxiosParamCreator = function (config
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
+         * @summary List environment deployments
+         * @param {string} environmentId Environment ID
+         * @param {string} [startId] Starting point after which to return results
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listEnvironmentDeploymentHistoryV2: async (environmentId: string, startId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('listEnvironmentDeploymentHistoryV2', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/deploymentHistoryV2`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (startId !== undefined) {
+                localVarQueryParameter['startId'] = startId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -34363,6 +35122,18 @@ export const EnvironmentDeploymentHistoryApiFp = function(configuration?: Config
          */
         async listEnvironmentDeploymentHistory(environmentId: string, startId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryEnvironmentPaginatedResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listEnvironmentDeploymentHistory(environmentId, startId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
+         * @summary List environment deployments
+         * @param {string} environmentId Environment ID
+         * @param {string} [startId] Starting point after which to return results
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listEnvironmentDeploymentHistoryV2(environmentId: string, startId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryEnvironmentPaginatedResponseListV2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listEnvironmentDeploymentHistoryV2(environmentId, startId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -34386,6 +35157,17 @@ export const EnvironmentDeploymentHistoryApiFactory = function (configuration?: 
         listEnvironmentDeploymentHistory(environmentId: string, startId?: string, options?: any): AxiosPromise<DeploymentHistoryEnvironmentPaginatedResponseList> {
             return localVarFp.listEnvironmentDeploymentHistory(environmentId, startId, options).then((request) => request(axios, basePath));
         },
+        /**
+         * List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
+         * @summary List environment deployments
+         * @param {string} environmentId Environment ID
+         * @param {string} [startId] Starting point after which to return results
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listEnvironmentDeploymentHistoryV2(environmentId: string, startId?: string, options?: any): AxiosPromise<DeploymentHistoryEnvironmentPaginatedResponseListV2> {
+            return localVarFp.listEnvironmentDeploymentHistoryV2(environmentId, startId, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -34407,6 +35189,19 @@ export class EnvironmentDeploymentHistoryApi extends BaseAPI {
      */
     public listEnvironmentDeploymentHistory(environmentId: string, startId?: string, options?: AxiosRequestConfig) {
         return EnvironmentDeploymentHistoryApiFp(this.configuration).listEnvironmentDeploymentHistory(environmentId, startId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
+     * @summary List environment deployments
+     * @param {string} environmentId Environment ID
+     * @param {string} [startId] Starting point after which to return results
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentDeploymentHistoryApi
+     */
+    public listEnvironmentDeploymentHistoryV2(environmentId: string, startId?: string, options?: AxiosRequestConfig) {
+        return EnvironmentDeploymentHistoryApiFp(this.configuration).listEnvironmentDeploymentHistoryV2(environmentId, startId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -38648,6 +39443,47 @@ export const HelmDeploymentHistoryApiAxiosParamCreator = function (configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Returns the 20 last helm deployments
+         * @summary List helm deployments
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listHelmDeploymentHistoryV2: async (helmId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('listHelmDeploymentHistoryV2', 'helmId', helmId)
+            const localVarPath = `/helm/{helmId}/deploymentHistoryV2`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -38667,6 +39503,17 @@ export const HelmDeploymentHistoryApiFp = function(configuration?: Configuration
          */
         async listHelmDeploymentHistory(helmId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListHelmDeploymentHistory200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listHelmDeploymentHistory(helmId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Returns the 20 last helm deployments
+         * @summary List helm deployments
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listHelmDeploymentHistoryV2(helmId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listHelmDeploymentHistoryV2(helmId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -38689,6 +39536,16 @@ export const HelmDeploymentHistoryApiFactory = function (configuration?: Configu
         listHelmDeploymentHistory(helmId: string, options?: any): AxiosPromise<ListHelmDeploymentHistory200Response> {
             return localVarFp.listHelmDeploymentHistory(helmId, options).then((request) => request(axios, basePath));
         },
+        /**
+         * Returns the 20 last helm deployments
+         * @summary List helm deployments
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listHelmDeploymentHistoryV2(helmId: string, options?: any): AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2> {
+            return localVarFp.listHelmDeploymentHistoryV2(helmId, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -38709,6 +39566,18 @@ export class HelmDeploymentHistoryApi extends BaseAPI {
      */
     public listHelmDeploymentHistory(helmId: string, options?: AxiosRequestConfig) {
         return HelmDeploymentHistoryApiFp(this.configuration).listHelmDeploymentHistory(helmId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the 20 last helm deployments
+     * @summary List helm deployments
+     * @param {string} helmId Helm ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmDeploymentHistoryApi
+     */
+    public listHelmDeploymentHistoryV2(helmId: string, options?: AxiosRequestConfig) {
+        return HelmDeploymentHistoryApiFp(this.configuration).listHelmDeploymentHistoryV2(helmId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -41345,6 +42214,47 @@ export const JobDeploymentHistoryApiAxiosParamCreator = function (configuration?
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Returns the 20 last job deployments
+         * @summary List job deployments
+         * @param {string} jobId Job ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listJobDeploymentHistoryV2: async (jobId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'jobId' is not null or undefined
+            assertParamExists('listJobDeploymentHistoryV2', 'jobId', jobId)
+            const localVarPath = `/job/{jobId}/deploymentHistoryV2`
+                .replace(`{${"jobId"}}`, encodeURIComponent(String(jobId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -41364,6 +42274,17 @@ export const JobDeploymentHistoryApiFp = function(configuration?: Configuration)
          */
         async listJobDeploymentHistory(jobId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListJobDeploymentHistory200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listJobDeploymentHistory(jobId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Returns the 20 last job deployments
+         * @summary List job deployments
+         * @param {string} jobId Job ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listJobDeploymentHistoryV2(jobId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listJobDeploymentHistoryV2(jobId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -41386,6 +42307,16 @@ export const JobDeploymentHistoryApiFactory = function (configuration?: Configur
         listJobDeploymentHistory(jobId: string, options?: any): AxiosPromise<ListJobDeploymentHistory200Response> {
             return localVarFp.listJobDeploymentHistory(jobId, options).then((request) => request(axios, basePath));
         },
+        /**
+         * Returns the 20 last job deployments
+         * @summary List job deployments
+         * @param {string} jobId Job ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listJobDeploymentHistoryV2(jobId: string, options?: any): AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2> {
+            return localVarFp.listJobDeploymentHistoryV2(jobId, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -41406,6 +42337,18 @@ export class JobDeploymentHistoryApi extends BaseAPI {
      */
     public listJobDeploymentHistory(jobId: string, options?: AxiosRequestConfig) {
         return JobDeploymentHistoryApiFp(this.configuration).listJobDeploymentHistory(jobId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the 20 last job deployments
+     * @summary List job deployments
+     * @param {string} jobId Job ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobDeploymentHistoryApi
+     */
+    public listJobDeploymentHistoryV2(jobId: string, options?: AxiosRequestConfig) {
+        return JobDeploymentHistoryApiFp(this.configuration).listJobDeploymentHistoryV2(jobId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
