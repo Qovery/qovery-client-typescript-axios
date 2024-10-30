@@ -22172,10 +22172,11 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
          * 
          * @summary List AWS EKS available instance types
          * @param {string} region region name
+         * @param {string} [onlyMeetsResourceReqs] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAWSEKSInstanceType: async (region: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listAWSEKSInstanceType: async (region: string, onlyMeetsResourceReqs?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'region' is not null or undefined
             assertParamExists('listAWSEKSInstanceType', 'region', region)
             const localVarPath = `/aws/eks/instanceType/{region}`
@@ -22197,6 +22198,10 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (onlyMeetsResourceReqs !== undefined) {
+                localVarQueryParameter['only_meets_resource_reqs'] = onlyMeetsResourceReqs;
+            }
 
 
     
@@ -22839,11 +22844,12 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
          * 
          * @summary List AWS EKS available instance types
          * @param {string} region region name
+         * @param {string} [onlyMeetsResourceReqs] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listAWSEKSInstanceType(region: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterInstanceTypeResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listAWSEKSInstanceType(region, options);
+        async listAWSEKSInstanceType(region: string, onlyMeetsResourceReqs?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterInstanceTypeResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAWSEKSInstanceType(region, onlyMeetsResourceReqs, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -23026,11 +23032,12 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
          * 
          * @summary List AWS EKS available instance types
          * @param {string} region region name
+         * @param {string} [onlyMeetsResourceReqs] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAWSEKSInstanceType(region: string, options?: any): AxiosPromise<ClusterInstanceTypeResponseList> {
-            return localVarFp.listAWSEKSInstanceType(region, options).then((request) => request(axios, basePath));
+        listAWSEKSInstanceType(region: string, onlyMeetsResourceReqs?: string, options?: any): AxiosPromise<ClusterInstanceTypeResponseList> {
+            return localVarFp.listAWSEKSInstanceType(region, onlyMeetsResourceReqs, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -23196,12 +23203,13 @@ export class CloudProviderApi extends BaseAPI {
      * 
      * @summary List AWS EKS available instance types
      * @param {string} region region name
+     * @param {string} [onlyMeetsResourceReqs] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudProviderApi
      */
-    public listAWSEKSInstanceType(region: string, options?: AxiosRequestConfig) {
-        return CloudProviderApiFp(this.configuration).listAWSEKSInstanceType(region, options).then((request) => request(this.axios, this.basePath));
+    public listAWSEKSInstanceType(region: string, onlyMeetsResourceReqs?: string, options?: AxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listAWSEKSInstanceType(region, onlyMeetsResourceReqs, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
