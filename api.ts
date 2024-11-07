@@ -13021,6 +13021,12 @@ export interface OrganizationEventResponseList {
      */
     'links'?: OrganizationEventResponseListLinks;
     /**
+     * Indicates if you cannot see previous logs according to your organization max limit
+     * @type {boolean}
+     * @memberof OrganizationEventResponseList
+     */
+    'organization_max_limit_reached'?: boolean;
+    /**
      * 
      * @type {Array<OrganizationEventResponse>}
      * @memberof OrganizationEventResponseList
