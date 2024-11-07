@@ -2866,6 +2866,12 @@ export interface ClusterInstanceAttributes {
      */
     'instance_size'?: string;
     /**
+     * The instance has gpu.
+     * @type {boolean}
+     * @memberof ClusterInstanceAttributes
+     */
+    'with_gpu'?: boolean;
+    /**
      * The instance has sufficient resources to be chosen as a standalone instance in a cluster.
      * @type {boolean}
      * @memberof ClusterInstanceAttributes
