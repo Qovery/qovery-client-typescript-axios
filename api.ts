@@ -2866,12 +2866,6 @@ export interface ClusterInstanceAttributes {
      */
     'instance_size'?: string;
     /**
-     * The instance has gpu.
-     * @type {boolean}
-     * @memberof ClusterInstanceAttributes
-     */
-    'with_gpu'?: boolean;
-    /**
      * The instance has sufficient resources to be chosen as a standalone instance in a cluster.
      * @type {boolean}
      * @memberof ClusterInstanceAttributes
@@ -22185,10 +22179,11 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
          * @summary List AWS EKS available instance types
          * @param {string} region region name
          * @param {boolean} [onlyMeetsResourceReqs] 
+         * @param {boolean} [withGpu] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAWSEKSInstanceType: async (region: string, onlyMeetsResourceReqs?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listAWSEKSInstanceType: async (region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'region' is not null or undefined
             assertParamExists('listAWSEKSInstanceType', 'region', region)
             const localVarPath = `/aws/eks/instanceType/{region}`
@@ -22213,6 +22208,10 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
 
             if (onlyMeetsResourceReqs !== undefined) {
                 localVarQueryParameter['only_meets_resource_reqs'] = onlyMeetsResourceReqs;
+            }
+
+            if (withGpu !== undefined) {
+                localVarQueryParameter['with_gpu'] = withGpu;
             }
 
 
@@ -22857,11 +22856,12 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
          * @summary List AWS EKS available instance types
          * @param {string} region region name
          * @param {boolean} [onlyMeetsResourceReqs] 
+         * @param {boolean} [withGpu] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listAWSEKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterInstanceTypeResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listAWSEKSInstanceType(region, onlyMeetsResourceReqs, options);
+        async listAWSEKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterInstanceTypeResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAWSEKSInstanceType(region, onlyMeetsResourceReqs, withGpu, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -23045,11 +23045,12 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
          * @summary List AWS EKS available instance types
          * @param {string} region region name
          * @param {boolean} [onlyMeetsResourceReqs] 
+         * @param {boolean} [withGpu] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAWSEKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, options?: any): AxiosPromise<ClusterInstanceTypeResponseList> {
-            return localVarFp.listAWSEKSInstanceType(region, onlyMeetsResourceReqs, options).then((request) => request(axios, basePath));
+        listAWSEKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, options?: any): AxiosPromise<ClusterInstanceTypeResponseList> {
+            return localVarFp.listAWSEKSInstanceType(region, onlyMeetsResourceReqs, withGpu, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -23216,12 +23217,13 @@ export class CloudProviderApi extends BaseAPI {
      * @summary List AWS EKS available instance types
      * @param {string} region region name
      * @param {boolean} [onlyMeetsResourceReqs] 
+     * @param {boolean} [withGpu] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudProviderApi
      */
-    public listAWSEKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, options?: AxiosRequestConfig) {
-        return CloudProviderApiFp(this.configuration).listAWSEKSInstanceType(region, onlyMeetsResourceReqs, options).then((request) => request(this.axios, this.basePath));
+    public listAWSEKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, options?: AxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listAWSEKSInstanceType(region, onlyMeetsResourceReqs, withGpu, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
