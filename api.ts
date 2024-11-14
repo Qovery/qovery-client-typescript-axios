@@ -2980,6 +2980,31 @@ export interface ClusterInstanceTypeResponseListResultsInner {
 /**
  * 
  * @export
+ * @interface ClusterKarpenterPrivateSubnetIdsPutRequest
+ */
+export interface ClusterKarpenterPrivateSubnetIdsPutRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterKarpenterPrivateSubnetIdsPutRequest
+     */
+    'eks_karpenter_fargate_subnets_zone_a_ids'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterKarpenterPrivateSubnetIdsPutRequest
+     */
+    'eks_karpenter_fargate_subnets_zone_b_ids'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterKarpenterPrivateSubnetIdsPutRequest
+     */
+    'eks_karpenter_fargate_subnets_zone_c_ids'?: Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface ClusterLogs
  */
 export interface ClusterLogs {
@@ -25991,6 +26016,55 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Update karpenter private fargate subnet ids
+         * @summary Update karpenter private fargate subnet ids
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {ClusterKarpenterPrivateSubnetIdsPutRequest} [clusterKarpenterPrivateSubnetIdsPutRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateKarpenterPrivateFargateSubnetIds: async (organizationId: string, clusterId: string, clusterKarpenterPrivateSubnetIdsPutRequest?: ClusterKarpenterPrivateSubnetIdsPutRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('updateKarpenterPrivateFargateSubnetIds', 'organizationId', organizationId)
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('updateKarpenterPrivateFargateSubnetIds', 'clusterId', clusterId)
+            const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/karpenterPrivateSubnetIds`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(clusterKarpenterPrivateSubnetIdsPutRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * allows to upgrade a cluster to next available kubernetes version
          * @summary Upgrade a cluster
          * @param {string} clusterId Cluster ID
@@ -26285,6 +26359,19 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Update karpenter private fargate subnet ids
+         * @summary Update karpenter private fargate subnet ids
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {ClusterKarpenterPrivateSubnetIdsPutRequest} [clusterKarpenterPrivateSubnetIdsPutRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateKarpenterPrivateFargateSubnetIds(organizationId: string, clusterId: string, clusterKarpenterPrivateSubnetIdsPutRequest?: ClusterKarpenterPrivateSubnetIdsPutRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateKarpenterPrivateFargateSubnetIds(organizationId, clusterId, clusterKarpenterPrivateSubnetIdsPutRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * allows to upgrade a cluster to next available kubernetes version
          * @summary Upgrade a cluster
          * @param {string} clusterId Cluster ID
@@ -26527,6 +26614,18 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          */
         stopCluster(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterStatus> {
             return localVarFp.stopCluster(organizationId, clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Update karpenter private fargate subnet ids
+         * @summary Update karpenter private fargate subnet ids
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {ClusterKarpenterPrivateSubnetIdsPutRequest} [clusterKarpenterPrivateSubnetIdsPutRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateKarpenterPrivateFargateSubnetIds(organizationId: string, clusterId: string, clusterKarpenterPrivateSubnetIdsPutRequest?: ClusterKarpenterPrivateSubnetIdsPutRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.updateKarpenterPrivateFargateSubnetIds(organizationId, clusterId, clusterKarpenterPrivateSubnetIdsPutRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * allows to upgrade a cluster to next available kubernetes version
@@ -26809,6 +26908,20 @@ export class ClustersApi extends BaseAPI {
      */
     public stopCluster(organizationId: string, clusterId: string, options?: AxiosRequestConfig) {
         return ClustersApiFp(this.configuration).stopCluster(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Update karpenter private fargate subnet ids
+     * @summary Update karpenter private fargate subnet ids
+     * @param {string} organizationId Organization ID
+     * @param {string} clusterId Cluster ID
+     * @param {ClusterKarpenterPrivateSubnetIdsPutRequest} [clusterKarpenterPrivateSubnetIdsPutRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClustersApi
+     */
+    public updateKarpenterPrivateFargateSubnetIds(organizationId: string, clusterId: string, clusterKarpenterPrivateSubnetIdsPutRequest?: ClusterKarpenterPrivateSubnetIdsPutRequest, options?: AxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).updateKarpenterPrivateFargateSubnetIds(organizationId, clusterId, clusterKarpenterPrivateSubnetIdsPutRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
