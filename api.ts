@@ -6139,10 +6139,10 @@ export interface DeploymentHistoryEnvironmentPaginatedResponseListV2 {
     'page_size': number;
     /**
      * 
-     * @type {Array<DeploymentHistoryEnvironment>}
+     * @type {Array<DeploymentHistoryEnvironmentV2>}
      * @memberof DeploymentHistoryEnvironmentPaginatedResponseListV2
      */
-    'results'?: Array<DeploymentHistoryEnvironment>;
+    'results'?: Array<DeploymentHistoryEnvironmentV2>;
 }
 /**
  * 
