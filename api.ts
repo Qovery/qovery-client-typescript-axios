@@ -25201,10 +25201,11 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
          * @summary Deploy a cluster
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
+         * @param {boolean} [dryRun] default: false. Decide if the deployment of the cluster should be done in dry_run mode. Avoiding any changes
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployCluster: async (organizationId: string, clusterId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deployCluster: async (organizationId: string, clusterId: string, dryRun?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('deployCluster', 'organizationId', organizationId)
             // verify required parameter 'clusterId' is not null or undefined
@@ -25229,6 +25230,10 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (dryRun !== undefined) {
+                localVarQueryParameter['dry_run'] = dryRun;
+            }
 
 
     
@@ -26145,11 +26150,12 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          * @summary Deploy a cluster
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
+         * @param {boolean} [dryRun] default: false. Decide if the deployment of the cluster should be done in dry_run mode. Avoiding any changes
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deployCluster(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatus>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deployCluster(organizationId, clusterId, options);
+        async deployCluster(organizationId: string, clusterId: string, dryRun?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatus>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deployCluster(organizationId, clusterId, dryRun, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -26420,11 +26426,12 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          * @summary Deploy a cluster
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
+         * @param {boolean} [dryRun] default: false. Decide if the deployment of the cluster should be done in dry_run mode. Avoiding any changes
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployCluster(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterStatus> {
-            return localVarFp.deployCluster(organizationId, clusterId, options).then((request) => request(axios, basePath));
+        deployCluster(organizationId: string, clusterId: string, dryRun?: boolean, options?: any): AxiosPromise<ClusterStatus> {
+            return localVarFp.deployCluster(organizationId, clusterId, dryRun, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -26679,12 +26686,13 @@ export class ClustersApi extends BaseAPI {
      * @summary Deploy a cluster
      * @param {string} organizationId Organization ID
      * @param {string} clusterId Cluster ID
+     * @param {boolean} [dryRun] default: false. Decide if the deployment of the cluster should be done in dry_run mode. Avoiding any changes
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ClustersApi
      */
-    public deployCluster(organizationId: string, clusterId: string, options?: AxiosRequestConfig) {
-        return ClustersApiFp(this.configuration).deployCluster(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
+    public deployCluster(organizationId: string, clusterId: string, dryRun?: boolean, options?: AxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).deployCluster(organizationId, clusterId, dryRun, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
