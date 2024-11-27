@@ -29681,20 +29681,16 @@ export const ContainerRegistriesApiAxiosParamCreator = function (configuration?:
          * @summary List image version for a container registry
          * @param {string} organizationId Organization ID
          * @param {string} containerRegistryId Container Registry ID
-         * @param {string} imageName container image name
-         * @param {string} search partial container image name to search
+         * @param {string} [imageName] container image name
+         * @param {string} [search] partial container image name to search
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getContainerVersions: async (organizationId: string, containerRegistryId: string, imageName: string, search: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getContainerVersions: async (organizationId: string, containerRegistryId: string, imageName?: string, search?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('getContainerVersions', 'organizationId', organizationId)
             // verify required parameter 'containerRegistryId' is not null or undefined
             assertParamExists('getContainerVersions', 'containerRegistryId', containerRegistryId)
-            // verify required parameter 'imageName' is not null or undefined
-            assertParamExists('getContainerVersions', 'imageName', imageName)
-            // verify required parameter 'search' is not null or undefined
-            assertParamExists('getContainerVersions', 'search', search)
             const localVarPath = `/organization/{organizationId}/containerRegistry/{containerRegistryId}/images`
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
                 .replace(`{${"containerRegistryId"}}`, encodeURIComponent(String(containerRegistryId)));
@@ -29877,12 +29873,12 @@ export const ContainerRegistriesApiFp = function(configuration?: Configuration) 
          * @summary List image version for a container registry
          * @param {string} organizationId Organization ID
          * @param {string} containerRegistryId Container Registry ID
-         * @param {string} imageName container image name
-         * @param {string} search partial container image name to search
+         * @param {string} [imageName] container image name
+         * @param {string} [search] partial container image name to search
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getContainerVersions(organizationId: string, containerRegistryId: string, imageName: string, search: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerVersionResponseList>> {
+        async getContainerVersions(organizationId: string, containerRegistryId: string, imageName?: string, search?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContainerVersionResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getContainerVersions(organizationId, containerRegistryId, imageName, search, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -29967,12 +29963,12 @@ export const ContainerRegistriesApiFactory = function (configuration?: Configura
          * @summary List image version for a container registry
          * @param {string} organizationId Organization ID
          * @param {string} containerRegistryId Container Registry ID
-         * @param {string} imageName container image name
-         * @param {string} search partial container image name to search
+         * @param {string} [imageName] container image name
+         * @param {string} [search] partial container image name to search
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getContainerVersions(organizationId: string, containerRegistryId: string, imageName: string, search: string, options?: any): AxiosPromise<ContainerVersionResponseList> {
+        getContainerVersions(organizationId: string, containerRegistryId: string, imageName?: string, search?: string, options?: any): AxiosPromise<ContainerVersionResponseList> {
             return localVarFp.getContainerVersions(organizationId, containerRegistryId, imageName, search, options).then((request) => request(axios, basePath));
         },
         /**
@@ -30062,13 +30058,13 @@ export class ContainerRegistriesApi extends BaseAPI {
      * @summary List image version for a container registry
      * @param {string} organizationId Organization ID
      * @param {string} containerRegistryId Container Registry ID
-     * @param {string} imageName container image name
-     * @param {string} search partial container image name to search
+     * @param {string} [imageName] container image name
+     * @param {string} [search] partial container image name to search
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContainerRegistriesApi
      */
-    public getContainerVersions(organizationId: string, containerRegistryId: string, imageName: string, search: string, options?: AxiosRequestConfig) {
+    public getContainerVersions(organizationId: string, containerRegistryId: string, imageName?: string, search?: string, options?: AxiosRequestConfig) {
         return ContainerRegistriesApiFp(this.configuration).getContainerVersions(organizationId, containerRegistryId, imageName, search, options).then((request) => request(this.axios, this.basePath));
     }
 
