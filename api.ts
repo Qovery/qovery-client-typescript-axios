@@ -34067,51 +34067,6 @@ export const EnvironmentApiAxiosParamCreator = function (configuration?: Configu
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Start a deployment of the environment. Any of the services within the chosen environment based on the following rule: a service is deployed only if a new version is specified in the payload for that application/container or if there was a change in its configuration that needs to be applied (vCPU,RAM etc..)
-         * @summary Deploy applications
-         * @param {string} environmentId Environment ID
-         * @param {DeployAllRequest} [deployAllRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deployAllApplications: async (environmentId: string, deployAllRequest?: DeployAllRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'environmentId' is not null or undefined
-            assertParamExists('deployAllApplications', 'environmentId', environmentId)
-            const localVarPath = `/environment/{environmentId}/application/deploy`
-                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(deployAllRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -34170,18 +34125,6 @@ export const EnvironmentApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.checkHelmRepository(environmentId, helmCheckRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-        /**
-         * Start a deployment of the environment. Any of the services within the chosen environment based on the following rule: a service is deployed only if a new version is specified in the payload for that application/container or if there was a change in its configuration that needs to be applied (vCPU,RAM etc..)
-         * @summary Deploy applications
-         * @param {string} environmentId Environment ID
-         * @param {DeployAllRequest} [deployAllRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deployAllApplications(environmentId: string, deployAllRequest?: DeployAllRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deployAllApplications(environmentId, deployAllRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
     }
 };
 
@@ -34235,17 +34178,6 @@ export const EnvironmentApiFactory = function (configuration?: Configuration, ba
          */
         checkHelmRepository(environmentId: string, helmCheckRequest?: HelmCheckRequest, options?: any): AxiosPromise<object> {
             return localVarFp.checkHelmRepository(environmentId, helmCheckRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Start a deployment of the environment. Any of the services within the chosen environment based on the following rule: a service is deployed only if a new version is specified in the payload for that application/container or if there was a change in its configuration that needs to be applied (vCPU,RAM etc..)
-         * @summary Deploy applications
-         * @param {string} environmentId Environment ID
-         * @param {DeployAllRequest} [deployAllRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deployAllApplications(environmentId: string, deployAllRequest?: DeployAllRequest, options?: any): AxiosPromise<Status> {
-            return localVarFp.deployAllApplications(environmentId, deployAllRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -34307,19 +34239,6 @@ export class EnvironmentApi extends BaseAPI {
      */
     public checkHelmRepository(environmentId: string, helmCheckRequest?: HelmCheckRequest, options?: AxiosRequestConfig) {
         return EnvironmentApiFp(this.configuration).checkHelmRepository(environmentId, helmCheckRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Start a deployment of the environment. Any of the services within the chosen environment based on the following rule: a service is deployed only if a new version is specified in the payload for that application/container or if there was a change in its configuration that needs to be applied (vCPU,RAM etc..)
-     * @summary Deploy applications
-     * @param {string} environmentId Environment ID
-     * @param {DeployAllRequest} [deployAllRequest] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof EnvironmentApi
-     */
-    public deployAllApplications(environmentId: string, deployAllRequest?: DeployAllRequest, options?: AxiosRequestConfig) {
-        return EnvironmentApiFp(this.configuration).deployAllApplications(environmentId, deployAllRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
