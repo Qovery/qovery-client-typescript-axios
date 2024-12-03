@@ -238,12 +238,6 @@ export interface Application {
      */
     'dockerfile_path'?: string | null;
     /**
-     * 
-     * @type {BuildPackLanguageEnum}
-     * @memberof Application
-     */
-    'buildpack_language'?: BuildPackLanguageEnum | null;
-    /**
      * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
      * @memberof Application
@@ -689,12 +683,6 @@ export interface ApplicationEditRequest {
      */
     'dockerfile_path'?: string | null;
     /**
-     * 
-     * @type {BuildPackLanguageEnum}
-     * @memberof ApplicationEditRequest
-     */
-    'buildpack_language'?: BuildPackLanguageEnum | null;
-    /**
      * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
      * @memberof ApplicationEditRequest
@@ -967,12 +955,6 @@ export interface ApplicationRequest {
      * @memberof ApplicationRequest
      */
     'dockerfile_path'?: string | null;
-    /**
-     * 
-     * @type {BuildPackLanguageEnum}
-     * @memberof ApplicationRequest
-     */
-    'buildpack_language'?: BuildPackLanguageEnum | null;
     /**
      * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -1668,40 +1650,16 @@ export interface Budget {
     'currency_code'?: string;
 }
 /**
- * `DOCKER` requires `dockerfile_path` `BUILDPACKS` does not require any `dockerfile_path` 
+ * `DOCKER` requires `dockerfile_path` 
  * @export
  * @enum {string}
  */
 
 export const BuildModeEnum = {
-    BUILDPACKS: 'BUILDPACKS',
     DOCKER: 'DOCKER'
 } as const;
 
 export type BuildModeEnum = typeof BuildModeEnum[keyof typeof BuildModeEnum];
-
-
-/**
- * Development language of the application
- * @export
- * @enum {string}
- */
-
-export const BuildPackLanguageEnum = {
-    CLOJURE: 'CLOJURE',
-    GO: 'GO',
-    GRADLE: 'GRADLE',
-    GRAILS: 'GRAILS',
-    JAVA: 'JAVA',
-    JVM: 'JVM',
-    NODE_JS: 'NODE_JS',
-    PHP: 'PHP',
-    PLAY: 'PLAY',
-    PYTHON: 'PYTHON',
-    SCALA: 'SCALA'
-} as const;
-
-export type BuildPackLanguageEnum = typeof BuildPackLanguageEnum[keyof typeof BuildPackLanguageEnum];
 
 
 /**
@@ -7043,32 +7001,6 @@ export interface EnvironmentAllOfCloudProvider {
      * @memberof EnvironmentAllOfCloudProvider
      */
     'cluster'?: string;
-}
-/**
- * 
- * @export
- * @interface EnvironmentApplicationsSupportedLanguage
- */
-export interface EnvironmentApplicationsSupportedLanguage {
-    /**
-     * 
-     * @type {string}
-     * @memberof EnvironmentApplicationsSupportedLanguage
-     */
-    'name': string;
-}
-/**
- * 
- * @export
- * @interface EnvironmentApplicationsSupportedLanguageList
- */
-export interface EnvironmentApplicationsSupportedLanguageList {
-    /**
-     * 
-     * @type {Array<EnvironmentApplicationsSupportedLanguage>}
-     * @memberof EnvironmentApplicationsSupportedLanguageList
-     */
-    'results'?: Array<EnvironmentApplicationsSupportedLanguage>;
 }
 /**
  * 
@@ -20309,47 +20241,6 @@ export const ApplicationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * Returns list of languages supported by Buildpacks.
-         * @summary List supported languages
-         * @param {string} environmentId Environment ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getEnvironmentApplicationSupportedLanguages: async (environmentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'environmentId' is not null or undefined
-            assertParamExists('getEnvironmentApplicationSupportedLanguages', 'environmentId', environmentId)
-            const localVarPath = `/environment/{environmentId}/application/supportedLanguage`
-                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * 
          * @summary List applications
          * @param {string} environmentId Environment ID
@@ -20446,17 +20337,6 @@ export const ApplicationsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Returns list of languages supported by Buildpacks.
-         * @summary List supported languages
-         * @param {string} environmentId Environment ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getEnvironmentApplicationSupportedLanguages(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentApplicationsSupportedLanguageList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentApplicationSupportedLanguages(environmentId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * 
          * @summary List applications
          * @param {string} environmentId Environment ID
@@ -20517,16 +20397,6 @@ export const ApplicationsApiFactory = function (configuration?: Configuration, b
          */
         getEnvironmentApplicationStatus(environmentId: string, options?: any): AxiosPromise<ReferenceObjectStatusResponseList> {
             return localVarFp.getEnvironmentApplicationStatus(environmentId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns list of languages supported by Buildpacks.
-         * @summary List supported languages
-         * @param {string} environmentId Environment ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getEnvironmentApplicationSupportedLanguages(environmentId: string, options?: any): AxiosPromise<EnvironmentApplicationsSupportedLanguageList> {
-            return localVarFp.getEnvironmentApplicationSupportedLanguages(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -20595,18 +20465,6 @@ export class ApplicationsApi extends BaseAPI {
      */
     public getEnvironmentApplicationStatus(environmentId: string, options?: AxiosRequestConfig) {
         return ApplicationsApiFp(this.configuration).getEnvironmentApplicationStatus(environmentId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns list of languages supported by Buildpacks.
-     * @summary List supported languages
-     * @param {string} environmentId Environment ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApplicationsApi
-     */
-    public getEnvironmentApplicationSupportedLanguages(environmentId: string, options?: AxiosRequestConfig) {
-        return ApplicationsApiFp(this.configuration).getEnvironmentApplicationSupportedLanguages(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
