@@ -6470,7 +6470,21 @@ export interface DeploymentHistoryServiceDetailsOneOf2 {
      * @memberof DeploymentHistoryServiceDetailsOneOf2
      */
     'schedule'?: DeploymentHistoryServiceDetailsOneOf2Schedule;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryServiceDetailsOneOf2
+     */
+    'job_type': DeploymentHistoryServiceDetailsOneOf2JobTypeEnum;
 }
+
+export const DeploymentHistoryServiceDetailsOneOf2JobTypeEnum = {
+    CRON: 'CRON',
+    LIFECYCLE: 'LIFECYCLE'
+} as const;
+
+export type DeploymentHistoryServiceDetailsOneOf2JobTypeEnum = typeof DeploymentHistoryServiceDetailsOneOf2JobTypeEnum[keyof typeof DeploymentHistoryServiceDetailsOneOf2JobTypeEnum];
+
 /**
  * 
  * @export
@@ -15130,7 +15144,7 @@ export interface ServiceTotalNumber {
     'service_total_number'?: number;
 }
 /**
- * type of the service (application, database, job, gateway...)
+ * type of the service (application, database, job, ...)
  * @export
  * @enum {string}
  */
@@ -15140,8 +15154,7 @@ export const ServiceTypeEnum = {
     DATABASE: 'DATABASE',
     CONTAINER: 'CONTAINER',
     JOB: 'JOB',
-    HELM: 'HELM',
-    ROUTER: 'ROUTER'
+    HELM: 'HELM'
 } as const;
 
 export type ServiceTypeEnum = typeof ServiceTypeEnum[keyof typeof ServiceTypeEnum];
