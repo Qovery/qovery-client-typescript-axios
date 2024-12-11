@@ -11776,10 +11776,23 @@ export interface ListOrganizationLabelsGroup200Response {
     'results'?: Array<OrganizationLabelsGroupEnrichedResponse>;
 }
 /**
- * @type ListServicesByEnvironmentId200ResponseInner
+ * 
+ * @export
+ * @interface ListServicesByEnvironmentId200Response
+ */
+export interface ListServicesByEnvironmentId200Response {
+    /**
+     * 
+     * @type {Array<ListServicesByEnvironmentId200ResponseResultsInner>}
+     * @memberof ListServicesByEnvironmentId200Response
+     */
+    'results'?: Array<ListServicesByEnvironmentId200ResponseResultsInner>;
+}
+/**
+ * @type ListServicesByEnvironmentId200ResponseResultsInner
  * @export
  */
-export type ListServicesByEnvironmentId200ResponseInner = Application | ContainerResponse | Database | HelmResponse | JobResponse;
+export type ListServicesByEnvironmentId200ResponseResultsInner = Application | ContainerResponse | Database | HelmResponse | JobResponse;
 
 /**
  * 
@@ -33119,7 +33132,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listServicesByEnvironmentId(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ListServicesByEnvironmentId200ResponseInner>>> {
+        async listServicesByEnvironmentId(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListServicesByEnvironmentId200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listServicesByEnvironmentId(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -33150,7 +33163,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listServicesByEnvironmentId(environmentId: string, options?: any): AxiosPromise<Array<ListServicesByEnvironmentId200ResponseInner>> {
+        listServicesByEnvironmentId(environmentId: string, options?: any): AxiosPromise<ListServicesByEnvironmentId200Response> {
             return localVarFp.listServicesByEnvironmentId(environmentId, options).then((request) => request(axios, basePath));
         },
     };
