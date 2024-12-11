@@ -10850,6 +10850,56 @@ export interface KarpenterNodePool {
      * @memberof KarpenterNodePool
      */
     'requirements': Array<KarpenterNodePoolRequirement>;
+    /**
+     * 
+     * @type {KarpenterNodePoolOverride}
+     * @memberof KarpenterNodePool
+     */
+    'stable_override'?: KarpenterNodePoolOverride;
+}
+/**
+ * 
+ * @export
+ * @interface KarpenterNodePoolConsolidation
+ */
+export interface KarpenterNodePoolConsolidation {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof KarpenterNodePoolConsolidation
+     */
+    'enabled': boolean;
+    /**
+     * The list of days where the consolidation will occur. The days are indicated in the same manner as for a cron (sunday=0, monday=1, tuesday=2, wednesday=3, thursday=4, friday=5, saturday=6). 
+     * @type {Array<number>}
+     * @memberof KarpenterNodePoolConsolidation
+     */
+    'days': Array<number>;
+    /**
+     * The start date of the consolidation. The expected format is \"hh24:mm\". 
+     * @type {string}
+     * @memberof KarpenterNodePoolConsolidation
+     */
+    'start_time': string;
+    /**
+     * The duration during the consolidation will be active. Only hours and minutes can be defined, no seconds. The expected format is \"h:m\". 
+     * @type {string}
+     * @memberof KarpenterNodePoolConsolidation
+     */
+    'duration': string;
+}
+/**
+ * 
+ * @export
+ * @interface KarpenterNodePoolOverride
+ */
+export interface KarpenterNodePoolOverride {
+    /**
+     * 
+     * @type {KarpenterNodePoolConsolidation}
+     * @memberof KarpenterNodePoolOverride
+     */
+    'consolidation'?: KarpenterNodePoolConsolidation;
 }
 /**
  * 
