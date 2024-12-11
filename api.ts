@@ -315,6 +315,12 @@ export interface Application {
      * @memberof Application
      */
     'icon_uri': string;
+    /**
+     * 
+     * @type {ServiceTypeEnum}
+     * @memberof Application
+     */
+    'serviceType'?: ServiceTypeEnum;
 }
 
 
@@ -1425,7 +1431,15 @@ export interface BaseJobResponse {
      * @memberof BaseJobResponse
      */
     'icon_uri': string;
+    /**
+     * 
+     * @type {ServiceTypeEnum}
+     * @memberof BaseJobResponse
+     */
+    'serviceType'?: ServiceTypeEnum;
 }
+
+
 /**
  * @type BaseJobResponseAllOfSource
  * @export
@@ -4511,7 +4525,15 @@ export interface ContainerResponse {
      * @memberof ContainerResponse
      */
     'icon_uri': string;
+    /**
+     * 
+     * @type {ServiceTypeEnum}
+     * @memberof ContainerResponse
+     */
+    'serviceType'?: ServiceTypeEnum;
 }
+
+
 /**
  * 
  * @export
@@ -4965,6 +4987,12 @@ export interface CronJobResponse {
     'icon_uri': string;
     /**
      * 
+     * @type {ServiceTypeEnum}
+     * @memberof CronJobResponse
+     */
+    'serviceType'?: ServiceTypeEnum;
+    /**
+     * 
      * @type {string}
      * @memberof CronJobResponse
      */
@@ -5318,6 +5346,12 @@ export interface Database {
      * @memberof Database
      */
     'disk_encrypted'?: boolean;
+    /**
+     * 
+     * @type {ServiceTypeEnum}
+     * @memberof Database
+     */
+    'serviceType'?: ServiceTypeEnum;
 }
 
 
@@ -9783,7 +9817,15 @@ export interface HelmResponse {
      * @memberof HelmResponse
      */
     'icon_uri': string;
+    /**
+     * 
+     * @type {ServiceTypeEnum}
+     * @memberof HelmResponse
+     */
+    'serviceType'?: ServiceTypeEnum;
 }
+
+
 /**
  * @type HelmResponseAllOfPortsInner
  * @export
@@ -11264,6 +11306,12 @@ export interface LifecycleJobResponse {
     'icon_uri': string;
     /**
      * 
+     * @type {ServiceTypeEnum}
+     * @memberof LifecycleJobResponse
+     */
+    'serviceType'?: ServiceTypeEnum;
+    /**
+     * 
      * @type {string}
      * @memberof LifecycleJobResponse
      */
@@ -11727,6 +11775,12 @@ export interface ListOrganizationLabelsGroup200Response {
      */
     'results'?: Array<OrganizationLabelsGroupEnrichedResponse>;
 }
+/**
+ * @type ListServicesByEnvironmentId200ResponseInner
+ * @export
+ */
+export type ListServicesByEnvironmentId200ResponseInner = Application | ContainerResponse | Database | HelmResponse | JobResponse;
+
 /**
  * 
  * @export
@@ -32996,6 +33050,47 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary List Services By EnvironmentId
+         * @param {string} environmentId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listServicesByEnvironmentId: async (environmentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('listServicesByEnvironmentId', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/services`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -33015,6 +33110,17 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          */
         async getClusterTokenByClusterId(clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetClusterTokenByClusterId200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterTokenByClusterId(clusterId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary List Services By EnvironmentId
+         * @param {string} environmentId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listServicesByEnvironmentId(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ListServicesByEnvironmentId200ResponseInner>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listServicesByEnvironmentId(environmentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -33037,6 +33143,16 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         getClusterTokenByClusterId(clusterId: string, options?: any): AxiosPromise<GetClusterTokenByClusterId200Response> {
             return localVarFp.getClusterTokenByClusterId(clusterId, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @summary List Services By EnvironmentId
+         * @param {string} environmentId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listServicesByEnvironmentId(environmentId: string, options?: any): AxiosPromise<Array<ListServicesByEnvironmentId200ResponseInner>> {
+            return localVarFp.listServicesByEnvironmentId(environmentId, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -33057,6 +33173,18 @@ export class DefaultApi extends BaseAPI {
      */
     public getClusterTokenByClusterId(clusterId: string, options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).getClusterTokenByClusterId(clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List Services By EnvironmentId
+     * @param {string} environmentId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public listServicesByEnvironmentId(environmentId: string, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).listServicesByEnvironmentId(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
