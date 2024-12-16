@@ -10912,11 +10912,11 @@ export interface KarpenterNodePoolConsolidation {
      */
     'enabled': boolean;
     /**
-     * The list of days where the consolidation will occur. The days are indicated in the same manner as for a cron (sunday=0, monday=1, tuesday=2, wednesday=3, thursday=4, friday=5, saturday=6). 
-     * @type {Array<number>}
+     * 
+     * @type {Array<WeekdayEnum>}
      * @memberof KarpenterNodePoolConsolidation
      */
-    'days': Array<number>;
+    'days': Array<WeekdayEnum>;
     /**
      * The start date of the consolidation. The expected format is \"hh24:mm\". 
      * @type {string}
