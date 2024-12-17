@@ -7169,6 +7169,21 @@ export interface EnvironmentDeploymentRuleEditRequest {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export const EnvironmentDeploymentStatusEnum = {
+    NEVER_DEPLOYED: 'NEVER_DEPLOYED',
+    UP_TO_DATE: 'UP_TO_DATE',
+    OUT_OF_DATE: 'OUT_OF_DATE'
+} as const;
+
+export type EnvironmentDeploymentStatusEnum = typeof EnvironmentDeploymentStatusEnum[keyof typeof EnvironmentDeploymentStatusEnum];
+
+
+/**
+ * 
+ * @export
  * @interface EnvironmentEditRequest
  */
 export interface EnvironmentEditRequest {
@@ -7644,6 +7659,12 @@ export interface EnvironmentStatus {
      * @memberof EnvironmentStatus
      */
     'triggered_by'?: string | null;
+    /**
+     * 
+     * @type {EnvironmentDeploymentStatusEnum}
+     * @memberof EnvironmentStatus
+     */
+    'deployment_status'?: EnvironmentDeploymentStatusEnum;
 }
 
 
