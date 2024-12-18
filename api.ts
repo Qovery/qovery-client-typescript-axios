@@ -14435,6 +14435,12 @@ export interface ReferenceObjectStatus {
      * @memberof ReferenceObjectStatus
      */
     'steps'?: ServiceStepMetrics;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReferenceObjectStatus
+     */
+    'execution_id'?: string;
 }
 
 
@@ -15704,6 +15710,12 @@ export interface Status {
      * @memberof Status
      */
     'steps'?: ServiceStepMetrics;
+    /**
+     * 
+     * @type {string}
+     * @memberof Status
+     */
+    'execution_id'?: string;
 }
 
 
