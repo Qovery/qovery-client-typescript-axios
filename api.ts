@@ -10904,6 +10904,19 @@ export interface JobSourceDockerResponse {
 /**
  * 
  * @export
+ * @interface KarpenterDefaultNodePoolOverride
+ */
+export interface KarpenterDefaultNodePoolOverride {
+    /**
+     * 
+     * @type {KarpenterNodePoolLimits}
+     * @memberof KarpenterDefaultNodePoolOverride
+     */
+    'limits'?: KarpenterNodePoolLimits;
+}
+/**
+ * 
+ * @export
  * @interface KarpenterNodePool
  */
 export interface KarpenterNodePool {
@@ -10915,10 +10928,16 @@ export interface KarpenterNodePool {
     'requirements': Array<KarpenterNodePoolRequirement>;
     /**
      * 
-     * @type {KarpenterNodePoolOverride}
+     * @type {KarpenterStableNodePoolOverride}
      * @memberof KarpenterNodePool
      */
-    'stable_override'?: KarpenterNodePoolOverride;
+    'stable_override'?: KarpenterStableNodePoolOverride;
+    /**
+     * 
+     * @type {KarpenterDefaultNodePoolOverride}
+     * @memberof KarpenterNodePool
+     */
+    'default_override'?: KarpenterDefaultNodePoolOverride;
 }
 /**
  * 
@@ -10954,15 +10973,21 @@ export interface KarpenterNodePoolConsolidation {
 /**
  * 
  * @export
- * @interface KarpenterNodePoolOverride
+ * @interface KarpenterNodePoolLimits
  */
-export interface KarpenterNodePoolOverride {
+export interface KarpenterNodePoolLimits {
     /**
-     * 
-     * @type {KarpenterNodePoolConsolidation}
-     * @memberof KarpenterNodePoolOverride
+     * CPU limit that will be applied for the node pool (in vCPU unit: 1 vCPU = 1000 millicores)
+     * @type {number}
+     * @memberof KarpenterNodePoolLimits
      */
-    'consolidation'?: KarpenterNodePoolConsolidation;
+    'max_cpu_in_vcpu': number;
+    /**
+     * Memory limit that will be applied for the node pool (in Gibibytes unit: 1Gi = 1024 mebibytes)
+     * @type {number}
+     * @memberof KarpenterNodePoolLimits
+     */
+    'max_memory_in_gibibytes': number;
 }
 /**
  * 
@@ -11019,6 +11044,25 @@ export const KarpenterNodePoolRequirementOperator = {
 export type KarpenterNodePoolRequirementOperator = typeof KarpenterNodePoolRequirementOperator[keyof typeof KarpenterNodePoolRequirementOperator];
 
 
+/**
+ * 
+ * @export
+ * @interface KarpenterStableNodePoolOverride
+ */
+export interface KarpenterStableNodePoolOverride {
+    /**
+     * 
+     * @type {KarpenterNodePoolConsolidation}
+     * @memberof KarpenterStableNodePoolOverride
+     */
+    'consolidation'?: KarpenterNodePoolConsolidation;
+    /**
+     * 
+     * @type {KarpenterNodePoolLimits}
+     * @memberof KarpenterStableNodePoolOverride
+     */
+    'limits'?: KarpenterNodePoolLimits;
+}
 /**
  * 
  * @export
