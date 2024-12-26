@@ -320,7 +320,7 @@ export interface Application {
      * @type {ServiceTypeEnum}
      * @memberof Application
      */
-    'serviceType'?: ServiceTypeEnum;
+    'service_type': ServiceTypeEnum;
 }
 
 
@@ -1436,7 +1436,7 @@ export interface BaseJobResponse {
      * @type {ServiceTypeEnum}
      * @memberof BaseJobResponse
      */
-    'serviceType'?: ServiceTypeEnum;
+    'service_type': ServiceTypeEnum;
 }
 
 
@@ -4530,7 +4530,7 @@ export interface ContainerResponse {
      * @type {ServiceTypeEnum}
      * @memberof ContainerResponse
      */
-    'serviceType'?: ServiceTypeEnum;
+    'service_type': ServiceTypeEnum;
 }
 
 
@@ -4990,7 +4990,7 @@ export interface CronJobResponse {
      * @type {ServiceTypeEnum}
      * @memberof CronJobResponse
      */
-    'serviceType'?: ServiceTypeEnum;
+    'service_type': ServiceTypeEnum;
     /**
      * 
      * @type {string}
@@ -5351,7 +5351,7 @@ export interface Database {
      * @type {ServiceTypeEnum}
      * @memberof Database
      */
-    'serviceType'?: ServiceTypeEnum;
+    'service_type': ServiceTypeEnum;
 }
 
 
@@ -9843,7 +9843,7 @@ export interface HelmResponse {
      * @type {ServiceTypeEnum}
      * @memberof HelmResponse
      */
-    'serviceType'?: ServiceTypeEnum;
+    'service_type': ServiceTypeEnum;
 }
 
 
@@ -11374,7 +11374,7 @@ export interface LifecycleJobResponse {
      * @type {ServiceTypeEnum}
      * @memberof LifecycleJobResponse
      */
-    'serviceType'?: ServiceTypeEnum;
+    'service_type': ServiceTypeEnum;
     /**
      * 
      * @type {string}
