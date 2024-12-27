@@ -2977,6 +2977,75 @@ export interface ClusterKarpenterPrivateSubnetIdsPutRequest {
 /**
  * 
  * @export
+ * @interface ClusterLock
+ */
+export interface ClusterLock {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterLock
+     */
+    'reason': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterLock
+     */
+    'ttl_in_days'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterLock
+     */
+    'cluster_id': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterLock
+     */
+    'locked_at': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterLock
+     */
+    'owner_name': string;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterLockList
+ */
+export interface ClusterLockList {
+    /**
+     * 
+     * @type {Array<ClusterLock>}
+     * @memberof ClusterLockList
+     */
+    'results'?: Array<ClusterLock>;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterLockRequest
+ */
+export interface ClusterLockRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterLockRequest
+     */
+    'reason': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterLockRequest
+     */
+    'ttl_in_days'?: number;
+}
+/**
+ * 
+ * @export
  * @interface ClusterLogs
  */
 export interface ClusterLogs {
@@ -3499,6 +3568,12 @@ export interface ClusterStatus {
      * @memberof ClusterStatus
      */
     'last_execution_id'?: string;
+    /**
+     * 
+     * @type {ClusterLock}
+     * @memberof ClusterStatus
+     */
+    'cluster_lock'?: ClusterLock;
 }
 
 
@@ -25992,6 +26067,51 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Lock a Cluster
+         * @summary Lock Cluster
+         * @param {string} clusterId 
+         * @param {ClusterLockRequest} [clusterLockRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        lockCluster: async (clusterId: string, clusterLockRequest?: ClusterLockRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('lockCluster', 'clusterId', clusterId)
+            const localVarPath = `/cluster/{clusterId}/lock`
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(clusterLockRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Specify cluster cloud provider info and credentials
          * @param {string} organizationId Organization ID
@@ -26064,6 +26184,47 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Unlock a cluster
+         * @summary Unlock Cluster
+         * @param {string} clusterId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        unlockCluster: async (clusterId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('unlockCluster', 'clusterId', clusterId)
+            const localVarPath = `/cluster/{clusterId}/lock`
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -26405,6 +26566,18 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Lock a Cluster
+         * @summary Lock Cluster
+         * @param {string} clusterId 
+         * @param {ClusterLockRequest} [clusterLockRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async lockCluster(clusterId: string, clusterLockRequest?: ClusterLockRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterLock>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.lockCluster(clusterId, clusterLockRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * 
          * @summary Specify cluster cloud provider info and credentials
          * @param {string} organizationId Organization ID
@@ -26427,6 +26600,17 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          */
         async stopCluster(organizationId: string, clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.stopCluster(organizationId, clusterId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Unlock a cluster
+         * @summary Unlock Cluster
+         * @param {string} clusterId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async unlockCluster(clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.unlockCluster(clusterId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -26665,6 +26849,17 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.listOrganizationCluster(organizationId, options).then((request) => request(axios, basePath));
         },
         /**
+         * Lock a Cluster
+         * @summary Lock Cluster
+         * @param {string} clusterId 
+         * @param {ClusterLockRequest} [clusterLockRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        lockCluster(clusterId: string, clusterLockRequest?: ClusterLockRequest, options?: any): AxiosPromise<ClusterLock> {
+            return localVarFp.lockCluster(clusterId, clusterLockRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Specify cluster cloud provider info and credentials
          * @param {string} organizationId Organization ID
@@ -26686,6 +26881,16 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          */
         stopCluster(organizationId: string, clusterId: string, options?: any): AxiosPromise<ClusterStatus> {
             return localVarFp.stopCluster(organizationId, clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Unlock a cluster
+         * @summary Unlock Cluster
+         * @param {string} clusterId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        unlockCluster(clusterId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.unlockCluster(clusterId, options).then((request) => request(axios, basePath));
         },
         /**
          * Update karpenter private fargate subnet ids
@@ -26957,6 +27162,19 @@ export class ClustersApi extends BaseAPI {
     }
 
     /**
+     * Lock a Cluster
+     * @summary Lock Cluster
+     * @param {string} clusterId 
+     * @param {ClusterLockRequest} [clusterLockRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClustersApi
+     */
+    public lockCluster(clusterId: string, clusterLockRequest?: ClusterLockRequest, options?: AxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).lockCluster(clusterId, clusterLockRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * 
      * @summary Specify cluster cloud provider info and credentials
      * @param {string} organizationId Organization ID
@@ -26981,6 +27199,18 @@ export class ClustersApi extends BaseAPI {
      */
     public stopCluster(organizationId: string, clusterId: string, options?: AxiosRequestConfig) {
         return ClustersApiFp(this.configuration).stopCluster(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Unlock a cluster
+     * @summary Unlock Cluster
+     * @param {string} clusterId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClustersApi
+     */
+    public unlockCluster(clusterId: string, options?: AxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).unlockCluster(clusterId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -47396,6 +47626,119 @@ export class OrganizationApiTokenApi extends BaseAPI {
      */
     public listOrganizationApiTokens(organizationId: string, options?: AxiosRequestConfig) {
         return OrganizationApiTokenApiFp(this.configuration).listOrganizationApiTokens(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * OrganizationClusterLockApi - axios parameter creator
+ * @export
+ */
+export const OrganizationClusterLockApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List locked Cluster by organization
+         * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listClusterLock: async (organizationId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listClusterLock', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/lock`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * OrganizationClusterLockApi - functional programming interface
+ * @export
+ */
+export const OrganizationClusterLockApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = OrganizationClusterLockApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary List locked Cluster by organization
+         * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listClusterLock(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ClusterLockList>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listClusterLock(organizationId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * OrganizationClusterLockApi - factory interface
+ * @export
+ */
+export const OrganizationClusterLockApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = OrganizationClusterLockApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary List locked Cluster by organization
+         * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listClusterLock(organizationId: string, options?: any): AxiosPromise<Array<ClusterLockList>> {
+            return localVarFp.listClusterLock(organizationId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * OrganizationClusterLockApi - object-oriented interface
+ * @export
+ * @class OrganizationClusterLockApi
+ * @extends {BaseAPI}
+ */
+export class OrganizationClusterLockApi extends BaseAPI {
+    /**
+     * 
+     * @summary List locked Cluster by organization
+     * @param {string} organizationId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationClusterLockApi
+     */
+    public listClusterLock(organizationId: string, options?: AxiosRequestConfig) {
+        return OrganizationClusterLockApiFp(this.configuration).listClusterLock(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
