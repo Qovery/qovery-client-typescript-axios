@@ -3000,10 +3000,10 @@ export interface ClusterLock {
     'cluster_id': string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ClusterLock
      */
-    'locked_at': number;
+    'locked_at': string;
     /**
      * 
      * @type {string}
