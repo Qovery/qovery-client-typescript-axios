@@ -47695,7 +47695,7 @@ export const OrganizationClusterLockApiFp = function(configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listClusterLock(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ClusterLockList>>> {
+        async listClusterLock(organizationId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterLockList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listClusterLock(organizationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -47716,7 +47716,7 @@ export const OrganizationClusterLockApiFactory = function (configuration?: Confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listClusterLock(organizationId: string, options?: any): AxiosPromise<Array<ClusterLockList>> {
+        listClusterLock(organizationId: string, options?: any): AxiosPromise<ClusterLockList> {
             return localVarFp.listClusterLock(organizationId, options).then((request) => request(axios, basePath));
         },
     };
