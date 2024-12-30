@@ -11033,13 +11033,13 @@ export interface KarpenterNodePoolConsolidation {
      */
     'days': Array<WeekdayEnum>;
     /**
-     * The start date of the consolidation. The expected format is \"hh24:mm\". 
+     * The start date of the consolidation. The format should follow ISO-8601 convention: \"PThh:mm\" 
      * @type {string}
      * @memberof KarpenterNodePoolConsolidation
      */
     'start_time': string;
     /**
-     * The duration during the consolidation will be active. Only hours and minutes can be defined, no seconds. The expected format is \"h:m\". 
+     * The duration during the consolidation will be active. The format should follow ISO-8601 convention: \"PThhHmmM\" 
      * @type {string}
      * @memberof KarpenterNodePoolConsolidation
      */
