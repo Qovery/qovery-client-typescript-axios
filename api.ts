@@ -6496,6 +6496,12 @@ export interface DeploymentHistoryService {
      * @memberof DeploymentHistoryService
      */
     'details': DeploymentHistoryServiceDetails;
+    /**
+     * 
+     * @type {StatusDetails}
+     * @memberof DeploymentHistoryService
+     */
+    'status_details'?: StatusDetails;
 }
 
 
@@ -14560,6 +14566,12 @@ export interface ReferenceObjectStatus {
      * @memberof ReferenceObjectStatus
      */
     'execution_id'?: string;
+    /**
+     * 
+     * @type {StatusDetails}
+     * @memberof ReferenceObjectStatus
+     */
+    'status_details': StatusDetails;
 }
 
 
@@ -15071,6 +15083,42 @@ export interface Service {
      */
     'to_update'?: boolean;
 }
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ServiceActionEnum = {
+    DEPLOY: 'DEPLOY',
+    DELETE: 'DELETE',
+    RESTART: 'RESTART',
+    STOP: 'STOP',
+    UNKNOWN: 'UNKNOWN'
+} as const;
+
+export type ServiceActionEnum = typeof ServiceActionEnum[keyof typeof ServiceActionEnum];
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ServiceActionStatusEnum = {
+    QUEUED: 'QUEUED',
+    ONGOING: 'ONGOING',
+    SUCCESS: 'SUCCESS',
+    ERROR: 'ERROR',
+    CANCELED: 'CANCELED',
+    CANCELING: 'CANCELING',
+    NEVER: 'NEVER'
+} as const;
+
+export type ServiceActionStatusEnum = typeof ServiceActionStatusEnum[keyof typeof ServiceActionStatusEnum];
 
 
 /**
@@ -15835,6 +15883,33 @@ export interface Status {
      * @memberof Status
      */
     'execution_id'?: string;
+    /**
+     * 
+     * @type {StatusDetails}
+     * @memberof Status
+     */
+    'status_details': StatusDetails;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface StatusDetails
+ */
+export interface StatusDetails {
+    /**
+     * 
+     * @type {ServiceActionEnum}
+     * @memberof StatusDetails
+     */
+    'action': ServiceActionEnum;
+    /**
+     * 
+     * @type {ServiceActionStatusEnum}
+     * @memberof StatusDetails
+     */
+    'status': ServiceActionStatusEnum;
 }
 
 
