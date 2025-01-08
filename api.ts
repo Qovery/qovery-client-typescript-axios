@@ -2618,7 +2618,7 @@ export interface ClusterFeatureKarpenterParameters {
      * @type {KarpenterNodePool}
      * @memberof ClusterFeatureKarpenterParameters
      */
-    'qovery_node_pools': KarpenterNodePool;
+    'qovery_node_pools'?: KarpenterNodePool;
 }
 
 
