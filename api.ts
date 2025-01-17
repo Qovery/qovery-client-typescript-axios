@@ -11058,6 +11058,12 @@ export interface KarpenterNodePoolConsolidation {
  */
 export interface KarpenterNodePoolLimits {
     /**
+     * 
+     * @type {boolean}
+     * @memberof KarpenterNodePoolLimits
+     */
+    'enabled': boolean;
+    /**
      * CPU limit that will be applied for the node pool (in vCPU unit: 1 vCPU = 1000 millicores)
      * @type {number}
      * @memberof KarpenterNodePoolLimits
