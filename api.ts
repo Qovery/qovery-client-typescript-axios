@@ -7040,6 +7040,33 @@ export interface DockerfileCheckResponse {
 /**
  * 
  * @export
+ * @interface EnvDeploymentStatus
+ */
+export interface EnvDeploymentStatus {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvDeploymentStatus
+     */
+    'deployment_request_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvDeploymentStatus
+     */
+    'environment_id'?: string;
+    /**
+     * 
+     * @type {StateEnum}
+     * @memberof EnvDeploymentStatus
+     */
+    'status'?: StateEnum;
+}
+
+
+/**
+ * 
+ * @export
  * @interface Environment
  */
 export interface Environment {
@@ -33451,6 +33478,50 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Get Deployment Status By DeploymentRequestId
+         * @param {string} deploymentRequestId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDeploymentStatusByDeploymentRequestId: async (deploymentRequestId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'deploymentRequestId' is not null or undefined
+            assertParamExists('getDeploymentStatusByDeploymentRequestId', 'deploymentRequestId', deploymentRequestId)
+            const localVarPath = `/environment/deploymentStatus`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (deploymentRequestId !== undefined) {
+                localVarQueryParameter['deploymentRequestId'] = deploymentRequestId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -33470,6 +33541,17 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          */
         async getClusterTokenByClusterId(clusterId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetClusterTokenByClusterId200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterTokenByClusterId(clusterId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get Deployment Status By DeploymentRequestId
+         * @param {string} deploymentRequestId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDeploymentStatusByDeploymentRequestId(deploymentRequestId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvDeploymentStatus>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeploymentStatusByDeploymentRequestId(deploymentRequestId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -33492,6 +33574,16 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         getClusterTokenByClusterId(clusterId: string, options?: any): AxiosPromise<GetClusterTokenByClusterId200Response> {
             return localVarFp.getClusterTokenByClusterId(clusterId, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @summary Get Deployment Status By DeploymentRequestId
+         * @param {string} deploymentRequestId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDeploymentStatusByDeploymentRequestId(deploymentRequestId: string, options?: any): AxiosPromise<EnvDeploymentStatus> {
+            return localVarFp.getDeploymentStatusByDeploymentRequestId(deploymentRequestId, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -33512,6 +33604,18 @@ export class DefaultApi extends BaseAPI {
      */
     public getClusterTokenByClusterId(clusterId: string, options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).getClusterTokenByClusterId(clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get Deployment Status By DeploymentRequestId
+     * @param {string} deploymentRequestId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getDeploymentStatusByDeploymentRequestId(deploymentRequestId: string, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getDeploymentStatusByDeploymentRequestId(deploymentRequestId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
