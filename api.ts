@@ -5909,6 +5909,25 @@ export interface DeploymentHistory {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export const DeploymentHistoryActionStatus = {
+    QUEUED: 'QUEUED',
+    ONGOING: 'ONGOING',
+    SUCCESS: 'SUCCESS',
+    ERROR: 'ERROR',
+    CANCELED: 'CANCELED',
+    CANCELING: 'CANCELING',
+    NEVER: 'NEVER'
+} as const;
+
+export type DeploymentHistoryActionStatus = typeof DeploymentHistoryActionStatus[keyof typeof DeploymentHistoryActionStatus];
+
+
+/**
+ * 
+ * @export
  * @interface DeploymentHistoryApplication
  */
 export interface DeploymentHistoryApplication {
@@ -6253,6 +6272,12 @@ export interface DeploymentHistoryEnvironmentV2 {
      * @memberof DeploymentHistoryEnvironmentV2
      */
     'stages': Array<DeploymentHistoryStage>;
+    /**
+     * 
+     * @type {DeploymentHistoryActionStatus}
+     * @memberof DeploymentHistoryEnvironmentV2
+     */
+    'action_status': DeploymentHistoryActionStatus;
 }
 
 
