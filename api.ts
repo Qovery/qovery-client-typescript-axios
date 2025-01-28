@@ -33791,47 +33791,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Get Deployment Queue By EnvironmentId
-         * @param {string} environmentId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getEnvironmentDeploymentQueue: async (environmentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'environmentId' is not null or undefined
-            assertParamExists('getEnvironmentDeploymentQueue', 'environmentId', environmentId)
-            const localVarPath = `/environment/{environmentId}/deploymentQueue`
-                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary List Services By OrganizationId
          * @param {string} organizationId 
          * @param {string | null} [projectId] 
@@ -33915,17 +33874,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get Deployment Queue By EnvironmentId
-         * @param {string} environmentId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getEnvironmentDeploymentQueue(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QueuedDeploymentRequestWithStages>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentDeploymentQueue(environmentId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary List Services By OrganizationId
          * @param {string} organizationId 
          * @param {string | null} [projectId] 
@@ -33966,16 +33914,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         getDeploymentStatusByDeploymentRequestId(deploymentRequestId: string, options?: any): AxiosPromise<EnvDeploymentStatus> {
             return localVarFp.getDeploymentStatusByDeploymentRequestId(deploymentRequestId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get Deployment Queue By EnvironmentId
-         * @param {string} environmentId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getEnvironmentDeploymentQueue(environmentId: string, options?: any): AxiosPromise<QueuedDeploymentRequestWithStages> {
-            return localVarFp.getEnvironmentDeploymentQueue(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -34021,18 +33959,6 @@ export class DefaultApi extends BaseAPI {
      */
     public getDeploymentStatusByDeploymentRequestId(deploymentRequestId: string, options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).getDeploymentStatusByDeploymentRequestId(deploymentRequestId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get Deployment Queue By EnvironmentId
-     * @param {string} environmentId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public getEnvironmentDeploymentQueue(environmentId: string, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getEnvironmentDeploymentQueue(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -36838,6 +36764,47 @@ export const EnvironmentMainCallsApiAxiosParamCreator = function (configuration?
         },
         /**
          * 
+         * @summary Get Deployment Queue By EnvironmentId
+         * @param {string} environmentId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentDeploymentQueue: async (environmentId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('getEnvironmentDeploymentQueue', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/deploymentQueue`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get environment status
          * @param {string} environmentId Environment ID
          * @param {*} [options] Override http request option.
@@ -37046,6 +37013,17 @@ export const EnvironmentMainCallsApiFp = function(configuration?: Configuration)
         },
         /**
          * 
+         * @summary Get Deployment Queue By EnvironmentId
+         * @param {string} environmentId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEnvironmentDeploymentQueue(environmentId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QueuedDeploymentRequestWithStages>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentDeploymentQueue(environmentId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Get environment status
          * @param {string} environmentId Environment ID
          * @param {*} [options] Override http request option.
@@ -37128,6 +37106,16 @@ export const EnvironmentMainCallsApiFactory = function (configuration?: Configur
          */
         getEnvironment(environmentId: string, options?: any): AxiosPromise<Environment> {
             return localVarFp.getEnvironment(environmentId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get Deployment Queue By EnvironmentId
+         * @param {string} environmentId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentDeploymentQueue(environmentId: string, options?: any): AxiosPromise<QueuedDeploymentRequestWithStages> {
+            return localVarFp.getEnvironmentDeploymentQueue(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -37214,6 +37202,18 @@ export class EnvironmentMainCallsApi extends BaseAPI {
      */
     public getEnvironment(environmentId: string, options?: AxiosRequestConfig) {
         return EnvironmentMainCallsApiFp(this.configuration).getEnvironment(environmentId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get Deployment Queue By EnvironmentId
+     * @param {string} environmentId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentMainCallsApi
+     */
+    public getEnvironmentDeploymentQueue(environmentId: string, options?: AxiosRequestConfig) {
+        return EnvironmentMainCallsApiFp(this.configuration).getEnvironmentDeploymentQueue(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
