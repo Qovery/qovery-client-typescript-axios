@@ -6527,6 +6527,18 @@ export interface DeploymentHistoryService {
      * @memberof DeploymentHistoryService
      */
     'status_details'?: StatusDetails;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryService
+     */
+    'icon_uri': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeploymentHistoryService
+     */
+    'total_duration'?: string;
 }
 
 
@@ -6732,12 +6744,6 @@ export interface DeploymentHistoryServiceIdentifier {
      * @memberof DeploymentHistoryServiceIdentifier
      */
     'execution_id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DeploymentHistoryServiceIdentifier
-     */
-    'icon_uri': string;
 }
 
 
