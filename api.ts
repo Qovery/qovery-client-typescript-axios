@@ -15472,8 +15472,20 @@ export interface ServiceLightResponse {
      * @memberof ServiceLightResponse
      */
     'environment_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ServiceLightResponse
+     */
+    'job_type'?: ServiceLightResponseJobTypeEnum;
 }
 
+export const ServiceLightResponseJobTypeEnum = {
+    CRON: 'CRON',
+    LIFECYCLE: 'LIFECYCLE'
+} as const;
+
+export type ServiceLightResponseJobTypeEnum = typeof ServiceLightResponseJobTypeEnum[keyof typeof ServiceLightResponseJobTypeEnum];
 
 /**
  * 
