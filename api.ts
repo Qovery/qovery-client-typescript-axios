@@ -14602,10 +14602,10 @@ export interface QueuedDeploymentRequestWithStages {
     'trigger_action': DeploymentHistoryTriggerAction;
     /**
      * 
-     * @type {QueuedDeploymentRequestWithStagesStages}
+     * @type {Array<QueuedDeploymentRequestWithStagesStagesInner>}
      * @memberof QueuedDeploymentRequestWithStages
      */
-    'stages': QueuedDeploymentRequestWithStagesStages;
+    'stages': Array<QueuedDeploymentRequestWithStagesStagesInner>;
 }
 
 
@@ -14652,52 +14652,52 @@ export interface QueuedDeploymentRequestWithStagesIdentifier {
 /**
  * 
  * @export
- * @interface QueuedDeploymentRequestWithStagesStages
+ * @interface QueuedDeploymentRequestWithStagesStagesInner
  */
-export interface QueuedDeploymentRequestWithStagesStages {
+export interface QueuedDeploymentRequestWithStagesStagesInner {
     /**
      * 
      * @type {string}
-     * @memberof QueuedDeploymentRequestWithStagesStages
+     * @memberof QueuedDeploymentRequestWithStagesStagesInner
      */
     'name': string;
     /**
      * 
      * @type {StageStatusEnum}
-     * @memberof QueuedDeploymentRequestWithStagesStages
+     * @memberof QueuedDeploymentRequestWithStagesStagesInner
      */
     'status': StageStatusEnum;
     /**
      * 
-     * @type {Array<QueuedDeploymentRequestWithStagesStagesServicesInner>}
-     * @memberof QueuedDeploymentRequestWithStagesStages
+     * @type {Array<QueuedDeploymentRequestWithStagesStagesInnerServicesInner>}
+     * @memberof QueuedDeploymentRequestWithStagesStagesInner
      */
-    'services': Array<QueuedDeploymentRequestWithStagesStagesServicesInner>;
+    'services': Array<QueuedDeploymentRequestWithStagesStagesInnerServicesInner>;
 }
 
 
 /**
  * 
  * @export
- * @interface QueuedDeploymentRequestWithStagesStagesServicesInner
+ * @interface QueuedDeploymentRequestWithStagesStagesInnerServicesInner
  */
-export interface QueuedDeploymentRequestWithStagesStagesServicesInner {
+export interface QueuedDeploymentRequestWithStagesStagesInnerServicesInner {
     /**
      * 
-     * @type {QueuedDeploymentRequestWithStagesStagesServicesInnerIdentifier}
-     * @memberof QueuedDeploymentRequestWithStagesStagesServicesInner
+     * @type {QueuedDeploymentRequestWithStagesStagesInnerServicesInnerIdentifier}
+     * @memberof QueuedDeploymentRequestWithStagesStagesInnerServicesInner
      */
-    'identifier': QueuedDeploymentRequestWithStagesStagesServicesInnerIdentifier;
+    'identifier': QueuedDeploymentRequestWithStagesStagesInnerServicesInnerIdentifier;
     /**
      * 
      * @type {StageStatusEnum}
-     * @memberof QueuedDeploymentRequestWithStagesStagesServicesInner
+     * @memberof QueuedDeploymentRequestWithStagesStagesInnerServicesInner
      */
     'status': StageStatusEnum;
     /**
      * 
      * @type {string}
-     * @memberof QueuedDeploymentRequestWithStagesStagesServicesInner
+     * @memberof QueuedDeploymentRequestWithStagesStagesInnerServicesInner
      */
     'icon_uri'?: string;
 }
@@ -14706,25 +14706,25 @@ export interface QueuedDeploymentRequestWithStagesStagesServicesInner {
 /**
  * 
  * @export
- * @interface QueuedDeploymentRequestWithStagesStagesServicesInnerIdentifier
+ * @interface QueuedDeploymentRequestWithStagesStagesInnerServicesInnerIdentifier
  */
-export interface QueuedDeploymentRequestWithStagesStagesServicesInnerIdentifier {
+export interface QueuedDeploymentRequestWithStagesStagesInnerServicesInnerIdentifier {
     /**
      * 
      * @type {string}
-     * @memberof QueuedDeploymentRequestWithStagesStagesServicesInnerIdentifier
+     * @memberof QueuedDeploymentRequestWithStagesStagesInnerServicesInnerIdentifier
      */
     'service_id': string;
     /**
      * 
      * @type {ServiceTypeEnum}
-     * @memberof QueuedDeploymentRequestWithStagesStagesServicesInnerIdentifier
+     * @memberof QueuedDeploymentRequestWithStagesStagesInnerServicesInnerIdentifier
      */
     'service_type': ServiceTypeEnum;
     /**
      * 
      * @type {string}
-     * @memberof QueuedDeploymentRequestWithStagesStagesServicesInnerIdentifier
+     * @memberof QueuedDeploymentRequestWithStagesStagesInnerServicesInnerIdentifier
      */
     'name': string;
 }
