@@ -14700,8 +14700,41 @@ export interface QueuedDeploymentRequestWithStagesStagesInnerServicesInner {
      * @memberof QueuedDeploymentRequestWithStagesStagesInnerServicesInner
      */
     'icon_uri'?: string;
+    /**
+     * 
+     * @type {QueuedDeploymentRequestWithStagesStagesInnerServicesInnerDetails}
+     * @memberof QueuedDeploymentRequestWithStagesStagesInnerServicesInner
+     */
+    'details'?: QueuedDeploymentRequestWithStagesStagesInnerServicesInnerDetails;
 }
 
+
+/**
+ * @type QueuedDeploymentRequestWithStagesStagesInnerServicesInnerDetails
+ * @export
+ */
+export type QueuedDeploymentRequestWithStagesStagesInnerServicesInnerDetails = QueuedDeploymentRequestWithStagesStagesInnerServicesInnerDetailsOneOf;
+
+/**
+ * JobDetails
+ * @export
+ * @interface QueuedDeploymentRequestWithStagesStagesInnerServicesInnerDetailsOneOf
+ */
+export interface QueuedDeploymentRequestWithStagesStagesInnerServicesInnerDetailsOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof QueuedDeploymentRequestWithStagesStagesInnerServicesInnerDetailsOneOf
+     */
+    'job_type': QueuedDeploymentRequestWithStagesStagesInnerServicesInnerDetailsOneOfJobTypeEnum;
+}
+
+export const QueuedDeploymentRequestWithStagesStagesInnerServicesInnerDetailsOneOfJobTypeEnum = {
+    CRON: 'CRON',
+    LIFECYCLE: 'LIFECYCLE'
+} as const;
+
+export type QueuedDeploymentRequestWithStagesStagesInnerServicesInnerDetailsOneOfJobTypeEnum = typeof QueuedDeploymentRequestWithStagesStagesInnerServicesInnerDetailsOneOfJobTypeEnum[keyof typeof QueuedDeploymentRequestWithStagesStagesInnerServicesInnerDetailsOneOfJobTypeEnum];
 
 /**
  * 
