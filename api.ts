@@ -33853,10 +33853,11 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} organizationId 
          * @param {string | null} [projectId] 
          * @param {string | null} [environmentId] 
+         * @param {string} [clusterId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listServicesByOrganizationId: async (organizationId: string, projectId?: string | null, environmentId?: string | null, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listServicesByOrganizationId: async (organizationId: string, projectId?: string | null, environmentId?: string | null, clusterId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('listServicesByOrganizationId', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/services`
@@ -33885,6 +33886,10 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (environmentId !== undefined) {
                 localVarQueryParameter['environment_id'] = environmentId;
+            }
+
+            if (clusterId !== undefined) {
+                localVarQueryParameter['cluster_id'] = clusterId;
             }
 
 
@@ -33936,11 +33941,12 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} organizationId 
          * @param {string | null} [projectId] 
          * @param {string | null} [environmentId] 
+         * @param {string} [clusterId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listServicesByOrganizationId(organizationId: string, projectId?: string | null, environmentId?: string | null, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListServicesByOrganizationId200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listServicesByOrganizationId(organizationId, projectId, environmentId, options);
+        async listServicesByOrganizationId(organizationId: string, projectId?: string | null, environmentId?: string | null, clusterId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListServicesByOrganizationId200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listServicesByOrganizationId(organizationId, projectId, environmentId, clusterId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -33979,11 +33985,12 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {string} organizationId 
          * @param {string | null} [projectId] 
          * @param {string | null} [environmentId] 
+         * @param {string} [clusterId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listServicesByOrganizationId(organizationId: string, projectId?: string | null, environmentId?: string | null, options?: any): AxiosPromise<ListServicesByOrganizationId200Response> {
-            return localVarFp.listServicesByOrganizationId(organizationId, projectId, environmentId, options).then((request) => request(axios, basePath));
+        listServicesByOrganizationId(organizationId: string, projectId?: string | null, environmentId?: string | null, clusterId?: string, options?: any): AxiosPromise<ListServicesByOrganizationId200Response> {
+            return localVarFp.listServicesByOrganizationId(organizationId, projectId, environmentId, clusterId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -34025,12 +34032,13 @@ export class DefaultApi extends BaseAPI {
      * @param {string} organizationId 
      * @param {string | null} [projectId] 
      * @param {string | null} [environmentId] 
+     * @param {string} [clusterId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public listServicesByOrganizationId(organizationId: string, projectId?: string | null, environmentId?: string | null, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).listServicesByOrganizationId(organizationId, projectId, environmentId, options).then((request) => request(this.axios, this.basePath));
+    public listServicesByOrganizationId(organizationId: string, projectId?: string | null, environmentId?: string | null, clusterId?: string, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).listServicesByOrganizationId(organizationId, projectId, environmentId, clusterId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
