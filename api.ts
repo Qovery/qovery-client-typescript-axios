@@ -14855,6 +14855,12 @@ export interface ReferenceObjectStatus {
      * @memberof ReferenceObjectStatus
      */
     'status_details': StatusDetails;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReferenceObjectStatus
+     */
+    'deployment_request_id'?: string | null;
 }
 
 
@@ -16247,6 +16253,12 @@ export interface Status {
      * @memberof Status
      */
     'status_details': StatusDetails;
+    /**
+     * 
+     * @type {string}
+     * @memberof Status
+     */
+    'deployment_request_id'?: string | null;
 }
 
 
