@@ -27694,7 +27694,7 @@ export class ClustersApi extends BaseAPI {
 export const ContainerActionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * You must provide a git commit id
+         * You must provide a container image tag
          * @summary Deploy container
          * @param {string} containerId Container ID
          * @param {ContainerDeployRequest} [containerDeployRequest] 
@@ -27872,7 +27872,7 @@ export const ContainerActionsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ContainerActionsApiAxiosParamCreator(configuration)
     return {
         /**
-         * You must provide a git commit id
+         * You must provide a container image tag
          * @summary Deploy container
          * @param {string} containerId Container ID
          * @param {ContainerDeployRequest} [containerDeployRequest] 
@@ -27927,7 +27927,7 @@ export const ContainerActionsApiFactory = function (configuration?: Configuratio
     const localVarFp = ContainerActionsApiFp(configuration)
     return {
         /**
-         * You must provide a git commit id
+         * You must provide a container image tag
          * @summary Deploy container
          * @param {string} containerId Container ID
          * @param {ContainerDeployRequest} [containerDeployRequest] 
@@ -27978,7 +27978,7 @@ export const ContainerActionsApiFactory = function (configuration?: Configuratio
  */
 export class ContainerActionsApi extends BaseAPI {
     /**
-     * You must provide a git commit id
+     * You must provide a container image tag
      * @summary Deploy container
      * @param {string} containerId Container ID
      * @param {ContainerDeployRequest} [containerDeployRequest] 
@@ -39538,7 +39538,7 @@ export class GithubAppApi extends BaseAPI {
 export const HelmActionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
+         * You must provide a git commit id or a helm version depending on the source location of your code (git vs helm repository).
          * @summary Deploy helm
          * @param {string} helmId Helm ID
          * @param {HelmForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned helm hasn\&#39;t the target event provided, the helm won\&#39;t be deployed. 
@@ -39685,7 +39685,7 @@ export const HelmActionsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = HelmActionsApiAxiosParamCreator(configuration)
     return {
         /**
-         * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
+         * You must provide a git commit id or a helm version depending on the source location of your code (git vs helm repository).
          * @summary Deploy helm
          * @param {string} helmId Helm ID
          * @param {HelmForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned helm hasn\&#39;t the target event provided, the helm won\&#39;t be deployed. 
@@ -39731,7 +39731,7 @@ export const HelmActionsApiFactory = function (configuration?: Configuration, ba
     const localVarFp = HelmActionsApiFp(configuration)
     return {
         /**
-         * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
+         * You must provide a git commit id or a helm version depending on the source location of your code (git vs helm repository).
          * @summary Deploy helm
          * @param {string} helmId Helm ID
          * @param {HelmForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned helm hasn\&#39;t the target event provided, the helm won\&#39;t be deployed. 
@@ -39774,7 +39774,7 @@ export const HelmActionsApiFactory = function (configuration?: Configuration, ba
  */
 export class HelmActionsApi extends BaseAPI {
     /**
-     * You must provide a git commit id or an image tag depending on the source location of your code (git vs image repository).
+     * You must provide a git commit id or a helm version depending on the source location of your code (git vs helm repository).
      * @summary Deploy helm
      * @param {string} helmId Helm ID
      * @param {HelmForceEvent} [forceEvent] When filled, it indicates the target event to be deployed.   If the concerned helm hasn\&#39;t the target event provided, the helm won\&#39;t be deployed. 
