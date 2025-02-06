@@ -11931,6 +11931,19 @@ export interface ListDeploymentRequestByEnvironmentId200Response {
 /**
  * 
  * @export
+ * @interface ListDeploymentRequestByServiceId200Response
+ */
+export interface ListDeploymentRequestByServiceId200Response {
+    /**
+     * 
+     * @type {Array<QueuedDeploymentRequestForService>}
+     * @memberof ListDeploymentRequestByServiceId200Response
+     */
+    'results'?: Array<QueuedDeploymentRequestForService>;
+}
+/**
+ * 
+ * @export
  * @interface ListHelmDeploymentHistory200Response
  */
 export interface ListHelmDeploymentHistory200Response {
@@ -14576,6 +14589,91 @@ export interface ProjectStatsResponseList {
      */
     'results'?: Array<ProjectStats>;
 }
+/**
+ * 
+ * @export
+ * @interface QueuedDeploymentRequestForService
+ */
+export interface QueuedDeploymentRequestForService {
+    /**
+     * 
+     * @type {QueuedDeploymentRequestForServiceIdentifier}
+     * @memberof QueuedDeploymentRequestForService
+     */
+    'identifier': QueuedDeploymentRequestForServiceIdentifier;
+    /**
+     * 
+     * @type {QueuedDeploymentRequestForServiceAuditingData}
+     * @memberof QueuedDeploymentRequestForService
+     */
+    'auditing_data': QueuedDeploymentRequestForServiceAuditingData;
+    /**
+     * 
+     * @type {StatusDetails}
+     * @memberof QueuedDeploymentRequestForService
+     */
+    'status_details': StatusDetails;
+    /**
+     * 
+     * @type {string}
+     * @memberof QueuedDeploymentRequestForService
+     */
+    'icon_uri': string;
+}
+/**
+ * 
+ * @export
+ * @interface QueuedDeploymentRequestForServiceAuditingData
+ */
+export interface QueuedDeploymentRequestForServiceAuditingData {
+    /**
+     * 
+     * @type {string}
+     * @memberof QueuedDeploymentRequestForServiceAuditingData
+     */
+    'triggered_by': string;
+    /**
+     * 
+     * @type {OrganizationEventOrigin}
+     * @memberof QueuedDeploymentRequestForServiceAuditingData
+     */
+    'origin'?: OrganizationEventOrigin;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface QueuedDeploymentRequestForServiceIdentifier
+ */
+export interface QueuedDeploymentRequestForServiceIdentifier {
+    /**
+     * 
+     * @type {string}
+     * @memberof QueuedDeploymentRequestForServiceIdentifier
+     */
+    'deployment_request_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof QueuedDeploymentRequestForServiceIdentifier
+     */
+    'service_id': string;
+    /**
+     * 
+     * @type {ServiceTypeEnum}
+     * @memberof QueuedDeploymentRequestForServiceIdentifier
+     */
+    'service_type': ServiceTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof QueuedDeploymentRequestForServiceIdentifier
+     */
+    'name': string;
+}
+
+
 /**
  * 
  * @export
@@ -37006,6 +37104,47 @@ export const EnvironmentMainCallsApiAxiosParamCreator = function (configuration?
         },
         /**
          * 
+         * @summary List Deployment Request By ServiceId
+         * @param {string} serviceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listDeploymentRequestByServiceId: async (serviceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'serviceId' is not null or undefined
+            assertParamExists('listDeploymentRequestByServiceId', 'serviceId', serviceId)
+            const localVarPath = `/service/{serviceId}/deploymentQueue`
+                .replace(`{${"serviceId"}}`, encodeURIComponent(String(serviceId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary List Services By EnvironmentId
          * @param {string} environmentId 
          * @param {*} [options] Override http request option.
@@ -37135,6 +37274,17 @@ export const EnvironmentMainCallsApiFp = function(configuration?: Configuration)
         },
         /**
          * 
+         * @summary List Deployment Request By ServiceId
+         * @param {string} serviceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listDeploymentRequestByServiceId(serviceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListDeploymentRequestByServiceId200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listDeploymentRequestByServiceId(serviceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary List Services By EnvironmentId
          * @param {string} environmentId 
          * @param {*} [options] Override http request option.
@@ -37224,6 +37374,16 @@ export const EnvironmentMainCallsApiFactory = function (configuration?: Configur
          */
         listDeploymentRequestByEnvironmentId(environmentId: string, options?: any): AxiosPromise<ListDeploymentRequestByEnvironmentId200Response> {
             return localVarFp.listDeploymentRequestByEnvironmentId(environmentId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List Deployment Request By ServiceId
+         * @param {string} serviceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listDeploymentRequestByServiceId(serviceId: string, options?: any): AxiosPromise<ListDeploymentRequestByServiceId200Response> {
+            return localVarFp.listDeploymentRequestByServiceId(serviceId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -37328,6 +37488,18 @@ export class EnvironmentMainCallsApi extends BaseAPI {
      */
     public listDeploymentRequestByEnvironmentId(environmentId: string, options?: AxiosRequestConfig) {
         return EnvironmentMainCallsApiFp(this.configuration).listDeploymentRequestByEnvironmentId(environmentId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List Deployment Request By ServiceId
+     * @param {string} serviceId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentMainCallsApi
+     */
+    public listDeploymentRequestByServiceId(serviceId: string, options?: AxiosRequestConfig) {
+        return EnvironmentMainCallsApiFp(this.configuration).listDeploymentRequestByServiceId(serviceId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
