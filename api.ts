@@ -37063,7 +37063,7 @@ export const EnvironmentMainCallsApiAxiosParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary List Deployment Request By EnvironmentId
+         * @summary List Deployment Queue Request By EnvironmentId
          * @param {string} environmentId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -37104,7 +37104,7 @@ export const EnvironmentMainCallsApiAxiosParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary List Deployment Request By ServiceId
+         * @summary List Deployment Queue Request By ServiceId
          * @param {string} serviceId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -37263,7 +37263,7 @@ export const EnvironmentMainCallsApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary List Deployment Request By EnvironmentId
+         * @summary List Deployment Queue Request By EnvironmentId
          * @param {string} environmentId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -37274,7 +37274,7 @@ export const EnvironmentMainCallsApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary List Deployment Request By ServiceId
+         * @summary List Deployment Queue Request By ServiceId
          * @param {string} serviceId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -37367,7 +37367,7 @@ export const EnvironmentMainCallsApiFactory = function (configuration?: Configur
         },
         /**
          * 
-         * @summary List Deployment Request By EnvironmentId
+         * @summary List Deployment Queue Request By EnvironmentId
          * @param {string} environmentId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -37377,7 +37377,7 @@ export const EnvironmentMainCallsApiFactory = function (configuration?: Configur
         },
         /**
          * 
-         * @summary List Deployment Request By ServiceId
+         * @summary List Deployment Queue Request By ServiceId
          * @param {string} serviceId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -37480,7 +37480,7 @@ export class EnvironmentMainCallsApi extends BaseAPI {
 
     /**
      * 
-     * @summary List Deployment Request By EnvironmentId
+     * @summary List Deployment Queue Request By EnvironmentId
      * @param {string} environmentId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -37492,7 +37492,7 @@ export class EnvironmentMainCallsApi extends BaseAPI {
 
     /**
      * 
-     * @summary List Deployment Request By ServiceId
+     * @summary List Deployment Queue Request By ServiceId
      * @param {string} serviceId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
