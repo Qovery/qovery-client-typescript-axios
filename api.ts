@@ -321,6 +321,12 @@ export interface Application {
      * @memberof Application
      */
     'service_type': ServiceTypeEnum;
+    /**
+     * The target build stage in the Dockerfile to build
+     * @type {string}
+     * @memberof Application
+     */
+    'docker_target_build_stage'?: string | null;
 }
 
 
@@ -1033,6 +1039,12 @@ export interface ApplicationRequest {
      * @memberof ApplicationRequest
      */
     'icon_uri'?: string;
+    /**
+     * The target build stage in the Dockerfile to build
+     * @type {string}
+     * @memberof ApplicationRequest
+     */
+    'docker_target_build_stage'?: string | null;
 }
 
 
@@ -10960,6 +10972,12 @@ export interface JobRequestAllOfSourceDocker {
      * @memberof JobRequestAllOfSourceDocker
      */
     'dockerfile_raw'?: string | null;
+    /**
+     * The target build stage in the Dockerfile to build
+     * @type {string}
+     * @memberof JobRequestAllOfSourceDocker
+     */
+    'docker_target_build_stage'?: string | null;
 }
 /**
  * 
@@ -11045,6 +11063,12 @@ export interface JobSourceDockerResponse {
      * @memberof JobSourceDockerResponse
      */
     'dockerfile_raw'?: string | null;
+    /**
+     * The target build stage in the Dockerfile to build
+     * @type {string}
+     * @memberof JobSourceDockerResponse
+     */
+    'docker_target_build_stage'?: string | null;
 }
 /**
  * 
