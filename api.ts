@@ -772,6 +772,12 @@ export interface ApplicationEditRequest {
      * @memberof ApplicationEditRequest
      */
     'icon_uri'?: string;
+    /**
+     * The target build stage in the Dockerfile to build
+     * @type {string}
+     * @memberof ApplicationEditRequest
+     */
+    'docker_target_build_stage'?: string | null;
 }
 
 
