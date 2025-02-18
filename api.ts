@@ -34185,6 +34185,126 @@ export class DefaultApi extends BaseAPI {
 
 
 /**
+ * DeploymentQueueActionsApi - axios parameter creator
+ * @export
+ */
+export const DeploymentQueueActionsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Cancel the a deployment request.
+         * @summary Cancel deployment request
+         * @param {string} deploymentRequestId Deployment Request ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cancelDeploymentRequest: async (deploymentRequestId: string, body?: object, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'deploymentRequestId' is not null or undefined
+            assertParamExists('cancelDeploymentRequest', 'deploymentRequestId', deploymentRequestId)
+            const localVarPath = `/deploymentQueue/{deploymentRequestId}/cancelDeployment`
+                .replace(`{${"deploymentRequestId"}}`, encodeURIComponent(String(deploymentRequestId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * DeploymentQueueActionsApi - functional programming interface
+ * @export
+ */
+export const DeploymentQueueActionsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = DeploymentQueueActionsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Cancel the a deployment request.
+         * @summary Cancel deployment request
+         * @param {string} deploymentRequestId Deployment Request ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cancelDeploymentRequest(deploymentRequestId: string, body?: object, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cancelDeploymentRequest(deploymentRequestId, body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * DeploymentQueueActionsApi - factory interface
+ * @export
+ */
+export const DeploymentQueueActionsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = DeploymentQueueActionsApiFp(configuration)
+    return {
+        /**
+         * Cancel the a deployment request.
+         * @summary Cancel deployment request
+         * @param {string} deploymentRequestId Deployment Request ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cancelDeploymentRequest(deploymentRequestId: string, body?: object, options?: any): AxiosPromise<void> {
+            return localVarFp.cancelDeploymentRequest(deploymentRequestId, body, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * DeploymentQueueActionsApi - object-oriented interface
+ * @export
+ * @class DeploymentQueueActionsApi
+ * @extends {BaseAPI}
+ */
+export class DeploymentQueueActionsApi extends BaseAPI {
+    /**
+     * Cancel the a deployment request.
+     * @summary Cancel deployment request
+     * @param {string} deploymentRequestId Deployment Request ID
+     * @param {object} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DeploymentQueueActionsApi
+     */
+    public cancelDeploymentRequest(deploymentRequestId: string, body?: object, options?: AxiosRequestConfig) {
+        return DeploymentQueueActionsApiFp(this.configuration).cancelDeploymentRequest(deploymentRequestId, body, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * DeploymentStageMainCallsApi - axios parameter creator
  * @export
  */
