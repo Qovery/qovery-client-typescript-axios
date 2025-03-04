@@ -8331,6 +8331,68 @@ export interface GenericObjectCurrentCost {
 /**
  * 
  * @export
+ * @interface GetClusterKubernetesEvents200Response
+ */
+export interface GetClusterKubernetesEvents200Response {
+    /**
+     * 
+     * @type {Array<GetClusterKubernetesEvents200ResponseResultsInner>}
+     * @memberof GetClusterKubernetesEvents200Response
+     */
+    'results'?: Array<GetClusterKubernetesEvents200ResponseResultsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface GetClusterKubernetesEvents200ResponseResultsInner
+ */
+export interface GetClusterKubernetesEvents200ResponseResultsInner {
+    /**
+     * The created date following ISO-8601 format
+     * @type {string}
+     * @memberof GetClusterKubernetesEvents200ResponseResultsInner
+     */
+    'created_at'?: string;
+    /**
+     * The source kubernetes object related to the Event
+     * @type {string}
+     * @memberof GetClusterKubernetesEvents200ResponseResultsInner
+     */
+    'kind'?: string;
+    /**
+     * The namespace of the kubernetes object related to the Event (optional)
+     * @type {string}
+     * @memberof GetClusterKubernetesEvents200ResponseResultsInner
+     */
+    'namespace'?: string;
+    /**
+     * The name of the Event
+     * @type {string}
+     * @memberof GetClusterKubernetesEvents200ResponseResultsInner
+     */
+    'name'?: string;
+    /**
+     * The action that triggered the Event
+     * @type {string}
+     * @memberof GetClusterKubernetesEvents200ResponseResultsInner
+     */
+    'reason'?: string;
+    /**
+     * A description of the Event
+     * @type {string}
+     * @memberof GetClusterKubernetesEvents200ResponseResultsInner
+     */
+    'message'?: string;
+    /**
+     * As of today it can be either Warning or Normal (can evolve in the next releases)
+     * @type {string}
+     * @memberof GetClusterKubernetesEvents200ResponseResultsInner
+     */
+    'type'?: string;
+}
+/**
+ * 
+ * @export
  * @interface GetClusterTokenByClusterId200Response
  */
 export interface GetClusterTokenByClusterId200Response {
@@ -26251,6 +26313,65 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * List Cluster Kubernetes Events
+         * @summary List Cluster Kubernetes Events
+         * @param {string} clusterId Cluster ID
+         * @param {string} nodeName 
+         * @param {string} fromDateTime The start date time to fetch events from, following ISO-8601 format.   The &#x60;+&#x60; character must be escaped (&#x60;%2B&#x60;) 
+         * @param {string} toDateTime The end date time to fetch events from, following ISO-8601 format.   The &#x60;+&#x60; character must be escaped (&#x60;%2B&#x60;) 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusterKubernetesEvents: async (clusterId: string, nodeName: string, fromDateTime: string, toDateTime: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('getClusterKubernetesEvents', 'clusterId', clusterId)
+            // verify required parameter 'nodeName' is not null or undefined
+            assertParamExists('getClusterKubernetesEvents', 'nodeName', nodeName)
+            // verify required parameter 'fromDateTime' is not null or undefined
+            assertParamExists('getClusterKubernetesEvents', 'fromDateTime', fromDateTime)
+            // verify required parameter 'toDateTime' is not null or undefined
+            assertParamExists('getClusterKubernetesEvents', 'toDateTime', toDateTime)
+            const localVarPath = `/cluster/{clusterId}/events/{nodeName}`
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)))
+                .replace(`{${"nodeName"}}`, encodeURIComponent(String(nodeName)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (fromDateTime !== undefined) {
+                localVarQueryParameter['from_date_time'] = fromDateTime;
+            }
+
+            if (toDateTime !== undefined) {
+                localVarQueryParameter['to_date_time'] = toDateTime;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Know if a cluster is ready to be deployed or not
          * @param {string} organizationId Organization ID
@@ -27035,6 +27156,20 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * List Cluster Kubernetes Events
+         * @summary List Cluster Kubernetes Events
+         * @param {string} clusterId Cluster ID
+         * @param {string} nodeName 
+         * @param {string} fromDateTime The start date time to fetch events from, following ISO-8601 format.   The &#x60;+&#x60; character must be escaped (&#x60;%2B&#x60;) 
+         * @param {string} toDateTime The end date time to fetch events from, following ISO-8601 format.   The &#x60;+&#x60; character must be escaped (&#x60;%2B&#x60;) 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getClusterKubernetesEvents(clusterId: string, nodeName: string, fromDateTime: string, toDateTime: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetClusterKubernetesEvents200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterKubernetesEvents(clusterId, nodeName, fromDateTime, toDateTime, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * 
          * @summary Know if a cluster is ready to be deployed or not
          * @param {string} organizationId Organization ID
@@ -27325,6 +27460,19 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          */
         getClusterKubeconfig(organizationId: string, clusterId: string, withTokenFromCli?: boolean, options?: any): AxiosPromise<string> {
             return localVarFp.getClusterKubeconfig(organizationId, clusterId, withTokenFromCli, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List Cluster Kubernetes Events
+         * @summary List Cluster Kubernetes Events
+         * @param {string} clusterId Cluster ID
+         * @param {string} nodeName 
+         * @param {string} fromDateTime The start date time to fetch events from, following ISO-8601 format.   The &#x60;+&#x60; character must be escaped (&#x60;%2B&#x60;) 
+         * @param {string} toDateTime The end date time to fetch events from, following ISO-8601 format.   The &#x60;+&#x60; character must be escaped (&#x60;%2B&#x60;) 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusterKubernetesEvents(clusterId: string, nodeName: string, fromDateTime: string, toDateTime: string, options?: any): AxiosPromise<GetClusterKubernetesEvents200Response> {
+            return localVarFp.getClusterKubernetesEvents(clusterId, nodeName, fromDateTime, toDateTime, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -27619,6 +27767,21 @@ export class ClustersApi extends BaseAPI {
      */
     public getClusterKubeconfig(organizationId: string, clusterId: string, withTokenFromCli?: boolean, options?: AxiosRequestConfig) {
         return ClustersApiFp(this.configuration).getClusterKubeconfig(organizationId, clusterId, withTokenFromCli, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List Cluster Kubernetes Events
+     * @summary List Cluster Kubernetes Events
+     * @param {string} clusterId Cluster ID
+     * @param {string} nodeName 
+     * @param {string} fromDateTime The start date time to fetch events from, following ISO-8601 format.   The &#x60;+&#x60; character must be escaped (&#x60;%2B&#x60;) 
+     * @param {string} toDateTime The end date time to fetch events from, following ISO-8601 format.   The &#x60;+&#x60; character must be escaped (&#x60;%2B&#x60;) 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClustersApi
+     */
+    public getClusterKubernetesEvents(clusterId: string, nodeName: string, fromDateTime: string, toDateTime: string, options?: AxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).getClusterKubernetesEvents(clusterId, nodeName, fromDateTime, toDateTime, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
