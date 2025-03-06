@@ -1148,65 +1148,128 @@ export interface AvailableHelmRepositoryResponseList {
     'results'?: Array<AvailableHelmRepositoryResponse>;
 }
 /**
+ * @type AwsCredentialsRequest
+ * @export
+ */
+export type AwsCredentialsRequest = AwsRoleCredentialsRequest | AwsStaticCredentialsRequest;
+
+/**
  * 
  * @export
- * @interface AwsClusterCredentials
+ * @interface AwsRoleClusterCredentials
  */
-export interface AwsClusterCredentials {
+export interface AwsRoleClusterCredentials {
     /**
      * 
      * @type {string}
-     * @memberof AwsClusterCredentials
+     * @memberof AwsRoleClusterCredentials
      */
     'id': string;
     /**
      * 
      * @type {string}
-     * @memberof AwsClusterCredentials
+     * @memberof AwsRoleClusterCredentials
      */
     'name': string;
     /**
      * 
      * @type {string}
-     * @memberof AwsClusterCredentials
+     * @memberof AwsRoleClusterCredentials
      */
-    'access_key_id': string;
+    'role_arn': string;
     /**
      * 
      * @type {string}
-     * @memberof AwsClusterCredentials
+     * @memberof AwsRoleClusterCredentials
      */
-    'object_type': AwsClusterCredentialsObjectTypeEnum;
+    'object_type': AwsRoleClusterCredentialsObjectTypeEnum;
 }
 
-export const AwsClusterCredentialsObjectTypeEnum = {
-    AWS: 'AWS'
+export const AwsRoleClusterCredentialsObjectTypeEnum = {
+    AWS_ROLE: 'AWS_ROLE'
 } as const;
 
-export type AwsClusterCredentialsObjectTypeEnum = typeof AwsClusterCredentialsObjectTypeEnum[keyof typeof AwsClusterCredentialsObjectTypeEnum];
+export type AwsRoleClusterCredentialsObjectTypeEnum = typeof AwsRoleClusterCredentialsObjectTypeEnum[keyof typeof AwsRoleClusterCredentialsObjectTypeEnum];
 
 /**
  * 
  * @export
- * @interface AwsCredentialsRequest
+ * @interface AwsRoleCredentialsRequest
  */
-export interface AwsCredentialsRequest {
+export interface AwsRoleCredentialsRequest {
     /**
      * 
      * @type {string}
-     * @memberof AwsCredentialsRequest
+     * @memberof AwsRoleCredentialsRequest
      */
     'name': string;
     /**
      * 
      * @type {string}
-     * @memberof AwsCredentialsRequest
+     * @memberof AwsRoleCredentialsRequest
+     */
+    'role_arn': string;
+}
+/**
+ * 
+ * @export
+ * @interface AwsStaticClusterCredentials
+ */
+export interface AwsStaticClusterCredentials {
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsStaticClusterCredentials
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsStaticClusterCredentials
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsStaticClusterCredentials
      */
     'access_key_id': string;
     /**
      * 
      * @type {string}
-     * @memberof AwsCredentialsRequest
+     * @memberof AwsStaticClusterCredentials
+     */
+    'object_type': AwsStaticClusterCredentialsObjectTypeEnum;
+}
+
+export const AwsStaticClusterCredentialsObjectTypeEnum = {
+    AWS: 'AWS'
+} as const;
+
+export type AwsStaticClusterCredentialsObjectTypeEnum = typeof AwsStaticClusterCredentialsObjectTypeEnum[keyof typeof AwsStaticClusterCredentialsObjectTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface AwsStaticCredentialsRequest
+ */
+export interface AwsStaticCredentialsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsStaticCredentialsRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsStaticCredentialsRequest
+     */
+    'access_key_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsStaticCredentialsRequest
      */
     'secret_access_key': string;
 }
@@ -2353,7 +2416,7 @@ export interface ClusterCloudProviderInfoRequest {
  * @type ClusterCredentials
  * @export
  */
-export type ClusterCredentials = { object_type: 'AWS' } & AwsClusterCredentials | { object_type: 'OTHER' } & GenericClusterCredentials | { object_type: 'SCW' } & ScalewayClusterCredentials;
+export type ClusterCredentials = { object_type: 'AWS' } & AwsStaticClusterCredentials | { object_type: 'AWS_ROLE' } & AwsRoleClusterCredentials | { object_type: 'OTHER' } & GenericClusterCredentials | { object_type: 'SCW' } & ScalewayClusterCredentials;
 
 /**
  * 
@@ -4196,6 +4259,12 @@ export interface ContainerRegistryRequestConfig {
      * @memberof ContainerRegistryRequestConfig
      */
     'password'?: string;
+    /**
+     * For ECR, you can either set a static access_key or use a role arn that we are going to assume
+     * @type {string}
+     * @memberof ContainerRegistryRequestConfig
+     */
+    'role_arn'?: string;
 }
 /**
  * 
@@ -4321,6 +4390,12 @@ export interface ContainerRegistryResponseAllOfConfig {
      * @memberof ContainerRegistryResponseAllOfConfig
      */
     'access_key_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOfConfig
+     */
+    'role_arn'?: string;
 }
 /**
  * 
