@@ -1987,6 +1987,29 @@ export interface CloudProviderResponseList {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export const CloudVendorEnum = {
+    AWS: 'AWS',
+    SCW: 'SCW',
+    GCP: 'GCP',
+    DO: 'DO',
+    AZURE: 'AZURE',
+    OVH: 'OVH',
+    CIVO: 'CIVO',
+    HETZNER: 'HETZNER',
+    ORACLE: 'ORACLE',
+    IBM: 'IBM',
+    ON_PREMISE: 'ON_PREMISE'
+} as const;
+
+export type CloudVendorEnum = typeof CloudVendorEnum[keyof typeof CloudVendorEnum];
+
+
+/**
+ * 
+ * @export
  * @interface Cluster
  */
 export interface Cluster {
@@ -2034,10 +2057,10 @@ export interface Cluster {
     'region': string;
     /**
      * 
-     * @type {CloudProviderEnum}
+     * @type {CloudVendorEnum}
      * @memberof Cluster
      */
-    'cloud_provider': CloudProviderEnum;
+    'cloud_provider': CloudVendorEnum;
     /**
      * 
      * @type {number}
@@ -3428,10 +3451,10 @@ export interface ClusterRequest {
     'region': string;
     /**
      * 
-     * @type {CloudProviderEnum}
+     * @type {CloudVendorEnum}
      * @memberof ClusterRequest
      */
-    'cloud_provider': CloudProviderEnum;
+    'cloud_provider': CloudVendorEnum;
     /**
      * 
      * @type {ClusterCloudProviderInfoRequest}
