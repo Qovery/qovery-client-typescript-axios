@@ -3678,6 +3678,12 @@ export interface ClusterStatus {
      * @memberof ClusterStatus
      */
     'cluster_lock'?: ClusterLock;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterStatus
+     */
+    'last_deployment_date'?: string;
 }
 
 
