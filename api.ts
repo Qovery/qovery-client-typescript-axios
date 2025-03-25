@@ -15155,6 +15155,12 @@ export interface ReferenceObjectStatus {
      * @memberof ReferenceObjectStatus
      */
     'deployment_request_id'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReferenceObjectStatus
+     */
+    'deployment_requests_count'?: number;
 }
 
 
@@ -16553,6 +16559,12 @@ export interface Status {
      * @memberof Status
      */
     'deployment_request_id'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof Status
+     */
+    'deployment_requests_count'?: number;
 }
 
 
