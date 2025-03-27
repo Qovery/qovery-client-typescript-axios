@@ -26432,24 +26432,22 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
          * List Cluster Kubernetes Events
          * @summary List Cluster Kubernetes Events
          * @param {string} clusterId Cluster ID
-         * @param {string} nodeName 
          * @param {string} fromDateTime The start date time to fetch events from, following ISO-8601 format.   The &#x60;+&#x60; character must be escaped (&#x60;%2B&#x60;) 
          * @param {string} toDateTime The end date time to fetch events from, following ISO-8601 format.   The &#x60;+&#x60; character must be escaped (&#x60;%2B&#x60;) 
+         * @param {string} [nodeName] The name of the node to fetch event from
+         * @param {string} [podName] The name of the pod to fetch event from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getClusterKubernetesEvents: async (clusterId: string, nodeName: string, fromDateTime: string, toDateTime: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getClusterKubernetesEvents: async (clusterId: string, fromDateTime: string, toDateTime: string, nodeName?: string, podName?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'clusterId' is not null or undefined
             assertParamExists('getClusterKubernetesEvents', 'clusterId', clusterId)
-            // verify required parameter 'nodeName' is not null or undefined
-            assertParamExists('getClusterKubernetesEvents', 'nodeName', nodeName)
             // verify required parameter 'fromDateTime' is not null or undefined
             assertParamExists('getClusterKubernetesEvents', 'fromDateTime', fromDateTime)
             // verify required parameter 'toDateTime' is not null or undefined
             assertParamExists('getClusterKubernetesEvents', 'toDateTime', toDateTime)
-            const localVarPath = `/cluster/{clusterId}/events/{nodeName}`
-                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)))
-                .replace(`{${"nodeName"}}`, encodeURIComponent(String(nodeName)));
+            const localVarPath = `/cluster/{clusterId}/events`
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -26474,6 +26472,14 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
 
             if (toDateTime !== undefined) {
                 localVarQueryParameter['to_date_time'] = toDateTime;
+            }
+
+            if (nodeName !== undefined) {
+                localVarQueryParameter['node_name'] = nodeName;
+            }
+
+            if (podName !== undefined) {
+                localVarQueryParameter['pod_name'] = podName;
             }
 
 
@@ -27275,14 +27281,15 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          * List Cluster Kubernetes Events
          * @summary List Cluster Kubernetes Events
          * @param {string} clusterId Cluster ID
-         * @param {string} nodeName 
          * @param {string} fromDateTime The start date time to fetch events from, following ISO-8601 format.   The &#x60;+&#x60; character must be escaped (&#x60;%2B&#x60;) 
          * @param {string} toDateTime The end date time to fetch events from, following ISO-8601 format.   The &#x60;+&#x60; character must be escaped (&#x60;%2B&#x60;) 
+         * @param {string} [nodeName] The name of the node to fetch event from
+         * @param {string} [podName] The name of the pod to fetch event from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getClusterKubernetesEvents(clusterId: string, nodeName: string, fromDateTime: string, toDateTime: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetClusterKubernetesEvents200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterKubernetesEvents(clusterId, nodeName, fromDateTime, toDateTime, options);
+        async getClusterKubernetesEvents(clusterId: string, fromDateTime: string, toDateTime: string, nodeName?: string, podName?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetClusterKubernetesEvents200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterKubernetesEvents(clusterId, fromDateTime, toDateTime, nodeName, podName, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -27581,14 +27588,15 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          * List Cluster Kubernetes Events
          * @summary List Cluster Kubernetes Events
          * @param {string} clusterId Cluster ID
-         * @param {string} nodeName 
          * @param {string} fromDateTime The start date time to fetch events from, following ISO-8601 format.   The &#x60;+&#x60; character must be escaped (&#x60;%2B&#x60;) 
          * @param {string} toDateTime The end date time to fetch events from, following ISO-8601 format.   The &#x60;+&#x60; character must be escaped (&#x60;%2B&#x60;) 
+         * @param {string} [nodeName] The name of the node to fetch event from
+         * @param {string} [podName] The name of the pod to fetch event from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getClusterKubernetesEvents(clusterId: string, nodeName: string, fromDateTime: string, toDateTime: string, options?: any): AxiosPromise<GetClusterKubernetesEvents200Response> {
-            return localVarFp.getClusterKubernetesEvents(clusterId, nodeName, fromDateTime, toDateTime, options).then((request) => request(axios, basePath));
+        getClusterKubernetesEvents(clusterId: string, fromDateTime: string, toDateTime: string, nodeName?: string, podName?: string, options?: any): AxiosPromise<GetClusterKubernetesEvents200Response> {
+            return localVarFp.getClusterKubernetesEvents(clusterId, fromDateTime, toDateTime, nodeName, podName, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -27889,15 +27897,16 @@ export class ClustersApi extends BaseAPI {
      * List Cluster Kubernetes Events
      * @summary List Cluster Kubernetes Events
      * @param {string} clusterId Cluster ID
-     * @param {string} nodeName 
      * @param {string} fromDateTime The start date time to fetch events from, following ISO-8601 format.   The &#x60;+&#x60; character must be escaped (&#x60;%2B&#x60;) 
      * @param {string} toDateTime The end date time to fetch events from, following ISO-8601 format.   The &#x60;+&#x60; character must be escaped (&#x60;%2B&#x60;) 
+     * @param {string} [nodeName] The name of the node to fetch event from
+     * @param {string} [podName] The name of the pod to fetch event from
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ClustersApi
      */
-    public getClusterKubernetesEvents(clusterId: string, nodeName: string, fromDateTime: string, toDateTime: string, options?: AxiosRequestConfig) {
-        return ClustersApiFp(this.configuration).getClusterKubernetesEvents(clusterId, nodeName, fromDateTime, toDateTime, options).then((request) => request(this.axios, this.basePath));
+    public getClusterKubernetesEvents(clusterId: string, fromDateTime: string, toDateTime: string, nodeName?: string, podName?: string, options?: AxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).getClusterKubernetesEvents(clusterId, fromDateTime, toDateTime, nodeName, podName, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
