@@ -1902,6 +1902,12 @@ export interface CloneEnvironmentRequest {
      * @memberof CloneEnvironmentRequest
      */
     'apply_deployment_rule'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CloneEnvironmentRequest
+     */
+    'project_id'?: string;
 }
 
 
