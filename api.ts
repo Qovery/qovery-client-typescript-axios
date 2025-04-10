@@ -415,6 +415,12 @@ export interface ApplicationAdvancedSettings {
      */
     'network.ingress.proxy_body_size_mb'?: number;
     /**
+     * When using SSL offloading outside of cluster, you can enforce a redirect to HTTPS even when there is no TLS certificate available
+     * @type {boolean}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.ingress.force_ssl_redirect'?: boolean;
+    /**
      * 
      * @type {boolean}
      * @memberof ApplicationAdvancedSettings
@@ -3839,6 +3845,12 @@ export interface ContainerAdvancedSettings {
      * @memberof ContainerAdvancedSettings
      */
     'network.ingress.proxy_body_size_mb'?: number;
+    /**
+     * When using SSL offloading outside of cluster, you can enforce a redirect to HTTPS even when there is no TLS certificate available
+     * @type {boolean}
+     * @memberof ContainerAdvancedSettings
+     */
+    'network.ingress.force_ssl_redirect'?: boolean;
     /**
      * 
      * @type {boolean}
@@ -8936,6 +8948,12 @@ export interface HelmAdvancedSettings {
      * @memberof HelmAdvancedSettings
      */
     'network.ingress.proxy_body_size_mb'?: number;
+    /**
+     * When using SSL offloading outside of cluster, you can enforce a redirect to HTTPS even when there is no TLS certificate available
+     * @type {boolean}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.ingress.force_ssl_redirect'?: boolean;
     /**
      * 
      * @type {boolean}
