@@ -3383,6 +3383,19 @@ export interface ClusterLogsResponseList {
 /**
  * 
  * @export
+ * @interface ClusterMetricsResponse
+ */
+export interface ClusterMetricsResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterMetricsResponse
+     */
+    'metrics'?: string;
+}
+/**
+ * 
+ * @export
  * @interface ClusterReadinessStatus
  */
 export interface ClusterReadinessStatus {
@@ -26732,6 +26745,96 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Fetch cluster metrics
+         * @summary Fetch cluster metrics
+         * @param {string} clusterId Cluster ID
+         * @param {string} endpoint 
+         * @param {string} query 
+         * @param {string} [start] 
+         * @param {string} [end] 
+         * @param {string} [step] 
+         * @param {string} [time] 
+         * @param {string} [timeout] 
+         * @param {string} [dedup] 
+         * @param {string} [partialResponse] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusterMetrics: async (clusterId: string, endpoint: string, query: string, start?: string, end?: string, step?: string, time?: string, timeout?: string, dedup?: string, partialResponse?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('getClusterMetrics', 'clusterId', clusterId)
+            // verify required parameter 'endpoint' is not null or undefined
+            assertParamExists('getClusterMetrics', 'endpoint', endpoint)
+            // verify required parameter 'query' is not null or undefined
+            assertParamExists('getClusterMetrics', 'query', query)
+            const localVarPath = `/cluster/{clusterId}/metrics`
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (endpoint !== undefined) {
+                localVarQueryParameter['endpoint'] = endpoint;
+            }
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
+            if (start !== undefined) {
+                localVarQueryParameter['start'] = start;
+            }
+
+            if (end !== undefined) {
+                localVarQueryParameter['end'] = end;
+            }
+
+            if (step !== undefined) {
+                localVarQueryParameter['step'] = step;
+            }
+
+            if (time !== undefined) {
+                localVarQueryParameter['time'] = time;
+            }
+
+            if (timeout !== undefined) {
+                localVarQueryParameter['timeout'] = timeout;
+            }
+
+            if (dedup !== undefined) {
+                localVarQueryParameter['dedup'] = dedup;
+            }
+
+            if (partialResponse !== undefined) {
+                localVarQueryParameter['partial_response'] = partialResponse;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Know if a cluster is ready to be deployed or not
          * @param {string} organizationId Organization ID
@@ -27551,6 +27654,28 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Fetch cluster metrics
+         * @summary Fetch cluster metrics
+         * @param {string} clusterId Cluster ID
+         * @param {string} endpoint 
+         * @param {string} query 
+         * @param {string} [start] 
+         * @param {string} [end] 
+         * @param {string} [step] 
+         * @param {string} [time] 
+         * @param {string} [timeout] 
+         * @param {string} [dedup] 
+         * @param {string} [partialResponse] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getClusterMetrics(clusterId: string, endpoint: string, query: string, start?: string, end?: string, step?: string, time?: string, timeout?: string, dedup?: string, partialResponse?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterMetricsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterMetrics(clusterId, endpoint, query, start, end, step, time, timeout, dedup, partialResponse, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ClustersApi.getClusterMetrics']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Know if a cluster is ready to be deployed or not
          * @param {string} organizationId Organization ID
@@ -27887,6 +28012,25 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getClusterKubernetesEvents(clusterId, fromDateTime, toDateTime, nodeName, podName, options).then((request) => request(axios, basePath));
         },
         /**
+         * Fetch cluster metrics
+         * @summary Fetch cluster metrics
+         * @param {string} clusterId Cluster ID
+         * @param {string} endpoint 
+         * @param {string} query 
+         * @param {string} [start] 
+         * @param {string} [end] 
+         * @param {string} [step] 
+         * @param {string} [time] 
+         * @param {string} [timeout] 
+         * @param {string} [dedup] 
+         * @param {string} [partialResponse] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusterMetrics(clusterId: string, endpoint: string, query: string, start?: string, end?: string, step?: string, time?: string, timeout?: string, dedup?: string, partialResponse?: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterMetricsResponse> {
+            return localVarFp.getClusterMetrics(clusterId, endpoint, query, start, end, step, time, timeout, dedup, partialResponse, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Know if a cluster is ready to be deployed or not
          * @param {string} organizationId Organization ID
@@ -28195,6 +28339,27 @@ export class ClustersApi extends BaseAPI {
      */
     public getClusterKubernetesEvents(clusterId: string, fromDateTime: string, toDateTime: string, nodeName?: string, podName?: string, options?: RawAxiosRequestConfig) {
         return ClustersApiFp(this.configuration).getClusterKubernetesEvents(clusterId, fromDateTime, toDateTime, nodeName, podName, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Fetch cluster metrics
+     * @summary Fetch cluster metrics
+     * @param {string} clusterId Cluster ID
+     * @param {string} endpoint 
+     * @param {string} query 
+     * @param {string} [start] 
+     * @param {string} [end] 
+     * @param {string} [step] 
+     * @param {string} [time] 
+     * @param {string} [timeout] 
+     * @param {string} [dedup] 
+     * @param {string} [partialResponse] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClustersApi
+     */
+    public getClusterMetrics(clusterId: string, endpoint: string, query: string, start?: string, end?: string, step?: string, time?: string, timeout?: string, dedup?: string, partialResponse?: string, options?: RawAxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).getClusterMetrics(clusterId, endpoint, query, start, end, step, time, timeout, dedup, partialResponse, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
