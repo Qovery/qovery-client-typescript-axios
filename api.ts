@@ -2175,6 +2175,12 @@ export interface Cluster {
      * @memberof Cluster
      */
     'deployment_status'?: ClusterDeploymentStatusEnum;
+    /**
+     * 
+     * @type {MetricsParameters}
+     * @memberof Cluster
+     */
+    'metrics_parameters'?: MetricsParameters;
 }
 
 
@@ -3534,6 +3540,12 @@ export interface ClusterRequest {
      * @memberof ClusterRequest
      */
     'features'?: Array<ClusterRequestFeaturesInner>;
+    /**
+     * 
+     * @type {MetricsParameters}
+     * @memberof ClusterRequest
+     */
+    'metrics_parameters'?: MetricsParameters;
 }
 
 
@@ -12498,6 +12510,51 @@ export interface MemberRoleUpdateRequest {
      */
     'role_id': string;
 }
+/**
+ * 
+ * @export
+ * @interface MetricsConfigurationManagedByQovery
+ */
+export interface MetricsConfigurationManagedByQovery {
+    /**
+     * 
+     * @type {string}
+     * @memberof MetricsConfigurationManagedByQovery
+     */
+    'kind'?: MetricsConfigurationManagedByQoveryKindEnum;
+}
+
+export const MetricsConfigurationManagedByQoveryKindEnum = {
+    MANAGED_BY_QOVERY: 'MANAGED_BY_QOVERY'
+} as const;
+
+export type MetricsConfigurationManagedByQoveryKindEnum = typeof MetricsConfigurationManagedByQoveryKindEnum[keyof typeof MetricsConfigurationManagedByQoveryKindEnum];
+
+/**
+ * 
+ * @export
+ * @interface MetricsParameters
+ */
+export interface MetricsParameters {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MetricsParameters
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {MetricsParametersConfiguration}
+     * @memberof MetricsParameters
+     */
+    'configuration'?: MetricsParametersConfiguration;
+}
+/**
+ * @type MetricsParametersConfiguration
+ * @export
+ */
+export type MetricsParametersConfiguration = { kind: 'MANAGED_BY_QOVERY' } & MetricsConfigurationManagedByQovery;
+
 /**
  * 
  * @export
