@@ -11519,7 +11519,6 @@ export interface Key {
  */
 
 export const KubernetesEnum = {
-    K3_S: 'K3S',
     MANAGED: 'MANAGED',
     SELF_MANAGED: 'SELF_MANAGED'
 } as const;
@@ -23400,47 +23399,6 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary List AWS EC2 available instance types
-         * @param {string} region region name
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listAWSEc2InstanceType: async (region: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'region' is not null or undefined
-            assertParamExists('listAWSEc2InstanceType', 'region', region)
-            const localVarPath = `/aws/ec2/instanceType/{region}`
-                .replace(`{${"region"}}`, encodeURIComponent(String(region)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary List AWS features available
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -24041,19 +23999,6 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List AWS EC2 available instance types
-         * @param {string} region region name
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listAWSEc2InstanceType(region: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterInstanceTypeResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listAWSEc2InstanceType(region, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CloudProviderApi.listAWSEc2InstanceType']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary List AWS features available
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -24261,16 +24206,6 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
         },
         /**
          * 
-         * @summary List AWS EC2 available instance types
-         * @param {string} region region name
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listAWSEc2InstanceType(region: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterInstanceTypeResponseList> {
-            return localVarFp.listAWSEc2InstanceType(region, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary List AWS features available
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -24431,18 +24366,6 @@ export class CloudProviderApi extends BaseAPI {
      */
     public listAWSEKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, options?: RawAxiosRequestConfig) {
         return CloudProviderApiFp(this.configuration).listAWSEKSInstanceType(region, onlyMeetsResourceReqs, withGpu, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary List AWS EC2 available instance types
-     * @param {string} region region name
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CloudProviderApi
-     */
-    public listAWSEc2InstanceType(region: string, options?: RawAxiosRequestConfig) {
-        return CloudProviderApiFp(this.configuration).listAWSEc2InstanceType(region, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
