@@ -10482,6 +10482,27 @@ export interface HelmVersionResponseList {
 /**
  * 
  * @export
+ * @interface IngressDeploymentStatusResponse
+ */
+export interface IngressDeploymentStatusResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof IngressDeploymentStatusResponse
+     */
+    'routerId'?: string;
+    /**
+     * 
+     * @type {StateEnum}
+     * @memberof IngressDeploymentStatusResponse
+     */
+    'status'?: StateEnum;
+}
+
+
+/**
+ * 
+ * @export
  * @interface InviteMember
  */
 export interface InviteMember {
@@ -55358,6 +55379,137 @@ export class ReferralRewardsApi extends BaseAPI {
     }
 }
 
+
+
+/**
+ * ServiceStatusApi - axios parameter creator
+ * @export
+ */
+export const ServiceStatusApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get Ingress Deployment Status By Service
+         * @param {GetIngressDeploymentStatusServiceTypeEnum} serviceType 
+         * @param {string} serviceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIngressDeploymentStatus: async (serviceType: GetIngressDeploymentStatusServiceTypeEnum, serviceId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'serviceType' is not null or undefined
+            assertParamExists('getIngressDeploymentStatus', 'serviceType', serviceType)
+            // verify required parameter 'serviceId' is not null or undefined
+            assertParamExists('getIngressDeploymentStatus', 'serviceId', serviceId)
+            const localVarPath = `/{serviceType}/{serviceId}/ingressDeploymentStatus`
+                .replace(`{${"serviceType"}}`, encodeURIComponent(String(serviceType)))
+                .replace(`{${"serviceId"}}`, encodeURIComponent(String(serviceId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ServiceStatusApi - functional programming interface
+ * @export
+ */
+export const ServiceStatusApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ServiceStatusApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get Ingress Deployment Status By Service
+         * @param {GetIngressDeploymentStatusServiceTypeEnum} serviceType 
+         * @param {string} serviceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getIngressDeploymentStatus(serviceType: GetIngressDeploymentStatusServiceTypeEnum, serviceId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngressDeploymentStatusResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIngressDeploymentStatus(serviceType, serviceId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ServiceStatusApi.getIngressDeploymentStatus']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * ServiceStatusApi - factory interface
+ * @export
+ */
+export const ServiceStatusApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ServiceStatusApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get Ingress Deployment Status By Service
+         * @param {GetIngressDeploymentStatusServiceTypeEnum} serviceType 
+         * @param {string} serviceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIngressDeploymentStatus(serviceType: GetIngressDeploymentStatusServiceTypeEnum, serviceId: string, options?: RawAxiosRequestConfig): AxiosPromise<IngressDeploymentStatusResponse> {
+            return localVarFp.getIngressDeploymentStatus(serviceType, serviceId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ServiceStatusApi - object-oriented interface
+ * @export
+ * @class ServiceStatusApi
+ * @extends {BaseAPI}
+ */
+export class ServiceStatusApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get Ingress Deployment Status By Service
+     * @param {GetIngressDeploymentStatusServiceTypeEnum} serviceType 
+     * @param {string} serviceId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ServiceStatusApi
+     */
+    public getIngressDeploymentStatus(serviceType: GetIngressDeploymentStatusServiceTypeEnum, serviceId: string, options?: RawAxiosRequestConfig) {
+        return ServiceStatusApiFp(this.configuration).getIngressDeploymentStatus(serviceType, serviceId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+/**
+ * @export
+ */
+export const GetIngressDeploymentStatusServiceTypeEnum = {
+    CONTAINER: 'container',
+    APPLICATION: 'application',
+    HELM: 'helm'
+} as const;
+export type GetIngressDeploymentStatusServiceTypeEnum = typeof GetIngressDeploymentStatusServiceTypeEnum[keyof typeof GetIngressDeploymentStatusServiceTypeEnum];
 
 
 /**
