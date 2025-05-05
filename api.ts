@@ -13792,7 +13792,8 @@ export const OrganizationEventType = {
     DEPLOY_FAILED: 'DEPLOY_FAILED',
     STOP_FAILED: 'STOP_FAILED',
     DELETE_FAILED: 'DELETE_FAILED',
-    RESTART_FAILED: 'RESTART_FAILED'
+    RESTART_FAILED: 'RESTART_FAILED',
+    MAINTENANCE: 'MAINTENANCE'
 } as const;
 
 export type OrganizationEventType = typeof OrganizationEventType[keyof typeof OrganizationEventType];
