@@ -2113,8 +2113,7 @@ export const CloudVendorEnum = {
     HETZNER: 'HETZNER',
     ORACLE: 'ORACLE',
     IBM: 'IBM',
-    ON_PREMISE: 'ON_PREMISE',
-    AZURE2: 'AZURE'
+    ON_PREMISE: 'ON_PREMISE'
 } as const;
 
 export type CloudVendorEnum = typeof CloudVendorEnum[keyof typeof CloudVendorEnum];
