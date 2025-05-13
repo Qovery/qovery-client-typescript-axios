@@ -1282,6 +1282,105 @@ export interface AwsStaticCredentialsRequest {
 /**
  * 
  * @export
+ * @interface AzureCredentialsRequest
+ */
+export interface AzureCredentialsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AzureCredentialsRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AzureCredentialsRequest
+     */
+    'azure_subscription_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AzureCredentialsRequest
+     */
+    'azure_tenant_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AzureCredentialsRequest
+     */
+    'azure_client_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AzureCredentialsRequest
+     */
+    'azure_client_secret': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AzureCredentialsRequest
+     */
+    'azure_resource_group_name': string;
+}
+/**
+ * 
+ * @export
+ * @interface AzureStaticClusterCredentials
+ */
+export interface AzureStaticClusterCredentials {
+    /**
+     * 
+     * @type {string}
+     * @memberof AzureStaticClusterCredentials
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AzureStaticClusterCredentials
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AzureStaticClusterCredentials
+     */
+    'azure_subscription_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AzureStaticClusterCredentials
+     */
+    'azure_tenant_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AzureStaticClusterCredentials
+     */
+    'azure_client_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AzureStaticClusterCredentials
+     */
+    'azure_resource_group_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AzureStaticClusterCredentials
+     */
+    'object_type': AzureStaticClusterCredentialsObjectTypeEnum;
+}
+
+export const AzureStaticClusterCredentialsObjectTypeEnum = {
+    AZURE: 'AZURE'
+} as const;
+
+export type AzureStaticClusterCredentialsObjectTypeEnum = typeof AzureStaticClusterCredentialsObjectTypeEnum[keyof typeof AzureStaticClusterCredentialsObjectTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface Backup
  */
 export interface Backup {
@@ -1977,7 +2076,8 @@ export const CloudProviderEnum = {
     AWS: 'AWS',
     SCW: 'SCW',
     GCP: 'GCP',
-    ON_PREMISE: 'ON_PREMISE'
+    ON_PREMISE: 'ON_PREMISE',
+    AZURE: 'AZURE'
 } as const;
 
 export type CloudProviderEnum = typeof CloudProviderEnum[keyof typeof CloudProviderEnum];
@@ -2013,7 +2113,8 @@ export const CloudVendorEnum = {
     HETZNER: 'HETZNER',
     ORACLE: 'ORACLE',
     IBM: 'IBM',
-    ON_PREMISE: 'ON_PREMISE'
+    ON_PREMISE: 'ON_PREMISE',
+    AZURE2: 'AZURE'
 } as const;
 
 export type CloudVendorEnum = typeof CloudVendorEnum[keyof typeof CloudVendorEnum];
@@ -2457,7 +2558,7 @@ export interface ClusterCloudProviderInfoRequest {
  * @type ClusterCredentials
  * @export
  */
-export type ClusterCredentials = { object_type: 'AWS' } & AwsStaticClusterCredentials | { object_type: 'AWS_ROLE' } & AwsRoleClusterCredentials | { object_type: 'OTHER' } & GenericClusterCredentials | { object_type: 'SCW' } & ScalewayClusterCredentials;
+export type ClusterCredentials = { object_type: 'AWS' } & AwsStaticClusterCredentials | { object_type: 'AWS_ROLE' } & AwsRoleClusterCredentials | { object_type: 'AZURE' } & AzureStaticClusterCredentials | { object_type: 'OTHER' } & GenericClusterCredentials | { object_type: 'SCW' } & ScalewayClusterCredentials;
 
 /**
  * 
@@ -4194,7 +4295,8 @@ export const ContainerRegistryKindEnum = {
     PUBLIC_ECR: 'PUBLIC_ECR',
     DOCR: 'DOCR',
     GENERIC_CR: 'GENERIC_CR',
-    GCP_ARTIFACT_REGISTRY: 'GCP_ARTIFACT_REGISTRY'
+    GCP_ARTIFACT_REGISTRY: 'GCP_ARTIFACT_REGISTRY',
+    AZURE_CR: 'AZURE_CR'
 } as const;
 
 export type ContainerRegistryKindEnum = typeof ContainerRegistryKindEnum[keyof typeof ContainerRegistryKindEnum];
@@ -23592,6 +23694,80 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
+         * @summary List Azure features available
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAzureFeatures: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/azure/clusterFeature`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List Azure regions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAzureRegions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/azure/region`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary List Cloud providers available
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -24061,6 +24237,30 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List Azure features available
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listAzureFeatures(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterFeatureResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAzureFeatures(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CloudProviderApi.listAzureFeatures']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary List Azure regions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listAzureRegions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterRegionResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAzureRegions(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CloudProviderApi.listAzureRegions']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary List Cloud providers available
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -24253,6 +24453,24 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
         },
         /**
          * 
+         * @summary List Azure features available
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAzureFeatures(options?: RawAxiosRequestConfig): AxiosPromise<ClusterFeatureResponseList> {
+            return localVarFp.listAzureFeatures(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List Azure regions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAzureRegions(options?: RawAxiosRequestConfig): AxiosPromise<ClusterRegionResponseList> {
+            return localVarFp.listAzureRegions(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary List Cloud providers available
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -24427,6 +24645,28 @@ export class CloudProviderApi extends BaseAPI {
 
     /**
      * 
+     * @summary List Azure features available
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderApi
+     */
+    public listAzureFeatures(options?: RawAxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listAzureFeatures(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List Azure regions
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderApi
+     */
+    public listAzureRegions(options?: RawAxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listAzureRegions(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary List Cloud providers available
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -24594,6 +24834,51 @@ export const CloudProviderCredentialsApiAxiosParamCreator = function (configurat
         },
         /**
          * 
+         * @summary Create Azure credentials set
+         * @param {string} organizationId Organization ID
+         * @param {AzureCredentialsRequest} [azureCredentialsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAzureCredentials: async (organizationId: string, azureCredentialsRequest?: AzureCredentialsRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('createAzureCredentials', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/azure/credentials`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(azureCredentialsRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Create GCP credentials set
          * @param {string} organizationId Organization ID
          * @param {GcpCredentialsRequest} [gcpCredentialsRequest] 
@@ -24743,6 +25028,51 @@ export const CloudProviderCredentialsApiAxiosParamCreator = function (configurat
             const localVarPath = `/organization/{organizationId}/aws/credentials/{credentialsId}`
                 .replace(`{${"credentialsId"}}`, encodeURIComponent(String(credentialsId)))
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a set of Azure credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAzureCredentials: async (organizationId: string, credentialsId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('deleteAzureCredentials', 'organizationId', organizationId)
+            // verify required parameter 'credentialsId' is not null or undefined
+            assertParamExists('deleteAzureCredentials', 'credentialsId', credentialsId)
+            const localVarPath = `/organization/{organizationId}/azure/credentials/{credentialsId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"credentialsId"}}`, encodeURIComponent(String(credentialsId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -24958,6 +25288,55 @@ export const CloudProviderCredentialsApiAxiosParamCreator = function (configurat
         },
         /**
          * 
+         * @summary Edit a set of Azure credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {AzureCredentialsRequest} [azureCredentialsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editAzureCredentials: async (organizationId: string, credentialsId: string, azureCredentialsRequest?: AzureCredentialsRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('editAzureCredentials', 'organizationId', organizationId)
+            // verify required parameter 'credentialsId' is not null or undefined
+            assertParamExists('editAzureCredentials', 'credentialsId', credentialsId)
+            const localVarPath = `/organization/{organizationId}/azure/credentials/{credentialsId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"credentialsId"}}`, encodeURIComponent(String(credentialsId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(azureCredentialsRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Edit a set of GCP credentials
          * @param {string} organizationId Organization ID
          * @param {string} credentialsId Credentials ID
@@ -25117,6 +25496,51 @@ export const CloudProviderCredentialsApiAxiosParamCreator = function (configurat
             // verify required parameter 'credentialsId' is not null or undefined
             assertParamExists('getAWSCredentials', 'credentialsId', credentialsId)
             const localVarPath = `/organization/{organizationId}/aws/credentials/{credentialsId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"credentialsId"}}`, encodeURIComponent(String(credentialsId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a set of Azure credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAzureCredentials: async (organizationId: string, credentialsId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getAzureCredentials', 'organizationId', organizationId)
+            // verify required parameter 'credentialsId' is not null or undefined
+            assertParamExists('getAzureCredentials', 'credentialsId', credentialsId)
+            const localVarPath = `/organization/{organizationId}/azure/credentials/{credentialsId}`
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
                 .replace(`{${"credentialsId"}}`, encodeURIComponent(String(credentialsId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -25326,6 +25750,47 @@ export const CloudProviderCredentialsApiAxiosParamCreator = function (configurat
         },
         /**
          * 
+         * @summary List Azure credentials
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAzureCredentials: async (organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listAzureCredentials', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/azure/credentials`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary List GCP credentials
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
@@ -25473,6 +25938,20 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
         },
         /**
          * 
+         * @summary Create Azure credentials set
+         * @param {string} organizationId Organization ID
+         * @param {AzureCredentialsRequest} [azureCredentialsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createAzureCredentials(organizationId: string, azureCredentialsRequest?: AzureCredentialsRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentials>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createAzureCredentials(organizationId, azureCredentialsRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CloudProviderCredentialsApi.createAzureCredentials']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Create GCP credentials set
          * @param {string} organizationId Organization ID
          * @param {GcpCredentialsRequest} [gcpCredentialsRequest] 
@@ -25525,6 +26004,20 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAWSCredentials(credentialsId, organizationId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CloudProviderCredentialsApi.deleteAWSCredentials']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Delete a set of Azure credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteAzureCredentials(organizationId: string, credentialsId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAzureCredentials(organizationId, credentialsId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CloudProviderCredentialsApi.deleteAzureCredentials']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -25582,6 +26075,21 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
             const localVarAxiosArgs = await localVarAxiosParamCreator.editAWSCredentials(organizationId, credentialsId, awsCredentialsRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CloudProviderCredentialsApi.editAWSCredentials']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Edit a set of Azure credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {AzureCredentialsRequest} [azureCredentialsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editAzureCredentials(organizationId: string, credentialsId: string, azureCredentialsRequest?: AzureCredentialsRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentials>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editAzureCredentials(organizationId, credentialsId, azureCredentialsRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CloudProviderCredentialsApi.editAzureCredentials']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -25645,6 +26153,20 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
         },
         /**
          * 
+         * @summary Get a set of Azure credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAzureCredentials(organizationId: string, credentialsId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentials>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAzureCredentials(organizationId, credentialsId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CloudProviderCredentialsApi.getAzureCredentials']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get a set of GCP credentials
          * @param {string} organizationId Organization ID
          * @param {string} credentialsId Credentials ID
@@ -25696,6 +26218,19 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
             const localVarAxiosArgs = await localVarAxiosParamCreator.listAWSCredentials(organizationId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CloudProviderCredentialsApi.listAWSCredentials']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary List Azure credentials
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listAzureCredentials(organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterCredentialsResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAzureCredentials(organizationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CloudProviderCredentialsApi.listAzureCredentials']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -25760,6 +26295,17 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
         },
         /**
          * 
+         * @summary Create Azure credentials set
+         * @param {string} organizationId Organization ID
+         * @param {AzureCredentialsRequest} [azureCredentialsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAzureCredentials(organizationId: string, azureCredentialsRequest?: AzureCredentialsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClusterCredentials> {
+            return localVarFp.createAzureCredentials(organizationId, azureCredentialsRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Create GCP credentials set
          * @param {string} organizationId Organization ID
          * @param {GcpCredentialsRequest} [gcpCredentialsRequest] 
@@ -25801,6 +26347,17 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
          */
         deleteAWSCredentials(credentialsId: string, organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteAWSCredentials(credentialsId, organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete a set of Azure credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAzureCredentials(organizationId: string, credentialsId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteAzureCredentials(organizationId, credentialsId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -25846,6 +26403,18 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
          */
         editAWSCredentials(organizationId: string, credentialsId: string, awsCredentialsRequest?: AwsCredentialsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClusterCredentials> {
             return localVarFp.editAWSCredentials(organizationId, credentialsId, awsCredentialsRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Edit a set of Azure credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {AzureCredentialsRequest} [azureCredentialsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editAzureCredentials(organizationId: string, credentialsId: string, azureCredentialsRequest?: AzureCredentialsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClusterCredentials> {
+            return localVarFp.editAzureCredentials(organizationId, credentialsId, azureCredentialsRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -25896,6 +26465,17 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
         },
         /**
          * 
+         * @summary Get a set of Azure credentials
+         * @param {string} organizationId Organization ID
+         * @param {string} credentialsId Credentials ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAzureCredentials(organizationId: string, credentialsId: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterCredentials> {
+            return localVarFp.getAzureCredentials(organizationId, credentialsId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get a set of GCP credentials
          * @param {string} organizationId Organization ID
          * @param {string} credentialsId Credentials ID
@@ -25936,6 +26516,16 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
          */
         listAWSCredentials(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterCredentialsResponseList> {
             return localVarFp.listAWSCredentials(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List Azure credentials
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAzureCredentials(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterCredentialsResponseList> {
+            return localVarFp.listAzureCredentials(organizationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -25992,6 +26582,19 @@ export class CloudProviderCredentialsApi extends BaseAPI {
 
     /**
      * 
+     * @summary Create Azure credentials set
+     * @param {string} organizationId Organization ID
+     * @param {AzureCredentialsRequest} [azureCredentialsRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderCredentialsApi
+     */
+    public createAzureCredentials(organizationId: string, azureCredentialsRequest?: AzureCredentialsRequest, options?: RawAxiosRequestConfig) {
+        return CloudProviderCredentialsApiFp(this.configuration).createAzureCredentials(organizationId, azureCredentialsRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Create GCP credentials set
      * @param {string} organizationId Organization ID
      * @param {GcpCredentialsRequest} [gcpCredentialsRequest] 
@@ -26040,6 +26643,19 @@ export class CloudProviderCredentialsApi extends BaseAPI {
      */
     public deleteAWSCredentials(credentialsId: string, organizationId: string, options?: RawAxiosRequestConfig) {
         return CloudProviderCredentialsApiFp(this.configuration).deleteAWSCredentials(credentialsId, organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete a set of Azure credentials
+     * @param {string} organizationId Organization ID
+     * @param {string} credentialsId Credentials ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderCredentialsApi
+     */
+    public deleteAzureCredentials(organizationId: string, credentialsId: string, options?: RawAxiosRequestConfig) {
+        return CloudProviderCredentialsApiFp(this.configuration).deleteAzureCredentials(organizationId, credentialsId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -26093,6 +26709,20 @@ export class CloudProviderCredentialsApi extends BaseAPI {
      */
     public editAWSCredentials(organizationId: string, credentialsId: string, awsCredentialsRequest?: AwsCredentialsRequest, options?: RawAxiosRequestConfig) {
         return CloudProviderCredentialsApiFp(this.configuration).editAWSCredentials(organizationId, credentialsId, awsCredentialsRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Edit a set of Azure credentials
+     * @param {string} organizationId Organization ID
+     * @param {string} credentialsId Credentials ID
+     * @param {AzureCredentialsRequest} [azureCredentialsRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderCredentialsApi
+     */
+    public editAzureCredentials(organizationId: string, credentialsId: string, azureCredentialsRequest?: AzureCredentialsRequest, options?: RawAxiosRequestConfig) {
+        return CloudProviderCredentialsApiFp(this.configuration).editAzureCredentials(organizationId, credentialsId, azureCredentialsRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -26152,6 +26782,19 @@ export class CloudProviderCredentialsApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get a set of Azure credentials
+     * @param {string} organizationId Organization ID
+     * @param {string} credentialsId Credentials ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderCredentialsApi
+     */
+    public getAzureCredentials(organizationId: string, credentialsId: string, options?: RawAxiosRequestConfig) {
+        return CloudProviderCredentialsApiFp(this.configuration).getAzureCredentials(organizationId, credentialsId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Get a set of GCP credentials
      * @param {string} organizationId Organization ID
      * @param {string} credentialsId Credentials ID
@@ -26199,6 +26842,18 @@ export class CloudProviderCredentialsApi extends BaseAPI {
      */
     public listAWSCredentials(organizationId: string, options?: RawAxiosRequestConfig) {
         return CloudProviderCredentialsApiFp(this.configuration).listAWSCredentials(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List Azure credentials
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderCredentialsApi
+     */
+    public listAzureCredentials(organizationId: string, options?: RawAxiosRequestConfig) {
+        return CloudProviderCredentialsApiFp(this.configuration).listAzureCredentials(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
