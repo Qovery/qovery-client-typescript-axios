@@ -16869,6 +16869,92 @@ export type StorageTypeEnum = typeof StorageTypeEnum[keyof typeof StorageTypeEnu
 /**
  * 
  * @export
+ * @interface TerraformRequest
+ */
+export interface TerraformRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformRequest
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformRequest
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TerraformRequest
+     */
+    'auto_approve'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TerraformRequest
+     */
+    'auto_deploy'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformRequest
+     */
+    'terraform_files_source'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformRequest
+     */
+    'terraform_variables_source'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformRequest
+     */
+    'provider'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformRequest
+     */
+    'provider_version'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformRequest
+     */
+    'timeout_sec'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformRequest
+     */
+    'icon_uri'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformRequest
+     */
+    'job_resources'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TerraformResponse
+ */
+export interface TerraformResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformResponse
+     */
+    'id'?: string;
+}
+/**
+ * 
+ * @export
  * @interface TransferOwnershipRequest
  */
 export interface TransferOwnershipRequest {
