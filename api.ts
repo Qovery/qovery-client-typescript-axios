@@ -23693,6 +23693,57 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
+         * @summary List Azure AKS available instance types
+         * @param {string} region region name
+         * @param {boolean} [onlyMeetsResourceReqs] 
+         * @param {boolean} [withGpu] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAzureAKSInstanceType: async (region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'region' is not null or undefined
+            assertParamExists('listAzureAKSInstanceType', 'region', region)
+            const localVarPath = `/azure/aks/instanceType/{region}`
+                .replace(`{${"region"}}`, encodeURIComponent(String(region)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (onlyMeetsResourceReqs !== undefined) {
+                localVarQueryParameter['only_meets_resource_reqs'] = onlyMeetsResourceReqs;
+            }
+
+            if (withGpu !== undefined) {
+                localVarQueryParameter['with_gpu'] = withGpu;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary List Azure features available
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -24236,6 +24287,21 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List Azure AKS available instance types
+         * @param {string} region region name
+         * @param {boolean} [onlyMeetsResourceReqs] 
+         * @param {boolean} [withGpu] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listAzureAKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterInstanceTypeResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAzureAKSInstanceType(region, onlyMeetsResourceReqs, withGpu, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CloudProviderApi.listAzureAKSInstanceType']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary List Azure features available
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -24452,6 +24518,18 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
         },
         /**
          * 
+         * @summary List Azure AKS available instance types
+         * @param {string} region region name
+         * @param {boolean} [onlyMeetsResourceReqs] 
+         * @param {boolean} [withGpu] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAzureAKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<ClusterInstanceTypeResponseList> {
+            return localVarFp.listAzureAKSInstanceType(region, onlyMeetsResourceReqs, withGpu, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary List Azure features available
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -24640,6 +24718,20 @@ export class CloudProviderApi extends BaseAPI {
      */
     public listAWSRegions(options?: RawAxiosRequestConfig) {
         return CloudProviderApiFp(this.configuration).listAWSRegions(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List Azure AKS available instance types
+     * @param {string} region region name
+     * @param {boolean} [onlyMeetsResourceReqs] 
+     * @param {boolean} [withGpu] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderApi
+     */
+    public listAzureAKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, options?: RawAxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listAzureAKSInstanceType(region, onlyMeetsResourceReqs, withGpu, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
