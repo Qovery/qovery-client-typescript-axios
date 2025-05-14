@@ -16869,6 +16869,25 @@ export type StorageTypeEnum = typeof StorageTypeEnum[keyof typeof StorageTypeEnu
 /**
  * 
  * @export
+ * @interface TerraformProviderVersion
+ */
+export interface TerraformProviderVersion {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TerraformProviderVersion
+     */
+    'read_from_terraform_block': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformProviderVersion
+     */
+    'explicit_version'?: string;
+}
+/**
+ * 
+ * @export
  * @interface TerraformRequest
  */
 export interface TerraformRequest {
@@ -16904,22 +16923,22 @@ export interface TerraformRequest {
     'terraform_files_source': string;
     /**
      * 
-     * @type {string}
+     * @type {TerraformVariablesSourceRequest}
      * @memberof TerraformRequest
      */
-    'terraform_variables_source': string;
+    'terraform_variables_source': TerraformVariablesSourceRequest;
     /**
      * 
      * @type {string}
      * @memberof TerraformRequest
      */
-    'provider': string;
+    'provider': TerraformRequestProviderEnum;
     /**
      * 
-     * @type {string}
+     * @type {TerraformProviderVersion}
      * @memberof TerraformRequest
      */
-    'provider_version': string;
+    'provider_version': TerraformProviderVersion;
     /**
      * 
      * @type {string}
@@ -16939,6 +16958,13 @@ export interface TerraformRequest {
      */
     'job_resources': TerraformRequestJobResources;
 }
+
+export const TerraformRequestProviderEnum = {
+    TERRAFORM: 'Terraform'
+} as const;
+
+export type TerraformRequestProviderEnum = typeof TerraformRequestProviderEnum[keyof typeof TerraformRequestProviderEnum];
+
 /**
  * 
  * @export
@@ -16976,6 +17002,44 @@ export interface TerraformResponse {
      * @memberof TerraformResponse
      */
     'id'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TerraformVarKeyValue
+ */
+export interface TerraformVarKeyValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformVarKeyValue
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformVarKeyValue
+     */
+    'value': string;
+}
+/**
+ * 
+ * @export
+ * @interface TerraformVariablesSourceRequest
+ */
+export interface TerraformVariablesSourceRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TerraformVariablesSourceRequest
+     */
+    'tf_var_file_paths': Array<string>;
+    /**
+     * 
+     * @type {Array<TerraformVarKeyValue>}
+     * @memberof TerraformVariablesSourceRequest
+     */
+    'tf_vars': Array<TerraformVarKeyValue>;
 }
 /**
  * 
