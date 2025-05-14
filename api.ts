@@ -11550,7 +11550,9 @@ export interface KarpenterNodePoolRequirement {
 export const KarpenterNodePoolRequirementKey = {
     INSTANCE_FAMILY: 'InstanceFamily',
     INSTANCE_SIZE: 'InstanceSize',
-    ARCH: 'Arch'
+    ARCH: 'Arch',
+    SKU_FAMILY: 'SkuFamily',
+    SKU_VERSION: 'SkuVersion'
 } as const;
 
 export type KarpenterNodePoolRequirementKey = typeof KarpenterNodePoolRequirementKey[keyof typeof KarpenterNodePoolRequirementKey];
