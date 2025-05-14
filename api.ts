@@ -16877,49 +16877,49 @@ export interface TerraformRequest {
      * @type {string}
      * @memberof TerraformRequest
      */
-    'name'?: string;
+    'name': string;
     /**
      * 
      * @type {string}
      * @memberof TerraformRequest
      */
-    'description'?: string;
+    'description': string;
     /**
      * 
      * @type {boolean}
      * @memberof TerraformRequest
      */
-    'auto_approve'?: boolean;
+    'auto_approve': boolean;
     /**
      * 
      * @type {boolean}
      * @memberof TerraformRequest
      */
-    'auto_deploy'?: boolean;
+    'auto_deploy': boolean;
     /**
      * 
      * @type {string}
      * @memberof TerraformRequest
      */
-    'terraform_files_source'?: string;
+    'terraform_files_source': string;
     /**
      * 
      * @type {string}
      * @memberof TerraformRequest
      */
-    'terraform_variables_source'?: string;
+    'terraform_variables_source': string;
     /**
      * 
      * @type {string}
      * @memberof TerraformRequest
      */
-    'provider'?: string;
+    'provider': string;
     /**
      * 
      * @type {string}
      * @memberof TerraformRequest
      */
-    'provider_version'?: string;
+    'provider_version': string;
     /**
      * 
      * @type {string}
@@ -16934,10 +16934,35 @@ export interface TerraformRequest {
     'icon_uri'?: string;
     /**
      * 
-     * @type {string}
+     * @type {TerraformRequestJobResources}
      * @memberof TerraformRequest
      */
-    'job_resources'?: string;
+    'job_resources': TerraformRequestJobResources;
+}
+/**
+ * 
+ * @export
+ * @interface TerraformRequestJobResources
+ */
+export interface TerraformRequestJobResources {
+    /**
+     * 
+     * @type {number}
+     * @memberof TerraformRequestJobResources
+     */
+    'cpu_milli': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TerraformRequestJobResources
+     */
+    'ram_mib': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TerraformRequestJobResources
+     */
+    'storage_gb': number;
 }
 /**
  * 
