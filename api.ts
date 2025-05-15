@@ -56176,9 +56176,9 @@ export class ServiceStatusApi extends BaseAPI {
  * @export
  */
 export const GetIngressDeploymentStatusServiceTypeEnum = {
-    CONTAINER: 'container',
-    APPLICATION: 'application',
-    HELM: 'helm'
+    CONTAINER: 'CONTAINER',
+    APPLICATION: 'APPLICATION',
+    HELM: 'HELM'
 } as const;
 export type GetIngressDeploymentStatusServiceTypeEnum = typeof GetIngressDeploymentStatusServiceTypeEnum[keyof typeof GetIngressDeploymentStatusServiceTypeEnum];
 
