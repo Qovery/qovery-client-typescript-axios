@@ -24414,47 +24414,6 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary List Scaleway available managed database instance types
-         * @param {string} databaseType Database type
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listSCWManagedDatabaseInstanceType: async (databaseType: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'databaseType' is not null or undefined
-            assertParamExists('listSCWManagedDatabaseInstanceType', 'databaseType', databaseType)
-            const localVarPath = `/scaleway/managedDatabase/instanceType/{zone}/{databaseType}`
-                .replace(`{${"databaseType"}}`, encodeURIComponent(String(databaseType)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary List Scaleway available managed database types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -24819,19 +24778,6 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List Scaleway available managed database instance types
-         * @param {string} databaseType Database type
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listSCWManagedDatabaseInstanceType(databaseType: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ManagedDatabaseInstanceTypeResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listSCWManagedDatabaseInstanceType(databaseType, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CloudProviderApi.listSCWManagedDatabaseInstanceType']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary List Scaleway available managed database types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -25026,16 +24972,6 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
          */
         listGcpRegions(options?: RawAxiosRequestConfig): AxiosPromise<ClusterRegionResponseList> {
             return localVarFp.listGcpRegions(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary List Scaleway available managed database instance types
-         * @param {string} databaseType Database type
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listSCWManagedDatabaseInstanceType(databaseType: string, options?: RawAxiosRequestConfig): AxiosPromise<ManagedDatabaseInstanceTypeResponseList> {
-            return localVarFp.listSCWManagedDatabaseInstanceType(databaseType, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -25243,18 +25179,6 @@ export class CloudProviderApi extends BaseAPI {
      */
     public listGcpRegions(options?: RawAxiosRequestConfig) {
         return CloudProviderApiFp(this.configuration).listGcpRegions(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary List Scaleway available managed database instance types
-     * @param {string} databaseType Database type
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CloudProviderApi
-     */
-    public listSCWManagedDatabaseInstanceType(databaseType: string, options?: RawAxiosRequestConfig) {
-        return CloudProviderApiFp(this.configuration).listSCWManagedDatabaseInstanceType(databaseType, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
