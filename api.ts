@@ -16354,7 +16354,8 @@ export const ServiceTypeEnum = {
     DATABASE: 'DATABASE',
     CONTAINER: 'CONTAINER',
     JOB: 'JOB',
-    HELM: 'HELM'
+    HELM: 'HELM',
+    TERRAFORM: 'TERRAFORM'
 } as const;
 
 export type ServiceTypeEnum = typeof ServiceTypeEnum[keyof typeof ServiceTypeEnum];
@@ -16868,6 +16869,447 @@ export const StorageTypeEnum = {
 export type StorageTypeEnum = typeof StorageTypeEnum[keyof typeof StorageTypeEnum];
 
 
+/**
+ * 
+ * @export
+ * @interface TerraformAdvancedSettings
+ */
+export interface TerraformAdvancedSettings {
+    /**
+     * define the max timeout for the build
+     * @type {number}
+     * @memberof TerraformAdvancedSettings
+     */
+    'build.timeout_max_sec'?: number;
+    /**
+     * define the max cpu resources (in milli)
+     * @type {number}
+     * @memberof TerraformAdvancedSettings
+     */
+    'build.cpu_max_in_milli'?: number;
+    /**
+     * define the max ram resources (in gib)
+     * @type {number}
+     * @memberof TerraformAdvancedSettings
+     */
+    'build.ram_max_in_gib'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TerraformAdvancedSettings
+     */
+    'build.ephemeral_storage_in_gib'?: number;
+    /**
+     * define how long in seconds an application is supposed to be stopped gracefully
+     * @type {number}
+     * @memberof TerraformAdvancedSettings
+     */
+    'deployment.termination_grace_period_seconds'?: number;
+    /**
+     * Set pod placement on specific Kubernetes nodes labels
+     * @type {{ [key: string]: string; }}
+     * @memberof TerraformAdvancedSettings
+     */
+    'deployment.affinity.node.required'?: { [key: string]: string; };
+    /**
+     * Allows you to set an existing Kubernetes service account name 
+     * @type {string}
+     * @memberof TerraformAdvancedSettings
+     */
+    'security.service_account_name'?: string;
+    /**
+     * Mounts the container\'s root filesystem as read-only 
+     * @type {boolean}
+     * @memberof TerraformAdvancedSettings
+     */
+    'security.read_only_root_filesystem'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface TerraformFilesSourceRequest
+ */
+export interface TerraformFilesSourceRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformFilesSourceRequest
+     */
+    'id'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TerraformGitRepositoryRequest
+ */
+export interface TerraformGitRepositoryRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformGitRepositoryRequest
+     */
+    'url': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformGitRepositoryRequest
+     */
+    'branch'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformGitRepositoryRequest
+     */
+    'root_path'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformGitRepositoryRequest
+     */
+    'git_token_id'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TerraformJobResourcesResponse
+ */
+export interface TerraformJobResourcesResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof TerraformJobResourcesResponse
+     */
+    'cpu_milli': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TerraformJobResourcesResponse
+     */
+    'ram_mib': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TerraformJobResourcesResponse
+     */
+    'storage_gb': number;
+}
+/**
+ * 
+ * @export
+ * @interface TerraformProviderVersion
+ */
+export interface TerraformProviderVersion {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TerraformProviderVersion
+     */
+    'read_from_terraform_block': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformProviderVersion
+     */
+    'explicit_version'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TerraformRequest
+ */
+export interface TerraformRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformRequest
+     */
+    'description': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TerraformRequest
+     */
+    'auto_approve': boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TerraformRequest
+     */
+    'auto_deploy': boolean;
+    /**
+     * 
+     * @type {TerraformRequestTerraformFilesSource}
+     * @memberof TerraformRequest
+     */
+    'terraform_files_source': TerraformRequestTerraformFilesSource;
+    /**
+     * 
+     * @type {TerraformVariablesSourceRequest}
+     * @memberof TerraformRequest
+     */
+    'terraform_variables_source': TerraformVariablesSourceRequest;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformRequest
+     */
+    'provider': TerraformRequestProviderEnum;
+    /**
+     * 
+     * @type {TerraformProviderVersion}
+     * @memberof TerraformRequest
+     */
+    'provider_version': TerraformProviderVersion;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformRequest
+     */
+    'timeout_sec'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformRequest
+     */
+    'icon_uri'?: string;
+    /**
+     * 
+     * @type {TerraformRequestJobResources}
+     * @memberof TerraformRequest
+     */
+    'job_resources': TerraformRequestJobResources;
+}
+
+export const TerraformRequestProviderEnum = {
+    TERRAFORM: 'Terraform'
+} as const;
+
+export type TerraformRequestProviderEnum = typeof TerraformRequestProviderEnum[keyof typeof TerraformRequestProviderEnum];
+
+/**
+ * 
+ * @export
+ * @interface TerraformRequestJobResources
+ */
+export interface TerraformRequestJobResources {
+    /**
+     * 
+     * @type {number}
+     * @memberof TerraformRequestJobResources
+     */
+    'cpu_milli': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TerraformRequestJobResources
+     */
+    'ram_mib': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TerraformRequestJobResources
+     */
+    'storage_gb': number;
+}
+/**
+ * @type TerraformRequestTerraformFilesSource
+ * @export
+ */
+export type TerraformRequestTerraformFilesSource = TerraformRequestTerraformFilesSourceOneOf;
+
+/**
+ * 
+ * @export
+ * @interface TerraformRequestTerraformFilesSourceOneOf
+ */
+export interface TerraformRequestTerraformFilesSourceOneOf {
+    /**
+     * 
+     * @type {TerraformGitRepositoryRequest}
+     * @memberof TerraformRequestTerraformFilesSourceOneOf
+     */
+    'git_repository'?: TerraformGitRepositoryRequest;
+}
+/**
+ * 
+ * @export
+ * @interface TerraformResponse
+ */
+export interface TerraformResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformResponse
+     */
+    'updated_at'?: string;
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof TerraformResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformResponse
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof TerraformResponse
+     */
+    'timeout_sec': number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TerraformResponse
+     */
+    'auto_approve': boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TerraformResponse
+     */
+    'auto_deploy': boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof TerraformResponse
+     */
+    'terraform_files_source'?: object | null;
+    /**
+     * Icon URI representing the terraform service.
+     * @type {string}
+     * @memberof TerraformResponse
+     */
+    'icon_uri'?: string;
+    /**
+     * 
+     * @type {ServiceTypeEnum}
+     * @memberof TerraformResponse
+     */
+    'service_type': ServiceTypeEnum;
+    /**
+     * 
+     * @type {TerraformVariablesSourceResponse}
+     * @memberof TerraformResponse
+     */
+    'terraform_variables_source': TerraformVariablesSourceResponse;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformResponse
+     */
+    'provider': TerraformResponseProviderEnum;
+    /**
+     * 
+     * @type {TerraformProviderVersion}
+     * @memberof TerraformResponse
+     */
+    'provider_version': TerraformProviderVersion;
+    /**
+     * 
+     * @type {TerraformJobResourcesResponse}
+     * @memberof TerraformResponse
+     */
+    'job_resources': TerraformJobResourcesResponse;
+}
+
+export const TerraformResponseProviderEnum = {
+    TERRAFORM: 'TERRAFORM'
+} as const;
+
+export type TerraformResponseProviderEnum = typeof TerraformResponseProviderEnum[keyof typeof TerraformResponseProviderEnum];
+
+/**
+ * 
+ * @export
+ * @interface TerraformResponseList
+ */
+export interface TerraformResponseList {
+    /**
+     * 
+     * @type {Array<TerraformResponse>}
+     * @memberof TerraformResponseList
+     */
+    'id'?: Array<TerraformResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface TerraformVarKeyValue
+ */
+export interface TerraformVarKeyValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformVarKeyValue
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformVarKeyValue
+     */
+    'value': string;
+}
+/**
+ * 
+ * @export
+ * @interface TerraformVariablesSourceRequest
+ */
+export interface TerraformVariablesSourceRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TerraformVariablesSourceRequest
+     */
+    'tf_var_file_paths': Array<string>;
+    /**
+     * 
+     * @type {Array<TerraformVarKeyValue>}
+     * @memberof TerraformVariablesSourceRequest
+     */
+    'tf_vars': Array<TerraformVarKeyValue>;
+}
+/**
+ * 
+ * @export
+ * @interface TerraformVariablesSourceResponse
+ */
+export interface TerraformVariablesSourceResponse {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TerraformVariablesSourceResponse
+     */
+    'tf_var_file_paths': Array<string>;
+    /**
+     * 
+     * @type {Array<TerraformVarKeyValue>}
+     * @memberof TerraformVariablesSourceResponse
+     */
+    'tf_vars': Array<TerraformVarKeyValue>;
+}
 /**
  * 
  * @export
@@ -56181,6 +56623,676 @@ export const GetIngressDeploymentStatusServiceTypeEnum = {
     HELM: 'HELM'
 } as const;
 export type GetIngressDeploymentStatusServiceTypeEnum = typeof GetIngressDeploymentStatusServiceTypeEnum[keyof typeof GetIngressDeploymentStatusServiceTypeEnum];
+
+
+/**
+ * TerraformConfigurationApi - axios parameter creator
+ * @export
+ */
+export const TerraformConfigurationApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Edit Advanced settings
+         * @param {string} terraformId Terraform ID
+         * @param {TerraformAdvancedSettings} [terraformAdvancedSettings] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editTerraformAdvancedSettings: async (terraformId: string, terraformAdvancedSettings?: TerraformAdvancedSettings, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'terraformId' is not null or undefined
+            assertParamExists('editTerraformAdvancedSettings', 'terraformId', terraformId)
+            const localVarPath = `/terraform/{terraformId}/advancedSettings`
+                .replace(`{${"terraformId"}}`, encodeURIComponent(String(terraformId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(terraformAdvancedSettings, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get Advanced settings
+         * @param {string} terraformId Terraform ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTerraformAdvancedSettings: async (terraformId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'terraformId' is not null or undefined
+            assertParamExists('getTerraformAdvancedSettings', 'terraformId', terraformId)
+            const localVarPath = `/terraform/{terraformId}/advancedSettings`
+                .replace(`{${"terraformId"}}`, encodeURIComponent(String(terraformId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TerraformConfigurationApi - functional programming interface
+ * @export
+ */
+export const TerraformConfigurationApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TerraformConfigurationApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Edit Advanced settings
+         * @param {string} terraformId Terraform ID
+         * @param {TerraformAdvancedSettings} [terraformAdvancedSettings] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editTerraformAdvancedSettings(terraformId: string, terraformAdvancedSettings?: TerraformAdvancedSettings, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TerraformAdvancedSettings>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editTerraformAdvancedSettings(terraformId, terraformAdvancedSettings, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TerraformConfigurationApi.editTerraformAdvancedSettings']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get Advanced settings
+         * @param {string} terraformId Terraform ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTerraformAdvancedSettings(terraformId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TerraformAdvancedSettings>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTerraformAdvancedSettings(terraformId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TerraformConfigurationApi.getTerraformAdvancedSettings']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * TerraformConfigurationApi - factory interface
+ * @export
+ */
+export const TerraformConfigurationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TerraformConfigurationApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Edit Advanced settings
+         * @param {string} terraformId Terraform ID
+         * @param {TerraformAdvancedSettings} [terraformAdvancedSettings] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editTerraformAdvancedSettings(terraformId: string, terraformAdvancedSettings?: TerraformAdvancedSettings, options?: RawAxiosRequestConfig): AxiosPromise<TerraformAdvancedSettings> {
+            return localVarFp.editTerraformAdvancedSettings(terraformId, terraformAdvancedSettings, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get Advanced settings
+         * @param {string} terraformId Terraform ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTerraformAdvancedSettings(terraformId: string, options?: RawAxiosRequestConfig): AxiosPromise<TerraformAdvancedSettings> {
+            return localVarFp.getTerraformAdvancedSettings(terraformId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * TerraformConfigurationApi - object-oriented interface
+ * @export
+ * @class TerraformConfigurationApi
+ * @extends {BaseAPI}
+ */
+export class TerraformConfigurationApi extends BaseAPI {
+    /**
+     * 
+     * @summary Edit Advanced settings
+     * @param {string} terraformId Terraform ID
+     * @param {TerraformAdvancedSettings} [terraformAdvancedSettings] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TerraformConfigurationApi
+     */
+    public editTerraformAdvancedSettings(terraformId: string, terraformAdvancedSettings?: TerraformAdvancedSettings, options?: RawAxiosRequestConfig) {
+        return TerraformConfigurationApiFp(this.configuration).editTerraformAdvancedSettings(terraformId, terraformAdvancedSettings, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get Advanced settings
+     * @param {string} terraformId Terraform ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TerraformConfigurationApi
+     */
+    public getTerraformAdvancedSettings(terraformId: string, options?: RawAxiosRequestConfig) {
+        return TerraformConfigurationApiFp(this.configuration).getTerraformAdvancedSettings(terraformId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * TerraformMainCallsApi - axios parameter creator
+ * @export
+ */
+export const TerraformMainCallsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Delete Terraform
+         * @param {string} terraformId Terraform ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTerraform: async (terraformId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'terraformId' is not null or undefined
+            assertParamExists('deleteTerraform', 'terraformId', terraformId)
+            const localVarPath = `/terraform/{terraformId}`
+                .replace(`{${"terraformId"}}`, encodeURIComponent(String(terraformId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Edit Terraform
+         * @param {string} terraformId Terraform ID
+         * @param {TerraformRequest} [terraformRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editTerraform: async (terraformId: string, terraformRequest?: TerraformRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'terraformId' is not null or undefined
+            assertParamExists('editTerraform', 'terraformId', terraformId)
+            const localVarPath = `/terraform/{terraformId}`
+                .replace(`{${"terraformId"}}`, encodeURIComponent(String(terraformId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(terraformRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get terraform by ID
+         * @param {string} terraformId Terraform ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTerraform: async (terraformId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'terraformId' is not null or undefined
+            assertParamExists('getTerraform', 'terraformId', terraformId)
+            const localVarPath = `/terraform/{terraformId}`
+                .replace(`{${"terraformId"}}`, encodeURIComponent(String(terraformId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TerraformMainCallsApi - functional programming interface
+ * @export
+ */
+export const TerraformMainCallsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TerraformMainCallsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Delete Terraform
+         * @param {string} terraformId Terraform ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteTerraform(terraformId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTerraform(terraformId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TerraformMainCallsApi.deleteTerraform']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Edit Terraform
+         * @param {string} terraformId Terraform ID
+         * @param {TerraformRequest} [terraformRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editTerraform(terraformId: string, terraformRequest?: TerraformRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TerraformResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editTerraform(terraformId, terraformRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TerraformMainCallsApi.editTerraform']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get terraform by ID
+         * @param {string} terraformId Terraform ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTerraform(terraformId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TerraformResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTerraform(terraformId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TerraformMainCallsApi.getTerraform']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * TerraformMainCallsApi - factory interface
+ * @export
+ */
+export const TerraformMainCallsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TerraformMainCallsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Delete Terraform
+         * @param {string} terraformId Terraform ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTerraform(terraformId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteTerraform(terraformId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Edit Terraform
+         * @param {string} terraformId Terraform ID
+         * @param {TerraformRequest} [terraformRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editTerraform(terraformId: string, terraformRequest?: TerraformRequest, options?: RawAxiosRequestConfig): AxiosPromise<TerraformResponse> {
+            return localVarFp.editTerraform(terraformId, terraformRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get terraform by ID
+         * @param {string} terraformId Terraform ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTerraform(terraformId: string, options?: RawAxiosRequestConfig): AxiosPromise<TerraformResponse> {
+            return localVarFp.getTerraform(terraformId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * TerraformMainCallsApi - object-oriented interface
+ * @export
+ * @class TerraformMainCallsApi
+ * @extends {BaseAPI}
+ */
+export class TerraformMainCallsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Delete Terraform
+     * @param {string} terraformId Terraform ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TerraformMainCallsApi
+     */
+    public deleteTerraform(terraformId: string, options?: RawAxiosRequestConfig) {
+        return TerraformMainCallsApiFp(this.configuration).deleteTerraform(terraformId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Edit Terraform
+     * @param {string} terraformId Terraform ID
+     * @param {TerraformRequest} [terraformRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TerraformMainCallsApi
+     */
+    public editTerraform(terraformId: string, terraformRequest?: TerraformRequest, options?: RawAxiosRequestConfig) {
+        return TerraformMainCallsApiFp(this.configuration).editTerraform(terraformId, terraformRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get terraform by ID
+     * @param {string} terraformId Terraform ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TerraformMainCallsApi
+     */
+    public getTerraform(terraformId: string, options?: RawAxiosRequestConfig) {
+        return TerraformMainCallsApiFp(this.configuration).getTerraform(terraformId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * TerraformsApi - axios parameter creator
+ * @export
+ */
+export const TerraformsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Create a terraform
+         * @param {string} environmentId 
+         * @param {TerraformRequest} [terraformRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTerraform: async (environmentId: string, terraformRequest?: TerraformRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('createTerraform', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/terraform`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(terraformRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List terraforms
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listTerraforms: async (environmentId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('listTerraforms', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/terraform`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TerraformsApi - functional programming interface
+ * @export
+ */
+export const TerraformsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TerraformsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Create a terraform
+         * @param {string} environmentId 
+         * @param {TerraformRequest} [terraformRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createTerraform(environmentId: string, terraformRequest?: TerraformRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TerraformResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createTerraform(environmentId, terraformRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TerraformsApi.createTerraform']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary List terraforms
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listTerraforms(environmentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TerraformResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listTerraforms(environmentId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TerraformsApi.listTerraforms']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * TerraformsApi - factory interface
+ * @export
+ */
+export const TerraformsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TerraformsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Create a terraform
+         * @param {string} environmentId 
+         * @param {TerraformRequest} [terraformRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTerraform(environmentId: string, terraformRequest?: TerraformRequest, options?: RawAxiosRequestConfig): AxiosPromise<TerraformResponse> {
+            return localVarFp.createTerraform(environmentId, terraformRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List terraforms
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listTerraforms(environmentId: string, options?: RawAxiosRequestConfig): AxiosPromise<TerraformResponseList> {
+            return localVarFp.listTerraforms(environmentId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * TerraformsApi - object-oriented interface
+ * @export
+ * @class TerraformsApi
+ * @extends {BaseAPI}
+ */
+export class TerraformsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create a terraform
+     * @param {string} environmentId 
+     * @param {TerraformRequest} [terraformRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TerraformsApi
+     */
+    public createTerraform(environmentId: string, terraformRequest?: TerraformRequest, options?: RawAxiosRequestConfig) {
+        return TerraformsApiFp(this.configuration).createTerraform(environmentId, terraformRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List terraforms
+     * @param {string} environmentId Environment ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TerraformsApi
+     */
+    public listTerraforms(environmentId: string, options?: RawAxiosRequestConfig) {
+        return TerraformsApiFp(this.configuration).listTerraforms(environmentId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 
 /**
