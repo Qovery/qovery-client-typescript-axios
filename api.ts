@@ -1315,12 +1315,6 @@ export interface AzureCredentialsRequest {
      * @memberof AzureCredentialsRequest
      */
     'azure_client_secret': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AzureCredentialsRequest
-     */
-    'azure_resource_group_name': string;
 }
 /**
  * 
@@ -1358,12 +1352,6 @@ export interface AzureStaticClusterCredentials {
      * @memberof AzureStaticClusterCredentials
      */
     'azure_client_id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AzureStaticClusterCredentials
-     */
-    'azure_resource_group_name': string;
     /**
      * 
      * @type {string}
