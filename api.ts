@@ -13870,7 +13870,8 @@ export const OrganizationEventTargetType = {
     MEMBERS_AND_ROLES: 'MEMBERS_AND_ROLES',
     ORGANIZATION: 'ORGANIZATION',
     PROJECT: 'PROJECT',
-    WEBHOOK: 'WEBHOOK'
+    WEBHOOK: 'WEBHOOK',
+    TERRAFORM: 'TERRAFORM'
 } as const;
 
 export type OrganizationEventTargetType = typeof OrganizationEventTargetType[keyof typeof OrganizationEventTargetType];
