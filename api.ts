@@ -56988,6 +56988,100 @@ export const TerraformDeploymentRestrictionApiAxiosParamCreator = function (conf
             };
         },
         /**
+         * Delete a terraform deployment restriction
+         * @summary Delete a terraform deployment restriction
+         * @param {string} terraformId Terraform ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTerraformDeploymentRestriction: async (terraformId: string, deploymentRestrictionId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'terraformId' is not null or undefined
+            assertParamExists('deleteTerraformDeploymentRestriction', 'terraformId', terraformId)
+            // verify required parameter 'deploymentRestrictionId' is not null or undefined
+            assertParamExists('deleteTerraformDeploymentRestriction', 'deploymentRestrictionId', deploymentRestrictionId)
+            const localVarPath = `/terraform/{terraformId}/deploymentRestriction/{deploymentRestrictionId}`
+                .replace(`{${"terraformId"}}`, encodeURIComponent(String(terraformId)))
+                .replace(`{${"deploymentRestrictionId"}}`, encodeURIComponent(String(deploymentRestrictionId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Edit a terraform deployment restriction
+         * @summary Edit a terraform deployment restriction
+         * @param {string} terraformId Terraform ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {TerraformDeploymentRestrictionRequest} [terraformDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editTerraformDeploymentRestriction: async (terraformId: string, deploymentRestrictionId: string, terraformDeploymentRestrictionRequest?: TerraformDeploymentRestrictionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'terraformId' is not null or undefined
+            assertParamExists('editTerraformDeploymentRestriction', 'terraformId', terraformId)
+            // verify required parameter 'deploymentRestrictionId' is not null or undefined
+            assertParamExists('editTerraformDeploymentRestriction', 'deploymentRestrictionId', deploymentRestrictionId)
+            const localVarPath = `/terraform/{terraformId}/deploymentRestriction/{deploymentRestrictionId}`
+                .replace(`{${"terraformId"}}`, encodeURIComponent(String(terraformId)))
+                .replace(`{${"deploymentRestrictionId"}}`, encodeURIComponent(String(deploymentRestrictionId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(terraformDeploymentRestrictionRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Get terraform deployment restrictions
          * @summary Get terraform deployment restrictions
          * @param {string} terraformId Terraform ID
@@ -57053,6 +57147,35 @@ export const TerraformDeploymentRestrictionApiFp = function(configuration?: Conf
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Delete a terraform deployment restriction
+         * @summary Delete a terraform deployment restriction
+         * @param {string} terraformId Terraform ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteTerraformDeploymentRestriction(terraformId: string, deploymentRestrictionId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTerraformDeploymentRestriction(terraformId, deploymentRestrictionId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TerraformDeploymentRestrictionApi.deleteTerraformDeploymentRestriction']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Edit a terraform deployment restriction
+         * @summary Edit a terraform deployment restriction
+         * @param {string} terraformId Terraform ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {TerraformDeploymentRestrictionRequest} [terraformDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editTerraformDeploymentRestriction(terraformId: string, deploymentRestrictionId: string, terraformDeploymentRestrictionRequest?: TerraformDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TerraformDeploymentRestrictionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editTerraformDeploymentRestriction(terraformId, deploymentRestrictionId, terraformDeploymentRestrictionRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TerraformDeploymentRestrictionApi.editTerraformDeploymentRestriction']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Get terraform deployment restrictions
          * @summary Get terraform deployment restrictions
          * @param {string} terraformId Terraform ID
@@ -57087,6 +57210,29 @@ export const TerraformDeploymentRestrictionApiFactory = function (configuration?
             return localVarFp.createTerraformDeploymentRestriction(terraformId, terraformDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * Delete a terraform deployment restriction
+         * @summary Delete a terraform deployment restriction
+         * @param {string} terraformId Terraform ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTerraformDeploymentRestriction(terraformId: string, deploymentRestrictionId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteTerraformDeploymentRestriction(terraformId, deploymentRestrictionId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Edit a terraform deployment restriction
+         * @summary Edit a terraform deployment restriction
+         * @param {string} terraformId Terraform ID
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {TerraformDeploymentRestrictionRequest} [terraformDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editTerraformDeploymentRestriction(terraformId: string, deploymentRestrictionId: string, terraformDeploymentRestrictionRequest?: TerraformDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): AxiosPromise<TerraformDeploymentRestrictionResponse> {
+            return localVarFp.editTerraformDeploymentRestriction(terraformId, deploymentRestrictionId, terraformDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Get terraform deployment restrictions
          * @summary Get terraform deployment restrictions
          * @param {string} terraformId Terraform ID
@@ -57117,6 +57263,33 @@ export class TerraformDeploymentRestrictionApi extends BaseAPI {
      */
     public createTerraformDeploymentRestriction(terraformId: string, terraformDeploymentRestrictionRequest?: TerraformDeploymentRestrictionRequest, options?: RawAxiosRequestConfig) {
         return TerraformDeploymentRestrictionApiFp(this.configuration).createTerraformDeploymentRestriction(terraformId, terraformDeploymentRestrictionRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete a terraform deployment restriction
+     * @summary Delete a terraform deployment restriction
+     * @param {string} terraformId Terraform ID
+     * @param {string} deploymentRestrictionId Deployment Restriction ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TerraformDeploymentRestrictionApi
+     */
+    public deleteTerraformDeploymentRestriction(terraformId: string, deploymentRestrictionId: string, options?: RawAxiosRequestConfig) {
+        return TerraformDeploymentRestrictionApiFp(this.configuration).deleteTerraformDeploymentRestriction(terraformId, deploymentRestrictionId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Edit a terraform deployment restriction
+     * @summary Edit a terraform deployment restriction
+     * @param {string} terraformId Terraform ID
+     * @param {string} deploymentRestrictionId Deployment Restriction ID
+     * @param {TerraformDeploymentRestrictionRequest} [terraformDeploymentRestrictionRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TerraformDeploymentRestrictionApi
+     */
+    public editTerraformDeploymentRestriction(terraformId: string, deploymentRestrictionId: string, terraformDeploymentRestrictionRequest?: TerraformDeploymentRestrictionRequest, options?: RawAxiosRequestConfig) {
+        return TerraformDeploymentRestrictionApiFp(this.configuration).editTerraformDeploymentRestriction(terraformId, deploymentRestrictionId, terraformDeploymentRestrictionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
