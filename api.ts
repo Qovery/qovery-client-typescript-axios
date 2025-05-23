@@ -36,7 +36,8 @@ export const APIVariableScopeEnum = {
     PROJECT: 'PROJECT',
     CONTAINER: 'CONTAINER',
     JOB: 'JOB',
-    HELM: 'HELM'
+    HELM: 'HELM',
+    TERRAFORM: 'TERRAFORM'
 } as const;
 
 export type APIVariableScopeEnum = typeof APIVariableScopeEnum[keyof typeof APIVariableScopeEnum];
@@ -57062,6 +57063,43 @@ export const TerraformsApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary List default terraform advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDefaultTerraformAdvancedSettings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/defaultTerraformAdvancedSettings:`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary List terraforms
          * @param {string} environmentId Environment ID
          * @param {*} [options] Override http request option.
@@ -57127,6 +57165,18 @@ export const TerraformsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List default terraform advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDefaultTerraformAdvancedSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TerraformAdvancedSettings>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDefaultTerraformAdvancedSettings(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TerraformsApi.getDefaultTerraformAdvancedSettings']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary List terraforms
          * @param {string} environmentId Environment ID
          * @param {*} [options] Override http request option.
@@ -57161,6 +57211,15 @@ export const TerraformsApiFactory = function (configuration?: Configuration, bas
         },
         /**
          * 
+         * @summary List default terraform advanced settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDefaultTerraformAdvancedSettings(options?: RawAxiosRequestConfig): AxiosPromise<TerraformAdvancedSettings> {
+            return localVarFp.getDefaultTerraformAdvancedSettings(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary List terraforms
          * @param {string} environmentId Environment ID
          * @param {*} [options] Override http request option.
@@ -57190,6 +57249,17 @@ export class TerraformsApi extends BaseAPI {
      */
     public createTerraform(environmentId: string, terraformRequest?: TerraformRequest, options?: RawAxiosRequestConfig) {
         return TerraformsApiFp(this.configuration).createTerraform(environmentId, terraformRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List default terraform advanced settings
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TerraformsApi
+     */
+    public getDefaultTerraformAdvancedSettings(options?: RawAxiosRequestConfig) {
+        return TerraformsApiFp(this.configuration).getDefaultTerraformAdvancedSettings(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
