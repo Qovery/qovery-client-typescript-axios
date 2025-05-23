@@ -56737,6 +56737,121 @@ export class TerraformConfigurationApi extends BaseAPI {
 
 
 /**
+ * TerraformDeploymentHistoryApi - axios parameter creator
+ * @export
+ */
+export const TerraformDeploymentHistoryApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Returns the 20 last terraform deployments
+         * @summary List terraform deployments
+         * @param {string} terraformId Terraform ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listTerraformDeploymentHistoryV2: async (terraformId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'terraformId' is not null or undefined
+            assertParamExists('listTerraformDeploymentHistoryV2', 'terraformId', terraformId)
+            const localVarPath = `/terraform/{terraformId}/deploymentHistoryV2`
+                .replace(`{${"terraformId"}}`, encodeURIComponent(String(terraformId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TerraformDeploymentHistoryApi - functional programming interface
+ * @export
+ */
+export const TerraformDeploymentHistoryApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TerraformDeploymentHistoryApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Returns the 20 last terraform deployments
+         * @summary List terraform deployments
+         * @param {string} terraformId Terraform ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listTerraformDeploymentHistoryV2(terraformId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listTerraformDeploymentHistoryV2(terraformId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TerraformDeploymentHistoryApi.listTerraformDeploymentHistoryV2']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * TerraformDeploymentHistoryApi - factory interface
+ * @export
+ */
+export const TerraformDeploymentHistoryApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TerraformDeploymentHistoryApiFp(configuration)
+    return {
+        /**
+         * Returns the 20 last terraform deployments
+         * @summary List terraform deployments
+         * @param {string} terraformId Terraform ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listTerraformDeploymentHistoryV2(terraformId: string, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2> {
+            return localVarFp.listTerraformDeploymentHistoryV2(terraformId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * TerraformDeploymentHistoryApi - object-oriented interface
+ * @export
+ * @class TerraformDeploymentHistoryApi
+ * @extends {BaseAPI}
+ */
+export class TerraformDeploymentHistoryApi extends BaseAPI {
+    /**
+     * Returns the 20 last terraform deployments
+     * @summary List terraform deployments
+     * @param {string} terraformId Terraform ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TerraformDeploymentHistoryApi
+     */
+    public listTerraformDeploymentHistoryV2(terraformId: string, options?: RawAxiosRequestConfig) {
+        return TerraformDeploymentHistoryApiFp(this.configuration).listTerraformDeploymentHistoryV2(terraformId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * TerraformMainCallsApi - axios parameter creator
  * @export
  */
@@ -57017,6 +57132,51 @@ export class TerraformMainCallsApi extends BaseAPI {
 export const TerraformsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * This will create a new terraform with the same configuration on the targeted environment Id.
+         * @summary Clone terraform
+         * @param {string} terraformId Terraform ID
+         * @param {CloneServiceRequest} [cloneServiceRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloneTerraform: async (terraformId: string, cloneServiceRequest?: CloneServiceRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'terraformId' is not null or undefined
+            assertParamExists('cloneTerraform', 'terraformId', terraformId)
+            const localVarPath = `/terraform/{terraformId}/clone`
+                .replace(`{${"terraformId"}}`, encodeURIComponent(String(terraformId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cloneServiceRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Create a terraform
          * @param {string} environmentId 
@@ -57150,6 +57310,20 @@ export const TerraformsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TerraformsApiAxiosParamCreator(configuration)
     return {
         /**
+         * This will create a new terraform with the same configuration on the targeted environment Id.
+         * @summary Clone terraform
+         * @param {string} terraformId Terraform ID
+         * @param {CloneServiceRequest} [cloneServiceRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloneTerraform(terraformId: string, cloneServiceRequest?: CloneServiceRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TerraformResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloneTerraform(terraformId, cloneServiceRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TerraformsApi.cloneTerraform']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Create a terraform
          * @param {string} environmentId 
@@ -57199,6 +57373,17 @@ export const TerraformsApiFactory = function (configuration?: Configuration, bas
     const localVarFp = TerraformsApiFp(configuration)
     return {
         /**
+         * This will create a new terraform with the same configuration on the targeted environment Id.
+         * @summary Clone terraform
+         * @param {string} terraformId Terraform ID
+         * @param {CloneServiceRequest} [cloneServiceRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloneTerraform(terraformId: string, cloneServiceRequest?: CloneServiceRequest, options?: RawAxiosRequestConfig): AxiosPromise<TerraformResponse> {
+            return localVarFp.cloneTerraform(terraformId, cloneServiceRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Create a terraform
          * @param {string} environmentId 
@@ -57238,6 +57423,19 @@ export const TerraformsApiFactory = function (configuration?: Configuration, bas
  * @extends {BaseAPI}
  */
 export class TerraformsApi extends BaseAPI {
+    /**
+     * This will create a new terraform with the same configuration on the targeted environment Id.
+     * @summary Clone terraform
+     * @param {string} terraformId Terraform ID
+     * @param {CloneServiceRequest} [cloneServiceRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TerraformsApi
+     */
+    public cloneTerraform(terraformId: string, cloneServiceRequest?: CloneServiceRequest, options?: RawAxiosRequestConfig) {
+        return TerraformsApiFp(this.configuration).cloneTerraform(terraformId, cloneServiceRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Create a terraform
