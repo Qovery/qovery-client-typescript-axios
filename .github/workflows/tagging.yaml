@@ -1,3 +1,5 @@
+name: Tagging
+
 on:
   push:
     branches: ["main"]
@@ -6,8 +8,10 @@ jobs:
   build:
     name: Bump tag
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
+
       - name: Create an incremental release
         uses: aurestic/incrementarl-create-release@master
         with:
@@ -20,13 +24,16 @@ jobs:
       - name: Save last tag to file
         run: |
           echo "LAST_TAG=$(git describe --abbrev=0 --tags)" >> $GITHUB_ENV
+
       - name: Replace tag in package.json and commit it the changes
         run: |
           sed -i "s/\"version\": \".*\"/\"version\": \"$LAST_TAG\"/g" package.json
+
       - name: Setup Git
         run: |
           git config user.name 'Qovery Bot'
           git config user.email 'github@qovery.com'
+
       - name: commit changes
         run: |
           git add package.json
