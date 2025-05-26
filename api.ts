@@ -17276,7 +17276,7 @@ export interface TerraformResponse {
      * @type {string}
      * @memberof TerraformResponse
      */
-    'icon_uri'?: string;
+    'icon_uri': string;
     /**
      * 
      * @type {ServiceTypeEnum}
@@ -17307,6 +17307,12 @@ export interface TerraformResponse {
      * @memberof TerraformResponse
      */
     'job_resources': TerraformJobResourcesResponse;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof TerraformResponse
+     */
+    'environment': ReferenceObject;
 }
 
 export const TerraformResponseProviderEnum = {
