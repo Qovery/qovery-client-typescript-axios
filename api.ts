@@ -125,6 +125,38 @@ export interface AccountInfoEditRequest {
 /**
  * 
  * @export
+ * @interface AksInfrastructureOutputs
+ */
+export interface AksInfrastructureOutputs {
+    /**
+     * 
+     * @type {string}
+     * @memberof AksInfrastructureOutputs
+     */
+    'kind': AksInfrastructureOutputsKindEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AksInfrastructureOutputs
+     */
+    'cluster_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AksInfrastructureOutputs
+     */
+    'cluster_oidc_issuer': string;
+}
+
+export const AksInfrastructureOutputsKindEnum = {
+    AKS: 'AKS'
+} as const;
+
+export type AksInfrastructureOutputsKindEnum = typeof AksInfrastructureOutputsKindEnum[keyof typeof AksInfrastructureOutputsKindEnum];
+
+/**
+ * 
+ * @export
  * @interface Annotation
  */
 export interface Annotation {
@@ -2270,6 +2302,12 @@ export interface Cluster {
      * @memberof Cluster
      */
     'metrics_parameters'?: MetricsParameters;
+    /**
+     * 
+     * @type {InfrastructureOutputs}
+     * @memberof Cluster
+     */
+    'infrastructure_outputs'?: InfrastructureOutputs;
 }
 
 
@@ -7333,6 +7371,50 @@ export interface DockerfileCheckResponse {
 /**
  * 
  * @export
+ * @interface EksInfrastructureOutputs
+ */
+export interface EksInfrastructureOutputs {
+    /**
+     * 
+     * @type {string}
+     * @memberof EksInfrastructureOutputs
+     */
+    'kind': EksInfrastructureOutputsKindEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof EksInfrastructureOutputs
+     */
+    'cluster_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EksInfrastructureOutputs
+     */
+    'cluster_arn': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EksInfrastructureOutputs
+     */
+    'cluster_oidc_issuer': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EksInfrastructureOutputs
+     */
+    'vpc_id': string;
+}
+
+export const EksInfrastructureOutputsKindEnum = {
+    EKS: 'EKS'
+} as const;
+
+export type EksInfrastructureOutputsKindEnum = typeof EksInfrastructureOutputsKindEnum[keyof typeof EksInfrastructureOutputsKindEnum];
+
+/**
+ * 
+ * @export
  * @interface EnvDeploymentStatus
  */
 export interface EnvDeploymentStatus {
@@ -9030,6 +9112,38 @@ export interface GitTokenResponseList {
 /**
  * 
  * @export
+ * @interface GkeInfrastructureOutputs
+ */
+export interface GkeInfrastructureOutputs {
+    /**
+     * 
+     * @type {string}
+     * @memberof GkeInfrastructureOutputs
+     */
+    'kind': GkeInfrastructureOutputsKindEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof GkeInfrastructureOutputs
+     */
+    'cluster_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GkeInfrastructureOutputs
+     */
+    'cluster_self_link': string;
+}
+
+export const GkeInfrastructureOutputsKindEnum = {
+    GKE: 'GKE'
+} as const;
+
+export type GkeInfrastructureOutputsKindEnum = typeof GkeInfrastructureOutputsKindEnum[keyof typeof GkeInfrastructureOutputsKindEnum];
+
+/**
+ * 
+ * @export
  * @interface Healthcheck
  */
 export interface Healthcheck {
@@ -10570,6 +10684,12 @@ export interface HelmVersionResponseList {
     'results'?: Array<HelmVersionResponse>;
 }
 /**
+ * @type InfrastructureOutputs
+ * @export
+ */
+export type InfrastructureOutputs = { kind: 'AKS' } & AksInfrastructureOutputs | { kind: 'EKS' } & EksInfrastructureOutputs | { kind: 'GKE' } & GkeInfrastructureOutputs | { kind: 'SCW_KAPSULE' } & KapsuleInfrastructureOutputs;
+
+/**
  * 
  * @export
  * @interface IngressDeploymentStatusResponse
@@ -11409,6 +11529,32 @@ export interface JobSourceDockerResponse {
      */
     'docker_target_build_stage'?: string | null;
 }
+/**
+ * 
+ * @export
+ * @interface KapsuleInfrastructureOutputs
+ */
+export interface KapsuleInfrastructureOutputs {
+    /**
+     * 
+     * @type {string}
+     * @memberof KapsuleInfrastructureOutputs
+     */
+    'kind': KapsuleInfrastructureOutputsKindEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof KapsuleInfrastructureOutputs
+     */
+    'cluster_name': string;
+}
+
+export const KapsuleInfrastructureOutputsKindEnum = {
+    SCW_KAPSULE: 'SCW_KAPSULE'
+} as const;
+
+export type KapsuleInfrastructureOutputsKindEnum = typeof KapsuleInfrastructureOutputsKindEnum[keyof typeof KapsuleInfrastructureOutputsKindEnum];
+
 /**
  * 
  * @export
