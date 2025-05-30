@@ -8224,6 +8224,12 @@ export interface EnvironmentStatuses {
      * @memberof EnvironmentStatuses
      */
     'helms'?: Array<Status>;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof EnvironmentStatuses
+     */
+    'terraforms'?: Array<Status>;
 }
 /**
  * 
