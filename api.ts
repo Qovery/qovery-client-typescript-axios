@@ -7319,6 +7319,12 @@ export interface DeploymentStageWithServicesStatuses {
     'helms'?: Array<Status>;
     /**
      * 
+     * @type {Array<Status>}
+     * @memberof DeploymentStageWithServicesStatuses
+     */
+    'terraforms'?: Array<Status>;
+    /**
+     * 
      * @type {Stage}
      * @memberof DeploymentStageWithServicesStatuses
      */
