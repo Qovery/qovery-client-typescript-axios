@@ -17495,25 +17495,6 @@ export interface TerraformResponseList {
 /**
  * 
  * @export
- * @interface TerraformVarKeyValue
- */
-export interface TerraformVarKeyValue {
-    /**
-     * 
-     * @type {string}
-     * @memberof TerraformVarKeyValue
-     */
-    'key': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TerraformVarKeyValue
-     */
-    'value': string;
-}
-/**
- * 
- * @export
  * @interface TerraformVariablesSourceRequest
  */
 export interface TerraformVariablesSourceRequest {
@@ -17525,10 +17506,10 @@ export interface TerraformVariablesSourceRequest {
     'tf_var_file_paths': Array<string>;
     /**
      * 
-     * @type {Array<TerraformVarKeyValue>}
+     * @type {Array<Array<Array<string>>>}
      * @memberof TerraformVariablesSourceRequest
      */
-    'tf_vars': Array<TerraformVarKeyValue>;
+    'tf_vars': Array<Array<Array<string>>>;
 }
 /**
  * 
@@ -17544,10 +17525,10 @@ export interface TerraformVariablesSourceResponse {
     'tf_var_file_paths': Array<string>;
     /**
      * 
-     * @type {Array<TerraformVarKeyValue>}
+     * @type {Array<Array<Array<string>>>}
      * @memberof TerraformVariablesSourceResponse
      */
-    'tf_vars': Array<TerraformVarKeyValue>;
+    'tf_vars': Array<Array<Array<string>>>;
 }
 /**
  * 
