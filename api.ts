@@ -17505,11 +17505,11 @@ export interface TerraformVariablesSourceRequest {
      */
     'tf_var_file_paths': Array<string>;
     /**
-     * 
-     * @type {Array<Array<Array<string>>>}
+     * The input is in json array format: [ [$KEY,$VALUE], [...] ]
+     * @type {Array<Array<string>>}
      * @memberof TerraformVariablesSourceRequest
      */
-    'tf_vars': Array<Array<Array<string>>>;
+    'tf_vars': Array<Array<string>>;
 }
 /**
  * 
@@ -17524,11 +17524,11 @@ export interface TerraformVariablesSourceResponse {
      */
     'tf_var_file_paths': Array<string>;
     /**
-     * 
-     * @type {Array<Array<Array<string>>>}
+     * The input is in json array format: [ [$KEY,$VALUE], [...] ]
+     * @type {Array<Array<string>>}
      * @memberof TerraformVariablesSourceResponse
      */
-    'tf_vars': Array<Array<Array<string>>>;
+    'tf_vars': Array<Array<string>>;
 }
 /**
  * 
