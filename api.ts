@@ -269,7 +269,7 @@ export interface Application {
      * @type {string}
      * @memberof Application
      */
-    'dockerfile_path'?: string | null;
+    'dockerfile_path'?: string;
     /**
      * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -359,7 +359,7 @@ export interface Application {
      * @type {string}
      * @memberof Application
      */
-    'docker_target_build_stage'?: string | null;
+    'docker_target_build_stage'?: string;
 }
 
 
@@ -732,7 +732,7 @@ export interface ApplicationEditRequest {
      * @type {string}
      * @memberof ApplicationEditRequest
      */
-    'dockerfile_path'?: string | null;
+    'dockerfile_path'?: string;
     /**
      * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -792,7 +792,7 @@ export interface ApplicationEditRequest {
      * @type {boolean}
      * @memberof ApplicationEditRequest
      */
-    'auto_deploy'?: boolean | null;
+    'auto_deploy'?: boolean;
     /**
      * 
      * @type {Array<ServiceAnnotationRequest>}
@@ -816,7 +816,7 @@ export interface ApplicationEditRequest {
      * @type {string}
      * @memberof ApplicationEditRequest
      */
-    'docker_target_build_stage'?: string | null;
+    'docker_target_build_stage'?: string;
 }
 
 
@@ -897,13 +897,13 @@ export interface ApplicationGitRepository {
      * @type {string}
      * @memberof ApplicationGitRepository
      */
-    'git_token_id'?: string | null;
+    'git_token_id'?: string;
     /**
      * 
      * @type {string}
      * @memberof ApplicationGitRepository
      */
-    'git_token_name'?: string | null;
+    'git_token_name'?: string;
 }
 
 
@@ -936,7 +936,7 @@ export interface ApplicationGitRepositoryRequest {
      * @type {string}
      * @memberof ApplicationGitRepositoryRequest
      */
-    'git_token_id'?: string | null;
+    'git_token_id'?: string;
 }
 /**
  * 
@@ -993,7 +993,7 @@ export interface ApplicationRequest {
      * @type {string}
      * @memberof ApplicationRequest
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {ApplicationGitRepositoryRequest}
@@ -1011,7 +1011,7 @@ export interface ApplicationRequest {
      * @type {string}
      * @memberof ApplicationRequest
      */
-    'dockerfile_path'?: string | null;
+    'dockerfile_path'?: string;
     /**
      * unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -1065,7 +1065,7 @@ export interface ApplicationRequest {
      * @type {boolean}
      * @memberof ApplicationRequest
      */
-    'auto_deploy'?: boolean | null;
+    'auto_deploy'?: boolean;
     /**
      * 
      * @type {Array<ServiceAnnotationRequest>}
@@ -1089,7 +1089,7 @@ export interface ApplicationRequest {
      * @type {string}
      * @memberof ApplicationRequest
      */
-    'docker_target_build_stage'?: string | null;
+    'docker_target_build_stage'?: string;
 }
 
 
@@ -1613,7 +1613,7 @@ export interface BaseJobResponse {
      * @type {number}
      * @memberof BaseJobResponse
      */
-    'port'?: number | null;
+    'port'?: number;
     /**
      * 
      * @type {BaseJobResponseAllOfSource}
@@ -1703,61 +1703,61 @@ export interface BillingInfo {
      * @type {string}
      * @memberof BillingInfo
      */
-    'first_name'?: string | null;
+    'first_name'?: string;
     /**
      * 
      * @type {string}
      * @memberof BillingInfo
      */
-    'last_name'?: string | null;
+    'last_name'?: string;
     /**
      * email used for billing, and to receive all invoices by email
      * @type {string}
      * @memberof BillingInfo
      */
-    'email'?: string | null;
+    'email'?: string;
     /**
      * 
      * @type {string}
      * @memberof BillingInfo
      */
-    'address'?: string | null;
+    'address'?: string;
     /**
      * 
      * @type {string}
      * @memberof BillingInfo
      */
-    'city'?: string | null;
+    'city'?: string;
     /**
      * 
      * @type {string}
      * @memberof BillingInfo
      */
-    'zip'?: string | null;
+    'zip'?: string;
     /**
      * only for US
      * @type {string}
      * @memberof BillingInfo
      */
-    'state'?: string | null;
+    'state'?: string;
     /**
      * ISO code of the country
      * @type {string}
      * @memberof BillingInfo
      */
-    'country_code'?: string | null;
+    'country_code'?: string;
     /**
      * name of the company to bill
      * @type {string}
      * @memberof BillingInfo
      */
-    'company'?: string | null;
+    'company'?: string;
     /**
      * 
      * @type {string}
      * @memberof BillingInfo
      */
-    'vat_number'?: string | null;
+    'vat_number'?: string;
 }
 /**
  * 
@@ -1919,7 +1919,7 @@ export interface CheckedCustomDomainResponse {
      * @type {string}
      * @memberof CheckedCustomDomainResponse
      */
-    'error_details'?: string | null;
+    'error_details'?: string;
 }
 
 
@@ -2664,73 +2664,73 @@ export interface ClusterFeatureAwsExistingVpc {
      * @type {Array<string>}
      * @memberof ClusterFeatureAwsExistingVpc
      */
-    'documentdb_subnets_zone_a_ids'?: Array<string> | null;
+    'documentdb_subnets_zone_a_ids'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof ClusterFeatureAwsExistingVpc
      */
-    'documentdb_subnets_zone_b_ids'?: Array<string> | null;
+    'documentdb_subnets_zone_b_ids'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof ClusterFeatureAwsExistingVpc
      */
-    'documentdb_subnets_zone_c_ids'?: Array<string> | null;
+    'documentdb_subnets_zone_c_ids'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof ClusterFeatureAwsExistingVpc
      */
-    'elasticache_subnets_zone_a_ids'?: Array<string> | null;
+    'elasticache_subnets_zone_a_ids'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof ClusterFeatureAwsExistingVpc
      */
-    'elasticache_subnets_zone_b_ids'?: Array<string> | null;
+    'elasticache_subnets_zone_b_ids'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof ClusterFeatureAwsExistingVpc
      */
-    'elasticache_subnets_zone_c_ids'?: Array<string> | null;
+    'elasticache_subnets_zone_c_ids'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof ClusterFeatureAwsExistingVpc
      */
-    'rds_subnets_zone_a_ids'?: Array<string> | null;
+    'rds_subnets_zone_a_ids'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof ClusterFeatureAwsExistingVpc
      */
-    'rds_subnets_zone_b_ids'?: Array<string> | null;
+    'rds_subnets_zone_b_ids'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof ClusterFeatureAwsExistingVpc
      */
-    'rds_subnets_zone_c_ids'?: Array<string> | null;
+    'rds_subnets_zone_c_ids'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof ClusterFeatureAwsExistingVpc
      */
-    'eks_karpenter_fargate_subnets_zone_a_ids'?: Array<string> | null;
+    'eks_karpenter_fargate_subnets_zone_a_ids'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof ClusterFeatureAwsExistingVpc
      */
-    'eks_karpenter_fargate_subnets_zone_b_ids'?: Array<string> | null;
+    'eks_karpenter_fargate_subnets_zone_b_ids'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof ClusterFeatureAwsExistingVpc
      */
-    'eks_karpenter_fargate_subnets_zone_c_ids'?: Array<string> | null;
+    'eks_karpenter_fargate_subnets_zone_c_ids'?: Array<string>;
 }
 /**
  * 
@@ -2791,25 +2791,25 @@ export interface ClusterFeatureGcpExistingVpc {
      * @type {string}
      * @memberof ClusterFeatureGcpExistingVpc
      */
-    'vpc_project_id'?: string | null;
+    'vpc_project_id'?: string;
     /**
      * 
      * @type {string}
      * @memberof ClusterFeatureGcpExistingVpc
      */
-    'subnetwork_name'?: string | null;
+    'subnetwork_name'?: string;
     /**
      * 
      * @type {string}
      * @memberof ClusterFeatureGcpExistingVpc
      */
-    'ip_range_services_name'?: string | null;
+    'ip_range_services_name'?: string;
     /**
      * 
      * @type {string}
      * @memberof ClusterFeatureGcpExistingVpc
      */
-    'ip_range_pods_name'?: string | null;
+    'ip_range_pods_name'?: string;
     /**
      * 
      * @type {Array<string>}
@@ -2915,28 +2915,28 @@ export interface ClusterFeatureResponse {
      * @type {string}
      * @memberof ClusterFeatureResponse
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {number}
      * @memberof ClusterFeatureResponse
      * @deprecated
      */
-    'cost_per_month_in_cents'?: number | null;
+    'cost_per_month_in_cents'?: number;
     /**
      * 
      * @type {number}
      * @memberof ClusterFeatureResponse
      * @deprecated
      */
-    'cost_per_month'?: number | null;
+    'cost_per_month'?: number;
     /**
      * 
      * @type {string}
      * @memberof ClusterFeatureResponse
      * @deprecated
      */
-    'currency_code'?: string | null;
+    'currency_code'?: string;
     /**
      * 
      * @type {boolean}
@@ -2948,7 +2948,7 @@ export interface ClusterFeatureResponse {
      * @type {string}
      * @memberof ClusterFeatureResponse
      */
-    'cloud_provider_feature_documentation'?: string | null;
+    'cloud_provider_feature_documentation'?: string;
     /**
      * 
      * @type {boolean}
@@ -2960,7 +2960,7 @@ export interface ClusterFeatureResponse {
      * @type {string}
      * @memberof ClusterFeatureResponse
      */
-    'qovery_feature_documentation'?: string | null;
+    'qovery_feature_documentation'?: string;
     /**
      * 
      * @type {string}
@@ -2972,7 +2972,7 @@ export interface ClusterFeatureResponse {
      * @type {ClusterFeatureResponseValueObject}
      * @memberof ClusterFeatureResponse
      */
-    'value_object'?: ClusterFeatureResponseValueObject | null;
+    'value_object'?: ClusterFeatureResponseValueObject;
     /**
      * 
      * @type {boolean}
@@ -3693,7 +3693,7 @@ export interface ClusterRequestFeaturesInner {
      * @type {ClusterRequestFeaturesInnerValue}
      * @memberof ClusterRequestFeaturesInner
      */
-    'value'?: ClusterRequestFeaturesInnerValue | null;
+    'value'?: ClusterRequestFeaturesInnerValue;
 }
 /**
  * @type ClusterRequestFeaturesInnerValue
@@ -3830,7 +3830,7 @@ export interface ClusterStatus {
      * @type {string}
      * @memberof ClusterStatus
      */
-    'next_k8s_available_version'?: string | null;
+    'next_k8s_available_version'?: string;
     /**
      * 
      * @type {string}
@@ -4712,7 +4712,7 @@ export interface ContainerRequest {
      * @type {boolean}
      * @memberof ContainerRequest
      */
-    'auto_deploy'?: boolean | null;
+    'auto_deploy'?: boolean;
     /**
      * 
      * @type {Array<ServiceAnnotationRequest>}
@@ -5329,7 +5329,7 @@ export interface CronJobResponse {
      * @type {number}
      * @memberof CronJobResponse
      */
-    'port'?: number | null;
+    'port'?: number;
     /**
      * 
      * @type {BaseJobResponseAllOfSource}
@@ -5459,7 +5459,7 @@ export interface CurrentCost {
      * @type {string}
      * @memberof CurrentCost
      */
-    'renewal_at'?: string | null;
+    'renewal_at'?: string;
     /**
      * 
      * @type {Cost}
@@ -6190,7 +6190,7 @@ export interface DeploymentHistory {
      * @type {Commit}
      * @memberof DeploymentHistory
      */
-    'commit'?: Commit | null;
+    'commit'?: Commit;
     /**
      * 
      * @type {DeploymentHistoryStatusEnum}
@@ -6254,7 +6254,7 @@ export interface DeploymentHistoryApplication {
      * @type {Commit}
      * @memberof DeploymentHistoryApplication
      */
-    'commit'?: Commit | null;
+    'commit'?: Commit;
     /**
      * 
      * @type {StateEnum}
@@ -6635,13 +6635,13 @@ export interface DeploymentHistoryHelmResponse {
      * @type {Commit}
      * @memberof DeploymentHistoryHelmResponse
      */
-    'commit'?: Commit | null;
+    'commit'?: Commit;
     /**
      * 
      * @type {DeploymentHistoryHelmResponseAllOfRepository}
      * @memberof DeploymentHistoryHelmResponse
      */
-    'repository'?: DeploymentHistoryHelmResponseAllOfRepository | null;
+    'repository'?: DeploymentHistoryHelmResponseAllOfRepository;
 }
 
 
@@ -6717,7 +6717,7 @@ export interface DeploymentHistoryJobResponse {
      * @type {Commit}
      * @memberof DeploymentHistoryJobResponse
      */
-    'commit'?: Commit | null;
+    'commit'?: Commit;
     /**
      * 
      * @type {DeploymentHistoryJobResponseAllOfSchedule}
@@ -6756,7 +6756,7 @@ export interface DeploymentHistoryJobResponseAllOfSchedule {
      * @type {string}
      * @memberof DeploymentHistoryJobResponseAllOfSchedule
      */
-    'schedule_at'?: string | null;
+    'schedule_at'?: string;
 }
 
 
@@ -6853,7 +6853,7 @@ export interface DeploymentHistoryServiceDetailsOneOf {
      * @type {Commit}
      * @memberof DeploymentHistoryServiceDetailsOneOf
      */
-    'commit': Commit | null;
+    'commit': Commit;
 }
 /**
  * ContainerDeploymentHistoryData
@@ -6909,7 +6909,7 @@ export interface DeploymentHistoryServiceDetailsOneOf2 {
      * @type {Commit}
      * @memberof DeploymentHistoryServiceDetailsOneOf2
      */
-    'commit'?: Commit | null;
+    'commit'?: Commit;
     /**
      * 
      * @type {DeploymentHistoryServiceDetailsOneOf2Schedule}
@@ -6981,7 +6981,7 @@ export interface DeploymentHistoryServiceDetailsOneOf3 {
      * @type {Commit}
      * @memberof DeploymentHistoryServiceDetailsOneOf3
      */
-    'commit'?: Commit | null;
+    'commit'?: Commit;
     /**
      * 
      * @type {DeploymentHistoryServiceDetailsOneOf3Repository}
@@ -7174,7 +7174,7 @@ export interface DeploymentStageRequest {
      * @type {string}
      * @memberof DeploymentStageRequest
      */
-    'description'?: string | null;
+    'description'?: string;
 }
 /**
  * 
@@ -7623,13 +7623,13 @@ export interface EnvironmentDeploymentRuleEditRequest {
      * @type {boolean}
      * @memberof EnvironmentDeploymentRuleEditRequest
      */
-    'auto_preview'?: boolean;
+    'auto_stop'?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof EnvironmentDeploymentRuleEditRequest
      */
-    'auto_stop'?: boolean;
+    'auto_preview'?: boolean;
     /**
      * 
      * @type {string}
@@ -7726,7 +7726,7 @@ export interface EnvironmentLog {
      * @type {string}
      * @memberof EnvironmentLog
      */
-    'message': string | null;
+    'message': string;
     /**
      * Only for errors. Helps Qovery team to investigate.
      * @type {string}
@@ -7826,13 +7826,13 @@ export interface EnvironmentLogs {
      * @type {EnvironmentLogsError}
      * @memberof EnvironmentLogs
      */
-    'error'?: EnvironmentLogsError | null;
+    'error'?: EnvironmentLogsError;
     /**
      * 
      * @type {EnvironmentLogsMessage}
      * @memberof EnvironmentLogs
      */
-    'message'?: EnvironmentLogsMessage | null;
+    'message'?: EnvironmentLogsMessage;
 }
 /**
  * 
@@ -7888,13 +7888,13 @@ export interface EnvironmentLogsDetailsStage {
      * @type {string}
      * @memberof EnvironmentLogsDetailsStage
      */
-    'id'?: string | null;
+    'id'?: string;
     /**
      * 
      * @type {string}
      * @memberof EnvironmentLogsDetailsStage
      */
-    'name'?: string | null;
+    'name'?: string;
 }
 /**
  * 
@@ -8117,7 +8117,7 @@ export interface EnvironmentStatus {
      * @type {string}
      * @memberof EnvironmentStatus
      */
-    'last_deployment_date'?: string | null;
+    'last_deployment_date'?: string;
     /**
      * 
      * @type {StateEnum}
@@ -8129,25 +8129,25 @@ export interface EnvironmentStatus {
      * @type {string}
      * @memberof EnvironmentStatus
      */
-    'last_deployment_id'?: string | null;
+    'last_deployment_id'?: string;
     /**
      * 
      * @type {number}
      * @memberof EnvironmentStatus
      */
-    'total_deployment_duration_in_seconds'?: number | null;
+    'total_deployment_duration_in_seconds'?: number;
     /**
      * 
      * @type {EnvironmentStatusEventOriginEnum}
      * @memberof EnvironmentStatus
      */
-    'origin'?: EnvironmentStatusEventOriginEnum | null;
+    'origin'?: EnvironmentStatusEventOriginEnum;
     /**
      * 
      * @type {string}
      * @memberof EnvironmentStatus
      */
-    'triggered_by'?: string | null;
+    'triggered_by'?: string;
     /**
      * 
      * @type {EnvironmentDeploymentStatusEnum}
@@ -8337,19 +8337,19 @@ export interface EnvironmentVariable {
      * @type {string}
      * @memberof EnvironmentVariable
      */
-    'mount_path'?: string | null;
+    'mount_path'?: string;
     /**
      * optional variable description (255 characters maximum)
      * @type {string}
      * @memberof EnvironmentVariable
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof EnvironmentVariable
      */
-    'enable_interpolation_in_file'?: boolean | null;
+    'enable_interpolation_in_file'?: boolean;
     /**
      * 
      * @type {EnvironmentVariableOverride}
@@ -8469,19 +8469,19 @@ export interface EnvironmentVariableEditRequest {
      * @type {string}
      * @memberof EnvironmentVariableEditRequest
      */
-    'mount_path'?: string | null;
+    'mount_path'?: string;
     /**
      * optional variable description (255 characters maximum)
      * @type {string}
      * @memberof EnvironmentVariableEditRequest
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof EnvironmentVariableEditRequest
      */
-    'enable_interpolation_in_file'?: boolean | null;
+    'enable_interpolation_in_file'?: boolean;
 }
 /**
  * 
@@ -8551,19 +8551,19 @@ export interface EnvironmentVariableRequest {
      * @type {string}
      * @memberof EnvironmentVariableRequest
      */
-    'mount_path'?: string | null;
+    'mount_path'?: string;
     /**
      * optional variable description (255 characters maximum)
      * @type {string}
      * @memberof EnvironmentVariableRequest
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof EnvironmentVariableRequest
      */
-    'enable_interpolation_in_file'?: boolean | null;
+    'enable_interpolation_in_file'?: boolean;
 }
 /**
  * 
@@ -9164,13 +9164,13 @@ export interface Healthcheck {
      * @type {Probe}
      * @memberof Healthcheck
      */
-    'readiness_probe'?: Probe | null;
+    'readiness_probe'?: Probe;
     /**
      * 
      * @type {Probe}
      * @memberof Healthcheck
      */
-    'liveness_probe'?: Probe | null;
+    'liveness_probe'?: Probe;
 }
 /**
  * 
@@ -9501,7 +9501,7 @@ export interface HelmGitRepositoryRequest {
      * @type {string}
      * @memberof HelmGitRepositoryRequest
      */
-    'git_token_id'?: string | null;
+    'git_token_id'?: string;
 }
 /**
  * 
@@ -10147,7 +10147,7 @@ export interface HelmRequest {
      * @type {boolean}
      * @memberof HelmRequest
      */
-    'auto_preview'?: boolean | null;
+    'auto_preview'?: boolean;
     /**
      * Specify if the helm will be automatically updated after receiving a new image tag or a new commit according to the source type. 
      * @type {boolean}
@@ -10228,7 +10228,7 @@ export interface HelmRequestAllOfSourceOneOf1HelmRepository {
      * @type {string}
      * @memberof HelmRequestAllOfSourceOneOf1HelmRepository
      */
-    'repository'?: string | null;
+    'repository'?: string;
     /**
      * The name of the chart in the repository
      * @type {string}
@@ -10271,7 +10271,7 @@ export interface HelmRequestAllOfValuesOverride {
      * @type {HelmRequestAllOfValuesOverrideFile}
      * @memberof HelmRequestAllOfValuesOverride
      */
-    'file'?: HelmRequestAllOfValuesOverrideFile | null;
+    'file'?: HelmRequestAllOfValuesOverrideFile;
 }
 /**
  * 
@@ -10284,13 +10284,13 @@ export interface HelmRequestAllOfValuesOverrideFile {
      * @type {HelmRequestAllOfValuesOverrideFileGit}
      * @memberof HelmRequestAllOfValuesOverrideFile
      */
-    'git'?: HelmRequestAllOfValuesOverrideFileGit | null;
+    'git'?: HelmRequestAllOfValuesOverrideFileGit;
     /**
      * 
      * @type {HelmRequestAllOfValuesOverrideFileRaw}
      * @memberof HelmRequestAllOfValuesOverrideFile
      */
-    'raw'?: HelmRequestAllOfValuesOverrideFileRaw | null;
+    'raw'?: HelmRequestAllOfValuesOverrideFileRaw;
 }
 /**
  * 
@@ -10515,7 +10515,7 @@ export interface HelmResponseAllOfValuesOverride {
      * @type {HelmResponseAllOfValuesOverrideFile}
      * @memberof HelmResponseAllOfValuesOverride
      */
-    'file'?: HelmResponseAllOfValuesOverrideFile | null;
+    'file'?: HelmResponseAllOfValuesOverrideFile;
 }
 /**
  * 
@@ -10528,13 +10528,13 @@ export interface HelmResponseAllOfValuesOverrideFile {
      * @type {HelmResponseAllOfValuesOverrideFileRaw}
      * @memberof HelmResponseAllOfValuesOverrideFile
      */
-    'raw'?: HelmResponseAllOfValuesOverrideFileRaw | null;
+    'raw'?: HelmResponseAllOfValuesOverrideFileRaw;
     /**
      * 
      * @type {HelmResponseAllOfValuesOverrideFileGit}
      * @memberof HelmResponseAllOfValuesOverrideFile
      */
-    'git'?: HelmResponseAllOfValuesOverrideFileGit | null;
+    'git'?: HelmResponseAllOfValuesOverrideFileGit;
 }
 /**
  * 
@@ -10991,7 +10991,7 @@ export interface JobAdvancedSettings {
      * @type {number}
      * @memberof JobAdvancedSettings
      */
-    'job.delete_ttl_seconds_after_finished'?: number | null;
+    'job.delete_ttl_seconds_after_finished'?: number;
     /**
      * 
      * @type {string}
@@ -11267,7 +11267,7 @@ export interface JobRequest {
      * @type {number}
      * @memberof JobRequest
      */
-    'port'?: number | null;
+    'port'?: number;
     /**
      * 
      * @type {JobRequestAllOfSource}
@@ -11291,7 +11291,7 @@ export interface JobRequest {
      * @type {boolean}
      * @memberof JobRequest
      */
-    'auto_deploy'?: boolean | null;
+    'auto_deploy'?: boolean;
     /**
      * 
      * @type {Array<ServiceAnnotationRequest>}
@@ -11411,13 +11411,13 @@ export interface JobRequestAllOfSource {
      * @type {JobRequestAllOfSourceImage}
      * @memberof JobRequestAllOfSource
      */
-    'image'?: JobRequestAllOfSourceImage | null;
+    'image'?: JobRequestAllOfSourceImage;
     /**
      * 
      * @type {JobRequestAllOfSourceDocker}
      * @memberof JobRequestAllOfSource
      */
-    'docker'?: JobRequestAllOfSourceDocker | null;
+    'docker'?: JobRequestAllOfSourceDocker;
 }
 /**
  * 
@@ -11436,19 +11436,19 @@ export interface JobRequestAllOfSourceDocker {
      * @type {string}
      * @memberof JobRequestAllOfSourceDocker
      */
-    'dockerfile_path'?: string | null;
+    'dockerfile_path'?: string;
     /**
      * The content of your dockerfile if it is not stored inside your git repository
      * @type {string}
      * @memberof JobRequestAllOfSourceDocker
      */
-    'dockerfile_raw'?: string | null;
+    'dockerfile_raw'?: string;
     /**
      * The target build stage in the Dockerfile to build
      * @type {string}
      * @memberof JobRequestAllOfSourceDocker
      */
-    'docker_target_build_stage'?: string | null;
+    'docker_target_build_stage'?: string;
 }
 /**
  * 
@@ -11527,19 +11527,19 @@ export interface JobSourceDockerResponse {
      * @type {string}
      * @memberof JobSourceDockerResponse
      */
-    'dockerfile_path'?: string | null;
+    'dockerfile_path'?: string;
     /**
      * The content of your dockerfile if it is not stored inside your git repository
      * @type {string}
      * @memberof JobSourceDockerResponse
      */
-    'dockerfile_raw'?: string | null;
+    'dockerfile_raw'?: string;
     /**
      * The target build stage in the Dockerfile to build
      * @type {string}
      * @memberof JobSourceDockerResponse
      */
-    'docker_target_build_stage'?: string | null;
+    'docker_target_build_stage'?: string;
 }
 /**
  * 
@@ -11754,13 +11754,13 @@ export interface Key {
      * @type {string}
      * @memberof Key
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof Key
      */
-    'enable_interpolation_in_file'?: boolean | null;
+    'enable_interpolation_in_file'?: boolean;
 }
 /**
  * 
@@ -12017,7 +12017,7 @@ export interface LifecycleJobResponse {
      * @type {number}
      * @memberof LifecycleJobResponse
      */
-    'port'?: number | null;
+    'port'?: number;
     /**
      * 
      * @type {BaseJobResponseAllOfSource}
@@ -12556,7 +12556,7 @@ export interface ListServicesByEnvironmentId200Response {
  * @type ListServicesByEnvironmentId200ResponseResultsInner
  * @export
  */
-export type ListServicesByEnvironmentId200ResponseResultsInner = Application | ContainerResponse | Database | HelmResponse | JobResponse;
+export type ListServicesByEnvironmentId200ResponseResultsInner = { service_type: 'APPLICATION' } & Application | { service_type: 'CONTAINER' } & ContainerResponse | { service_type: 'DATABASE' } & Database | { service_type: 'HELM' } & HelmResponse | { service_type: 'JOB' } & JobResponse | { service_type: 'TERRAFORM' } & TerraformResponse;
 
 /**
  * 
@@ -12873,7 +12873,7 @@ export interface Organization {
      * @type {string}
      * @memberof Organization
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {PlanEnum}
@@ -12885,31 +12885,31 @@ export interface Organization {
      * @type {string}
      * @memberof Organization
      */
-    'website_url'?: string | null;
+    'website_url'?: string;
     /**
      * 
      * @type {string}
      * @memberof Organization
      */
-    'repository'?: string | null;
+    'repository'?: string;
     /**
      * 
      * @type {string}
      * @memberof Organization
      */
-    'logo_url'?: string | null;
+    'logo_url'?: string;
     /**
      * 
      * @type {string}
      * @memberof Organization
      */
-    'icon_url'?: string | null;
+    'icon_url'?: string;
     /**
      * 
      * @type {Array<string>}
      * @memberof Organization
      */
-    'admin_emails'?: Array<string> | null;
+    'admin_emails'?: Array<string>;
     /**
      * uuid of the user owning the organization
      * @type {string}
@@ -13287,13 +13287,13 @@ export interface OrganizationApiTokenCreateRequest {
      * @type {OrganizationApiTokenScope}
      * @memberof OrganizationApiTokenCreateRequest
      */
-    'scope'?: OrganizationApiTokenScope | null;
+    'scope'?: OrganizationApiTokenScope;
     /**
      * the roleId provided by the \"List organization custom roles\" endpoint.
      * @type {string}
      * @memberof OrganizationApiTokenCreateRequest
      */
-    'role_id': string | null;
+    'role_id': string;
 }
 
 
@@ -13486,7 +13486,7 @@ export interface OrganizationCurrentCost {
      * @type {string}
      * @memberof OrganizationCurrentCost
      */
-    'renewal_at'?: string | null;
+    'renewal_at'?: string;
     /**
      * 
      * @type {Cost}
@@ -13775,31 +13775,31 @@ export interface OrganizationEditRequest {
      * @type {string}
      * @memberof OrganizationEditRequest
      */
-    'website_url'?: string | null;
+    'website_url'?: string;
     /**
      * 
      * @type {string}
      * @memberof OrganizationEditRequest
      */
-    'repository'?: string | null;
+    'repository'?: string;
     /**
      * 
      * @type {string}
      * @memberof OrganizationEditRequest
      */
-    'logo_url'?: string | null;
+    'logo_url'?: string;
     /**
      * 
      * @type {string}
      * @memberof OrganizationEditRequest
      */
-    'icon_url'?: string | null;
+    'icon_url'?: string;
     /**
      * 
      * @type {Array<string>}
      * @memberof OrganizationEditRequest
      */
-    'admin_emails'?: Array<string> | null;
+    'admin_emails'?: Array<string>;
 }
 /**
  * Origin of the organization event
@@ -13848,7 +13848,7 @@ export interface OrganizationEventResponse {
      * @type {string}
      * @memberof OrganizationEventResponse
      */
-    'target_id'?: string | null;
+    'target_id'?: string;
     /**
      * 
      * @type {string}
@@ -13866,7 +13866,7 @@ export interface OrganizationEventResponse {
      * @type {OrganizationEventSubTargetType}
      * @memberof OrganizationEventResponse
      */
-    'sub_target_type'?: OrganizationEventSubTargetType | null;
+    'sub_target_type'?: OrganizationEventSubTargetType;
     /**
      * 
      * @type {string}
@@ -13890,7 +13890,7 @@ export interface OrganizationEventResponse {
      * @type {string}
      * @memberof OrganizationEventResponse
      */
-    'project_id'?: string | null;
+    'project_id'?: string;
     /**
      * 
      * @type {string}
@@ -13902,7 +13902,7 @@ export interface OrganizationEventResponse {
      * @type {string}
      * @memberof OrganizationEventResponse
      */
-    'environment_id'?: string | null;
+    'environment_id'?: string;
     /**
      * 
      * @type {string}
@@ -13914,7 +13914,7 @@ export interface OrganizationEventResponse {
      * @type {string}
      * @memberof OrganizationEventResponse
      */
-    'user_agent'?: string | null;
+    'user_agent'?: string;
 }
 
 
@@ -14300,7 +14300,7 @@ export interface OrganizationRequest {
      * @type {string}
      * @memberof OrganizationRequest
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {PlanEnum}
@@ -14312,31 +14312,31 @@ export interface OrganizationRequest {
      * @type {string}
      * @memberof OrganizationRequest
      */
-    'website_url'?: string | null;
+    'website_url'?: string;
     /**
      * 
      * @type {string}
      * @memberof OrganizationRequest
      */
-    'repository'?: string | null;
+    'repository'?: string;
     /**
      * 
      * @type {string}
      * @memberof OrganizationRequest
      */
-    'logo_url'?: string | null;
+    'logo_url'?: string;
     /**
      * 
      * @type {string}
      * @memberof OrganizationRequest
      */
-    'icon_url'?: string | null;
+    'icon_url'?: string;
     /**
      * 
      * @type {Array<string>}
      * @memberof OrganizationRequest
      */
-    'admin_emails'?: Array<string> | null;
+    'admin_emails'?: Array<string>;
 }
 
 
@@ -14711,25 +14711,25 @@ export interface ProbeType {
      * @type {ProbeTypeTcp}
      * @memberof ProbeType
      */
-    'tcp'?: ProbeTypeTcp | null;
+    'tcp'?: ProbeTypeTcp;
     /**
      * 
      * @type {ProbeTypeHttp}
      * @memberof ProbeType
      */
-    'http'?: ProbeTypeHttp | null;
+    'http'?: ProbeTypeHttp;
     /**
      * 
      * @type {ProbeTypeExec}
      * @memberof ProbeType
      */
-    'exec'?: ProbeTypeExec | null;
+    'exec'?: ProbeTypeExec;
     /**
      * 
      * @type {ProbeTypeGrpc}
      * @memberof ProbeType
      */
-    'grpc'?: ProbeTypeGrpc | null;
+    'grpc'?: ProbeTypeGrpc;
 }
 /**
  * 
@@ -14755,7 +14755,7 @@ export interface ProbeTypeGrpc {
      * @type {string}
      * @memberof ProbeTypeGrpc
      */
-    'service'?: string | null;
+    'service'?: string;
     /**
      * 
      * @type {number}
@@ -14805,7 +14805,7 @@ export interface ProbeTypeTcp {
      * @type {string}
      * @memberof ProbeTypeTcp
      */
-    'host'?: string | null;
+    'host'?: string;
 }
 /**
  * 
@@ -14935,7 +14935,7 @@ export interface ProjectDeploymentRule {
      * @type {string}
      * @memberof ProjectDeploymentRule
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {EnvironmentModeEnum}
@@ -15010,7 +15010,7 @@ export interface ProjectDeploymentRuleRequest {
      * @type {string}
      * @memberof ProjectDeploymentRuleRequest
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {EnvironmentModeEnum}
@@ -15527,7 +15527,7 @@ export interface ReferenceObjectStatus {
      * @type {string}
      * @memberof ReferenceObjectStatus
      */
-    'deployment_request_id'?: string | null;
+    'deployment_request_id'?: string;
     /**
      * 
      * @type {number}
@@ -15779,13 +15779,13 @@ export interface Secret {
      * @type {string}
      * @memberof Secret
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof Secret
      */
-    'enable_interpolation_in_file'?: boolean | null;
+    'enable_interpolation_in_file'?: boolean;
 }
 
 
@@ -15830,13 +15830,13 @@ export interface SecretAlias {
      * @type {string}
      * @memberof SecretAlias
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof SecretAlias
      */
-    'enable_interpolation_in_file'?: boolean | null;
+    'enable_interpolation_in_file'?: boolean;
 }
 
 
@@ -15863,13 +15863,13 @@ export interface SecretEditRequest {
      * @type {string}
      * @memberof SecretEditRequest
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof SecretEditRequest
      */
-    'enable_interpolation_in_file'?: boolean | null;
+    'enable_interpolation_in_file'?: boolean;
 }
 /**
  * 
@@ -15912,13 +15912,13 @@ export interface SecretOverride {
      * @type {string}
      * @memberof SecretOverride
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof SecretOverride
      */
-    'enable_interpolation_in_file'?: boolean | null;
+    'enable_interpolation_in_file'?: boolean;
 }
 
 
@@ -15945,19 +15945,19 @@ export interface SecretRequest {
      * @type {string}
      * @memberof SecretRequest
      */
-    'mount_path'?: string | null;
+    'mount_path'?: string;
     /**
      * optional variable description (255 character maximum)
      * @type {string}
      * @memberof SecretRequest
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof SecretRequest
      */
-    'enable_interpolation_in_file'?: boolean | null;
+    'enable_interpolation_in_file'?: boolean;
 }
 /**
  * 
@@ -16372,7 +16372,7 @@ export interface ServiceStepMetrics {
      * @type {number}
      * @memberof ServiceStepMetrics
      */
-    'total_duration_sec'?: number | null;
+    'total_duration_sec'?: number;
     /**
      * The total duration in seconds of the service deployment without queuing steps.
      * @type {number}
@@ -16584,7 +16584,7 @@ export interface SignUp {
      * @type {string}
      * @memberof SignUp
      */
-    'company_name'?: string | null;
+    'company_name'?: string;
     /**
      * 
      * @type {CompanySizeEnum}
@@ -16596,37 +16596,37 @@ export interface SignUp {
      * @type {string}
      * @memberof SignUp
      */
-    'user_role'?: string | null;
+    'user_role'?: string;
     /**
      * 
      * @type {string}
      * @memberof SignUp
      */
-    'qovery_usage_other'?: string | null;
+    'qovery_usage_other'?: string;
     /**
      * 
      * @type {string}
      * @memberof SignUp
      */
-    'user_questions'?: string | null;
+    'user_questions'?: string;
     /**
      * 
      * @type {string}
      * @memberof SignUp
      */
-    'current_step'?: string | null;
+    'current_step'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof SignUp
      */
-    'dx_auth'?: boolean | null;
+    'dx_auth'?: boolean;
     /**
      * 
      * @type {string}
      * @memberof SignUp
      */
-    'infrastructure_hosting'?: string | null;
+    'infrastructure_hosting'?: string;
 }
 
 
@@ -16671,7 +16671,7 @@ export interface SignUpRequest {
      * @type {string}
      * @memberof SignUpRequest
      */
-    'company_name'?: string | null;
+    'company_name'?: string;
     /**
      * 
      * @type {CompanySizeEnum}
@@ -16683,37 +16683,37 @@ export interface SignUpRequest {
      * @type {string}
      * @memberof SignUpRequest
      */
-    'user_role'?: string | null;
+    'user_role'?: string;
     /**
      * 
      * @type {string}
      * @memberof SignUpRequest
      */
-    'qovery_usage_other'?: string | null;
+    'qovery_usage_other'?: string;
     /**
      * 
      * @type {string}
      * @memberof SignUpRequest
      */
-    'user_questions'?: string | null;
+    'user_questions'?: string;
     /**
      * 
      * @type {string}
      * @memberof SignUpRequest
      */
-    'current_step'?: string | null;
+    'current_step'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof SignUpRequest
      */
-    'dx_auth'?: boolean | null;
+    'dx_auth'?: boolean;
     /**
      * 
      * @type {string}
      * @memberof SignUpRequest
      */
-    'infrastructure_hosting'?: string | null;
+    'infrastructure_hosting'?: string;
 }
 
 
@@ -16826,7 +16826,7 @@ export interface StageStepMetrics {
      * @type {number}
      * @memberof StageStepMetrics
      */
-    'total_duration_sec'?: number | null;
+    'total_duration_sec'?: number;
     /**
      * A list of metrics for deployment steps of the stage.
      * @type {Array<StageStepMetric>}
@@ -16932,7 +16932,7 @@ export interface Status {
      * @type {string}
      * @memberof Status
      */
-    'deployment_request_id'?: string | null;
+    'deployment_request_id'?: string;
     /**
      * 
      * @type {number}
@@ -17425,10 +17425,10 @@ export interface TerraformResponse {
     'auto_deploy': boolean;
     /**
      * 
-     * @type {object}
+     * @type {any}
      * @memberof TerraformResponse
      */
-    'terraform_files_source'?: object | null;
+    'terraform_files_source'?: any | null;
     /**
      * Icon URI representing the terraform service.
      * @type {string}
@@ -17637,13 +17637,13 @@ export interface Value {
      * @type {string}
      * @memberof Value
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof Value
      */
-    'enable_interpolation_in_file'?: boolean | null;
+    'enable_interpolation_in_file'?: boolean;
 }
 /**
  * 
@@ -17668,7 +17668,7 @@ export interface VariableAlias {
      * @type {string}
      * @memberof VariableAlias
      */
-    'value'?: string | null;
+    'value'?: string;
     /**
      * 
      * @type {string}
@@ -17719,13 +17719,13 @@ export interface VariableAliasRequest {
      * @type {string}
      * @memberof VariableAliasRequest
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof VariableAliasRequest
      */
-    'enable_interpolation_in_file'?: boolean | null;
+    'enable_interpolation_in_file'?: boolean;
 }
 
 
@@ -17746,19 +17746,19 @@ export interface VariableEditRequest {
      * @type {string}
      * @memberof VariableEditRequest
      */
-    'value'?: string | null;
+    'value'?: string;
     /**
      * optional variable description (255 characters maximum)
      * @type {string}
      * @memberof VariableEditRequest
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof VariableEditRequest
      */
-    'enable_interpolation_in_file'?: boolean | null;
+    'enable_interpolation_in_file'?: boolean;
 }
 /**
  * 
@@ -17887,7 +17887,7 @@ export interface VariableOverride {
      * @type {string}
      * @memberof VariableOverride
      */
-    'value'?: string | null;
+    'value'?: string;
     /**
      * The mounth path of the overriden variable (only if environment variable type is \'file\')
      * @type {string}
@@ -17938,13 +17938,13 @@ export interface VariableOverrideRequest {
      * @type {string}
      * @memberof VariableOverrideRequest
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof VariableOverrideRequest
      */
-    'enable_interpolation_in_file'?: boolean | null;
+    'enable_interpolation_in_file'?: boolean;
 }
 
 
@@ -17971,7 +17971,7 @@ export interface VariableRequest {
      * @type {string}
      * @memberof VariableRequest
      */
-    'mount_path'?: string | null;
+    'mount_path'?: string;
     /**
      * if true, the variable will be considered as a secret and will not be accessible after its creation. Only your applications will be able to access its value at build and run time.
      * @type {boolean}
@@ -17995,13 +17995,13 @@ export interface VariableRequest {
      * @type {string}
      * @memberof VariableRequest
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof VariableRequest
      */
-    'enable_interpolation_in_file'?: boolean | null;
+    'enable_interpolation_in_file'?: boolean;
 }
 
 
@@ -18040,13 +18040,13 @@ export interface VariableResponse {
      * @type {string}
      * @memberof VariableResponse
      */
-    'value': string | null;
+    'value': string;
     /**
      * 
      * @type {string}
      * @memberof VariableResponse
      */
-    'mount_path'?: string | null;
+    'mount_path'?: string;
     /**
      * 
      * @type {VariableOverride}
@@ -19651,7 +19651,7 @@ export const ApplicationDeploymentHistoryApiAxiosParamCreator = function (config
         /**
          * By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. You can also filter by status (FAILED or SUCCESS), and git_commit_id
          * @summary List application deploys
-         * @param {string} applicationId Application ID
+         * @param {string} applicationId 
          * @param {string} [startId] Starting point after which to return results
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -19721,7 +19721,7 @@ export const ApplicationDeploymentHistoryApiFp = function(configuration?: Config
         /**
          * By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. You can also filter by status (FAILED or SUCCESS), and git_commit_id
          * @summary List application deploys
-         * @param {string} applicationId Application ID
+         * @param {string} applicationId 
          * @param {string} [startId] Starting point after which to return results
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -19756,7 +19756,7 @@ export const ApplicationDeploymentHistoryApiFactory = function (configuration?: 
         /**
          * By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. You can also filter by status (FAILED or SUCCESS), and git_commit_id
          * @summary List application deploys
-         * @param {string} applicationId Application ID
+         * @param {string} applicationId 
          * @param {string} [startId] Starting point after which to return results
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -19790,7 +19790,7 @@ export class ApplicationDeploymentHistoryApi extends BaseAPI {
     /**
      * By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. You can also filter by status (FAILED or SUCCESS), and git_commit_id
      * @summary List application deploys
-     * @param {string} applicationId Application ID
+     * @param {string} applicationId 
      * @param {string} [startId] Starting point after which to return results
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -22250,10 +22250,11 @@ export const ApplicationsApiAxiosParamCreator = function (configuration?: Config
          * 
          * @summary List applications
          * @param {string} environmentId Environment ID
+         * @param {boolean} [toUpdate] return (or not) results that must be updated
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listApplication: async (environmentId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listApplication: async (environmentId: string, toUpdate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'environmentId' is not null or undefined
             assertParamExists('listApplication', 'environmentId', environmentId)
             const localVarPath = `/environment/{environmentId}/application`
@@ -22275,6 +22276,10 @@ export const ApplicationsApiAxiosParamCreator = function (configuration?: Config
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (toUpdate !== undefined) {
+                localVarQueryParameter['toUpdate'] = toUpdate;
+            }
 
 
     
@@ -22354,11 +22359,12 @@ export const ApplicationsApiFp = function(configuration?: Configuration) {
          * 
          * @summary List applications
          * @param {string} environmentId Environment ID
+         * @param {boolean} [toUpdate] return (or not) results that must be updated
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listApplication(environmentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listApplication(environmentId, options);
+        async listApplication(environmentId: string, toUpdate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listApplication(environmentId, toUpdate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApplicationsApi.listApplication']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -22418,11 +22424,12 @@ export const ApplicationsApiFactory = function (configuration?: Configuration, b
          * 
          * @summary List applications
          * @param {string} environmentId Environment ID
+         * @param {boolean} [toUpdate] return (or not) results that must be updated
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listApplication(environmentId: string, options?: RawAxiosRequestConfig): AxiosPromise<ApplicationResponseList> {
-            return localVarFp.listApplication(environmentId, options).then((request) => request(axios, basePath));
+        listApplication(environmentId: string, toUpdate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<ApplicationResponseList> {
+            return localVarFp.listApplication(environmentId, toUpdate, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -22487,12 +22494,13 @@ export class ApplicationsApi extends BaseAPI {
      * 
      * @summary List applications
      * @param {string} environmentId Environment ID
+     * @param {boolean} [toUpdate] return (or not) results that must be updated
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApplicationsApi
      */
-    public listApplication(environmentId: string, options?: RawAxiosRequestConfig) {
-        return ApplicationsApiFp(this.configuration).listApplication(environmentId, options).then((request) => request(this.axios, this.basePath));
+    public listApplication(environmentId: string, toUpdate?: boolean, options?: RawAxiosRequestConfig) {
+        return ApplicationsApiFp(this.configuration).listApplication(environmentId, toUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -25739,8 +25747,8 @@ export const CloudProviderCredentialsApiAxiosParamCreator = function (configurat
         /**
          * 
          * @summary Delete a set of Azure credentials
-         * @param {string} organizationId Organization ID
-         * @param {string} credentialsId Credentials ID
+         * @param {string} organizationId 
+         * @param {string} credentialsId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -25968,8 +25976,8 @@ export const CloudProviderCredentialsApiAxiosParamCreator = function (configurat
         /**
          * 
          * @summary Edit a set of Azure credentials
-         * @param {string} organizationId Organization ID
-         * @param {string} credentialsId Credentials ID
+         * @param {string} organizationId 
+         * @param {string} credentialsId 
          * @param {AzureCredentialsRequest} [azureCredentialsRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -26209,8 +26217,8 @@ export const CloudProviderCredentialsApiAxiosParamCreator = function (configurat
         /**
          * 
          * @summary Get a set of Azure credentials
-         * @param {string} organizationId Organization ID
-         * @param {string} credentialsId Credentials ID
+         * @param {string} organizationId 
+         * @param {string} credentialsId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -26688,8 +26696,8 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
         /**
          * 
          * @summary Delete a set of Azure credentials
-         * @param {string} organizationId Organization ID
-         * @param {string} credentialsId Credentials ID
+         * @param {string} organizationId 
+         * @param {string} credentialsId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -26759,8 +26767,8 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
         /**
          * 
          * @summary Edit a set of Azure credentials
-         * @param {string} organizationId Organization ID
-         * @param {string} credentialsId Credentials ID
+         * @param {string} organizationId 
+         * @param {string} credentialsId 
          * @param {AzureCredentialsRequest} [azureCredentialsRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -26833,8 +26841,8 @@ export const CloudProviderCredentialsApiFp = function(configuration?: Configurat
         /**
          * 
          * @summary Get a set of Azure credentials
-         * @param {string} organizationId Organization ID
-         * @param {string} credentialsId Credentials ID
+         * @param {string} organizationId 
+         * @param {string} credentialsId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -27030,8 +27038,8 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
         /**
          * 
          * @summary Delete a set of Azure credentials
-         * @param {string} organizationId Organization ID
-         * @param {string} credentialsId Credentials ID
+         * @param {string} organizationId 
+         * @param {string} credentialsId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -27086,8 +27094,8 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
         /**
          * 
          * @summary Edit a set of Azure credentials
-         * @param {string} organizationId Organization ID
-         * @param {string} credentialsId Credentials ID
+         * @param {string} organizationId 
+         * @param {string} credentialsId 
          * @param {AzureCredentialsRequest} [azureCredentialsRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -27145,8 +27153,8 @@ export const CloudProviderCredentialsApiFactory = function (configuration?: Conf
         /**
          * 
          * @summary Get a set of Azure credentials
-         * @param {string} organizationId Organization ID
-         * @param {string} credentialsId Credentials ID
+         * @param {string} organizationId 
+         * @param {string} credentialsId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -27327,8 +27335,8 @@ export class CloudProviderCredentialsApi extends BaseAPI {
     /**
      * 
      * @summary Delete a set of Azure credentials
-     * @param {string} organizationId Organization ID
-     * @param {string} credentialsId Credentials ID
+     * @param {string} organizationId 
+     * @param {string} credentialsId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudProviderCredentialsApi
@@ -27393,8 +27401,8 @@ export class CloudProviderCredentialsApi extends BaseAPI {
     /**
      * 
      * @summary Edit a set of Azure credentials
-     * @param {string} organizationId Organization ID
-     * @param {string} credentialsId Credentials ID
+     * @param {string} organizationId 
+     * @param {string} credentialsId 
      * @param {AzureCredentialsRequest} [azureCredentialsRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -27462,8 +27470,8 @@ export class CloudProviderCredentialsApi extends BaseAPI {
     /**
      * 
      * @summary Get a set of Azure credentials
-     * @param {string} organizationId Organization ID
-     * @param {string} credentialsId Credentials ID
+     * @param {string} organizationId 
+     * @param {string} credentialsId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudProviderCredentialsApi
@@ -34944,7 +34952,7 @@ export const DatabaseDeploymentHistoryApiAxiosParamCreator = function (configura
         /**
          * By default it returns the 20 last results. The response is paginated.
          * @summary List database deploys
-         * @param {string} databaseId Database ID
+         * @param {string} databaseId 
          * @param {string} [startId] Starting point after which to return results
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -35014,7 +35022,7 @@ export const DatabaseDeploymentHistoryApiFp = function(configuration?: Configura
         /**
          * By default it returns the 20 last results. The response is paginated.
          * @summary List database deploys
-         * @param {string} databaseId Database ID
+         * @param {string} databaseId 
          * @param {string} [startId] Starting point after which to return results
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -35049,7 +35057,7 @@ export const DatabaseDeploymentHistoryApiFactory = function (configuration?: Con
         /**
          * By default it returns the 20 last results. The response is paginated.
          * @summary List database deploys
-         * @param {string} databaseId Database ID
+         * @param {string} databaseId 
          * @param {string} [startId] Starting point after which to return results
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -35083,7 +35091,7 @@ export class DatabaseDeploymentHistoryApi extends BaseAPI {
     /**
      * By default it returns the 20 last results. The response is paginated.
      * @summary List database deploys
-     * @param {string} databaseId Database ID
+     * @param {string} databaseId 
      * @param {string} [startId] Starting point after which to return results
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -36317,7 +36325,7 @@ export const DeploymentQueueActionsApiAxiosParamCreator = function (configuratio
         /**
          * Cancel the a deployment request.
          * @summary Cancel deployment request
-         * @param {string} deploymentRequestId Deployment Request ID
+         * @param {string} deploymentRequestId 
          * @param {object} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -36372,7 +36380,7 @@ export const DeploymentQueueActionsApiFp = function(configuration?: Configuratio
         /**
          * Cancel the a deployment request.
          * @summary Cancel deployment request
-         * @param {string} deploymentRequestId Deployment Request ID
+         * @param {string} deploymentRequestId 
          * @param {object} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -36396,7 +36404,7 @@ export const DeploymentQueueActionsApiFactory = function (configuration?: Config
         /**
          * Cancel the a deployment request.
          * @summary Cancel deployment request
-         * @param {string} deploymentRequestId Deployment Request ID
+         * @param {string} deploymentRequestId 
          * @param {object} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -36417,7 +36425,7 @@ export class DeploymentQueueActionsApi extends BaseAPI {
     /**
      * Cancel the a deployment request.
      * @summary Cancel deployment request
-     * @param {string} deploymentRequestId Deployment Request ID
+     * @param {string} deploymentRequestId 
      * @param {object} [body] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -38462,7 +38470,7 @@ export const EnvironmentDeploymentHistoryApiAxiosParamCreator = function (config
         /**
          * List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
          * @summary List environment deployments
-         * @param {string} environmentId Environment ID
+         * @param {string} environmentId 
          * @param {string} [startId] Starting point after which to return results
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -38532,7 +38540,7 @@ export const EnvironmentDeploymentHistoryApiFp = function(configuration?: Config
         /**
          * List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
          * @summary List environment deployments
-         * @param {string} environmentId Environment ID
+         * @param {string} environmentId 
          * @param {string} [startId] Starting point after which to return results
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -38567,7 +38575,7 @@ export const EnvironmentDeploymentHistoryApiFactory = function (configuration?: 
         /**
          * List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
          * @summary List environment deployments
-         * @param {string} environmentId Environment ID
+         * @param {string} environmentId 
          * @param {string} [startId] Starting point after which to return results
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -38601,7 +38609,7 @@ export class EnvironmentDeploymentHistoryApi extends BaseAPI {
     /**
      * List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
      * @summary List environment deployments
-     * @param {string} environmentId Environment ID
+     * @param {string} environmentId 
      * @param {string} [startId] Starting point after which to return results
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -43175,7 +43183,7 @@ export const HelmDeploymentHistoryApiAxiosParamCreator = function (configuration
         /**
          * Returns the 20 last helm deployments
          * @summary List helm deployments
-         * @param {string} helmId Helm ID
+         * @param {string} helmId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -43239,7 +43247,7 @@ export const HelmDeploymentHistoryApiFp = function(configuration?: Configuration
         /**
          * Returns the 20 last helm deployments
          * @summary List helm deployments
-         * @param {string} helmId Helm ID
+         * @param {string} helmId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -43272,7 +43280,7 @@ export const HelmDeploymentHistoryApiFactory = function (configuration?: Configu
         /**
          * Returns the 20 last helm deployments
          * @summary List helm deployments
-         * @param {string} helmId Helm ID
+         * @param {string} helmId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -43304,7 +43312,7 @@ export class HelmDeploymentHistoryApi extends BaseAPI {
     /**
      * Returns the 20 last helm deployments
      * @summary List helm deployments
-     * @param {string} helmId Helm ID
+     * @param {string} helmId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof HelmDeploymentHistoryApi
@@ -45110,10 +45118,11 @@ export const HelmsApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary List helms
          * @param {string} environmentId Environment ID
+         * @param {boolean} [toUpdate] return (or not) results that must be updated
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listHelms: async (environmentId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listHelms: async (environmentId: string, toUpdate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'environmentId' is not null or undefined
             assertParamExists('listHelms', 'environmentId', environmentId)
             const localVarPath = `/environment/{environmentId}/helm`
@@ -45135,6 +45144,10 @@ export const HelmsApiAxiosParamCreator = function (configuration?: Configuration
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (toUpdate !== undefined) {
+                localVarQueryParameter['toUpdate'] = toUpdate;
+            }
 
 
     
@@ -45228,11 +45241,12 @@ export const HelmsApiFp = function(configuration?: Configuration) {
          * 
          * @summary List helms
          * @param {string} environmentId Environment ID
+         * @param {boolean} [toUpdate] return (or not) results that must be updated
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listHelms(environmentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listHelms(environmentId, options);
+        async listHelms(environmentId: string, toUpdate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listHelms(environmentId, toUpdate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['HelmsApi.listHelms']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -45303,11 +45317,12 @@ export const HelmsApiFactory = function (configuration?: Configuration, basePath
          * 
          * @summary List helms
          * @param {string} environmentId Environment ID
+         * @param {boolean} [toUpdate] return (or not) results that must be updated
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listHelms(environmentId: string, options?: RawAxiosRequestConfig): AxiosPromise<HelmResponseList> {
-            return localVarFp.listHelms(environmentId, options).then((request) => request(axios, basePath));
+        listHelms(environmentId: string, toUpdate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<HelmResponseList> {
+            return localVarFp.listHelms(environmentId, toUpdate, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -45385,12 +45400,13 @@ export class HelmsApi extends BaseAPI {
      * 
      * @summary List helms
      * @param {string} environmentId Environment ID
+     * @param {boolean} [toUpdate] return (or not) results that must be updated
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof HelmsApi
      */
-    public listHelms(environmentId: string, options?: RawAxiosRequestConfig) {
-        return HelmsApiFp(this.configuration).listHelms(environmentId, options).then((request) => request(this.axios, this.basePath));
+    public listHelms(environmentId: string, toUpdate?: boolean, options?: RawAxiosRequestConfig) {
+        return HelmsApiFp(this.configuration).listHelms(environmentId, toUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -46010,7 +46026,7 @@ export const JobDeploymentHistoryApiAxiosParamCreator = function (configuration?
         /**
          * Returns the 20 last job deployments
          * @summary List job deployments
-         * @param {string} jobId Job ID
+         * @param {string} jobId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -46074,7 +46090,7 @@ export const JobDeploymentHistoryApiFp = function(configuration?: Configuration)
         /**
          * Returns the 20 last job deployments
          * @summary List job deployments
-         * @param {string} jobId Job ID
+         * @param {string} jobId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -46107,7 +46123,7 @@ export const JobDeploymentHistoryApiFactory = function (configuration?: Configur
         /**
          * Returns the 20 last job deployments
          * @summary List job deployments
-         * @param {string} jobId Job ID
+         * @param {string} jobId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -46139,7 +46155,7 @@ export class JobDeploymentHistoryApi extends BaseAPI {
     /**
      * Returns the 20 last job deployments
      * @summary List job deployments
-     * @param {string} jobId Job ID
+     * @param {string} jobId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof JobDeploymentHistoryApi
@@ -51680,8 +51696,8 @@ export const OrganizationEventApiAxiosParamCreator = function (configuration?: C
          * Get available event targets to filter events
          * @summary Get available event targets to filter events
          * @param {string} organizationId Organization ID
-         * @param {string | null} [fromTimestamp] Display targets available since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
-         * @param {string | null} [toTimestamp] Display targets triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string} [fromTimestamp] Display targets available since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string} [toTimestamp] Display targets triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
          * @param {OrganizationEventType} [eventType] 
          * @param {OrganizationEventTargetType} [targetType] 
          * @param {string} [triggeredBy] Information about the owner of the event (user name / apitoken / automatic action)
@@ -51691,7 +51707,7 @@ export const OrganizationEventApiAxiosParamCreator = function (configuration?: C
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationEventTargets: async (organizationId: string, fromTimestamp?: string | null, toTimestamp?: string | null, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getOrganizationEventTargets: async (organizationId: string, fromTimestamp?: string, toTimestamp?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('getOrganizationEventTargets', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/targets`
@@ -51761,21 +51777,21 @@ export const OrganizationEventApiAxiosParamCreator = function (configuration?: C
          * Get all events inside the organization
          * @summary Get all events inside the organization
          * @param {string} organizationId Organization ID
-         * @param {number | null} [pageSize] The number of events to display in the current page
-         * @param {string | null} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
-         * @param {string | null} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {number} [pageSize] The number of events to display in the current page
+         * @param {string} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
          * @param {string} [continueToken] Token used to fetch the next page results The format is a timestamp with nano precision 
          * @param {string} [stepBackToken] Token used to fetch the previous page results The format is a timestamp with nano precision 
          * @param {OrganizationEventType} [eventType] 
          * @param {OrganizationEventTargetType} [targetType] 
-         * @param {string | null} [targetId] The target resource id to search.   Must be specified with the corresponding &#x60;target_type&#x60; 
+         * @param {string} [targetId] The target resource id to search.   Must be specified with the corresponding &#x60;target_type&#x60; 
          * @param {OrganizationEventSubTargetType} [subTargetType] 
          * @param {string} [triggeredBy] Information about the owner of the event (user name / apitoken / automatic action)
          * @param {OrganizationEventOrigin} [origin] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationEvents: async (organizationId: string, pageSize?: number | null, fromTimestamp?: string | null, toTimestamp?: string | null, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string | null, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getOrganizationEvents: async (organizationId: string, pageSize?: number, fromTimestamp?: string, toTimestamp?: string, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('getOrganizationEvents', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/events`
@@ -51867,8 +51883,8 @@ export const OrganizationEventApiFp = function(configuration?: Configuration) {
          * Get available event targets to filter events
          * @summary Get available event targets to filter events
          * @param {string} organizationId Organization ID
-         * @param {string | null} [fromTimestamp] Display targets available since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
-         * @param {string | null} [toTimestamp] Display targets triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string} [fromTimestamp] Display targets available since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string} [toTimestamp] Display targets triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
          * @param {OrganizationEventType} [eventType] 
          * @param {OrganizationEventTargetType} [targetType] 
          * @param {string} [triggeredBy] Information about the owner of the event (user name / apitoken / automatic action)
@@ -51878,7 +51894,7 @@ export const OrganizationEventApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganizationEventTargets(organizationId: string, fromTimestamp?: string | null, toTimestamp?: string | null, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationEventTargetResponseList>> {
+        async getOrganizationEventTargets(organizationId: string, fromTimestamp?: string, toTimestamp?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationEventTargetResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationEventTargets(organizationId, fromTimestamp, toTimestamp, eventType, targetType, triggeredBy, origin, projectId, environmentId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OrganizationEventApi.getOrganizationEventTargets']?.[localVarOperationServerIndex]?.url;
@@ -51888,21 +51904,21 @@ export const OrganizationEventApiFp = function(configuration?: Configuration) {
          * Get all events inside the organization
          * @summary Get all events inside the organization
          * @param {string} organizationId Organization ID
-         * @param {number | null} [pageSize] The number of events to display in the current page
-         * @param {string | null} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
-         * @param {string | null} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {number} [pageSize] The number of events to display in the current page
+         * @param {string} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
          * @param {string} [continueToken] Token used to fetch the next page results The format is a timestamp with nano precision 
          * @param {string} [stepBackToken] Token used to fetch the previous page results The format is a timestamp with nano precision 
          * @param {OrganizationEventType} [eventType] 
          * @param {OrganizationEventTargetType} [targetType] 
-         * @param {string | null} [targetId] The target resource id to search.   Must be specified with the corresponding &#x60;target_type&#x60; 
+         * @param {string} [targetId] The target resource id to search.   Must be specified with the corresponding &#x60;target_type&#x60; 
          * @param {OrganizationEventSubTargetType} [subTargetType] 
          * @param {string} [triggeredBy] Information about the owner of the event (user name / apitoken / automatic action)
          * @param {OrganizationEventOrigin} [origin] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganizationEvents(organizationId: string, pageSize?: number | null, fromTimestamp?: string | null, toTimestamp?: string | null, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string | null, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationEventResponseList>> {
+        async getOrganizationEvents(organizationId: string, pageSize?: number, fromTimestamp?: string, toTimestamp?: string, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationEventResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationEvents(organizationId, pageSize, fromTimestamp, toTimestamp, continueToken, stepBackToken, eventType, targetType, targetId, subTargetType, triggeredBy, origin, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OrganizationEventApi.getOrganizationEvents']?.[localVarOperationServerIndex]?.url;
@@ -51922,8 +51938,8 @@ export const OrganizationEventApiFactory = function (configuration?: Configurati
          * Get available event targets to filter events
          * @summary Get available event targets to filter events
          * @param {string} organizationId Organization ID
-         * @param {string | null} [fromTimestamp] Display targets available since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
-         * @param {string | null} [toTimestamp] Display targets triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string} [fromTimestamp] Display targets available since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string} [toTimestamp] Display targets triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
          * @param {OrganizationEventType} [eventType] 
          * @param {OrganizationEventTargetType} [targetType] 
          * @param {string} [triggeredBy] Information about the owner of the event (user name / apitoken / automatic action)
@@ -51933,28 +51949,28 @@ export const OrganizationEventApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationEventTargets(organizationId: string, fromTimestamp?: string | null, toTimestamp?: string | null, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options?: RawAxiosRequestConfig): AxiosPromise<OrganizationEventTargetResponseList> {
+        getOrganizationEventTargets(organizationId: string, fromTimestamp?: string, toTimestamp?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options?: RawAxiosRequestConfig): AxiosPromise<OrganizationEventTargetResponseList> {
             return localVarFp.getOrganizationEventTargets(organizationId, fromTimestamp, toTimestamp, eventType, targetType, triggeredBy, origin, projectId, environmentId, options).then((request) => request(axios, basePath));
         },
         /**
          * Get all events inside the organization
          * @summary Get all events inside the organization
          * @param {string} organizationId Organization ID
-         * @param {number | null} [pageSize] The number of events to display in the current page
-         * @param {string | null} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
-         * @param {string | null} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {number} [pageSize] The number of events to display in the current page
+         * @param {string} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
+         * @param {string} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
          * @param {string} [continueToken] Token used to fetch the next page results The format is a timestamp with nano precision 
          * @param {string} [stepBackToken] Token used to fetch the previous page results The format is a timestamp with nano precision 
          * @param {OrganizationEventType} [eventType] 
          * @param {OrganizationEventTargetType} [targetType] 
-         * @param {string | null} [targetId] The target resource id to search.   Must be specified with the corresponding &#x60;target_type&#x60; 
+         * @param {string} [targetId] The target resource id to search.   Must be specified with the corresponding &#x60;target_type&#x60; 
          * @param {OrganizationEventSubTargetType} [subTargetType] 
          * @param {string} [triggeredBy] Information about the owner of the event (user name / apitoken / automatic action)
          * @param {OrganizationEventOrigin} [origin] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationEvents(organizationId: string, pageSize?: number | null, fromTimestamp?: string | null, toTimestamp?: string | null, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string | null, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: RawAxiosRequestConfig): AxiosPromise<OrganizationEventResponseList> {
+        getOrganizationEvents(organizationId: string, pageSize?: number, fromTimestamp?: string, toTimestamp?: string, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: RawAxiosRequestConfig): AxiosPromise<OrganizationEventResponseList> {
             return localVarFp.getOrganizationEvents(organizationId, pageSize, fromTimestamp, toTimestamp, continueToken, stepBackToken, eventType, targetType, targetId, subTargetType, triggeredBy, origin, options).then((request) => request(axios, basePath));
         },
     };
@@ -51971,8 +51987,8 @@ export class OrganizationEventApi extends BaseAPI {
      * Get available event targets to filter events
      * @summary Get available event targets to filter events
      * @param {string} organizationId Organization ID
-     * @param {string | null} [fromTimestamp] Display targets available since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
-     * @param {string | null} [toTimestamp] Display targets triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
+     * @param {string} [fromTimestamp] Display targets available since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
+     * @param {string} [toTimestamp] Display targets triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
      * @param {OrganizationEventType} [eventType] 
      * @param {OrganizationEventTargetType} [targetType] 
      * @param {string} [triggeredBy] Information about the owner of the event (user name / apitoken / automatic action)
@@ -51983,7 +51999,7 @@ export class OrganizationEventApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrganizationEventApi
      */
-    public getOrganizationEventTargets(organizationId: string, fromTimestamp?: string | null, toTimestamp?: string | null, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options?: RawAxiosRequestConfig) {
+    public getOrganizationEventTargets(organizationId: string, fromTimestamp?: string, toTimestamp?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options?: RawAxiosRequestConfig) {
         return OrganizationEventApiFp(this.configuration).getOrganizationEventTargets(organizationId, fromTimestamp, toTimestamp, eventType, targetType, triggeredBy, origin, projectId, environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -51991,14 +52007,14 @@ export class OrganizationEventApi extends BaseAPI {
      * Get all events inside the organization
      * @summary Get all events inside the organization
      * @param {string} organizationId Organization ID
-     * @param {number | null} [pageSize] The number of events to display in the current page
-     * @param {string | null} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
-     * @param {string | null} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
+     * @param {number} [pageSize] The number of events to display in the current page
+     * @param {string} [fromTimestamp] Display events triggered since this timestamp.   A range of date can be specified by using &#x60;from-timestamp&#x60; with &#x60;to-timestamp&#x60; The format is a timestamp with nano precision 
+     * @param {string} [toTimestamp] Display events triggered before this timestamp.   A range of date can be specified by using &#x60;to-timestamp&#x60; with &#x60;from-timestamp&#x60; The format is a timestamp with nano precision 
      * @param {string} [continueToken] Token used to fetch the next page results The format is a timestamp with nano precision 
      * @param {string} [stepBackToken] Token used to fetch the previous page results The format is a timestamp with nano precision 
      * @param {OrganizationEventType} [eventType] 
      * @param {OrganizationEventTargetType} [targetType] 
-     * @param {string | null} [targetId] The target resource id to search.   Must be specified with the corresponding &#x60;target_type&#x60; 
+     * @param {string} [targetId] The target resource id to search.   Must be specified with the corresponding &#x60;target_type&#x60; 
      * @param {OrganizationEventSubTargetType} [subTargetType] 
      * @param {string} [triggeredBy] Information about the owner of the event (user name / apitoken / automatic action)
      * @param {OrganizationEventOrigin} [origin] 
@@ -52006,7 +52022,7 @@ export class OrganizationEventApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrganizationEventApi
      */
-    public getOrganizationEvents(organizationId: string, pageSize?: number | null, fromTimestamp?: string | null, toTimestamp?: string | null, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string | null, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: RawAxiosRequestConfig) {
+    public getOrganizationEvents(organizationId: string, pageSize?: number, fromTimestamp?: string, toTimestamp?: string, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: RawAxiosRequestConfig) {
         return OrganizationEventApiFp(this.configuration).getOrganizationEvents(organizationId, pageSize, fromTimestamp, toTimestamp, continueToken, stepBackToken, eventType, targetType, targetId, subTargetType, triggeredBy, origin, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -53166,13 +53182,13 @@ export const OrganizationMainCallsApiAxiosParamCreator = function (configuration
          * 
          * @summary List Services By OrganizationId
          * @param {string} organizationId 
-         * @param {string | null} [projectId] 
-         * @param {string | null} [environmentId] 
+         * @param {string} [projectId] 
+         * @param {string} [environmentId] 
          * @param {string} [clusterId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listServicesByOrganizationId: async (organizationId: string, projectId?: string | null, environmentId?: string | null, clusterId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listServicesByOrganizationId: async (organizationId: string, projectId?: string, environmentId?: string, clusterId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('listServicesByOrganizationId', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/services`
@@ -53422,13 +53438,13 @@ export const OrganizationMainCallsApiFp = function(configuration?: Configuration
          * 
          * @summary List Services By OrganizationId
          * @param {string} organizationId 
-         * @param {string | null} [projectId] 
-         * @param {string | null} [environmentId] 
+         * @param {string} [projectId] 
+         * @param {string} [environmentId] 
          * @param {string} [clusterId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listServicesByOrganizationId(organizationId: string, projectId?: string | null, environmentId?: string | null, clusterId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListServicesByOrganizationId200Response>> {
+        async listServicesByOrganizationId(organizationId: string, projectId?: string, environmentId?: string, clusterId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListServicesByOrganizationId200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listServicesByOrganizationId(organizationId, projectId, environmentId, clusterId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OrganizationMainCallsApi.listServicesByOrganizationId']?.[localVarOperationServerIndex]?.url;
@@ -53596,13 +53612,13 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
          * 
          * @summary List Services By OrganizationId
          * @param {string} organizationId 
-         * @param {string | null} [projectId] 
-         * @param {string | null} [environmentId] 
+         * @param {string} [projectId] 
+         * @param {string} [environmentId] 
          * @param {string} [clusterId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listServicesByOrganizationId(organizationId: string, projectId?: string | null, environmentId?: string | null, clusterId?: string, options?: RawAxiosRequestConfig): AxiosPromise<ListServicesByOrganizationId200Response> {
+        listServicesByOrganizationId(organizationId: string, projectId?: string, environmentId?: string, clusterId?: string, options?: RawAxiosRequestConfig): AxiosPromise<ListServicesByOrganizationId200Response> {
             return localVarFp.listServicesByOrganizationId(organizationId, projectId, environmentId, clusterId, options).then((request) => request(axios, basePath));
         },
     };
@@ -53795,14 +53811,14 @@ export class OrganizationMainCallsApi extends BaseAPI {
      * 
      * @summary List Services By OrganizationId
      * @param {string} organizationId 
-     * @param {string | null} [projectId] 
-     * @param {string | null} [environmentId] 
+     * @param {string} [projectId] 
+     * @param {string} [environmentId] 
      * @param {string} [clusterId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationMainCallsApi
      */
-    public listServicesByOrganizationId(organizationId: string, projectId?: string | null, environmentId?: string | null, clusterId?: string, options?: RawAxiosRequestConfig) {
+    public listServicesByOrganizationId(organizationId: string, projectId?: string, environmentId?: string, clusterId?: string, options?: RawAxiosRequestConfig) {
         return OrganizationMainCallsApiFp(this.configuration).listServicesByOrganizationId(organizationId, projectId, environmentId, clusterId, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -56778,7 +56794,7 @@ export const TerraformConfigurationApiAxiosParamCreator = function (configuratio
         /**
          * 
          * @summary Edit Advanced settings
-         * @param {string} terraformId Terraform ID
+         * @param {string} terraformId 
          * @param {TerraformAdvancedSettings} [terraformAdvancedSettings] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -56823,7 +56839,7 @@ export const TerraformConfigurationApiAxiosParamCreator = function (configuratio
         /**
          * 
          * @summary Get Advanced settings
-         * @param {string} terraformId Terraform ID
+         * @param {string} terraformId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -56874,7 +56890,7 @@ export const TerraformConfigurationApiFp = function(configuration?: Configuratio
         /**
          * 
          * @summary Edit Advanced settings
-         * @param {string} terraformId Terraform ID
+         * @param {string} terraformId 
          * @param {TerraformAdvancedSettings} [terraformAdvancedSettings] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -56888,7 +56904,7 @@ export const TerraformConfigurationApiFp = function(configuration?: Configuratio
         /**
          * 
          * @summary Get Advanced settings
-         * @param {string} terraformId Terraform ID
+         * @param {string} terraformId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -56911,7 +56927,7 @@ export const TerraformConfigurationApiFactory = function (configuration?: Config
         /**
          * 
          * @summary Edit Advanced settings
-         * @param {string} terraformId Terraform ID
+         * @param {string} terraformId 
          * @param {TerraformAdvancedSettings} [terraformAdvancedSettings] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -56922,7 +56938,7 @@ export const TerraformConfigurationApiFactory = function (configuration?: Config
         /**
          * 
          * @summary Get Advanced settings
-         * @param {string} terraformId Terraform ID
+         * @param {string} terraformId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -56942,7 +56958,7 @@ export class TerraformConfigurationApi extends BaseAPI {
     /**
      * 
      * @summary Edit Advanced settings
-     * @param {string} terraformId Terraform ID
+     * @param {string} terraformId 
      * @param {TerraformAdvancedSettings} [terraformAdvancedSettings] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -56955,7 +56971,7 @@ export class TerraformConfigurationApi extends BaseAPI {
     /**
      * 
      * @summary Get Advanced settings
-     * @param {string} terraformId Terraform ID
+     * @param {string} terraformId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TerraformConfigurationApi
@@ -56976,7 +56992,7 @@ export const TerraformDeploymentHistoryApiAxiosParamCreator = function (configur
         /**
          * Returns the 20 last terraform deployments
          * @summary List terraform deployments
-         * @param {string} terraformId Terraform ID
+         * @param {string} terraformId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -57027,7 +57043,7 @@ export const TerraformDeploymentHistoryApiFp = function(configuration?: Configur
         /**
          * Returns the 20 last terraform deployments
          * @summary List terraform deployments
-         * @param {string} terraformId Terraform ID
+         * @param {string} terraformId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -57050,7 +57066,7 @@ export const TerraformDeploymentHistoryApiFactory = function (configuration?: Co
         /**
          * Returns the 20 last terraform deployments
          * @summary List terraform deployments
-         * @param {string} terraformId Terraform ID
+         * @param {string} terraformId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -57070,7 +57086,7 @@ export class TerraformDeploymentHistoryApi extends BaseAPI {
     /**
      * Returns the 20 last terraform deployments
      * @summary List terraform deployments
-     * @param {string} terraformId Terraform ID
+     * @param {string} terraformId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TerraformDeploymentHistoryApi
@@ -57091,7 +57107,7 @@ export const TerraformDeploymentRestrictionApiAxiosParamCreator = function (conf
         /**
          * Create a terraform deployment restriction
          * @summary Create a terraform deployment restriction
-         * @param {string} terraformId Terraform ID
+         * @param {string} terraformId 
          * @param {TerraformDeploymentRestrictionRequest} [terraformDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -57136,8 +57152,8 @@ export const TerraformDeploymentRestrictionApiAxiosParamCreator = function (conf
         /**
          * Delete a terraform deployment restriction
          * @summary Delete a terraform deployment restriction
-         * @param {string} terraformId Terraform ID
-         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {string} terraformId 
+         * @param {string} deploymentRestrictionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -57181,8 +57197,8 @@ export const TerraformDeploymentRestrictionApiAxiosParamCreator = function (conf
         /**
          * Edit a terraform deployment restriction
          * @summary Edit a terraform deployment restriction
-         * @param {string} terraformId Terraform ID
-         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {string} terraformId 
+         * @param {string} deploymentRestrictionId 
          * @param {TerraformDeploymentRestrictionRequest} [terraformDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -57230,7 +57246,7 @@ export const TerraformDeploymentRestrictionApiAxiosParamCreator = function (conf
         /**
          * Get terraform deployment restrictions
          * @summary Get terraform deployment restrictions
-         * @param {string} terraformId Terraform ID
+         * @param {string} terraformId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -57281,7 +57297,7 @@ export const TerraformDeploymentRestrictionApiFp = function(configuration?: Conf
         /**
          * Create a terraform deployment restriction
          * @summary Create a terraform deployment restriction
-         * @param {string} terraformId Terraform ID
+         * @param {string} terraformId 
          * @param {TerraformDeploymentRestrictionRequest} [terraformDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -57295,8 +57311,8 @@ export const TerraformDeploymentRestrictionApiFp = function(configuration?: Conf
         /**
          * Delete a terraform deployment restriction
          * @summary Delete a terraform deployment restriction
-         * @param {string} terraformId Terraform ID
-         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {string} terraformId 
+         * @param {string} deploymentRestrictionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -57309,8 +57325,8 @@ export const TerraformDeploymentRestrictionApiFp = function(configuration?: Conf
         /**
          * Edit a terraform deployment restriction
          * @summary Edit a terraform deployment restriction
-         * @param {string} terraformId Terraform ID
-         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {string} terraformId 
+         * @param {string} deploymentRestrictionId 
          * @param {TerraformDeploymentRestrictionRequest} [terraformDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -57324,7 +57340,7 @@ export const TerraformDeploymentRestrictionApiFp = function(configuration?: Conf
         /**
          * Get terraform deployment restrictions
          * @summary Get terraform deployment restrictions
-         * @param {string} terraformId Terraform ID
+         * @param {string} terraformId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -57347,7 +57363,7 @@ export const TerraformDeploymentRestrictionApiFactory = function (configuration?
         /**
          * Create a terraform deployment restriction
          * @summary Create a terraform deployment restriction
-         * @param {string} terraformId Terraform ID
+         * @param {string} terraformId 
          * @param {TerraformDeploymentRestrictionRequest} [terraformDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -57358,8 +57374,8 @@ export const TerraformDeploymentRestrictionApiFactory = function (configuration?
         /**
          * Delete a terraform deployment restriction
          * @summary Delete a terraform deployment restriction
-         * @param {string} terraformId Terraform ID
-         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {string} terraformId 
+         * @param {string} deploymentRestrictionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -57369,8 +57385,8 @@ export const TerraformDeploymentRestrictionApiFactory = function (configuration?
         /**
          * Edit a terraform deployment restriction
          * @summary Edit a terraform deployment restriction
-         * @param {string} terraformId Terraform ID
-         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {string} terraformId 
+         * @param {string} deploymentRestrictionId 
          * @param {TerraformDeploymentRestrictionRequest} [terraformDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -57381,7 +57397,7 @@ export const TerraformDeploymentRestrictionApiFactory = function (configuration?
         /**
          * Get terraform deployment restrictions
          * @summary Get terraform deployment restrictions
-         * @param {string} terraformId Terraform ID
+         * @param {string} terraformId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -57401,7 +57417,7 @@ export class TerraformDeploymentRestrictionApi extends BaseAPI {
     /**
      * Create a terraform deployment restriction
      * @summary Create a terraform deployment restriction
-     * @param {string} terraformId Terraform ID
+     * @param {string} terraformId 
      * @param {TerraformDeploymentRestrictionRequest} [terraformDeploymentRestrictionRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -57414,8 +57430,8 @@ export class TerraformDeploymentRestrictionApi extends BaseAPI {
     /**
      * Delete a terraform deployment restriction
      * @summary Delete a terraform deployment restriction
-     * @param {string} terraformId Terraform ID
-     * @param {string} deploymentRestrictionId Deployment Restriction ID
+     * @param {string} terraformId 
+     * @param {string} deploymentRestrictionId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TerraformDeploymentRestrictionApi
@@ -57427,8 +57443,8 @@ export class TerraformDeploymentRestrictionApi extends BaseAPI {
     /**
      * Edit a terraform deployment restriction
      * @summary Edit a terraform deployment restriction
-     * @param {string} terraformId Terraform ID
-     * @param {string} deploymentRestrictionId Deployment Restriction ID
+     * @param {string} terraformId 
+     * @param {string} deploymentRestrictionId 
      * @param {TerraformDeploymentRestrictionRequest} [terraformDeploymentRestrictionRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -57441,7 +57457,7 @@ export class TerraformDeploymentRestrictionApi extends BaseAPI {
     /**
      * Get terraform deployment restrictions
      * @summary Get terraform deployment restrictions
-     * @param {string} terraformId Terraform ID
+     * @param {string} terraformId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TerraformDeploymentRestrictionApi
@@ -57863,7 +57879,7 @@ export const TerraformsApiAxiosParamCreator = function (configuration?: Configur
         /**
          * 
          * @summary List terraforms
-         * @param {string} environmentId Environment ID
+         * @param {string} environmentId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -57954,7 +57970,7 @@ export const TerraformsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary List terraforms
-         * @param {string} environmentId Environment ID
+         * @param {string} environmentId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -58008,7 +58024,7 @@ export const TerraformsApiFactory = function (configuration?: Configuration, bas
         /**
          * 
          * @summary List terraforms
-         * @param {string} environmentId Environment ID
+         * @param {string} environmentId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -58065,7 +58081,7 @@ export class TerraformsApi extends BaseAPI {
     /**
      * 
      * @summary List terraforms
-     * @param {string} environmentId Environment ID
+     * @param {string} environmentId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TerraformsApi
@@ -58546,11 +58562,11 @@ export const VariableMainCallsApiAxiosParamCreator = function (configuration?: C
          * @summary List variables
          * @param {string} parentId it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
          * @param {APIVariableScopeEnum} scope the type of the parent_id (application, project, environment etc..).
-         * @param {boolean | null} [isSecret] 
+         * @param {boolean} [isSecret] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listVariables: async (parentId: string, scope: APIVariableScopeEnum, isSecret?: boolean | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listVariables: async (parentId: string, scope: APIVariableScopeEnum, isSecret?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'parentId' is not null or undefined
             assertParamExists('listVariables', 'parentId', parentId)
             // verify required parameter 'scope' is not null or undefined
@@ -58695,11 +58711,11 @@ export const VariableMainCallsApiFp = function(configuration?: Configuration) {
          * @summary List variables
          * @param {string} parentId it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
          * @param {APIVariableScopeEnum} scope the type of the parent_id (application, project, environment etc..).
-         * @param {boolean | null} [isSecret] 
+         * @param {boolean} [isSecret] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listVariables(parentId: string, scope: APIVariableScopeEnum, isSecret?: boolean | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VariableResponseList>> {
+        async listVariables(parentId: string, scope: APIVariableScopeEnum, isSecret?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VariableResponseList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listVariables(parentId, scope, isSecret, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['VariableMainCallsApi.listVariables']?.[localVarOperationServerIndex]?.url;
@@ -58785,11 +58801,11 @@ export const VariableMainCallsApiFactory = function (configuration?: Configurati
          * @summary List variables
          * @param {string} parentId it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
          * @param {APIVariableScopeEnum} scope the type of the parent_id (application, project, environment etc..).
-         * @param {boolean | null} [isSecret] 
+         * @param {boolean} [isSecret] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listVariables(parentId: string, scope: APIVariableScopeEnum, isSecret?: boolean | null, options?: RawAxiosRequestConfig): AxiosPromise<VariableResponseList> {
+        listVariables(parentId: string, scope: APIVariableScopeEnum, isSecret?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<VariableResponseList> {
             return localVarFp.listVariables(parentId, scope, isSecret, options).then((request) => request(axios, basePath));
         },
     };
@@ -58884,12 +58900,12 @@ export class VariableMainCallsApi extends BaseAPI {
      * @summary List variables
      * @param {string} parentId it filters the list by returning only the variables accessible by the selected parent_id. This field shall contain the id of a project, environment or service depending on the selected scope. Example, if scope &#x3D; APPLICATION and parent_id&#x3D;&lt;application_id&gt;, the result will contain any variable accessible by the application. The result will contain also any variable declared at an higher scope.
      * @param {APIVariableScopeEnum} scope the type of the parent_id (application, project, environment etc..).
-     * @param {boolean | null} [isSecret] 
+     * @param {boolean} [isSecret] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof VariableMainCallsApi
      */
-    public listVariables(parentId: string, scope: APIVariableScopeEnum, isSecret?: boolean | null, options?: RawAxiosRequestConfig) {
+    public listVariables(parentId: string, scope: APIVariableScopeEnum, isSecret?: boolean, options?: RawAxiosRequestConfig) {
         return VariableMainCallsApiFp(this.configuration).listVariables(parentId, scope, isSecret, options).then((request) => request(this.axios, this.basePath));
     }
 }
