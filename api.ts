@@ -17078,6 +17078,25 @@ export interface TerraformAdvancedSettings {
 /**
  * 
  * @export
+ * @interface TerraformDeployRequest
+ */
+export interface TerraformDeployRequest {
+    /**
+     * Commit to deploy for chart source. 
+     * @type {string}
+     * @memberof TerraformDeployRequest
+     */
+    'git_commit_id'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TerraformDeployRequest
+     */
+    'dry_run'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface TerraformDeploymentRestrictionRequest
  */
 export interface TerraformDeploymentRestrictionRequest {
@@ -56786,6 +56805,128 @@ export const GetIngressDeploymentStatusServiceTypeEnum = {
     HELM: 'HELM'
 } as const;
 export type GetIngressDeploymentStatusServiceTypeEnum = typeof GetIngressDeploymentStatusServiceTypeEnum[keyof typeof GetIngressDeploymentStatusServiceTypeEnum];
+
+
+/**
+ * TerraformActionsApi - axios parameter creator
+ * @export
+ */
+export const TerraformActionsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * You must provide a git commit id.
+         * @summary Deploy terraform
+         * @param {string} terraformId Terraform ID
+         * @param {TerraformDeployRequest} [terraformDeployRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deployTerraform: async (terraformId: string, terraformDeployRequest?: TerraformDeployRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'terraformId' is not null or undefined
+            assertParamExists('deployTerraform', 'terraformId', terraformId)
+            const localVarPath = `/terraform/{terraformId}/deploy`
+                .replace(`{${"terraformId"}}`, encodeURIComponent(String(terraformId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(terraformDeployRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TerraformActionsApi - functional programming interface
+ * @export
+ */
+export const TerraformActionsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TerraformActionsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * You must provide a git commit id.
+         * @summary Deploy terraform
+         * @param {string} terraformId Terraform ID
+         * @param {TerraformDeployRequest} [terraformDeployRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deployTerraform(terraformId: string, terraformDeployRequest?: TerraformDeployRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deployTerraform(terraformId, terraformDeployRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TerraformActionsApi.deployTerraform']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * TerraformActionsApi - factory interface
+ * @export
+ */
+export const TerraformActionsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TerraformActionsApiFp(configuration)
+    return {
+        /**
+         * You must provide a git commit id.
+         * @summary Deploy terraform
+         * @param {string} terraformId Terraform ID
+         * @param {TerraformDeployRequest} [terraformDeployRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deployTerraform(terraformId: string, terraformDeployRequest?: TerraformDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<Status> {
+            return localVarFp.deployTerraform(terraformId, terraformDeployRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * TerraformActionsApi - object-oriented interface
+ * @export
+ * @class TerraformActionsApi
+ * @extends {BaseAPI}
+ */
+export class TerraformActionsApi extends BaseAPI {
+    /**
+     * You must provide a git commit id.
+     * @summary Deploy terraform
+     * @param {string} terraformId Terraform ID
+     * @param {TerraformDeployRequest} [terraformDeployRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TerraformActionsApi
+     */
+    public deployTerraform(terraformId: string, terraformDeployRequest?: TerraformDeployRequest, options?: RawAxiosRequestConfig) {
+        return TerraformActionsApiFp(this.configuration).deployTerraform(terraformId, terraformDeployRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 
 /**
