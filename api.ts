@@ -17224,7 +17224,7 @@ export interface TerraformJobResourcesResponse {
      * @type {number}
      * @memberof TerraformJobResourcesResponse
      */
-    'storage_gb': number;
+    'storage_gib': number;
 }
 /**
  * 
@@ -17348,7 +17348,7 @@ export interface TerraformRequestJobResources {
      * @type {number}
      * @memberof TerraformRequestJobResources
      */
-    'storage_gb': number;
+    'storage_gib': number;
 }
 /**
  * @type TerraformRequestTerraformFilesSource
