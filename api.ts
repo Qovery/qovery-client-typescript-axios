@@ -57978,7 +57978,7 @@ export const TerraformsApiAxiosParamCreator = function (configuration?: Configur
          * @throws {RequiredError}
          */
         getDefaultTerraformAdvancedSettings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/defaultTerraformAdvancedSettings:`;
+            const localVarPath = `/defaultTerraformAdvancedSettings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
