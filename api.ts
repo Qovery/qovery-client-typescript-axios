@@ -8987,7 +8987,8 @@ export const GitTokenAssociatedServiceType = {
     APPLICATION: 'APPLICATION',
     CRON: 'CRON',
     LIFECYCLE: 'LIFECYCLE',
-    HELM: 'HELM'
+    HELM: 'HELM',
+    TERRAFORM: 'TERRAFORM'
 } as const;
 
 export type GitTokenAssociatedServiceType = typeof GitTokenAssociatedServiceType[keyof typeof GitTokenAssociatedServiceType];
@@ -12381,7 +12382,8 @@ export const LinkedServiceTypeEnum = {
     CONTAINER: 'CONTAINER',
     DATABASE: 'DATABASE',
     JOB: 'JOB',
-    HELM: 'HELM'
+    HELM: 'HELM',
+    TERRAFORM: 'TERRAFORM'
 } as const;
 
 export type LinkedServiceTypeEnum = typeof LinkedServiceTypeEnum[keyof typeof LinkedServiceTypeEnum];
@@ -16519,7 +16521,8 @@ export const ServiceTypeForVariableEnum = {
     APPLICATION: 'APPLICATION',
     CONTAINER: 'CONTAINER',
     JOB: 'JOB',
-    HELM: 'HELM'
+    HELM: 'HELM',
+    TERRAFORM: 'TERRAFORM'
 } as const;
 
 export type ServiceTypeForVariableEnum = typeof ServiceTypeForVariableEnum[keyof typeof ServiceTypeForVariableEnum];
