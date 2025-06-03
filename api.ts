@@ -5362,10 +5362,10 @@ export interface CronJobResponse {
     'service_type': ServiceTypeEnum;
     /**
      * 
-     * @type {string}
+     * @type {JobTypeEnum}
      * @memberof CronJobResponse
      */
-    'job_type': CronJobResponseJobTypeEnum;
+    'job_type': JobTypeEnum;
     /**
      * 
      * @type {CronJobResponseAllOfSchedule}
@@ -5386,11 +5386,6 @@ export interface CronJobResponse {
     'labels_groups'?: Array<OrganizationLabelsGroupResponse>;
 }
 
-export const CronJobResponseJobTypeEnum = {
-    CRON: 'CRON'
-} as const;
-
-export type CronJobResponseJobTypeEnum = typeof CronJobResponseJobTypeEnum[keyof typeof CronJobResponseJobTypeEnum];
 
 /**
  * 
@@ -11543,6 +11538,20 @@ export interface JobSourceDockerResponse {
     'docker_target_build_stage'?: string | null;
 }
 /**
+ * type of job
+ * @export
+ * @enum {string}
+ */
+
+export const JobTypeEnum = {
+    LIFECYCLE: 'LIFECYCLE',
+    CRON: 'CRON'
+} as const;
+
+export type JobTypeEnum = typeof JobTypeEnum[keyof typeof JobTypeEnum];
+
+
+/**
  * 
  * @export
  * @interface KapsuleInfrastructureOutputs
@@ -12051,10 +12060,10 @@ export interface LifecycleJobResponse {
     'service_type': ServiceTypeEnum;
     /**
      * 
-     * @type {string}
+     * @type {JobTypeEnum}
      * @memberof LifecycleJobResponse
      */
-    'job_type': LifecycleJobResponseJobTypeEnum;
+    'job_type': JobTypeEnum;
     /**
      * 
      * @type {LifecycleJobResponseAllOfSchedule}
@@ -12075,11 +12084,6 @@ export interface LifecycleJobResponse {
     'labels_groups'?: Array<OrganizationLabelsGroupResponse>;
 }
 
-export const LifecycleJobResponseJobTypeEnum = {
-    LIFECYCLE: 'LIFECYCLE'
-} as const;
-
-export type LifecycleJobResponseJobTypeEnum = typeof LifecycleJobResponseJobTypeEnum[keyof typeof LifecycleJobResponseJobTypeEnum];
 
 /**
  * 
