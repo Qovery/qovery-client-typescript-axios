@@ -17121,7 +17121,7 @@ export interface TerraformDeploymentRestrictionRequest {
      * @type {string}
      * @memberof TerraformDeploymentRestrictionRequest
      */
-    'value'?: string;
+    'value': string;
 }
 
 
@@ -17166,7 +17166,7 @@ export interface TerraformDeploymentRestrictionResponse {
      * @type {string}
      * @memberof TerraformDeploymentRestrictionResponse
      */
-    'value'?: string;
+    'value': string;
 }
 
 
