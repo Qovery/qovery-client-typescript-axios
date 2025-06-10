@@ -17343,6 +17343,12 @@ export interface TerraformRequest {
      * @memberof TerraformRequest
      */
     'job_resources': TerraformRequestJobResources;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TerraformRequest
+     */
+    'use_cluster_credentials'?: boolean;
 }
 
 export const TerraformRequestProviderEnum = {
@@ -17497,6 +17503,12 @@ export interface TerraformResponse {
      * @memberof TerraformResponse
      */
     'environment': ReferenceObject;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TerraformResponse
+     */
+    'use_cluster_credentials': boolean;
 }
 
 export const TerraformResponseProviderEnum = {
