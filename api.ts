@@ -17352,7 +17352,7 @@ export interface TerraformRequest {
 }
 
 export const TerraformRequestProviderEnum = {
-    TERRAFORM: 'Terraform'
+    TERRAFORM: 'TERRAFORM'
 } as const;
 
 export type TerraformRequestProviderEnum = typeof TerraformRequestProviderEnum[keyof typeof TerraformRequestProviderEnum];
