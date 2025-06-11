@@ -57605,10 +57605,11 @@ export const TerraformMainCallsApiAxiosParamCreator = function (configuration?: 
          * 
          * @summary Delete Terraform
          * @param {string} terraformId Terraform ID
+         * @param {boolean} [deleteResourcesOnly] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTerraform: async (terraformId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteTerraform: async (terraformId: string, deleteResourcesOnly?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'terraformId' is not null or undefined
             assertParamExists('deleteTerraform', 'terraformId', terraformId)
             const localVarPath = `/terraform/{terraformId}`
@@ -57630,6 +57631,10 @@ export const TerraformMainCallsApiAxiosParamCreator = function (configuration?: 
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (deleteResourcesOnly !== undefined) {
+                localVarQueryParameter['delete_resources_only'] = deleteResourcesOnly;
+            }
 
 
     
@@ -57783,11 +57788,12 @@ export const TerraformMainCallsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Delete Terraform
          * @param {string} terraformId Terraform ID
+         * @param {boolean} [deleteResourcesOnly] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteTerraform(terraformId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTerraform(terraformId, options);
+        async deleteTerraform(terraformId: string, deleteResourcesOnly?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTerraform(terraformId, deleteResourcesOnly, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TerraformMainCallsApi.deleteTerraform']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -57846,11 +57852,12 @@ export const TerraformMainCallsApiFactory = function (configuration?: Configurat
          * 
          * @summary Delete Terraform
          * @param {string} terraformId Terraform ID
+         * @param {boolean} [deleteResourcesOnly] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTerraform(terraformId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteTerraform(terraformId, options).then((request) => request(axios, basePath));
+        deleteTerraform(terraformId: string, deleteResourcesOnly?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteTerraform(terraformId, deleteResourcesOnly, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -57897,12 +57904,13 @@ export class TerraformMainCallsApi extends BaseAPI {
      * 
      * @summary Delete Terraform
      * @param {string} terraformId Terraform ID
+     * @param {boolean} [deleteResourcesOnly] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TerraformMainCallsApi
      */
-    public deleteTerraform(terraformId: string, options?: RawAxiosRequestConfig) {
-        return TerraformMainCallsApiFp(this.configuration).deleteTerraform(terraformId, options).then((request) => request(this.axios, this.basePath));
+    public deleteTerraform(terraformId: string, deleteResourcesOnly?: boolean, options?: RawAxiosRequestConfig) {
+        return TerraformMainCallsApiFp(this.configuration).deleteTerraform(terraformId, deleteResourcesOnly, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
