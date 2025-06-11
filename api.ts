@@ -1336,18 +1336,6 @@ export interface AzureCredentialsRequest {
      * @memberof AzureCredentialsRequest
      */
     'azure_tenant_id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AzureCredentialsRequest
-     */
-    'azure_client_id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AzureCredentialsRequest
-     */
-    'azure_client_secret': string;
 }
 /**
  * 
@@ -1379,12 +1367,6 @@ export interface AzureStaticClusterCredentials {
      * @memberof AzureStaticClusterCredentials
      */
     'azure_tenant_id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AzureStaticClusterCredentials
-     */
-    'azure_client_id': string;
     /**
      * 
      * @type {string}
