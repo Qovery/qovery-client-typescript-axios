@@ -10100,6 +10100,18 @@ export interface HelmRepositoryResponseAllOfConfig {
      * @memberof HelmRepositoryResponseAllOfConfig
      */
     'scaleway_project_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryResponseAllOfConfig
+     */
+    'azure_tenant_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryResponseAllOfConfig
+     */
+    'azure_subscription_id'?: string;
 }
 /**
  * 
