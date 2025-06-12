@@ -9994,6 +9994,18 @@ export interface HelmRepositoryRequestConfig {
      * @memberof HelmRepositoryRequestConfig
      */
     'scaleway_project_id'?: string;
+    /**
+     * Required if kind is `AZURE_CR`.
+     * @type {string}
+     * @memberof HelmRepositoryRequestConfig
+     */
+    'azure_tenant_id'?: string;
+    /**
+     * Required if kind is `AZURE_CR`.
+     * @type {string}
+     * @memberof HelmRepositoryRequestConfig
+     */
+    'azure_subscription_id'?: string;
 }
 /**
  * 
