@@ -4448,6 +4448,18 @@ export interface ContainerRegistryRequestConfig {
      * @memberof ContainerRegistryRequestConfig
      */
     'role_arn'?: string;
+    /**
+     * Required if kind is `AZURE_CR`.
+     * @type {string}
+     * @memberof ContainerRegistryRequestConfig
+     */
+    'azure_tenant_id'?: string;
+    /**
+     * Required if kind is `AZURE_CR`.
+     * @type {string}
+     * @memberof ContainerRegistryRequestConfig
+     */
+    'azure_subscription_id'?: string;
 }
 /**
  * 
@@ -4579,6 +4591,18 @@ export interface ContainerRegistryResponseAllOfConfig {
      * @memberof ContainerRegistryResponseAllOfConfig
      */
     'role_arn'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOfConfig
+     */
+    'azure_tenant_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOfConfig
+     */
+    'azure_subscription_id'?: string;
 }
 /**
  * 
