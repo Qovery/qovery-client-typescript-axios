@@ -18625,6 +18625,51 @@ export const ApplicationActionsApiAxiosParamCreator = function (configuration?: 
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Delete the resources of an application but keep the Qovery config. 
+         * @summary Uninstall application
+         * @param {string} applicationId Application ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uninstallApplication: async (applicationId: string, body?: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'applicationId' is not null or undefined
+            assertParamExists('uninstallApplication', 'applicationId', applicationId)
+            const localVarPath = `/application/{applicationId}/uninstall`
+                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -18688,6 +18733,20 @@ export const ApplicationActionsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['ApplicationActionsApi.stopApplication']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Delete the resources of an application but keep the Qovery config. 
+         * @summary Uninstall application
+         * @param {string} applicationId Application ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uninstallApplication(applicationId: string, body?: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uninstallApplication(applicationId, body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ApplicationActionsApi.uninstallApplication']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -18738,6 +18797,17 @@ export const ApplicationActionsApiFactory = function (configuration?: Configurat
          */
         stopApplication(applicationId: string, options?: RawAxiosRequestConfig): AxiosPromise<Status> {
             return localVarFp.stopApplication(applicationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete the resources of an application but keep the Qovery config. 
+         * @summary Uninstall application
+         * @param {string} applicationId Application ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uninstallApplication(applicationId: string, body?: object, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.uninstallApplication(applicationId, body, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -18796,6 +18866,19 @@ export class ApplicationActionsApi extends BaseAPI {
      */
     public stopApplication(applicationId: string, options?: RawAxiosRequestConfig) {
         return ApplicationActionsApiFp(this.configuration).stopApplication(applicationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete the resources of an application but keep the Qovery config. 
+     * @summary Uninstall application
+     * @param {string} applicationId Application ID
+     * @param {object} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApplicationActionsApi
+     */
+    public uninstallApplication(applicationId: string, body?: object, options?: RawAxiosRequestConfig) {
+        return ApplicationActionsApiFp(this.configuration).uninstallApplication(applicationId, body, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -30167,6 +30250,51 @@ export const ContainerActionsApiAxiosParamCreator = function (configuration?: Co
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Delete the resources of the container but keep Qovery configuration
+         * @summary Uninstall container
+         * @param {string} containerId Container ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uninstallContainer: async (containerId: string, body?: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'containerId' is not null or undefined
+            assertParamExists('uninstallContainer', 'containerId', containerId)
+            const localVarPath = `/container/{containerId}/uninstall`
+                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -30230,6 +30358,20 @@ export const ContainerActionsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['ContainerActionsApi.stopContainer']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Delete the resources of the container but keep Qovery configuration
+         * @summary Uninstall container
+         * @param {string} containerId Container ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uninstallContainer(containerId: string, body?: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uninstallContainer(containerId, body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ContainerActionsApi.uninstallContainer']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -30280,6 +30422,17 @@ export const ContainerActionsApiFactory = function (configuration?: Configuratio
          */
         stopContainer(containerId: string, options?: RawAxiosRequestConfig): AxiosPromise<Status> {
             return localVarFp.stopContainer(containerId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete the resources of the container but keep Qovery configuration
+         * @summary Uninstall container
+         * @param {string} containerId Container ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uninstallContainer(containerId: string, body?: object, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.uninstallContainer(containerId, body, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -30338,6 +30491,19 @@ export class ContainerActionsApi extends BaseAPI {
      */
     public stopContainer(containerId: string, options?: RawAxiosRequestConfig) {
         return ContainerActionsApiFp(this.configuration).stopContainer(containerId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete the resources of the container but keep Qovery configuration
+     * @summary Uninstall container
+     * @param {string} containerId Container ID
+     * @param {object} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContainerActionsApi
+     */
+    public uninstallContainer(containerId: string, body?: object, options?: RawAxiosRequestConfig) {
+        return ContainerActionsApiFp(this.configuration).uninstallContainer(containerId, body, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -34618,6 +34784,51 @@ export const DatabaseActionsApiAxiosParamCreator = function (configuration?: Con
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Uninstall database
+         * @param {string} databaseId Database ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uninstallDatabase: async (databaseId: string, body?: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'databaseId' is not null or undefined
+            assertParamExists('uninstallDatabase', 'databaseId', databaseId)
+            const localVarPath = `/database/{databaseId}/uninstall`
+                .replace(`{${"databaseId"}}`, encodeURIComponent(String(databaseId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -34680,6 +34891,20 @@ export const DatabaseActionsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['DatabaseActionsApi.stopDatabase']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary Uninstall database
+         * @param {string} databaseId Database ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uninstallDatabase(databaseId: string, body?: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uninstallDatabase(databaseId, body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DatabaseActionsApi.uninstallDatabase']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -34729,6 +34954,17 @@ export const DatabaseActionsApiFactory = function (configuration?: Configuration
          */
         stopDatabase(databaseId: string, options?: RawAxiosRequestConfig): AxiosPromise<Status> {
             return localVarFp.stopDatabase(databaseId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Uninstall database
+         * @param {string} databaseId Database ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uninstallDatabase(databaseId: string, body?: object, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.uninstallDatabase(databaseId, body, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -34786,6 +35022,19 @@ export class DatabaseActionsApi extends BaseAPI {
      */
     public stopDatabase(databaseId: string, options?: RawAxiosRequestConfig) {
         return DatabaseActionsApiFp(this.configuration).stopDatabase(databaseId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Uninstall database
+     * @param {string} databaseId Database ID
+     * @param {object} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DatabaseActionsApi
+     */
+    public uninstallDatabase(databaseId: string, body?: object, options?: RawAxiosRequestConfig) {
+        return DatabaseActionsApiFp(this.configuration).uninstallDatabase(databaseId, body, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -42350,6 +42599,51 @@ export const HelmActionsApiAxiosParamCreator = function (configuration?: Configu
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Delete the resources of the helm but keep Qovery configuration
+         * @summary Uninstall helm
+         * @param {string} helmId Helm ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uninstallHelm: async (helmId: string, body?: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('uninstallHelm', 'helmId', helmId)
+            const localVarPath = `/helm/{helmId}/uninstall`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -42402,6 +42696,20 @@ export const HelmActionsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['HelmActionsApi.stopHelm']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Delete the resources of the helm but keep Qovery configuration
+         * @summary Uninstall helm
+         * @param {string} helmId Helm ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uninstallHelm(helmId: string, body?: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uninstallHelm(helmId, body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['HelmActionsApi.uninstallHelm']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -42444,6 +42752,17 @@ export const HelmActionsApiFactory = function (configuration?: Configuration, ba
          */
         stopHelm(helmId: string, options?: RawAxiosRequestConfig): AxiosPromise<Status> {
             return localVarFp.stopHelm(helmId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete the resources of the helm but keep Qovery configuration
+         * @summary Uninstall helm
+         * @param {string} helmId Helm ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uninstallHelm(helmId: string, body?: object, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.uninstallHelm(helmId, body, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -42492,6 +42811,19 @@ export class HelmActionsApi extends BaseAPI {
      */
     public stopHelm(helmId: string, options?: RawAxiosRequestConfig) {
         return HelmActionsApiFp(this.configuration).stopHelm(helmId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete the resources of the helm but keep Qovery configuration
+     * @summary Uninstall helm
+     * @param {string} helmId Helm ID
+     * @param {object} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmActionsApi
+     */
+    public uninstallHelm(helmId: string, body?: object, options?: RawAxiosRequestConfig) {
+        return HelmActionsApiFp(this.configuration).uninstallHelm(helmId, body, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -45680,6 +46012,51 @@ export const JobActionsApiAxiosParamCreator = function (configuration?: Configur
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Delete the resources of the job but keep Qovery configuration
+         * @summary Uninstall job
+         * @param {string} jobId Job ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uninstallJob: async (jobId: string, body?: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'jobId' is not null or undefined
+            assertParamExists('uninstallJob', 'jobId', jobId)
+            const localVarPath = `/job/{jobId}/uninstall`
+                .replace(`{${"jobId"}}`, encodeURIComponent(String(jobId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -45745,6 +46122,20 @@ export const JobActionsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['JobActionsApi.stopJob']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Delete the resources of the job but keep Qovery configuration
+         * @summary Uninstall job
+         * @param {string} jobId Job ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uninstallJob(jobId: string, body?: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uninstallJob(jobId, body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['JobActionsApi.uninstallJob']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -45797,6 +46188,17 @@ export const JobActionsApiFactory = function (configuration?: Configuration, bas
          */
         stopJob(jobId: string, options?: RawAxiosRequestConfig): AxiosPromise<Status> {
             return localVarFp.stopJob(jobId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete the resources of the job but keep Qovery configuration
+         * @summary Uninstall job
+         * @param {string} jobId Job ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uninstallJob(jobId: string, body?: object, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.uninstallJob(jobId, body, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -45857,6 +46259,19 @@ export class JobActionsApi extends BaseAPI {
      */
     public stopJob(jobId: string, options?: RawAxiosRequestConfig) {
         return JobActionsApiFp(this.configuration).stopJob(jobId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete the resources of the job but keep Qovery configuration
+     * @summary Uninstall job
+     * @param {string} jobId Job ID
+     * @param {object} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobActionsApi
+     */
+    public uninstallJob(jobId: string, body?: object, options?: RawAxiosRequestConfig) {
+        return JobActionsApiFp(this.configuration).uninstallJob(jobId, body, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -56920,6 +57335,51 @@ export const TerraformActionsApiAxiosParamCreator = function (configuration?: Co
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Delete the resources of the terraform but keep Qovery configuration
+         * @summary Uninstall terraform
+         * @param {string} terraformId Terraform ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uninstallTerraform: async (terraformId: string, body?: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'terraformId' is not null or undefined
+            assertParamExists('uninstallTerraform', 'terraformId', terraformId)
+            const localVarPath = `/terraform/{terraformId}/uninstall`
+                .replace(`{${"terraformId"}}`, encodeURIComponent(String(terraformId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -56944,6 +57404,20 @@ export const TerraformActionsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['TerraformActionsApi.deployTerraform']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Delete the resources of the terraform but keep Qovery configuration
+         * @summary Uninstall terraform
+         * @param {string} terraformId Terraform ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uninstallTerraform(terraformId: string, body?: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uninstallTerraform(terraformId, body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TerraformActionsApi.uninstallTerraform']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -56964,6 +57438,17 @@ export const TerraformActionsApiFactory = function (configuration?: Configuratio
          */
         deployTerraform(terraformId: string, terraformDeployRequest?: TerraformDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<Status> {
             return localVarFp.deployTerraform(terraformId, terraformDeployRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete the resources of the terraform but keep Qovery configuration
+         * @summary Uninstall terraform
+         * @param {string} terraformId Terraform ID
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uninstallTerraform(terraformId: string, body?: object, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.uninstallTerraform(terraformId, body, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -56986,6 +57471,19 @@ export class TerraformActionsApi extends BaseAPI {
      */
     public deployTerraform(terraformId: string, terraformDeployRequest?: TerraformDeployRequest, options?: RawAxiosRequestConfig) {
         return TerraformActionsApiFp(this.configuration).deployTerraform(terraformId, terraformDeployRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete the resources of the terraform but keep Qovery configuration
+     * @summary Uninstall terraform
+     * @param {string} terraformId Terraform ID
+     * @param {object} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TerraformActionsApi
+     */
+    public uninstallTerraform(terraformId: string, body?: object, options?: RawAxiosRequestConfig) {
+        return TerraformActionsApiFp(this.configuration).uninstallTerraform(terraformId, body, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
