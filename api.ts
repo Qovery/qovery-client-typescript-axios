@@ -8062,6 +8062,12 @@ export interface EnvironmentServiceIdsAllRequest {
      * @memberof EnvironmentServiceIdsAllRequest
      */
     'helm_ids'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof EnvironmentServiceIdsAllRequest
+     */
+    'terraform_ids'?: Array<string>;
 }
 /**
  * 
@@ -38352,6 +38358,51 @@ export const EnvironmentActionsApiAxiosParamCreator = function (configuration?: 
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * uninstall selected services
+         * @summary Uninstall services
+         * @param {string} environmentId Environment ID
+         * @param {EnvironmentServiceIdsAllRequest} [environmentServiceIdsAllRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uninstallSelectedServices: async (environmentId: string, environmentServiceIdsAllRequest?: EnvironmentServiceIdsAllRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('uninstallSelectedServices', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/service/uninstall`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(environmentServiceIdsAllRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -38499,6 +38550,20 @@ export const EnvironmentActionsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['EnvironmentActionsApi.stopSelectedServices']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * uninstall selected services
+         * @summary Uninstall services
+         * @param {string} environmentId Environment ID
+         * @param {EnvironmentServiceIdsAllRequest} [environmentServiceIdsAllRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uninstallSelectedServices(environmentId: string, environmentServiceIdsAllRequest?: EnvironmentServiceIdsAllRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uninstallSelectedServices(environmentId, environmentServiceIdsAllRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['EnvironmentActionsApi.uninstallSelectedServices']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -38615,6 +38680,17 @@ export const EnvironmentActionsApiFactory = function (configuration?: Configurat
          */
         stopSelectedServices(environmentId: string, environmentServiceIdsAllRequest?: EnvironmentServiceIdsAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.stopSelectedServices(environmentId, environmentServiceIdsAllRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * uninstall selected services
+         * @summary Uninstall services
+         * @param {string} environmentId Environment ID
+         * @param {EnvironmentServiceIdsAllRequest} [environmentServiceIdsAllRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uninstallSelectedServices(environmentId: string, environmentServiceIdsAllRequest?: EnvironmentServiceIdsAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.uninstallSelectedServices(environmentId, environmentServiceIdsAllRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -38751,6 +38827,19 @@ export class EnvironmentActionsApi extends BaseAPI {
      */
     public stopSelectedServices(environmentId: string, environmentServiceIdsAllRequest?: EnvironmentServiceIdsAllRequest, options?: RawAxiosRequestConfig) {
         return EnvironmentActionsApiFp(this.configuration).stopSelectedServices(environmentId, environmentServiceIdsAllRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * uninstall selected services
+     * @summary Uninstall services
+     * @param {string} environmentId Environment ID
+     * @param {EnvironmentServiceIdsAllRequest} [environmentServiceIdsAllRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentActionsApi
+     */
+    public uninstallSelectedServices(environmentId: string, environmentServiceIdsAllRequest?: EnvironmentServiceIdsAllRequest, options?: RawAxiosRequestConfig) {
+        return EnvironmentActionsApiFp(this.configuration).uninstallSelectedServices(environmentId, environmentServiceIdsAllRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
