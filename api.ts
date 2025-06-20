@@ -5106,6 +5106,33 @@ export interface CreateEnvironmentRequest {
 /**
  * 
  * @export
+ * @interface CredentialCluster
+ */
+export interface CredentialCluster {
+    /**
+     * 
+     * @type {string}
+     * @memberof CredentialCluster
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CredentialCluster
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {CloudProviderEnum}
+     * @memberof CredentialCluster
+     */
+    'cloud_provider'?: CloudProviderEnum;
+}
+
+
+/**
+ * 
+ * @export
  * @interface Credentials
  */
 export interface Credentials {
@@ -13556,38 +13583,11 @@ export interface OrganizationCrendentialsResponseListResultsInner {
     'credential'?: ClusterCredentials;
     /**
      * 
-     * @type {Array<OrganizationCrendentialsResponseListResultsInnerClustersInner>}
+     * @type {Array<CredentialCluster>}
      * @memberof OrganizationCrendentialsResponseListResultsInner
      */
-    'clusters'?: Array<OrganizationCrendentialsResponseListResultsInnerClustersInner>;
+    'clusters'?: Array<CredentialCluster>;
 }
-/**
- * 
- * @export
- * @interface OrganizationCrendentialsResponseListResultsInnerClustersInner
- */
-export interface OrganizationCrendentialsResponseListResultsInnerClustersInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationCrendentialsResponseListResultsInnerClustersInner
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationCrendentialsResponseListResultsInnerClustersInner
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {CloudProviderEnum}
-     * @memberof OrganizationCrendentialsResponseListResultsInnerClustersInner
-     */
-    'cloud_provider'?: CloudProviderEnum;
-}
-
-
 /**
  * 
  * @export
