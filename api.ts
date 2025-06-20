@@ -18806,7 +18806,7 @@ export const ApplicationActionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async uninstallApplication(applicationId: string, body?: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async uninstallApplication(applicationId: string, body?: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.uninstallApplication(applicationId, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApplicationActionsApi.uninstallApplication']?.[localVarOperationServerIndex]?.url;
@@ -18871,7 +18871,7 @@ export const ApplicationActionsApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uninstallApplication(applicationId: string, body?: object, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+        uninstallApplication(applicationId: string, body?: object, options?: RawAxiosRequestConfig): AxiosPromise<Status> {
             return localVarFp.uninstallApplication(applicationId, body, options).then((request) => request(axios, basePath));
         },
     };
@@ -30431,7 +30431,7 @@ export const ContainerActionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async uninstallContainer(containerId: string, body?: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async uninstallContainer(containerId: string, body?: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.uninstallContainer(containerId, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ContainerActionsApi.uninstallContainer']?.[localVarOperationServerIndex]?.url;
@@ -30496,7 +30496,7 @@ export const ContainerActionsApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uninstallContainer(containerId: string, body?: object, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+        uninstallContainer(containerId: string, body?: object, options?: RawAxiosRequestConfig): AxiosPromise<Status> {
             return localVarFp.uninstallContainer(containerId, body, options).then((request) => request(axios, basePath));
         },
     };
@@ -34964,7 +34964,7 @@ export const DatabaseActionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async uninstallDatabase(databaseId: string, body?: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async uninstallDatabase(databaseId: string, body?: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.uninstallDatabase(databaseId, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DatabaseActionsApi.uninstallDatabase']?.[localVarOperationServerIndex]?.url;
@@ -35028,7 +35028,7 @@ export const DatabaseActionsApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uninstallDatabase(databaseId: string, body?: object, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+        uninstallDatabase(databaseId: string, body?: object, options?: RawAxiosRequestConfig): AxiosPromise<Status> {
             return localVarFp.uninstallDatabase(databaseId, body, options).then((request) => request(axios, basePath));
         },
     };
@@ -42928,7 +42928,7 @@ export const HelmActionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async uninstallHelm(helmId: string, body?: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async uninstallHelm(helmId: string, body?: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.uninstallHelm(helmId, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['HelmActionsApi.uninstallHelm']?.[localVarOperationServerIndex]?.url;
@@ -42985,7 +42985,7 @@ export const HelmActionsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uninstallHelm(helmId: string, body?: object, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+        uninstallHelm(helmId: string, body?: object, options?: RawAxiosRequestConfig): AxiosPromise<Status> {
             return localVarFp.uninstallHelm(helmId, body, options).then((request) => request(axios, basePath));
         },
     };
@@ -46354,7 +46354,7 @@ export const JobActionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async uninstallJob(jobId: string, body?: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async uninstallJob(jobId: string, body?: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.uninstallJob(jobId, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['JobActionsApi.uninstallJob']?.[localVarOperationServerIndex]?.url;
@@ -46421,7 +46421,7 @@ export const JobActionsApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uninstallJob(jobId: string, body?: object, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+        uninstallJob(jobId: string, body?: object, options?: RawAxiosRequestConfig): AxiosPromise<Status> {
             return localVarFp.uninstallJob(jobId, body, options).then((request) => request(axios, basePath));
         },
     };
@@ -57712,7 +57712,7 @@ export const TerraformActionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async uninstallTerraform(terraformId: string, body?: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async uninstallTerraform(terraformId: string, body?: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.uninstallTerraform(terraformId, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TerraformActionsApi.uninstallTerraform']?.[localVarOperationServerIndex]?.url;
@@ -57747,7 +57747,7 @@ export const TerraformActionsApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uninstallTerraform(terraformId: string, body?: object, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+        uninstallTerraform(terraformId: string, body?: object, options?: RawAxiosRequestConfig): AxiosPromise<Status> {
             return localVarFp.uninstallTerraform(terraformId, body, options).then((request) => request(axios, basePath));
         },
     };
