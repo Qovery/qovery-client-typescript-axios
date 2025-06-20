@@ -8806,6 +8806,65 @@ export interface GetClusterTokenByClusterId200ResponseStatus {
 /**
  * 
  * @export
+ * @interface GetOrganizationOrganizationIdCredentials200Response
+ */
+export interface GetOrganizationOrganizationIdCredentials200Response {
+    /**
+     * 
+     * @type {Array<GetOrganizationOrganizationIdCredentials200ResponseResultsInner>}
+     * @memberof GetOrganizationOrganizationIdCredentials200Response
+     */
+    'results'?: Array<GetOrganizationOrganizationIdCredentials200ResponseResultsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface GetOrganizationOrganizationIdCredentials200ResponseResultsInner
+ */
+export interface GetOrganizationOrganizationIdCredentials200ResponseResultsInner {
+    /**
+     * 
+     * @type {ClusterCredentials}
+     * @memberof GetOrganizationOrganizationIdCredentials200ResponseResultsInner
+     */
+    'credential'?: ClusterCredentials;
+    /**
+     * 
+     * @type {Array<GetOrganizationOrganizationIdCredentials200ResponseResultsInnerClustersInner>}
+     * @memberof GetOrganizationOrganizationIdCredentials200ResponseResultsInner
+     */
+    'clusters'?: Array<GetOrganizationOrganizationIdCredentials200ResponseResultsInnerClustersInner>;
+}
+/**
+ * 
+ * @export
+ * @interface GetOrganizationOrganizationIdCredentials200ResponseResultsInnerClustersInner
+ */
+export interface GetOrganizationOrganizationIdCredentials200ResponseResultsInnerClustersInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetOrganizationOrganizationIdCredentials200ResponseResultsInnerClustersInner
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetOrganizationOrganizationIdCredentials200ResponseResultsInnerClustersInner
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {CloudProviderEnum}
+     * @memberof GetOrganizationOrganizationIdCredentials200ResponseResultsInnerClustersInner
+     */
+    'cloud_provider'?: CloudProviderEnum;
+}
+
+
+/**
+ * 
+ * @export
  * @interface GitAuthProvider
  */
 export interface GitAuthProvider {
@@ -36560,6 +36619,47 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * List credentials of an organization and their associated clusters
+         * @summary List credentials of an organization and their associated clusters
+         * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationOrganizationIdCredentials: async (organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOrganizationOrganizationIdCredentials', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/credentials`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -36596,6 +36696,19 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.getDeploymentStatusByDeploymentRequestId']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * List credentials of an organization and their associated clusters
+         * @summary List credentials of an organization and their associated clusters
+         * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationOrganizationIdCredentials(organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetOrganizationOrganizationIdCredentials200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationOrganizationIdCredentials(organizationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getOrganizationOrganizationIdCredentials']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -36625,6 +36738,16 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         getDeploymentStatusByDeploymentRequestId(deploymentRequestId: string, options?: RawAxiosRequestConfig): AxiosPromise<EnvDeploymentStatus> {
             return localVarFp.getDeploymentStatusByDeploymentRequestId(deploymentRequestId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List credentials of an organization and their associated clusters
+         * @summary List credentials of an organization and their associated clusters
+         * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationOrganizationIdCredentials(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<GetOrganizationOrganizationIdCredentials200Response> {
+            return localVarFp.getOrganizationOrganizationIdCredentials(organizationId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -36658,6 +36781,18 @@ export class DefaultApi extends BaseAPI {
      */
     public getDeploymentStatusByDeploymentRequestId(deploymentRequestId: string, options?: RawAxiosRequestConfig) {
         return DefaultApiFp(this.configuration).getDeploymentStatusByDeploymentRequestId(deploymentRequestId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List credentials of an organization and their associated clusters
+     * @summary List credentials of an organization and their associated clusters
+     * @param {string} organizationId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getOrganizationOrganizationIdCredentials(organizationId: string, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getOrganizationOrganizationIdCredentials(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
