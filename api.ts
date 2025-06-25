@@ -2566,7 +2566,7 @@ export interface ClusterCloudProviderInfoRequest {
  * @type ClusterCredentials
  * @export
  */
-export type ClusterCredentials = { object_type: 'AWS' } & AwsStaticClusterCredentials | { object_type: 'AWS_ROLE' } & AwsRoleClusterCredentials | { object_type: 'AZURE' } & AzureStaticClusterCredentials | { object_type: 'OTHER' } & GenericClusterCredentials | { object_type: 'SCW' } & ScalewayClusterCredentials;
+export type ClusterCredentials = { object_type: 'AWS' } & AwsStaticClusterCredentials | { object_type: 'AWS_ROLE' } & AwsRoleClusterCredentials | { object_type: 'AZURE' } & AzureStaticClusterCredentials | { object_type: 'GCP' } & GcpStaticClusterCredentials | { object_type: 'OTHER' } & GenericClusterCredentials | { object_type: 'SCW' } & ScalewayClusterCredentials;
 
 /**
  * 
@@ -8631,6 +8631,38 @@ export interface GcpCredentialsRequest {
      */
     'gcp_credentials': string;
 }
+/**
+ * 
+ * @export
+ * @interface GcpStaticClusterCredentials
+ */
+export interface GcpStaticClusterCredentials {
+    /**
+     * 
+     * @type {string}
+     * @memberof GcpStaticClusterCredentials
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GcpStaticClusterCredentials
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GcpStaticClusterCredentials
+     */
+    'object_type': GcpStaticClusterCredentialsObjectTypeEnum;
+}
+
+export const GcpStaticClusterCredentialsObjectTypeEnum = {
+    GCP: 'GCP'
+} as const;
+
+export type GcpStaticClusterCredentialsObjectTypeEnum = typeof GcpStaticClusterCredentialsObjectTypeEnum[keyof typeof GcpStaticClusterCredentialsObjectTypeEnum];
+
 /**
  * 
  * @export
