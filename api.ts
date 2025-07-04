@@ -19924,11 +19924,11 @@ export const ApplicationDeploymentHistoryApiAxiosParamCreator = function (config
          * By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. You can also filter by status (FAILED or SUCCESS), and git_commit_id
          * @summary List application deploys
          * @param {string} applicationId 
-         * @param {string} [startId] Starting point after which to return results
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listApplicationDeploymentHistoryV2: async (applicationId: string, startId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listApplicationDeploymentHistoryV2: async (applicationId: string, pageSize?: number | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'applicationId' is not null or undefined
             assertParamExists('listApplicationDeploymentHistoryV2', 'applicationId', applicationId)
             const localVarPath = `/application/{applicationId}/deploymentHistoryV2`
@@ -19951,8 +19951,8 @@ export const ApplicationDeploymentHistoryApiAxiosParamCreator = function (config
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-            if (startId !== undefined) {
-                localVarQueryParameter['startId'] = startId;
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
             }
 
 
@@ -19994,12 +19994,12 @@ export const ApplicationDeploymentHistoryApiFp = function(configuration?: Config
          * By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. You can also filter by status (FAILED or SUCCESS), and git_commit_id
          * @summary List application deploys
          * @param {string} applicationId 
-         * @param {string} [startId] Starting point after which to return results
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listApplicationDeploymentHistoryV2(applicationId: string, startId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listApplicationDeploymentHistoryV2(applicationId, startId, options);
+        async listApplicationDeploymentHistoryV2(applicationId: string, pageSize?: number | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listApplicationDeploymentHistoryV2(applicationId, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApplicationDeploymentHistoryApi.listApplicationDeploymentHistoryV2']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -20029,12 +20029,12 @@ export const ApplicationDeploymentHistoryApiFactory = function (configuration?: 
          * By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. You can also filter by status (FAILED or SUCCESS), and git_commit_id
          * @summary List application deploys
          * @param {string} applicationId 
-         * @param {string} [startId] Starting point after which to return results
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listApplicationDeploymentHistoryV2(applicationId: string, startId?: string, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2> {
-            return localVarFp.listApplicationDeploymentHistoryV2(applicationId, startId, options).then((request) => request(axios, basePath));
+        listApplicationDeploymentHistoryV2(applicationId: string, pageSize?: number | null, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2> {
+            return localVarFp.listApplicationDeploymentHistoryV2(applicationId, pageSize, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -20063,13 +20063,13 @@ export class ApplicationDeploymentHistoryApi extends BaseAPI {
      * By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter. You can also filter by status (FAILED or SUCCESS), and git_commit_id
      * @summary List application deploys
      * @param {string} applicationId 
-     * @param {string} [startId] Starting point after which to return results
+     * @param {number | null} [pageSize] The number of deployments to return in the current page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApplicationDeploymentHistoryApi
      */
-    public listApplicationDeploymentHistoryV2(applicationId: string, startId?: string, options?: RawAxiosRequestConfig) {
-        return ApplicationDeploymentHistoryApiFp(this.configuration).listApplicationDeploymentHistoryV2(applicationId, startId, options).then((request) => request(this.axios, this.basePath));
+    public listApplicationDeploymentHistoryV2(applicationId: string, pageSize?: number | null, options?: RawAxiosRequestConfig) {
+        return ApplicationDeploymentHistoryApiFp(this.configuration).listApplicationDeploymentHistoryV2(applicationId, pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -31544,10 +31544,11 @@ export const ContainerDeploymentHistoryApiAxiosParamCreator = function (configur
          * Returns the 20 last container deployments
          * @summary List container deployments
          * @param {string} containerId Container ID
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listContainerDeploymentHistoryV2: async (containerId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listContainerDeploymentHistoryV2: async (containerId: string, pageSize?: number | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'containerId' is not null or undefined
             assertParamExists('listContainerDeploymentHistoryV2', 'containerId', containerId)
             const localVarPath = `/container/{containerId}/deploymentHistoryV2`
@@ -31569,6 +31570,10 @@ export const ContainerDeploymentHistoryApiAxiosParamCreator = function (configur
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
 
 
     
@@ -31608,11 +31613,12 @@ export const ContainerDeploymentHistoryApiFp = function(configuration?: Configur
          * Returns the 20 last container deployments
          * @summary List container deployments
          * @param {string} containerId Container ID
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listContainerDeploymentHistoryV2(containerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listContainerDeploymentHistoryV2(containerId, options);
+        async listContainerDeploymentHistoryV2(containerId: string, pageSize?: number | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listContainerDeploymentHistoryV2(containerId, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ContainerDeploymentHistoryApi.listContainerDeploymentHistoryV2']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -31641,11 +31647,12 @@ export const ContainerDeploymentHistoryApiFactory = function (configuration?: Co
          * Returns the 20 last container deployments
          * @summary List container deployments
          * @param {string} containerId Container ID
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listContainerDeploymentHistoryV2(containerId: string, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2> {
-            return localVarFp.listContainerDeploymentHistoryV2(containerId, options).then((request) => request(axios, basePath));
+        listContainerDeploymentHistoryV2(containerId: string, pageSize?: number | null, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2> {
+            return localVarFp.listContainerDeploymentHistoryV2(containerId, pageSize, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -31673,12 +31680,13 @@ export class ContainerDeploymentHistoryApi extends BaseAPI {
      * Returns the 20 last container deployments
      * @summary List container deployments
      * @param {string} containerId Container ID
+     * @param {number | null} [pageSize] The number of deployments to return in the current page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContainerDeploymentHistoryApi
      */
-    public listContainerDeploymentHistoryV2(containerId: string, options?: RawAxiosRequestConfig) {
-        return ContainerDeploymentHistoryApiFp(this.configuration).listContainerDeploymentHistoryV2(containerId, options).then((request) => request(this.axios, this.basePath));
+    public listContainerDeploymentHistoryV2(containerId: string, pageSize?: number | null, options?: RawAxiosRequestConfig) {
+        return ContainerDeploymentHistoryApiFp(this.configuration).listContainerDeploymentHistoryV2(containerId, pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -35391,11 +35399,11 @@ export const DatabaseDeploymentHistoryApiAxiosParamCreator = function (configura
          * By default it returns the 20 last results. The response is paginated.
          * @summary List database deploys
          * @param {string} databaseId 
-         * @param {string} [startId] Starting point after which to return results
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listDatabaseDeploymentHistoryV2: async (databaseId: string, startId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listDatabaseDeploymentHistoryV2: async (databaseId: string, pageSize?: number | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'databaseId' is not null or undefined
             assertParamExists('listDatabaseDeploymentHistoryV2', 'databaseId', databaseId)
             const localVarPath = `/database/{databaseId}/deploymentHistoryV2`
@@ -35418,8 +35426,8 @@ export const DatabaseDeploymentHistoryApiAxiosParamCreator = function (configura
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-            if (startId !== undefined) {
-                localVarQueryParameter['startId'] = startId;
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
             }
 
 
@@ -35461,12 +35469,12 @@ export const DatabaseDeploymentHistoryApiFp = function(configuration?: Configura
          * By default it returns the 20 last results. The response is paginated.
          * @summary List database deploys
          * @param {string} databaseId 
-         * @param {string} [startId] Starting point after which to return results
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listDatabaseDeploymentHistoryV2(databaseId: string, startId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listDatabaseDeploymentHistoryV2(databaseId, startId, options);
+        async listDatabaseDeploymentHistoryV2(databaseId: string, pageSize?: number | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listDatabaseDeploymentHistoryV2(databaseId, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DatabaseDeploymentHistoryApi.listDatabaseDeploymentHistoryV2']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -35496,12 +35504,12 @@ export const DatabaseDeploymentHistoryApiFactory = function (configuration?: Con
          * By default it returns the 20 last results. The response is paginated.
          * @summary List database deploys
          * @param {string} databaseId 
-         * @param {string} [startId] Starting point after which to return results
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listDatabaseDeploymentHistoryV2(databaseId: string, startId?: string, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2> {
-            return localVarFp.listDatabaseDeploymentHistoryV2(databaseId, startId, options).then((request) => request(axios, basePath));
+        listDatabaseDeploymentHistoryV2(databaseId: string, pageSize?: number | null, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2> {
+            return localVarFp.listDatabaseDeploymentHistoryV2(databaseId, pageSize, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -35530,13 +35538,13 @@ export class DatabaseDeploymentHistoryApi extends BaseAPI {
      * By default it returns the 20 last results. The response is paginated.
      * @summary List database deploys
      * @param {string} databaseId 
-     * @param {string} [startId] Starting point after which to return results
+     * @param {number | null} [pageSize] The number of deployments to return in the current page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DatabaseDeploymentHistoryApi
      */
-    public listDatabaseDeploymentHistoryV2(databaseId: string, startId?: string, options?: RawAxiosRequestConfig) {
-        return DatabaseDeploymentHistoryApiFp(this.configuration).listDatabaseDeploymentHistoryV2(databaseId, startId, options).then((request) => request(this.axios, this.basePath));
+    public listDatabaseDeploymentHistoryV2(databaseId: string, pageSize?: number | null, options?: RawAxiosRequestConfig) {
+        return DatabaseDeploymentHistoryApiFp(this.configuration).listDatabaseDeploymentHistoryV2(databaseId, pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -39068,11 +39076,11 @@ export const EnvironmentDeploymentHistoryApiAxiosParamCreator = function (config
          * List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
          * @summary List environment deployments
          * @param {string} environmentId 
-         * @param {string} [startId] Starting point after which to return results
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listEnvironmentDeploymentHistoryV2: async (environmentId: string, startId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listEnvironmentDeploymentHistoryV2: async (environmentId: string, pageSize?: number | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'environmentId' is not null or undefined
             assertParamExists('listEnvironmentDeploymentHistoryV2', 'environmentId', environmentId)
             const localVarPath = `/environment/{environmentId}/deploymentHistoryV2`
@@ -39095,8 +39103,8 @@ export const EnvironmentDeploymentHistoryApiAxiosParamCreator = function (config
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-            if (startId !== undefined) {
-                localVarQueryParameter['startId'] = startId;
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
             }
 
 
@@ -39138,12 +39146,12 @@ export const EnvironmentDeploymentHistoryApiFp = function(configuration?: Config
          * List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
          * @summary List environment deployments
          * @param {string} environmentId 
-         * @param {string} [startId] Starting point after which to return results
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listEnvironmentDeploymentHistoryV2(environmentId: string, startId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryEnvironmentPaginatedResponseListV2>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listEnvironmentDeploymentHistoryV2(environmentId, startId, options);
+        async listEnvironmentDeploymentHistoryV2(environmentId: string, pageSize?: number | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryEnvironmentPaginatedResponseListV2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listEnvironmentDeploymentHistoryV2(environmentId, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EnvironmentDeploymentHistoryApi.listEnvironmentDeploymentHistoryV2']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -39173,12 +39181,12 @@ export const EnvironmentDeploymentHistoryApiFactory = function (configuration?: 
          * List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
          * @summary List environment deployments
          * @param {string} environmentId 
-         * @param {string} [startId] Starting point after which to return results
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listEnvironmentDeploymentHistoryV2(environmentId: string, startId?: string, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentHistoryEnvironmentPaginatedResponseListV2> {
-            return localVarFp.listEnvironmentDeploymentHistoryV2(environmentId, startId, options).then((request) => request(axios, basePath));
+        listEnvironmentDeploymentHistoryV2(environmentId: string, pageSize?: number | null, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentHistoryEnvironmentPaginatedResponseListV2> {
+            return localVarFp.listEnvironmentDeploymentHistoryV2(environmentId, pageSize, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -39207,13 +39215,13 @@ export class EnvironmentDeploymentHistoryApi extends BaseAPI {
      * List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
      * @summary List environment deployments
      * @param {string} environmentId 
-     * @param {string} [startId] Starting point after which to return results
+     * @param {number | null} [pageSize] The number of deployments to return in the current page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EnvironmentDeploymentHistoryApi
      */
-    public listEnvironmentDeploymentHistoryV2(environmentId: string, startId?: string, options?: RawAxiosRequestConfig) {
-        return EnvironmentDeploymentHistoryApiFp(this.configuration).listEnvironmentDeploymentHistoryV2(environmentId, startId, options).then((request) => request(this.axios, this.basePath));
+    public listEnvironmentDeploymentHistoryV2(environmentId: string, pageSize?: number | null, options?: RawAxiosRequestConfig) {
+        return EnvironmentDeploymentHistoryApiFp(this.configuration).listEnvironmentDeploymentHistoryV2(environmentId, pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -43864,10 +43872,11 @@ export const HelmDeploymentHistoryApiAxiosParamCreator = function (configuration
          * Returns the 20 last helm deployments
          * @summary List helm deployments
          * @param {string} helmId 
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listHelmDeploymentHistoryV2: async (helmId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listHelmDeploymentHistoryV2: async (helmId: string, pageSize?: number | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'helmId' is not null or undefined
             assertParamExists('listHelmDeploymentHistoryV2', 'helmId', helmId)
             const localVarPath = `/helm/{helmId}/deploymentHistoryV2`
@@ -43889,6 +43898,10 @@ export const HelmDeploymentHistoryApiAxiosParamCreator = function (configuration
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
 
 
     
@@ -43928,11 +43941,12 @@ export const HelmDeploymentHistoryApiFp = function(configuration?: Configuration
          * Returns the 20 last helm deployments
          * @summary List helm deployments
          * @param {string} helmId 
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listHelmDeploymentHistoryV2(helmId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listHelmDeploymentHistoryV2(helmId, options);
+        async listHelmDeploymentHistoryV2(helmId: string, pageSize?: number | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listHelmDeploymentHistoryV2(helmId, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['HelmDeploymentHistoryApi.listHelmDeploymentHistoryV2']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -43961,11 +43975,12 @@ export const HelmDeploymentHistoryApiFactory = function (configuration?: Configu
          * Returns the 20 last helm deployments
          * @summary List helm deployments
          * @param {string} helmId 
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listHelmDeploymentHistoryV2(helmId: string, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2> {
-            return localVarFp.listHelmDeploymentHistoryV2(helmId, options).then((request) => request(axios, basePath));
+        listHelmDeploymentHistoryV2(helmId: string, pageSize?: number | null, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2> {
+            return localVarFp.listHelmDeploymentHistoryV2(helmId, pageSize, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -43993,12 +44008,13 @@ export class HelmDeploymentHistoryApi extends BaseAPI {
      * Returns the 20 last helm deployments
      * @summary List helm deployments
      * @param {string} helmId 
+     * @param {number | null} [pageSize] The number of deployments to return in the current page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof HelmDeploymentHistoryApi
      */
-    public listHelmDeploymentHistoryV2(helmId: string, options?: RawAxiosRequestConfig) {
-        return HelmDeploymentHistoryApiFp(this.configuration).listHelmDeploymentHistoryV2(helmId, options).then((request) => request(this.axios, this.basePath));
+    public listHelmDeploymentHistoryV2(helmId: string, pageSize?: number | null, options?: RawAxiosRequestConfig) {
+        return HelmDeploymentHistoryApiFp(this.configuration).listHelmDeploymentHistoryV2(helmId, pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -46782,10 +46798,11 @@ export const JobDeploymentHistoryApiAxiosParamCreator = function (configuration?
          * Returns the 20 last job deployments
          * @summary List job deployments
          * @param {string} jobId 
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listJobDeploymentHistoryV2: async (jobId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listJobDeploymentHistoryV2: async (jobId: string, pageSize?: number | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'jobId' is not null or undefined
             assertParamExists('listJobDeploymentHistoryV2', 'jobId', jobId)
             const localVarPath = `/job/{jobId}/deploymentHistoryV2`
@@ -46807,6 +46824,10 @@ export const JobDeploymentHistoryApiAxiosParamCreator = function (configuration?
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
 
 
     
@@ -46846,11 +46867,12 @@ export const JobDeploymentHistoryApiFp = function(configuration?: Configuration)
          * Returns the 20 last job deployments
          * @summary List job deployments
          * @param {string} jobId 
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listJobDeploymentHistoryV2(jobId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listJobDeploymentHistoryV2(jobId, options);
+        async listJobDeploymentHistoryV2(jobId: string, pageSize?: number | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listJobDeploymentHistoryV2(jobId, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['JobDeploymentHistoryApi.listJobDeploymentHistoryV2']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -46879,11 +46901,12 @@ export const JobDeploymentHistoryApiFactory = function (configuration?: Configur
          * Returns the 20 last job deployments
          * @summary List job deployments
          * @param {string} jobId 
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listJobDeploymentHistoryV2(jobId: string, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2> {
-            return localVarFp.listJobDeploymentHistoryV2(jobId, options).then((request) => request(axios, basePath));
+        listJobDeploymentHistoryV2(jobId: string, pageSize?: number | null, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2> {
+            return localVarFp.listJobDeploymentHistoryV2(jobId, pageSize, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -46911,12 +46934,13 @@ export class JobDeploymentHistoryApi extends BaseAPI {
      * Returns the 20 last job deployments
      * @summary List job deployments
      * @param {string} jobId 
+     * @param {number | null} [pageSize] The number of deployments to return in the current page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof JobDeploymentHistoryApi
      */
-    public listJobDeploymentHistoryV2(jobId: string, options?: RawAxiosRequestConfig) {
-        return JobDeploymentHistoryApiFp(this.configuration).listJobDeploymentHistoryV2(jobId, options).then((request) => request(this.axios, this.basePath));
+    public listJobDeploymentHistoryV2(jobId: string, pageSize?: number | null, options?: RawAxiosRequestConfig) {
+        return JobDeploymentHistoryApiFp(this.configuration).listJobDeploymentHistoryV2(jobId, pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -58029,10 +58053,11 @@ export const TerraformDeploymentHistoryApiAxiosParamCreator = function (configur
          * Returns the 20 last terraform deployments
          * @summary List terraform deployments
          * @param {string} terraformId 
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listTerraformDeploymentHistoryV2: async (terraformId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listTerraformDeploymentHistoryV2: async (terraformId: string, pageSize?: number | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'terraformId' is not null or undefined
             assertParamExists('listTerraformDeploymentHistoryV2', 'terraformId', terraformId)
             const localVarPath = `/terraform/{terraformId}/deploymentHistoryV2`
@@ -58054,6 +58079,10 @@ export const TerraformDeploymentHistoryApiAxiosParamCreator = function (configur
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
 
 
     
@@ -58080,11 +58109,12 @@ export const TerraformDeploymentHistoryApiFp = function(configuration?: Configur
          * Returns the 20 last terraform deployments
          * @summary List terraform deployments
          * @param {string} terraformId 
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listTerraformDeploymentHistoryV2(terraformId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listTerraformDeploymentHistoryV2(terraformId, options);
+        async listTerraformDeploymentHistoryV2(terraformId: string, pageSize?: number | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listTerraformDeploymentHistoryV2(terraformId, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TerraformDeploymentHistoryApi.listTerraformDeploymentHistoryV2']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -58103,11 +58133,12 @@ export const TerraformDeploymentHistoryApiFactory = function (configuration?: Co
          * Returns the 20 last terraform deployments
          * @summary List terraform deployments
          * @param {string} terraformId 
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listTerraformDeploymentHistoryV2(terraformId: string, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2> {
-            return localVarFp.listTerraformDeploymentHistoryV2(terraformId, options).then((request) => request(axios, basePath));
+        listTerraformDeploymentHistoryV2(terraformId: string, pageSize?: number | null, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2> {
+            return localVarFp.listTerraformDeploymentHistoryV2(terraformId, pageSize, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -58123,12 +58154,13 @@ export class TerraformDeploymentHistoryApi extends BaseAPI {
      * Returns the 20 last terraform deployments
      * @summary List terraform deployments
      * @param {string} terraformId 
+     * @param {number | null} [pageSize] The number of deployments to return in the current page
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TerraformDeploymentHistoryApi
      */
-    public listTerraformDeploymentHistoryV2(terraformId: string, options?: RawAxiosRequestConfig) {
-        return TerraformDeploymentHistoryApiFp(this.configuration).listTerraformDeploymentHistoryV2(terraformId, options).then((request) => request(this.axios, this.basePath));
+    public listTerraformDeploymentHistoryV2(terraformId: string, pageSize?: number | null, options?: RawAxiosRequestConfig) {
+        return TerraformDeploymentHistoryApiFp(this.configuration).listTerraformDeploymentHistoryV2(terraformId, pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
