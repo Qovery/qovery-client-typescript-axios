@@ -1373,6 +1373,18 @@ export interface AzureStaticClusterCredentials {
      * @memberof AzureStaticClusterCredentials
      */
     'object_type': AzureStaticClusterCredentialsObjectTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AzureStaticClusterCredentials
+     */
+    'azure_application_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AzureStaticClusterCredentials
+     */
+    'azure_application_object_id': string;
 }
 
 export const AzureStaticClusterCredentialsObjectTypeEnum = {
