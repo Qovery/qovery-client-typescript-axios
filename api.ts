@@ -4615,6 +4615,18 @@ export interface ContainerRegistryResponseAllOfConfig {
      * @memberof ContainerRegistryResponseAllOfConfig
      */
     'azure_subscription_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOfConfig
+     */
+    'azure_application_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOfConfig
+     */
+    'azure_application_object_id'?: string;
 }
 /**
  * 
