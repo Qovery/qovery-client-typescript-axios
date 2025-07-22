@@ -17708,6 +17708,31 @@ export interface TerraformResponseList {
 /**
  * 
  * @export
+ * @interface TerraformVarKeyValue
+ */
+export interface TerraformVarKeyValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformVarKeyValue
+     */
+    'key'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformVarKeyValue
+     */
+    'value'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TerraformVarKeyValue
+     */
+    'secret'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface TerraformVariablesSourceRequest
  */
 export interface TerraformVariablesSourceRequest {
@@ -17718,11 +17743,11 @@ export interface TerraformVariablesSourceRequest {
      */
     'tf_var_file_paths': Array<string>;
     /**
-     * The input is in json array format: [ [$KEY,$VALUE], [...] ]
-     * @type {Array<Array<string>>}
+     * 
+     * @type {TerraformVarKeyValue}
      * @memberof TerraformVariablesSourceRequest
      */
-    'tf_vars': Array<Array<string>>;
+    'tf_vars': TerraformVarKeyValue;
 }
 /**
  * 
@@ -17736,12 +17761,6 @@ export interface TerraformVariablesSourceResponse {
      * @memberof TerraformVariablesSourceResponse
      */
     'tf_var_file_paths': Array<string>;
-    /**
-     * The input is in json array format: [ [$KEY,$VALUE], [...] ]
-     * @type {Array<Array<string>>}
-     * @memberof TerraformVariablesSourceResponse
-     */
-    'tf_vars': Array<Array<string>>;
 }
 /**
  * 
