@@ -7176,7 +7176,8 @@ export const DeploymentHistoryTriggerAction = {
     DELETE: 'DELETE',
     RESTART: 'RESTART',
     STOP: 'STOP',
-    UNKNOWN: 'UNKNOWN'
+    UNKNOWN: 'UNKNOWN',
+    UNINSTALL: 'UNINSTALL'
 } as const;
 
 export type DeploymentHistoryTriggerAction = typeof DeploymentHistoryTriggerAction[keyof typeof DeploymentHistoryTriggerAction];
