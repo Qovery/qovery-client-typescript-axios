@@ -17767,10 +17767,10 @@ export interface TerraformVariablesSourceRequest {
     'tf_var_file_paths': Array<string>;
     /**
      * 
-     * @type {TerraformVarKeyValue}
+     * @type {Array<TerraformVarKeyValue>}
      * @memberof TerraformVariablesSourceRequest
      */
-    'tf_vars': TerraformVarKeyValue;
+    'tf_vars': Array<TerraformVarKeyValue>;
 }
 /**
  * 
