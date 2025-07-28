@@ -17729,7 +17729,7 @@ export interface TerraformResponseList {
     'id'?: Array<TerraformResponse>;
 }
 /**
- * 
+ * A Terraform input variable
  * @export
  * @interface TerraformVarKeyValue
  */
