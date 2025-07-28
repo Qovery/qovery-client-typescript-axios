@@ -17802,7 +17802,7 @@ export interface TerraformVariableParsingRequest {
      * @type {ApplicationGitRepositoryRequest}
      * @memberof TerraformVariableParsingRequest
      */
-    'gitRepository': ApplicationGitRepositoryRequest;
+    'git_repository': ApplicationGitRepositoryRequest;
 }
 /**
  * 
