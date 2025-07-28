@@ -14827,6 +14827,19 @@ export interface PaginationData {
     'page_size': number;
 }
 /**
+ * 
+ * @export
+ * @interface ParseTerraformVariablesFromGitRepo200Response
+ */
+export interface ParseTerraformVariablesFromGitRepo200Response {
+    /**
+     * 
+     * @type {Array<TerraformVariableDefinition>}
+     * @memberof ParseTerraformVariablesFromGitRepo200Response
+     */
+    'results'?: Array<TerraformVariableDefinition>;
+}
+/**
  * BUSINESS & PROFESSIONAL are deprecated
  * @export
  * @enum {string}
@@ -17752,6 +17765,44 @@ export interface TerraformVarKeyValue {
      * @memberof TerraformVarKeyValue
      */
     'secret'?: boolean;
+}
+/**
+ * Represents a Terraform variable definition extracted from a Terraform file.
+ * @export
+ * @interface TerraformVariableDefinition
+ */
+export interface TerraformVariableDefinition {
+    /**
+     * The name of the variable
+     * @type {string}
+     * @memberof TerraformVariableDefinition
+     */
+    'key': string;
+    /**
+     * Whether the variable is marked as sensitive
+     * @type {boolean}
+     * @memberof TerraformVariableDefinition
+     */
+    'sensitive': boolean;
+    /**
+     * The default value of the variable, or null if no default is provided
+     * @type {string}
+     * @memberof TerraformVariableDefinition
+     */
+    'default'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface TerraformVariableParsingRequest
+ */
+export interface TerraformVariableParsingRequest {
+    /**
+     * 
+     * @type {ApplicationGitRepositoryRequest}
+     * @memberof TerraformVariableParsingRequest
+     */
+    'gitRepository': ApplicationGitRepositoryRequest;
 }
 /**
  * 
@@ -54120,6 +54171,53 @@ export const OrganizationMainCallsApiAxiosParamCreator = function (configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Parse Terraform variables from Git repository
+         * @param {string} organizationId Organization ID
+         * @param {TerraformVariableParsingRequest} terraformVariableParsingRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        parseTerraformVariablesFromGitRepo: async (organizationId: string, terraformVariableParsingRequest: TerraformVariableParsingRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('parseTerraformVariablesFromGitRepo', 'organizationId', organizationId)
+            // verify required parameter 'terraformVariableParsingRequest' is not null or undefined
+            assertParamExists('parseTerraformVariablesFromGitRepo', 'terraformVariableParsingRequest', terraformVariableParsingRequest)
+            const localVarPath = `/organization/{organizationId}/parseTerraformVariablesFromGitRepo`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(terraformVariableParsingRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -54349,6 +54447,20 @@ export const OrganizationMainCallsApiFp = function(configuration?: Configuration
             const localVarOperationServerBasePath = operationServerMap['OrganizationMainCallsApi.listServicesByOrganizationId']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary Parse Terraform variables from Git repository
+         * @param {string} organizationId Organization ID
+         * @param {TerraformVariableParsingRequest} terraformVariableParsingRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async parseTerraformVariablesFromGitRepo(organizationId: string, terraformVariableParsingRequest: TerraformVariableParsingRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ParseTerraformVariablesFromGitRepo200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.parseTerraformVariablesFromGitRepo(organizationId, terraformVariableParsingRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrganizationMainCallsApi.parseTerraformVariablesFromGitRepo']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -54529,6 +54641,17 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
          */
         listServicesByOrganizationId(organizationId: string, projectId?: string | null, environmentId?: string | null, clusterId?: string, options?: RawAxiosRequestConfig): AxiosPromise<ListServicesByOrganizationId200Response> {
             return localVarFp.listServicesByOrganizationId(organizationId, projectId, environmentId, clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Parse Terraform variables from Git repository
+         * @param {string} organizationId Organization ID
+         * @param {TerraformVariableParsingRequest} terraformVariableParsingRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        parseTerraformVariablesFromGitRepo(organizationId: string, terraformVariableParsingRequest: TerraformVariableParsingRequest, options?: RawAxiosRequestConfig): AxiosPromise<ParseTerraformVariablesFromGitRepo200Response> {
+            return localVarFp.parseTerraformVariablesFromGitRepo(organizationId, terraformVariableParsingRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -54741,6 +54864,19 @@ export class OrganizationMainCallsApi extends BaseAPI {
      */
     public listServicesByOrganizationId(organizationId: string, projectId?: string | null, environmentId?: string | null, clusterId?: string, options?: RawAxiosRequestConfig) {
         return OrganizationMainCallsApiFp(this.configuration).listServicesByOrganizationId(organizationId, projectId, environmentId, clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Parse Terraform variables from Git repository
+     * @param {string} organizationId Organization ID
+     * @param {TerraformVariableParsingRequest} terraformVariableParsingRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationMainCallsApi
+     */
+    public parseTerraformVariablesFromGitRepo(organizationId: string, terraformVariableParsingRequest: TerraformVariableParsingRequest, options?: RawAxiosRequestConfig) {
+        return OrganizationMainCallsApiFp(this.configuration).parseTerraformVariablesFromGitRepo(organizationId, terraformVariableParsingRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
