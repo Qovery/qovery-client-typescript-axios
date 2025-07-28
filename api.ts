@@ -17600,7 +17600,7 @@ export interface TerraformRequestTerraformFilesSourceOneOf {
     'git_repository'?: TerraformGitRepositoryRequest;
 }
 /**
- * 
+ * A Terraform service
  * @export
  * @interface TerraformResponse
  */
