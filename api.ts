@@ -17397,6 +17397,32 @@ export interface TerraformDeploymentRestrictionResponseList {
 /**
  * 
  * @export
+ * @interface TerraformFilesSource
+ */
+export interface TerraformFilesSource {
+    /**
+     * 
+     * @type {TerraformFilesSourceGit}
+     * @memberof TerraformFilesSource
+     */
+    'git'?: TerraformFilesSourceGit;
+}
+/**
+ * 
+ * @export
+ * @interface TerraformFilesSourceGit
+ */
+export interface TerraformFilesSourceGit {
+    /**
+     * 
+     * @type {ApplicationGitRepository}
+     * @memberof TerraformFilesSourceGit
+     */
+    'git_repository'?: ApplicationGitRepository;
+}
+/**
+ * 
+ * @export
  * @interface TerraformFilesSourceRequest
  */
 export interface TerraformFilesSourceRequest {
@@ -17668,10 +17694,10 @@ export interface TerraformResponse {
     'auto_deploy': boolean;
     /**
      * 
-     * @type {object}
+     * @type {TerraformResponseAllOfTerraformFilesSource}
      * @memberof TerraformResponse
      */
-    'terraform_files_source'?: object | null;
+    'terraform_files_source'?: TerraformResponseAllOfTerraformFilesSource;
     /**
      * Icon URI representing the terraform service.
      * @type {string}
@@ -17727,6 +17753,12 @@ export const TerraformResponseProviderEnum = {
 } as const;
 
 export type TerraformResponseProviderEnum = typeof TerraformResponseProviderEnum[keyof typeof TerraformResponseProviderEnum];
+
+/**
+ * @type TerraformResponseAllOfTerraformFilesSource
+ * @export
+ */
+export type TerraformResponseAllOfTerraformFilesSource = TerraformFilesSource;
 
 /**
  * 
