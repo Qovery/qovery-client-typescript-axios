@@ -57926,6 +57926,47 @@ export const TerraformActionsApiAxiosParamCreator = function (configuration?: Co
             };
         },
         /**
+         * 
+         * @summary Redeploy terraform
+         * @param {string} terraformId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        redeployTerrraform: async (terraformId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'terraformId' is not null or undefined
+            assertParamExists('redeployTerrraform', 'terraformId', terraformId)
+            const localVarPath = `/terraform/{terraformId}/redeploy`
+                .replace(`{${"terraformId"}}`, encodeURIComponent(String(terraformId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Delete the resources of the terraform but keep Qovery configuration
          * @summary Uninstall terraform
          * @param {string} terraformId Terraform ID
@@ -57995,6 +58036,19 @@ export const TerraformActionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * 
+         * @summary Redeploy terraform
+         * @param {string} terraformId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async redeployTerrraform(terraformId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.redeployTerrraform(terraformId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TerraformActionsApi.redeployTerrraform']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Delete the resources of the terraform but keep Qovery configuration
          * @summary Uninstall terraform
          * @param {string} terraformId Terraform ID
@@ -58030,6 +58084,16 @@ export const TerraformActionsApiFactory = function (configuration?: Configuratio
             return localVarFp.deployTerraform(terraformId, terraformDeployRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * 
+         * @summary Redeploy terraform
+         * @param {string} terraformId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        redeployTerrraform(terraformId: string, options?: RawAxiosRequestConfig): AxiosPromise<Status> {
+            return localVarFp.redeployTerrraform(terraformId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Delete the resources of the terraform but keep Qovery configuration
          * @summary Uninstall terraform
          * @param {string} terraformId Terraform ID
@@ -58061,6 +58125,18 @@ export class TerraformActionsApi extends BaseAPI {
      */
     public deployTerraform(terraformId: string, terraformDeployRequest?: TerraformDeployRequest, options?: RawAxiosRequestConfig) {
         return TerraformActionsApiFp(this.configuration).deployTerraform(terraformId, terraformDeployRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Redeploy terraform
+     * @param {string} terraformId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TerraformActionsApi
+     */
+    public redeployTerrraform(terraformId: string, options?: RawAxiosRequestConfig) {
+        return TerraformActionsApiFp(this.configuration).redeployTerrraform(terraformId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
