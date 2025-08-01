@@ -937,7 +937,15 @@ export interface ApplicationGitRepositoryRequest {
      * @memberof ApplicationGitRepositoryRequest
      */
     'git_token_id'?: string | null;
+    /**
+     * 
+     * @type {GitProviderEnum}
+     * @memberof ApplicationGitRepositoryRequest
+     */
+    'provider': GitProviderEnum;
 }
+
+
 /**
  * 
  * @export
