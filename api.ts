@@ -9166,6 +9166,12 @@ export interface GitTokenRequest {
      * @memberof GitTokenRequest
      */
     'workspace'?: string;
+    /**
+     * custom git api url for the given git provider/type. I.e: Self-hosted version of Gitlab
+     * @type {string}
+     * @memberof GitTokenRequest
+     */
+    'git_api_url'?: string;
 }
 
 
@@ -9229,6 +9235,12 @@ export interface GitTokenResponse {
      * @memberof GitTokenResponse
      */
     'associated_services_count': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof GitTokenResponse
+     */
+    'git_api_url': string;
 }
 
 
