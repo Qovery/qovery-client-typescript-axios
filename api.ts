@@ -28571,11 +28571,11 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [partialResponse] 
          * @param {string} [maxSourceResolution] 
          * @param {string} [engine] 
-         * @param {string} [analyse] 
+         * @param {string} [analyze] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getClusterMetrics: async (clusterId: string, endpoint: string, query: string, start?: string, end?: string, step?: string, time?: string, timeout?: string, dedup?: string, partialResponse?: string, maxSourceResolution?: string, engine?: string, analyse?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getClusterMetrics: async (clusterId: string, endpoint: string, query: string, start?: string, end?: string, step?: string, time?: string, timeout?: string, dedup?: string, partialResponse?: string, maxSourceResolution?: string, engine?: string, analyze?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'clusterId' is not null or undefined
             assertParamExists('getClusterMetrics', 'clusterId', clusterId)
             // verify required parameter 'endpoint' is not null or undefined
@@ -28646,8 +28646,8 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter['engine'] = engine;
             }
 
-            if (analyse !== undefined) {
-                localVarQueryParameter['analyse'] = analyse;
+            if (analyze !== undefined) {
+                localVarQueryParameter['analyze'] = analyze;
             }
 
 
@@ -29496,12 +29496,12 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          * @param {string} [partialResponse] 
          * @param {string} [maxSourceResolution] 
          * @param {string} [engine] 
-         * @param {string} [analyse] 
+         * @param {string} [analyze] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getClusterMetrics(clusterId: string, endpoint: string, query: string, start?: string, end?: string, step?: string, time?: string, timeout?: string, dedup?: string, partialResponse?: string, maxSourceResolution?: string, engine?: string, analyse?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterMetricsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterMetrics(clusterId, endpoint, query, start, end, step, time, timeout, dedup, partialResponse, maxSourceResolution, engine, analyse, options);
+        async getClusterMetrics(clusterId: string, endpoint: string, query: string, start?: string, end?: string, step?: string, time?: string, timeout?: string, dedup?: string, partialResponse?: string, maxSourceResolution?: string, engine?: string, analyze?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterMetricsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterMetrics(clusterId, endpoint, query, start, end, step, time, timeout, dedup, partialResponse, maxSourceResolution, engine, analyze, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ClustersApi.getClusterMetrics']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -29858,12 +29858,12 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          * @param {string} [partialResponse] 
          * @param {string} [maxSourceResolution] 
          * @param {string} [engine] 
-         * @param {string} [analyse] 
+         * @param {string} [analyze] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getClusterMetrics(clusterId: string, endpoint: string, query: string, start?: string, end?: string, step?: string, time?: string, timeout?: string, dedup?: string, partialResponse?: string, maxSourceResolution?: string, engine?: string, analyse?: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterMetricsResponse> {
-            return localVarFp.getClusterMetrics(clusterId, endpoint, query, start, end, step, time, timeout, dedup, partialResponse, maxSourceResolution, engine, analyse, options).then((request) => request(axios, basePath));
+        getClusterMetrics(clusterId: string, endpoint: string, query: string, start?: string, end?: string, step?: string, time?: string, timeout?: string, dedup?: string, partialResponse?: string, maxSourceResolution?: string, engine?: string, analyze?: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterMetricsResponse> {
+            return localVarFp.getClusterMetrics(clusterId, endpoint, query, start, end, step, time, timeout, dedup, partialResponse, maxSourceResolution, engine, analyze, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -30192,13 +30192,13 @@ export class ClustersApi extends BaseAPI {
      * @param {string} [partialResponse] 
      * @param {string} [maxSourceResolution] 
      * @param {string} [engine] 
-     * @param {string} [analyse] 
+     * @param {string} [analyze] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ClustersApi
      */
-    public getClusterMetrics(clusterId: string, endpoint: string, query: string, start?: string, end?: string, step?: string, time?: string, timeout?: string, dedup?: string, partialResponse?: string, maxSourceResolution?: string, engine?: string, analyse?: string, options?: RawAxiosRequestConfig) {
-        return ClustersApiFp(this.configuration).getClusterMetrics(clusterId, endpoint, query, start, end, step, time, timeout, dedup, partialResponse, maxSourceResolution, engine, analyse, options).then((request) => request(this.axios, this.basePath));
+    public getClusterMetrics(clusterId: string, endpoint: string, query: string, start?: string, end?: string, step?: string, time?: string, timeout?: string, dedup?: string, partialResponse?: string, maxSourceResolution?: string, engine?: string, analyze?: string, options?: RawAxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).getClusterMetrics(clusterId, endpoint, query, start, end, step, time, timeout, dedup, partialResponse, maxSourceResolution, engine, analyze, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
