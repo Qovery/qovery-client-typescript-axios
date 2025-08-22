@@ -38212,7 +38212,7 @@ export const EnvironmentApiAxiosParamCreator = function (configuration?: Configu
         listEnvironmentServicesLinks: async (environmentId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'environmentId' is not null or undefined
             assertParamExists('listEnvironmentServicesLinks', 'environmentId', environmentId)
-            const localVarPath = `/api/environment/{environmentId}/link`
+            const localVarPath = `/environment/{environmentId}/link`
                 .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
