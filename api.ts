@@ -2310,6 +2310,12 @@ export interface Cluster {
      * @memberof Cluster
      */
     'infrastructure_outputs'?: InfrastructureOutputs;
+    /**
+     * 
+     * @type {ClusterInfrastructureNginxChartParameters}
+     * @memberof Cluster
+     */
+    'infrastructure_charts_parameters'?: ClusterInfrastructureNginxChartParameters;
 }
 
 
@@ -3061,6 +3067,69 @@ export interface ClusterFeatureStringResponse {
 /**
  * 
  * @export
+ * @interface ClusterInfrastructureCertManagerChartParameters
+ */
+export interface ClusterInfrastructureCertManagerChartParameters {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterInfrastructureCertManagerChartParameters
+     */
+    'kubernetes_namespace'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterInfrastructureMetalLbChartParameters
+ */
+export interface ClusterInfrastructureMetalLbChartParameters {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterInfrastructureMetalLbChartParameters
+     */
+    'ip_address_pools'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterInfrastructureNginxChartParameters
+ */
+export interface ClusterInfrastructureNginxChartParameters {
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterInfrastructureNginxChartParameters
+     */
+    'replica_count'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterInfrastructureNginxChartParameters
+     */
+    'default_ssl_certificate'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterInfrastructureNginxChartParameters
+     */
+    'publish_status_address'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterInfrastructureNginxChartParameters
+     */
+    'annotation_metal_lb_load_balancer_ips'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterInfrastructureNginxChartParameters
+     */
+    'annotation_external_dns_kubernetes_target'?: string;
+}
+/**
+ * 
+ * @export
  * @interface ClusterInstanceAttributes
  */
 export interface ClusterInstanceAttributes {
@@ -3688,6 +3757,12 @@ export interface ClusterRequest {
      * @memberof ClusterRequest
      */
     'metrics_parameters'?: MetricsParameters;
+    /**
+     * 
+     * @type {ClusterInfrastructureNginxChartParameters}
+     * @memberof ClusterRequest
+     */
+    'infrastructure_charts_parameters'?: ClusterInfrastructureNginxChartParameters;
 }
 
 
@@ -11957,7 +12032,8 @@ export interface Key {
 
 export const KubernetesEnum = {
     MANAGED: 'MANAGED',
-    SELF_MANAGED: 'SELF_MANAGED'
+    SELF_MANAGED: 'SELF_MANAGED',
+    PARTIALLY_MANAGED: 'PARTIALLY_MANAGED'
 } as const;
 
 export type KubernetesEnum = typeof KubernetesEnum[keyof typeof KubernetesEnum];
