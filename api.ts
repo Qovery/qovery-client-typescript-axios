@@ -2312,10 +2312,10 @@ export interface Cluster {
     'infrastructure_outputs'?: InfrastructureOutputs;
     /**
      * 
-     * @type {ClusterInfrastructureNginxChartParameters}
+     * @type {ClusterInfrastructureChartsParameters}
      * @memberof Cluster
      */
-    'infrastructure_charts_parameters'?: ClusterInfrastructureNginxChartParameters;
+    'infrastructure_charts_parameters'?: ClusterInfrastructureChartsParameters;
 }
 
 
@@ -3080,6 +3080,31 @@ export interface ClusterInfrastructureCertManagerChartParameters {
 /**
  * 
  * @export
+ * @interface ClusterInfrastructureChartsParameters
+ */
+export interface ClusterInfrastructureChartsParameters {
+    /**
+     * 
+     * @type {ClusterInfrastructureNginxChartParameters}
+     * @memberof ClusterInfrastructureChartsParameters
+     */
+    'nginx_parameters'?: ClusterInfrastructureNginxChartParameters;
+    /**
+     * 
+     * @type {ClusterInfrastructureCertManagerChartParameters}
+     * @memberof ClusterInfrastructureChartsParameters
+     */
+    'cert_manager_parameters'?: ClusterInfrastructureCertManagerChartParameters;
+    /**
+     * 
+     * @type {ClusterInfrastructureMetalLbChartParameters}
+     * @memberof ClusterInfrastructureChartsParameters
+     */
+    'metalLb_parameters'?: ClusterInfrastructureMetalLbChartParameters;
+}
+/**
+ * 
+ * @export
  * @interface ClusterInfrastructureMetalLbChartParameters
  */
 export interface ClusterInfrastructureMetalLbChartParameters {
@@ -3759,10 +3784,10 @@ export interface ClusterRequest {
     'metrics_parameters'?: MetricsParameters;
     /**
      * 
-     * @type {ClusterInfrastructureNginxChartParameters}
+     * @type {ClusterInfrastructureChartsParameters}
      * @memberof ClusterRequest
      */
-    'infrastructure_charts_parameters'?: ClusterInfrastructureNginxChartParameters;
+    'infrastructure_charts_parameters'?: ClusterInfrastructureChartsParameters;
 }
 
 
