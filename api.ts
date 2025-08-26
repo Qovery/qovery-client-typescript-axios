@@ -38279,7 +38279,7 @@ export const EnvironmentApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         * List services links of an environment
          * @summary List environment services links
          * @param {string} environmentId Environment ID
          * @param {*} [options] Override http request option.
@@ -38386,7 +38386,7 @@ export const EnvironmentApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * List services links of an environment
          * @summary List environment services links
          * @param {string} environmentId Environment ID
          * @param {*} [options] Override http request option.
@@ -38453,7 +38453,7 @@ export const EnvironmentApiFactory = function (configuration?: Configuration, ba
             return localVarFp.checkHelmRepository(environmentId, helmCheckRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * List services links of an environment
          * @summary List environment services links
          * @param {string} environmentId Environment ID
          * @param {*} [options] Override http request option.
@@ -38525,7 +38525,7 @@ export class EnvironmentApi extends BaseAPI {
     }
 
     /**
-     * 
+     * List services links of an environment
      * @summary List environment services links
      * @param {string} environmentId Environment ID
      * @param {*} [options] Override http request option.
