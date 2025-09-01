@@ -3100,7 +3100,7 @@ export interface ClusterInfrastructureChartsParameters {
      * @type {ClusterInfrastructureMetalLbChartParameters}
      * @memberof ClusterInfrastructureChartsParameters
      */
-    'metalLb_parameters'?: ClusterInfrastructureMetalLbChartParameters;
+    'metal_lb_parameters'?: ClusterInfrastructureMetalLbChartParameters;
 }
 /**
  * 
