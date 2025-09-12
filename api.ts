@@ -17460,6 +17460,12 @@ export interface TerraformDeployRequest {
      * @memberof TerraformDeployRequest
      */
     'dry_run'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TerraformDeployRequest
+     */
+    'force_unlock_state'?: boolean;
 }
 /**
  * 
