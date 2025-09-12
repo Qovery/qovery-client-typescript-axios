@@ -17722,10 +17722,10 @@ export interface TerraformRequest {
     'provider_version': TerraformProviderVersion;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof TerraformRequest
      */
-    'timeout_sec'?: string;
+    'timeout_sec'?: number;
     /**
      * 
      * @type {string}
