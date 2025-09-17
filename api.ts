@@ -17664,13 +17664,13 @@ export interface TerraformProviderVersion {
      * @type {boolean}
      * @memberof TerraformProviderVersion
      */
-    'read_from_terraform_block': boolean;
+    'read_from_terraform_block'?: boolean;
     /**
      * 
      * @type {string}
      * @memberof TerraformProviderVersion
      */
-    'explicit_version'?: string;
+    'explicit_version': string;
 }
 /**
  * 
