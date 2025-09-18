@@ -28762,7 +28762,7 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Fetch cluster metrics
+         * Fetch cluster metrics.
          * @summary Fetch cluster metrics
          * @param {string} clusterId Cluster ID
          * @param {string} endpoint 
@@ -29729,7 +29729,7 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Fetch cluster metrics
+         * Fetch cluster metrics.
          * @summary Fetch cluster metrics
          * @param {string} clusterId Cluster ID
          * @param {string} endpoint 
@@ -30114,7 +30114,7 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getClusterLogs(clusterId, endpoint, query, start, end, limit, since, step, interval, direction, options).then((request) => request(axios, basePath));
         },
         /**
-         * Fetch cluster metrics
+         * Fetch cluster metrics.
          * @summary Fetch cluster metrics
          * @param {string} clusterId Cluster ID
          * @param {string} endpoint 
@@ -30473,7 +30473,7 @@ export class ClustersApi extends BaseAPI {
     }
 
     /**
-     * Fetch cluster metrics
+     * Fetch cluster metrics.
      * @summary Fetch cluster metrics
      * @param {string} clusterId Cluster ID
      * @param {string} endpoint 
