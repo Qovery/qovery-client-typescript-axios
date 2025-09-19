@@ -17449,6 +17449,39 @@ export interface TerraformAdvancedSettings {
     'security.read_only_root_filesystem'?: boolean;
 }
 /**
+ * @type TerraformBackend
+ * Configuration for Terraform backend - exactly one backend type must be specified
+ * @export
+ */
+export type TerraformBackend = TerraformBackendOneOf | TerraformBackendOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface TerraformBackendOneOf
+ */
+export interface TerraformBackendOneOf {
+    /**
+     * Kubernetes-specific backend configuration
+     * @type {object}
+     * @memberof TerraformBackendOneOf
+     */
+    'kubernetes'?: object;
+}
+/**
+ * 
+ * @export
+ * @interface TerraformBackendOneOf1
+ */
+export interface TerraformBackendOneOf1 {
+    /**
+     * User-provided backend configuration
+     * @type {object}
+     * @memberof TerraformBackendOneOf1
+     */
+    'user_provided'?: object;
+}
+/**
  * 
  * @export
  * @interface TerraformDeployRequest
@@ -17716,6 +17749,12 @@ export interface TerraformRequest {
     'terraform_variables_source': TerraformVariablesSourceRequest;
     /**
      * 
+     * @type {TerraformBackend}
+     * @memberof TerraformRequest
+     */
+    'backend': TerraformBackend;
+    /**
+     * 
      * @type {string}
      * @memberof TerraformRequest
      */
@@ -17886,6 +17925,12 @@ export interface TerraformResponse {
      * @memberof TerraformResponse
      */
     'provider': TerraformResponseProviderEnum;
+    /**
+     * 
+     * @type {TerraformBackend}
+     * @memberof TerraformResponse
+     */
+    'backend': TerraformBackend;
     /**
      * 
      * @type {TerraformProviderVersion}
