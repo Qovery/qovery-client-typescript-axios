@@ -17935,7 +17935,7 @@ export interface TerraformResponseList {
      * @type {Array<TerraformResponse>}
      * @memberof TerraformResponseList
      */
-    'id'?: Array<TerraformResponse>;
+    'results'?: Array<TerraformResponse>;
 }
 /**
  * A Terraform input variable
