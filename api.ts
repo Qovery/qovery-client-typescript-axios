@@ -17509,7 +17509,7 @@ export interface TerraformBackendOneOf {
      * @type {object}
      * @memberof TerraformBackendOneOf
      */
-    'kubernetes'?: object;
+    'kubernetes': object;
 }
 /**
  * 
@@ -17522,7 +17522,7 @@ export interface TerraformBackendOneOf1 {
      * @type {object}
      * @memberof TerraformBackendOneOf1
      */
-    'user_provided'?: object;
+    'user_provided': object;
 }
 /**
  * 
