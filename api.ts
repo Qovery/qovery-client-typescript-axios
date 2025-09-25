@@ -16639,6 +16639,18 @@ export interface ServicePort {
      * @memberof ServicePort
      */
     'protocol': PortProtocolEnum;
+    /**
+     * Indicate the path or regex that must match for traffic to be accepted on your service i.e: /api/ will only accept http calls that start with /api/  Only valid for publicly_accessible HTTP or GRPC ports. 
+     * @type {string}
+     * @memberof ServicePort
+     */
+    'public_path'?: string;
+    /**
+     * Indicate the new path that will be used to reach your service after replacement i.e: public_path -> /(.*)  public_path_rewrite -> /api/$1 will append /api/ on all externaly requested url when reaching the service  external/use url -> example.com/foobar  -> url seen by the service -> example.com/api/foobar Only valid for publicly_accessible HTTP or GRPC ports. 
+     * @type {string}
+     * @memberof ServicePort
+     */
+    'public_path_rewrite'?: string;
 }
 
 
@@ -16703,6 +16715,18 @@ export interface ServicePortRequestPortsInner {
      * @memberof ServicePortRequestPortsInner
      */
     'protocol'?: PortProtocolEnum;
+    /**
+     * Indicate the path or regex that must match for traffic to be accepted on your service i.e: /api/ will only accept http calls that start with /api/  Only valid for publicly_accessible HTTP or GRPC ports. 
+     * @type {string}
+     * @memberof ServicePortRequestPortsInner
+     */
+    'public_path'?: string;
+    /**
+     * Indicate the new path that will be used to reach your service after replacement i.e: public_path -> /(.*)  public_path_rewrite -> /api/$1 will append /api/ on all externaly requested url when reaching the service  external/use url -> example.com/foobar  -> url seen by the service -> example.com/api/foobar Only valid for publicly_accessible HTTP or GRPC ports. 
+     * @type {string}
+     * @memberof ServicePortRequestPortsInner
+     */
+    'public_path_rewrite'?: string;
 }
 
 
