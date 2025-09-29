@@ -7606,6 +7606,12 @@ export interface EnterpriseConnectionDto {
      */
     'default_role': string;
     /**
+     * * if `true`, roles will be synchronized at each user login according to your `group_mappings` configuration based on your IDP groups * if `false`, no synchronization is done for your users and `group_mappings` configuration will be ignored 
+     * @type {boolean}
+     * @memberof EnterpriseConnectionDto
+     */
+    'enforce_group_sync': boolean;
+    /**
      * This will allow to create mapping rules based on your IDP group names.   It\'s a dictionnary having: - key: either a Qovery provided role (i.e `viewer`) or one of your custom role`s uuid - value: an array of your IDP group names  Example: \"I want to associate the Qovery role `devops` to my IDP groups [\'Administrators\', \'DevSecOps\']\" 
      * @type {{ [key: string]: Array<string>; }}
      * @memberof EnterpriseConnectionDto
