@@ -6221,6 +6221,12 @@ export interface DeployAllRequest {
      * @memberof DeployAllRequest
      */
     'helms'?: Array<DeployAllRequestHelmsInner>;
+    /**
+     * 
+     * @type {Array<TerraformDeployRequest>}
+     * @memberof DeployAllRequest
+     */
+    'terraforms'?: Array<TerraformDeployRequest>;
 }
 /**
  * 
@@ -17540,24 +17546,46 @@ export interface TerraformBackendOneOf1 {
  */
 export interface TerraformDeployRequest {
     /**
-     * Commit to deploy for chart source. 
+     * Terraform service identifier
+     * @type {string}
+     * @memberof TerraformDeployRequest
+     */
+    'id'?: string | null;
+    /**
+     * Commit to deploy for chart source.
      * @type {string}
      * @memberof TerraformDeployRequest
      */
     'git_commit_id'?: string;
     /**
-     * 
+     * Deprecated: use action=PLAN instead.
      * @type {boolean}
      * @memberof TerraformDeployRequest
      */
     'dry_run'?: boolean;
     /**
-     * 
+     * Deprecated: use action=FORCE_UNLOCK instead.
      * @type {boolean}
      * @memberof TerraformDeployRequest
      */
-    'force_unlock_state'?: boolean;
+    'force_unlock_state'?: boolean | null;
+    /**
+     * Terraform action to execute.
+     * @type {string}
+     * @memberof TerraformDeployRequest
+     */
+    'action'?: TerraformDeployRequestActionEnum | null;
 }
+
+export const TerraformDeployRequestActionEnum = {
+    PLAN: 'PLAN',
+    PLAN_AND_APPLY: 'PLAN_AND_APPLY',
+    FORCE_UNLOCK: 'FORCE_UNLOCK',
+    DESTROY: 'DESTROY'
+} as const;
+
+export type TerraformDeployRequestActionEnum = typeof TerraformDeployRequestActionEnum[keyof typeof TerraformDeployRequestActionEnum];
+
 /**
  * 
  * @export
