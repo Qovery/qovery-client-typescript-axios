@@ -247,6 +247,12 @@ export interface Application {
      */
     'maximum_memory'?: number;
     /**
+     * 
+     * @type {number}
+     * @memberof Application
+     */
+    'maximun_gpu'?: number;
+    /**
      * name is case insensitive
      * @type {string}
      * @memberof Application
@@ -282,6 +288,12 @@ export interface Application {
      * @memberof Application
      */
     'memory'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Application
+     */
+    'gpu'?: number;
     /**
      * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no application running. 
      * @type {number}
@@ -1033,6 +1045,12 @@ export interface ApplicationRequest {
      */
     'memory'?: number;
     /**
+     * 
+     * @type {number}
+     * @memberof ApplicationRequest
+     */
+    'gpu'?: number;
+    /**
      * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no application running. 
      * @type {number}
      * @memberof ApplicationRequest
@@ -1569,6 +1587,12 @@ export interface BaseJobResponse {
      */
     'maximum_memory': number;
     /**
+     * Maximum memory that can be allocated to the job based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof BaseJobResponse
+     */
+    'maximum_gpu': number;
+    /**
      * name is case insensitive
      * @type {string}
      * @memberof BaseJobResponse
@@ -1592,6 +1616,12 @@ export interface BaseJobResponse {
      * @memberof BaseJobResponse
      */
     'memory': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BaseJobResponse
+     */
+    'gpu': number;
     /**
      * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
      * @type {number}
@@ -1618,10 +1648,10 @@ export interface BaseJobResponse {
     'port'?: number | null;
     /**
      * 
-     * @type {BaseJobResponseAllOfSource}
+     * @type {object}
      * @memberof BaseJobResponse
      */
-    'source': BaseJobResponseAllOfSource;
+    'source': object | null;
     /**
      * 
      * @type {Healthcheck}
@@ -1649,38 +1679,6 @@ export interface BaseJobResponse {
 }
 
 
-/**
- * @type BaseJobResponseAllOfSource
- * @export
- */
-export type BaseJobResponseAllOfSource = BaseJobResponseAllOfSourceOneOf | BaseJobResponseAllOfSourceOneOf1;
-
-/**
- * 
- * @export
- * @interface BaseJobResponseAllOfSourceOneOf
- */
-export interface BaseJobResponseAllOfSourceOneOf {
-    /**
-     * 
-     * @type {ContainerSource}
-     * @memberof BaseJobResponseAllOfSourceOneOf
-     */
-    'image': ContainerSource;
-}
-/**
- * 
- * @export
- * @interface BaseJobResponseAllOfSourceOneOf1
- */
-export interface BaseJobResponseAllOfSourceOneOf1 {
-    /**
-     * 
-     * @type {JobSourceDockerResponse}
-     * @memberof BaseJobResponseAllOfSourceOneOf1
-     */
-    'docker': JobSourceDockerResponse;
-}
 /**
  * 
  * @export
@@ -4836,6 +4834,12 @@ export interface ContainerRequest {
      */
     'memory'?: number;
     /**
+     * 
+     * @type {number}
+     * @memberof ContainerRequest
+     */
+    'gpu'?: number;
+    /**
      * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no container running. 
      * @type {number}
      * @memberof ContainerRequest
@@ -4957,6 +4961,12 @@ export interface ContainerResponse {
      */
     'maximum_memory': number;
     /**
+     * Maximum memory that can be allocated to the container based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof ContainerResponse
+     */
+    'maximum_gpu': number;
+    /**
      * name is case insensitive
      * @type {string}
      * @memberof ContainerResponse
@@ -4992,6 +5002,12 @@ export interface ContainerResponse {
      * @memberof ContainerResponse
      */
     'memory': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ContainerResponse
+     */
+    'gpu': number;
     /**
      * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no container running. 
      * @type {number}
@@ -5462,6 +5478,12 @@ export interface CronJobResponse {
      */
     'maximum_memory': number;
     /**
+     * Maximum memory that can be allocated to the job based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof CronJobResponse
+     */
+    'maximum_gpu': number;
+    /**
      * name is case insensitive
      * @type {string}
      * @memberof CronJobResponse
@@ -5485,6 +5507,12 @@ export interface CronJobResponse {
      * @memberof CronJobResponse
      */
     'memory': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CronJobResponse
+     */
+    'gpu': number;
     /**
      * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
      * @type {number}
@@ -5511,10 +5539,10 @@ export interface CronJobResponse {
     'port'?: number | null;
     /**
      * 
-     * @type {BaseJobResponseAllOfSource}
+     * @type {object}
      * @memberof CronJobResponse
      */
-    'source': BaseJobResponseAllOfSource;
+    'source': object | null;
     /**
      * 
      * @type {Healthcheck}
@@ -11550,6 +11578,12 @@ export interface JobRequest {
      */
     'memory'?: number;
     /**
+     * 
+     * @type {number}
+     * @memberof JobRequest
+     */
+    'gpu'?: number;
+    /**
      * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
      * @type {number}
      * @memberof JobRequest
@@ -11902,6 +11936,31 @@ export interface KarpenterDefaultNodePoolOverride {
 /**
  * 
  * @export
+ * @interface KarpenterGpuNodePoolOverride
+ */
+export interface KarpenterGpuNodePoolOverride {
+    /**
+     * 
+     * @type {KarpenterNodePoolConsolidation}
+     * @memberof KarpenterGpuNodePoolOverride
+     */
+    'consolidation'?: KarpenterNodePoolConsolidation;
+    /**
+     * 
+     * @type {KarpenterNodePoolLimits}
+     * @memberof KarpenterGpuNodePoolOverride
+     */
+    'limits'?: KarpenterNodePoolLimits;
+    /**
+     * 
+     * @type {Array<KarpenterNodePoolRequirement>}
+     * @memberof KarpenterGpuNodePoolOverride
+     */
+    'requirements'?: Array<KarpenterNodePoolRequirement>;
+}
+/**
+ * 
+ * @export
  * @interface KarpenterNodePool
  */
 export interface KarpenterNodePool {
@@ -11923,6 +11982,12 @@ export interface KarpenterNodePool {
      * @memberof KarpenterNodePool
      */
     'default_override'?: KarpenterDefaultNodePoolOverride;
+    /**
+     * 
+     * @type {KarpenterGpuNodePoolOverride}
+     * @memberof KarpenterNodePool
+     */
+    'gpu_override'?: KarpenterGpuNodePoolOverride;
 }
 /**
  * 
@@ -12291,6 +12356,12 @@ export interface LifecycleJobResponse {
      */
     'maximum_memory': number;
     /**
+     * Maximum memory that can be allocated to the job based on organization cluster configuration. unit is MB. 1024 MB = 1GB
+     * @type {number}
+     * @memberof LifecycleJobResponse
+     */
+    'maximum_gpu': number;
+    /**
      * name is case insensitive
      * @type {string}
      * @memberof LifecycleJobResponse
@@ -12314,6 +12385,12 @@ export interface LifecycleJobResponse {
      * @memberof LifecycleJobResponse
      */
     'memory': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof LifecycleJobResponse
+     */
+    'gpu': number;
     /**
      * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
      * @type {number}
@@ -12340,10 +12417,10 @@ export interface LifecycleJobResponse {
     'port'?: number | null;
     /**
      * 
-     * @type {BaseJobResponseAllOfSource}
+     * @type {object}
      * @memberof LifecycleJobResponse
      */
-    'source': BaseJobResponseAllOfSource;
+    'source': object | null;
     /**
      * 
      * @type {Healthcheck}
@@ -17764,6 +17841,12 @@ export interface TerraformJobResourcesResponse {
      * @type {number}
      * @memberof TerraformJobResourcesResponse
      */
+    'gpu': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TerraformJobResourcesResponse
+     */
     'storage_gib': number;
 }
 /**
@@ -17895,6 +17978,12 @@ export interface TerraformRequestJobResources {
      * @memberof TerraformRequestJobResources
      */
     'ram_mib': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TerraformRequestJobResources
+     */
+    'gpu': number;
     /**
      * 
      * @type {number}
