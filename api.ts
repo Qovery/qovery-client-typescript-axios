@@ -17952,6 +17952,12 @@ export interface TerraformRequest {
      * @memberof TerraformRequest
      */
     'use_cluster_credentials'?: boolean;
+    /**
+     * The key represent the action command name i.e: \"plan\" The value represent the extra arguments to pass to this command  i.e: {\"apply\", [\"-lock=false\"]} is going to prepend `-lock=false` to terraform apply commands
+     * @type {{ [key: string]: Array<string>; }}
+     * @memberof TerraformRequest
+     */
+    'action_extra_arguments'?: { [key: string]: Array<string>; };
 }
 
 export const TerraformRequestProviderEnum = {
@@ -18124,6 +18130,12 @@ export interface TerraformResponse {
      * @memberof TerraformResponse
      */
     'use_cluster_credentials': boolean;
+    /**
+     * The key represent the action command name i.e: \"plan\" The value represent the extra arguments to pass to this command  i.e: {\"apply\", [\"-lock=false\"]} is going to prepend `-lock=false` to terraform apply commands
+     * @type {{ [key: string]: Array<string>; }}
+     * @memberof TerraformResponse
+     */
+    'action_extra_arguments': { [key: string]: Array<string>; };
 }
 
 export const TerraformResponseProviderEnum = {
