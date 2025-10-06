@@ -758,6 +758,12 @@ export interface ApplicationEditRequest {
      */
     'memory'?: number;
     /**
+     * 
+     * @type {number}
+     * @memberof ApplicationEditRequest
+     */
+    'gpu'?: number;
+    /**
      * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no application running. 
      * @type {number}
      * @memberof ApplicationEditRequest
