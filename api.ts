@@ -11957,6 +11957,12 @@ export interface KarpenterGpuNodePoolOverride {
      * @memberof KarpenterGpuNodePoolOverride
      */
     'requirements'?: Array<KarpenterNodePoolRequirement>;
+    /**
+     * 
+     * @type {number}
+     * @memberof KarpenterGpuNodePoolOverride
+     */
+    'disk_size_in_gib'?: number;
 }
 /**
  * 
