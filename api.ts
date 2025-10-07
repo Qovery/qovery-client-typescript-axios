@@ -7693,6 +7693,19 @@ export interface EnterpriseConnectionDto {
 /**
  * 
  * @export
+ * @interface EnterpriseConnectionResponseList
+ */
+export interface EnterpriseConnectionResponseList {
+    /**
+     * 
+     * @type {Array<EnterpriseConnectionDto>}
+     * @memberof EnterpriseConnectionResponseList
+     */
+    'results'?: Array<EnterpriseConnectionDto>;
+}
+/**
+ * 
+ * @export
  * @interface EnvDeploymentStatus
  */
 export interface EnvDeploymentStatus {
@@ -53385,6 +53398,47 @@ export const OrganizationEnterpriseConnectionApiAxiosParamCreator = function (co
         },
         /**
          * 
+         * @summary List enterprise connections
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationEnterpriseConnections: async (organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listOrganizationEnterpriseConnections', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/enterpriseconnection`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Update enterprise connection
          * @param {string} organizationId Organization ID
          * @param {string} connectionName The name of the Organization\&#39;s Enterprise Connection
@@ -53458,6 +53512,19 @@ export const OrganizationEnterpriseConnectionApiFp = function(configuration?: Co
         },
         /**
          * 
+         * @summary List enterprise connections
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listOrganizationEnterpriseConnections(organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnterpriseConnectionResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizationEnterpriseConnections(organizationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrganizationEnterpriseConnectionApi.listOrganizationEnterpriseConnections']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Update enterprise connection
          * @param {string} organizationId Organization ID
          * @param {string} connectionName The name of the Organization\&#39;s Enterprise Connection
@@ -53494,6 +53561,16 @@ export const OrganizationEnterpriseConnectionApiFactory = function (configuratio
         },
         /**
          * 
+         * @summary List enterprise connections
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationEnterpriseConnections(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<EnterpriseConnectionResponseList> {
+            return localVarFp.listOrganizationEnterpriseConnections(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Update enterprise connection
          * @param {string} organizationId Organization ID
          * @param {string} connectionName The name of the Organization\&#39;s Enterprise Connection
@@ -53525,6 +53602,18 @@ export class OrganizationEnterpriseConnectionApi extends BaseAPI {
      */
     public getOrganizationEnterpriseConnection(organizationId: string, connectionName: string, options?: RawAxiosRequestConfig) {
         return OrganizationEnterpriseConnectionApiFp(this.configuration).getOrganizationEnterpriseConnection(organizationId, connectionName, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List enterprise connections
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationEnterpriseConnectionApi
+     */
+    public listOrganizationEnterpriseConnections(organizationId: string, options?: RawAxiosRequestConfig) {
+        return OrganizationEnterpriseConnectionApiFp(this.configuration).listOrganizationEnterpriseConnections(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
