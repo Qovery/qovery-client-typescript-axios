@@ -7672,6 +7672,12 @@ export type EksInfrastructureOutputsKindEnum = typeof EksInfrastructureOutputsKi
  */
 export interface EnterpriseConnectionDto {
     /**
+     * The connection name
+     * @type {string}
+     * @memberof EnterpriseConnectionDto
+     */
+    'connection_name': string;
+    /**
      * The purpose of this default role is to be associated to your users if: - you choose to not expose your IDPs groups to the SAML / OIDC connection - no associated group is found in your `group_mappings` defined  You can define either a Qovery provided role (i.e `viewer`) or one of your custom role`s uuid. 
      * @type {string}
      * @memberof EnterpriseConnectionDto
