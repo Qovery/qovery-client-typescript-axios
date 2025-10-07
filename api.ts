@@ -1654,10 +1654,10 @@ export interface BaseJobResponse {
     'port'?: number | null;
     /**
      * 
-     * @type {object}
+     * @type {BaseJobResponseAllOfSource}
      * @memberof BaseJobResponse
      */
-    'source': object | null;
+    'source': BaseJobResponseAllOfSource;
     /**
      * 
      * @type {Healthcheck}
@@ -1685,6 +1685,38 @@ export interface BaseJobResponse {
 }
 
 
+/**
+ * @type BaseJobResponseAllOfSource
+ * @export
+ */
+export type BaseJobResponseAllOfSource = BaseJobResponseAllOfSourceOneOf | BaseJobResponseAllOfSourceOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface BaseJobResponseAllOfSourceOneOf
+ */
+export interface BaseJobResponseAllOfSourceOneOf {
+    /**
+     * 
+     * @type {ContainerSource}
+     * @memberof BaseJobResponseAllOfSourceOneOf
+     */
+    'image': ContainerSource;
+}
+/**
+ * 
+ * @export
+ * @interface BaseJobResponseAllOfSourceOneOf1
+ */
+export interface BaseJobResponseAllOfSourceOneOf1 {
+    /**
+     * 
+     * @type {JobSourceDockerResponse}
+     * @memberof BaseJobResponseAllOfSourceOneOf1
+     */
+    'docker': JobSourceDockerResponse;
+}
 /**
  * 
  * @export
@@ -5545,10 +5577,10 @@ export interface CronJobResponse {
     'port'?: number | null;
     /**
      * 
-     * @type {object}
+     * @type {BaseJobResponseAllOfSource}
      * @memberof CronJobResponse
      */
-    'source': object | null;
+    'source': BaseJobResponseAllOfSource;
     /**
      * 
      * @type {Healthcheck}
@@ -12429,10 +12461,10 @@ export interface LifecycleJobResponse {
     'port'?: number | null;
     /**
      * 
-     * @type {object}
+     * @type {BaseJobResponseAllOfSource}
      * @memberof LifecycleJobResponse
      */
-    'source': object | null;
+    'source': BaseJobResponseAllOfSource;
     /**
      * 
      * @type {Healthcheck}
