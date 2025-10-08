@@ -17958,12 +17958,6 @@ export interface TerraformRequest {
      * @type {boolean}
      * @memberof TerraformRequest
      */
-    'auto_approve': boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TerraformRequest
-     */
     'auto_deploy': boolean;
     /**
      * 
@@ -18125,12 +18119,6 @@ export interface TerraformResponse {
      * @memberof TerraformResponse
      */
     'timeout_sec': number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TerraformResponse
-     */
-    'auto_approve': boolean;
     /**
      * 
      * @type {boolean}
