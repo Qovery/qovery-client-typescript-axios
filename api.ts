@@ -24982,11 +24982,12 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
          * @summary List AWS EKS available instance types
          * @param {string} region region name
          * @param {boolean} [onlyMeetsResourceReqs] 
-         * @param {boolean} [withGpu] 
+         * @param {boolean} [withGpu] deprecated field, use &#x60;gpu&#x60; instead
+         * @param {ListAWSEKSInstanceTypeGpuEnum} [gpu] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAWSEKSInstanceType: async (region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listAWSEKSInstanceType: async (region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, gpu?: ListAWSEKSInstanceTypeGpuEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'region' is not null or undefined
             assertParamExists('listAWSEKSInstanceType', 'region', region)
             const localVarPath = `/aws/eks/instanceType/{region}`
@@ -25015,6 +25016,10 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
 
             if (withGpu !== undefined) {
                 localVarQueryParameter['with_gpu'] = withGpu;
+            }
+
+            if (gpu !== undefined) {
+                localVarQueryParameter['gpu'] = gpu;
             }
 
 
@@ -25226,11 +25231,12 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
          * @summary List Azure AKS available instance types
          * @param {string} region region name
          * @param {boolean} [onlyMeetsResourceReqs] 
-         * @param {boolean} [withGpu] 
+         * @param {boolean} [withGpu] deprecated field, use &#x60;gpu&#x60; instead
+         * @param {ListAzureAKSInstanceTypeGpuEnum} [gpu] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAzureAKSInstanceType: async (region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listAzureAKSInstanceType: async (region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, gpu?: ListAzureAKSInstanceTypeGpuEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'region' is not null or undefined
             assertParamExists('listAzureAKSInstanceType', 'region', region)
             const localVarPath = `/azure/aks/instanceType/{region}`
@@ -25259,6 +25265,10 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
 
             if (withGpu !== undefined) {
                 localVarQueryParameter['with_gpu'] = withGpu;
+            }
+
+            if (gpu !== undefined) {
+                localVarQueryParameter['gpu'] = gpu;
             }
 
 
@@ -25702,12 +25712,13 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
          * @summary List AWS EKS available instance types
          * @param {string} region region name
          * @param {boolean} [onlyMeetsResourceReqs] 
-         * @param {boolean} [withGpu] 
+         * @param {boolean} [withGpu] deprecated field, use &#x60;gpu&#x60; instead
+         * @param {ListAWSEKSInstanceTypeGpuEnum} [gpu] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listAWSEKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterInstanceTypeResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listAWSEKSInstanceType(region, onlyMeetsResourceReqs, withGpu, options);
+        async listAWSEKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, gpu?: ListAWSEKSInstanceTypeGpuEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterInstanceTypeResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAWSEKSInstanceType(region, onlyMeetsResourceReqs, withGpu, gpu, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CloudProviderApi.listAWSEKSInstanceType']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -25779,12 +25790,13 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
          * @summary List Azure AKS available instance types
          * @param {string} region region name
          * @param {boolean} [onlyMeetsResourceReqs] 
-         * @param {boolean} [withGpu] 
+         * @param {boolean} [withGpu] deprecated field, use &#x60;gpu&#x60; instead
+         * @param {ListAzureAKSInstanceTypeGpuEnum} [gpu] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listAzureAKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterInstanceTypeResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listAzureAKSInstanceType(region, onlyMeetsResourceReqs, withGpu, options);
+        async listAzureAKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, gpu?: ListAzureAKSInstanceTypeGpuEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterInstanceTypeResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAzureAKSInstanceType(region, onlyMeetsResourceReqs, withGpu, gpu, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CloudProviderApi.listAzureAKSInstanceType']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -25938,12 +25950,13 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
          * @summary List AWS EKS available instance types
          * @param {string} region region name
          * @param {boolean} [onlyMeetsResourceReqs] 
-         * @param {boolean} [withGpu] 
+         * @param {boolean} [withGpu] deprecated field, use &#x60;gpu&#x60; instead
+         * @param {ListAWSEKSInstanceTypeGpuEnum} [gpu] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAWSEKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<ClusterInstanceTypeResponseList> {
-            return localVarFp.listAWSEKSInstanceType(region, onlyMeetsResourceReqs, withGpu, options).then((request) => request(axios, basePath));
+        listAWSEKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, gpu?: ListAWSEKSInstanceTypeGpuEnum, options?: RawAxiosRequestConfig): AxiosPromise<ClusterInstanceTypeResponseList> {
+            return localVarFp.listAWSEKSInstanceType(region, onlyMeetsResourceReqs, withGpu, gpu, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -25997,12 +26010,13 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
          * @summary List Azure AKS available instance types
          * @param {string} region region name
          * @param {boolean} [onlyMeetsResourceReqs] 
-         * @param {boolean} [withGpu] 
+         * @param {boolean} [withGpu] deprecated field, use &#x60;gpu&#x60; instead
+         * @param {ListAzureAKSInstanceTypeGpuEnum} [gpu] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAzureAKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<ClusterInstanceTypeResponseList> {
-            return localVarFp.listAzureAKSInstanceType(region, onlyMeetsResourceReqs, withGpu, options).then((request) => request(axios, basePath));
+        listAzureAKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, gpu?: ListAzureAKSInstanceTypeGpuEnum, options?: RawAxiosRequestConfig): AxiosPromise<ClusterInstanceTypeResponseList> {
+            return localVarFp.listAzureAKSInstanceType(region, onlyMeetsResourceReqs, withGpu, gpu, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -26120,13 +26134,14 @@ export class CloudProviderApi extends BaseAPI {
      * @summary List AWS EKS available instance types
      * @param {string} region region name
      * @param {boolean} [onlyMeetsResourceReqs] 
-     * @param {boolean} [withGpu] 
+     * @param {boolean} [withGpu] deprecated field, use &#x60;gpu&#x60; instead
+     * @param {ListAWSEKSInstanceTypeGpuEnum} [gpu] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudProviderApi
      */
-    public listAWSEKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, options?: RawAxiosRequestConfig) {
-        return CloudProviderApiFp(this.configuration).listAWSEKSInstanceType(region, onlyMeetsResourceReqs, withGpu, options).then((request) => request(this.axios, this.basePath));
+    public listAWSEKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, gpu?: ListAWSEKSInstanceTypeGpuEnum, options?: RawAxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listAWSEKSInstanceType(region, onlyMeetsResourceReqs, withGpu, gpu, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -26191,13 +26206,14 @@ export class CloudProviderApi extends BaseAPI {
      * @summary List Azure AKS available instance types
      * @param {string} region region name
      * @param {boolean} [onlyMeetsResourceReqs] 
-     * @param {boolean} [withGpu] 
+     * @param {boolean} [withGpu] deprecated field, use &#x60;gpu&#x60; instead
+     * @param {ListAzureAKSInstanceTypeGpuEnum} [gpu] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudProviderApi
      */
-    public listAzureAKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, options?: RawAxiosRequestConfig) {
-        return CloudProviderApiFp(this.configuration).listAzureAKSInstanceType(region, onlyMeetsResourceReqs, withGpu, options).then((request) => request(this.axios, this.basePath));
+    public listAzureAKSInstanceType(region: string, onlyMeetsResourceReqs?: boolean, withGpu?: boolean, gpu?: ListAzureAKSInstanceTypeGpuEnum, options?: RawAxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listAzureAKSInstanceType(region, onlyMeetsResourceReqs, withGpu, gpu, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -26324,6 +26340,24 @@ export class CloudProviderApi extends BaseAPI {
     }
 }
 
+/**
+ * @export
+ */
+export const ListAWSEKSInstanceTypeGpuEnum = {
+    INCLUDE: 'INCLUDE',
+    EXCLUDE: 'EXCLUDE',
+    ONLY: 'ONLY'
+} as const;
+export type ListAWSEKSInstanceTypeGpuEnum = typeof ListAWSEKSInstanceTypeGpuEnum[keyof typeof ListAWSEKSInstanceTypeGpuEnum];
+/**
+ * @export
+ */
+export const ListAzureAKSInstanceTypeGpuEnum = {
+    ONLY: 'ONLY',
+    INCLUDE: 'INCLUDE',
+    EXCLUDE: 'EXCLUDE'
+} as const;
+export type ListAzureAKSInstanceTypeGpuEnum = typeof ListAzureAKSInstanceTypeGpuEnum[keyof typeof ListAzureAKSInstanceTypeGpuEnum];
 
 
 /**
