@@ -18335,6 +18335,32 @@ export interface TerraformVariablesSourceResponse {
 /**
  * 
  * @export
+ * @interface TerraformVersionResponse
+ */
+export interface TerraformVersionResponse {
+    /**
+     * Terraform version string
+     * @type {string}
+     * @memberof TerraformVersionResponse
+     */
+    'version'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TerraformVersionResponseList
+ */
+export interface TerraformVersionResponseList {
+    /**
+     * 
+     * @type {Array<TerraformVersionResponse>}
+     * @memberof TerraformVersionResponseList
+     */
+    'results'?: Array<TerraformVersionResponse>;
+}
+/**
+ * 
+ * @export
  * @interface TransferOwnershipRequest
  */
 export interface TransferOwnershipRequest {
@@ -60109,6 +60135,43 @@ export const TerraformMainCallsApiAxiosParamCreator = function (configuration?: 
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary List available Terraform versions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listTerraformVersions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/terraform/available-versions`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -60174,6 +60237,18 @@ export const TerraformMainCallsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['TerraformMainCallsApi.listTerraformCommit']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary List available Terraform versions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listTerraformVersions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TerraformVersionResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listTerraformVersions(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TerraformMainCallsApi.listTerraformVersions']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -60226,6 +60301,15 @@ export const TerraformMainCallsApiFactory = function (configuration?: Configurat
          */
         listTerraformCommit(terraformId: string, options?: RawAxiosRequestConfig): AxiosPromise<CommitResponseList> {
             return localVarFp.listTerraformCommit(terraformId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List available Terraform versions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listTerraformVersions(options?: RawAxiosRequestConfig): AxiosPromise<TerraformVersionResponseList> {
+            return localVarFp.listTerraformVersions(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -60286,6 +60370,17 @@ export class TerraformMainCallsApi extends BaseAPI {
      */
     public listTerraformCommit(terraformId: string, options?: RawAxiosRequestConfig) {
         return TerraformMainCallsApiFp(this.configuration).listTerraformCommit(terraformId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List available Terraform versions
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TerraformMainCallsApi
+     */
+    public listTerraformVersions(options?: RawAxiosRequestConfig) {
+        return TerraformMainCallsApiFp(this.configuration).listTerraformVersions(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
