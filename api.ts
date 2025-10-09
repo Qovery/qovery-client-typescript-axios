@@ -12120,6 +12120,12 @@ export interface KarpenterNodePoolLimits {
      * @memberof KarpenterNodePoolLimits
      */
     'max_memory_in_gibibytes': number;
+    /**
+     * GPU limit that will be applied for the node pool
+     * @type {number}
+     * @memberof KarpenterNodePoolLimits
+     */
+    'max_gpu': number;
 }
 /**
  * 
