@@ -157,6 +157,155 @@ export type AksInfrastructureOutputsKindEnum = typeof AksInfrastructureOutputsKi
 /**
  * 
  * @export
+ * @interface AlertReceiverCreationRequest
+ */
+export interface AlertReceiverCreationRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertReceiverCreationRequest
+     */
+    'organization_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertReceiverCreationRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertReceiverCreationRequest
+     */
+    'description': string;
+    /**
+     * 
+     * @type {AlertReceiverType}
+     * @memberof AlertReceiverCreationRequest
+     */
+    'type': AlertReceiverType;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AlertReceiverCreationRequest
+     */
+    'send_resolved': boolean;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface AlertReceiverEditRequest
+ */
+export interface AlertReceiverEditRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertReceiverEditRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertReceiverEditRequest
+     */
+    'description': string;
+    /**
+     * 
+     * @type {AlertReceiverType}
+     * @memberof AlertReceiverEditRequest
+     */
+    'type': AlertReceiverType;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AlertReceiverEditRequest
+     */
+    'send_resolved': boolean;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface AlertReceiverList
+ */
+export interface AlertReceiverList {
+    /**
+     * 
+     * @type {Array<AlertReceiverResponse>}
+     * @memberof AlertReceiverList
+     */
+    'results': Array<AlertReceiverResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface AlertReceiverResponse
+ */
+export interface AlertReceiverResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertReceiverResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertReceiverResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertReceiverResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertReceiverResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertReceiverResponse
+     */
+    'description': string;
+    /**
+     * 
+     * @type {AlertReceiverType}
+     * @memberof AlertReceiverResponse
+     */
+    'type': AlertReceiverType;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AlertReceiverResponse
+     */
+    'send_resolved': boolean;
+}
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const AlertReceiverType = {
+    SLACK: 'SLACK'
+} as const;
+
+export type AlertReceiverType = typeof AlertReceiverType[keyof typeof AlertReceiverType];
+
+
+/**
+ * 
+ * @export
  * @interface Annotation
  */
 export interface Annotation {
@@ -17315,6 +17464,36 @@ export interface SignUpRequest {
 /**
  * 
  * @export
+ * @interface SlackAlertReceiverCreationRequest
+ */
+export interface SlackAlertReceiverCreationRequest extends AlertReceiverCreationRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SlackAlertReceiverCreationRequest
+     */
+    'webhook_url': string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface SlackAlertReceiverEditRequest
+ */
+export interface SlackAlertReceiverEditRequest extends AlertReceiverEditRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SlackAlertReceiverEditRequest
+     */
+    'webhook_url'?: string | null;
+}
+
+
+/**
+ * 
+ * @export
  * @interface Stage
  */
 export interface Stage {
@@ -19182,6 +19361,432 @@ export class AccountInfoApi extends BaseAPI {
      */
     public getAccountInformation(options?: RawAxiosRequestConfig) {
         return AccountInfoApiFp(this.configuration).getAccountInformation(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * AlertReceiversApi - axios parameter creator
+ * @export
+ */
+export const AlertReceiversApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Create a new alert receiver
+         * @summary Create alert receiver
+         * @param {AlertReceiverCreationRequest} [alertReceiverCreationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAlertReceiver: async (alertReceiverCreationRequest?: AlertReceiverCreationRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/alert-receivers`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(alertReceiverCreationRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete an alert receiver
+         * @summary Delete alert receiver
+         * @param {string} alertReceiverId Alert Receiver ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAlertReceiver: async (alertReceiverId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'alertReceiverId' is not null or undefined
+            assertParamExists('deleteAlertReceiver', 'alertReceiverId', alertReceiverId)
+            const localVarPath = `/api/alert-receivers/{alertReceiverId}`
+                .replace(`{${"alertReceiverId"}}`, encodeURIComponent(String(alertReceiverId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Update an existing alert receiver
+         * @summary Update alert receiver
+         * @param {string} alertReceiverId Alert Receiver ID
+         * @param {AlertReceiverEditRequest} [alertReceiverEditRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editAlertReceiver: async (alertReceiverId: string, alertReceiverEditRequest?: AlertReceiverEditRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'alertReceiverId' is not null or undefined
+            assertParamExists('editAlertReceiver', 'alertReceiverId', alertReceiverId)
+            const localVarPath = `/api/alert-receivers/{alertReceiverId}`
+                .replace(`{${"alertReceiverId"}}`, encodeURIComponent(String(alertReceiverId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(alertReceiverEditRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve a specific alert receiver by its ID
+         * @summary Get alert receiver
+         * @param {string} alertReceiverId Alert Receiver ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAlertReceiver: async (alertReceiverId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'alertReceiverId' is not null or undefined
+            assertParamExists('getAlertReceiver', 'alertReceiverId', alertReceiverId)
+            const localVarPath = `/api/alert-receivers/{alertReceiverId}`
+                .replace(`{${"alertReceiverId"}}`, encodeURIComponent(String(alertReceiverId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve all alert receivers for a specific organization
+         * @summary List alert receivers
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAlertReceivers: async (organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getAlertReceivers', 'organizationId', organizationId)
+            const localVarPath = `/api/organization/{organizationId}/alert-receivers`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AlertReceiversApi - functional programming interface
+ * @export
+ */
+export const AlertReceiversApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AlertReceiversApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Create a new alert receiver
+         * @summary Create alert receiver
+         * @param {AlertReceiverCreationRequest} [alertReceiverCreationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createAlertReceiver(alertReceiverCreationRequest?: AlertReceiverCreationRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AlertReceiverResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createAlertReceiver(alertReceiverCreationRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AlertReceiversApi.createAlertReceiver']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Delete an alert receiver
+         * @summary Delete alert receiver
+         * @param {string} alertReceiverId Alert Receiver ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteAlertReceiver(alertReceiverId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAlertReceiver(alertReceiverId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AlertReceiversApi.deleteAlertReceiver']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Update an existing alert receiver
+         * @summary Update alert receiver
+         * @param {string} alertReceiverId Alert Receiver ID
+         * @param {AlertReceiverEditRequest} [alertReceiverEditRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editAlertReceiver(alertReceiverId: string, alertReceiverEditRequest?: AlertReceiverEditRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AlertReceiverResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editAlertReceiver(alertReceiverId, alertReceiverEditRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AlertReceiversApi.editAlertReceiver']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Retrieve a specific alert receiver by its ID
+         * @summary Get alert receiver
+         * @param {string} alertReceiverId Alert Receiver ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAlertReceiver(alertReceiverId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AlertReceiverResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAlertReceiver(alertReceiverId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AlertReceiversApi.getAlertReceiver']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Retrieve all alert receivers for a specific organization
+         * @summary List alert receivers
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAlertReceivers(organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AlertReceiverList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAlertReceivers(organizationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AlertReceiversApi.getAlertReceivers']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AlertReceiversApi - factory interface
+ * @export
+ */
+export const AlertReceiversApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AlertReceiversApiFp(configuration)
+    return {
+        /**
+         * Create a new alert receiver
+         * @summary Create alert receiver
+         * @param {AlertReceiverCreationRequest} [alertReceiverCreationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAlertReceiver(alertReceiverCreationRequest?: AlertReceiverCreationRequest, options?: RawAxiosRequestConfig): AxiosPromise<AlertReceiverResponse> {
+            return localVarFp.createAlertReceiver(alertReceiverCreationRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete an alert receiver
+         * @summary Delete alert receiver
+         * @param {string} alertReceiverId Alert Receiver ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAlertReceiver(alertReceiverId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteAlertReceiver(alertReceiverId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Update an existing alert receiver
+         * @summary Update alert receiver
+         * @param {string} alertReceiverId Alert Receiver ID
+         * @param {AlertReceiverEditRequest} [alertReceiverEditRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editAlertReceiver(alertReceiverId: string, alertReceiverEditRequest?: AlertReceiverEditRequest, options?: RawAxiosRequestConfig): AxiosPromise<AlertReceiverResponse> {
+            return localVarFp.editAlertReceiver(alertReceiverId, alertReceiverEditRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Retrieve a specific alert receiver by its ID
+         * @summary Get alert receiver
+         * @param {string} alertReceiverId Alert Receiver ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAlertReceiver(alertReceiverId: string, options?: RawAxiosRequestConfig): AxiosPromise<AlertReceiverResponse> {
+            return localVarFp.getAlertReceiver(alertReceiverId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Retrieve all alert receivers for a specific organization
+         * @summary List alert receivers
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAlertReceivers(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<AlertReceiverList> {
+            return localVarFp.getAlertReceivers(organizationId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AlertReceiversApi - object-oriented interface
+ * @export
+ * @class AlertReceiversApi
+ * @extends {BaseAPI}
+ */
+export class AlertReceiversApi extends BaseAPI {
+    /**
+     * Create a new alert receiver
+     * @summary Create alert receiver
+     * @param {AlertReceiverCreationRequest} [alertReceiverCreationRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlertReceiversApi
+     */
+    public createAlertReceiver(alertReceiverCreationRequest?: AlertReceiverCreationRequest, options?: RawAxiosRequestConfig) {
+        return AlertReceiversApiFp(this.configuration).createAlertReceiver(alertReceiverCreationRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete an alert receiver
+     * @summary Delete alert receiver
+     * @param {string} alertReceiverId Alert Receiver ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlertReceiversApi
+     */
+    public deleteAlertReceiver(alertReceiverId: string, options?: RawAxiosRequestConfig) {
+        return AlertReceiversApiFp(this.configuration).deleteAlertReceiver(alertReceiverId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Update an existing alert receiver
+     * @summary Update alert receiver
+     * @param {string} alertReceiverId Alert Receiver ID
+     * @param {AlertReceiverEditRequest} [alertReceiverEditRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlertReceiversApi
+     */
+    public editAlertReceiver(alertReceiverId: string, alertReceiverEditRequest?: AlertReceiverEditRequest, options?: RawAxiosRequestConfig) {
+        return AlertReceiversApiFp(this.configuration).editAlertReceiver(alertReceiverId, alertReceiverEditRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Retrieve a specific alert receiver by its ID
+     * @summary Get alert receiver
+     * @param {string} alertReceiverId Alert Receiver ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlertReceiversApi
+     */
+    public getAlertReceiver(alertReceiverId: string, options?: RawAxiosRequestConfig) {
+        return AlertReceiversApiFp(this.configuration).getAlertReceiver(alertReceiverId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Retrieve all alert receivers for a specific organization
+     * @summary List alert receivers
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlertReceiversApi
+     */
+    public getAlertReceivers(organizationId: string, options?: RawAxiosRequestConfig) {
+        return AlertReceiversApiFp(this.configuration).getAlertReceivers(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
