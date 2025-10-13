@@ -157,6 +157,44 @@ export type AksInfrastructureOutputsKindEnum = typeof AksInfrastructureOutputsKi
 /**
  * 
  * @export
+ * @interface AlertPresentation
+ */
+export interface AlertPresentation {
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertPresentation
+     */
+    'summary'?: string | null;
+    /**
+     * URL to runbook with remediation steps
+     * @type {string}
+     * @memberof AlertPresentation
+     */
+    'runbook_url'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface AlertPresentationResponse
+ */
+export interface AlertPresentationResponse {
+    /**
+     *  Alert summary template
+     * @type {string}
+     * @memberof AlertPresentationResponse
+     */
+    'summary'?: string | null;
+    /**
+     * URL to runbook with remediation steps
+     * @type {string}
+     * @memberof AlertPresentationResponse
+     */
+    'runbook_url'?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface AlertReceiverCreationRequest
  */
 export interface AlertReceiverCreationRequest {
@@ -301,6 +339,233 @@ export const AlertReceiverType = {
 } as const;
 
 export type AlertReceiverType = typeof AlertReceiverType[keyof typeof AlertReceiverType];
+
+
+/**
+ * 
+ * @export
+ * @interface AlertRuleCreationRequest
+ */
+export interface AlertRuleCreationRequest {
+    /**
+     * Organization identifier
+     * @type {string}
+     * @memberof AlertRuleCreationRequest
+     */
+    'organization_id': string;
+    /**
+     *  Cluster identifier where the rule will be deployed
+     * @type {string}
+     * @memberof AlertRuleCreationRequest
+     */
+    'cluster_id': string;
+    /**
+     * Name of the alert rule
+     * @type {string}
+     * @memberof AlertRuleCreationRequest
+     */
+    'name': string;
+    /**
+     * Description of what the alert monitors 
+     * @type {string}
+     * @memberof AlertRuleCreationRequest
+     */
+    'description': string;
+    /**
+     * PromQL expression to evaluate
+     * @type {string}
+     * @memberof AlertRuleCreationRequest
+     */
+    'promql_expr': string;
+    /**
+     * Duration the condition must be true before firing (ISO-8601 duration format)
+     * @type {string}
+     * @memberof AlertRuleCreationRequest
+     */
+    'for_duration': string;
+    /**
+     * 
+     * @type {AlertSeverity}
+     * @memberof AlertRuleCreationRequest
+     */
+    'severity': AlertSeverity;
+    /**
+     * Whether the alert rule is enabled
+     * @type {boolean}
+     * @memberof AlertRuleCreationRequest
+     */
+    'enabled': boolean;
+    /**
+     * List of alert receiver IDs to send notifications to
+     * @type {Array<string>}
+     * @memberof AlertRuleCreationRequest
+     */
+    'alert_receiver_ids': Array<string>;
+    /**
+     * 
+     * @type {AlertPresentation}
+     * @memberof AlertRuleCreationRequest
+     */
+    'presentation': AlertPresentation;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface AlertRuleEditRequest
+ */
+export interface AlertRuleEditRequest {
+    /**
+     * Name of the alert rule
+     * @type {string}
+     * @memberof AlertRuleEditRequest
+     */
+    'name': string;
+    /**
+     * Description of what the alert monitors
+     * @type {string}
+     * @memberof AlertRuleEditRequest
+     */
+    'description': string;
+    /**
+     * PromQL expression to evaluate
+     * @type {string}
+     * @memberof AlertRuleEditRequest
+     */
+    'promql_expr': string;
+    /**
+     * Duration the condition must be true before firing (ISO-8601 duration format)
+     * @type {string}
+     * @memberof AlertRuleEditRequest
+     */
+    'for_duration': string;
+    /**
+     * 
+     * @type {AlertSeverity}
+     * @memberof AlertRuleEditRequest
+     */
+    'severity': AlertSeverity;
+    /**
+     * Whether the alert rule is enabled
+     * @type {boolean}
+     * @memberof AlertRuleEditRequest
+     */
+    'enabled': boolean;
+    /**
+     * List of alert receiver IDs to send notifications to
+     * @type {Array<string>}
+     * @memberof AlertRuleEditRequest
+     */
+    'alert_receiver_ids': Array<string>;
+    /**
+     * 
+     * @type {AlertPresentation}
+     * @memberof AlertRuleEditRequest
+     */
+    'presentation': AlertPresentation;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface AlertRuleResponse
+ */
+export interface AlertRuleResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertRuleResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertRuleResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertRuleResponse
+     */
+    'updated_at'?: string;
+    /**
+     * Organization identifier
+     * @type {string}
+     * @memberof AlertRuleResponse
+     */
+    'organization_id': string;
+    /**
+     *  Cluster identifier
+     * @type {string}
+     * @memberof AlertRuleResponse
+     */
+    'cluster_id': string;
+    /**
+     * Name of the alert rule 
+     * @type {string}
+     * @memberof AlertRuleResponse
+     */
+    'name': string;
+    /**
+     * Description of what the alert monitors
+     * @type {string}
+     * @memberof AlertRuleResponse
+     */
+    'description': string;
+    /**
+     * PromQL expression to evaluate
+     * @type {string}
+     * @memberof AlertRuleResponse
+     */
+    'promql_expr': string;
+    /**
+     * Duration the condition must be true before firing (ISO-8601 duration format)
+     * @type {string}
+     * @memberof AlertRuleResponse
+     */
+    'for_duration': string;
+    /**
+     * 
+     * @type {AlertSeverity}
+     * @memberof AlertRuleResponse
+     */
+    'severity': AlertSeverity;
+    /**
+     * Whether the alert rule is enabled
+     * @type {boolean}
+     * @memberof AlertRuleResponse
+     */
+    'enabled': boolean;
+    /**
+     * List of alert receiver IDs to send notifications to
+     * @type {Array<string>}
+     * @memberof AlertRuleResponse
+     */
+    'alert_receiver_ids': Array<string>;
+    /**
+     * 
+     * @type {AlertPresentationResponse}
+     * @memberof AlertRuleResponse
+     */
+    'presentation': AlertPresentationResponse;
+}
+
+
+/**
+ * Alert severity level:         - WARNING: Non-critical issue requiring attention         - CRITICAL: Critical issue requiring immediate action
+ * @export
+ * @enum {string}
+ */
+
+export const AlertSeverity = {
+    WARNING: 'WARNING',
+    CRITICAL: 'CRITICAL'
+} as const;
+
+export type AlertSeverity = typeof AlertSeverity[keyof typeof AlertSeverity];
 
 
 /**
@@ -19787,6 +20052,356 @@ export class AlertReceiversApi extends BaseAPI {
      */
     public getAlertReceivers(organizationId: string, options?: RawAxiosRequestConfig) {
         return AlertReceiversApiFp(this.configuration).getAlertReceivers(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * AlertRulesApi - axios parameter creator
+ * @export
+ */
+export const AlertRulesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Create a new alert rule with PromQL expression
+         * @summary Create alert rule
+         * @param {AlertRuleCreationRequest} [alertRuleCreationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAlertRule: async (alertRuleCreationRequest?: AlertRuleCreationRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/alert-rules`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(alertRuleCreationRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete an alert rule
+         * @summary Delete alert rule
+         * @param {string} alertRuleId Alert Rule ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAlertRule: async (alertRuleId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'alertRuleId' is not null or undefined
+            assertParamExists('deleteAlertRule', 'alertRuleId', alertRuleId)
+            const localVarPath = `/api/alert-rules/{alertRuleId}`
+                .replace(`{${"alertRuleId"}}`, encodeURIComponent(String(alertRuleId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Update an existing alert rule
+         * @summary Update alert rule
+         * @param {string} alertRuleId Alert Rule ID
+         * @param {AlertRuleEditRequest} [alertRuleEditRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editAlertRule: async (alertRuleId: string, alertRuleEditRequest?: AlertRuleEditRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'alertRuleId' is not null or undefined
+            assertParamExists('editAlertRule', 'alertRuleId', alertRuleId)
+            const localVarPath = `/api/alert-rules/{alertRuleId}`
+                .replace(`{${"alertRuleId"}}`, encodeURIComponent(String(alertRuleId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(alertRuleEditRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve a specific alert rule by its ID
+         * @summary Get alert rule
+         * @param {string} alertRuleId Alert Rule ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAlertRule: async (alertRuleId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'alertRuleId' is not null or undefined
+            assertParamExists('getAlertRule', 'alertRuleId', alertRuleId)
+            const localVarPath = `/api/alert-rules/{alertRuleId}`
+                .replace(`{${"alertRuleId"}}`, encodeURIComponent(String(alertRuleId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AlertRulesApi - functional programming interface
+ * @export
+ */
+export const AlertRulesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AlertRulesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Create a new alert rule with PromQL expression
+         * @summary Create alert rule
+         * @param {AlertRuleCreationRequest} [alertRuleCreationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createAlertRule(alertRuleCreationRequest?: AlertRuleCreationRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AlertRuleResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createAlertRule(alertRuleCreationRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AlertRulesApi.createAlertRule']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Delete an alert rule
+         * @summary Delete alert rule
+         * @param {string} alertRuleId Alert Rule ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteAlertRule(alertRuleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAlertRule(alertRuleId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AlertRulesApi.deleteAlertRule']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Update an existing alert rule
+         * @summary Update alert rule
+         * @param {string} alertRuleId Alert Rule ID
+         * @param {AlertRuleEditRequest} [alertRuleEditRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editAlertRule(alertRuleId: string, alertRuleEditRequest?: AlertRuleEditRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AlertRuleResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editAlertRule(alertRuleId, alertRuleEditRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AlertRulesApi.editAlertRule']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Retrieve a specific alert rule by its ID
+         * @summary Get alert rule
+         * @param {string} alertRuleId Alert Rule ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAlertRule(alertRuleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AlertRuleResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAlertRule(alertRuleId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AlertRulesApi.getAlertRule']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AlertRulesApi - factory interface
+ * @export
+ */
+export const AlertRulesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AlertRulesApiFp(configuration)
+    return {
+        /**
+         * Create a new alert rule with PromQL expression
+         * @summary Create alert rule
+         * @param {AlertRuleCreationRequest} [alertRuleCreationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAlertRule(alertRuleCreationRequest?: AlertRuleCreationRequest, options?: RawAxiosRequestConfig): AxiosPromise<AlertRuleResponse> {
+            return localVarFp.createAlertRule(alertRuleCreationRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete an alert rule
+         * @summary Delete alert rule
+         * @param {string} alertRuleId Alert Rule ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAlertRule(alertRuleId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteAlertRule(alertRuleId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Update an existing alert rule
+         * @summary Update alert rule
+         * @param {string} alertRuleId Alert Rule ID
+         * @param {AlertRuleEditRequest} [alertRuleEditRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editAlertRule(alertRuleId: string, alertRuleEditRequest?: AlertRuleEditRequest, options?: RawAxiosRequestConfig): AxiosPromise<AlertRuleResponse> {
+            return localVarFp.editAlertRule(alertRuleId, alertRuleEditRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Retrieve a specific alert rule by its ID
+         * @summary Get alert rule
+         * @param {string} alertRuleId Alert Rule ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAlertRule(alertRuleId: string, options?: RawAxiosRequestConfig): AxiosPromise<AlertRuleResponse> {
+            return localVarFp.getAlertRule(alertRuleId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AlertRulesApi - object-oriented interface
+ * @export
+ * @class AlertRulesApi
+ * @extends {BaseAPI}
+ */
+export class AlertRulesApi extends BaseAPI {
+    /**
+     * Create a new alert rule with PromQL expression
+     * @summary Create alert rule
+     * @param {AlertRuleCreationRequest} [alertRuleCreationRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlertRulesApi
+     */
+    public createAlertRule(alertRuleCreationRequest?: AlertRuleCreationRequest, options?: RawAxiosRequestConfig) {
+        return AlertRulesApiFp(this.configuration).createAlertRule(alertRuleCreationRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete an alert rule
+     * @summary Delete alert rule
+     * @param {string} alertRuleId Alert Rule ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlertRulesApi
+     */
+    public deleteAlertRule(alertRuleId: string, options?: RawAxiosRequestConfig) {
+        return AlertRulesApiFp(this.configuration).deleteAlertRule(alertRuleId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Update an existing alert rule
+     * @summary Update alert rule
+     * @param {string} alertRuleId Alert Rule ID
+     * @param {AlertRuleEditRequest} [alertRuleEditRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlertRulesApi
+     */
+    public editAlertRule(alertRuleId: string, alertRuleEditRequest?: AlertRuleEditRequest, options?: RawAxiosRequestConfig) {
+        return AlertRulesApiFp(this.configuration).editAlertRule(alertRuleId, alertRuleEditRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Retrieve a specific alert rule by its ID
+     * @summary Get alert rule
+     * @param {string} alertRuleId Alert Rule ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlertRulesApi
+     */
+    public getAlertRule(alertRuleId: string, options?: RawAxiosRequestConfig) {
+        return AlertRulesApiFp(this.configuration).getAlertRule(alertRuleId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
