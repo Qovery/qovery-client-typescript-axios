@@ -18185,10 +18185,8 @@ export interface TerraformDeployRequest {
 
 export const TerraformDeployRequestActionEnum = {
     PLAN: 'PLAN',
-    PLAN_AND_APPLY: 'PLAN_AND_APPLY',
     FORCE_UNLOCK: 'FORCE_UNLOCK',
-    MIGRATE_STATE: 'MIGRATE_STATE',
-    DESTROY: 'DESTROY'
+    MIGRATE_STATE: 'MIGRATE_STATE'
 } as const;
 
 export type TerraformDeployRequestActionEnum = typeof TerraformDeployRequestActionEnum[keyof typeof TerraformDeployRequestActionEnum];
