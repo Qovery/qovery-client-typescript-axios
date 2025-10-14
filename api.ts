@@ -7493,7 +7493,7 @@ export interface DeploymentHistoryService {
      * @type {StatusDetails}
      * @memberof DeploymentHistoryService
      */
-    'status_details'?: StatusDetails;
+    'status_details': StatusDetails;
     /**
      * 
      * @type {string}
