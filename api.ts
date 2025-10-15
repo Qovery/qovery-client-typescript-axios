@@ -17542,6 +17542,24 @@ export interface ServiceStorageStorageInner {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export const ServiceSubActionEnum = {
+    NONE: 'NONE',
+    TERRAFORM_PLAN_ONLY: 'TERRAFORM_PLAN_ONLY',
+    TERRAFORM_PLAN_AND_APPLY: 'TERRAFORM_PLAN_AND_APPLY',
+    TERRAFORM_DESTROY: 'TERRAFORM_DESTROY',
+    TERRAFORM_FORCE_UNLOCK_STATE: 'TERRAFORM_FORCE_UNLOCK_STATE',
+    TERRAFORM_MIGRATE_STATE: 'TERRAFORM_MIGRATE_STATE'
+} as const;
+
+export type ServiceSubActionEnum = typeof ServiceSubActionEnum[keyof typeof ServiceSubActionEnum];
+
+
+/**
+ * 
+ * @export
  * @interface ServiceTotalNumber
  */
 export interface ServiceTotalNumber {
@@ -18053,6 +18071,12 @@ export interface StatusDetails {
      * @memberof StatusDetails
      */
     'status': ServiceActionStatusEnum;
+    /**
+     * 
+     * @type {ServiceSubActionEnum}
+     * @memberof StatusDetails
+     */
+    'sub_action': ServiceSubActionEnum;
 }
 
 
