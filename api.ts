@@ -12500,6 +12500,12 @@ export interface KarpenterGpuNodePoolOverride {
      * @memberof KarpenterGpuNodePoolOverride
      */
     'disk_size_in_gib'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof KarpenterGpuNodePoolOverride
+     */
+    'spot_enabled'?: boolean;
 }
 /**
  * 
