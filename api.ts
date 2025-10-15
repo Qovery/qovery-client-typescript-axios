@@ -8976,43 +8976,43 @@ export interface EnvironmentStatuses {
      * @type {EnvironmentStatus}
      * @memberof EnvironmentStatuses
      */
-    'environment'?: EnvironmentStatus;
+    'environment': EnvironmentStatus;
     /**
      * 
      * @type {Array<Status>}
      * @memberof EnvironmentStatuses
      */
-    'applications'?: Array<Status>;
+    'applications': Array<Status>;
     /**
      * 
      * @type {Array<Status>}
      * @memberof EnvironmentStatuses
      */
-    'containers'?: Array<Status>;
+    'containers': Array<Status>;
     /**
      * 
      * @type {Array<Status>}
      * @memberof EnvironmentStatuses
      */
-    'jobs'?: Array<Status>;
+    'jobs': Array<Status>;
     /**
      * 
      * @type {Array<Status>}
      * @memberof EnvironmentStatuses
      */
-    'databases'?: Array<Status>;
+    'databases': Array<Status>;
     /**
      * 
      * @type {Array<Status>}
      * @memberof EnvironmentStatuses
      */
-    'helms'?: Array<Status>;
+    'helms': Array<Status>;
     /**
      * 
      * @type {Array<Status>}
      * @memberof EnvironmentStatuses
      */
-    'terraforms'?: Array<Status>;
+    'terraforms': Array<Status>;
 }
 /**
  * 
@@ -16538,7 +16538,7 @@ export interface ReferenceObjectStatus {
      * @type {boolean}
      * @memberof ReferenceObjectStatus
      */
-    'is_part_last_deployment'?: boolean;
+    'is_part_last_deployment': boolean;
     /**
      * 
      * @type {ServiceStepMetrics}
@@ -16562,13 +16562,13 @@ export interface ReferenceObjectStatus {
      * @type {string}
      * @memberof ReferenceObjectStatus
      */
-    'deployment_request_id'?: string | null;
+    'deployment_request_id': string | null;
     /**
      * 
      * @type {number}
      * @memberof ReferenceObjectStatus
      */
-    'deployment_requests_count'?: number;
+    'deployment_requests_count': number;
 }
 
 
@@ -17433,19 +17433,19 @@ export interface ServiceStepMetrics {
      * @type {number}
      * @memberof ServiceStepMetrics
      */
-    'total_duration_sec'?: number | null;
+    'total_duration_sec': number | null;
     /**
      * The total duration in seconds of the service deployment without queuing steps.
      * @type {number}
      * @memberof ServiceStepMetrics
      */
-    'total_computing_duration_sec'?: number;
+    'total_computing_duration_sec': number;
     /**
      * A list of metrics for deployment steps of the service.
      * @type {Array<ServiceStepMetric>}
      * @memberof ServiceStepMetrics
      */
-    'details'?: Array<ServiceStepMetric>;
+    'details': Array<ServiceStepMetric>;
 }
 /**
  * 
@@ -18019,7 +18019,7 @@ export interface Status {
      * @type {boolean}
      * @memberof Status
      */
-    'is_part_last_deployment'?: boolean;
+    'is_part_last_deployment': boolean;
     /**
      * 
      * @type {ServiceStepMetrics}
@@ -18043,13 +18043,13 @@ export interface Status {
      * @type {string}
      * @memberof Status
      */
-    'deployment_request_id'?: string | null;
+    'deployment_request_id': string | null;
     /**
      * 
      * @type {number}
      * @memberof Status
      */
-    'deployment_requests_count'?: number;
+    'deployment_requests_count': number;
 }
 
 
