@@ -390,6 +390,12 @@ export interface AlertRuleCreationRequest {
      */
     'severity': AlertSeverity;
     /**
+     * 
+     * @type {AlertPresentation}
+     * @memberof AlertRuleCreationRequest
+     */
+    'presentation': AlertPresentation;
+    /**
      * Whether the alert rule is enabled
      * @type {boolean}
      * @memberof AlertRuleCreationRequest
@@ -403,10 +409,10 @@ export interface AlertRuleCreationRequest {
     'alert_receiver_ids': Array<string>;
     /**
      * 
-     * @type {AlertPresentation}
+     * @type {AlertTarget}
      * @memberof AlertRuleCreationRequest
      */
-    'presentation': AlertPresentation;
+    'target': AlertTarget;
 }
 
 
@@ -551,6 +557,12 @@ export interface AlertRuleResponse {
      * @memberof AlertRuleResponse
      */
     'presentation': AlertPresentationResponse;
+    /**
+     * 
+     * @type {AlertTarget}
+     * @memberof AlertRuleResponse
+     */
+    'target': AlertTarget;
 }
 
 
@@ -566,6 +578,47 @@ export const AlertSeverity = {
 } as const;
 
 export type AlertSeverity = typeof AlertSeverity[keyof typeof AlertSeverity];
+
+
+/**
+ * 
+ * @export
+ * @interface AlertTarget
+ */
+export interface AlertTarget {
+    /**
+     * 
+     * @type {AlertTargetType}
+     * @memberof AlertTarget
+     */
+    'target_type': AlertTargetType;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertTarget
+     */
+    'target_id': string;
+}
+
+
+/**
+ * The target of an alert
+ * @export
+ * @enum {string}
+ */
+
+export const AlertTargetType = {
+    CLUSTER: ' CLUSTER',
+    ENVIRONMENT: 'ENVIRONMENT',
+    APPLICATION: 'APPLICATION',
+    CONTAINER: 'CONTAINER',
+    JOB: 'JOB',
+    CRONJOB: 'CRONJOB',
+    HELM: 'HELM',
+    TERRAFORM: 'TERRAFORM'
+} as const;
+
+export type AlertTargetType = typeof AlertTargetType[keyof typeof AlertTargetType];
 
 
 /**
