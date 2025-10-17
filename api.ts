@@ -18811,6 +18811,12 @@ export interface TerraformVariableDefinition {
      * @memberof TerraformVariableDefinition
      */
     'default'?: string | null;
+    /**
+     * The path inside your git repository where the variable is defined
+     * @type {string}
+     * @memberof TerraformVariableDefinition
+     */
+    'source': string;
 }
 /**
  * 
