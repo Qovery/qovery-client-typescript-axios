@@ -30351,10 +30351,11 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [step] 
          * @param {string} [interval] 
          * @param {string} [direction] 
+         * @param {string} [time] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getClusterLogs: async (clusterId: string, endpoint: string, query: string, start?: string, end?: string, limit?: string, since?: string, step?: string, interval?: string, direction?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getClusterLogs: async (clusterId: string, endpoint: string, query: string, start?: string, end?: string, limit?: string, since?: string, step?: string, interval?: string, direction?: string, time?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'clusterId' is not null or undefined
             assertParamExists('getClusterLogs', 'clusterId', clusterId)
             // verify required parameter 'endpoint' is not null or undefined
@@ -30415,6 +30416,10 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
 
             if (direction !== undefined) {
                 localVarQueryParameter['direction'] = direction;
+            }
+
+            if (time !== undefined) {
+                localVarQueryParameter['time'] = time;
             }
 
 
@@ -31386,11 +31391,12 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          * @param {string} [step] 
          * @param {string} [interval] 
          * @param {string} [direction] 
+         * @param {string} [time] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getClusterLogs(clusterId: string, endpoint: string, query: string, start?: string, end?: string, limit?: string, since?: string, step?: string, interval?: string, direction?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterLogsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterLogs(clusterId, endpoint, query, start, end, limit, since, step, interval, direction, options);
+        async getClusterLogs(clusterId: string, endpoint: string, query: string, start?: string, end?: string, limit?: string, since?: string, step?: string, interval?: string, direction?: string, time?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterLogsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterLogs(clusterId, endpoint, query, start, end, limit, since, step, interval, direction, time, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ClustersApi.getClusterLogs']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -31774,11 +31780,12 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          * @param {string} [step] 
          * @param {string} [interval] 
          * @param {string} [direction] 
+         * @param {string} [time] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getClusterLogs(clusterId: string, endpoint: string, query: string, start?: string, end?: string, limit?: string, since?: string, step?: string, interval?: string, direction?: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterLogsResponse> {
-            return localVarFp.getClusterLogs(clusterId, endpoint, query, start, end, limit, since, step, interval, direction, options).then((request) => request(axios, basePath));
+        getClusterLogs(clusterId: string, endpoint: string, query: string, start?: string, end?: string, limit?: string, since?: string, step?: string, interval?: string, direction?: string, time?: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterLogsResponse> {
+            return localVarFp.getClusterLogs(clusterId, endpoint, query, start, end, limit, since, step, interval, direction, time, options).then((request) => request(axios, basePath));
         },
         /**
          * Fetch cluster metrics.
@@ -32131,12 +32138,13 @@ export class ClustersApi extends BaseAPI {
      * @param {string} [step] 
      * @param {string} [interval] 
      * @param {string} [direction] 
+     * @param {string} [time] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ClustersApi
      */
-    public getClusterLogs(clusterId: string, endpoint: string, query: string, start?: string, end?: string, limit?: string, since?: string, step?: string, interval?: string, direction?: string, options?: RawAxiosRequestConfig) {
-        return ClustersApiFp(this.configuration).getClusterLogs(clusterId, endpoint, query, start, end, limit, since, step, interval, direction, options).then((request) => request(this.axios, this.basePath));
+    public getClusterLogs(clusterId: string, endpoint: string, query: string, start?: string, end?: string, limit?: string, since?: string, step?: string, interval?: string, direction?: string, time?: string, options?: RawAxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).getClusterLogs(clusterId, endpoint, query, start, end, limit, since, step, interval, direction, time, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
