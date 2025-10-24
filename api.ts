@@ -476,6 +476,19 @@ export interface AlertRuleEditRequest {
 /**
  * 
  * @export
+ * @interface AlertRuleList
+ */
+export interface AlertRuleList {
+    /**
+     * 
+     * @type {Array<AlertRuleResponse>}
+     * @memberof AlertRuleList
+     */
+    'results': Array<AlertRuleResponse>;
+}
+/**
+ * 
+ * @export
  * @interface AlertRuleResponse
  */
 export interface AlertRuleResponse {
@@ -563,7 +576,31 @@ export interface AlertRuleResponse {
      * @memberof AlertRuleResponse
      */
     'target': AlertTarget;
+    /**
+     * 
+     * @type {AlertRuleState}
+     * @memberof AlertRuleResponse
+     */
+    'state': AlertRuleState;
 }
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const AlertRuleState = {
+    UNDEPLOYED: 'UNDEPLOYED',
+    OK: 'OK',
+    TRIGGERED: 'TRIGGERED',
+    FIRED: 'FIRED',
+    NOTIFIED: 'NOTIFIED',
+    SUPPRESSED: 'SUPPRESSED'
+} as const;
+
+export type AlertRuleState = typeof AlertRuleState[keyof typeof AlertRuleState];
 
 
 /**
@@ -19902,7 +19939,7 @@ export const AlertReceiversApiAxiosParamCreator = function (configuration?: Conf
         getAlertReceivers: async (organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('getAlertReceivers', 'organizationId', organizationId)
-            const localVarPath = `/api/organization/{organizationId}/alert-receivers`
+            const localVarPath = `/organization/{organizationId}/alert-receivers`
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -20318,6 +20355,47 @@ export const AlertRulesApiAxiosParamCreator = function (configuration?: Configur
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Retrieve all alert rules for a specific organization
+         * @summary List alert rules
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAlertRules: async (organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getAlertRules', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/alert-rules`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -20381,6 +20459,19 @@ export const AlertRulesApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['AlertRulesApi.getAlertRule']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Retrieve all alert rules for a specific organization
+         * @summary List alert rules
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAlertRules(organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AlertRuleList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAlertRules(organizationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AlertRulesApi.getAlertRules']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -20431,6 +20522,16 @@ export const AlertRulesApiFactory = function (configuration?: Configuration, bas
          */
         getAlertRule(alertRuleId: string, options?: RawAxiosRequestConfig): AxiosPromise<AlertRuleResponse> {
             return localVarFp.getAlertRule(alertRuleId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Retrieve all alert rules for a specific organization
+         * @summary List alert rules
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAlertRules(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<AlertRuleList> {
+            return localVarFp.getAlertRules(organizationId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -20489,6 +20590,18 @@ export class AlertRulesApi extends BaseAPI {
      */
     public getAlertRule(alertRuleId: string, options?: RawAxiosRequestConfig) {
         return AlertRulesApiFp(this.configuration).getAlertRule(alertRuleId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Retrieve all alert rules for a specific organization
+     * @summary List alert rules
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlertRulesApi
+     */
+    public getAlertRules(organizationId: string, options?: RawAxiosRequestConfig) {
+        return AlertRulesApiFp(this.configuration).getAlertRules(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
