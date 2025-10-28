@@ -595,9 +595,10 @@ export const AlertRuleState = {
     UNDEPLOYED: 'UNDEPLOYED',
     OK: 'OK',
     TRIGGERED: 'TRIGGERED',
-    FIRED: 'FIRED',
+    PENDING_NOTIFICATION: 'PENDING_NOTIFICATION',
     NOTIFIED: 'NOTIFIED',
-    SUPPRESSED: 'SUPPRESSED'
+    SUPPRESSED: 'SUPPRESSED',
+    UNROUTED: 'UNROUTED'
 } as const;
 
 export type AlertRuleState = typeof AlertRuleState[keyof typeof AlertRuleState];
