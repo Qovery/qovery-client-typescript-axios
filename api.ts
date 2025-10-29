@@ -18990,13 +18990,13 @@ export interface TerraformVersionResponse {
      * @type {string}
      * @memberof TerraformVersionResponse
      */
-    'engine'?: TerraformVersionResponseEngineEnum;
+    'engine': TerraformVersionResponseEngineEnum;
     /**
      * Terraform version string
      * @type {string}
      * @memberof TerraformVersionResponse
      */
-    'version'?: string;
+    'version': string;
 }
 
 export const TerraformVersionResponseEngineEnum = {
