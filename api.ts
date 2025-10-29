@@ -18908,12 +18908,26 @@ export interface TerraformVariablesSourceResponse {
  */
 export interface TerraformVersionResponse {
     /**
+     * Terraform engine
+     * @type {string}
+     * @memberof TerraformVersionResponse
+     */
+    'engine'?: TerraformVersionResponseEngineEnum;
+    /**
      * Terraform version string
      * @type {string}
      * @memberof TerraformVersionResponse
      */
     'version'?: string;
 }
+
+export const TerraformVersionResponseEngineEnum = {
+    TERRAFORM: 'TERRAFORM',
+    OPEN_TOFU: 'OPEN_TOFU'
+} as const;
+
+export type TerraformVersionResponseEngineEnum = typeof TerraformVersionResponseEngineEnum[keyof typeof TerraformVersionResponseEngineEnum];
+
 /**
  * 
  * @export
@@ -61571,7 +61585,7 @@ export const TerraformMainCallsApiAxiosParamCreator = function (configuration?: 
          * @throws {RequiredError}
          */
         listTerraformVersions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/terraform/available-versions`;
+            const localVarPath = `/terraform/availableVersion`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
