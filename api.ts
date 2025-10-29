@@ -9707,6 +9707,34 @@ export interface GitFileCheckRequest {
     'files': Array<string>;
 }
 /**
+ * Git provider information
+ * @export
+ * @interface GitProvider
+ */
+export interface GitProvider {
+    /**
+     * The type of git provider
+     * @type {string}
+     * @memberof GitProvider
+     */
+    'kind': GitProviderKindEnum;
+    /**
+     * Custom git provider URL (for self-hosted instances)
+     * @type {string}
+     * @memberof GitProvider
+     */
+    'url'?: string | null;
+}
+
+export const GitProviderKindEnum = {
+    GITHUB: 'GITHUB',
+    GITLAB: 'GITLAB',
+    BITBUCKET: 'BITBUCKET'
+} as const;
+
+export type GitProviderKindEnum = typeof GitProviderKindEnum[keyof typeof GitProviderKindEnum];
+
+/**
  * 
  * @export
  * @enum {string}
@@ -9783,6 +9811,43 @@ export interface GitRepositoryBranchResponseList {
      * @memberof GitRepositoryBranchResponseList
      */
     'results'?: Array<GitRepositoryBranch>;
+}
+/**
+ * Git repository information for Terraform operations
+ * @export
+ * @interface GitRepositoryRequest
+ */
+export interface GitRepositoryRequest {
+    /**
+     * Git repository URL
+     * @type {string}
+     * @memberof GitRepositoryRequest
+     */
+    'url': string;
+    /**
+     * Name of the branch to use (optional)
+     * @type {string}
+     * @memberof GitRepositoryRequest
+     */
+    'branch'?: string | null;
+    /**
+     * Root path within the repository
+     * @type {string}
+     * @memberof GitRepositoryRequest
+     */
+    'root_path'?: string;
+    /**
+     * The git token id on Qovery side
+     * @type {string}
+     * @memberof GitRepositoryRequest
+     */
+    'git_token_id'?: string | null;
+    /**
+     * 
+     * @type {GitProvider}
+     * @memberof GitRepositoryRequest
+     */
+    'provider': GitProvider;
 }
 /**
  * 
@@ -13570,6 +13635,19 @@ export interface ListServicesByOrganizationId200Response {
      * @memberof ListServicesByOrganizationId200Response
      */
     'results'?: Array<ServiceLightResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface ListTfVarsFilesFromGitRepo200Response
+ */
+export interface ListTfVarsFilesFromGitRepo200Response {
+    /**
+     * 
+     * @type {Array<TfVarsFileResponse>}
+     * @memberof ListTfVarsFilesFromGitRepo200Response
+     */
+    'results'?: Array<TfVarsFileResponse>;
 }
 /**
  * 
@@ -18940,6 +19018,38 @@ export interface TerraformVersionResponseList {
      * @memberof TerraformVersionResponseList
      */
     'results'?: Array<TerraformVersionResponse>;
+}
+/**
+ * Represents a Terraform tfvars file with its variables
+ * @export
+ * @interface TfVarsFileResponse
+ */
+export interface TfVarsFileResponse {
+    /**
+     * The path to the tfvars file within the Git repository
+     * @type {string}
+     * @memberof TfVarsFileResponse
+     */
+    'source': string;
+    /**
+     * Map of variable names to their values from the tfvars file
+     * @type {{ [key: string]: string; }}
+     * @memberof TfVarsFileResponse
+     */
+    'variables': { [key: string]: string; };
+}
+/**
+ * Request to list Terraform tfvars files from a Git repository
+ * @export
+ * @interface TfVarsListRequest
+ */
+export interface TfVarsListRequest {
+    /**
+     * 
+     * @type {GitRepositoryRequest}
+     * @memberof TfVarsListRequest
+     */
+    'git_repository': GitRepositoryRequest;
 }
 /**
  * 
@@ -56744,6 +56854,53 @@ export const OrganizationMainCallsApiAxiosParamCreator = function (configuration
         },
         /**
          * 
+         * @summary List Terraform tfvars files from Git repository
+         * @param {string} organizationId Organization ID
+         * @param {TfVarsListRequest} tfVarsListRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listTfVarsFilesFromGitRepo: async (organizationId: string, tfVarsListRequest: TfVarsListRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listTfVarsFilesFromGitRepo', 'organizationId', organizationId)
+            // verify required parameter 'tfVarsListRequest' is not null or undefined
+            assertParamExists('listTfVarsFilesFromGitRepo', 'tfVarsListRequest', tfVarsListRequest)
+            const localVarPath = `/organization/{organizationId}/listTfVarsFilesFromGitRepo`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(tfVarsListRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Parse Terraform variables from Git repository
          * @param {string} organizationId Organization ID
          * @param {TerraformVariableParsingRequest} terraformVariableParsingRequest 
@@ -57020,6 +57177,20 @@ export const OrganizationMainCallsApiFp = function(configuration?: Configuration
         },
         /**
          * 
+         * @summary List Terraform tfvars files from Git repository
+         * @param {string} organizationId Organization ID
+         * @param {TfVarsListRequest} tfVarsListRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listTfVarsFilesFromGitRepo(organizationId: string, tfVarsListRequest: TfVarsListRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListTfVarsFilesFromGitRepo200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listTfVarsFilesFromGitRepo(organizationId, tfVarsListRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrganizationMainCallsApi.listTfVarsFilesFromGitRepo']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Parse Terraform variables from Git repository
          * @param {string} organizationId Organization ID
          * @param {TerraformVariableParsingRequest} terraformVariableParsingRequest 
@@ -57212,6 +57383,17 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
          */
         listServicesByOrganizationId(organizationId: string, projectId?: string | null, environmentId?: string | null, clusterId?: string, options?: RawAxiosRequestConfig): AxiosPromise<ListServicesByOrganizationId200Response> {
             return localVarFp.listServicesByOrganizationId(organizationId, projectId, environmentId, clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List Terraform tfvars files from Git repository
+         * @param {string} organizationId Organization ID
+         * @param {TfVarsListRequest} tfVarsListRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listTfVarsFilesFromGitRepo(organizationId: string, tfVarsListRequest: TfVarsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<ListTfVarsFilesFromGitRepo200Response> {
+            return localVarFp.listTfVarsFilesFromGitRepo(organizationId, tfVarsListRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -57435,6 +57617,19 @@ export class OrganizationMainCallsApi extends BaseAPI {
      */
     public listServicesByOrganizationId(organizationId: string, projectId?: string | null, environmentId?: string | null, clusterId?: string, options?: RawAxiosRequestConfig) {
         return OrganizationMainCallsApiFp(this.configuration).listServicesByOrganizationId(organizationId, projectId, environmentId, clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List Terraform tfvars files from Git repository
+     * @param {string} organizationId Organization ID
+     * @param {TfVarsListRequest} tfVarsListRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationMainCallsApi
+     */
+    public listTfVarsFilesFromGitRepo(organizationId: string, tfVarsListRequest: TfVarsListRequest, options?: RawAxiosRequestConfig) {
+        return OrganizationMainCallsApiFp(this.configuration).listTfVarsFilesFromGitRepo(organizationId, tfVarsListRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
