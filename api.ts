@@ -19020,6 +19020,59 @@ export interface TerraformVersionResponseList {
     'results'?: Array<TerraformVersionResponse>;
 }
 /**
+ * @type TfVarsDiscoveryMode
+ * Discovery mode for Terraform tfvars files - either auto-discover or specify paths
+ * @export
+ */
+export type TfVarsDiscoveryMode = { type: 'AutoDiscover' } & TfVarsDiscoveryModeAutoDiscover | { type: 'SpecificPaths' } & TfVarsDiscoveryModeSpecificPaths;
+
+/**
+ * Automatically discover all tfvars files in the repository
+ * @export
+ * @interface TfVarsDiscoveryModeAutoDiscover
+ */
+export interface TfVarsDiscoveryModeAutoDiscover {
+    /**
+     * Discriminator for auto-discovery mode
+     * @type {string}
+     * @memberof TfVarsDiscoveryModeAutoDiscover
+     */
+    'type': TfVarsDiscoveryModeAutoDiscoverTypeEnum;
+}
+
+export const TfVarsDiscoveryModeAutoDiscoverTypeEnum = {
+    AUTO_DISCOVER: 'AutoDiscover'
+} as const;
+
+export type TfVarsDiscoveryModeAutoDiscoverTypeEnum = typeof TfVarsDiscoveryModeAutoDiscoverTypeEnum[keyof typeof TfVarsDiscoveryModeAutoDiscoverTypeEnum];
+
+/**
+ * Discover tfvars files at specific paths only
+ * @export
+ * @interface TfVarsDiscoveryModeSpecificPaths
+ */
+export interface TfVarsDiscoveryModeSpecificPaths {
+    /**
+     * Discriminator for specific paths mode
+     * @type {string}
+     * @memberof TfVarsDiscoveryModeSpecificPaths
+     */
+    'type': TfVarsDiscoveryModeSpecificPathsTypeEnum;
+    /**
+     * List of specific paths to tfvars files
+     * @type {Array<string>}
+     * @memberof TfVarsDiscoveryModeSpecificPaths
+     */
+    'paths': Array<string>;
+}
+
+export const TfVarsDiscoveryModeSpecificPathsTypeEnum = {
+    SPECIFIC_PATHS: 'SpecificPaths'
+} as const;
+
+export type TfVarsDiscoveryModeSpecificPathsTypeEnum = typeof TfVarsDiscoveryModeSpecificPathsTypeEnum[keyof typeof TfVarsDiscoveryModeSpecificPathsTypeEnum];
+
+/**
  * Represents a Terraform tfvars file with its variables
  * @export
  * @interface TfVarsFileResponse
@@ -19050,6 +19103,12 @@ export interface TfVarsListRequest {
      * @memberof TfVarsListRequest
      */
     'git_repository': GitRepositoryRequest;
+    /**
+     * 
+     * @type {TfVarsDiscoveryMode}
+     * @memberof TfVarsListRequest
+     */
+    'mode': TfVarsDiscoveryMode;
 }
 /**
  * 
