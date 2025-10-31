@@ -9707,34 +9707,6 @@ export interface GitFileCheckRequest {
     'files': Array<string>;
 }
 /**
- * Git provider information
- * @export
- * @interface GitProvider
- */
-export interface GitProvider {
-    /**
-     * The type of git provider
-     * @type {string}
-     * @memberof GitProvider
-     */
-    'kind': GitProviderKindEnum;
-    /**
-     * Custom git provider URL (for self-hosted instances)
-     * @type {string}
-     * @memberof GitProvider
-     */
-    'url'?: string | null;
-}
-
-export const GitProviderKindEnum = {
-    GITHUB: 'GITHUB',
-    GITLAB: 'GITLAB',
-    BITBUCKET: 'BITBUCKET'
-} as const;
-
-export type GitProviderKindEnum = typeof GitProviderKindEnum[keyof typeof GitProviderKindEnum];
-
-/**
  * 
  * @export
  * @enum {string}
@@ -9811,43 +9783,6 @@ export interface GitRepositoryBranchResponseList {
      * @memberof GitRepositoryBranchResponseList
      */
     'results'?: Array<GitRepositoryBranch>;
-}
-/**
- * Git repository information for Terraform operations
- * @export
- * @interface GitRepositoryRequest
- */
-export interface GitRepositoryRequest {
-    /**
-     * Git repository URL
-     * @type {string}
-     * @memberof GitRepositoryRequest
-     */
-    'url': string;
-    /**
-     * Name of the branch to use (optional)
-     * @type {string}
-     * @memberof GitRepositoryRequest
-     */
-    'branch'?: string | null;
-    /**
-     * Root path within the repository
-     * @type {string}
-     * @memberof GitRepositoryRequest
-     */
-    'root_path'?: string;
-    /**
-     * The git token id on Qovery side
-     * @type {string}
-     * @memberof GitRepositoryRequest
-     */
-    'git_token_id'?: string | null;
-    /**
-     * 
-     * @type {GitProvider}
-     * @memberof GitRepositoryRequest
-     */
-    'provider': GitProvider;
 }
 /**
  * 
@@ -19099,10 +19034,10 @@ export interface TfVarsFileResponse {
 export interface TfVarsListRequest {
     /**
      * 
-     * @type {GitRepositoryRequest}
+     * @type {ApplicationGitRepositoryRequest}
      * @memberof TfVarsListRequest
      */
-    'git_repository': GitRepositoryRequest;
+    'git_repository': ApplicationGitRepositoryRequest;
     /**
      * 
      * @type {TfVarsDiscoveryMode}
