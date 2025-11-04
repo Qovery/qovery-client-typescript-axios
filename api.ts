@@ -662,6 +662,43 @@ export type AlertTargetType = typeof AlertTargetType[keyof typeof AlertTargetTyp
 /**
  * 
  * @export
+ * @interface AlertingConfig
+ */
+export interface AlertingConfig {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AlertingConfig
+     */
+    'enabled': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertingConfig
+     */
+    'default_rule_labels'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertingConfig
+     */
+    'spec_config_secret'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertingConfig
+     */
+    'spec_external_url'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertingConfig
+     */
+    'config_name'?: string;
+}
+/**
+ * 
+ * @export
  * @interface Annotation
  */
 export interface Annotation {
@@ -2683,6 +2720,19 @@ export const CloudVendorEnum = {
 export type CloudVendorEnum = typeof CloudVendorEnum[keyof typeof CloudVendorEnum];
 
 
+/**
+ * 
+ * @export
+ * @interface CloudWatchExportConfig
+ */
+export interface CloudWatchExportConfig {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CloudWatchExportConfig
+     */
+    'enabled': boolean;
+}
 /**
  * 
  * @export
@@ -11633,6 +11683,19 @@ export interface IngressDeploymentStatusResponse {
 /**
  * 
  * @export
+ * @interface InternalNetworkMonitoring
+ */
+export interface InternalNetworkMonitoring {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof InternalNetworkMonitoring
+     */
+    'enabled': boolean;
+}
+/**
+ * 
+ * @export
  * @interface InviteMember
  */
 export interface InviteMember {
@@ -13805,6 +13868,36 @@ export interface MetricsConfigurationManagedByQovery {
      * @memberof MetricsConfigurationManagedByQovery
      */
     'kind'?: MetricsConfigurationManagedByQoveryKindEnum;
+    /**
+     * 
+     * @type {ObservabilityResourceProfile}
+     * @memberof MetricsConfigurationManagedByQovery
+     */
+    'resource_profile'?: ObservabilityResourceProfile;
+    /**
+     * 
+     * @type {CloudWatchExportConfig}
+     * @memberof MetricsConfigurationManagedByQovery
+     */
+    'cloudWatchExportConfig'?: CloudWatchExportConfig;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MetricsConfigurationManagedByQovery
+     */
+    'highAvailability'?: boolean;
+    /**
+     * 
+     * @type {InternalNetworkMonitoring}
+     * @memberof MetricsConfigurationManagedByQovery
+     */
+    'internalNetworkMonitoring'?: InternalNetworkMonitoring;
+    /**
+     * 
+     * @type {AlertingConfig}
+     * @memberof MetricsConfigurationManagedByQovery
+     */
+    'alerting'?: AlertingConfig;
 }
 
 export const MetricsConfigurationManagedByQoveryKindEnum = {
@@ -13837,6 +13930,21 @@ export interface MetricsParameters {
  * @export
  */
 export type MetricsParametersConfiguration = { kind: 'MANAGED_BY_QOVERY' } & MetricsConfigurationManagedByQovery;
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ObservabilityResourceProfile = {
+    LOW: 'LOW',
+    NORMAL: 'NORMAL',
+    HIGH: 'HIGH'
+} as const;
+
+export type ObservabilityResourceProfile = typeof ObservabilityResourceProfile[keyof typeof ObservabilityResourceProfile];
+
 
 /**
  * 
