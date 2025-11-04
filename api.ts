@@ -18521,6 +18521,20 @@ export interface TerraformDeploymentRestrictionResponseList {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export const TerraformEngineEnum = {
+    TERRAFORM: 'TERRAFORM',
+    OPEN_TOFU: 'OPEN_TOFU'
+} as const;
+
+export type TerraformEngineEnum = typeof TerraformEngineEnum[keyof typeof TerraformEngineEnum];
+
+
+/**
+ * 
+ * @export
  * @interface TerraformFilesSource
  */
 export interface TerraformFilesSource {
@@ -18622,20 +18636,6 @@ export interface TerraformJobResourcesResponse {
 /**
  * 
  * @export
- * @enum {string}
- */
-
-export const TerraformProviderEnum = {
-    TERRAFORM: 'TERRAFORM',
-    OPEN_TOFU: 'OPEN_TOFU'
-} as const;
-
-export type TerraformProviderEnum = typeof TerraformProviderEnum[keyof typeof TerraformProviderEnum];
-
-
-/**
- * 
- * @export
  * @interface TerraformProviderVersion
  */
 export interface TerraformProviderVersion {
@@ -18696,10 +18696,10 @@ export interface TerraformRequest {
     'backend': TerraformBackend;
     /**
      * 
-     * @type {TerraformProviderEnum}
+     * @type {TerraformEngineEnum}
      * @memberof TerraformRequest
      */
-    'provider': TerraformProviderEnum;
+    'engine': TerraformEngineEnum;
     /**
      * 
      * @type {TerraformProviderVersion}
@@ -18863,10 +18863,10 @@ export interface TerraformResponse {
     'terraform_variables_source': TerraformVariablesSourceResponse;
     /**
      * 
-     * @type {TerraformProviderEnum}
+     * @type {TerraformEngineEnum}
      * @memberof TerraformResponse
      */
-    'provider': TerraformProviderEnum;
+    'engine': TerraformEngineEnum;
     /**
      * 
      * @type {TerraformBackend}
@@ -19078,10 +19078,10 @@ export interface TerraformVariablesSourceResponse {
 export interface TerraformVersionResponse {
     /**
      * 
-     * @type {TerraformProviderEnum}
+     * @type {TerraformEngineEnum}
      * @memberof TerraformVersionResponse
      */
-    'engine': TerraformProviderEnum;
+    'engine': TerraformEngineEnum;
     /**
      * Terraform version string
      * @type {string}
