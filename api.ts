@@ -13879,19 +13879,19 @@ export interface MetricsConfigurationManagedByQovery {
      * @type {CloudWatchExportConfig}
      * @memberof MetricsConfigurationManagedByQovery
      */
-    'cloudWatchExportConfig'?: CloudWatchExportConfig;
+    'cloud_watch_export_config'?: CloudWatchExportConfig;
     /**
      * 
      * @type {boolean}
      * @memberof MetricsConfigurationManagedByQovery
      */
-    'highAvailability'?: boolean;
+    'high_availability'?: boolean;
     /**
      * 
      * @type {InternalNetworkMonitoring}
      * @memberof MetricsConfigurationManagedByQovery
      */
-    'internalNetworkMonitoring'?: InternalNetworkMonitoring;
+    'internal_network_monitoring'?: InternalNetworkMonitoring;
     /**
      * 
      * @type {AlertingConfig}
