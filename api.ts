@@ -19033,11 +19033,11 @@ export interface TerraformVariablesSourceResponse {
  */
 export interface TerraformVersionResponse {
     /**
-     * Terraform engine
-     * @type {string}
+     * 
+     * @type {TerraformProviderEnum}
      * @memberof TerraformVersionResponse
      */
-    'engine': TerraformVersionResponseEngineEnum;
+    'engine': TerraformProviderEnum;
     /**
      * Terraform version string
      * @type {string}
@@ -19046,12 +19046,6 @@ export interface TerraformVersionResponse {
     'version': string;
 }
 
-export const TerraformVersionResponseEngineEnum = {
-    TERRAFORM: 'TERRAFORM',
-    OPEN_TOFU: 'OPEN_TOFU'
-} as const;
-
-export type TerraformVersionResponseEngineEnum = typeof TerraformVersionResponseEngineEnum[keyof typeof TerraformVersionResponseEngineEnum];
 
 /**
  * 
