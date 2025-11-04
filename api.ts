@@ -2727,7 +2727,7 @@ export type CloudVendorEnum = typeof CloudVendorEnum[keyof typeof CloudVendorEnu
  */
 export interface CloudWatchExportConfig {
     /**
-     * 
+     * To enable the cloudwatch exporter.
      * @type {boolean}
      * @memberof CloudWatchExportConfig
      */
