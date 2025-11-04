@@ -18514,6 +18514,20 @@ export interface TerraformJobResourcesResponse {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export const TerraformProviderEnum = {
+    TERRAFORM: 'TERRAFORM',
+    OPEN_TOFU: 'OPEN_TOFU'
+} as const;
+
+export type TerraformProviderEnum = typeof TerraformProviderEnum[keyof typeof TerraformProviderEnum];
+
+
+/**
+ * 
+ * @export
  * @interface TerraformProviderVersion
  */
 export interface TerraformProviderVersion {
@@ -18574,10 +18588,10 @@ export interface TerraformRequest {
     'backend': TerraformBackend;
     /**
      * 
-     * @type {string}
+     * @type {TerraformProviderEnum}
      * @memberof TerraformRequest
      */
-    'provider': TerraformRequestProviderEnum;
+    'provider': TerraformProviderEnum;
     /**
      * 
      * @type {TerraformProviderVersion}
@@ -18616,11 +18630,6 @@ export interface TerraformRequest {
     'action_extra_arguments'?: { [key: string]: Array<string>; };
 }
 
-export const TerraformRequestProviderEnum = {
-    TERRAFORM: 'TERRAFORM'
-} as const;
-
-export type TerraformRequestProviderEnum = typeof TerraformRequestProviderEnum[keyof typeof TerraformRequestProviderEnum];
 
 /**
  * 
@@ -18746,10 +18755,10 @@ export interface TerraformResponse {
     'terraform_variables_source': TerraformVariablesSourceResponse;
     /**
      * 
-     * @type {string}
+     * @type {TerraformProviderEnum}
      * @memberof TerraformResponse
      */
-    'provider': TerraformResponseProviderEnum;
+    'provider': TerraformProviderEnum;
     /**
      * 
      * @type {TerraformBackend}
@@ -18788,11 +18797,6 @@ export interface TerraformResponse {
     'action_extra_arguments': { [key: string]: Array<string>; };
 }
 
-export const TerraformResponseProviderEnum = {
-    TERRAFORM: 'TERRAFORM'
-} as const;
-
-export type TerraformResponseProviderEnum = typeof TerraformResponseProviderEnum[keyof typeof TerraformResponseProviderEnum];
 
 /**
  * @type TerraformResponseAllOfTerraformFilesSource
