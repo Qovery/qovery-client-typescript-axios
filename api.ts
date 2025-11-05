@@ -19044,12 +19044,6 @@ export interface TerraformVariablesSourceRequest {
      * @memberof TerraformVariablesSourceRequest
      */
     'tf_var_file_paths': Array<string>;
-    /**
-     * 
-     * @type {Array<TerraformVarKeyValue>}
-     * @memberof TerraformVariablesSourceRequest
-     */
-    'tf_vars': Array<TerraformVarKeyValue>;
 }
 /**
  * 
@@ -19063,12 +19057,6 @@ export interface TerraformVariablesSourceResponse {
      * @memberof TerraformVariablesSourceResponse
      */
     'tf_var_file_paths': Array<string>;
-    /**
-     * 
-     * @type {Array<TerraformVarKeyValue>}
-     * @memberof TerraformVariablesSourceResponse
-     */
-    'tf_vars': Array<TerraformVarKeyValue>;
 }
 /**
  * 
@@ -20464,7 +20452,7 @@ export const AlertRulesApiAxiosParamCreator = function (configuration?: Configur
          * @throws {RequiredError}
          */
         createAlertRule: async (alertRuleCreationRequest?: AlertRuleCreationRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/alert-rules`;
+            const localVarPath = `/alert-rules`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -20507,7 +20495,7 @@ export const AlertRulesApiAxiosParamCreator = function (configuration?: Configur
         deleteAlertRule: async (alertRuleId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'alertRuleId' is not null or undefined
             assertParamExists('deleteAlertRule', 'alertRuleId', alertRuleId)
-            const localVarPath = `/api/alert-rules/{alertRuleId}`
+            const localVarPath = `/alert-rules/{alertRuleId}`
                 .replace(`{${"alertRuleId"}}`, encodeURIComponent(String(alertRuleId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -20549,7 +20537,7 @@ export const AlertRulesApiAxiosParamCreator = function (configuration?: Configur
         editAlertRule: async (alertRuleId: string, alertRuleEditRequest?: AlertRuleEditRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'alertRuleId' is not null or undefined
             assertParamExists('editAlertRule', 'alertRuleId', alertRuleId)
-            const localVarPath = `/api/alert-rules/{alertRuleId}`
+            const localVarPath = `/alert-rules/{alertRuleId}`
                 .replace(`{${"alertRuleId"}}`, encodeURIComponent(String(alertRuleId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -20593,7 +20581,7 @@ export const AlertRulesApiAxiosParamCreator = function (configuration?: Configur
         getAlertRule: async (alertRuleId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'alertRuleId' is not null or undefined
             assertParamExists('getAlertRule', 'alertRuleId', alertRuleId)
-            const localVarPath = `/api/alert-rules/{alertRuleId}`
+            const localVarPath = `/alert-rules/{alertRuleId}`
                 .replace(`{${"alertRuleId"}}`, encodeURIComponent(String(alertRuleId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
