@@ -15823,7 +15823,7 @@ export interface ParseTerraformVariablesFromGitRepo200Response {
     'results'?: Array<TerraformVariableDefinition>;
 }
 /**
- * BUSINESS & PROFESSIONAL are deprecated
+ * FREE, BUSINESS & PROFESSIONAL are deprecated. 2025 plans are the new plans available.
  * @export
  * @enum {string}
  */
@@ -15835,7 +15835,11 @@ export const PlanEnum = {
     ENTERPRISE: 'ENTERPRISE',
     ENTERPRISE_YEARLY: 'ENTERPRISE_YEARLY',
     PROFESSIONAL: 'PROFESSIONAL',
-    BUSINESS: 'BUSINESS'
+    BUSINESS: 'BUSINESS',
+    USER_2025: 'USER_2025',
+    TEAM_2025: 'TEAM_2025',
+    BUSINESS_2025: 'BUSINESS_2025',
+    ENTERPRISE_2025: 'ENTERPRISE_2025'
 } as const;
 
 export type PlanEnum = typeof PlanEnum[keyof typeof PlanEnum];
