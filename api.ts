@@ -582,6 +582,12 @@ export interface AlertRuleResponse {
      * @memberof AlertRuleResponse
      */
     'state': AlertRuleState;
+    /**
+     * Indicates whether the current version of the alert has been synced with the alerting system. If false, an outdated version is currently deployed.
+     * @type {boolean}
+     * @memberof AlertRuleResponse
+     */
+    'is_up_to_date': boolean;
 }
 
 
