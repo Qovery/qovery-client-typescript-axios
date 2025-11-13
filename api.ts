@@ -15076,6 +15076,12 @@ export interface OrganizationEventResponse {
      * @memberof OrganizationEventResponse
      */
     'user_agent'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationEventResponse
+     */
+    'original_change'?: string | null;
 }
 
 
