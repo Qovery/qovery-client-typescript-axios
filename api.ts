@@ -19032,6 +19032,19 @@ export interface TerraformVariableResponse {
     'secret': boolean;
 }
 /**
+ * Request to atomically replace all Terraform variables. Note: For secret variables, use value \"SECRET_VALUE_UNCHANGED\" to preserve the existing secret value.
+ * @export
+ * @interface TerraformVariablesReplaceRequest
+ */
+export interface TerraformVariablesReplaceRequest {
+    /**
+     * Complete list of variables to set (replaces all existing variables)
+     * @type {Array<TerraformVarKeyValue>}
+     * @memberof TerraformVariablesReplaceRequest
+     */
+    'variables': Array<TerraformVarKeyValue>;
+}
+/**
  * Response containing list of Terraform variables
  * @export
  * @interface TerraformVariablesResponse
@@ -61233,17 +61246,17 @@ export const TerraformConfigurationApiAxiosParamCreator = function (configuratio
         },
         /**
          * 
-         * @summary Create or update a terraform variable
+         * @summary Replace all terraform variables
          * @param {string} terraformId Terraform ID
-         * @param {TerraformVarKeyValue} terraformVarKeyValue 
+         * @param {TerraformVariablesReplaceRequest} terraformVariablesReplaceRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateTerraformVariable: async (terraformId: string, terraformVarKeyValue: TerraformVarKeyValue, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        replaceAllTerraformVariables: async (terraformId: string, terraformVariablesReplaceRequest: TerraformVariablesReplaceRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'terraformId' is not null or undefined
-            assertParamExists('updateTerraformVariable', 'terraformId', terraformId)
-            // verify required parameter 'terraformVarKeyValue' is not null or undefined
-            assertParamExists('updateTerraformVariable', 'terraformVarKeyValue', terraformVarKeyValue)
+            assertParamExists('replaceAllTerraformVariables', 'terraformId', terraformId)
+            // verify required parameter 'terraformVariablesReplaceRequest' is not null or undefined
+            assertParamExists('replaceAllTerraformVariables', 'terraformVariablesReplaceRequest', terraformVariablesReplaceRequest)
             const localVarPath = `/terraform/{terraformId}/variables`
                 .replace(`{${"terraformId"}}`, encodeURIComponent(String(terraformId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -61253,7 +61266,7 @@ export const TerraformConfigurationApiAxiosParamCreator = function (configuratio
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -61271,7 +61284,7 @@ export const TerraformConfigurationApiAxiosParamCreator = function (configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(terraformVarKeyValue, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(terraformVariablesReplaceRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -61344,16 +61357,16 @@ export const TerraformConfigurationApiFp = function(configuration?: Configuratio
         },
         /**
          * 
-         * @summary Create or update a terraform variable
+         * @summary Replace all terraform variables
          * @param {string} terraformId Terraform ID
-         * @param {TerraformVarKeyValue} terraformVarKeyValue 
+         * @param {TerraformVariablesReplaceRequest} terraformVariablesReplaceRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateTerraformVariable(terraformId: string, terraformVarKeyValue: TerraformVarKeyValue, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateTerraformVariable(terraformId, terraformVarKeyValue, options);
+        async replaceAllTerraformVariables(terraformId: string, terraformVariablesReplaceRequest: TerraformVariablesReplaceRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.replaceAllTerraformVariables(terraformId, terraformVariablesReplaceRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TerraformConfigurationApi.updateTerraformVariable']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TerraformConfigurationApi.replaceAllTerraformVariables']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -61410,14 +61423,14 @@ export const TerraformConfigurationApiFactory = function (configuration?: Config
         },
         /**
          * 
-         * @summary Create or update a terraform variable
+         * @summary Replace all terraform variables
          * @param {string} terraformId Terraform ID
-         * @param {TerraformVarKeyValue} terraformVarKeyValue 
+         * @param {TerraformVariablesReplaceRequest} terraformVariablesReplaceRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateTerraformVariable(terraformId: string, terraformVarKeyValue: TerraformVarKeyValue, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.updateTerraformVariable(terraformId, terraformVarKeyValue, options).then((request) => request(axios, basePath));
+        replaceAllTerraformVariables(terraformId: string, terraformVariablesReplaceRequest: TerraformVariablesReplaceRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.replaceAllTerraformVariables(terraformId, terraformVariablesReplaceRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -61481,15 +61494,15 @@ export class TerraformConfigurationApi extends BaseAPI {
 
     /**
      * 
-     * @summary Create or update a terraform variable
+     * @summary Replace all terraform variables
      * @param {string} terraformId Terraform ID
-     * @param {TerraformVarKeyValue} terraformVarKeyValue 
+     * @param {TerraformVariablesReplaceRequest} terraformVariablesReplaceRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TerraformConfigurationApi
      */
-    public updateTerraformVariable(terraformId: string, terraformVarKeyValue: TerraformVarKeyValue, options?: RawAxiosRequestConfig) {
-        return TerraformConfigurationApiFp(this.configuration).updateTerraformVariable(terraformId, terraformVarKeyValue, options).then((request) => request(this.axios, this.basePath));
+    public replaceAllTerraformVariables(terraformId: string, terraformVariablesReplaceRequest: TerraformVariablesReplaceRequest, options?: RawAxiosRequestConfig) {
+        return TerraformConfigurationApiFp(this.configuration).replaceAllTerraformVariables(terraformId, terraformVariablesReplaceRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
