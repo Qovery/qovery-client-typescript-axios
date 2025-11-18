@@ -10950,6 +10950,12 @@ export interface HelmRepositoryRequestConfig {
      * @memberof HelmRepositoryRequestConfig
      */
     'azure_subscription_id'?: string;
+    /**
+     * For ECR, you can either set a static access_key or use a role arn that we are going to assume
+     * @type {string}
+     * @memberof HelmRepositoryRequestConfig
+     */
+    'role_arn'?: string;
 }
 /**
  * 
