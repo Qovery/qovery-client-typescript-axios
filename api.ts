@@ -3439,6 +3439,12 @@ export interface ClusterFeatureAwsExistingVpc {
      * @memberof ClusterFeatureAwsExistingVpc
      */
     'eks_karpenter_fargate_subnets_zone_c_ids'?: Array<string> | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterFeatureAwsExistingVpc
+     */
+    'eks_create_nodes_in_private_subnet'?: boolean;
 }
 /**
  * 
