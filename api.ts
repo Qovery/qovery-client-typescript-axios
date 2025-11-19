@@ -6134,7 +6134,7 @@ export interface CreditCardRequest {
      * @type {string}
      * @memberof CreditCardRequest
      */
-    'token': string | null;
+    'token'?: string | null;
 }
 /**
  * 
