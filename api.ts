@@ -344,6 +344,89 @@ export type AlertReceiverType = typeof AlertReceiverType[keyof typeof AlertRecei
 /**
  * 
  * @export
+ * @interface AlertRuleCondition
+ */
+export interface AlertRuleCondition {
+    /**
+     * 
+     * @type {AlertRuleConditionKind}
+     * @memberof AlertRuleCondition
+     */
+    'kind': AlertRuleConditionKind;
+    /**
+     * 
+     * @type {AlertRuleConditionOperator}
+     * @memberof AlertRuleCondition
+     */
+    'operator'?: AlertRuleConditionOperator;
+    /**
+     * 
+     * @type {number}
+     * @memberof AlertRuleCondition
+     */
+    'threshold'?: number;
+    /**
+     * 
+     * @type {AlertRuleConditionFunction}
+     * @memberof AlertRuleCondition
+     */
+    'function'?: AlertRuleConditionFunction;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertRuleCondition
+     */
+    'promql': string;
+}
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const AlertRuleConditionFunction = {
+    NONE: 'NONE',
+    AVG: 'AVG',
+    MAX: 'MAX',
+    MIN: 'MIN'
+} as const;
+
+export type AlertRuleConditionFunction = typeof AlertRuleConditionFunction[keyof typeof AlertRuleConditionFunction];
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const AlertRuleConditionKind = {
+    CUSTOM: 'CUSTOM',
+    BUILT: 'BUILT'
+} as const;
+
+export type AlertRuleConditionKind = typeof AlertRuleConditionKind[keyof typeof AlertRuleConditionKind];
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const AlertRuleConditionOperator = {
+    ABOVE: 'ABOVE',
+    BELOW: 'BELOW'
+} as const;
+
+export type AlertRuleConditionOperator = typeof AlertRuleConditionOperator[keyof typeof AlertRuleConditionOperator];
+
+
+/**
+ * 
+ * @export
  * @interface AlertRuleCreationRequest
  */
 export interface AlertRuleCreationRequest {
@@ -372,11 +455,17 @@ export interface AlertRuleCreationRequest {
      */
     'description': string;
     /**
-     * PromQL expression to evaluate
+     * 
      * @type {string}
      * @memberof AlertRuleCreationRequest
      */
-    'promql_expr': string;
+    'tag': string;
+    /**
+     * 
+     * @type {AlertRuleCondition}
+     * @memberof AlertRuleCreationRequest
+     */
+    'condition': AlertRuleCondition;
     /**
      * Duration the condition must be true before firing (ISO-8601 duration format)
      * @type {string}
@@ -435,11 +524,17 @@ export interface AlertRuleEditRequest {
      */
     'description': string;
     /**
-     * PromQL expression to evaluate
+     * 
      * @type {string}
      * @memberof AlertRuleEditRequest
      */
-    'promql_expr': string;
+    'tag': string;
+    /**
+     * 
+     * @type {AlertRuleCondition}
+     * @memberof AlertRuleEditRequest
+     */
+    'condition': AlertRuleCondition;
     /**
      * Duration the condition must be true before firing (ISO-8601 duration format)
      * @type {string}
@@ -535,11 +630,17 @@ export interface AlertRuleResponse {
      */
     'description': string;
     /**
-     * PromQL expression to evaluate
+     * 
      * @type {string}
      * @memberof AlertRuleResponse
      */
-    'promql_expr': string;
+    'tag': string;
+    /**
+     * 
+     * @type {AlertRuleCondition}
+     * @memberof AlertRuleResponse
+     */
+    'condition': AlertRuleCondition;
     /**
      * Duration the condition must be true before firing (ISO-8601 duration format)
      * @type {string}
