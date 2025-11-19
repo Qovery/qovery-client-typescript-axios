@@ -20186,7 +20186,7 @@ export const AlertReceiversApiAxiosParamCreator = function (configuration?: Conf
          * @throws {RequiredError}
          */
         createAlertReceiver: async (alertReceiverCreationRequest?: AlertReceiverCreationRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/alert-receivers`;
+            const localVarPath = `/alert-receivers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -20229,7 +20229,7 @@ export const AlertReceiversApiAxiosParamCreator = function (configuration?: Conf
         deleteAlertReceiver: async (alertReceiverId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'alertReceiverId' is not null or undefined
             assertParamExists('deleteAlertReceiver', 'alertReceiverId', alertReceiverId)
-            const localVarPath = `/api/alert-receivers/{alertReceiverId}`
+            const localVarPath = `/alert-receivers/{alertReceiverId}`
                 .replace(`{${"alertReceiverId"}}`, encodeURIComponent(String(alertReceiverId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -20271,7 +20271,7 @@ export const AlertReceiversApiAxiosParamCreator = function (configuration?: Conf
         editAlertReceiver: async (alertReceiverId: string, alertReceiverEditRequest?: AlertReceiverEditRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'alertReceiverId' is not null or undefined
             assertParamExists('editAlertReceiver', 'alertReceiverId', alertReceiverId)
-            const localVarPath = `/api/alert-receivers/{alertReceiverId}`
+            const localVarPath = `/alert-receivers/{alertReceiverId}`
                 .replace(`{${"alertReceiverId"}}`, encodeURIComponent(String(alertReceiverId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -20315,7 +20315,7 @@ export const AlertReceiversApiAxiosParamCreator = function (configuration?: Conf
         getAlertReceiver: async (alertReceiverId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'alertReceiverId' is not null or undefined
             assertParamExists('getAlertReceiver', 'alertReceiverId', alertReceiverId)
-            const localVarPath = `/api/alert-receivers/{alertReceiverId}`
+            const localVarPath = `/alert-receivers/{alertReceiverId}`
                 .replace(`{${"alertReceiverId"}}`, encodeURIComponent(String(alertReceiverId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
