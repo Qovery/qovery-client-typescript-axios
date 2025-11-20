@@ -11168,6 +11168,12 @@ export interface HelmRepositoryResponseAllOfConfig {
      * @type {string}
      * @memberof HelmRepositoryResponseAllOfConfig
      */
+    'role_arn'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmRepositoryResponseAllOfConfig
+     */
     'scaleway_access_key'?: string;
     /**
      * 
