@@ -501,7 +501,7 @@ export interface AlertRuleCreationRequest {
      * @type {AlertTarget}
      * @memberof AlertRuleCreationRequest
      */
-    'target': AlertTarget | null;
+    'target': AlertTarget;
 }
 
 
@@ -676,7 +676,7 @@ export interface AlertRuleResponse {
      * @type {AlertTarget}
      * @memberof AlertRuleResponse
      */
-    'target': AlertTarget | null;
+    'target': AlertTarget;
     /**
      * 
      * @type {AlertRuleState}
@@ -745,7 +745,15 @@ export interface AlertTarget {
      * @memberof AlertTarget
      */
     'target_id': string;
+    /**
+     * 
+     * @type {ServiceLightResponse}
+     * @memberof AlertTarget
+     */
+    'service'?: ServiceLightResponse;
 }
+
+
 /**
  * The target of an alert
  * @export
