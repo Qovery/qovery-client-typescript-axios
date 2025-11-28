@@ -19154,57 +19154,6 @@ export interface TerraformVariableParsingRequest {
     'git_repository': ApplicationGitRepositoryRequest;
 }
 /**
- * A Terraform variable with its configuration
- * @export
- * @interface TerraformVariableResponse
- */
-export interface TerraformVariableResponse {
-    /**
-     * The variable key/name
-     * @type {string}
-     * @memberof TerraformVariableResponse
-     */
-    'key': string;
-    /**
-     * The variable value (null if secret and not exposed)
-     * @type {string}
-     * @memberof TerraformVariableResponse
-     */
-    'value'?: string | null;
-    /**
-     * Whether the variable is secret
-     * @type {boolean}
-     * @memberof TerraformVariableResponse
-     */
-    'secret': boolean;
-}
-/**
- * Request to atomically replace all Terraform variables. Note: For secret variables, use value \"SECRET_VALUE_UNCHANGED\" to preserve the existing secret value.
- * @export
- * @interface TerraformVariablesReplaceRequest
- */
-export interface TerraformVariablesReplaceRequest {
-    /**
-     * Complete list of variables to set (replaces all existing variables)
-     * @type {Array<TerraformVarKeyValue>}
-     * @memberof TerraformVariablesReplaceRequest
-     */
-    'variables': Array<TerraformVarKeyValue>;
-}
-/**
- * Response containing list of Terraform variables
- * @export
- * @interface TerraformVariablesResponse
- */
-export interface TerraformVariablesResponse {
-    /**
-     * 
-     * @type {Array<TerraformVariableResponse>}
-     * @memberof TerraformVariablesResponse
-     */
-    'variables': Array<TerraformVariableResponse>;
-}
-/**
  * 
  * @export
  * @interface TerraformVariablesSourceRequest
@@ -61221,51 +61170,6 @@ export const TerraformConfigurationApiAxiosParamCreator = function (configuratio
     return {
         /**
          * 
-         * @summary Delete a terraform variable
-         * @param {string} terraformId Terraform ID
-         * @param {string} key Variable key to delete
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteTerraformVariable: async (terraformId: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'terraformId' is not null or undefined
-            assertParamExists('deleteTerraformVariable', 'terraformId', terraformId)
-            // verify required parameter 'key' is not null or undefined
-            assertParamExists('deleteTerraformVariable', 'key', key)
-            const localVarPath = `/terraform/{terraformId}/variables/{key}`
-                .replace(`{${"terraformId"}}`, encodeURIComponent(String(terraformId)))
-                .replace(`{${"key"}}`, encodeURIComponent(String(key)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Edit Advanced settings
          * @param {string} terraformId 
          * @param {TerraformAdvancedSettings} [terraformAdvancedSettings] 
@@ -61350,94 +61254,6 @@ export const TerraformConfigurationApiAxiosParamCreator = function (configuratio
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @summary Get terraform variables
-         * @param {string} terraformId Terraform ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTerraformVariables: async (terraformId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'terraformId' is not null or undefined
-            assertParamExists('getTerraformVariables', 'terraformId', terraformId)
-            const localVarPath = `/terraform/{terraformId}/variables`
-                .replace(`{${"terraformId"}}`, encodeURIComponent(String(terraformId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Replace all terraform variables
-         * @param {string} terraformId Terraform ID
-         * @param {TerraformVariablesReplaceRequest} terraformVariablesReplaceRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        replaceAllTerraformVariables: async (terraformId: string, terraformVariablesReplaceRequest: TerraformVariablesReplaceRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'terraformId' is not null or undefined
-            assertParamExists('replaceAllTerraformVariables', 'terraformId', terraformId)
-            // verify required parameter 'terraformVariablesReplaceRequest' is not null or undefined
-            assertParamExists('replaceAllTerraformVariables', 'terraformVariablesReplaceRequest', terraformVariablesReplaceRequest)
-            const localVarPath = `/terraform/{terraformId}/variables`
-                .replace(`{${"terraformId"}}`, encodeURIComponent(String(terraformId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(terraformVariablesReplaceRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -61448,20 +61264,6 @@ export const TerraformConfigurationApiAxiosParamCreator = function (configuratio
 export const TerraformConfigurationApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TerraformConfigurationApiAxiosParamCreator(configuration)
     return {
-        /**
-         * 
-         * @summary Delete a terraform variable
-         * @param {string} terraformId Terraform ID
-         * @param {string} key Variable key to delete
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteTerraformVariable(terraformId: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTerraformVariable(terraformId, key, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TerraformConfigurationApi.deleteTerraformVariable']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
         /**
          * 
          * @summary Edit Advanced settings
@@ -61489,33 +61291,6 @@ export const TerraformConfigurationApiFp = function(configuration?: Configuratio
             const localVarOperationServerBasePath = operationServerMap['TerraformConfigurationApi.getTerraformAdvancedSettings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * 
-         * @summary Get terraform variables
-         * @param {string} terraformId Terraform ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getTerraformVariables(terraformId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TerraformVariablesResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTerraformVariables(terraformId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TerraformConfigurationApi.getTerraformVariables']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Replace all terraform variables
-         * @param {string} terraformId Terraform ID
-         * @param {TerraformVariablesReplaceRequest} terraformVariablesReplaceRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async replaceAllTerraformVariables(terraformId: string, terraformVariablesReplaceRequest: TerraformVariablesReplaceRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.replaceAllTerraformVariables(terraformId, terraformVariablesReplaceRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TerraformConfigurationApi.replaceAllTerraformVariables']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -61526,17 +61301,6 @@ export const TerraformConfigurationApiFp = function(configuration?: Configuratio
 export const TerraformConfigurationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = TerraformConfigurationApiFp(configuration)
     return {
-        /**
-         * 
-         * @summary Delete a terraform variable
-         * @param {string} terraformId Terraform ID
-         * @param {string} key Variable key to delete
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteTerraformVariable(terraformId: string, key: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteTerraformVariable(terraformId, key, options).then((request) => request(axios, basePath));
-        },
         /**
          * 
          * @summary Edit Advanced settings
@@ -61558,27 +61322,6 @@ export const TerraformConfigurationApiFactory = function (configuration?: Config
         getTerraformAdvancedSettings(terraformId: string, options?: RawAxiosRequestConfig): AxiosPromise<TerraformAdvancedSettings> {
             return localVarFp.getTerraformAdvancedSettings(terraformId, options).then((request) => request(axios, basePath));
         },
-        /**
-         * 
-         * @summary Get terraform variables
-         * @param {string} terraformId Terraform ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTerraformVariables(terraformId: string, options?: RawAxiosRequestConfig): AxiosPromise<TerraformVariablesResponse> {
-            return localVarFp.getTerraformVariables(terraformId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Replace all terraform variables
-         * @param {string} terraformId Terraform ID
-         * @param {TerraformVariablesReplaceRequest} terraformVariablesReplaceRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        replaceAllTerraformVariables(terraformId: string, terraformVariablesReplaceRequest: TerraformVariablesReplaceRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.replaceAllTerraformVariables(terraformId, terraformVariablesReplaceRequest, options).then((request) => request(axios, basePath));
-        },
     };
 };
 
@@ -61589,19 +61332,6 @@ export const TerraformConfigurationApiFactory = function (configuration?: Config
  * @extends {BaseAPI}
  */
 export class TerraformConfigurationApi extends BaseAPI {
-    /**
-     * 
-     * @summary Delete a terraform variable
-     * @param {string} terraformId Terraform ID
-     * @param {string} key Variable key to delete
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TerraformConfigurationApi
-     */
-    public deleteTerraformVariable(terraformId: string, key: string, options?: RawAxiosRequestConfig) {
-        return TerraformConfigurationApiFp(this.configuration).deleteTerraformVariable(terraformId, key, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * 
      * @summary Edit Advanced settings
@@ -61625,31 +61355,6 @@ export class TerraformConfigurationApi extends BaseAPI {
      */
     public getTerraformAdvancedSettings(terraformId: string, options?: RawAxiosRequestConfig) {
         return TerraformConfigurationApiFp(this.configuration).getTerraformAdvancedSettings(terraformId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get terraform variables
-     * @param {string} terraformId Terraform ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TerraformConfigurationApi
-     */
-    public getTerraformVariables(terraformId: string, options?: RawAxiosRequestConfig) {
-        return TerraformConfigurationApiFp(this.configuration).getTerraformVariables(terraformId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Replace all terraform variables
-     * @param {string} terraformId Terraform ID
-     * @param {TerraformVariablesReplaceRequest} terraformVariablesReplaceRequest 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TerraformConfigurationApi
-     */
-    public replaceAllTerraformVariables(terraformId: string, terraformVariablesReplaceRequest: TerraformVariablesReplaceRequest, options?: RawAxiosRequestConfig) {
-        return TerraformConfigurationApiFp(this.configuration).replaceAllTerraformVariables(terraformId, terraformVariablesReplaceRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
