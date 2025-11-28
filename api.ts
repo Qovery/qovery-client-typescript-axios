@@ -689,6 +689,12 @@ export interface AlertRuleResponse {
      * @memberof AlertRuleResponse
      */
     'is_up_to_date': boolean;
+    /**
+     * when the alert starts firing
+     * @type {string}
+     * @memberof AlertRuleResponse
+     */
+    'starts_at'?: string;
 }
 
 
