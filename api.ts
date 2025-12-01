@@ -18571,18 +18571,6 @@ export interface TerraformDeployRequest {
      */
     'git_commit_id'?: string;
     /**
-     * Deprecated: use action=PLAN instead.
-     * @type {boolean}
-     * @memberof TerraformDeployRequest
-     */
-    'dry_run'?: boolean;
-    /**
-     * Deprecated: use action=FORCE_UNLOCK instead.
-     * @type {boolean}
-     * @memberof TerraformDeployRequest
-     */
-    'force_unlock_state'?: boolean | null;
-    /**
      * Terraform action to execute.
      * @type {string}
      * @memberof TerraformDeployRequest
