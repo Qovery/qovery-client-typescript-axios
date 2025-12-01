@@ -390,7 +390,9 @@ export const AlertRuleConditionFunction = {
     NONE: 'NONE',
     AVG: 'AVG',
     MAX: 'MAX',
-    MIN: 'MIN'
+    MIN: 'MIN',
+    SUM: 'SUM',
+    COUNT: 'COUNT'
 } as const;
 
 export type AlertRuleConditionFunction = typeof AlertRuleConditionFunction[keyof typeof AlertRuleConditionFunction];
@@ -417,8 +419,12 @@ export type AlertRuleConditionKind = typeof AlertRuleConditionKind[keyof typeof 
  */
 
 export const AlertRuleConditionOperator = {
+    NONE: 'NONE',
     ABOVE: 'ABOVE',
-    BELOW: 'BELOW'
+    BELOW: 'BELOW',
+    ABOVE_OR_EQUAL: 'ABOVE_OR_EQUAL',
+    BELOW_OR_EQUAL: 'BELOW_OR_EQUAL',
+    EQUAL: 'EQUAL'
 } as const;
 
 export type AlertRuleConditionOperator = typeof AlertRuleConditionOperator[keyof typeof AlertRuleConditionOperator];
