@@ -15312,6 +15312,20 @@ export type OrganizationEventSubTargetType = typeof OrganizationEventSubTargetTy
 
 
 /**
+ * The target level to fetch
+ * @export
+ * @enum {string}
+ */
+
+export const OrganizationEventTargetLevel = {
+    PROJECT: 'PROJECT',
+    ENVIRONMENT: 'ENVIRONMENT'
+} as const;
+
+export type OrganizationEventTargetLevel = typeof OrganizationEventTargetLevel[keyof typeof OrganizationEventTargetLevel];
+
+
+/**
  * 
  * @export
  * @interface OrganizationEventTargetResponseList
@@ -55540,10 +55554,11 @@ export const OrganizationEventApiAxiosParamCreator = function (configuration?: C
          * @param {OrganizationEventOrigin} [origin] 
          * @param {string} [projectId] Mandatory when requesting an environment or a service
          * @param {string} [environmentId] Mandatory when requesting a service
+         * @param {OrganizationEventTargetLevel} [targetLevelToFetch] Used only to retrieve projects or environments linked to service typed events
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationEventTargets: async (organizationId: string, fromTimestamp?: string | null, toTimestamp?: string | null, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getOrganizationEventTargets: async (organizationId: string, fromTimestamp?: string | null, toTimestamp?: string | null, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, targetLevelToFetch?: OrganizationEventTargetLevel, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('getOrganizationEventTargets', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/targets`
@@ -55596,6 +55611,10 @@ export const OrganizationEventApiAxiosParamCreator = function (configuration?: C
 
             if (environmentId !== undefined) {
                 localVarQueryParameter['environmentId'] = environmentId;
+            }
+
+            if (targetLevelToFetch !== undefined) {
+                localVarQueryParameter['targetLevelToFetch'] = targetLevelToFetch;
             }
 
 
@@ -55727,11 +55746,12 @@ export const OrganizationEventApiFp = function(configuration?: Configuration) {
          * @param {OrganizationEventOrigin} [origin] 
          * @param {string} [projectId] Mandatory when requesting an environment or a service
          * @param {string} [environmentId] Mandatory when requesting a service
+         * @param {OrganizationEventTargetLevel} [targetLevelToFetch] Used only to retrieve projects or environments linked to service typed events
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganizationEventTargets(organizationId: string, fromTimestamp?: string | null, toTimestamp?: string | null, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationEventTargetResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationEventTargets(organizationId, fromTimestamp, toTimestamp, eventType, targetType, triggeredBy, origin, projectId, environmentId, options);
+        async getOrganizationEventTargets(organizationId: string, fromTimestamp?: string | null, toTimestamp?: string | null, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, targetLevelToFetch?: OrganizationEventTargetLevel, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationEventTargetResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationEventTargets(organizationId, fromTimestamp, toTimestamp, eventType, targetType, triggeredBy, origin, projectId, environmentId, targetLevelToFetch, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OrganizationEventApi.getOrganizationEventTargets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -55782,11 +55802,12 @@ export const OrganizationEventApiFactory = function (configuration?: Configurati
          * @param {OrganizationEventOrigin} [origin] 
          * @param {string} [projectId] Mandatory when requesting an environment or a service
          * @param {string} [environmentId] Mandatory when requesting a service
+         * @param {OrganizationEventTargetLevel} [targetLevelToFetch] Used only to retrieve projects or environments linked to service typed events
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationEventTargets(organizationId: string, fromTimestamp?: string | null, toTimestamp?: string | null, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options?: RawAxiosRequestConfig): AxiosPromise<OrganizationEventTargetResponseList> {
-            return localVarFp.getOrganizationEventTargets(organizationId, fromTimestamp, toTimestamp, eventType, targetType, triggeredBy, origin, projectId, environmentId, options).then((request) => request(axios, basePath));
+        getOrganizationEventTargets(organizationId: string, fromTimestamp?: string | null, toTimestamp?: string | null, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, targetLevelToFetch?: OrganizationEventTargetLevel, options?: RawAxiosRequestConfig): AxiosPromise<OrganizationEventTargetResponseList> {
+            return localVarFp.getOrganizationEventTargets(organizationId, fromTimestamp, toTimestamp, eventType, targetType, triggeredBy, origin, projectId, environmentId, targetLevelToFetch, options).then((request) => request(axios, basePath));
         },
         /**
          * Get all events inside the organization
@@ -55831,12 +55852,13 @@ export class OrganizationEventApi extends BaseAPI {
      * @param {OrganizationEventOrigin} [origin] 
      * @param {string} [projectId] Mandatory when requesting an environment or a service
      * @param {string} [environmentId] Mandatory when requesting a service
+     * @param {OrganizationEventTargetLevel} [targetLevelToFetch] Used only to retrieve projects or environments linked to service typed events
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationEventApi
      */
-    public getOrganizationEventTargets(organizationId: string, fromTimestamp?: string | null, toTimestamp?: string | null, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, options?: RawAxiosRequestConfig) {
-        return OrganizationEventApiFp(this.configuration).getOrganizationEventTargets(organizationId, fromTimestamp, toTimestamp, eventType, targetType, triggeredBy, origin, projectId, environmentId, options).then((request) => request(this.axios, this.basePath));
+    public getOrganizationEventTargets(organizationId: string, fromTimestamp?: string | null, toTimestamp?: string | null, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, projectId?: string, environmentId?: string, targetLevelToFetch?: OrganizationEventTargetLevel, options?: RawAxiosRequestConfig) {
+        return OrganizationEventApiFp(this.configuration).getOrganizationEventTargets(organizationId, fromTimestamp, toTimestamp, eventType, targetType, triggeredBy, origin, projectId, environmentId, targetLevelToFetch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
