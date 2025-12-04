@@ -55649,10 +55649,12 @@ export const OrganizationEventApiAxiosParamCreator = function (configuration?: C
          * @param {OrganizationEventSubTargetType} [subTargetType] 
          * @param {string} [triggeredBy] Information about the owner of the event (user name / apitoken / automatic action)
          * @param {OrganizationEventOrigin} [origin] 
+         * @param {string} [serviceProjectId] The project chosen when filtering on a service type
+         * @param {string} [serviceEnvironmentId] The environment chosen when filtering on a service type
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationEvents: async (organizationId: string, pageSize?: number | null, fromTimestamp?: string | null, toTimestamp?: string | null, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string | null, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getOrganizationEvents: async (organizationId: string, pageSize?: number | null, fromTimestamp?: string | null, toTimestamp?: string | null, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string | null, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, serviceProjectId?: string, serviceEnvironmentId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('getOrganizationEvents', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/events`
@@ -55719,6 +55721,14 @@ export const OrganizationEventApiAxiosParamCreator = function (configuration?: C
                 localVarQueryParameter['origin'] = origin;
             }
 
+            if (serviceProjectId !== undefined) {
+                localVarQueryParameter['serviceProjectId'] = serviceProjectId;
+            }
+
+            if (serviceEnvironmentId !== undefined) {
+                localVarQueryParameter['serviceEnvironmentId'] = serviceEnvironmentId;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -55777,11 +55787,13 @@ export const OrganizationEventApiFp = function(configuration?: Configuration) {
          * @param {OrganizationEventSubTargetType} [subTargetType] 
          * @param {string} [triggeredBy] Information about the owner of the event (user name / apitoken / automatic action)
          * @param {OrganizationEventOrigin} [origin] 
+         * @param {string} [serviceProjectId] The project chosen when filtering on a service type
+         * @param {string} [serviceEnvironmentId] The environment chosen when filtering on a service type
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganizationEvents(organizationId: string, pageSize?: number | null, fromTimestamp?: string | null, toTimestamp?: string | null, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string | null, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationEventResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationEvents(organizationId, pageSize, fromTimestamp, toTimestamp, continueToken, stepBackToken, eventType, targetType, targetId, subTargetType, triggeredBy, origin, options);
+        async getOrganizationEvents(organizationId: string, pageSize?: number | null, fromTimestamp?: string | null, toTimestamp?: string | null, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string | null, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, serviceProjectId?: string, serviceEnvironmentId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationEventResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationEvents(organizationId, pageSize, fromTimestamp, toTimestamp, continueToken, stepBackToken, eventType, targetType, targetId, subTargetType, triggeredBy, origin, serviceProjectId, serviceEnvironmentId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OrganizationEventApi.getOrganizationEvents']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -55830,11 +55842,13 @@ export const OrganizationEventApiFactory = function (configuration?: Configurati
          * @param {OrganizationEventSubTargetType} [subTargetType] 
          * @param {string} [triggeredBy] Information about the owner of the event (user name / apitoken / automatic action)
          * @param {OrganizationEventOrigin} [origin] 
+         * @param {string} [serviceProjectId] The project chosen when filtering on a service type
+         * @param {string} [serviceEnvironmentId] The environment chosen when filtering on a service type
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationEvents(organizationId: string, pageSize?: number | null, fromTimestamp?: string | null, toTimestamp?: string | null, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string | null, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: RawAxiosRequestConfig): AxiosPromise<OrganizationEventResponseList> {
-            return localVarFp.getOrganizationEvents(organizationId, pageSize, fromTimestamp, toTimestamp, continueToken, stepBackToken, eventType, targetType, targetId, subTargetType, triggeredBy, origin, options).then((request) => request(axios, basePath));
+        getOrganizationEvents(organizationId: string, pageSize?: number | null, fromTimestamp?: string | null, toTimestamp?: string | null, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string | null, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, serviceProjectId?: string, serviceEnvironmentId?: string, options?: RawAxiosRequestConfig): AxiosPromise<OrganizationEventResponseList> {
+            return localVarFp.getOrganizationEvents(organizationId, pageSize, fromTimestamp, toTimestamp, continueToken, stepBackToken, eventType, targetType, targetId, subTargetType, triggeredBy, origin, serviceProjectId, serviceEnvironmentId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -55882,12 +55896,14 @@ export class OrganizationEventApi extends BaseAPI {
      * @param {OrganizationEventSubTargetType} [subTargetType] 
      * @param {string} [triggeredBy] Information about the owner of the event (user name / apitoken / automatic action)
      * @param {OrganizationEventOrigin} [origin] 
+     * @param {string} [serviceProjectId] The project chosen when filtering on a service type
+     * @param {string} [serviceEnvironmentId] The environment chosen when filtering on a service type
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationEventApi
      */
-    public getOrganizationEvents(organizationId: string, pageSize?: number | null, fromTimestamp?: string | null, toTimestamp?: string | null, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string | null, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, options?: RawAxiosRequestConfig) {
-        return OrganizationEventApiFp(this.configuration).getOrganizationEvents(organizationId, pageSize, fromTimestamp, toTimestamp, continueToken, stepBackToken, eventType, targetType, targetId, subTargetType, triggeredBy, origin, options).then((request) => request(this.axios, this.basePath));
+    public getOrganizationEvents(organizationId: string, pageSize?: number | null, fromTimestamp?: string | null, toTimestamp?: string | null, continueToken?: string, stepBackToken?: string, eventType?: OrganizationEventType, targetType?: OrganizationEventTargetType, targetId?: string | null, subTargetType?: OrganizationEventSubTargetType, triggeredBy?: string, origin?: OrganizationEventOrigin, serviceProjectId?: string, serviceEnvironmentId?: string, options?: RawAxiosRequestConfig) {
+        return OrganizationEventApiFp(this.configuration).getOrganizationEvents(organizationId, pageSize, fromTimestamp, toTimestamp, continueToken, stepBackToken, eventType, targetType, targetId, subTargetType, triggeredBy, origin, serviceProjectId, serviceEnvironmentId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
