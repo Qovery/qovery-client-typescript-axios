@@ -19147,6 +19147,12 @@ export interface TerraformVariableDefinition {
      * @memberof TerraformVariableDefinition
      */
     'source': string;
+    /**
+     * The description of the variable, or null if no description is provided
+     * @type {string}
+     * @memberof TerraformVariableDefinition
+     */
+    'description'?: string | null;
 }
 /**
  * 
