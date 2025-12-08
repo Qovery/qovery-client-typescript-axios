@@ -614,17 +614,23 @@ export interface AlertRuleEditRequest {
 export interface AlertRuleList {
     /**
      * 
-     * @type {Array<AlertRuleResponse>}
+     * @type {Array<AlertRuleListResultsInner>}
      * @memberof AlertRuleList
      */
-    'results': Array<AlertRuleResponse>;
+    'results': Array<AlertRuleListResultsInner>;
 }
+/**
+ * @type AlertRuleListResultsInner
+ * @export
+ */
+export type AlertRuleListResultsInner = { source: 'GHOST' } & GhostAlertRuleResponse | { source: 'MANAGED' } & AlertRuleResponse;
+
 /**
  * 
  * @export
  * @interface AlertRuleResponse
  */
-export interface AlertRuleResponse {
+export interface AlertRuleResponse extends AlertRuleResponseBase {
     /**
      * 
      * @type {string}
@@ -655,12 +661,6 @@ export interface AlertRuleResponse {
      * @memberof AlertRuleResponse
      */
     'cluster_id': string;
-    /**
-     * Name of the alert rule 
-     * @type {string}
-     * @memberof AlertRuleResponse
-     */
-    'name': string;
     /**
      * Description of what the alert monitors
      * @type {string}
@@ -716,12 +716,6 @@ export interface AlertRuleResponse {
      */
     'target': AlertTarget;
     /**
-     * 
-     * @type {AlertRuleState}
-     * @memberof AlertRuleResponse
-     */
-    'state': AlertRuleState;
-    /**
      * Indicates whether the current version of the alert has been synced with the alerting system. If false, an outdated version is currently deployed.
      * @type {boolean}
      * @memberof AlertRuleResponse
@@ -734,6 +728,47 @@ export interface AlertRuleResponse {
      */
     'starts_at'?: string;
 }
+
+
+/**
+ * Base schema for alert rule responses with discriminator
+ * @export
+ * @interface AlertRuleResponseBase
+ */
+export interface AlertRuleResponseBase {
+    /**
+     * 
+     * @type {AlertRuleSource}
+     * @memberof AlertRuleResponseBase
+     */
+    'source': AlertRuleSource;
+    /**
+     * Name of the alert rule
+     * @type {string}
+     * @memberof AlertRuleResponseBase
+     */
+    'name': string;
+    /**
+     * 
+     * @type {AlertRuleState}
+     * @memberof AlertRuleResponseBase
+     */
+    'state': AlertRuleState;
+}
+
+
+/**
+ * Source of the alert rule: - MANAGED: Alert rule created and managed through the Qovery API - GHOST: Alert rule that exists in Prometheus but has been deleted from the database
+ * @export
+ * @enum {string}
+ */
+
+export const AlertRuleSource = {
+    MANAGED: 'MANAGED',
+    GHOST: 'GHOST'
+} as const;
+
+export type AlertRuleSource = typeof AlertRuleSource[keyof typeof AlertRuleSource];
 
 
 /**
@@ -9868,6 +9903,54 @@ export interface GetClusterTokenByClusterId200ResponseStatus {
      */
     'expirationTimestamp': string;
 }
+/**
+ * Response for ghost alerts that exist in Prometheus but have been deleted from the database
+ * @export
+ * @interface GhostAlertRuleResponse
+ */
+export interface GhostAlertRuleResponse extends AlertRuleResponseBase {
+    /**
+     * 
+     * @type {GhostAlertRuleResponseAllOfTarget}
+     * @memberof GhostAlertRuleResponse
+     */
+    'target'?: GhostAlertRuleResponseAllOfTarget;
+    /**
+     * When the ghost alert started firing
+     * @type {string}
+     * @memberof GhostAlertRuleResponse
+     */
+    'starts_at'?: string | null;
+}
+
+
+/**
+ * May be null if target info couldn\'t be extracted from Prometheus
+ * @export
+ * @interface GhostAlertRuleResponseAllOfTarget
+ */
+export interface GhostAlertRuleResponseAllOfTarget {
+    /**
+     * 
+     * @type {AlertTargetType}
+     * @memberof GhostAlertRuleResponseAllOfTarget
+     */
+    'target_type': AlertTargetType;
+    /**
+     * 
+     * @type {string}
+     * @memberof GhostAlertRuleResponseAllOfTarget
+     */
+    'target_id': string;
+    /**
+     * 
+     * @type {ServiceLightResponse}
+     * @memberof GhostAlertRuleResponseAllOfTarget
+     */
+    'service'?: ServiceLightResponse;
+}
+
+
 /**
  * 
  * @export
