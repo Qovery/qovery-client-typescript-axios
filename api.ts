@@ -234,6 +234,25 @@ export interface AlertReceiverCreationRequest {
 /**
  * 
  * @export
+ * @interface AlertReceiverCreationValidationRequest
+ */
+export interface AlertReceiverCreationValidationRequest {
+    /**
+     * 
+     * @type {AlertReceiverCreationRequest}
+     * @memberof AlertReceiverCreationValidationRequest
+     */
+    'alertReceiver': AlertReceiverCreationRequest;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertReceiverCreationValidationRequest
+     */
+    'message'?: string;
+}
+/**
+ * 
+ * @export
  * @interface AlertReceiverEditRequest
  */
 export interface AlertReceiverEditRequest {
@@ -341,6 +360,19 @@ export const AlertReceiverType = {
 export type AlertReceiverType = typeof AlertReceiverType[keyof typeof AlertReceiverType];
 
 
+/**
+ * 
+ * @export
+ * @interface AlertReceiverValidationRequest
+ */
+export interface AlertReceiverValidationRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertReceiverValidationRequest
+     */
+    'message'?: string;
+}
 /**
  * 
  * @export
@@ -20383,6 +20415,92 @@ export const AlertReceiversApiAxiosParamCreator = function (configuration?: Conf
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Validate an existing alert receiver by sending a test message for example
+         * @summary Validate Existing Alert Receiver
+         * @param {string} alertReceiverId Alert Receiver ID
+         * @param {AlertReceiverValidationRequest} [alertReceiverValidationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        validateExistingAlertReceiver: async (alertReceiverId: string, alertReceiverValidationRequest?: AlertReceiverValidationRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'alertReceiverId' is not null or undefined
+            assertParamExists('validateExistingAlertReceiver', 'alertReceiverId', alertReceiverId)
+            const localVarPath = `/alert-receivers/{alertReceiverId}/validate`
+                .replace(`{${"alertReceiverId"}}`, encodeURIComponent(String(alertReceiverId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(alertReceiverValidationRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Validate a future alert receiver by sending a test message for example
+         * @summary Validate New Alert Receiver
+         * @param {AlertReceiverCreationValidationRequest} [alertReceiverCreationValidationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        validateNewAlertReceiver: async (alertReceiverCreationValidationRequest?: AlertReceiverCreationValidationRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/alert-receivers/validate`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(alertReceiverCreationValidationRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -20459,6 +20577,33 @@ export const AlertReceiversApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['AlertReceiversApi.getAlertReceivers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Validate an existing alert receiver by sending a test message for example
+         * @summary Validate Existing Alert Receiver
+         * @param {string} alertReceiverId Alert Receiver ID
+         * @param {AlertReceiverValidationRequest} [alertReceiverValidationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async validateExistingAlertReceiver(alertReceiverId: string, alertReceiverValidationRequest?: AlertReceiverValidationRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.validateExistingAlertReceiver(alertReceiverId, alertReceiverValidationRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AlertReceiversApi.validateExistingAlertReceiver']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Validate a future alert receiver by sending a test message for example
+         * @summary Validate New Alert Receiver
+         * @param {AlertReceiverCreationValidationRequest} [alertReceiverCreationValidationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async validateNewAlertReceiver(alertReceiverCreationValidationRequest?: AlertReceiverCreationValidationRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.validateNewAlertReceiver(alertReceiverCreationValidationRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AlertReceiversApi.validateNewAlertReceiver']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -20519,6 +20664,27 @@ export const AlertReceiversApiFactory = function (configuration?: Configuration,
          */
         getAlertReceivers(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<AlertReceiverList> {
             return localVarFp.getAlertReceivers(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Validate an existing alert receiver by sending a test message for example
+         * @summary Validate Existing Alert Receiver
+         * @param {string} alertReceiverId Alert Receiver ID
+         * @param {AlertReceiverValidationRequest} [alertReceiverValidationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        validateExistingAlertReceiver(alertReceiverId: string, alertReceiverValidationRequest?: AlertReceiverValidationRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.validateExistingAlertReceiver(alertReceiverId, alertReceiverValidationRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Validate a future alert receiver by sending a test message for example
+         * @summary Validate New Alert Receiver
+         * @param {AlertReceiverCreationValidationRequest} [alertReceiverCreationValidationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        validateNewAlertReceiver(alertReceiverCreationValidationRequest?: AlertReceiverCreationValidationRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.validateNewAlertReceiver(alertReceiverCreationValidationRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -20589,6 +20755,31 @@ export class AlertReceiversApi extends BaseAPI {
      */
     public getAlertReceivers(organizationId: string, options?: RawAxiosRequestConfig) {
         return AlertReceiversApiFp(this.configuration).getAlertReceivers(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Validate an existing alert receiver by sending a test message for example
+     * @summary Validate Existing Alert Receiver
+     * @param {string} alertReceiverId Alert Receiver ID
+     * @param {AlertReceiverValidationRequest} [alertReceiverValidationRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlertReceiversApi
+     */
+    public validateExistingAlertReceiver(alertReceiverId: string, alertReceiverValidationRequest?: AlertReceiverValidationRequest, options?: RawAxiosRequestConfig) {
+        return AlertReceiversApiFp(this.configuration).validateExistingAlertReceiver(alertReceiverId, alertReceiverValidationRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Validate a future alert receiver by sending a test message for example
+     * @summary Validate New Alert Receiver
+     * @param {AlertReceiverCreationValidationRequest} [alertReceiverCreationValidationRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlertReceiversApi
+     */
+    public validateNewAlertReceiver(alertReceiverCreationValidationRequest?: AlertReceiverCreationValidationRequest, options?: RawAxiosRequestConfig) {
+        return AlertReceiversApiFp(this.configuration).validateNewAlertReceiver(alertReceiverCreationValidationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
