@@ -19260,6 +19260,12 @@ export interface TerraformVariableDefinition {
      */
     'sensitive': boolean;
     /**
+     * Whether the variable accepts null values. If false, the variable is required.
+     * @type {boolean}
+     * @memberof TerraformVariableDefinition
+     */
+    'nullable'?: boolean;
+    /**
      * The default value of the variable, or null if no default is provided
      * @type {string}
      * @memberof TerraformVariableDefinition
