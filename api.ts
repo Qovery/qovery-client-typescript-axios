@@ -20102,7 +20102,7 @@ export interface WebhookEventResponse {
      * @type {string}
      * @memberof WebhookEventResponse
      */
-    'createdAt': string;
+    'created_at': string;
     /**
      * 
      * @type {OrganizationWebhookKindEnum}
@@ -20114,13 +20114,13 @@ export interface WebhookEventResponse {
      * @type {OrganizationWebhookEventEnum}
      * @memberof WebhookEventResponse
      */
-    'matchedEvent': OrganizationWebhookEventEnum;
+    'matched_event': OrganizationWebhookEventEnum;
     /**
      * The webhook target URL that was invoked
      * @type {string}
      * @memberof WebhookEventResponse
      */
-    'targetUrlUsed': string;
+    'target_url_used': string;
     /**
      * The request payload sent to the webhook
      * @type {{ [key: string]: any; }}
@@ -20132,13 +20132,13 @@ export interface WebhookEventResponse {
      * @type {number}
      * @memberof WebhookEventResponse
      */
-    'targetResponseStatusCode': number;
+    'target_response_status_code': number;
     /**
      * Response body from the webhook target
      * @type {string}
      * @memberof WebhookEventResponse
      */
-    'targetResponseBody'?: string | null;
+    'target_response_body'?: string | null;
 }
 
 
