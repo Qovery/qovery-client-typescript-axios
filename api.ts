@@ -20575,7 +20575,7 @@ export const AlertReceiversApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
-         * Validate an existing alert receiver by sending a test message for example
+         * Validate an existing alert receiver by sending a test message for example.
          * @summary Validate Existing Alert Receiver
          * @param {string} alertReceiverId Alert Receiver ID
          * @param {AlertReceiverValidationRequest} [alertReceiverValidationRequest] 
@@ -20737,7 +20737,7 @@ export const AlertReceiversApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Validate an existing alert receiver by sending a test message for example
+         * Validate an existing alert receiver by sending a test message for example.
          * @summary Validate Existing Alert Receiver
          * @param {string} alertReceiverId Alert Receiver ID
          * @param {AlertReceiverValidationRequest} [alertReceiverValidationRequest] 
@@ -20825,7 +20825,7 @@ export const AlertReceiversApiFactory = function (configuration?: Configuration,
             return localVarFp.getAlertReceivers(organizationId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Validate an existing alert receiver by sending a test message for example
+         * Validate an existing alert receiver by sending a test message for example.
          * @summary Validate Existing Alert Receiver
          * @param {string} alertReceiverId Alert Receiver ID
          * @param {AlertReceiverValidationRequest} [alertReceiverValidationRequest] 
@@ -20917,7 +20917,7 @@ export class AlertReceiversApi extends BaseAPI {
     }
 
     /**
-     * Validate an existing alert receiver by sending a test message for example
+     * Validate an existing alert receiver by sending a test message for example.
      * @summary Validate Existing Alert Receiver
      * @param {string} alertReceiverId Alert Receiver ID
      * @param {AlertReceiverValidationRequest} [alertReceiverValidationRequest] 
