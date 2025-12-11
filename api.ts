@@ -242,7 +242,7 @@ export interface AlertReceiverCreationValidationRequest {
      * @type {AlertReceiverCreationRequest}
      * @memberof AlertReceiverCreationValidationRequest
      */
-    'alertReceiver': AlertReceiverCreationRequest;
+    'alert_receiver': AlertReceiverCreationRequest;
     /**
      * 
      * @type {string}
