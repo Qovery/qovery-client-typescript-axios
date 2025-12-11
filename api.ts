@@ -20620,7 +20620,7 @@ export const AlertReceiversApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
-         * Validate a future alert receiver by sending a test message for example
+         * Validate a future alert receiver by sending a test message.
          * @summary Validate New Alert Receiver
          * @param {AlertReceiverCreationValidationRequest} [alertReceiverCreationValidationRequest] 
          * @param {*} [options] Override http request option.
@@ -20751,7 +20751,7 @@ export const AlertReceiversApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Validate a future alert receiver by sending a test message for example
+         * Validate a future alert receiver by sending a test message.
          * @summary Validate New Alert Receiver
          * @param {AlertReceiverCreationValidationRequest} [alertReceiverCreationValidationRequest] 
          * @param {*} [options] Override http request option.
@@ -20836,7 +20836,7 @@ export const AlertReceiversApiFactory = function (configuration?: Configuration,
             return localVarFp.validateExistingAlertReceiver(alertReceiverId, alertReceiverValidationRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Validate a future alert receiver by sending a test message for example
+         * Validate a future alert receiver by sending a test message.
          * @summary Validate New Alert Receiver
          * @param {AlertReceiverCreationValidationRequest} [alertReceiverCreationValidationRequest] 
          * @param {*} [options] Override http request option.
@@ -20930,7 +20930,7 @@ export class AlertReceiversApi extends BaseAPI {
     }
 
     /**
-     * Validate a future alert receiver by sending a test message for example
+     * Validate a future alert receiver by sending a test message.
      * @summary Validate New Alert Receiver
      * @param {AlertReceiverCreationValidationRequest} [alertReceiverCreationValidationRequest] 
      * @param {*} [options] Override http request option.
