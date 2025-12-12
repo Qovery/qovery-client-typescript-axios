@@ -58342,7 +58342,7 @@ export const OrganizationWebhookApiAxiosParamCreator = function (configuration?:
             assertParamExists('createOrganizationWebhook', 'organizationId', organizationId)
             // verify required parameter 'webhookId' is not null or undefined
             assertParamExists('createOrganizationWebhook', 'webhookId', webhookId)
-            const localVarPath = `/organization/{organizationId}/webhook/{webhookId}/event`
+            const localVarPath = `/organization/{organizationId}/webhook`
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
                 .replace(`{${"webhookId"}}`, encodeURIComponent(String(webhookId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -58520,14 +58520,18 @@ export const OrganizationWebhookApiAxiosParamCreator = function (configuration?:
          * List organization webhooks
          * @summary List organization webhooks
          * @param {string} organizationId Organization ID
+         * @param {string} webhookId Webhook ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listOrganizationWebHooks: async (organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listOrganizationWebHooks: async (organizationId: string, webhookId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('listOrganizationWebHooks', 'organizationId', organizationId)
+            // verify required parameter 'webhookId' is not null or undefined
+            assertParamExists('listOrganizationWebHooks', 'webhookId', webhookId)
             const localVarPath = `/organization/{organizationId}/webhook`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"webhookId"}}`, encodeURIComponent(String(webhookId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -58561,18 +58565,14 @@ export const OrganizationWebhookApiAxiosParamCreator = function (configuration?:
          * List events of a webhooks
          * @summary List events of a webhook
          * @param {string} organizationId Organization ID
-         * @param {string} webhookId Webhook ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listWebhookEvent: async (organizationId: string, webhookId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listWebhookEvent: async (organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('listWebhookEvent', 'organizationId', organizationId)
-            // verify required parameter 'webhookId' is not null or undefined
-            assertParamExists('listWebhookEvent', 'webhookId', webhookId)
             const localVarPath = `/organization/{organizationId}/webhook/{webhookId}/event`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
-                .replace(`{${"webhookId"}}`, encodeURIComponent(String(webhookId)));
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -58674,11 +58674,12 @@ export const OrganizationWebhookApiFp = function(configuration?: Configuration) 
          * List organization webhooks
          * @summary List organization webhooks
          * @param {string} organizationId Organization ID
+         * @param {string} webhookId Webhook ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listOrganizationWebHooks(organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationWebhookResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizationWebHooks(organizationId, options);
+        async listOrganizationWebHooks(organizationId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationWebhookResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizationWebHooks(organizationId, webhookId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OrganizationWebhookApi.listOrganizationWebHooks']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -58687,12 +58688,11 @@ export const OrganizationWebhookApiFp = function(configuration?: Configuration) 
          * List events of a webhooks
          * @summary List events of a webhook
          * @param {string} organizationId Organization ID
-         * @param {string} webhookId Webhook ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listWebhookEvent(organizationId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookEventResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listWebhookEvent(organizationId, webhookId, options);
+        async listWebhookEvent(organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookEventResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listWebhookEvent(organizationId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OrganizationWebhookApi.listWebhookEvent']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -58757,22 +58757,22 @@ export const OrganizationWebhookApiFactory = function (configuration?: Configura
          * List organization webhooks
          * @summary List organization webhooks
          * @param {string} organizationId Organization ID
+         * @param {string} webhookId Webhook ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listOrganizationWebHooks(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<OrganizationWebhookResponseList> {
-            return localVarFp.listOrganizationWebHooks(organizationId, options).then((request) => request(axios, basePath));
+        listOrganizationWebHooks(organizationId: string, webhookId: string, options?: RawAxiosRequestConfig): AxiosPromise<OrganizationWebhookResponseList> {
+            return localVarFp.listOrganizationWebHooks(organizationId, webhookId, options).then((request) => request(axios, basePath));
         },
         /**
          * List events of a webhooks
          * @summary List events of a webhook
          * @param {string} organizationId Organization ID
-         * @param {string} webhookId Webhook ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listWebhookEvent(organizationId: string, webhookId: string, options?: RawAxiosRequestConfig): AxiosPromise<WebhookEventResponseList> {
-            return localVarFp.listWebhookEvent(organizationId, webhookId, options).then((request) => request(axios, basePath));
+        listWebhookEvent(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<WebhookEventResponseList> {
+            return localVarFp.listWebhookEvent(organizationId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -58842,25 +58842,25 @@ export class OrganizationWebhookApi extends BaseAPI {
      * List organization webhooks
      * @summary List organization webhooks
      * @param {string} organizationId Organization ID
+     * @param {string} webhookId Webhook ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationWebhookApi
      */
-    public listOrganizationWebHooks(organizationId: string, options?: RawAxiosRequestConfig) {
-        return OrganizationWebhookApiFp(this.configuration).listOrganizationWebHooks(organizationId, options).then((request) => request(this.axios, this.basePath));
+    public listOrganizationWebHooks(organizationId: string, webhookId: string, options?: RawAxiosRequestConfig) {
+        return OrganizationWebhookApiFp(this.configuration).listOrganizationWebHooks(organizationId, webhookId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * List events of a webhooks
      * @summary List events of a webhook
      * @param {string} organizationId Organization ID
-     * @param {string} webhookId Webhook ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationWebhookApi
      */
-    public listWebhookEvent(organizationId: string, webhookId: string, options?: RawAxiosRequestConfig) {
-        return OrganizationWebhookApiFp(this.configuration).listWebhookEvent(organizationId, webhookId, options).then((request) => request(this.axios, this.basePath));
+    public listWebhookEvent(organizationId: string, options?: RawAxiosRequestConfig) {
+        return OrganizationWebhookApiFp(this.configuration).listWebhookEvent(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
