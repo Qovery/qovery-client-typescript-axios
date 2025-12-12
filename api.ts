@@ -1190,6 +1190,12 @@ export interface ApplicationAdvancedSettings {
      */
     'build.ram_max_in_gib'?: number;
     /**
+     * disable buildkit registry cache during build
+     * @type {boolean}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'build.disable_buildkit_cache'?: boolean;
+    /**
      * 
      * @type {number}
      * @memberof ApplicationAdvancedSettings
@@ -12215,6 +12221,12 @@ export interface JobAdvancedSettings {
      * @memberof JobAdvancedSettings
      */
     'build.ram_max_in_gib'?: number;
+    /**
+     * disable buildkit registry cache during build
+     * @type {boolean}
+     * @memberof JobAdvancedSettings
+     */
+    'build.disable_buildkit_cache'?: boolean;
     /**
      * define how long in seconds an application is supposed to be stopped gracefully
      * @type {number}
