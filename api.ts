@@ -8406,6 +8406,58 @@ export interface DockerfileCheckResponse {
     'repositories'?: Array<string>;
 }
 /**
+ * Reference a Dockerfile fragment file from your Git repository.
+ * @export
+ * @interface DockerfileFragmentFile
+ */
+export interface DockerfileFragmentFile {
+    /**
+     * Fragment type discriminator
+     * @type {string}
+     * @memberof DockerfileFragmentFile
+     */
+    'type': DockerfileFragmentFileTypeEnum;
+    /**
+     * Absolute path to the fragment file.
+     * @type {string}
+     * @memberof DockerfileFragmentFile
+     */
+    'path': string;
+}
+
+export const DockerfileFragmentFileTypeEnum = {
+    FILE: 'file'
+} as const;
+
+export type DockerfileFragmentFileTypeEnum = typeof DockerfileFragmentFileTypeEnum[keyof typeof DockerfileFragmentFileTypeEnum];
+
+/**
+ * Define Dockerfile commands directly in the configuration.
+ * @export
+ * @interface DockerfileFragmentInline
+ */
+export interface DockerfileFragmentInline {
+    /**
+     * Fragment type discriminator
+     * @type {string}
+     * @memberof DockerfileFragmentInline
+     */
+    'type': DockerfileFragmentInlineTypeEnum;
+    /**
+     * Dockerfile commands to inject (max 8KB).
+     * @type {string}
+     * @memberof DockerfileFragmentInline
+     */
+    'content': string;
+}
+
+export const DockerfileFragmentInlineTypeEnum = {
+    INLINE: 'inline'
+} as const;
+
+export type DockerfileFragmentInlineTypeEnum = typeof DockerfileFragmentInlineTypeEnum[keyof typeof DockerfileFragmentInlineTypeEnum];
+
+/**
  * 
  * @export
  * @interface EksInfrastructureOutputs
@@ -19039,8 +19091,21 @@ export interface TerraformRequest {
      * @memberof TerraformRequest
      */
     'action_extra_arguments'?: { [key: string]: Array<string>; };
+    /**
+     * 
+     * @type {TerraformRequestDockerfileFragment}
+     * @memberof TerraformRequest
+     */
+    'dockerfile_fragment'?: TerraformRequestDockerfileFragment | null;
 }
 
+
+/**
+ * @type TerraformRequestDockerfileFragment
+ * Custom Dockerfile fragment to inject during build. Optional field. When null, no custom fragment is injected. 
+ * @export
+ */
+export type TerraformRequestDockerfileFragment = { type: 'file' } & DockerfileFragmentFile | { type: 'inline' } & DockerfileFragmentInline;
 
 /**
  * 
@@ -19206,8 +19271,21 @@ export interface TerraformResponse {
      * @memberof TerraformResponse
      */
     'action_extra_arguments': { [key: string]: Array<string>; };
+    /**
+     * 
+     * @type {TerraformResponseAllOfDockerfileFragment}
+     * @memberof TerraformResponse
+     */
+    'dockerfile_fragment'?: TerraformResponseAllOfDockerfileFragment | null;
 }
 
+
+/**
+ * @type TerraformResponseAllOfDockerfileFragment
+ * Custom Dockerfile fragment to inject during build. When null, no custom fragment is injected. 
+ * @export
+ */
+export type TerraformResponseAllOfDockerfileFragment = { type: 'file' } & DockerfileFragmentFile | { type: 'inline' } & DockerfileFragmentInline;
 
 /**
  * @type TerraformResponseAllOfTerraformFilesSource
