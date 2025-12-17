@@ -16412,6 +16412,12 @@ export interface Project {
     'description'?: string;
     /**
      * 
+     * @type {number}
+     * @memberof Project
+     */
+    'associated_environments_count': number;
+    /**
+     * 
      * @type {ReferenceObject}
      * @memberof Project
      */
