@@ -13863,6 +13863,19 @@ export interface ListDeploymentRequestByServiceId200Response {
 /**
  * 
  * @export
+ * @interface ListDirectoriesFromGitRepository200Response
+ */
+export interface ListDirectoriesFromGitRepository200Response {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ListDirectoriesFromGitRepository200Response
+     */
+    'results'?: Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface ListHelmDeploymentHistory200Response
  */
 export interface ListHelmDeploymentHistory200Response {
@@ -45471,6 +45484,51 @@ export const GitRepositoriesApiAxiosParamCreator = function (configuration?: Con
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * List immediate subdirectories at a specified path in a git repository. This endpoint is used when creating Terraform services to help users browse and select the appropriate root path. 
+         * @summary List directories from a git repository
+         * @param {string} organizationId Organization ID
+         * @param {ApplicationGitRepositoryRequest} [applicationGitRepositoryRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listDirectoriesFromGitRepository: async (organizationId: string, applicationGitRepositoryRequest?: ApplicationGitRepositoryRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listDirectoriesFromGitRepository', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/listDirectoriesFromGitRepository`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(applicationGitRepositoryRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -45575,6 +45633,20 @@ export const GitRepositoriesApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['GitRepositoriesApi.getGitlabRepositoryBranches']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * List immediate subdirectories at a specified path in a git repository. This endpoint is used when creating Terraform services to help users browse and select the appropriate root path. 
+         * @summary List directories from a git repository
+         * @param {string} organizationId Organization ID
+         * @param {ApplicationGitRepositoryRequest} [applicationGitRepositoryRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listDirectoriesFromGitRepository(organizationId: string, applicationGitRepositoryRequest?: ApplicationGitRepositoryRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListDirectoriesFromGitRepository200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listDirectoriesFromGitRepository(organizationId, applicationGitRepositoryRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitRepositoriesApi.listDirectoriesFromGitRepository']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -45657,6 +45729,17 @@ export const GitRepositoriesApiFactory = function (configuration?: Configuration
          */
         getGitlabRepositoryBranches(name?: string, options?: RawAxiosRequestConfig): AxiosPromise<GitRepositoryBranchResponseList> {
             return localVarFp.getGitlabRepositoryBranches(name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List immediate subdirectories at a specified path in a git repository. This endpoint is used when creating Terraform services to help users browse and select the appropriate root path. 
+         * @summary List directories from a git repository
+         * @param {string} organizationId Organization ID
+         * @param {ApplicationGitRepositoryRequest} [applicationGitRepositoryRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listDirectoriesFromGitRepository(organizationId: string, applicationGitRepositoryRequest?: ApplicationGitRepositoryRequest, options?: RawAxiosRequestConfig): AxiosPromise<ListDirectoriesFromGitRepository200Response> {
+            return localVarFp.listDirectoriesFromGitRepository(organizationId, applicationGitRepositoryRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -45753,6 +45836,19 @@ export class GitRepositoriesApi extends BaseAPI {
      */
     public getGitlabRepositoryBranches(name?: string, options?: RawAxiosRequestConfig) {
         return GitRepositoriesApiFp(this.configuration).getGitlabRepositoryBranches(name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List immediate subdirectories at a specified path in a git repository. This endpoint is used when creating Terraform services to help users browse and select the appropriate root path. 
+     * @summary List directories from a git repository
+     * @param {string} organizationId Organization ID
+     * @param {ApplicationGitRepositoryRequest} [applicationGitRepositoryRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitRepositoriesApi
+     */
+    public listDirectoriesFromGitRepository(organizationId: string, applicationGitRepositoryRequest?: ApplicationGitRepositoryRequest, options?: RawAxiosRequestConfig) {
+        return GitRepositoriesApiFp(this.configuration).listDirectoriesFromGitRepository(organizationId, applicationGitRepositoryRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
