@@ -26312,7 +26312,7 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * This endpoint returns the external ID of the organization\'s billing account. 
+         * This endpoint returns the external ID of the organization\'s billing account 
          * @summary Get organization billing external ID
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
@@ -26797,7 +26797,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * This endpoint returns the external ID of the organization\'s billing account. 
+         * This endpoint returns the external ID of the organization\'s billing account 
          * @summary Get organization billing external ID
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
@@ -27003,7 +27003,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getClusterCurrentCost(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
         /**
-         * This endpoint returns the external ID of the organization\'s billing account. 
+         * This endpoint returns the external ID of the organization\'s billing account 
          * @summary Get organization billing external ID
          * @param {string} organizationId Organization ID
          * @param {*} [options] Override http request option.
@@ -27196,7 +27196,7 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * This endpoint returns the external ID of the organization\'s billing account. 
+     * This endpoint returns the external ID of the organization\'s billing account 
      * @summary Get organization billing external ID
      * @param {string} organizationId Organization ID
      * @param {*} [options] Override http request option.
