@@ -5,7 +5,7 @@
   "author": "OpenAPI-Generator Contributors",
   "repository": {
     "type": "git",
-    "url": "https://github.com/qovery/qovery-client-typescript-axios.git"
+    "url": "https://github.com/Qovery/qovery-client-typescript-axios.git"
   },
   "keywords": [
     "axios",
