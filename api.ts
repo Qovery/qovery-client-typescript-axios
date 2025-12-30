@@ -1108,6 +1108,12 @@ export interface Application {
      * @memberof Application
      */
     'docker_target_build_stage'?: string | null;
+    /**
+     * 
+     * @type {AutoscalingPolicyResponse}
+     * @memberof Application
+     */
+    'autoscaling'?: AutoscalingPolicyResponse;
 }
 
 
@@ -1864,6 +1870,12 @@ export interface ApplicationRequest {
      * @memberof ApplicationRequest
      */
     'docker_target_build_stage'?: string | null;
+    /**
+     * 
+     * @type {AutoscalingPolicyRequest}
+     * @memberof ApplicationRequest
+     */
+    'autoscaling'?: AutoscalingPolicyRequest;
 }
 
 
@@ -1880,6 +1892,31 @@ export interface ApplicationResponseList {
      */
     'results'?: Array<Application>;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const AutoscalingMode = {
+    KEDA: 'KEDA'
+} as const;
+
+export type AutoscalingMode = typeof AutoscalingMode[keyof typeof AutoscalingMode];
+
+
+/**
+ * @type AutoscalingPolicyRequest
+ * @export
+ */
+export type AutoscalingPolicyRequest = { mode: 'KEDA' } & KedaAutoscalingRequest;
+
+/**
+ * @type AutoscalingPolicyResponse
+ * @export
+ */
+export type AutoscalingPolicyResponse = { mode: 'KEDA' } & KedaAutoscalingResponse;
+
 /**
  * 
  * @export
@@ -5711,6 +5748,12 @@ export interface ContainerRequest {
      * @memberof ContainerRequest
      */
     'icon_uri'?: string;
+    /**
+     * 
+     * @type {AutoscalingPolicyRequest}
+     * @memberof ContainerRequest
+     */
+    'autoscaling'?: AutoscalingPolicyRequest;
 }
 /**
  * 
@@ -5892,6 +5935,12 @@ export interface ContainerResponse {
      * @memberof ContainerResponse
      */
     'service_type': ServiceTypeEnum;
+    /**
+     * 
+     * @type {AutoscalingPolicyResponse}
+     * @memberof ContainerResponse
+     */
+    'autoscaling'?: AutoscalingPolicyResponse;
 }
 
 
@@ -13136,6 +13185,194 @@ export interface KarpenterStableNodePoolOverride {
      */
     'limits'?: KarpenterNodePoolLimits;
 }
+/**
+ * 
+ * @export
+ * @interface KedaAutoscalingRequest
+ */
+export interface KedaAutoscalingRequest {
+    /**
+     * 
+     * @type {AutoscalingMode}
+     * @memberof KedaAutoscalingRequest
+     */
+    'mode': AutoscalingMode;
+    /**
+     * 
+     * @type {number}
+     * @memberof KedaAutoscalingRequest
+     */
+    'polling_interval_seconds'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof KedaAutoscalingRequest
+     */
+    'cooldown_period_seconds'?: number;
+    /**
+     * 
+     * @type {Array<KedaScalerRequest>}
+     * @memberof KedaAutoscalingRequest
+     */
+    'scalers': Array<KedaScalerRequest>;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface KedaAutoscalingResponse
+ */
+export interface KedaAutoscalingResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof KedaAutoscalingResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KedaAutoscalingResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KedaAutoscalingResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KedaAutoscalingResponse
+     */
+    'service_id': string;
+    /**
+     * 
+     * @type {AutoscalingMode}
+     * @memberof KedaAutoscalingResponse
+     */
+    'mode': AutoscalingMode;
+    /**
+     * 
+     * @type {number}
+     * @memberof KedaAutoscalingResponse
+     */
+    'polling_interval_seconds': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof KedaAutoscalingResponse
+     */
+    'cooldown_period_seconds': number;
+    /**
+     * 
+     * @type {Array<KedaScalerResponse>}
+     * @memberof KedaAutoscalingResponse
+     */
+    'scalers': Array<KedaScalerResponse>;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface KedaScalerRequest
+ */
+export interface KedaScalerRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KedaScalerRequest
+     */
+    'scaler_type': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof KedaScalerRequest
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {KedaScalerRole}
+     * @memberof KedaScalerRequest
+     */
+    'role': KedaScalerRole;
+    /**
+     * 
+     * @type {object}
+     * @memberof KedaScalerRequest
+     */
+    'config_json'?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof KedaScalerRequest
+     */
+    'config_yaml'?: string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface KedaScalerResponse
+ */
+export interface KedaScalerResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof KedaScalerResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KedaScalerResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KedaScalerResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KedaScalerResponse
+     */
+    'scaler_type': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof KedaScalerResponse
+     */
+    'enabled': boolean;
+    /**
+     * 
+     * @type {KedaScalerRole}
+     * @memberof KedaScalerResponse
+     */
+    'role': KedaScalerRole;
+}
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const KedaScalerRole = {
+    PRIMARY: 'PRIMARY',
+    SAFETY: 'SAFETY'
+} as const;
+
+export type KedaScalerRole = typeof KedaScalerRole[keyof typeof KedaScalerRole];
+
+
 /**
  * 
  * @export
@@ -25727,6 +25964,280 @@ export class ApplicationsApi extends BaseAPI {
      */
     public listApplication(environmentId: string, options?: RawAxiosRequestConfig) {
         return ApplicationsApiFp(this.configuration).listApplication(environmentId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * AutoscalingPolicyApi - axios parameter creator
+ * @export
+ */
+export const AutoscalingPolicyApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary createOrUpdateServiceAutoscaling
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {AutoscalingPolicyRequest} [autoscalingPolicyRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrUpdateServiceAutoscaling: async (serviceId: string, autoscalingPolicyRequest?: AutoscalingPolicyRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'serviceId' is not null or undefined
+            assertParamExists('createOrUpdateServiceAutoscaling', 'serviceId', serviceId)
+            const localVarPath = `/service/{serviceId}/autoscalingPolicy`
+                .replace(`{${"serviceId"}}`, encodeURIComponent(String(serviceId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(autoscalingPolicyRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary deleteServiceAutoscaling
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteServiceAutoscaling: async (serviceId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'serviceId' is not null or undefined
+            assertParamExists('deleteServiceAutoscaling', 'serviceId', serviceId)
+            const localVarPath = `/service/{serviceId}/autoscalingPolicy`
+                .replace(`{${"serviceId"}}`, encodeURIComponent(String(serviceId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getServiceAutoscaling
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getServiceAutoscaling: async (serviceId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'serviceId' is not null or undefined
+            assertParamExists('getServiceAutoscaling', 'serviceId', serviceId)
+            const localVarPath = `/service/{serviceId}/autoscalingPolicy`
+                .replace(`{${"serviceId"}}`, encodeURIComponent(String(serviceId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AutoscalingPolicyApi - functional programming interface
+ * @export
+ */
+export const AutoscalingPolicyApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AutoscalingPolicyApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary createOrUpdateServiceAutoscaling
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {AutoscalingPolicyRequest} [autoscalingPolicyRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createOrUpdateServiceAutoscaling(serviceId: string, autoscalingPolicyRequest?: AutoscalingPolicyRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoscalingPolicyResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createOrUpdateServiceAutoscaling(serviceId, autoscalingPolicyRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AutoscalingPolicyApi.createOrUpdateServiceAutoscaling']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary deleteServiceAutoscaling
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteServiceAutoscaling(serviceId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteServiceAutoscaling(serviceId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AutoscalingPolicyApi.deleteServiceAutoscaling']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary getServiceAutoscaling
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getServiceAutoscaling(serviceId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoscalingPolicyResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getServiceAutoscaling(serviceId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AutoscalingPolicyApi.getServiceAutoscaling']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AutoscalingPolicyApi - factory interface
+ * @export
+ */
+export const AutoscalingPolicyApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AutoscalingPolicyApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary createOrUpdateServiceAutoscaling
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {AutoscalingPolicyRequest} [autoscalingPolicyRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrUpdateServiceAutoscaling(serviceId: string, autoscalingPolicyRequest?: AutoscalingPolicyRequest, options?: RawAxiosRequestConfig): AxiosPromise<AutoscalingPolicyResponse> {
+            return localVarFp.createOrUpdateServiceAutoscaling(serviceId, autoscalingPolicyRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary deleteServiceAutoscaling
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteServiceAutoscaling(serviceId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteServiceAutoscaling(serviceId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary getServiceAutoscaling
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getServiceAutoscaling(serviceId: string, options?: RawAxiosRequestConfig): AxiosPromise<AutoscalingPolicyResponse> {
+            return localVarFp.getServiceAutoscaling(serviceId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AutoscalingPolicyApi - object-oriented interface
+ * @export
+ * @class AutoscalingPolicyApi
+ * @extends {BaseAPI}
+ */
+export class AutoscalingPolicyApi extends BaseAPI {
+    /**
+     * 
+     * @summary createOrUpdateServiceAutoscaling
+     * @param {string} serviceId Service ID of an application/job/container/database
+     * @param {AutoscalingPolicyRequest} [autoscalingPolicyRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AutoscalingPolicyApi
+     */
+    public createOrUpdateServiceAutoscaling(serviceId: string, autoscalingPolicyRequest?: AutoscalingPolicyRequest, options?: RawAxiosRequestConfig) {
+        return AutoscalingPolicyApiFp(this.configuration).createOrUpdateServiceAutoscaling(serviceId, autoscalingPolicyRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary deleteServiceAutoscaling
+     * @param {string} serviceId Service ID of an application/job/container/database
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AutoscalingPolicyApi
+     */
+    public deleteServiceAutoscaling(serviceId: string, options?: RawAxiosRequestConfig) {
+        return AutoscalingPolicyApiFp(this.configuration).deleteServiceAutoscaling(serviceId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary getServiceAutoscaling
+     * @param {string} serviceId Service ID of an application/job/container/database
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AutoscalingPolicyApi
+     */
+    public getServiceAutoscaling(serviceId: string, options?: RawAxiosRequestConfig) {
+        return AutoscalingPolicyApiFp(this.configuration).getServiceAutoscaling(serviceId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
