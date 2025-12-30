@@ -57256,7 +57256,7 @@ export const OrganizationMainCallsApiAxiosParamCreator = function (configuration
             };
         },
         /**
-         * To edit an organization you must have the admin permission
+         * To edit an organization you must have the admin permission.
          * @summary Edit an organization
          * @param {string} organizationId Organization ID
          * @param {OrganizationEditRequest} [organizationEditRequest] 
@@ -57911,7 +57911,7 @@ export const OrganizationMainCallsApiFp = function(configuration?: Configuration
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * To edit an organization you must have the admin permission
+         * To edit an organization you must have the admin permission.
          * @summary Edit an organization
          * @param {string} organizationId Organization ID
          * @param {OrganizationEditRequest} [organizationEditRequest] 
@@ -58153,7 +58153,7 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
             return localVarFp.editGitToken(organizationId, gitTokenId, gitTokenRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * To edit an organization you must have the admin permission
+         * To edit an organization you must have the admin permission.
          * @summary Edit an organization
          * @param {string} organizationId Organization ID
          * @param {OrganizationEditRequest} [organizationEditRequest] 
@@ -58366,7 +58366,7 @@ export class OrganizationMainCallsApi extends BaseAPI {
     }
 
     /**
-     * To edit an organization you must have the admin permission
+     * To edit an organization you must have the admin permission.
      * @summary Edit an organization
      * @param {string} organizationId Organization ID
      * @param {OrganizationEditRequest} [organizationEditRequest] 
