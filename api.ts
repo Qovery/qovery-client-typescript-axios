@@ -13356,6 +13356,18 @@ export interface KedaScalerResponse {
      * @memberof KedaScalerResponse
      */
     'role': KedaScalerRole;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof KedaScalerResponse
+     */
+    'config_json'?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof KedaScalerResponse
+     */
+    'config_yaml'?: string | null;
 }
 
 
