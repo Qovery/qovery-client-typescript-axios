@@ -17776,6 +17776,12 @@ export interface ServiceLightResponse {
      * @type {string}
      * @memberof ServiceLightResponse
      */
+    'cluster_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ServiceLightResponse
+     */
     'job_type'?: ServiceLightResponseJobTypeEnum;
 }
 
