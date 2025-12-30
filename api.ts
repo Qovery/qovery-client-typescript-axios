@@ -3107,6 +3107,12 @@ export interface Cluster {
      * @memberof Cluster
      */
     'infrastructure_charts_parameters'?: ClusterInfrastructureChartsParameters;
+    /**
+     * 
+     * @type {ClusterKeda}
+     * @memberof Cluster
+     */
+    'keda'?: ClusterKeda;
 }
 
 
@@ -4119,6 +4125,19 @@ export interface ClusterKarpenterPrivateSubnetIdsPutRequest {
 /**
  * 
  * @export
+ * @interface ClusterKeda
+ */
+export interface ClusterKeda {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterKeda
+     */
+    'enabled': boolean;
+}
+/**
+ * 
+ * @export
  * @interface ClusterLock
  */
 export interface ClusterLock {
@@ -4585,6 +4604,12 @@ export interface ClusterRequest {
      * @memberof ClusterRequest
      */
     'infrastructure_charts_parameters'?: ClusterInfrastructureChartsParameters;
+    /**
+     * 
+     * @type {ClusterKeda}
+     * @memberof ClusterRequest
+     */
+    'keda'?: ClusterKeda;
 }
 
 
