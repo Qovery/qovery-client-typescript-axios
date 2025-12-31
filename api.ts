@@ -1583,6 +1583,12 @@ export interface ApplicationEditRequest {
      * @memberof ApplicationEditRequest
      */
     'docker_target_build_stage'?: string | null;
+    /**
+     * 
+     * @type {AutoscalingPolicyRequest}
+     * @memberof ApplicationEditRequest
+     */
+    'autoscaling'?: AutoscalingPolicyRequest;
 }
 
 
