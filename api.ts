@@ -13394,6 +13394,81 @@ export type KedaScalerRole = typeof KedaScalerRole[keyof typeof KedaScalerRole];
 /**
  * 
  * @export
+ * @interface KedaTriggerAuthenticationRequest
+ */
+export interface KedaTriggerAuthenticationRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KedaTriggerAuthenticationRequest
+     */
+    'name': string;
+    /**
+     * Optional raw KEDA TriggerAuthentication YAML configuration.
+     * @type {string}
+     * @memberof KedaTriggerAuthenticationRequest
+     */
+    'config_yaml'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface KedaTriggerAuthenticationResponse
+ */
+export interface KedaTriggerAuthenticationResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof KedaTriggerAuthenticationResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KedaTriggerAuthenticationResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KedaTriggerAuthenticationResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KedaTriggerAuthenticationResponse
+     */
+    'organization_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KedaTriggerAuthenticationResponse
+     */
+    'name': string;
+    /**
+     *  Optional raw KEDA TriggerAuthentication YAML configuration.
+     * @type {string}
+     * @memberof KedaTriggerAuthenticationResponse
+     */
+    'config_yaml'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface KedaTriggerAuthenticationResponseList
+ */
+export interface KedaTriggerAuthenticationResponseList {
+    /**
+     * 
+     * @type {Array<KedaTriggerAuthenticationResponse>}
+     * @memberof KedaTriggerAuthenticationResponseList
+     */
+    'results'?: Array<KedaTriggerAuthenticationResponse>;
+}
+/**
+ * 
+ * @export
  * @interface Key
  */
 export interface Key {
@@ -53360,6 +53435,462 @@ export class JobsApi extends BaseAPI {
      */
     public listJobs(environmentId: string, toUpdate?: boolean, options?: RawAxiosRequestConfig) {
         return JobsApiFp(this.configuration).listJobs(environmentId, toUpdate, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * KedaTriggerAuthenticationApi - axios parameter creator
+ * @export
+ */
+export const KedaTriggerAuthenticationApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary create Keda Trigger Authentications
+         * @param {string} organizationId Organization ID
+         * @param {KedaTriggerAuthenticationRequest} kedaTriggerAuthenticationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createKedaTriggerAuthentication: async (organizationId: string, kedaTriggerAuthenticationRequest: KedaTriggerAuthenticationRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('createKedaTriggerAuthentication', 'organizationId', organizationId)
+            // verify required parameter 'kedaTriggerAuthenticationRequest' is not null or undefined
+            assertParamExists('createKedaTriggerAuthentication', 'kedaTriggerAuthenticationRequest', kedaTriggerAuthenticationRequest)
+            const localVarPath = `/organization/{organizationId}/keda-trigger-authentications`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(kedaTriggerAuthenticationRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a KEDA trigger authentication
+         * @param {string} organizationId Organization ID
+         * @param {string} triggerAuthenticationId KEDA triggerAuthentication ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteKedaTriggerAuthentication: async (organizationId: string, triggerAuthenticationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('deleteKedaTriggerAuthentication', 'organizationId', organizationId)
+            // verify required parameter 'triggerAuthenticationId' is not null or undefined
+            assertParamExists('deleteKedaTriggerAuthentication', 'triggerAuthenticationId', triggerAuthenticationId)
+            const localVarPath = `/organization/{organizationId}/keda-trigger-authentications/{triggerAuthenticationId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"triggerAuthenticationId"}}`, encodeURIComponent(String(triggerAuthenticationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a KEDA trigger authentication
+         * @param {string} organizationId Organization ID
+         * @param {string} triggerAuthenticationId KEDA triggerAuthentication ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getKedaTriggerAuthentication: async (organizationId: string, triggerAuthenticationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getKedaTriggerAuthentication', 'organizationId', organizationId)
+            // verify required parameter 'triggerAuthenticationId' is not null or undefined
+            assertParamExists('getKedaTriggerAuthentication', 'triggerAuthenticationId', triggerAuthenticationId)
+            const localVarPath = `/organization/{organizationId}/keda-trigger-authentications/{triggerAuthenticationId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"triggerAuthenticationId"}}`, encodeURIComponent(String(triggerAuthenticationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary list Keda TriggerAuthentications
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listKedaTriggerAuthentications: async (organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listKedaTriggerAuthentications', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/keda-trigger-authentications`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update a KEDA trigger authentication
+         * @param {string} organizationId Organization ID
+         * @param {string} triggerAuthenticationId KEDA triggerAuthentication ID
+         * @param {KedaTriggerAuthenticationRequest} [kedaTriggerAuthenticationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateKedaTriggerAuthentication: async (organizationId: string, triggerAuthenticationId: string, kedaTriggerAuthenticationRequest?: KedaTriggerAuthenticationRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('updateKedaTriggerAuthentication', 'organizationId', organizationId)
+            // verify required parameter 'triggerAuthenticationId' is not null or undefined
+            assertParamExists('updateKedaTriggerAuthentication', 'triggerAuthenticationId', triggerAuthenticationId)
+            const localVarPath = `/organization/{organizationId}/keda-trigger-authentications/{triggerAuthenticationId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"triggerAuthenticationId"}}`, encodeURIComponent(String(triggerAuthenticationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(kedaTriggerAuthenticationRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * KedaTriggerAuthenticationApi - functional programming interface
+ * @export
+ */
+export const KedaTriggerAuthenticationApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = KedaTriggerAuthenticationApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary create Keda Trigger Authentications
+         * @param {string} organizationId Organization ID
+         * @param {KedaTriggerAuthenticationRequest} kedaTriggerAuthenticationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createKedaTriggerAuthentication(organizationId: string, kedaTriggerAuthenticationRequest: KedaTriggerAuthenticationRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KedaTriggerAuthenticationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createKedaTriggerAuthentication(organizationId, kedaTriggerAuthenticationRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['KedaTriggerAuthenticationApi.createKedaTriggerAuthentication']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Delete a KEDA trigger authentication
+         * @param {string} organizationId Organization ID
+         * @param {string} triggerAuthenticationId KEDA triggerAuthentication ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteKedaTriggerAuthentication(organizationId: string, triggerAuthenticationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteKedaTriggerAuthentication(organizationId, triggerAuthenticationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['KedaTriggerAuthenticationApi.deleteKedaTriggerAuthentication']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get a KEDA trigger authentication
+         * @param {string} organizationId Organization ID
+         * @param {string} triggerAuthenticationId KEDA triggerAuthentication ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getKedaTriggerAuthentication(organizationId: string, triggerAuthenticationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KedaTriggerAuthenticationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getKedaTriggerAuthentication(organizationId, triggerAuthenticationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['KedaTriggerAuthenticationApi.getKedaTriggerAuthentication']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary list Keda TriggerAuthentications
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listKedaTriggerAuthentications(organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KedaTriggerAuthenticationResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listKedaTriggerAuthentications(organizationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['KedaTriggerAuthenticationApi.listKedaTriggerAuthentications']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Update a KEDA trigger authentication
+         * @param {string} organizationId Organization ID
+         * @param {string} triggerAuthenticationId KEDA triggerAuthentication ID
+         * @param {KedaTriggerAuthenticationRequest} [kedaTriggerAuthenticationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateKedaTriggerAuthentication(organizationId: string, triggerAuthenticationId: string, kedaTriggerAuthenticationRequest?: KedaTriggerAuthenticationRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KedaTriggerAuthenticationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateKedaTriggerAuthentication(organizationId, triggerAuthenticationId, kedaTriggerAuthenticationRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['KedaTriggerAuthenticationApi.updateKedaTriggerAuthentication']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * KedaTriggerAuthenticationApi - factory interface
+ * @export
+ */
+export const KedaTriggerAuthenticationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = KedaTriggerAuthenticationApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary create Keda Trigger Authentications
+         * @param {string} organizationId Organization ID
+         * @param {KedaTriggerAuthenticationRequest} kedaTriggerAuthenticationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createKedaTriggerAuthentication(organizationId: string, kedaTriggerAuthenticationRequest: KedaTriggerAuthenticationRequest, options?: RawAxiosRequestConfig): AxiosPromise<KedaTriggerAuthenticationResponse> {
+            return localVarFp.createKedaTriggerAuthentication(organizationId, kedaTriggerAuthenticationRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete a KEDA trigger authentication
+         * @param {string} organizationId Organization ID
+         * @param {string} triggerAuthenticationId KEDA triggerAuthentication ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteKedaTriggerAuthentication(organizationId: string, triggerAuthenticationId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteKedaTriggerAuthentication(organizationId, triggerAuthenticationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get a KEDA trigger authentication
+         * @param {string} organizationId Organization ID
+         * @param {string} triggerAuthenticationId KEDA triggerAuthentication ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getKedaTriggerAuthentication(organizationId: string, triggerAuthenticationId: string, options?: RawAxiosRequestConfig): AxiosPromise<KedaTriggerAuthenticationResponse> {
+            return localVarFp.getKedaTriggerAuthentication(organizationId, triggerAuthenticationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary list Keda TriggerAuthentications
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listKedaTriggerAuthentications(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<KedaTriggerAuthenticationResponseList> {
+            return localVarFp.listKedaTriggerAuthentications(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update a KEDA trigger authentication
+         * @param {string} organizationId Organization ID
+         * @param {string} triggerAuthenticationId KEDA triggerAuthentication ID
+         * @param {KedaTriggerAuthenticationRequest} [kedaTriggerAuthenticationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateKedaTriggerAuthentication(organizationId: string, triggerAuthenticationId: string, kedaTriggerAuthenticationRequest?: KedaTriggerAuthenticationRequest, options?: RawAxiosRequestConfig): AxiosPromise<KedaTriggerAuthenticationResponse> {
+            return localVarFp.updateKedaTriggerAuthentication(organizationId, triggerAuthenticationId, kedaTriggerAuthenticationRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * KedaTriggerAuthenticationApi - object-oriented interface
+ * @export
+ * @class KedaTriggerAuthenticationApi
+ * @extends {BaseAPI}
+ */
+export class KedaTriggerAuthenticationApi extends BaseAPI {
+    /**
+     * 
+     * @summary create Keda Trigger Authentications
+     * @param {string} organizationId Organization ID
+     * @param {KedaTriggerAuthenticationRequest} kedaTriggerAuthenticationRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KedaTriggerAuthenticationApi
+     */
+    public createKedaTriggerAuthentication(organizationId: string, kedaTriggerAuthenticationRequest: KedaTriggerAuthenticationRequest, options?: RawAxiosRequestConfig) {
+        return KedaTriggerAuthenticationApiFp(this.configuration).createKedaTriggerAuthentication(organizationId, kedaTriggerAuthenticationRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete a KEDA trigger authentication
+     * @param {string} organizationId Organization ID
+     * @param {string} triggerAuthenticationId KEDA triggerAuthentication ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KedaTriggerAuthenticationApi
+     */
+    public deleteKedaTriggerAuthentication(organizationId: string, triggerAuthenticationId: string, options?: RawAxiosRequestConfig) {
+        return KedaTriggerAuthenticationApiFp(this.configuration).deleteKedaTriggerAuthentication(organizationId, triggerAuthenticationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get a KEDA trigger authentication
+     * @param {string} organizationId Organization ID
+     * @param {string} triggerAuthenticationId KEDA triggerAuthentication ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KedaTriggerAuthenticationApi
+     */
+    public getKedaTriggerAuthentication(organizationId: string, triggerAuthenticationId: string, options?: RawAxiosRequestConfig) {
+        return KedaTriggerAuthenticationApiFp(this.configuration).getKedaTriggerAuthentication(organizationId, triggerAuthenticationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary list Keda TriggerAuthentications
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KedaTriggerAuthenticationApi
+     */
+    public listKedaTriggerAuthentications(organizationId: string, options?: RawAxiosRequestConfig) {
+        return KedaTriggerAuthenticationApiFp(this.configuration).listKedaTriggerAuthentications(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update a KEDA trigger authentication
+     * @param {string} organizationId Organization ID
+     * @param {string} triggerAuthenticationId KEDA triggerAuthentication ID
+     * @param {KedaTriggerAuthenticationRequest} [kedaTriggerAuthenticationRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KedaTriggerAuthenticationApi
+     */
+    public updateKedaTriggerAuthentication(organizationId: string, triggerAuthenticationId: string, kedaTriggerAuthenticationRequest?: KedaTriggerAuthenticationRequest, options?: RawAxiosRequestConfig) {
+        return KedaTriggerAuthenticationApiFp(this.configuration).updateKedaTriggerAuthentication(organizationId, triggerAuthenticationId, kedaTriggerAuthenticationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
