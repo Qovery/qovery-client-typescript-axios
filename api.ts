@@ -13317,6 +13317,12 @@ export interface KedaScalerRequest {
      * @memberof KedaScalerRequest
      */
     'config_yaml'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KedaScalerRequest
+     */
+    'trigger_authentication_id'?: string;
 }
 
 
@@ -13374,6 +13380,12 @@ export interface KedaScalerResponse {
      * @memberof KedaScalerResponse
      */
     'config_yaml'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof KedaScalerResponse
+     */
+    'trigger_authentication_id'?: string;
 }
 
 
