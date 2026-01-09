@@ -14243,6 +14243,19 @@ export interface ListDirectoriesFromGitRepository200Response {
 /**
  * 
  * @export
+ * @interface ListEnvironmentsByOrganizationId200Response
+ */
+export interface ListEnvironmentsByOrganizationId200Response {
+    /**
+     * 
+     * @type {Array<OrganizationEnvironmentResponse>}
+     * @memberof ListEnvironmentsByOrganizationId200Response
+     */
+    'results'?: Array<OrganizationEnvironmentResponse>;
+}
+/**
+ * 
+ * @export
  * @interface ListHelmDeploymentHistory200Response
  */
 export interface ListHelmDeploymentHistory200Response {
@@ -15668,6 +15681,57 @@ export interface OrganizationEditRequest {
      */
     'admin_emails'?: Array<string> | null;
 }
+/**
+ * 
+ * @export
+ * @interface OrganizationEnvironmentResponse
+ */
+export interface OrganizationEnvironmentResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationEnvironmentResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationEnvironmentResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationEnvironmentResponse
+     */
+    'updated_at'?: string;
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof OrganizationEnvironmentResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof OrganizationEnvironmentResponse
+     */
+    'organization': ReferenceObject;
+    /**
+     * 
+     * @type {ReferenceObject}
+     * @memberof OrganizationEnvironmentResponse
+     */
+    'project': ReferenceObject;
+    /**
+     * 
+     * @type {EnvironmentModeEnum}
+     * @memberof OrganizationEnvironmentResponse
+     */
+    'mode': EnvironmentModeEnum;
+}
+
+
 /**
  * Origin of the organization event
  * @export
@@ -58595,6 +58659,47 @@ export const OrganizationMainCallsApiAxiosParamCreator = function (configuration
         },
         /**
          * 
+         * @summary List Environments By OrganizationId
+         * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listEnvironmentsByOrganizationId: async (organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listEnvironmentsByOrganizationId', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/environments`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary List user organizations
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -59067,6 +59172,19 @@ export const OrganizationMainCallsApiFp = function(configuration?: Configuration
         },
         /**
          * 
+         * @summary List Environments By OrganizationId
+         * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listEnvironmentsByOrganizationId(organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListEnvironmentsByOrganizationId200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listEnvironmentsByOrganizationId(organizationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrganizationMainCallsApi.listEnvironmentsByOrganizationId']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary List user organizations
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -59291,6 +59409,16 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
         },
         /**
          * 
+         * @summary List Environments By OrganizationId
+         * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listEnvironmentsByOrganizationId(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<ListEnvironmentsByOrganizationId200Response> {
+            return localVarFp.listEnvironmentsByOrganizationId(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary List user organizations
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -59512,6 +59640,18 @@ export class OrganizationMainCallsApi extends BaseAPI {
      */
     public getOrganizationGitToken(organizationId: string, gitTokenId: string, options?: RawAxiosRequestConfig) {
         return OrganizationMainCallsApiFp(this.configuration).getOrganizationGitToken(organizationId, gitTokenId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List Environments By OrganizationId
+     * @param {string} organizationId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationMainCallsApi
+     */
+    public listEnvironmentsByOrganizationId(organizationId: string, options?: RawAxiosRequestConfig) {
+        return OrganizationMainCallsApiFp(this.configuration).listEnvironmentsByOrganizationId(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
