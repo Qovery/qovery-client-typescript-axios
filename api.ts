@@ -1334,6 +1334,12 @@ export interface ApplicationAdvancedSettings {
      */
     'hpa.cpu.average_utilization_percent'?: number;
     /**
+     * Percentage value of memory usage at which point pods should scale up.
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'hpa.memory.average_utilization_percent'?: number | null;
+    /**
      * Allows you to set an existing Kubernetes service account name 
      * @type {string}
      * @memberof ApplicationAdvancedSettings
@@ -5116,6 +5122,12 @@ export interface ContainerAdvancedSettings {
      * @memberof ContainerAdvancedSettings
      */
     'hpa.cpu.average_utilization_percent'?: number;
+    /**
+     * Percentage value of memory usage at which point pods should scale up.
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'hpa.memory.average_utilization_percent'?: number | null;
     /**
      * Automount Kubernetes service account token to have access to Kubernetes API from pods 
      * @type {boolean}
