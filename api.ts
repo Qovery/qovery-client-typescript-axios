@@ -19625,6 +19625,132 @@ export interface TerraformRequestTerraformFilesSourceOneOf {
     'git_repository'?: TerraformGitRepositoryRequest;
 }
 /**
+ * A single attribute of a Terraform resource with key and value
+ * @export
+ * @interface TerraformResourceAttribute
+ */
+export interface TerraformResourceAttribute {
+    /**
+     * The attribute key name
+     * @type {string}
+     * @memberof TerraformResourceAttribute
+     */
+    'key': string;
+    /**
+     * The attribute value as a string
+     * @type {string}
+     * @memberof TerraformResourceAttribute
+     */
+    'value': string;
+}
+/**
+ * A Terraform resource from a deployment execution
+ * @export
+ * @interface TerraformResourceResponse
+ */
+export interface TerraformResourceResponse {
+    /**
+     * Unique identifier for this resource record
+     * @type {string}
+     * @memberof TerraformResourceResponse
+     */
+    'id': string;
+    /**
+     * Type of the Terraform resource (e.g., aws_instance, aws_s3_bucket)
+     * @type {string}
+     * @memberof TerraformResourceResponse
+     */
+    'resourceType': string;
+    /**
+     * Name of the resource as defined in Terraform configuration
+     * @type {string}
+     * @memberof TerraformResourceResponse
+     */
+    'name': string;
+    /**
+     * Full address of the resource (e.g., aws_instance.web_server)
+     * @type {string}
+     * @memberof TerraformResourceResponse
+     */
+    'address': string;
+    /**
+     * Terraform provider name (e.g., aws, google, azurerm)
+     * @type {string}
+     * @memberof TerraformResourceResponse
+     */
+    'provider': string;
+    /**
+     * Resource mode (managed or data source)
+     * @type {string}
+     * @memberof TerraformResourceResponse
+     */
+    'mode': TerraformResourceResponseModeEnum;
+    /**
+     * All resource attributes as key-value pairs
+     * @type {{ [key: string]: any; }}
+     * @memberof TerraformResourceResponse
+     */
+    'attributes': { [key: string]: any; };
+    /**
+     * Timestamp when the resource was extracted from Terraform state
+     * @type {string}
+     * @memberof TerraformResourceResponse
+     */
+    'extractedAt': string;
+    /**
+     * Most important attributes for this resource type (for display)
+     * @type {Array<TerraformResourceAttribute>}
+     * @memberof TerraformResourceResponse
+     */
+    'keyAttributes': Array<TerraformResourceAttribute>;
+}
+
+export const TerraformResourceResponseModeEnum = {
+    MANAGED: 'managed',
+    DATA: 'data'
+} as const;
+
+export type TerraformResourceResponseModeEnum = typeof TerraformResourceResponseModeEnum[keyof typeof TerraformResourceResponseModeEnum];
+
+/**
+ * Request to store terraform resources from engine after deployment
+ * @export
+ * @interface TerraformResourcesRequest
+ */
+export interface TerraformResourcesRequest {
+    /**
+     * ID of the Terraform service
+     * @type {string}
+     * @memberof TerraformResourcesRequest
+     */
+    'terraformId': string;
+    /**
+     * Execution ID in format \"UUID-version\" or \"UUID-version-timestamp\" Example: 550e8400-e29b-41d4-a716-446655440000-1 
+     * @type {string}
+     * @memberof TerraformResourcesRequest
+     */
+    'executionId': string;
+    /**
+     * JSON array of terraform resources extracted from terraform show output. Each resource contains: resource_type, name, provider, address, mode, attributes 
+     * @type {string}
+     * @memberof TerraformResourcesRequest
+     */
+    'resourcesJson': string;
+}
+/**
+ * List of Terraform resources from the latest deployment
+ * @export
+ * @interface TerraformResourcesResponse
+ */
+export interface TerraformResourcesResponse {
+    /**
+     * Array of Terraform resources
+     * @type {Array<TerraformResourceResponse>}
+     * @memberof TerraformResourcesResponse
+     */
+    'resources': Array<TerraformResourceResponse>;
+}
+/**
  * A Terraform service
  * @export
  * @interface TerraformResponse
@@ -63480,6 +63606,121 @@ export class TerraformMainCallsApi extends BaseAPI {
      */
     public listTerraformVersions(options?: RawAxiosRequestConfig) {
         return TerraformMainCallsApiFp(this.configuration).listTerraformVersions(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * TerraformResourcesApi - axios parameter creator
+ * @export
+ */
+export const TerraformResourcesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Returns the list of Terraform resources from the most recent deployment execution
+         * @summary Get terraform resources from latest deployment
+         * @param {string} terraformId Terraform ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTerraformResources: async (terraformId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'terraformId' is not null or undefined
+            assertParamExists('getTerraformResources', 'terraformId', terraformId)
+            const localVarPath = `/api/v1/terraform/{terraformId}/terraformResources`
+                .replace(`{${"terraformId"}}`, encodeURIComponent(String(terraformId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TerraformResourcesApi - functional programming interface
+ * @export
+ */
+export const TerraformResourcesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TerraformResourcesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Returns the list of Terraform resources from the most recent deployment execution
+         * @summary Get terraform resources from latest deployment
+         * @param {string} terraformId Terraform ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTerraformResources(terraformId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TerraformResourcesResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTerraformResources(terraformId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TerraformResourcesApi.getTerraformResources']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * TerraformResourcesApi - factory interface
+ * @export
+ */
+export const TerraformResourcesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TerraformResourcesApiFp(configuration)
+    return {
+        /**
+         * Returns the list of Terraform resources from the most recent deployment execution
+         * @summary Get terraform resources from latest deployment
+         * @param {string} terraformId Terraform ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTerraformResources(terraformId: string, options?: RawAxiosRequestConfig): AxiosPromise<TerraformResourcesResponse> {
+            return localVarFp.getTerraformResources(terraformId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * TerraformResourcesApi - object-oriented interface
+ * @export
+ * @class TerraformResourcesApi
+ * @extends {BaseAPI}
+ */
+export class TerraformResourcesApi extends BaseAPI {
+    /**
+     * Returns the list of Terraform resources from the most recent deployment execution
+     * @summary Get terraform resources from latest deployment
+     * @param {string} terraformId Terraform ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TerraformResourcesApi
+     */
+    public getTerraformResources(terraformId: string, options?: RawAxiosRequestConfig) {
+        return TerraformResourcesApiFp(this.configuration).getTerraformResources(terraformId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
