@@ -19677,7 +19677,7 @@ export interface TerraformResourceResponse {
      * @type {string}
      * @memberof TerraformResourceResponse
      */
-    'extractedAt'?: string;
+    'extracted_at': string;
 }
 
 export const TerraformResourceResponseModeEnum = {
