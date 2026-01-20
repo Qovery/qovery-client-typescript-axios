@@ -19625,25 +19625,6 @@ export interface TerraformRequestTerraformFilesSourceOneOf {
     'git_repository'?: TerraformGitRepositoryRequest;
 }
 /**
- * A single attribute of a Terraform resource with key and value
- * @export
- * @interface TerraformResourceAttribute
- */
-export interface TerraformResourceAttribute {
-    /**
-     * The attribute key name
-     * @type {string}
-     * @memberof TerraformResourceAttribute
-     */
-    'key': string;
-    /**
-     * The attribute value as a string
-     * @type {string}
-     * @memberof TerraformResourceAttribute
-     */
-    'value': string;
-}
-/**
  * A Terraform resource from a deployment execution
  * @export
  * @interface TerraformResourceResponse
@@ -19660,7 +19641,7 @@ export interface TerraformResourceResponse {
      * @type {string}
      * @memberof TerraformResourceResponse
      */
-    'resourceType': string;
+    'resource_type': string;
     /**
      * Name of the resource as defined in Terraform configuration
      * @type {string}
@@ -19696,13 +19677,7 @@ export interface TerraformResourceResponse {
      * @type {string}
      * @memberof TerraformResourceResponse
      */
-    'extractedAt': string;
-    /**
-     * Most important attributes for this resource type (for display)
-     * @type {Array<TerraformResourceAttribute>}
-     * @memberof TerraformResourceResponse
-     */
-    'keyAttributes': Array<TerraformResourceAttribute>;
+    'extractedAt'?: string;
 }
 
 export const TerraformResourceResponseModeEnum = {
