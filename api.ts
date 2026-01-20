@@ -19748,7 +19748,7 @@ export interface TerraformResourcesResponse {
      * @type {Array<TerraformResourceResponse>}
      * @memberof TerraformResourcesResponse
      */
-    'resources': Array<TerraformResourceResponse>;
+    'results': Array<TerraformResourceResponse>;
 }
 /**
  * A Terraform service
@@ -63627,7 +63627,7 @@ export const TerraformResourcesApiAxiosParamCreator = function (configuration?: 
         getTerraformResources: async (terraformId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'terraformId' is not null or undefined
             assertParamExists('getTerraformResources', 'terraformId', terraformId)
-            const localVarPath = `/api/v1/terraform/{terraformId}/terraformResources`
+            const localVarPath = `/terraform/{terraformId}/terraformResources`
                 .replace(`{${"terraformId"}}`, encodeURIComponent(String(terraformId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
