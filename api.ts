@@ -4503,6 +4503,39 @@ export interface ClusterMetricsResponse {
 /**
  * 
  * @export
+ * @interface ClusterOverviewResponse
+ */
+export interface ClusterOverviewResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOverviewResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOverviewResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {CloudVendorEnum}
+     * @memberof ClusterOverviewResponse
+     */
+    'cloud_provider': CloudVendorEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterOverviewResponse
+     */
+    'is_demo': boolean;
+}
+
+
+/**
+ * 
+ * @export
  * @interface ClusterReadinessStatus
  */
 export interface ClusterReadinessStatus {
@@ -9231,6 +9264,76 @@ export const EnvironmentModeEnum = {
 export type EnvironmentModeEnum = typeof EnvironmentModeEnum[keyof typeof EnvironmentModeEnum];
 
 
+/**
+ * 
+ * @export
+ * @interface EnvironmentOverviewResponse
+ */
+export interface EnvironmentOverviewResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentOverviewResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentOverviewResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentOverviewResponse
+     */
+    'updated_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentOverviewResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {EnvironmentModeEnum}
+     * @memberof EnvironmentOverviewResponse
+     */
+    'mode': EnvironmentModeEnum;
+    /**
+     * 
+     * @type {ClusterOverviewResponse}
+     * @memberof EnvironmentOverviewResponse
+     */
+    'cluster'?: ClusterOverviewResponse;
+    /**
+     * 
+     * @type {number}
+     * @memberof EnvironmentOverviewResponse
+     */
+    'service_count': number;
+    /**
+     * 
+     * @type {EnvironmentStatus}
+     * @memberof EnvironmentOverviewResponse
+     */
+    'deployment_status'?: EnvironmentStatus;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface EnvironmentOverviewResponseList
+ */
+export interface EnvironmentOverviewResponseList {
+    /**
+     * 
+     * @type {Array<EnvironmentOverviewResponse>}
+     * @memberof EnvironmentOverviewResponseList
+     */
+    'results'?: Array<EnvironmentOverviewResponse>;
+}
 /**
  * 
  * @export
@@ -45489,6 +45592,47 @@ export const EnvironmentsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
+         * Returns a list of environments with their overview information including deployment status, service count, and cluster details.
+         * @summary List environments overview
+         * @param {string} projectId Project ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProjectEnvironmentsOverview: async (projectId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'projectId' is not null or undefined
+            assertParamExists('getProjectEnvironmentsOverview', 'projectId', projectId)
+            const localVarPath = `/project/{projectId}/environmentOverview`
+                .replace(`{${"projectId"}}`, encodeURIComponent(String(projectId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns a list of environments with only their id and status.
          * @summary List environments statuses
          * @param {string} projectId Project ID
@@ -45608,6 +45752,19 @@ export const EnvironmentsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns a list of environments with their overview information including deployment status, service count, and cluster details.
+         * @summary List environments overview
+         * @param {string} projectId Project ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getProjectEnvironmentsOverview(projectId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentOverviewResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getProjectEnvironmentsOverview(projectId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['EnvironmentsApi.getProjectEnvironmentsOverview']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns a list of environments with only their id and status.
          * @summary List environments statuses
          * @param {string} projectId Project ID
@@ -45665,6 +45822,16 @@ export const EnvironmentsApiFactory = function (configuration?: Configuration, b
             return localVarFp.getProjectEnvironmentServiceNumber(projectId, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns a list of environments with their overview information including deployment status, service count, and cluster details.
+         * @summary List environments overview
+         * @param {string} projectId Project ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProjectEnvironmentsOverview(projectId: string, options?: RawAxiosRequestConfig): AxiosPromise<EnvironmentOverviewResponseList> {
+            return localVarFp.getProjectEnvironmentsOverview(projectId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns a list of environments with only their id and status.
          * @summary List environments statuses
          * @param {string} projectId Project ID
@@ -45717,6 +45884,18 @@ export class EnvironmentsApi extends BaseAPI {
      */
     public getProjectEnvironmentServiceNumber(projectId: string, options?: RawAxiosRequestConfig) {
         return EnvironmentsApiFp(this.configuration).getProjectEnvironmentServiceNumber(projectId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns a list of environments with their overview information including deployment status, service count, and cluster details.
+     * @summary List environments overview
+     * @param {string} projectId Project ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentsApi
+     */
+    public getProjectEnvironmentsOverview(projectId: string, options?: RawAxiosRequestConfig) {
+        return EnvironmentsApiFp(this.configuration).getProjectEnvironmentsOverview(projectId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
