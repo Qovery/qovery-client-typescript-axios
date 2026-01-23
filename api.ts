@@ -10822,6 +10822,48 @@ export interface GitTokenResponseList {
 /**
  * 
  * @export
+ * @interface GitWebhookStatusResponse
+ */
+export interface GitWebhookStatusResponse {
+    /**
+     * The webhook configuration status: - ACTIVE: Webhook is properly configured with all required events - NOT_CONFIGURED: No Qovery webhook found on the git rep - MISCONFIGURED: Webhook exists but is missing required events - UNABLE_TO_VERIFY: Could not check webhook status (auth error, rate limit, etc.) 
+     * @type {string}
+     * @memberof GitWebhookStatusResponse
+     */
+    'status': GitWebhookStatusResponseStatusEnum;
+    /**
+     * The git provider where the webhook is configured
+     * @type {string}
+     * @memberof GitWebhookStatusResponse
+     */
+    'provider': GitWebhookStatusResponseProviderEnum;
+    /**
+     * List of required events that are missing from the webhook configuration (only present when status is MISCONFIGURED)
+     * @type {Array<string>}
+     * @memberof GitWebhookStatusResponse
+     */
+    'missing_events'?: Array<string>;
+}
+
+export const GitWebhookStatusResponseStatusEnum = {
+    ACTIVE: 'ACTIVE',
+    NOT_CONFIGURED: 'NOT_CONFIGURED',
+    MISCONFIGURED: 'MISCONFIGURED',
+    UNABLE_TO_VERIFY: 'UNABLE_TO_VERIFY'
+} as const;
+
+export type GitWebhookStatusResponseStatusEnum = typeof GitWebhookStatusResponseStatusEnum[keyof typeof GitWebhookStatusResponseStatusEnum];
+export const GitWebhookStatusResponseProviderEnum = {
+    GITHUB: 'GITHUB',
+    GITLAB: 'GITLAB',
+    BITBUCKET: 'BITBUCKET'
+} as const;
+
+export type GitWebhookStatusResponseProviderEnum = typeof GitWebhookStatusResponseProviderEnum[keyof typeof GitWebhookStatusResponseProviderEnum];
+
+/**
+ * 
+ * @export
  * @interface GkeInfrastructureOutputs
  */
 export interface GkeInfrastructureOutputs {
@@ -62607,6 +62649,121 @@ export class ReferralRewardsApi extends BaseAPI {
      */
     public postAccountRewardClaim(rewardClaim?: RewardClaim, options?: RawAxiosRequestConfig) {
         return ReferralRewardsApiFp(this.configuration).postAccountRewardClaim(rewardClaim, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * ServiceMainCallsApi - axios parameter creator
+ * @export
+ */
+export const ServiceMainCallsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Returns the webhook status for a git-based service. Checks if the Qovery webhook is correctly configured on the git provider (GitHub, GitLab, or Bitbucket).
+         * @summary Get git webhook status for a service
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getServiceGitWebhookStatus: async (serviceId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'serviceId' is not null or undefined
+            assertParamExists('getServiceGitWebhookStatus', 'serviceId', serviceId)
+            const localVarPath = `/service/{serviceId}/gitWebhookStatus`
+                .replace(`{${"serviceId"}}`, encodeURIComponent(String(serviceId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ServiceMainCallsApi - functional programming interface
+ * @export
+ */
+export const ServiceMainCallsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ServiceMainCallsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Returns the webhook status for a git-based service. Checks if the Qovery webhook is correctly configured on the git provider (GitHub, GitLab, or Bitbucket).
+         * @summary Get git webhook status for a service
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getServiceGitWebhookStatus(serviceId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitWebhookStatusResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getServiceGitWebhookStatus(serviceId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ServiceMainCallsApi.getServiceGitWebhookStatus']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * ServiceMainCallsApi - factory interface
+ * @export
+ */
+export const ServiceMainCallsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ServiceMainCallsApiFp(configuration)
+    return {
+        /**
+         * Returns the webhook status for a git-based service. Checks if the Qovery webhook is correctly configured on the git provider (GitHub, GitLab, or Bitbucket).
+         * @summary Get git webhook status for a service
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getServiceGitWebhookStatus(serviceId: string, options?: RawAxiosRequestConfig): AxiosPromise<GitWebhookStatusResponse> {
+            return localVarFp.getServiceGitWebhookStatus(serviceId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ServiceMainCallsApi - object-oriented interface
+ * @export
+ * @class ServiceMainCallsApi
+ * @extends {BaseAPI}
+ */
+export class ServiceMainCallsApi extends BaseAPI {
+    /**
+     * Returns the webhook status for a git-based service. Checks if the Qovery webhook is correctly configured on the git provider (GitHub, GitLab, or Bitbucket).
+     * @summary Get git webhook status for a service
+     * @param {string} serviceId Service ID of an application/job/container/database
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ServiceMainCallsApi
+     */
+    public getServiceGitWebhookStatus(serviceId: string, options?: RawAxiosRequestConfig) {
+        return ServiceMainCallsApiFp(this.configuration).getServiceGitWebhookStatus(serviceId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
