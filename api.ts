@@ -193,41 +193,59 @@ export interface AlertPresentationResponse {
     'runbook_url'?: string | null;
 }
 /**
+ * @type AlertReceiverCreationRequest
+ * @export
+ */
+export type AlertReceiverCreationRequest = { type: 'EMAIL' } & EmailAlertReceiverCreationRequest | { type: 'SLACK' } & SlackAlertReceiverCreationRequest;
+
+/**
  * 
  * @export
- * @interface AlertReceiverCreationRequest
+ * @interface AlertReceiverCreationRequestBase
  */
-export interface AlertReceiverCreationRequest {
+export interface AlertReceiverCreationRequestBase {
     /**
      * 
      * @type {string}
-     * @memberof AlertReceiverCreationRequest
+     * @memberof AlertReceiverCreationRequestBase
      */
     'organization_id': string;
     /**
      * 
      * @type {string}
-     * @memberof AlertReceiverCreationRequest
+     * @memberof AlertReceiverCreationRequestBase
      */
     'name': string;
     /**
      * 
      * @type {string}
-     * @memberof AlertReceiverCreationRequest
+     * @memberof AlertReceiverCreationRequestBase
      */
     'description': string;
     /**
      * 
      * @type {AlertReceiverType}
-     * @memberof AlertReceiverCreationRequest
+     * @memberof AlertReceiverCreationRequestBase
      */
     'type': AlertReceiverType;
     /**
      * 
      * @type {boolean}
-     * @memberof AlertReceiverCreationRequest
+     * @memberof AlertReceiverCreationRequestBase
      */
     'send_resolved': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertReceiverCreationRequestBase
+     */
+    'owner'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertReceiverCreationRequestBase
+     */
+    'severity'?: string | null;
 }
 
 
@@ -251,35 +269,53 @@ export interface AlertReceiverCreationValidationRequest {
     'message'?: string;
 }
 /**
+ * @type AlertReceiverEditRequest
+ * @export
+ */
+export type AlertReceiverEditRequest = { type: 'EMAIL' } & EmailAlertReceiverEditRequest | { type: 'SLACK' } & SlackAlertReceiverEditRequest;
+
+/**
  * 
  * @export
- * @interface AlertReceiverEditRequest
+ * @interface AlertReceiverEditRequestBase
  */
-export interface AlertReceiverEditRequest {
+export interface AlertReceiverEditRequestBase {
     /**
      * 
      * @type {string}
-     * @memberof AlertReceiverEditRequest
+     * @memberof AlertReceiverEditRequestBase
      */
     'name': string;
     /**
      * 
      * @type {string}
-     * @memberof AlertReceiverEditRequest
+     * @memberof AlertReceiverEditRequestBase
      */
     'description': string;
     /**
      * 
      * @type {AlertReceiverType}
-     * @memberof AlertReceiverEditRequest
+     * @memberof AlertReceiverEditRequestBase
      */
     'type': AlertReceiverType;
     /**
      * 
      * @type {boolean}
-     * @memberof AlertReceiverEditRequest
+     * @memberof AlertReceiverEditRequestBase
      */
     'send_resolved': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertReceiverEditRequestBase
+     */
+    'owner'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AlertReceiverEditRequestBase
+     */
+    'severity'?: string | null;
 }
 
 
@@ -297,55 +333,10 @@ export interface AlertReceiverList {
     'results': Array<AlertReceiverResponse>;
 }
 /**
- * 
+ * @type AlertReceiverResponse
  * @export
- * @interface AlertReceiverResponse
  */
-export interface AlertReceiverResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof AlertReceiverResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AlertReceiverResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AlertReceiverResponse
-     */
-    'updated_at'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AlertReceiverResponse
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AlertReceiverResponse
-     */
-    'description': string;
-    /**
-     * 
-     * @type {AlertReceiverType}
-     * @memberof AlertReceiverResponse
-     */
-    'type': AlertReceiverType;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AlertReceiverResponse
-     */
-    'send_resolved': boolean;
-}
-
+export type AlertReceiverResponse = { type: 'EMAIL' } & EmailAlertReceiverResponse | { type: 'SLACK' } & SlackAlertReceiverResponse;
 
 /**
  * 
@@ -354,7 +345,8 @@ export interface AlertReceiverResponse {
  */
 
 export const AlertReceiverType = {
-    SLACK: 'SLACK'
+    SLACK: 'SLACK',
+    EMAIL: 'EMAIL'
 } as const;
 
 export type AlertReceiverType = typeof AlertReceiverType[keyof typeof AlertReceiverType];
@@ -8625,6 +8617,267 @@ export const EksInfrastructureOutputsKindEnum = {
 } as const;
 
 export type EksInfrastructureOutputsKindEnum = typeof EksInfrastructureOutputsKindEnum[keyof typeof EksInfrastructureOutputsKindEnum];
+
+/**
+ * 
+ * @export
+ * @interface EmailAlertReceiverCreationRequest
+ */
+export interface EmailAlertReceiverCreationRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverCreationRequest
+     */
+    'organization_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverCreationRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverCreationRequest
+     */
+    'description': string;
+    /**
+     * 
+     * @type {AlertReceiverType}
+     * @memberof EmailAlertReceiverCreationRequest
+     */
+    'type': AlertReceiverType;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EmailAlertReceiverCreationRequest
+     */
+    'send_resolved': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverCreationRequest
+     */
+    'owner'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverCreationRequest
+     */
+    'severity'?: string | null;
+    /**
+     * Recipient email address
+     * @type {string}
+     * @memberof EmailAlertReceiverCreationRequest
+     */
+    'to': string;
+    /**
+     * Sender email address
+     * @type {string}
+     * @memberof EmailAlertReceiverCreationRequest
+     */
+    'from': string;
+    /**
+     * SMTP server in format \'host:port\'
+     * @type {string}
+     * @memberof EmailAlertReceiverCreationRequest
+     */
+    'smarthost': string;
+    /**
+     * SMTP authentication username. Defaults to \'from\' if not provided.
+     * @type {string}
+     * @memberof EmailAlertReceiverCreationRequest
+     */
+    'auth_username'?: string | null;
+    /**
+     * SMTP authentication password
+     * @type {string}
+     * @memberof EmailAlertReceiverCreationRequest
+     */
+    'auth_password': string;
+    /**
+     * Whether to require TLS for SMTP connection
+     * @type {boolean}
+     * @memberof EmailAlertReceiverCreationRequest
+     */
+    'require_tls': boolean;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface EmailAlertReceiverEditRequest
+ */
+export interface EmailAlertReceiverEditRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverEditRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverEditRequest
+     */
+    'description': string;
+    /**
+     * 
+     * @type {AlertReceiverType}
+     * @memberof EmailAlertReceiverEditRequest
+     */
+    'type': AlertReceiverType;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EmailAlertReceiverEditRequest
+     */
+    'send_resolved': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverEditRequest
+     */
+    'owner'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverEditRequest
+     */
+    'severity'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverEditRequest
+     */
+    'to': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverEditRequest
+     */
+    'from': string;
+    /**
+     * SMTP server in format \'host:port\'
+     * @type {string}
+     * @memberof EmailAlertReceiverEditRequest
+     */
+    'smarthost': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverEditRequest
+     */
+    'auth_username'?: string | null;
+    /**
+     * SMTP password. If null, keeps existing password.
+     * @type {string}
+     * @memberof EmailAlertReceiverEditRequest
+     */
+    'auth_password'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EmailAlertReceiverEditRequest
+     */
+    'require_tls': boolean;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface EmailAlertReceiverResponse
+ */
+export interface EmailAlertReceiverResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverResponse
+     */
+    'description': string;
+    /**
+     * 
+     * @type {AlertReceiverType}
+     * @memberof EmailAlertReceiverResponse
+     */
+    'type': AlertReceiverType;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EmailAlertReceiverResponse
+     */
+    'send_resolved': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverResponse
+     */
+    'to': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverResponse
+     */
+    'from': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverResponse
+     */
+    'smarthost': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverResponse
+     */
+    'auth_username': string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EmailAlertReceiverResponse
+     */
+    'require_tls': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverResponse
+     */
+    'owner'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmailAlertReceiverResponse
+     */
+    'severity'?: string | null;
+}
+
 
 /**
  * 
@@ -18904,7 +19157,49 @@ export interface SignUpRequest {
  * @export
  * @interface SlackAlertReceiverCreationRequest
  */
-export interface SlackAlertReceiverCreationRequest extends AlertReceiverCreationRequest {
+export interface SlackAlertReceiverCreationRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SlackAlertReceiverCreationRequest
+     */
+    'organization_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SlackAlertReceiverCreationRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SlackAlertReceiverCreationRequest
+     */
+    'description': string;
+    /**
+     * 
+     * @type {AlertReceiverType}
+     * @memberof SlackAlertReceiverCreationRequest
+     */
+    'type': AlertReceiverType;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SlackAlertReceiverCreationRequest
+     */
+    'send_resolved': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof SlackAlertReceiverCreationRequest
+     */
+    'owner'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SlackAlertReceiverCreationRequest
+     */
+    'severity'?: string | null;
     /**
      * 
      * @type {string}
@@ -18919,13 +19214,112 @@ export interface SlackAlertReceiverCreationRequest extends AlertReceiverCreation
  * @export
  * @interface SlackAlertReceiverEditRequest
  */
-export interface SlackAlertReceiverEditRequest extends AlertReceiverEditRequest {
+export interface SlackAlertReceiverEditRequest {
     /**
      * 
      * @type {string}
      * @memberof SlackAlertReceiverEditRequest
      */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SlackAlertReceiverEditRequest
+     */
+    'description': string;
+    /**
+     * 
+     * @type {AlertReceiverType}
+     * @memberof SlackAlertReceiverEditRequest
+     */
+    'type': AlertReceiverType;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SlackAlertReceiverEditRequest
+     */
+    'send_resolved': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof SlackAlertReceiverEditRequest
+     */
+    'owner'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SlackAlertReceiverEditRequest
+     */
+    'severity'?: string | null;
+    /**
+     * Update webhook URL. If null, keeps existing value.
+     * @type {string}
+     * @memberof SlackAlertReceiverEditRequest
+     */
     'webhook_url'?: string | null;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface SlackAlertReceiverResponse
+ */
+export interface SlackAlertReceiverResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof SlackAlertReceiverResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SlackAlertReceiverResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SlackAlertReceiverResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SlackAlertReceiverResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SlackAlertReceiverResponse
+     */
+    'description': string;
+    /**
+     * 
+     * @type {AlertReceiverType}
+     * @memberof SlackAlertReceiverResponse
+     */
+    'type': AlertReceiverType;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SlackAlertReceiverResponse
+     */
+    'send_resolved': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof SlackAlertReceiverResponse
+     */
+    'owner'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SlackAlertReceiverResponse
+     */
+    'severity'?: string | null;
 }
 
 
