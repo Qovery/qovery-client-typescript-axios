@@ -62701,6 +62701,47 @@ export const ServiceMainCallsApiAxiosParamCreator = function (configuration?: Co
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Synchronizes the Qovery webhook configuration for a git-based service. - If no webhook exists, creates one with the correct configuration - If webhook exists but is misconfigured, updates it with the correct events - If webhook is already correctly configured, returns current status Works with GitHub, GitLab, and Bitbucket repositories. 
+         * @summary Synchronize git webhook for a service
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        syncServiceGitWebhook: async (serviceId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'serviceId' is not null or undefined
+            assertParamExists('syncServiceGitWebhook', 'serviceId', serviceId)
+            const localVarPath = `/service/{serviceId}/gitWebhook/sync`
+                .replace(`{${"serviceId"}}`, encodeURIComponent(String(serviceId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -62724,6 +62765,19 @@ export const ServiceMainCallsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['ServiceMainCallsApi.getServiceGitWebhookStatus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Synchronizes the Qovery webhook configuration for a git-based service. - If no webhook exists, creates one with the correct configuration - If webhook exists but is misconfigured, updates it with the correct events - If webhook is already correctly configured, returns current status Works with GitHub, GitLab, and Bitbucket repositories. 
+         * @summary Synchronize git webhook for a service
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async syncServiceGitWebhook(serviceId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitWebhookStatusResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.syncServiceGitWebhook(serviceId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ServiceMainCallsApi.syncServiceGitWebhook']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -62743,6 +62797,16 @@ export const ServiceMainCallsApiFactory = function (configuration?: Configuratio
          */
         getServiceGitWebhookStatus(serviceId: string, options?: RawAxiosRequestConfig): AxiosPromise<GitWebhookStatusResponse> {
             return localVarFp.getServiceGitWebhookStatus(serviceId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Synchronizes the Qovery webhook configuration for a git-based service. - If no webhook exists, creates one with the correct configuration - If webhook exists but is misconfigured, updates it with the correct events - If webhook is already correctly configured, returns current status Works with GitHub, GitLab, and Bitbucket repositories. 
+         * @summary Synchronize git webhook for a service
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        syncServiceGitWebhook(serviceId: string, options?: RawAxiosRequestConfig): AxiosPromise<GitWebhookStatusResponse> {
+            return localVarFp.syncServiceGitWebhook(serviceId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -62764,6 +62828,18 @@ export class ServiceMainCallsApi extends BaseAPI {
      */
     public getServiceGitWebhookStatus(serviceId: string, options?: RawAxiosRequestConfig) {
         return ServiceMainCallsApiFp(this.configuration).getServiceGitWebhookStatus(serviceId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Synchronizes the Qovery webhook configuration for a git-based service. - If no webhook exists, creates one with the correct configuration - If webhook exists but is misconfigured, updates it with the correct events - If webhook is already correctly configured, returns current status Works with GitHub, GitLab, and Bitbucket repositories. 
+     * @summary Synchronize git webhook for a service
+     * @param {string} serviceId Service ID of an application/job/container/database
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ServiceMainCallsApi
+     */
+    public syncServiceGitWebhook(serviceId: string, options?: RawAxiosRequestConfig) {
+        return ServiceMainCallsApiFp(this.configuration).syncServiceGitWebhook(serviceId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
