@@ -3047,6 +3047,18 @@ export interface Cluster {
      */
     'disk_size'?: number;
     /**
+     * Unit is operation/seconds. The disk IOPS to be used for the node configuration
+     * @type {number}
+     * @memberof Cluster
+     */
+    'disk_iops'?: number;
+    /**
+     * Unit is in MB/s. The disk thoughput to be used for the node configuration
+     * @type {number}
+     * @memberof Cluster
+     */
+    'disk_throughput'?: number;
+    /**
      * the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType
      * @type {string}
      * @memberof Cluster
@@ -3708,6 +3720,18 @@ export interface ClusterFeatureKarpenterParameters {
      * @memberof ClusterFeatureKarpenterParameters
      */
     'disk_size_in_gib': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterFeatureKarpenterParameters
+     */
+    'disk_iops'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterFeatureKarpenterParameters
+     */
+    'disk_throuput'?: number;
     /**
      * 
      * @type {CpuArchitectureEnum}
@@ -4636,6 +4660,18 @@ export interface ClusterRequest {
      * @memberof ClusterRequest
      */
     'disk_size'?: number;
+    /**
+     * Unit is operation/seconds. The disk IOPS to be used for the node configuration
+     * @type {number}
+     * @memberof ClusterRequest
+     */
+    'disk_iops'?: number;
+    /**
+     * Unit is in MB/s. The disk thoughput to be used for the node configuration
+     * @type {number}
+     * @memberof ClusterRequest
+     */
+    'disk_throughput'?: number;
     /**
      * the instance type to be used for this cluster. The list of values can be retrieved via the endpoint /{CloudProvider}/instanceType
      * @type {string}
