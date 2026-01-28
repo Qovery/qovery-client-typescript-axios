@@ -3731,7 +3731,7 @@ export interface ClusterFeatureKarpenterParameters {
      * @type {number}
      * @memberof ClusterFeatureKarpenterParameters
      */
-    'disk_throuput'?: number;
+    'disk_throughput'?: number;
     /**
      * 
      * @type {CpuArchitectureEnum}
