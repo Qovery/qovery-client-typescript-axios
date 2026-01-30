@@ -6876,6 +6876,12 @@ export interface Database {
      */
     'disk_encrypted'?: boolean;
     /**
+     * Apply changes immediately instead of waiting for the maintenance window. This field is only applicable for managed databases. 
+     * @type {boolean}
+     * @memberof Database
+     */
+    'apply_immediately'?: boolean;
+    /**
      * 
      * @type {ServiceTypeEnum}
      * @memberof Database
@@ -7004,6 +7010,12 @@ export interface DatabaseEditRequest {
      * @memberof DatabaseEditRequest
      */
     'icon_uri'?: string;
+    /**
+     * Apply changes immediately instead of waiting for the maintenance window. This field is only applicable for managed databases. Warning: Applying changes immediately may cause a brief service interruption. 
+     * @type {boolean}
+     * @memberof DatabaseEditRequest
+     */
+    'apply_immediately'?: boolean;
 }
 
 
