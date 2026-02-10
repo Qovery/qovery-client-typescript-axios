@@ -3166,6 +3166,12 @@ export interface Cluster {
      * @memberof Cluster
      */
     'keda'?: ClusterKeda;
+    /**
+     * 
+     * @type {ClusterLabelsGroupList}
+     * @memberof Cluster
+     */
+    'labels_groups'?: ClusterLabelsGroupList;
 }
 
 
@@ -4203,6 +4209,32 @@ export interface ClusterKeda {
 /**
  * 
  * @export
+ * @interface ClusterLabelsGroup
+ */
+export interface ClusterLabelsGroup {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterLabelsGroup
+     */
+    'id'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterLabelsGroupList
+ */
+export interface ClusterLabelsGroupList {
+    /**
+     * 
+     * @type {Array<ClusterLabelsGroup>}
+     * @memberof ClusterLabelsGroupList
+     */
+    'id'?: Array<ClusterLabelsGroup>;
+}
+/**
+ * 
+ * @export
  * @interface ClusterLock
  */
 export interface ClusterLock {
@@ -4720,6 +4752,12 @@ export interface ClusterRequest {
      * @memberof ClusterRequest
      */
     'keda'?: ClusterKeda;
+    /**
+     * 
+     * @type {ClusterLabelsGroupList}
+     * @memberof ClusterRequest
+     */
+    'labels_groups'?: ClusterLabelsGroupList;
 }
 
 
