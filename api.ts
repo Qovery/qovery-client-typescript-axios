@@ -39072,10 +39072,11 @@ export const DatabaseActionsApiAxiosParamCreator = function (configuration?: Con
          * 
          * @summary Deploy database 
          * @param {string} databaseId Database ID
+         * @param {boolean} [applyImmediately] Apply immediately regardless of the maintenance window
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployDatabase: async (databaseId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deployDatabase: async (databaseId: string, applyImmediately?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'databaseId' is not null or undefined
             assertParamExists('deployDatabase', 'databaseId', databaseId)
             const localVarPath = `/database/{databaseId}/deploy`
@@ -39097,6 +39098,10 @@ export const DatabaseActionsApiAxiosParamCreator = function (configuration?: Con
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (applyImmediately !== undefined) {
+                localVarQueryParameter['applyImmediately'] = applyImmediately;
+            }
 
 
     
@@ -39154,10 +39159,11 @@ export const DatabaseActionsApiAxiosParamCreator = function (configuration?: Con
          * 
          * @summary Redeploy database
          * @param {string} databaseId Database ID
+         * @param {boolean} [applyImmediately] Apply immediately regardless of the maintenance window
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        redeployDatabase: async (databaseId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        redeployDatabase: async (databaseId: string, applyImmediately?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'databaseId' is not null or undefined
             assertParamExists('redeployDatabase', 'databaseId', databaseId)
             const localVarPath = `/database/{databaseId}/redeploy`
@@ -39179,6 +39185,10 @@ export const DatabaseActionsApiAxiosParamCreator = function (configuration?: Con
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (applyImmediately !== undefined) {
+                localVarQueryParameter['applyImmediately'] = applyImmediately;
+            }
 
 
     
@@ -39291,11 +39301,12 @@ export const DatabaseActionsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Deploy database 
          * @param {string} databaseId Database ID
+         * @param {boolean} [applyImmediately] Apply immediately regardless of the maintenance window
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deployDatabase(databaseId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deployDatabase(databaseId, options);
+        async deployDatabase(databaseId: string, applyImmediately?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deployDatabase(databaseId, applyImmediately, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DatabaseActionsApi.deployDatabase']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -39317,11 +39328,12 @@ export const DatabaseActionsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Redeploy database
          * @param {string} databaseId Database ID
+         * @param {boolean} [applyImmediately] Apply immediately regardless of the maintenance window
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async redeployDatabase(databaseId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.redeployDatabase(databaseId, options);
+        async redeployDatabase(databaseId: string, applyImmediately?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.redeployDatabase(databaseId, applyImmediately, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DatabaseActionsApi.redeployDatabase']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -39367,11 +39379,12 @@ export const DatabaseActionsApiFactory = function (configuration?: Configuration
          * 
          * @summary Deploy database 
          * @param {string} databaseId Database ID
+         * @param {boolean} [applyImmediately] Apply immediately regardless of the maintenance window
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployDatabase(databaseId: string, options?: RawAxiosRequestConfig): AxiosPromise<Status> {
-            return localVarFp.deployDatabase(databaseId, options).then((request) => request(axios, basePath));
+        deployDatabase(databaseId: string, applyImmediately?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<Status> {
+            return localVarFp.deployDatabase(databaseId, applyImmediately, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -39387,11 +39400,12 @@ export const DatabaseActionsApiFactory = function (configuration?: Configuration
          * 
          * @summary Redeploy database
          * @param {string} databaseId Database ID
+         * @param {boolean} [applyImmediately] Apply immediately regardless of the maintenance window
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        redeployDatabase(databaseId: string, options?: RawAxiosRequestConfig): AxiosPromise<Status> {
-            return localVarFp.redeployDatabase(databaseId, options).then((request) => request(axios, basePath));
+        redeployDatabase(databaseId: string, applyImmediately?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<Status> {
+            return localVarFp.redeployDatabase(databaseId, applyImmediately, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -39428,12 +39442,13 @@ export class DatabaseActionsApi extends BaseAPI {
      * 
      * @summary Deploy database 
      * @param {string} databaseId Database ID
+     * @param {boolean} [applyImmediately] Apply immediately regardless of the maintenance window
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DatabaseActionsApi
      */
-    public deployDatabase(databaseId: string, options?: RawAxiosRequestConfig) {
-        return DatabaseActionsApiFp(this.configuration).deployDatabase(databaseId, options).then((request) => request(this.axios, this.basePath));
+    public deployDatabase(databaseId: string, applyImmediately?: boolean, options?: RawAxiosRequestConfig) {
+        return DatabaseActionsApiFp(this.configuration).deployDatabase(databaseId, applyImmediately, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -39452,12 +39467,13 @@ export class DatabaseActionsApi extends BaseAPI {
      * 
      * @summary Redeploy database
      * @param {string} databaseId Database ID
+     * @param {boolean} [applyImmediately] Apply immediately regardless of the maintenance window
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DatabaseActionsApi
      */
-    public redeployDatabase(databaseId: string, options?: RawAxiosRequestConfig) {
-        return DatabaseActionsApiFp(this.configuration).redeployDatabase(databaseId, options).then((request) => request(this.axios, this.basePath));
+    public redeployDatabase(databaseId: string, applyImmediately?: boolean, options?: RawAxiosRequestConfig) {
+        return DatabaseActionsApiFp(this.configuration).redeployDatabase(databaseId, applyImmediately, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
