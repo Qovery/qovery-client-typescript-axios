@@ -1899,6 +1899,19 @@ export interface ApplicationResponseList {
 /**
  * 
  * @export
+ * @interface AttachServiceToDeploymentStageRequest
+ */
+export interface AttachServiceToDeploymentStageRequest {
+    /**
+     * When true, marks the service as skipped (excluded from environment-level bulk deployments) while keeping it in the specified stage. When false or omitted, the service is moved to the specified stage and un-skipped.
+     * @type {boolean}
+     * @memberof AttachServiceToDeploymentStageRequest
+     */
+    'is_skipped'?: boolean;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -8502,6 +8515,12 @@ export interface DeploymentStageServiceResponse {
      * @memberof DeploymentStageServiceResponse
      */
     'service_type'?: string;
+    /**
+     * whether the service is excluded from environment-level deployments
+     * @type {boolean}
+     * @memberof DeploymentStageServiceResponse
+     */
+    'is_skipped'?: boolean;
 }
 /**
  * 
@@ -41250,14 +41269,15 @@ export class DeploymentQueueActionsApi extends BaseAPI {
 export const DeploymentStageMainCallsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Moves the service to the specified deployment stage. To skip a service from environment-level deployments while keeping it in its current stage, set `is_skipped: true` in the request body. Moving the service to a different stage automatically un-skips it (sets `is_skipped: false`).
          * @summary Attach service to deployment stage
          * @param {string} deploymentStageId Deployment Stage ID
          * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {AttachServiceToDeploymentStageRequest} [attachServiceToDeploymentStageRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        attachServiceToDeploymentStage: async (deploymentStageId: string, serviceId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        attachServiceToDeploymentStage: async (deploymentStageId: string, serviceId: string, attachServiceToDeploymentStageRequest?: AttachServiceToDeploymentStageRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'deploymentStageId' is not null or undefined
             assertParamExists('attachServiceToDeploymentStage', 'deploymentStageId', deploymentStageId)
             // verify required parameter 'serviceId' is not null or undefined
@@ -41285,9 +41305,12 @@ export const DeploymentStageMainCallsApiAxiosParamCreator = function (configurat
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(attachServiceToDeploymentStageRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -41649,15 +41672,16 @@ export const DeploymentStageMainCallsApiFp = function(configuration?: Configurat
     const localVarAxiosParamCreator = DeploymentStageMainCallsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Moves the service to the specified deployment stage. To skip a service from environment-level deployments while keeping it in its current stage, set `is_skipped: true` in the request body. Moving the service to a different stage automatically un-skips it (sets `is_skipped: false`).
          * @summary Attach service to deployment stage
          * @param {string} deploymentStageId Deployment Stage ID
          * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {AttachServiceToDeploymentStageRequest} [attachServiceToDeploymentStageRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async attachServiceToDeploymentStage(deploymentStageId: string, serviceId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentStageResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.attachServiceToDeploymentStage(deploymentStageId, serviceId, options);
+        async attachServiceToDeploymentStage(deploymentStageId: string, serviceId: string, attachServiceToDeploymentStageRequest?: AttachServiceToDeploymentStageRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentStageResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.attachServiceToDeploymentStage(deploymentStageId, serviceId, attachServiceToDeploymentStageRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DeploymentStageMainCallsApi.attachServiceToDeploymentStage']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -41781,15 +41805,16 @@ export const DeploymentStageMainCallsApiFactory = function (configuration?: Conf
     const localVarFp = DeploymentStageMainCallsApiFp(configuration)
     return {
         /**
-         * 
+         * Moves the service to the specified deployment stage. To skip a service from environment-level deployments while keeping it in its current stage, set `is_skipped: true` in the request body. Moving the service to a different stage automatically un-skips it (sets `is_skipped: false`).
          * @summary Attach service to deployment stage
          * @param {string} deploymentStageId Deployment Stage ID
          * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {AttachServiceToDeploymentStageRequest} [attachServiceToDeploymentStageRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        attachServiceToDeploymentStage(deploymentStageId: string, serviceId: string, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentStageResponseList> {
-            return localVarFp.attachServiceToDeploymentStage(deploymentStageId, serviceId, options).then((request) => request(axios, basePath));
+        attachServiceToDeploymentStage(deploymentStageId: string, serviceId: string, attachServiceToDeploymentStageRequest?: AttachServiceToDeploymentStageRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentStageResponseList> {
+            return localVarFp.attachServiceToDeploymentStage(deploymentStageId, serviceId, attachServiceToDeploymentStageRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -41886,16 +41911,17 @@ export const DeploymentStageMainCallsApiFactory = function (configuration?: Conf
  */
 export class DeploymentStageMainCallsApi extends BaseAPI {
     /**
-     * 
+     * Moves the service to the specified deployment stage. To skip a service from environment-level deployments while keeping it in its current stage, set `is_skipped: true` in the request body. Moving the service to a different stage automatically un-skips it (sets `is_skipped: false`).
      * @summary Attach service to deployment stage
      * @param {string} deploymentStageId Deployment Stage ID
      * @param {string} serviceId Service ID of an application/job/container/database
+     * @param {AttachServiceToDeploymentStageRequest} [attachServiceToDeploymentStageRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeploymentStageMainCallsApi
      */
-    public attachServiceToDeploymentStage(deploymentStageId: string, serviceId: string, options?: RawAxiosRequestConfig) {
-        return DeploymentStageMainCallsApiFp(this.configuration).attachServiceToDeploymentStage(deploymentStageId, serviceId, options).then((request) => request(this.axios, this.basePath));
+    public attachServiceToDeploymentStage(deploymentStageId: string, serviceId: string, attachServiceToDeploymentStageRequest?: AttachServiceToDeploymentStageRequest, options?: RawAxiosRequestConfig) {
+        return DeploymentStageMainCallsApiFp(this.configuration).attachServiceToDeploymentStage(deploymentStageId, serviceId, attachServiceToDeploymentStageRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
