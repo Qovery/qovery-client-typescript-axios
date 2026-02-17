@@ -13474,6 +13474,12 @@ export interface KarpenterDefaultNodePoolOverride {
      * @memberof KarpenterDefaultNodePoolOverride
      */
     'limits'?: KarpenterNodePoolLimits;
+    /**
+     * Time to wait before consolidating empty or underutilized nodes (e.g., 1m, 10m, 1h). Maximum: 24h
+     * @type {string}
+     * @memberof KarpenterDefaultNodePoolOverride
+     */
+    'consolidate_after'?: string;
 }
 /**
  * 
@@ -13511,6 +13517,12 @@ export interface KarpenterGpuNodePoolOverride {
      * @memberof KarpenterGpuNodePoolOverride
      */
     'spot_enabled'?: boolean;
+    /**
+     * Time to wait before consolidating empty or underutilized nodes (e.g., 1m, 10m, 1h). Maximum: 24h
+     * @type {string}
+     * @memberof KarpenterGpuNodePoolOverride
+     */
+    'consolidate_after'?: string;
 }
 /**
  * 
@@ -13680,6 +13692,12 @@ export interface KarpenterStableNodePoolOverride {
      * @memberof KarpenterStableNodePoolOverride
      */
     'limits'?: KarpenterNodePoolLimits;
+    /**
+     * Time to wait before consolidating empty or underutilized nodes (e.g., 1m, 10m, 1h). Maximum: 24h
+     * @type {string}
+     * @memberof KarpenterStableNodePoolOverride
+     */
+    'consolidate_after'?: string;
 }
 /**
  * 
