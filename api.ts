@@ -858,11 +858,11 @@ export interface AlertingConfig {
      */
     'enabled': boolean;
     /**
-     * 
-     * @type {string}
+     * Key-value pairs of default labels to be applied to alert rules
+     * @type {{ [key: string]: string; }}
      * @memberof AlertingConfig
      */
-    'default_rule_labels'?: string;
+    'default_rule_labels'?: { [key: string]: string; } | null;
     /**
      * 
      * @type {string}
