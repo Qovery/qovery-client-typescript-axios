@@ -15273,6 +15273,12 @@ export interface Organization {
      */
     'owner'?: string;
     /**
+     * If set, indicates a billing-related restriction on the organization. \'NO_CREDIT_CARD\' means the organization is on a free trial without a credit card — managed cluster creation and deployments on managed clusters are blocked, but demo cluster usage is allowed. Any other value blocks all deployments. null means no restriction.
+     * @type {string}
+     * @memberof Organization
+     */
+    'billing_deployment_restriction'?: string | null;
+    /**
      * 
      * @type {OrganizationAllOfOrganizationPlan}
      * @memberof Organization
