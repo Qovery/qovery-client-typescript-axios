@@ -3303,6 +3303,12 @@ export interface ClusterAdvancedSettings {
      */
     'aws.eks.ec2.metadata_imds'?: ClusterAdvancedSettingsAwsEksEc2MetadataImdsEnum;
     /**
+     * Select the AMI to use for EKS worker nodes (Karpenter only):   * `AmazonLinux2`: Amazon Linux 2   * `AmazonLinux2023`: Amazon Linux 2023 (default)   * `Bottlerocket`: Bottlerocket OS   * `ami-xxx` or `my-custom-ami-*`: A custom AMI ID or name pattern (assumes AL2023-based)   * `al2:ami-xxx`: A custom AMI based on Amazon Linux 2   * `al2023:ami-xxx`: A custom AMI based on Amazon Linux 2023   * `bottlerocket:ami-xxx`: A custom AMI based on Bottlerocket 
+     * @type {string}
+     * @memberof ClusterAdvancedSettings
+     */
+    'aws.eks.ec2.ami'?: string;
+    /**
      * 
      * @type {number}
      * @memberof ClusterAdvancedSettings
