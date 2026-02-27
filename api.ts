@@ -19844,6 +19844,36 @@ export interface TerraformAdvancedSettings {
     'security.read_only_root_filesystem'?: boolean;
 }
 /**
+ * 
+ * @export
+ * @interface TerraformAutoDeployConfig
+ */
+export interface TerraformAutoDeployConfig {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TerraformAutoDeployConfig
+     */
+    'auto_deploy': boolean;
+    /**
+     * Action to force a specific Terraform behavior on autodeploy. `DEFAULT`: The action is resolved based on the deployment type:   - Start/Restart -> PLAN_AND_APPLY   - Delete -> DESTROY   - Pause -> PLAN_ONLY 
+     * @type {string}
+     * @memberof TerraformAutoDeployConfig
+     */
+    'auto_deploy_action': TerraformAutoDeployConfigAutoDeployActionEnum;
+}
+
+export const TerraformAutoDeployConfigAutoDeployActionEnum = {
+    DEFAULT: 'DEFAULT',
+    PLAN: 'PLAN',
+    FORCE_UNLOCK: 'FORCE_UNLOCK',
+    MIGRATE_STATE: 'MIGRATE_STATE',
+    NOOP: 'NOOP'
+} as const;
+
+export type TerraformAutoDeployConfigAutoDeployActionEnum = typeof TerraformAutoDeployConfigAutoDeployActionEnum[keyof typeof TerraformAutoDeployConfigAutoDeployActionEnum];
+
+/**
  * @type TerraformBackend
  * Configuration for Terraform backend - exactly one backend type must be specified
  * @export
@@ -20149,10 +20179,10 @@ export interface TerraformRequest {
     'description': string;
     /**
      * 
-     * @type {boolean}
+     * @type {TerraformAutoDeployConfig}
      * @memberof TerraformRequest
      */
-    'auto_deploy': boolean;
+    'auto_deploy_config': TerraformAutoDeployConfig;
     /**
      * 
      * @type {TerraformRequestTerraformFilesSource}
@@ -20428,6 +20458,12 @@ export interface TerraformResponse {
      * @memberof TerraformResponse
      */
     'auto_deploy': boolean;
+    /**
+     * 
+     * @type {TerraformAutoDeployConfig}
+     * @memberof TerraformResponse
+     */
+    'auto_deploy_config'?: TerraformAutoDeployConfig;
     /**
      * 
      * @type {TerraformResponseAllOfTerraformFilesSource}
