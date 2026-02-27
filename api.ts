@@ -4630,6 +4630,12 @@ export interface ClusterRegion {
      * @memberof ClusterRegion
      */
     'city': string;
+    /**
+     * List of availability zones supported by this region
+     * @type {Array<string>}
+     * @memberof ClusterRegion
+     */
+    'zones'?: Array<string>;
 }
 /**
  * 
