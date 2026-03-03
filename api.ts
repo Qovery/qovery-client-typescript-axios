@@ -6926,6 +6926,12 @@ export interface Database {
      */
     'disk_encrypted'?: boolean;
     /**
+     * EBS disk type for the database. Only applicable for MANAGED mode (gp2 or gp3). Null for CONTAINER mode.
+     * @type {string}
+     * @memberof Database
+     */
+    'disk_type'?: DatabaseDiskTypeEnum | null;
+    /**
      * 
      * @type {ServiceTypeEnum}
      * @memberof Database
@@ -6933,6 +6939,12 @@ export interface Database {
     'service_type': ServiceTypeEnum;
 }
 
+export const DatabaseDiskTypeEnum = {
+    GP2: 'gp2',
+    GP3: 'gp3'
+} as const;
+
+export type DatabaseDiskTypeEnum = typeof DatabaseDiskTypeEnum[keyof typeof DatabaseDiskTypeEnum];
 
 /**
  * 
@@ -7054,8 +7066,20 @@ export interface DatabaseEditRequest {
      * @memberof DatabaseEditRequest
      */
     'icon_uri'?: string;
+    /**
+     * EBS disk type for MANAGED AWS databases. Allowed values: gp2, gp3. Only applicable for MANAGED mode.
+     * @type {string}
+     * @memberof DatabaseEditRequest
+     */
+    'disk_type'?: DatabaseEditRequestDiskTypeEnum;
 }
 
+export const DatabaseEditRequestDiskTypeEnum = {
+    GP2: 'gp2',
+    GP3: 'gp3'
+} as const;
+
+export type DatabaseEditRequestDiskTypeEnum = typeof DatabaseEditRequestDiskTypeEnum[keyof typeof DatabaseEditRequestDiskTypeEnum];
 
 /**
  * 
