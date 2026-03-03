@@ -19860,18 +19860,16 @@ export interface TerraformAutoDeployConfig {
      * @type {string}
      * @memberof TerraformAutoDeployConfig
      */
-    'auto_deploy_action': TerraformAutoDeployConfigAutoDeployActionEnum;
+    'terraform_action': TerraformAutoDeployConfigTerraformActionEnum;
 }
 
-export const TerraformAutoDeployConfigAutoDeployActionEnum = {
+export const TerraformAutoDeployConfigTerraformActionEnum = {
     DEFAULT: 'DEFAULT',
     PLAN: 'PLAN',
-    FORCE_UNLOCK: 'FORCE_UNLOCK',
-    MIGRATE_STATE: 'MIGRATE_STATE',
     NOOP: 'NOOP'
 } as const;
 
-export type TerraformAutoDeployConfigAutoDeployActionEnum = typeof TerraformAutoDeployConfigAutoDeployActionEnum[keyof typeof TerraformAutoDeployConfigAutoDeployActionEnum];
+export type TerraformAutoDeployConfigTerraformActionEnum = typeof TerraformAutoDeployConfigTerraformActionEnum[keyof typeof TerraformAutoDeployConfigTerraformActionEnum];
 
 /**
  * @type TerraformBackend
