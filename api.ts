@@ -3213,6 +3213,12 @@ export interface ClusterAdvancedSettings {
      */
     'aws.vpc.flow_logs_retention_days'?: number;
     /**
+     * Enable a secondary Elastic IP per NAT Gateway, increasing the number of outbound public IPs. Useful for services with IP-based rate limits.
+     * @type {boolean}
+     * @memberof ClusterAdvancedSettings
+     */
+    'aws.vpc.enable_nat_gateway_secondary_eip'?: boolean;
+    /**
      * For how long in week loki is going to keep logs of your applications
      * @type {number}
      * @memberof ClusterAdvancedSettings
