@@ -3521,6 +3521,39 @@ export type ClusterDeploymentStatusEnum = typeof ClusterDeploymentStatusEnum[key
 /**
  * 
  * @export
+ * @interface ClusterEksAnywhereGitRepository
+ */
+export interface ClusterEksAnywhereGitRepository {
+    /**
+     * EKS Anywhere git repository URL
+     * @type {string}
+     * @memberof ClusterEksAnywhereGitRepository
+     */
+    'url': string;
+    /**
+     * Name of the branch to use. This is optional. If not specified, the default branch of the repository is used. 
+     * @type {string}
+     * @memberof ClusterEksAnywhereGitRepository
+     */
+    'branch'?: string;
+    /**
+     * Qovery git token id used to access the repository
+     * @type {string}
+     * @memberof ClusterEksAnywhereGitRepository
+     */
+    'git_token_id': string;
+    /**
+     * 
+     * @type {GitProviderEnum}
+     * @memberof ClusterEksAnywhereGitRepository
+     */
+    'provider'?: GitProviderEnum;
+}
+
+
+/**
+ * 
+ * @export
  * @interface ClusterFeatureAwsExistingVpc
  */
 export interface ClusterFeatureAwsExistingVpc {
@@ -4000,6 +4033,31 @@ export interface ClusterInfrastructureChartsParameters {
      * @memberof ClusterInfrastructureChartsParameters
      */
     'metal_lb_parameters'?: ClusterInfrastructureMetalLbChartParameters;
+    /**
+     * 
+     * @type {ClusterInfrastructureEksAnywhereParameters}
+     * @memberof ClusterInfrastructureChartsParameters
+     */
+    'eks_anywhere_parameters'?: ClusterInfrastructureEksAnywhereParameters;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterInfrastructureEksAnywhereParameters
+ */
+export interface ClusterInfrastructureEksAnywhereParameters {
+    /**
+     * 
+     * @type {ClusterEksAnywhereGitRepository}
+     * @memberof ClusterInfrastructureEksAnywhereParameters
+     */
+    'git_repository': ClusterEksAnywhereGitRepository;
+    /**
+     * Path to the EKS Anywhere cluster YAML file in the git repository
+     * @type {string}
+     * @memberof ClusterInfrastructureEksAnywhereParameters
+     */
+    'yaml_file_path': string;
 }
 /**
  * 
