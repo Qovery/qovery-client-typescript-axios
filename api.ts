@@ -7135,7 +7135,7 @@ export interface DatabaseEditRequest {
      * @type {string}
      * @memberof DatabaseEditRequest
      */
-    'disk_type'?: DatabaseEditRequestDiskTypeEnum;
+    'disk_type'?: DatabaseEditRequestDiskTypeEnum | null;
 }
 
 export const DatabaseEditRequestDiskTypeEnum = {
