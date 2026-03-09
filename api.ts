@@ -1899,6 +1899,114 @@ export interface ApplicationResponseList {
 /**
  * 
  * @export
+ * @interface ArgoCdConnectionCheckResponse
+ */
+export interface ArgoCdConnectionCheckResponse {
+    /**
+     * Connection result
+     * @type {string}
+     * @memberof ArgoCdConnectionCheckResponse
+     */
+    'status': ArgoCdConnectionCheckResponseStatusEnum;
+    /**
+     * Number of ArgoCD applications visible with the provided token. Present only when status is \"connected\".
+     * @type {number}
+     * @memberof ArgoCdConnectionCheckResponse
+     */
+    'app_count'?: number;
+    /**
+     * Failure reason. Present only when status is \"error\".
+     * @type {string}
+     * @memberof ArgoCdConnectionCheckResponse
+     */
+    'reason'?: ArgoCdConnectionCheckResponseReasonEnum;
+}
+
+export const ArgoCdConnectionCheckResponseStatusEnum = {
+    CONNECTED: 'connected',
+    ERROR: 'error'
+} as const;
+
+export type ArgoCdConnectionCheckResponseStatusEnum = typeof ArgoCdConnectionCheckResponseStatusEnum[keyof typeof ArgoCdConnectionCheckResponseStatusEnum];
+export const ArgoCdConnectionCheckResponseReasonEnum = {
+    AUTHENTICATION_FAILED: 'authentication_failed',
+    UNREACHABLE: 'unreachable',
+    INSUFFICIENT_PERMISSIONS: 'insufficient_permissions'
+} as const;
+
+export type ArgoCdConnectionCheckResponseReasonEnum = typeof ArgoCdConnectionCheckResponseReasonEnum[keyof typeof ArgoCdConnectionCheckResponseReasonEnum];
+
+/**
+ * 
+ * @export
+ * @interface ArgoCdCredentialsRequest
+ */
+export interface ArgoCdCredentialsRequest {
+    /**
+     * The URL of the ArgoCD instance (e.g. https://argocd.example.com)
+     * @type {string}
+     * @memberof ArgoCdCredentialsRequest
+     */
+    'argocd_url': string;
+    /**
+     * ArgoCD API authentication token
+     * @type {string}
+     * @memberof ArgoCdCredentialsRequest
+     */
+    'argocd_token': string;
+}
+/**
+ * 
+ * @export
+ * @interface ArgoCdCredentialsResponse
+ */
+export interface ArgoCdCredentialsResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgoCdCredentialsResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgoCdCredentialsResponse
+     */
+    'cluster_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgoCdCredentialsResponse
+     */
+    'argocd_url': string;
+    /**
+     * Always returned as REDACTED
+     * @type {string}
+     * @memberof ArgoCdCredentialsResponse
+     */
+    'argocd_token': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgoCdCredentialsResponse
+     */
+    'last_checked_at'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgoCdCredentialsResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgoCdCredentialsResponse
+     */
+    'updated_at': string;
+}
+/**
+ * 
+ * @export
  * @interface AttachServiceToDeploymentStageRequest
  */
 export interface AttachServiceToDeploymentStageRequest {
@@ -27022,6 +27130,367 @@ export class ApplicationsApi extends BaseAPI {
      */
     public listApplication(environmentId: string, options?: RawAxiosRequestConfig) {
         return ApplicationsApiFp(this.configuration).listApplication(environmentId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * ArgoCDApi - axios parameter creator
+ * @export
+ */
+export const ArgoCDApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Test an ArgoCD URL and token before saving. The cluster agent attempts to connect to ArgoCD and returns the connection result. Always returns HTTP 200 — check the `status` field for the connection outcome. Requires ADMIN role. 
+         * @summary Check ArgoCD connection
+         * @param {string} clusterId Cluster ID
+         * @param {ArgoCdCredentialsRequest} argoCdCredentialsRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkArgoCdConnection: async (clusterId: string, argoCdCredentialsRequest: ArgoCdCredentialsRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('checkArgoCdConnection', 'clusterId', clusterId)
+            // verify required parameter 'argoCdCredentialsRequest' is not null or undefined
+            assertParamExists('checkArgoCdConnection', 'argoCdCredentialsRequest', argoCdCredentialsRequest)
+            const localVarPath = `/cluster/{clusterId}/argoCdConfig/check`
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(argoCdCredentialsRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Remove the stored ArgoCD configuration for a cluster. Requires ADMIN role.
+         * @summary Delete ArgoCD credentials for a cluster
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteArgoCdCredentials: async (clusterId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('deleteArgoCdCredentials', 'clusterId', clusterId)
+            const localVarPath = `/cluster/{clusterId}/argoCdConfig`
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve the stored ArgoCD configuration for a cluster. The token is always returned as REDACTED. Requires VIEWER role.
+         * @summary Get ArgoCD credentials for a cluster
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getArgoCdCredentials: async (clusterId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('getArgoCdCredentials', 'clusterId', clusterId)
+            const localVarPath = `/cluster/{clusterId}/argoCdConfig`
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Save or update the ArgoCD URL and authentication token for a cluster. Requires ADMIN role.
+         * @summary Save ArgoCD credentials for a cluster
+         * @param {string} clusterId Cluster ID
+         * @param {ArgoCdCredentialsRequest} argoCdCredentialsRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveArgoCdCredentials: async (clusterId: string, argoCdCredentialsRequest: ArgoCdCredentialsRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('saveArgoCdCredentials', 'clusterId', clusterId)
+            // verify required parameter 'argoCdCredentialsRequest' is not null or undefined
+            assertParamExists('saveArgoCdCredentials', 'argoCdCredentialsRequest', argoCdCredentialsRequest)
+            const localVarPath = `/cluster/{clusterId}/argoCdConfig`
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(argoCdCredentialsRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ArgoCDApi - functional programming interface
+ * @export
+ */
+export const ArgoCDApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ArgoCDApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Test an ArgoCD URL and token before saving. The cluster agent attempts to connect to ArgoCD and returns the connection result. Always returns HTTP 200 — check the `status` field for the connection outcome. Requires ADMIN role. 
+         * @summary Check ArgoCD connection
+         * @param {string} clusterId Cluster ID
+         * @param {ArgoCdCredentialsRequest} argoCdCredentialsRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async checkArgoCdConnection(clusterId: string, argoCdCredentialsRequest: ArgoCdCredentialsRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoCdConnectionCheckResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkArgoCdConnection(clusterId, argoCdCredentialsRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ArgoCDApi.checkArgoCdConnection']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Remove the stored ArgoCD configuration for a cluster. Requires ADMIN role.
+         * @summary Delete ArgoCD credentials for a cluster
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteArgoCdCredentials(clusterId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteArgoCdCredentials(clusterId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ArgoCDApi.deleteArgoCdCredentials']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Retrieve the stored ArgoCD configuration for a cluster. The token is always returned as REDACTED. Requires VIEWER role.
+         * @summary Get ArgoCD credentials for a cluster
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getArgoCdCredentials(clusterId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoCdCredentialsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getArgoCdCredentials(clusterId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ArgoCDApi.getArgoCdCredentials']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Save or update the ArgoCD URL and authentication token for a cluster. Requires ADMIN role.
+         * @summary Save ArgoCD credentials for a cluster
+         * @param {string} clusterId Cluster ID
+         * @param {ArgoCdCredentialsRequest} argoCdCredentialsRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async saveArgoCdCredentials(clusterId: string, argoCdCredentialsRequest: ArgoCdCredentialsRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoCdCredentialsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.saveArgoCdCredentials(clusterId, argoCdCredentialsRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ArgoCDApi.saveArgoCdCredentials']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * ArgoCDApi - factory interface
+ * @export
+ */
+export const ArgoCDApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ArgoCDApiFp(configuration)
+    return {
+        /**
+         * Test an ArgoCD URL and token before saving. The cluster agent attempts to connect to ArgoCD and returns the connection result. Always returns HTTP 200 — check the `status` field for the connection outcome. Requires ADMIN role. 
+         * @summary Check ArgoCD connection
+         * @param {string} clusterId Cluster ID
+         * @param {ArgoCdCredentialsRequest} argoCdCredentialsRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkArgoCdConnection(clusterId: string, argoCdCredentialsRequest: ArgoCdCredentialsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArgoCdConnectionCheckResponse> {
+            return localVarFp.checkArgoCdConnection(clusterId, argoCdCredentialsRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Remove the stored ArgoCD configuration for a cluster. Requires ADMIN role.
+         * @summary Delete ArgoCD credentials for a cluster
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteArgoCdCredentials(clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteArgoCdCredentials(clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Retrieve the stored ArgoCD configuration for a cluster. The token is always returned as REDACTED. Requires VIEWER role.
+         * @summary Get ArgoCD credentials for a cluster
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getArgoCdCredentials(clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<ArgoCdCredentialsResponse> {
+            return localVarFp.getArgoCdCredentials(clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Save or update the ArgoCD URL and authentication token for a cluster. Requires ADMIN role.
+         * @summary Save ArgoCD credentials for a cluster
+         * @param {string} clusterId Cluster ID
+         * @param {ArgoCdCredentialsRequest} argoCdCredentialsRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveArgoCdCredentials(clusterId: string, argoCdCredentialsRequest: ArgoCdCredentialsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArgoCdCredentialsResponse> {
+            return localVarFp.saveArgoCdCredentials(clusterId, argoCdCredentialsRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ArgoCDApi - object-oriented interface
+ * @export
+ * @class ArgoCDApi
+ * @extends {BaseAPI}
+ */
+export class ArgoCDApi extends BaseAPI {
+    /**
+     * Test an ArgoCD URL and token before saving. The cluster agent attempts to connect to ArgoCD and returns the connection result. Always returns HTTP 200 — check the `status` field for the connection outcome. Requires ADMIN role. 
+     * @summary Check ArgoCD connection
+     * @param {string} clusterId Cluster ID
+     * @param {ArgoCdCredentialsRequest} argoCdCredentialsRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ArgoCDApi
+     */
+    public checkArgoCdConnection(clusterId: string, argoCdCredentialsRequest: ArgoCdCredentialsRequest, options?: RawAxiosRequestConfig) {
+        return ArgoCDApiFp(this.configuration).checkArgoCdConnection(clusterId, argoCdCredentialsRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Remove the stored ArgoCD configuration for a cluster. Requires ADMIN role.
+     * @summary Delete ArgoCD credentials for a cluster
+     * @param {string} clusterId Cluster ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ArgoCDApi
+     */
+    public deleteArgoCdCredentials(clusterId: string, options?: RawAxiosRequestConfig) {
+        return ArgoCDApiFp(this.configuration).deleteArgoCdCredentials(clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Retrieve the stored ArgoCD configuration for a cluster. The token is always returned as REDACTED. Requires VIEWER role.
+     * @summary Get ArgoCD credentials for a cluster
+     * @param {string} clusterId Cluster ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ArgoCDApi
+     */
+    public getArgoCdCredentials(clusterId: string, options?: RawAxiosRequestConfig) {
+        return ArgoCDApiFp(this.configuration).getArgoCdCredentials(clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Save or update the ArgoCD URL and authentication token for a cluster. Requires ADMIN role.
+     * @summary Save ArgoCD credentials for a cluster
+     * @param {string} clusterId Cluster ID
+     * @param {ArgoCdCredentialsRequest} argoCdCredentialsRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ArgoCDApi
+     */
+    public saveArgoCdCredentials(clusterId: string, argoCdCredentialsRequest: ArgoCdCredentialsRequest, options?: RawAxiosRequestConfig) {
+        return ArgoCDApiFp(this.configuration).saveArgoCdCredentials(clusterId, argoCdCredentialsRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
