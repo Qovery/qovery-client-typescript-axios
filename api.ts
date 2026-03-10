@@ -17464,13 +17464,13 @@ export interface ProbeType {
     'grpc'?: ProbeTypeGrpc | null;
 }
 /**
- * 
+ * Execute a command inside the container. The probe succeeds if the command exits with status code 0.
  * @export
  * @interface ProbeTypeExec
  */
 export interface ProbeTypeExec {
     /**
-     * 
+     * Command to execute inside the container, specified as an array of strings. The first element is the executable, followed by its arguments. Example: [\"sh\", \"-c\", \"test -f /tmp/healthy\"]
      * @type {Array<string>}
      * @memberof ProbeTypeExec
      */
