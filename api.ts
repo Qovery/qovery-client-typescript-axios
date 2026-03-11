@@ -10023,6 +10023,18 @@ export interface EnvironmentStatus {
      * @memberof EnvironmentStatus
      */
     'deployment_status'?: EnvironmentDeploymentStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentStatus
+     */
+    'deployment_request_id'?: string | null;
+    /**
+     * 
+     * @type {Array<StageStepMetrics>}
+     * @memberof EnvironmentStatus
+     */
+    'metrics'?: Array<StageStepMetrics> | null;
 }
 
 
@@ -19742,6 +19754,12 @@ export type StageStatusEnum = typeof StageStatusEnum[keyof typeof StageStatusEnu
 export interface StageStepMetric {
     /**
      * 
+     * @type {string}
+     * @memberof StageStepMetric
+     */
+    'stage_id'?: string;
+    /**
+     * 
      * @type {StageStepMetricNameEnum}
      * @memberof StageStepMetric
      */
@@ -19762,12 +19780,13 @@ export interface StageStepMetric {
 
 
 /**
- * The name of the deployment step at the stage level: - QUEUEING: The step preceding the actual stage deployment step. - PROVISION_BUILDER: The step to provision builders before the actual build. 
+ * The name of the deployment step at the stage level: - TOTAL: The total duration of the stage deployment. - QUEUEING: The step preceding the actual stage deployment step. - PROVISION_BUILDER: The step to provision builders before the actual build. 
  * @export
  * @enum {string}
  */
 
 export const StageStepMetricNameEnum = {
+    TOTAL: 'TOTAL',
     QUEUEING: 'QUEUEING',
     PROVISION_BUILDER: 'PROVISION_BUILDER'
 } as const;
@@ -19782,7 +19801,13 @@ export type StageStepMetricNameEnum = typeof StageStepMetricNameEnum[keyof typeo
  */
 export interface StageStepMetrics {
     /**
-     * The total duration in seconds of the stage deployment or null if the deployment is not completed
+     * 
+     * @type {string}
+     * @memberof StageStepMetrics
+     */
+    'stage_id'?: string;
+    /**
+     * The total duration in seconds of the stage deployment or null if the deployment is not completed.
      * @type {number}
      * @memberof StageStepMetrics
      */
