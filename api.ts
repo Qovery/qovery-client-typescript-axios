@@ -3893,13 +3893,13 @@ export interface ClusterFeatureKarpenterParameters {
      */
     'disk_size_in_gib': number;
     /**
-     * 
+     * Unit is operation/seconds. The disk IOPS to be used for the node configuration
      * @type {number}
      * @memberof ClusterFeatureKarpenterParameters
      */
     'disk_iops'?: number;
     /**
-     * 
+     * Unit is in MB/s. The disk throughput to be used for the node configuration
      * @type {number}
      * @memberof ClusterFeatureKarpenterParameters
      */
@@ -13731,6 +13731,18 @@ export interface KarpenterGpuNodePoolOverride {
      * @memberof KarpenterGpuNodePoolOverride
      */
     'disk_size_in_gib'?: number;
+    /**
+     * Unit is operation/seconds. The disk IOPS to be used for the GPU node pool configuration
+     * @type {number}
+     * @memberof KarpenterGpuNodePoolOverride
+     */
+    'disk_iops'?: number;
+    /**
+     * Unit is in MB/s. The disk throughput to be used for the GPU node pool configuration
+     * @type {number}
+     * @memberof KarpenterGpuNodePoolOverride
+     */
+    'disk_throughput'?: number;
     /**
      * 
      * @type {boolean}
