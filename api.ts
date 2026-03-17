@@ -1320,6 +1320,18 @@ export interface ApplicationAdvancedSettings {
      */
     'network.ingress.extra_headers'?: string;
     /**
+     * Sets a timeout (in seconds) for requests proxied through the Gateway API route.
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.gateway_api.http_request_timeout_seconds'?: number | null;
+    /**
+     * Sets the idle timeout (in seconds) for HTTP connections proxied through the Gateway API route.
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'network.gateway_api.http_connection_idle_timeout_seconds'?: number | null;
+    /**
      * Percentage value of cpu usage at which point pods should scale up.
      * @type {number}
      * @memberof ApplicationAdvancedSettings
@@ -3460,6 +3472,18 @@ export interface ClusterAdvancedSettings {
      */
     'nginx.memory.limit_in_mib'?: number;
     /**
+     * Sets the default request timeout (in seconds) applied to Gateway API routes when the service does not override it.
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'envoy.gateway_api.http_request_timeout_seconds'?: number | null;
+    /**
+     * Sets the default idle connection timeout (in seconds) applied to Gateway API routes when the service does not override it.
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'envoy.gateway_api.http_connection_idle_timeout_seconds'?: number | null;
+    /**
      * hpa cpu threshold in percentage
      * @type {number}
      * @memberof ClusterAdvancedSettings
@@ -5381,6 +5405,18 @@ export interface ContainerAdvancedSettings {
      * @memberof ContainerAdvancedSettings
      */
     'network.ingress.extra_headers'?: string;
+    /**
+     * Sets a timeout (in seconds) for requests proxied through the Gateway API route.
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'network.gateway_api.http_request_timeout_seconds'?: number | null;
+    /**
+     * Sets the idle timeout (in seconds) for HTTP connections proxied through the Gateway API route.
+     * @type {number}
+     * @memberof ContainerAdvancedSettings
+     */
+    'network.gateway_api.http_connection_idle_timeout_seconds'?: number | null;
     /**
      * Set the name of an environment variable to use as a basic authentication (`login:crypted_password`) from `htpasswd` command. You can add multiples comma separated values. 
      * @type {string}
@@ -11356,6 +11392,18 @@ export interface HelmAdvancedSettings {
      * @memberof HelmAdvancedSettings
      */
     'network.ingress.enable_sticky_session'?: boolean;
+    /**
+     * Sets a timeout (in seconds) for requests proxied through the Gateway API route.
+     * @type {number}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.gateway_api.http_request_timeout_seconds'?: number | null;
+    /**
+     * Sets the idle timeout (in seconds) for HTTP connections proxied through the Gateway API route.
+     * @type {number}
+     * @memberof HelmAdvancedSettings
+     */
+    'network.gateway_api.http_connection_idle_timeout_seconds'?: number | null;
 }
 /**
  * 
