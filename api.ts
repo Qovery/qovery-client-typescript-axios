@@ -7619,6 +7619,44 @@ export interface DeployRequest {
 /**
  * 
  * @export
+ * @interface DeploymentBuildUsageReportRequest
+ */
+export interface DeploymentBuildUsageReportRequest {
+    /**
+     * The deployment execution ID (format environment_id-version)
+     * @type {string}
+     * @memberof DeploymentBuildUsageReportRequest
+     */
+    'execution_id': string;
+    /**
+     * The number of seconds the report will be publicly available
+     * @type {number}
+     * @memberof DeploymentBuildUsageReportRequest
+     */
+    'report_expiration_in_seconds': number;
+}
+/**
+ * 
+ * @export
+ * @interface DeploymentBuildUsageReportResponse
+ */
+export interface DeploymentBuildUsageReportResponse {
+    /**
+     * The publicly accessible URL of the Grafana snapshot report showing build pod resource usage
+     * @type {string}
+     * @memberof DeploymentBuildUsageReportResponse
+     */
+    'report_url'?: string;
+    /**
+     * The URL to pro-actively delete the report before it expires
+     * @type {string}
+     * @memberof DeploymentBuildUsageReportResponse
+     */
+    'delete_report_url'?: string;
+}
+/**
+ * 
+ * @export
  * @interface DeploymentHistory
  */
 export interface DeploymentHistory {
@@ -8315,6 +8353,12 @@ export interface DeploymentHistoryServiceDetailsOneOf {
      * @memberof DeploymentHistoryServiceDetailsOneOf
      */
     'commit': Commit | null;
+    /**
+     * The build pod name prefix for monitoring build runner usage. Format build-{execution_id}-0
+     * @type {string}
+     * @memberof DeploymentHistoryServiceDetailsOneOf
+     */
+    'build_pod_name': string;
 }
 /**
  * ContainerDeploymentHistoryData
@@ -8383,6 +8427,12 @@ export interface DeploymentHistoryServiceDetailsOneOf2 {
      * @memberof DeploymentHistoryServiceDetailsOneOf2
      */
     'job_type': DeploymentHistoryServiceDetailsOneOf2JobTypeEnum;
+    /**
+     * The build pod name prefix. Only set for jobs with a git source (Docker build). Null for container-source jobs.
+     * @type {string}
+     * @memberof DeploymentHistoryServiceDetailsOneOf2
+     */
+    'build_pod_name'?: string | null;
 }
 
 export const DeploymentHistoryServiceDetailsOneOf2JobTypeEnum = {
@@ -44187,6 +44237,51 @@ export class EnvironmentActionsApi extends BaseAPI {
 export const EnvironmentDeploymentHistoryApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Generate a Grafana snapshot report that shows the resource usage (CPU, memory) of build runner pods for a specific deployment execution. The report is publicly accessible for the specified duration.
+         * @summary Generate a Grafana snapshot report showing build runner pod usage for a specific deployment
+         * @param {string} environmentId Environment ID
+         * @param {DeploymentBuildUsageReportRequest} [deploymentBuildUsageReportRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        generateDeploymentBuildUsageReport: async (environmentId: string, deploymentBuildUsageReportRequest?: DeploymentBuildUsageReportRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('generateDeploymentBuildUsageReport', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/deploymentBuildUsageReport`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(deploymentBuildUsageReportRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
          * @summary List environment deployments
          * @param {string} environmentId Environment ID
@@ -44289,6 +44384,20 @@ export const EnvironmentDeploymentHistoryApiFp = function(configuration?: Config
     const localVarAxiosParamCreator = EnvironmentDeploymentHistoryApiAxiosParamCreator(configuration)
     return {
         /**
+         * Generate a Grafana snapshot report that shows the resource usage (CPU, memory) of build runner pods for a specific deployment execution. The report is publicly accessible for the specified duration.
+         * @summary Generate a Grafana snapshot report showing build runner pod usage for a specific deployment
+         * @param {string} environmentId Environment ID
+         * @param {DeploymentBuildUsageReportRequest} [deploymentBuildUsageReportRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async generateDeploymentBuildUsageReport(environmentId: string, deploymentBuildUsageReportRequest?: DeploymentBuildUsageReportRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentBuildUsageReportResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.generateDeploymentBuildUsageReport(environmentId, deploymentBuildUsageReportRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['EnvironmentDeploymentHistoryApi.generateDeploymentBuildUsageReport']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
          * @summary List environment deployments
          * @param {string} environmentId Environment ID
@@ -44327,6 +44436,17 @@ export const EnvironmentDeploymentHistoryApiFactory = function (configuration?: 
     const localVarFp = EnvironmentDeploymentHistoryApiFp(configuration)
     return {
         /**
+         * Generate a Grafana snapshot report that shows the resource usage (CPU, memory) of build runner pods for a specific deployment execution. The report is publicly accessible for the specified duration.
+         * @summary Generate a Grafana snapshot report showing build runner pod usage for a specific deployment
+         * @param {string} environmentId Environment ID
+         * @param {DeploymentBuildUsageReportRequest} [deploymentBuildUsageReportRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        generateDeploymentBuildUsageReport(environmentId: string, deploymentBuildUsageReportRequest?: DeploymentBuildUsageReportRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentBuildUsageReportResponse> {
+            return localVarFp.generateDeploymentBuildUsageReport(environmentId, deploymentBuildUsageReportRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
          * @summary List environment deployments
          * @param {string} environmentId Environment ID
@@ -44358,6 +44478,19 @@ export const EnvironmentDeploymentHistoryApiFactory = function (configuration?: 
  * @extends {BaseAPI}
  */
 export class EnvironmentDeploymentHistoryApi extends BaseAPI {
+    /**
+     * Generate a Grafana snapshot report that shows the resource usage (CPU, memory) of build runner pods for a specific deployment execution. The report is publicly accessible for the specified duration.
+     * @summary Generate a Grafana snapshot report showing build runner pod usage for a specific deployment
+     * @param {string} environmentId Environment ID
+     * @param {DeploymentBuildUsageReportRequest} [deploymentBuildUsageReportRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentDeploymentHistoryApi
+     */
+    public generateDeploymentBuildUsageReport(environmentId: string, deploymentBuildUsageReportRequest?: DeploymentBuildUsageReportRequest, options?: RawAxiosRequestConfig) {
+        return EnvironmentDeploymentHistoryApiFp(this.configuration).generateDeploymentBuildUsageReport(environmentId, deploymentBuildUsageReportRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * List previous and current environment deployments with the status deployment and the related services. By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
      * @summary List environment deployments
