@@ -1140,6 +1140,12 @@ export interface ApplicationAdvancedSettings {
      */
     'deployment.antiaffinity.pod'?: ApplicationAdvancedSettingsDeploymentAntiaffinityPodEnum;
     /**
+     * Define how you want pods to be spread across availability zones: * `Disabled` no topology spread constraints are applied * `ScheduleAnyway` pods are spread across zones on a best-effort basis (soft constraint) * `DoNotSchedule` pods must be evenly spread across zones with a maxSkew of 1 (hard constraint) 
+     * @type {string}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'deployment.topology_spread.zone'?: ApplicationAdvancedSettingsDeploymentTopologySpreadZoneEnum;
+    /**
      * Allows you to run a command after the application is started. The command should be a shell command or script.
      * @type {Array<string>}
      * @memberof ApplicationAdvancedSettings
@@ -1369,6 +1375,13 @@ export const ApplicationAdvancedSettingsDeploymentAntiaffinityPodEnum = {
 } as const;
 
 export type ApplicationAdvancedSettingsDeploymentAntiaffinityPodEnum = typeof ApplicationAdvancedSettingsDeploymentAntiaffinityPodEnum[keyof typeof ApplicationAdvancedSettingsDeploymentAntiaffinityPodEnum];
+export const ApplicationAdvancedSettingsDeploymentTopologySpreadZoneEnum = {
+    DISABLED: 'Disabled',
+    SCHEDULE_ANYWAY: 'ScheduleAnyway',
+    DO_NOT_SCHEDULE: 'DoNotSchedule'
+} as const;
+
+export type ApplicationAdvancedSettingsDeploymentTopologySpreadZoneEnum = typeof ApplicationAdvancedSettingsDeploymentTopologySpreadZoneEnum[keyof typeof ApplicationAdvancedSettingsDeploymentTopologySpreadZoneEnum];
 export const ApplicationAdvancedSettingsDeploymentUpdateStrategyTypeEnum = {
     ROLLING_UPDATE: 'RollingUpdate',
     RECREATE: 'Recreate'
@@ -5268,6 +5281,12 @@ export interface ContainerAdvancedSettings {
      */
     'deployment.antiaffinity.pod'?: ContainerAdvancedSettingsDeploymentAntiaffinityPodEnum;
     /**
+     * Define how you want pods to be spread across availability zones: * `Disabled` no topology spread constraints are applied * `ScheduleAnyway` pods are spread across zones on a best-effort basis (soft constraint) * `DoNotSchedule` pods must be evenly spread across zones with a maxSkew of 1 (hard constraint) 
+     * @type {string}
+     * @memberof ContainerAdvancedSettings
+     */
+    'deployment.topology_spread.zone'?: ContainerAdvancedSettingsDeploymentTopologySpreadZoneEnum;
+    /**
      * * `RollingUpdate` gracefully rollout new versions, and automatically rollback if the new version fails to start * `Recreate` stop all current versions and create new ones once all old ones have been shutdown 
      * @type {string}
      * @memberof ContainerAdvancedSettings
@@ -5467,6 +5486,13 @@ export const ContainerAdvancedSettingsDeploymentAntiaffinityPodEnum = {
 } as const;
 
 export type ContainerAdvancedSettingsDeploymentAntiaffinityPodEnum = typeof ContainerAdvancedSettingsDeploymentAntiaffinityPodEnum[keyof typeof ContainerAdvancedSettingsDeploymentAntiaffinityPodEnum];
+export const ContainerAdvancedSettingsDeploymentTopologySpreadZoneEnum = {
+    DISABLED: 'Disabled',
+    SCHEDULE_ANYWAY: 'ScheduleAnyway',
+    DO_NOT_SCHEDULE: 'DoNotSchedule'
+} as const;
+
+export type ContainerAdvancedSettingsDeploymentTopologySpreadZoneEnum = typeof ContainerAdvancedSettingsDeploymentTopologySpreadZoneEnum[keyof typeof ContainerAdvancedSettingsDeploymentTopologySpreadZoneEnum];
 export const ContainerAdvancedSettingsDeploymentUpdateStrategyTypeEnum = {
     ROLLING_UPDATE: 'RollingUpdate',
     RECREATE: 'Recreate'
