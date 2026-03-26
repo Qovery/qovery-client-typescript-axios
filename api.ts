@@ -15868,6 +15868,7 @@ export const OrganizationAnnotationsGroupScopeEnum = {
     STATEFUL_SETS: 'STATEFUL_SETS',
     SERVICES: 'SERVICES',
     INGRESS: 'INGRESS',
+    GATEWAY_API_ROUTES: 'GATEWAY_API_ROUTES',
     HPA: 'HPA',
     PODS: 'PODS',
     SECRETS: 'SECRETS',
