@@ -3682,6 +3682,12 @@ export interface ClusterEksAnywhereGitRepository {
      */
     'branch'?: string;
     /**
+     * Optional git commit SHA to pin EKS Anywhere configuration on a specific revision. If omitted, the latest commit from the selected branch is used. 
+     * @type {string}
+     * @memberof ClusterEksAnywhereGitRepository
+     */
+    'commit_id'?: string;
+    /**
      * Qovery git token id used to access the repository
      * @type {string}
      * @memberof ClusterEksAnywhereGitRepository
@@ -8974,6 +8980,32 @@ export const DockerfileFragmentInlineTypeEnum = {
 
 export type DockerfileFragmentInlineTypeEnum = typeof DockerfileFragmentInlineTypeEnum[keyof typeof DockerfileFragmentInlineTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface EksAnywhereCommitRequest
+ */
+export interface EksAnywhereCommitRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EksAnywhereCommitRequest
+     */
+    'commit_id': string;
+}
+/**
+ * 
+ * @export
+ * @interface EksAnywhereCommitResponse
+ */
+export interface EksAnywhereCommitResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof EksAnywhereCommitResponse
+     */
+    'commit_id': string;
+}
 /**
  * 
  * @export
@@ -33850,6 +33882,51 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Returns list of the last commits made on the repository linked to the EKS Anywhere cluster, filtered by the targeted YAML file when supported by provider.
+         * @summary List EKS Anywhere commits
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listEksAnywhereCommits: async (organizationId: string, clusterId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listEksAnywhereCommits', 'organizationId', organizationId)
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('listEksAnywhereCommits', 'clusterId', clusterId)
+            const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/eks-anywhere/commits`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary List organization clusters
          * @param {string} organizationId Organization ID
@@ -34064,6 +34141,57 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Persist selected commit for an EKS Anywhere cluster.
+         * @summary Update selected EKS Anywhere commit
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {EksAnywhereCommitRequest} eksAnywhereCommitRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEksAnywhereCommit: async (organizationId: string, clusterId: string, eksAnywhereCommitRequest: EksAnywhereCommitRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('updateEksAnywhereCommit', 'organizationId', organizationId)
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('updateEksAnywhereCommit', 'clusterId', clusterId)
+            // verify required parameter 'eksAnywhereCommitRequest' is not null or undefined
+            assertParamExists('updateEksAnywhereCommit', 'eksAnywhereCommitRequest', eksAnywhereCommitRequest)
+            const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/eks-anywhere/commit`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(eksAnywhereCommitRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -34483,6 +34611,20 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns list of the last commits made on the repository linked to the EKS Anywhere cluster, filtered by the targeted YAML file when supported by provider.
+         * @summary List EKS Anywhere commits
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listEksAnywhereCommits(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommitResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listEksAnywhereCommits(organizationId, clusterId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ClustersApi.listEksAnywhereCommits']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary List organization clusters
          * @param {string} organizationId Organization ID
@@ -34549,6 +34691,21 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.unlockCluster(clusterId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ClustersApi.unlockCluster']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Persist selected commit for an EKS Anywhere cluster.
+         * @summary Update selected EKS Anywhere commit
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {EksAnywhereCommitRequest} eksAnywhereCommitRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateEksAnywhereCommit(organizationId: string, clusterId: string, eksAnywhereCommitRequest: EksAnywhereCommitRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EksAnywhereCommitResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateEksAnywhereCommit(organizationId, clusterId, eksAnywhereCommitRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ClustersApi.updateEksAnywhereCommit']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -34842,6 +34999,17 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.listClusterLogs(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns list of the last commits made on the repository linked to the EKS Anywhere cluster, filtered by the targeted YAML file when supported by provider.
+         * @summary List EKS Anywhere commits
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listEksAnywhereCommits(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<CommitResponseList> {
+            return localVarFp.listEksAnywhereCommits(organizationId, clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary List organization clusters
          * @param {string} organizationId Organization ID
@@ -34894,6 +35062,18 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          */
         unlockCluster(clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.unlockCluster(clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Persist selected commit for an EKS Anywhere cluster.
+         * @summary Update selected EKS Anywhere commit
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {EksAnywhereCommitRequest} eksAnywhereCommitRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEksAnywhereCommit(organizationId: string, clusterId: string, eksAnywhereCommitRequest: EksAnywhereCommitRequest, options?: RawAxiosRequestConfig): AxiosPromise<EksAnywhereCommitResponse> {
+            return localVarFp.updateEksAnywhereCommit(organizationId, clusterId, eksAnywhereCommitRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Update karpenter private fargate subnet ids
@@ -35220,6 +35400,19 @@ export class ClustersApi extends BaseAPI {
     }
 
     /**
+     * Returns list of the last commits made on the repository linked to the EKS Anywhere cluster, filtered by the targeted YAML file when supported by provider.
+     * @summary List EKS Anywhere commits
+     * @param {string} organizationId Organization ID
+     * @param {string} clusterId Cluster ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClustersApi
+     */
+    public listEksAnywhereCommits(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).listEksAnywhereCommits(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * 
      * @summary List organization clusters
      * @param {string} organizationId Organization ID
@@ -35281,6 +35474,20 @@ export class ClustersApi extends BaseAPI {
      */
     public unlockCluster(clusterId: string, options?: RawAxiosRequestConfig) {
         return ClustersApiFp(this.configuration).unlockCluster(clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Persist selected commit for an EKS Anywhere cluster.
+     * @summary Update selected EKS Anywhere commit
+     * @param {string} organizationId Organization ID
+     * @param {string} clusterId Cluster ID
+     * @param {EksAnywhereCommitRequest} eksAnywhereCommitRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClustersApi
+     */
+    public updateEksAnywhereCommit(organizationId: string, clusterId: string, eksAnywhereCommitRequest: EksAnywhereCommitRequest, options?: RawAxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).updateEksAnywhereCommit(organizationId, clusterId, eksAnywhereCommitRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
