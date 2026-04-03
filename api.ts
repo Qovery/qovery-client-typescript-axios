@@ -3705,6 +3705,83 @@ export interface ClusterEksAnywhereGitRepository {
 /**
  * 
  * @export
+ * @interface ClusterEnvironmentResponse
+ */
+export interface ClusterEnvironmentResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterEnvironmentResponse
+     */
+    'environment_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterEnvironmentResponse
+     */
+    'environment_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterEnvironmentResponse
+     */
+    'project_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterEnvironmentResponse
+     */
+    'project_name': string;
+    /**
+     * 
+     * @type {Array<ClusterEnvironmentServiceResponse>}
+     * @memberof ClusterEnvironmentResponse
+     */
+    'services': Array<ClusterEnvironmentServiceResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterEnvironmentResponseList
+ */
+export interface ClusterEnvironmentResponseList {
+    /**
+     * 
+     * @type {Array<ClusterEnvironmentResponse>}
+     * @memberof ClusterEnvironmentResponseList
+     */
+    'results'?: Array<ClusterEnvironmentResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterEnvironmentServiceResponse
+ */
+export interface ClusterEnvironmentServiceResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterEnvironmentServiceResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterEnvironmentServiceResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {LinkedServiceTypeEnum}
+     * @memberof ClusterEnvironmentServiceResponse
+     */
+    'type': LinkedServiceTypeEnum;
+}
+
+
+/**
+ * 
+ * @export
  * @interface ClusterFeatureAwsExistingVpc
  */
 export interface ClusterFeatureAwsExistingVpc {
@@ -33662,6 +33739,47 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary List environments services by cluster id
+         * @param {string} clusterId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentsByClusterId: async (clusterId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('getEnvironmentsByClusterId', 'clusterId', clusterId)
+            const localVarPath = `/cluster/{clusterId}/environments`
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get cluster helm values for self managed installation
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
@@ -34543,6 +34661,19 @@ export const ClustersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List environments services by cluster id
+         * @param {string} clusterId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEnvironmentsByClusterId(clusterId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterEnvironmentResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentsByClusterId(clusterId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ClustersApi.getEnvironmentsByClusterId']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get cluster helm values for self managed installation
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
@@ -34946,6 +35077,16 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @summary List environments services by cluster id
+         * @param {string} clusterId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentsByClusterId(clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterEnvironmentResponseList> {
+            return localVarFp.getEnvironmentsByClusterId(clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get cluster helm values for self managed installation
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
@@ -35333,6 +35474,18 @@ export class ClustersApi extends BaseAPI {
      */
     public getDefaultClusterAdvancedSettings(options?: RawAxiosRequestConfig) {
         return ClustersApiFp(this.configuration).getDefaultClusterAdvancedSettings(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List environments services by cluster id
+     * @param {string} clusterId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClustersApi
+     */
+    public getEnvironmentsByClusterId(clusterId: string, options?: RawAxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).getEnvironmentsByClusterId(clusterId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
