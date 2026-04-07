@@ -3402,6 +3402,30 @@ export interface ClusterAdvancedSettings {
      */
     'aws.eks.enable_alb_controller'?: boolean;
     /**
+     * Enable the AWS EFS CSI driver EKS add-on to provision EFS-backed persistent volumes on the cluster.
+     * @type {boolean}
+     * @memberof ClusterAdvancedSettings
+     */
+    'aws.eks.enable_efs_addon'?: boolean;
+    /**
+     * EFS throughput mode. \"elastic\" scales automatically (pay-per-use), \"bursting\" uses burst credits based on file system size, \"provisioned\" requires a fixed throughput value.
+     * @type {string}
+     * @memberof ClusterAdvancedSettings
+     */
+    'aws.eks.efs.throughput_mode'?: ClusterAdvancedSettingsAwsEksEfsThroughputModeEnum;
+    /**
+     * EFS performance mode. \"generalPurpose\" offers lowest latency (recommended). \"maxIO\" provides higher aggregate throughput for highly parallelized workloads. Cannot be changed after creation.
+     * @type {string}
+     * @memberof ClusterAdvancedSettings
+     */
+    'aws.eks.efs.performance_mode'?: ClusterAdvancedSettingsAwsEksEfsPerformanceModeEnum;
+    /**
+     * Lifecycle policy to transition files to Infrequent Access (IA) storage after the specified period. IA storage costs less but has a per-read charge. Empty string disables the policy.
+     * @type {string}
+     * @memberof ClusterAdvancedSettings
+     */
+    'aws.eks.efs.transition_to_ia'?: ClusterAdvancedSettingsAwsEksEfsTransitionToIaEnum;
+    /**
      * Select the size of the main load_balancer (only effective for Scaleway)
      * @type {string}
      * @memberof ClusterAdvancedSettings
@@ -3560,6 +3584,30 @@ export interface ClusterAdvancedSettings {
     'k8s.api.allowed_public_access_cidrs'?: Array<string>;
 }
 
+export const ClusterAdvancedSettingsAwsEksEfsThroughputModeEnum = {
+    BURSTING: 'bursting',
+    ELASTIC: 'elastic',
+    PROVISIONED: 'provisioned'
+} as const;
+
+export type ClusterAdvancedSettingsAwsEksEfsThroughputModeEnum = typeof ClusterAdvancedSettingsAwsEksEfsThroughputModeEnum[keyof typeof ClusterAdvancedSettingsAwsEksEfsThroughputModeEnum];
+export const ClusterAdvancedSettingsAwsEksEfsPerformanceModeEnum = {
+    GENERAL_PURPOSE: 'generalPurpose',
+    MAX_IO: 'maxIO'
+} as const;
+
+export type ClusterAdvancedSettingsAwsEksEfsPerformanceModeEnum = typeof ClusterAdvancedSettingsAwsEksEfsPerformanceModeEnum[keyof typeof ClusterAdvancedSettingsAwsEksEfsPerformanceModeEnum];
+export const ClusterAdvancedSettingsAwsEksEfsTransitionToIaEnum = {
+    AFTER_1_DAY: 'AFTER_1_DAY',
+    AFTER_7_DAYS: 'AFTER_7_DAYS',
+    AFTER_14_DAYS: 'AFTER_14_DAYS',
+    AFTER_30_DAYS: 'AFTER_30_DAYS',
+    AFTER_60_DAYS: 'AFTER_60_DAYS',
+    AFTER_90_DAYS: 'AFTER_90_DAYS',
+    EMPTY: ''
+} as const;
+
+export type ClusterAdvancedSettingsAwsEksEfsTransitionToIaEnum = typeof ClusterAdvancedSettingsAwsEksEfsTransitionToIaEnum[keyof typeof ClusterAdvancedSettingsAwsEksEfsTransitionToIaEnum];
 export const ClusterAdvancedSettingsAwsEksEc2MetadataImdsEnum = {
     OPTIONAL: 'optional',
     REQUIRED: 'required'
