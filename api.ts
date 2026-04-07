@@ -2151,7 +2151,7 @@ export interface AvailableHelmRepositoryResponseList {
  * @type AwsCredentialsRequest
  * @export
  */
-export type AwsCredentialsRequest = AwsRoleCredentialsRequest | AwsStaticCredentialsRequest;
+export type AwsCredentialsRequest = { type: 'AWS_ROLE' } & AwsRoleCredentialsRequest | { type: 'AWS_STATIC' } & AwsStaticCredentialsRequest | { type: 'EKS_ANYWHERE_VSPHERE_ROLE' } & EksAnywhereVsphereRoleCredentialsRequest | { type: 'EKS_ANYWHERE_VSPHERE_STATIC' } & EksAnywhereVsphereStaticCredentialsRequest;
 
 /**
  * 
@@ -2202,6 +2202,12 @@ export interface AwsRoleCredentialsRequest {
      * @type {string}
      * @memberof AwsRoleCredentialsRequest
      */
+    'type': AwsRoleCredentialsRequestTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsRoleCredentialsRequest
+     */
     'name': string;
     /**
      * 
@@ -2210,6 +2216,13 @@ export interface AwsRoleCredentialsRequest {
      */
     'role_arn': string;
 }
+
+export const AwsRoleCredentialsRequestTypeEnum = {
+    AWS_ROLE: 'AWS_ROLE'
+} as const;
+
+export type AwsRoleCredentialsRequestTypeEnum = typeof AwsRoleCredentialsRequestTypeEnum[keyof typeof AwsRoleCredentialsRequestTypeEnum];
+
 /**
  * 
  * @export
@@ -2259,6 +2272,12 @@ export interface AwsStaticCredentialsRequest {
      * @type {string}
      * @memberof AwsStaticCredentialsRequest
      */
+    'type': AwsStaticCredentialsRequestTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsStaticCredentialsRequest
+     */
     'name': string;
     /**
      * 
@@ -2273,6 +2292,13 @@ export interface AwsStaticCredentialsRequest {
      */
     'secret_access_key': string;
 }
+
+export const AwsStaticCredentialsRequestTypeEnum = {
+    AWS_STATIC: 'AWS_STATIC'
+} as const;
+
+export type AwsStaticCredentialsRequestTypeEnum = typeof AwsStaticCredentialsRequestTypeEnum[keyof typeof AwsStaticCredentialsRequestTypeEnum];
+
 /**
  * 
  * @export
@@ -3618,7 +3644,7 @@ export interface ClusterCloudProviderInfoRequest {
  * @type ClusterCredentials
  * @export
  */
-export type ClusterCredentials = { object_type: 'AWS' } & AwsStaticClusterCredentials | { object_type: 'AWS_ROLE' } & AwsRoleClusterCredentials | { object_type: 'AZURE' } & AzureStaticClusterCredentials | { object_type: 'GCP' } & GcpStaticClusterCredentials | { object_type: 'OTHER' } & GenericClusterCredentials | { object_type: 'SCW' } & ScalewayClusterCredentials;
+export type ClusterCredentials = { object_type: 'AWS' } & AwsStaticClusterCredentials | { object_type: 'AWS_ROLE' } & AwsRoleClusterCredentials | { object_type: 'AZURE' } & AzureStaticClusterCredentials | { object_type: 'EKS_ANYWHERE_VSPHERE' } & EksAnywhereVsphereClusterCredentials | { object_type: 'GCP' } & GcpStaticClusterCredentials | { object_type: 'OTHER' } & GenericClusterCredentials | { object_type: 'SCW' } & ScalewayClusterCredentials;
 
 /**
  * 
@@ -9083,6 +9109,150 @@ export interface EksAnywhereCommitResponse {
      */
     'commit_id': string;
 }
+/**
+ * 
+ * @export
+ * @interface EksAnywhereVsphereClusterCredentials
+ */
+export interface EksAnywhereVsphereClusterCredentials {
+    /**
+     * 
+     * @type {string}
+     * @memberof EksAnywhereVsphereClusterCredentials
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EksAnywhereVsphereClusterCredentials
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EksAnywhereVsphereClusterCredentials
+     */
+    'vsphere_user': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EksAnywhereVsphereClusterCredentials
+     */
+    'access_key_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof EksAnywhereVsphereClusterCredentials
+     */
+    'role_arn'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof EksAnywhereVsphereClusterCredentials
+     */
+    'object_type': EksAnywhereVsphereClusterCredentialsObjectTypeEnum;
+}
+
+export const EksAnywhereVsphereClusterCredentialsObjectTypeEnum = {
+    EKS_ANYWHERE_VSPHERE: 'EKS_ANYWHERE_VSPHERE'
+} as const;
+
+export type EksAnywhereVsphereClusterCredentialsObjectTypeEnum = typeof EksAnywhereVsphereClusterCredentialsObjectTypeEnum[keyof typeof EksAnywhereVsphereClusterCredentialsObjectTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface EksAnywhereVsphereRoleCredentialsRequest
+ */
+export interface EksAnywhereVsphereRoleCredentialsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EksAnywhereVsphereRoleCredentialsRequest
+     */
+    'type': EksAnywhereVsphereRoleCredentialsRequestTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof EksAnywhereVsphereRoleCredentialsRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EksAnywhereVsphereRoleCredentialsRequest
+     */
+    'vsphere_user': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EksAnywhereVsphereRoleCredentialsRequest
+     */
+    'vsphere_password': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EksAnywhereVsphereRoleCredentialsRequest
+     */
+    'role_arn': string;
+}
+
+export const EksAnywhereVsphereRoleCredentialsRequestTypeEnum = {
+    EKS_ANYWHERE_VSPHERE_ROLE: 'EKS_ANYWHERE_VSPHERE_ROLE'
+} as const;
+
+export type EksAnywhereVsphereRoleCredentialsRequestTypeEnum = typeof EksAnywhereVsphereRoleCredentialsRequestTypeEnum[keyof typeof EksAnywhereVsphereRoleCredentialsRequestTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface EksAnywhereVsphereStaticCredentialsRequest
+ */
+export interface EksAnywhereVsphereStaticCredentialsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EksAnywhereVsphereStaticCredentialsRequest
+     */
+    'type': EksAnywhereVsphereStaticCredentialsRequestTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof EksAnywhereVsphereStaticCredentialsRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EksAnywhereVsphereStaticCredentialsRequest
+     */
+    'vsphere_user': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EksAnywhereVsphereStaticCredentialsRequest
+     */
+    'vsphere_password': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EksAnywhereVsphereStaticCredentialsRequest
+     */
+    'access_key_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EksAnywhereVsphereStaticCredentialsRequest
+     */
+    'secret_access_key': string;
+}
+
+export const EksAnywhereVsphereStaticCredentialsRequestTypeEnum = {
+    EKS_ANYWHERE_VSPHERE_STATIC: 'EKS_ANYWHERE_VSPHERE_STATIC'
+} as const;
+
+export type EksAnywhereVsphereStaticCredentialsRequestTypeEnum = typeof EksAnywhereVsphereStaticCredentialsRequestTypeEnum[keyof typeof EksAnywhereVsphereStaticCredentialsRequestTypeEnum];
+
 /**
  * 
  * @export
