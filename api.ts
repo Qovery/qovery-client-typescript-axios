@@ -14136,6 +14136,31 @@ export type KapsuleInfrastructureOutputsKindEnum = typeof KapsuleInfrastructureO
 /**
  * 
  * @export
+ * @interface KarpenterCronjobNodePoolOverride
+ */
+export interface KarpenterCronjobNodePoolOverride {
+    /**
+     * 
+     * @type {KarpenterNodePoolConsolidation}
+     * @memberof KarpenterCronjobNodePoolOverride
+     */
+    'consolidation'?: KarpenterNodePoolConsolidation;
+    /**
+     * 
+     * @type {KarpenterNodePoolLimits}
+     * @memberof KarpenterCronjobNodePoolOverride
+     */
+    'limits'?: KarpenterNodePoolLimits;
+    /**
+     * Time to wait before consolidating empty or underutilized nodes (e.g., 1m, 10m, 1h). Maximum: 24h
+     * @type {string}
+     * @memberof KarpenterCronjobNodePoolOverride
+     */
+    'consolidate_after'?: string;
+}
+/**
+ * 
+ * @export
  * @interface KarpenterDefaultNodePoolOverride
  */
 export interface KarpenterDefaultNodePoolOverride {
@@ -14237,6 +14262,12 @@ export interface KarpenterNodePool {
      * @memberof KarpenterNodePool
      */
     'gpu_override'?: KarpenterGpuNodePoolOverride;
+    /**
+     * 
+     * @type {KarpenterCronjobNodePoolOverride}
+     * @memberof KarpenterNodePool
+     */
+    'cronjob_override'?: KarpenterCronjobNodePoolOverride;
 }
 /**
  * 
