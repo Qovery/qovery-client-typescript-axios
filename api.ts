@@ -57773,10 +57773,12 @@ export const OrganizationApiTokenApiAxiosParamCreator = function (configuration?
          * List organization api tokens
          * @summary List organization api tokens
          * @param {string} organizationId Organization ID
+         * @param {string} [name] Name of the token to filter results by.
+         * @param {string} [creatorName] Name of the token creator to filter results by.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listOrganizationApiTokens: async (organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listOrganizationApiTokens: async (organizationId: string, name?: string, creatorName?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('listOrganizationApiTokens', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/apiToken`
@@ -57798,6 +57800,14 @@ export const OrganizationApiTokenApiAxiosParamCreator = function (configuration?
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (creatorName !== undefined) {
+                localVarQueryParameter['creatorName'] = creatorName;
+            }
 
 
     
@@ -57852,11 +57862,13 @@ export const OrganizationApiTokenApiFp = function(configuration?: Configuration)
          * List organization api tokens
          * @summary List organization api tokens
          * @param {string} organizationId Organization ID
+         * @param {string} [name] Name of the token to filter results by.
+         * @param {string} [creatorName] Name of the token creator to filter results by.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listOrganizationApiTokens(organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationApiTokenResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizationApiTokens(organizationId, options);
+        async listOrganizationApiTokens(organizationId: string, name?: string, creatorName?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationApiTokenResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizationApiTokens(organizationId, name, creatorName, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OrganizationApiTokenApi.listOrganizationApiTokens']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -57897,11 +57909,13 @@ export const OrganizationApiTokenApiFactory = function (configuration?: Configur
          * List organization api tokens
          * @summary List organization api tokens
          * @param {string} organizationId Organization ID
+         * @param {string} [name] Name of the token to filter results by.
+         * @param {string} [creatorName] Name of the token creator to filter results by.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listOrganizationApiTokens(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<OrganizationApiTokenResponseList> {
-            return localVarFp.listOrganizationApiTokens(organizationId, options).then((request) => request(axios, basePath));
+        listOrganizationApiTokens(organizationId: string, name?: string, creatorName?: string, options?: RawAxiosRequestConfig): AxiosPromise<OrganizationApiTokenResponseList> {
+            return localVarFp.listOrganizationApiTokens(organizationId, name, creatorName, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -57943,12 +57957,14 @@ export class OrganizationApiTokenApi extends BaseAPI {
      * List organization api tokens
      * @summary List organization api tokens
      * @param {string} organizationId Organization ID
+     * @param {string} [name] Name of the token to filter results by.
+     * @param {string} [creatorName] Name of the token creator to filter results by.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationApiTokenApi
      */
-    public listOrganizationApiTokens(organizationId: string, options?: RawAxiosRequestConfig) {
-        return OrganizationApiTokenApiFp(this.configuration).listOrganizationApiTokens(organizationId, options).then((request) => request(this.axios, this.basePath));
+    public listOrganizationApiTokens(organizationId: string, name?: string, creatorName?: string, options?: RawAxiosRequestConfig) {
+        return OrganizationApiTokenApiFp(this.configuration).listOrganizationApiTokens(organizationId, name, creatorName, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
