@@ -4345,6 +4345,68 @@ export interface ClusterInfrastructureChartsParameters {
 /**
  * 
  * @export
+ * @interface ClusterInfrastructureEksAnywhereBackupParameters
+ */
+export interface ClusterInfrastructureEksAnywhereBackupParameters {
+    /**
+     * Enable or disable EKS Anywhere cluster backup.
+     * @type {boolean}
+     * @memberof ClusterInfrastructureEksAnywhereBackupParameters
+     */
+    'enabled'?: boolean;
+    /**
+     * Timeout in seconds for backup operations.
+     * @type {number}
+     * @memberof ClusterInfrastructureEksAnywhereBackupParameters
+     */
+    'timeout_seconds'?: number;
+    /**
+     * Optional Kubernetes secret name holding etcd certificates.
+     * @type {string}
+     * @memberof ClusterInfrastructureEksAnywhereBackupParameters
+     */
+    'certs_secret_name'?: string;
+    /**
+     * 
+     * @type {ClusterInfrastructureEksAnywhereBackupS3Parameters}
+     * @memberof ClusterInfrastructureEksAnywhereBackupParameters
+     */
+    's3': ClusterInfrastructureEksAnywhereBackupS3Parameters;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterInfrastructureEksAnywhereBackupS3Parameters
+ */
+export interface ClusterInfrastructureEksAnywhereBackupS3Parameters {
+    /**
+     * S3 bucket name used to store EKS Anywhere backup artifacts.
+     * @type {string}
+     * @memberof ClusterInfrastructureEksAnywhereBackupS3Parameters
+     */
+    'bucket': string;
+    /**
+     * AWS region where the backup bucket is hosted.
+     * @type {string}
+     * @memberof ClusterInfrastructureEksAnywhereBackupS3Parameters
+     */
+    'region': string;
+    /**
+     * IAM role ARN assumed to upload backup artifacts.
+     * @type {string}
+     * @memberof ClusterInfrastructureEksAnywhereBackupS3Parameters
+     */
+    'role_arn': string;
+    /**
+     * Optional S3 key prefix used for backup object keys.
+     * @type {string}
+     * @memberof ClusterInfrastructureEksAnywhereBackupS3Parameters
+     */
+    'key_prefix'?: string;
+}
+/**
+ * 
+ * @export
  * @interface ClusterInfrastructureEksAnywhereParameters
  */
 export interface ClusterInfrastructureEksAnywhereParameters {
@@ -4360,6 +4422,12 @@ export interface ClusterInfrastructureEksAnywhereParameters {
      * @memberof ClusterInfrastructureEksAnywhereParameters
      */
     'yaml_file_path': string;
+    /**
+     * 
+     * @type {ClusterInfrastructureEksAnywhereBackupParameters}
+     * @memberof ClusterInfrastructureEksAnywhereParameters
+     */
+    'cluster_backup'?: ClusterInfrastructureEksAnywhereBackupParameters;
 }
 /**
  * 
