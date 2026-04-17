@@ -10366,17 +10366,74 @@ export interface EnvironmentOverviewResponse {
      * @type {ClusterOverviewResponse}
      * @memberof EnvironmentOverviewResponse
      */
+    'cluster': ClusterOverviewResponse;
+    /**
+     * 
+     * @type {ServicesOverviewResponse}
+     * @memberof EnvironmentOverviewResponse
+     */
+    'services_overview': ServicesOverviewResponse;
+    /**
+     * 
+     * @type {EnvironmentStatus}
+     * @memberof EnvironmentOverviewResponse
+     */
+    'deployment_status'?: EnvironmentStatus | null;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface EnvironmentOverviewResponseDeprecated
+ */
+export interface EnvironmentOverviewResponseDeprecated {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentOverviewResponseDeprecated
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentOverviewResponseDeprecated
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentOverviewResponseDeprecated
+     */
+    'updated_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentOverviewResponseDeprecated
+     */
+    'name': string;
+    /**
+     * 
+     * @type {EnvironmentModeEnum}
+     * @memberof EnvironmentOverviewResponseDeprecated
+     */
+    'mode': EnvironmentModeEnum;
+    /**
+     * 
+     * @type {ClusterOverviewResponse}
+     * @memberof EnvironmentOverviewResponseDeprecated
+     */
     'cluster'?: ClusterOverviewResponse;
     /**
      * 
      * @type {number}
-     * @memberof EnvironmentOverviewResponse
+     * @memberof EnvironmentOverviewResponseDeprecated
      */
     'service_count': number;
     /**
      * 
      * @type {EnvironmentStatus}
-     * @memberof EnvironmentOverviewResponse
+     * @memberof EnvironmentOverviewResponseDeprecated
      */
     'deployment_status'?: EnvironmentStatus;
 }
@@ -10394,6 +10451,19 @@ export interface EnvironmentOverviewResponseList {
      * @memberof EnvironmentOverviewResponseList
      */
     'results'?: Array<EnvironmentOverviewResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentOverviewResponseListDeprecated
+ */
+export interface EnvironmentOverviewResponseListDeprecated {
+    /**
+     * 
+     * @type {Array<EnvironmentOverviewResponseDeprecated>}
+     * @memberof EnvironmentOverviewResponseListDeprecated
+     */
+    'results'?: Array<EnvironmentOverviewResponseDeprecated>;
 }
 /**
  * 
@@ -19901,6 +19971,34 @@ export const ServiceTypeForVariableEnum = {
 
 export type ServiceTypeForVariableEnum = typeof ServiceTypeForVariableEnum[keyof typeof ServiceTypeForVariableEnum];
 
+
+/**
+ * 
+ * @export
+ * @interface ServicesOverviewResponse
+ */
+export interface ServicesOverviewResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof ServicesOverviewResponse
+     */
+    'service_count': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ServicesOverviewResponse
+     */
+    'managed_by': ServicesOverviewResponseManagedByEnum;
+}
+
+export const ServicesOverviewResponseManagedByEnum = {
+    QOVERY: 'QOVERY',
+    ARGOCD: 'ARGOCD',
+    MIXED: 'MIXED'
+} as const;
+
+export type ServicesOverviewResponseManagedByEnum = typeof ServicesOverviewResponseManagedByEnum[keyof typeof ServicesOverviewResponseManagedByEnum];
 
 /**
  * 
@@ -47786,6 +47884,47 @@ export const EnvironmentsApiAxiosParamCreator = function (configuration?: Config
         getProjectEnvironmentsOverview: async (projectId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'projectId' is not null or undefined
             assertParamExists('getProjectEnvironmentsOverview', 'projectId', projectId)
+            const localVarPath = `/project/{projectId}/environment/overview`
+                .replace(`{${"projectId"}}`, encodeURIComponent(String(projectId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns a list of environments with their overview information including deployment status, service count, and cluster details.
+         * @summary List environments overview
+         * @param {string} projectId Project ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProjectEnvironmentsOverviewDeprecated: async (projectId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'projectId' is not null or undefined
+            assertParamExists('getProjectEnvironmentsOverviewDeprecated', 'projectId', projectId)
             const localVarPath = `/project/{projectId}/environmentOverview`
                 .replace(`{${"projectId"}}`, encodeURIComponent(String(projectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -47950,6 +48089,19 @@ export const EnvironmentsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns a list of environments with their overview information including deployment status, service count, and cluster details.
+         * @summary List environments overview
+         * @param {string} projectId Project ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getProjectEnvironmentsOverviewDeprecated(projectId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentOverviewResponseListDeprecated>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getProjectEnvironmentsOverviewDeprecated(projectId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['EnvironmentsApi.getProjectEnvironmentsOverviewDeprecated']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns a list of environments with only their id and status.
          * @summary List environments statuses
          * @param {string} projectId Project ID
@@ -48017,6 +48169,16 @@ export const EnvironmentsApiFactory = function (configuration?: Configuration, b
             return localVarFp.getProjectEnvironmentsOverview(projectId, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns a list of environments with their overview information including deployment status, service count, and cluster details.
+         * @summary List environments overview
+         * @param {string} projectId Project ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProjectEnvironmentsOverviewDeprecated(projectId: string, options?: RawAxiosRequestConfig): AxiosPromise<EnvironmentOverviewResponseListDeprecated> {
+            return localVarFp.getProjectEnvironmentsOverviewDeprecated(projectId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns a list of environments with only their id and status.
          * @summary List environments statuses
          * @param {string} projectId Project ID
@@ -48081,6 +48243,18 @@ export class EnvironmentsApi extends BaseAPI {
      */
     public getProjectEnvironmentsOverview(projectId: string, options?: RawAxiosRequestConfig) {
         return EnvironmentsApiFp(this.configuration).getProjectEnvironmentsOverview(projectId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns a list of environments with their overview information including deployment status, service count, and cluster details.
+     * @summary List environments overview
+     * @param {string} projectId Project ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentsApi
+     */
+    public getProjectEnvironmentsOverviewDeprecated(projectId: string, options?: RawAxiosRequestConfig) {
+        return EnvironmentsApiFp(this.configuration).getProjectEnvironmentsOverviewDeprecated(projectId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
