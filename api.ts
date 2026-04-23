@@ -2030,6 +2030,51 @@ export interface ArgoCdCredentialsResponse {
     'updated_at': string;
 }
 /**
+ * An ArgoCD service
+ * @export
+ * @interface ArgocdAppResponse
+ */
+export interface ArgocdAppResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgocdAppResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgocdAppResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgocdAppResponse
+     */
+    'updated_at'?: string;
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof ArgocdAppResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {ServiceTypeEnum}
+     * @memberof ArgocdAppResponse
+     */
+    'service_type': ServiceTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgocdAppResponse
+     */
+    'namespace': string;
+}
+
+
+/**
  * 
  * @export
  * @interface AttachServiceToDeploymentStageRequest
@@ -15448,7 +15493,8 @@ export const LinkedServiceTypeEnum = {
     DATABASE: 'DATABASE',
     JOB: 'JOB',
     HELM: 'HELM',
-    TERRAFORM: 'TERRAFORM'
+    TERRAFORM: 'TERRAFORM',
+    ARGOCD_APP: 'ARGOCD_APP'
 } as const;
 
 export type LinkedServiceTypeEnum = typeof LinkedServiceTypeEnum[keyof typeof LinkedServiceTypeEnum];
@@ -15649,7 +15695,7 @@ export interface ListServicesByEnvironmentId200Response {
  * @type ListServicesByEnvironmentId200ResponseResultsInner
  * @export
  */
-export type ListServicesByEnvironmentId200ResponseResultsInner = { service_type: 'APPLICATION' } & Application | { service_type: 'CONTAINER' } & ContainerResponse | { service_type: 'DATABASE' } & Database | { service_type: 'HELM' } & HelmResponse | { service_type: 'JOB' } & JobResponse | { service_type: 'TERRAFORM' } & TerraformResponse;
+export type ListServicesByEnvironmentId200ResponseResultsInner = { service_type: 'APPLICATION' } & Application | { service_type: 'ARGOCD_APP' } & ArgocdAppResponse | { service_type: 'CONTAINER' } & ContainerResponse | { service_type: 'DATABASE' } & Database | { service_type: 'HELM' } & HelmResponse | { service_type: 'JOB' } & JobResponse | { service_type: 'TERRAFORM' } & TerraformResponse;
 
 /**
  * 
