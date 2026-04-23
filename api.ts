@@ -15493,8 +15493,7 @@ export const LinkedServiceTypeEnum = {
     DATABASE: 'DATABASE',
     JOB: 'JOB',
     HELM: 'HELM',
-    TERRAFORM: 'TERRAFORM',
-    ARGOCD_APP: 'ARGOCD_APP'
+    TERRAFORM: 'TERRAFORM'
 } as const;
 
 export type LinkedServiceTypeEnum = typeof LinkedServiceTypeEnum[keyof typeof LinkedServiceTypeEnum];
@@ -19925,7 +19924,8 @@ export const ServiceTypeEnum = {
     CONTAINER: 'CONTAINER',
     JOB: 'JOB',
     HELM: 'HELM',
-    TERRAFORM: 'TERRAFORM'
+    TERRAFORM: 'TERRAFORM',
+    ARGOCD_APP: 'ARGOCD_APP'
 } as const;
 
 export type ServiceTypeEnum = typeof ServiceTypeEnum[keyof typeof ServiceTypeEnum];
