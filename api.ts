@@ -3429,6 +3429,108 @@ export interface ClusterAdvancedSettings {
      */
     'loki.log_retention_in_week'?: number;
     /**
+     * Loki deployment topology. \"single_binary\" runs Loki as one pod; \"simple_scalable\" splits it into separate write, read, and backend components for larger clusters.
+     * @type {string}
+     * @memberof ClusterAdvancedSettings
+     */
+    'loki.deployment_mode'?: ClusterAdvancedSettingsLokiDeploymentModeEnum;
+    /**
+     * CPU request (in milli-CPU) for the Loki pod when running in single_binary mode.
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'loki.single_binary.cpu_request_m'?: number;
+    /**
+     * CPU limit (in milli-CPU) for the Loki pod when running in single_binary mode.
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'loki.single_binary.cpu_limit_m'?: number;
+    /**
+     * Memory request (in MiB) for the Loki pod when running in single_binary mode.
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'loki.single_binary.memory_request_mib'?: number;
+    /**
+     * Memory limit (in MiB) for the Loki pod when running in single_binary mode.
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'loki.single_binary.memory_limit_mib'?: number;
+    /**
+     * CPU request (in milli-CPU) for the Loki write component when running in simple_scalable mode.
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'loki.write.cpu_request_m'?: number;
+    /**
+     * CPU limit (in milli-CPU) for the Loki write component when running in simple_scalable mode.
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'loki.write.cpu_limit_m'?: number;
+    /**
+     * Memory request (in MiB) for the Loki write component when running in simple_scalable mode.
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'loki.write.memory_request_mib'?: number;
+    /**
+     * Memory limit (in MiB) for the Loki write component when running in simple_scalable mode.
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'loki.write.memory_limit_mib'?: number;
+    /**
+     * CPU request (in milli-CPU) for the Loki read component when running in simple_scalable mode.
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'loki.read.cpu_request_m'?: number;
+    /**
+     * CPU limit (in milli-CPU) for the Loki read component when running in simple_scalable mode.
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'loki.read.cpu_limit_m'?: number;
+    /**
+     * Memory request (in MiB) for the Loki read component when running in simple_scalable mode.
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'loki.read.memory_request_mib'?: number;
+    /**
+     * Memory limit (in MiB) for the Loki read component when running in simple_scalable mode.
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'loki.read.memory_limit_mib'?: number;
+    /**
+     * CPU request (in milli-CPU) for the Loki backend component when running in simple_scalable mode.
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'loki.backend.cpu_request_m'?: number;
+    /**
+     * CPU limit (in milli-CPU) for the Loki backend component when running in simple_scalable mode.
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'loki.backend.cpu_limit_m'?: number;
+    /**
+     * Memory request (in MiB) for the Loki backend component when running in simple_scalable mode.
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'loki.backend.memory_request_mib'?: number;
+    /**
+     * Memory limit (in MiB) for the Loki backend component when running in simple_scalable mode.
+     * @type {number}
+     * @memberof ClusterAdvancedSettings
+     */
+    'loki.backend.memory_limit_mib'?: number;
+    /**
      * Configure the number of seconds before cleaning images in the registry
      * @type {number}
      * @memberof ClusterAdvancedSettings
@@ -3629,6 +3731,12 @@ export interface ClusterAdvancedSettings {
     'k8s.api.allowed_public_access_cidrs'?: Array<string>;
 }
 
+export const ClusterAdvancedSettingsLokiDeploymentModeEnum = {
+    SINGLE_BINARY: 'single_binary',
+    SIMPLE_SCALABLE: 'simple_scalable'
+} as const;
+
+export type ClusterAdvancedSettingsLokiDeploymentModeEnum = typeof ClusterAdvancedSettingsLokiDeploymentModeEnum[keyof typeof ClusterAdvancedSettingsLokiDeploymentModeEnum];
 export const ClusterAdvancedSettingsAwsEksEfsThroughputModeEnum = {
     BURSTING: 'bursting',
     ELASTIC: 'elastic',
