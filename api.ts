@@ -22052,6 +22052,12 @@ export interface VariableEditRequest {
      * @memberof VariableEditRequest
      */
     'enable_interpolation_in_file'?: boolean | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableEditRequest
+     */
+    'secret_manager_access_id'?: string | null;
 }
 /**
  * 
@@ -22295,6 +22301,12 @@ export interface VariableRequest {
      * @memberof VariableRequest
      */
     'enable_interpolation_in_file'?: boolean | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableRequest
+     */
+    'secret_manager_access_id'?: string | null;
 }
 
 
@@ -22406,6 +22418,12 @@ export interface VariableResponse {
      * @memberof VariableResponse
      */
     'enable_interpolation_in_file'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableResponse
+     */
+    'secret_manager_access_id'?: string | null;
 }
 
 
