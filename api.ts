@@ -2126,6 +2126,26 @@ export interface AttachServiceToDeploymentStageRequest {
 /**
  * 
  * @export
+ * @interface AutomaticallyConfiguredAuthDto
+ */
+export interface AutomaticallyConfiguredAuthDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof AutomaticallyConfiguredAuthDto
+     */
+    'mode': AutomaticallyConfiguredAuthDtoModeEnum;
+}
+
+export const AutomaticallyConfiguredAuthDtoModeEnum = {
+    AUTOMATICALLY_CONFIGURED: 'AUTOMATICALLY_CONFIGURED'
+} as const;
+
+export type AutomaticallyConfiguredAuthDtoModeEnum = typeof AutomaticallyConfiguredAuthDtoModeEnum[keyof typeof AutomaticallyConfiguredAuthDtoModeEnum];
+
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -2237,6 +2257,58 @@ export type AwsCredentialsRequest = { type: 'AWS_ROLE' } & AwsRoleCredentialsReq
 /**
  * 
  * @export
+ * @interface AwsParameterStoreEndpointDto
+ */
+export interface AwsParameterStoreEndpointDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsParameterStoreEndpointDto
+     */
+    'mode': AwsParameterStoreEndpointDtoModeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsParameterStoreEndpointDto
+     */
+    'region': string;
+}
+
+export const AwsParameterStoreEndpointDtoModeEnum = {
+    AWS_PARAMETER_STORE: 'AWS_PARAMETER_STORE'
+} as const;
+
+export type AwsParameterStoreEndpointDtoModeEnum = typeof AwsParameterStoreEndpointDtoModeEnum[keyof typeof AwsParameterStoreEndpointDtoModeEnum];
+
+/**
+ * 
+ * @export
+ * @interface AwsRoleArnAuthDto
+ */
+export interface AwsRoleArnAuthDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsRoleArnAuthDto
+     */
+    'mode': AwsRoleArnAuthDtoModeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsRoleArnAuthDto
+     */
+    'role_arn': string;
+}
+
+export const AwsRoleArnAuthDtoModeEnum = {
+    AWS_ROLE_ARN: 'AWS_ROLE_ARN'
+} as const;
+
+export type AwsRoleArnAuthDtoModeEnum = typeof AwsRoleArnAuthDtoModeEnum[keyof typeof AwsRoleArnAuthDtoModeEnum];
+
+/**
+ * 
+ * @export
  * @interface AwsRoleClusterCredentials
  */
 export interface AwsRoleClusterCredentials {
@@ -2307,6 +2379,32 @@ export type AwsRoleCredentialsRequestTypeEnum = typeof AwsRoleCredentialsRequest
 /**
  * 
  * @export
+ * @interface AwsSecretManagerEndpointDto
+ */
+export interface AwsSecretManagerEndpointDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsSecretManagerEndpointDto
+     */
+    'mode': AwsSecretManagerEndpointDtoModeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsSecretManagerEndpointDto
+     */
+    'region': string;
+}
+
+export const AwsSecretManagerEndpointDtoModeEnum = {
+    AWS_SECRET_MANAGER: 'AWS_SECRET_MANAGER'
+} as const;
+
+export type AwsSecretManagerEndpointDtoModeEnum = typeof AwsSecretManagerEndpointDtoModeEnum[keyof typeof AwsSecretManagerEndpointDtoModeEnum];
+
+/**
+ * 
+ * @export
  * @interface AwsStaticClusterCredentials
  */
 export interface AwsStaticClusterCredentials {
@@ -2341,6 +2439,44 @@ export const AwsStaticClusterCredentialsObjectTypeEnum = {
 } as const;
 
 export type AwsStaticClusterCredentialsObjectTypeEnum = typeof AwsStaticClusterCredentialsObjectTypeEnum[keyof typeof AwsStaticClusterCredentialsObjectTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface AwsStaticCredentialsAuthDto
+ */
+export interface AwsStaticCredentialsAuthDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsStaticCredentialsAuthDto
+     */
+    'mode': AwsStaticCredentialsAuthDtoModeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsStaticCredentialsAuthDto
+     */
+    'region': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsStaticCredentialsAuthDto
+     */
+    'access_key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AwsStaticCredentialsAuthDto
+     */
+    'secret_key'?: string | null;
+}
+
+export const AwsStaticCredentialsAuthDtoModeEnum = {
+    AWS_STATIC_CREDENTIALS: 'AWS_STATIC_CREDENTIALS'
+} as const;
+
+export type AwsStaticCredentialsAuthDtoModeEnum = typeof AwsStaticCredentialsAuthDtoModeEnum[keyof typeof AwsStaticCredentialsAuthDtoModeEnum];
 
 /**
  * 
@@ -3425,6 +3561,12 @@ export interface Cluster {
      * @memberof Cluster
      */
     'labels_groups'?: Array<ClusterLabelsGroup>;
+    /**
+     * 
+     * @type {Array<SecretManagerAccessResponse>}
+     * @memberof Cluster
+     */
+    'secret_manager_accesses'?: Array<SecretManagerAccessResponse>;
 }
 
 
@@ -5393,6 +5535,12 @@ export interface ClusterRequest {
      * @memberof ClusterRequest
      */
     'labels_groups'?: Array<ClusterLabelsGroup>;
+    /**
+     * 
+     * @type {Array<SecretManagerAccessRequest>}
+     * @memberof ClusterRequest
+     */
+    'secret_manager_accesses'?: Array<SecretManagerAccessRequest>;
 }
 
 
@@ -11187,6 +11335,64 @@ export interface GcpCredentialsRequest {
      */
     'gcp_credentials': string;
 }
+/**
+ * 
+ * @export
+ * @interface GcpJsonCredentialsAuthDto
+ */
+export interface GcpJsonCredentialsAuthDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof GcpJsonCredentialsAuthDto
+     */
+    'mode': GcpJsonCredentialsAuthDtoModeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof GcpJsonCredentialsAuthDto
+     */
+    'json_credentials'?: string | null;
+}
+
+export const GcpJsonCredentialsAuthDtoModeEnum = {
+    GCP_JSON_CREDENTIALS: 'GCP_JSON_CREDENTIALS'
+} as const;
+
+export type GcpJsonCredentialsAuthDtoModeEnum = typeof GcpJsonCredentialsAuthDtoModeEnum[keyof typeof GcpJsonCredentialsAuthDtoModeEnum];
+
+/**
+ * 
+ * @export
+ * @interface GcpSecretManagerEndpointDto
+ */
+export interface GcpSecretManagerEndpointDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof GcpSecretManagerEndpointDto
+     */
+    'mode': GcpSecretManagerEndpointDtoModeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof GcpSecretManagerEndpointDto
+     */
+    'region': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GcpSecretManagerEndpointDto
+     */
+    'projectId': string;
+}
+
+export const GcpSecretManagerEndpointDtoModeEnum = {
+    GCP_SECRET_MANAGER: 'GCP_SECRET_MANAGER'
+} as const;
+
+export type GcpSecretManagerEndpointDtoModeEnum = typeof GcpSecretManagerEndpointDtoModeEnum[keyof typeof GcpSecretManagerEndpointDtoModeEnum];
+
 /**
  * 
  * @export
@@ -19386,6 +19592,92 @@ export interface SecretEditRequest {
      */
     'enable_interpolation_in_file'?: boolean | null;
 }
+/**
+ * 
+ * @export
+ * @interface SecretManagerAccessRequest
+ */
+export interface SecretManagerAccessRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SecretManagerAccessRequest
+     */
+    'id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SecretManagerAccessRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {SecretManagerEndpointConfigurationDto}
+     * @memberof SecretManagerAccessRequest
+     */
+    'endpoint': SecretManagerEndpointConfigurationDto;
+    /**
+     * 
+     * @type {SecretManagerAuthenticationDto}
+     * @memberof SecretManagerAccessRequest
+     */
+    'authentication': SecretManagerAuthenticationDto;
+}
+/**
+ * 
+ * @export
+ * @interface SecretManagerAccessResponse
+ */
+export interface SecretManagerAccessResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof SecretManagerAccessResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SecretManagerAccessResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SecretManagerAccessResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SecretManagerAccessResponse
+     */
+    'updated_at': string;
+    /**
+     * 
+     * @type {SecretManagerEndpointConfigurationDto}
+     * @memberof SecretManagerAccessResponse
+     */
+    'endpoint': SecretManagerEndpointConfigurationDto;
+    /**
+     * 
+     * @type {SecretManagerAuthenticationDto}
+     * @memberof SecretManagerAccessResponse
+     */
+    'authentication': SecretManagerAuthenticationDto;
+}
+/**
+ * @type SecretManagerAuthenticationDto
+ * @export
+ */
+export type SecretManagerAuthenticationDto = { mode: 'AUTOMATICALLY_CONFIGURED' } & AutomaticallyConfiguredAuthDto | { mode: 'AWS_ROLE_ARN' } & AwsRoleArnAuthDto | { mode: 'AWS_STATIC_CREDENTIALS' } & AwsStaticCredentialsAuthDto | { mode: 'GCP_JSON_CREDENTIALS' } & GcpJsonCredentialsAuthDto;
+
+/**
+ * @type SecretManagerEndpointConfigurationDto
+ * @export
+ */
+export type SecretManagerEndpointConfigurationDto = { mode: 'AWS_PARAMETER_STORE' } & AwsParameterStoreEndpointDto | { mode: 'AWS_SECRET_MANAGER' } & AwsSecretManagerEndpointDto | { mode: 'GCP_SECRET_MANAGER' } & GcpSecretManagerEndpointDto;
+
 /**
  * 
  * @export
