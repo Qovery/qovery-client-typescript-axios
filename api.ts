@@ -2071,6 +2071,42 @@ export interface ArgocdAppResponse {
      * @memberof ArgocdAppResponse
      */
     'namespace': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgocdAppResponse
+     */
+    'environment_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgocdAppResponse
+     */
+    'cluster_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgocdAppResponse
+     */
+    'last_synced_at'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgocdAppResponse
+     */
+    'manifest_revision'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgocdAppResponse
+     */
+    'source_repo_url'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgocdAppResponse
+     */
+    'source_target_revision'?: string | null;
 }
 
 
@@ -28014,6 +28050,47 @@ export const ArgoCDApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * 
+         * @summary Get ArgoCD app by ID
+         * @param {string} argocdAppId ArgoCD App ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getArgoCdApp: async (argocdAppId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'argocdAppId' is not null or undefined
+            assertParamExists('getArgoCdApp', 'argocdAppId', argocdAppId)
+            const localVarPath = `/argocdApp/{argocdAppId}`
+                .replace(`{${"argocdAppId"}}`, encodeURIComponent(String(argocdAppId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Retrieve the stored ArgoCD configuration for a cluster. The token is always returned as REDACTED. Requires VIEWER role.
          * @summary Get ArgoCD credentials for a cluster
          * @param {string} clusterId Cluster ID
@@ -28139,6 +28216,19 @@ export const ArgoCDApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * 
+         * @summary Get ArgoCD app by ID
+         * @param {string} argocdAppId ArgoCD App ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getArgoCdApp(argocdAppId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgocdAppResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getArgoCdApp(argocdAppId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ArgoCDApi.getArgoCdApp']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Retrieve the stored ArgoCD configuration for a cluster. The token is always returned as REDACTED. Requires VIEWER role.
          * @summary Get ArgoCD credentials for a cluster
          * @param {string} clusterId Cluster ID
@@ -28197,6 +28287,16 @@ export const ArgoCDApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.deleteArgoCdCredentials(clusterId, options).then((request) => request(axios, basePath));
         },
         /**
+         * 
+         * @summary Get ArgoCD app by ID
+         * @param {string} argocdAppId ArgoCD App ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getArgoCdApp(argocdAppId: string, options?: RawAxiosRequestConfig): AxiosPromise<ArgocdAppResponse> {
+            return localVarFp.getArgoCdApp(argocdAppId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Retrieve the stored ArgoCD configuration for a cluster. The token is always returned as REDACTED. Requires VIEWER role.
          * @summary Get ArgoCD credentials for a cluster
          * @param {string} clusterId Cluster ID
@@ -28250,6 +28350,18 @@ export class ArgoCDApi extends BaseAPI {
      */
     public deleteArgoCdCredentials(clusterId: string, options?: RawAxiosRequestConfig) {
         return ArgoCDApiFp(this.configuration).deleteArgoCdCredentials(clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get ArgoCD app by ID
+     * @param {string} argocdAppId ArgoCD App ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ArgoCDApi
+     */
+    public getArgoCdApp(argocdAppId: string, options?: RawAxiosRequestConfig) {
+        return ArgoCDApiFp(this.configuration).getArgoCdApp(argocdAppId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
