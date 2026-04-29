@@ -1928,11 +1928,11 @@ export interface ApplicationResponseList {
  */
 export interface ArgoCdConnectionCheckResponse {
     /**
-     * Connection result
-     * @type {string}
+     * 
+     * @type {ArgoCdConnectionStatusEnum}
      * @memberof ArgoCdConnectionCheckResponse
      */
-    'status': ArgoCdConnectionCheckResponseStatusEnum;
+    'status': ArgoCdConnectionStatusEnum;
     /**
      * Number of ArgoCD applications visible with the provided token. Present only when status is \"connected\".
      * @type {number}
@@ -1947,12 +1947,6 @@ export interface ArgoCdConnectionCheckResponse {
     'reason'?: ArgoCdConnectionCheckResponseReasonEnum;
 }
 
-export const ArgoCdConnectionCheckResponseStatusEnum = {
-    CONNECTED: 'connected',
-    ERROR: 'error'
-} as const;
-
-export type ArgoCdConnectionCheckResponseStatusEnum = typeof ArgoCdConnectionCheckResponseStatusEnum[keyof typeof ArgoCdConnectionCheckResponseStatusEnum];
 export const ArgoCdConnectionCheckResponseReasonEnum = {
     AUTHENTICATION_FAILED: 'authentication_failed',
     UNREACHABLE: 'unreachable',
@@ -1960,6 +1954,20 @@ export const ArgoCdConnectionCheckResponseReasonEnum = {
 } as const;
 
 export type ArgoCdConnectionCheckResponseReasonEnum = typeof ArgoCdConnectionCheckResponseReasonEnum[keyof typeof ArgoCdConnectionCheckResponseReasonEnum];
+
+/**
+ * Connection status of an ArgoCD instance
+ * @export
+ * @enum {string}
+ */
+
+export const ArgoCdConnectionStatusEnum = {
+    CONNECTED: 'connected',
+    ERROR: 'error'
+} as const;
+
+export type ArgoCdConnectionStatusEnum = typeof ArgoCdConnectionStatusEnum[keyof typeof ArgoCdConnectionStatusEnum];
+
 
 /**
  * 
@@ -2028,6 +2036,196 @@ export interface ArgoCdCredentialsResponse {
      * @memberof ArgoCdCredentialsResponse
      */
     'updated_at': string;
+}
+/**
+ * 
+ * @export
+ * @interface ArgoCdDestinationClusterMappingRequest
+ */
+export interface ArgoCdDestinationClusterMappingRequest {
+    /**
+     * ID of the Qovery cluster where the ArgoCD instance is running
+     * @type {string}
+     * @memberof ArgoCdDestinationClusterMappingRequest
+     */
+    'agent_cluster_id': string;
+    /**
+     * ArgoCD destination cluster URL as reported by ArgoCD
+     * @type {string}
+     * @memberof ArgoCdDestinationClusterMappingRequest
+     */
+    'argocd_cluster_url': string;
+    /**
+     * ID of the Qovery cluster to map this ArgoCD destination to
+     * @type {string}
+     * @memberof ArgoCdDestinationClusterMappingRequest
+     */
+    'cluster_id': string;
+}
+/**
+ * 
+ * @export
+ * @interface ArgoCdDestinationClusterMappingResponse
+ */
+export interface ArgoCdDestinationClusterMappingResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgoCdDestinationClusterMappingResponse
+     */
+    'agent_cluster_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgoCdDestinationClusterMappingResponse
+     */
+    'argocd_cluster_url': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgoCdDestinationClusterMappingResponse
+     */
+    'cluster_id': string | null;
+}
+/**
+ * 
+ * @export
+ * @interface ArgoCdInstanceMappingResponse
+ */
+export interface ArgoCdInstanceMappingResponse {
+    /**
+     * ID of the Qovery cluster where the ArgoCD instance is running
+     * @type {string}
+     * @memberof ArgoCdInstanceMappingResponse
+     */
+    'agent_cluster_id': string;
+    /**
+     * ID of the stored ArgoCD credentials for this instance
+     * @type {string}
+     * @memberof ArgoCdInstanceMappingResponse
+     */
+    'credentials_id': string;
+    /**
+     * URL of the ArgoCD instance
+     * @type {string}
+     * @memberof ArgoCdInstanceMappingResponse
+     */
+    'argocd_url': string;
+    /**
+     * 
+     * @type {ArgoCdConnectionStatusEnum}
+     * @memberof ArgoCdInstanceMappingResponse
+     */
+    'status': ArgoCdConnectionStatusEnum;
+    /**
+     * Timestamp of the last configuration update (will use last connectivity check in future)
+     * @type {string}
+     * @memberof ArgoCdInstanceMappingResponse
+     */
+    'last_checked_at': string;
+    /**
+     * ArgoCD clusters detected and mapped to a Qovery cluster
+     * @type {Array<ArgoCdLinkedClusterDetails>}
+     * @memberof ArgoCdInstanceMappingResponse
+     */
+    'linked_clusters': Array<ArgoCdLinkedClusterDetails>;
+    /**
+     * ArgoCD clusters detected but mapping is missing
+     * @type {Array<ArgoCdUnlinkedClusterDetails>}
+     * @memberof ArgoCdInstanceMappingResponse
+     */
+    'unlinked_clusters': Array<ArgoCdUnlinkedClusterDetails>;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ArgoCdInstanceMappingResponseList
+ */
+export interface ArgoCdInstanceMappingResponseList {
+    /**
+     * 
+     * @type {Array<ArgoCdInstanceMappingResponse>}
+     * @memberof ArgoCdInstanceMappingResponseList
+     */
+    'results': Array<ArgoCdInstanceMappingResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface ArgoCdLinkedClusterDetails
+ */
+export interface ArgoCdLinkedClusterDetails {
+    /**
+     * ArgoCD destination cluster URL
+     * @type {string}
+     * @memberof ArgoCdLinkedClusterDetails
+     */
+    'argocd_cluster_url': string;
+    /**
+     * ArgoCD cluster name (currently same as URL; will use ArgoCD alias in future)
+     * @type {string}
+     * @memberof ArgoCdLinkedClusterDetails
+     */
+    'argocd_cluster_name': string;
+    /**
+     * ID of the Qovery cluster this destination is mapped to
+     * @type {string}
+     * @memberof ArgoCdLinkedClusterDetails
+     */
+    'qovery_cluster_id': string;
+    /**
+     * Display name of the mapped Qovery cluster
+     * @type {string}
+     * @memberof ArgoCdLinkedClusterDetails
+     */
+    'qovery_cluster_name': string;
+    /**
+     * 
+     * @type {CloudVendorEnum}
+     * @memberof ArgoCdLinkedClusterDetails
+     */
+    'qovery_cluster_cloud_provider': CloudVendorEnum;
+    /**
+     * 
+     * @type {KubernetesEnum}
+     * @memberof ArgoCdLinkedClusterDetails
+     */
+    'qovery_cluster_type': KubernetesEnum;
+    /**
+     * Number of ArgoCD applications targeting this destination
+     * @type {number}
+     * @memberof ArgoCdLinkedClusterDetails
+     */
+    'applications_count': number;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ArgoCdUnlinkedClusterDetails
+ */
+export interface ArgoCdUnlinkedClusterDetails {
+    /**
+     * ArgoCD destination cluster URL for this stale mapping
+     * @type {string}
+     * @memberof ArgoCdUnlinkedClusterDetails
+     */
+    'argocd_cluster_url': string;
+    /**
+     * ArgoCD cluster name (currently same as URL; will use ArgoCD alias in future)
+     * @type {string}
+     * @memberof ArgoCdUnlinkedClusterDetails
+     */
+    'argocd_cluster_name': string;
+    /**
+     * Number of ArgoCD applications targeting this destination
+     * @type {number}
+     * @memberof ArgoCdUnlinkedClusterDetails
+     */
+    'applications_count': number;
 }
 /**
  * An ArgoCD service
@@ -28442,6 +28640,47 @@ export const ArgoCDApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Returns one entry per ArgoCD agent cluster that has credentials configured. Each entry lists linked clusters and unlinked clusters. Requires VIEWER role. 
+         * @summary List ArgoCD instance mappings for an organization
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listArgoCdDestinationClusterMappings: async (organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listArgoCdDestinationClusterMappings', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/argoCdDestinationClusterMapping`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Save or update the ArgoCD URL and authentication token for a cluster. Requires ADMIN role.
          * @summary Save ArgoCD credentials for a cluster
          * @param {string} clusterId Cluster ID
@@ -28482,6 +28721,53 @@ export const ArgoCDApiAxiosParamCreator = function (configuration?: Configuratio
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(argoCdCredentialsRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Map an ArgoCD destination cluster URL to a Qovery cluster for a given agent cluster. If a mapping for the same (agentClusterId, argocdClusterUrl) already exists, it is updated. Requires ADMIN role on the agent cluster. 
+         * @summary Save an ArgoCD destination cluster mapping
+         * @param {string} organizationId Organization ID
+         * @param {ArgoCdDestinationClusterMappingRequest} argoCdDestinationClusterMappingRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveArgoCdDestinationClusterMapping: async (organizationId: string, argoCdDestinationClusterMappingRequest: ArgoCdDestinationClusterMappingRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('saveArgoCdDestinationClusterMapping', 'organizationId', organizationId)
+            // verify required parameter 'argoCdDestinationClusterMappingRequest' is not null or undefined
+            assertParamExists('saveArgoCdDestinationClusterMapping', 'argoCdDestinationClusterMappingRequest', argoCdDestinationClusterMappingRequest)
+            const localVarPath = `/organization/{organizationId}/argoCdDestinationClusterMapping`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(argoCdDestinationClusterMappingRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -28552,6 +28838,19 @@ export const ArgoCDApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns one entry per ArgoCD agent cluster that has credentials configured. Each entry lists linked clusters and unlinked clusters. Requires VIEWER role. 
+         * @summary List ArgoCD instance mappings for an organization
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listArgoCdDestinationClusterMappings(organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoCdInstanceMappingResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listArgoCdDestinationClusterMappings(organizationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ArgoCDApi.listArgoCdDestinationClusterMappings']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Save or update the ArgoCD URL and authentication token for a cluster. Requires ADMIN role.
          * @summary Save ArgoCD credentials for a cluster
          * @param {string} clusterId Cluster ID
@@ -28563,6 +28862,20 @@ export const ArgoCDApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.saveArgoCdCredentials(clusterId, argoCdCredentialsRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ArgoCDApi.saveArgoCdCredentials']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Map an ArgoCD destination cluster URL to a Qovery cluster for a given agent cluster. If a mapping for the same (agentClusterId, argocdClusterUrl) already exists, it is updated. Requires ADMIN role on the agent cluster. 
+         * @summary Save an ArgoCD destination cluster mapping
+         * @param {string} organizationId Organization ID
+         * @param {ArgoCdDestinationClusterMappingRequest} argoCdDestinationClusterMappingRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async saveArgoCdDestinationClusterMapping(organizationId: string, argoCdDestinationClusterMappingRequest: ArgoCdDestinationClusterMappingRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoCdDestinationClusterMappingResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.saveArgoCdDestinationClusterMapping(organizationId, argoCdDestinationClusterMappingRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ArgoCDApi.saveArgoCdDestinationClusterMapping']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -28617,6 +28930,16 @@ export const ArgoCDApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getArgoCdCredentials(clusterId, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns one entry per ArgoCD agent cluster that has credentials configured. Each entry lists linked clusters and unlinked clusters. Requires VIEWER role. 
+         * @summary List ArgoCD instance mappings for an organization
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listArgoCdDestinationClusterMappings(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<ArgoCdInstanceMappingResponseList> {
+            return localVarFp.listArgoCdDestinationClusterMappings(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Save or update the ArgoCD URL and authentication token for a cluster. Requires ADMIN role.
          * @summary Save ArgoCD credentials for a cluster
          * @param {string} clusterId Cluster ID
@@ -28626,6 +28949,17 @@ export const ArgoCDApiFactory = function (configuration?: Configuration, basePat
          */
         saveArgoCdCredentials(clusterId: string, argoCdCredentialsRequest: ArgoCdCredentialsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArgoCdCredentialsResponse> {
             return localVarFp.saveArgoCdCredentials(clusterId, argoCdCredentialsRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Map an ArgoCD destination cluster URL to a Qovery cluster for a given agent cluster. If a mapping for the same (agentClusterId, argocdClusterUrl) already exists, it is updated. Requires ADMIN role on the agent cluster. 
+         * @summary Save an ArgoCD destination cluster mapping
+         * @param {string} organizationId Organization ID
+         * @param {ArgoCdDestinationClusterMappingRequest} argoCdDestinationClusterMappingRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveArgoCdDestinationClusterMapping(organizationId: string, argoCdDestinationClusterMappingRequest: ArgoCdDestinationClusterMappingRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArgoCdDestinationClusterMappingResponse> {
+            return localVarFp.saveArgoCdDestinationClusterMapping(organizationId, argoCdDestinationClusterMappingRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -28687,6 +29021,18 @@ export class ArgoCDApi extends BaseAPI {
     }
 
     /**
+     * Returns one entry per ArgoCD agent cluster that has credentials configured. Each entry lists linked clusters and unlinked clusters. Requires VIEWER role. 
+     * @summary List ArgoCD instance mappings for an organization
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ArgoCDApi
+     */
+    public listArgoCdDestinationClusterMappings(organizationId: string, options?: RawAxiosRequestConfig) {
+        return ArgoCDApiFp(this.configuration).listArgoCdDestinationClusterMappings(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Save or update the ArgoCD URL and authentication token for a cluster. Requires ADMIN role.
      * @summary Save ArgoCD credentials for a cluster
      * @param {string} clusterId Cluster ID
@@ -28697,6 +29043,19 @@ export class ArgoCDApi extends BaseAPI {
      */
     public saveArgoCdCredentials(clusterId: string, argoCdCredentialsRequest: ArgoCdCredentialsRequest, options?: RawAxiosRequestConfig) {
         return ArgoCDApiFp(this.configuration).saveArgoCdCredentials(clusterId, argoCdCredentialsRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Map an ArgoCD destination cluster URL to a Qovery cluster for a given agent cluster. If a mapping for the same (agentClusterId, argocdClusterUrl) already exists, it is updated. Requires ADMIN role on the agent cluster. 
+     * @summary Save an ArgoCD destination cluster mapping
+     * @param {string} organizationId Organization ID
+     * @param {ArgoCdDestinationClusterMappingRequest} argoCdDestinationClusterMappingRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ArgoCDApi
+     */
+    public saveArgoCdDestinationClusterMapping(organizationId: string, argoCdDestinationClusterMappingRequest: ArgoCdDestinationClusterMappingRequest, options?: RawAxiosRequestConfig) {
+        return ArgoCDApiFp(this.configuration).saveArgoCdDestinationClusterMapping(organizationId, argoCdDestinationClusterMappingRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
