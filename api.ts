@@ -2100,6 +2100,18 @@ export interface ArgoCdInstanceMappingResponse {
      */
     'agent_cluster_id': string;
     /**
+     * Display name of the Qovery cluster where the ArgoCD instance is running
+     * @type {string}
+     * @memberof ArgoCdInstanceMappingResponse
+     */
+    'agent_cluster_name': string;
+    /**
+     * 
+     * @type {CloudVendorEnum}
+     * @memberof ArgoCdInstanceMappingResponse
+     */
+    'agent_cluster_cloud_provider': CloudVendorEnum;
+    /**
      * ID of the stored ArgoCD credentials for this instance
      * @type {string}
      * @memberof ArgoCdInstanceMappingResponse
