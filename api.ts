@@ -44,7 +44,7 @@ export type APIVariableScopeEnum = typeof APIVariableScopeEnum[keyof typeof APIV
 
 
 /**
- * type of the environment variable (VALUE, FILE, ALIAS, OVERRIDE or BUIT_IN) 
+ * type of the environment variable (VALUE, FILE, ALIAS, OVERRIDE, BUIT_IN, EXTERNAL_SECRET) 
  * @export
  * @enum {string}
  */
@@ -54,7 +54,8 @@ export const APIVariableTypeEnum = {
     ALIAS: 'ALIAS',
     OVERRIDE: 'OVERRIDE',
     BUILT_IN: 'BUILT_IN',
-    FILE: 'FILE'
+    FILE: 'FILE',
+    EXTERNAL_SECRET: 'EXTERNAL_SECRET'
 } as const;
 
 export type APIVariableTypeEnum = typeof APIVariableTypeEnum[keyof typeof APIVariableTypeEnum];
