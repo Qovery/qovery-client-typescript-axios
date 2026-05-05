@@ -3774,10 +3774,10 @@ export interface Cluster {
     'labels_groups'?: Array<ClusterLabelsGroup>;
     /**
      * 
-     * @type {Array<SecretManagerAccessResponse>}
+     * @type {Array<SecretManagerAccess>}
      * @memberof Cluster
      */
-    'secret_manager_accesses'?: Array<SecretManagerAccessResponse>;
+    'secret_manager_accesses'?: Array<SecretManagerAccess>;
 }
 
 
@@ -19806,6 +19806,49 @@ export interface SecretEditRequest {
 /**
  * 
  * @export
+ * @interface SecretManagerAccess
+ */
+export interface SecretManagerAccess {
+    /**
+     * 
+     * @type {string}
+     * @memberof SecretManagerAccess
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SecretManagerAccess
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SecretManagerAccess
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SecretManagerAccess
+     */
+    'updated_at': string;
+    /**
+     * 
+     * @type {SecretManagerEndpointConfigurationDto}
+     * @memberof SecretManagerAccess
+     */
+    'endpoint': SecretManagerEndpointConfigurationDto;
+    /**
+     * 
+     * @type {SecretManagerAuthenticationDto}
+     * @memberof SecretManagerAccess
+     */
+    'authentication': SecretManagerAuthenticationDto;
+}
+/**
+ * 
+ * @export
  * @interface SecretManagerAccessRequest
  */
 export interface SecretManagerAccessRequest {
@@ -19831,49 +19874,6 @@ export interface SecretManagerAccessRequest {
      * 
      * @type {SecretManagerAuthenticationDto}
      * @memberof SecretManagerAccessRequest
-     */
-    'authentication': SecretManagerAuthenticationDto;
-}
-/**
- * 
- * @export
- * @interface SecretManagerAccessResponse
- */
-export interface SecretManagerAccessResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof SecretManagerAccessResponse
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SecretManagerAccessResponse
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SecretManagerAccessResponse
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SecretManagerAccessResponse
-     */
-    'updated_at': string;
-    /**
-     * 
-     * @type {SecretManagerEndpointConfigurationDto}
-     * @memberof SecretManagerAccessResponse
-     */
-    'endpoint': SecretManagerEndpointConfigurationDto;
-    /**
-     * 
-     * @type {SecretManagerAuthenticationDto}
-     * @memberof SecretManagerAccessResponse
      */
     'authentication': SecretManagerAuthenticationDto;
 }
