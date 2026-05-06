@@ -2284,6 +2284,12 @@ export interface ArgocdAppResponse {
     'namespace': string;
     /**
      * 
+     * @type {ReferenceObject}
+     * @memberof ArgocdAppResponse
+     */
+    'environment': ReferenceObject;
+    /**
+     * 
      * @type {string}
      * @memberof ArgocdAppResponse
      */
@@ -2294,6 +2300,12 @@ export interface ArgocdAppResponse {
      * @memberof ArgocdAppResponse
      */
     'cluster_id': string;
+    /**
+     * Icon URI representing the ArgoCD service.
+     * @type {string}
+     * @memberof ArgocdAppResponse
+     */
+    'icon_uri': string;
     /**
      * 
      * @type {string}
