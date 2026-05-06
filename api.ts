@@ -21503,8 +21503,27 @@ export type TerraformAutoDeployConfigTerraformActionEnum = typeof TerraformAutoD
  * Configuration for Terraform backend - exactly one backend type must be specified
  * @export
  */
-export type TerraformBackend = TerraformBackendOneOf | TerraformBackendOneOf1;
+export type TerraformBackend = TerraformBackendOneOf | TerraformBackendOneOf1 | TerraformBackendOneOf2;
 
+/**
+ * Blueprint-managed backend configuration. The user provides the backend type and config at blueprint creation time. The platform generates and injects backend.tf for the created service.
+ * @export
+ * @interface TerraformBackendBlueprint
+ */
+export interface TerraformBackendBlueprint {
+    /**
+     * Terraform backend type (e.g. s3, gcs, azurerm)
+     * @type {string}
+     * @memberof TerraformBackendBlueprint
+     */
+    'type': string;
+    /**
+     * Static backend configuration (bucket, region, etc.). Credentials should be provided via environment variables, not here.
+     * @type {{ [key: string]: string; }}
+     * @memberof TerraformBackendBlueprint
+     */
+    'config'?: { [key: string]: string; };
+}
 /**
  * 
  * @export
@@ -21530,6 +21549,19 @@ export interface TerraformBackendOneOf1 {
      * @memberof TerraformBackendOneOf1
      */
     'user_provided': object;
+}
+/**
+ * 
+ * @export
+ * @interface TerraformBackendOneOf2
+ */
+export interface TerraformBackendOneOf2 {
+    /**
+     * 
+     * @type {TerraformBackendBlueprint}
+     * @memberof TerraformBackendOneOf2
+     */
+    'blueprint': TerraformBackendBlueprint;
 }
 /**
  * 
