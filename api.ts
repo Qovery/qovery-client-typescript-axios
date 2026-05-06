@@ -3613,6 +3613,88 @@ export interface CloudWatchExportConfig {
 /**
  * 
  * @export
+ * @interface CloudflareDnsProviderRequest
+ */
+export interface CloudflareDnsProviderRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CloudflareDnsProviderRequest
+     */
+    'provider': CloudflareDnsProviderRequestProviderEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof CloudflareDnsProviderRequest
+     */
+    'domain': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CloudflareDnsProviderRequest
+     */
+    'email': string;
+    /**
+     * Cloudflare API token. Must be provided when editing Cloudflare DNS provider.
+     * @type {string}
+     * @memberof CloudflareDnsProviderRequest
+     */
+    'api_token': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CloudflareDnsProviderRequest
+     */
+    'proxied'?: boolean;
+}
+
+export const CloudflareDnsProviderRequestProviderEnum = {
+    CLOUDFLARE: 'CLOUDFLARE'
+} as const;
+
+export type CloudflareDnsProviderRequestProviderEnum = typeof CloudflareDnsProviderRequestProviderEnum[keyof typeof CloudflareDnsProviderRequestProviderEnum];
+
+/**
+ * 
+ * @export
+ * @interface CloudflareDnsProviderResponse
+ */
+export interface CloudflareDnsProviderResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof CloudflareDnsProviderResponse
+     */
+    'provider': CloudflareDnsProviderResponseProviderEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof CloudflareDnsProviderResponse
+     */
+    'domain': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CloudflareDnsProviderResponse
+     */
+    'email': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CloudflareDnsProviderResponse
+     */
+    'proxied': boolean;
+}
+
+export const CloudflareDnsProviderResponseProviderEnum = {
+    CLOUDFLARE: 'CLOUDFLARE'
+} as const;
+
+export type CloudflareDnsProviderResponseProviderEnum = typeof CloudflareDnsProviderResponseProviderEnum[keyof typeof CloudflareDnsProviderResponseProviderEnum];
+
+/**
+ * 
+ * @export
  * @interface Cluster
  */
 export interface Cluster {
@@ -4338,6 +4420,44 @@ export const ClusterDeploymentStatusEnum = {
 
 export type ClusterDeploymentStatusEnum = typeof ClusterDeploymentStatusEnum[keyof typeof ClusterDeploymentStatusEnum];
 
+
+/**
+ * 
+ * @export
+ * @interface ClusterDnsProviderRequest
+ */
+export interface ClusterDnsProviderRequest {
+    /**
+     * 
+     * @type {ClusterDnsProviderRequestProvider}
+     * @memberof ClusterDnsProviderRequest
+     */
+    'dns_provider': ClusterDnsProviderRequestProvider;
+}
+/**
+ * @type ClusterDnsProviderRequestProvider
+ * @export
+ */
+export type ClusterDnsProviderRequestProvider = { provider: 'CLOUDFLARE' } & CloudflareDnsProviderRequest | { provider: 'QOVERY' } & QoveryDnsProviderRequest | { provider: 'ROUTE53' } & Route53DnsProviderRequest;
+
+/**
+ * 
+ * @export
+ * @interface ClusterDnsProviderResponse
+ */
+export interface ClusterDnsProviderResponse {
+    /**
+     * 
+     * @type {ClusterDnsProviderResponseProvider}
+     * @memberof ClusterDnsProviderResponse
+     */
+    'dns_provider': ClusterDnsProviderResponseProvider;
+}
+/**
+ * @type ClusterDnsProviderResponseProvider
+ * @export
+ */
+export type ClusterDnsProviderResponseProvider = { provider: 'CLOUDFLARE' } & CloudflareDnsProviderResponse | { provider: 'QOVERY' } & QoveryDnsProviderResponse | { provider: 'ROUTE53' } & Route53DnsProviderResponse;
 
 /**
  * 
@@ -19201,6 +19321,58 @@ export interface ProjectStatsResponseList {
 /**
  * 
  * @export
+ * @interface QoveryDnsProviderRequest
+ */
+export interface QoveryDnsProviderRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryDnsProviderRequest
+     */
+    'provider': QoveryDnsProviderRequestProviderEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryDnsProviderRequest
+     */
+    'domain': string;
+}
+
+export const QoveryDnsProviderRequestProviderEnum = {
+    QOVERY: 'QOVERY'
+} as const;
+
+export type QoveryDnsProviderRequestProviderEnum = typeof QoveryDnsProviderRequestProviderEnum[keyof typeof QoveryDnsProviderRequestProviderEnum];
+
+/**
+ * 
+ * @export
+ * @interface QoveryDnsProviderResponse
+ */
+export interface QoveryDnsProviderResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryDnsProviderResponse
+     */
+    'provider': QoveryDnsProviderResponseProviderEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryDnsProviderResponse
+     */
+    'domain': string;
+}
+
+export const QoveryDnsProviderResponseProviderEnum = {
+    QOVERY: 'QOVERY'
+} as const;
+
+export type QoveryDnsProviderResponseProviderEnum = typeof QoveryDnsProviderResponseProviderEnum[keyof typeof QoveryDnsProviderResponseProviderEnum];
+
+/**
+ * 
+ * @export
  * @interface QueuedDeploymentRequestForService
  */
 export interface QueuedDeploymentRequestForService {
@@ -19648,6 +19820,164 @@ export const RewardClaimTypeEnum = {
 } as const;
 
 export type RewardClaimTypeEnum = typeof RewardClaimTypeEnum[keyof typeof RewardClaimTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface Route53DnsProviderRequest
+ */
+export interface Route53DnsProviderRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof Route53DnsProviderRequest
+     */
+    'provider': Route53DnsProviderRequestProviderEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof Route53DnsProviderRequest
+     */
+    'domain': string;
+    /**
+     * 
+     * @type {Route53DnsProviderRequestCredentials}
+     * @memberof Route53DnsProviderRequest
+     */
+    'credentials': Route53DnsProviderRequestCredentials;
+    /**
+     * 
+     * @type {string}
+     * @memberof Route53DnsProviderRequest
+     */
+    'aws_region': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Route53DnsProviderRequest
+     */
+    'hosted_zone_id'?: string | null;
+}
+
+export const Route53DnsProviderRequestProviderEnum = {
+    ROUTE53: 'ROUTE53'
+} as const;
+
+export type Route53DnsProviderRequestProviderEnum = typeof Route53DnsProviderRequestProviderEnum[keyof typeof Route53DnsProviderRequestProviderEnum];
+
+/**
+ * @type Route53DnsProviderRequestCredentials
+ * @export
+ */
+export type Route53DnsProviderRequestCredentials = { type: 'STATIC' } & Route53StaticCredentialsRequest;
+
+/**
+ * 
+ * @export
+ * @interface Route53DnsProviderResponse
+ */
+export interface Route53DnsProviderResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof Route53DnsProviderResponse
+     */
+    'provider': Route53DnsProviderResponseProviderEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof Route53DnsProviderResponse
+     */
+    'domain': string;
+    /**
+     * 
+     * @type {Route53DnsProviderResponseCredentials}
+     * @memberof Route53DnsProviderResponse
+     */
+    'credentials': Route53DnsProviderResponseCredentials;
+    /**
+     * 
+     * @type {string}
+     * @memberof Route53DnsProviderResponse
+     */
+    'aws_region': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Route53DnsProviderResponse
+     */
+    'hosted_zone_id'?: string | null;
+}
+
+export const Route53DnsProviderResponseProviderEnum = {
+    ROUTE53: 'ROUTE53'
+} as const;
+
+export type Route53DnsProviderResponseProviderEnum = typeof Route53DnsProviderResponseProviderEnum[keyof typeof Route53DnsProviderResponseProviderEnum];
+
+/**
+ * @type Route53DnsProviderResponseCredentials
+ * @export
+ */
+export type Route53DnsProviderResponseCredentials = { type: 'STATIC' } & Route53StaticCredentialsResponse;
+
+/**
+ * 
+ * @export
+ * @interface Route53StaticCredentialsRequest
+ */
+export interface Route53StaticCredentialsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof Route53StaticCredentialsRequest
+     */
+    'type': Route53StaticCredentialsRequestTypeEnum;
+    /**
+     * AWS access key identifier. It is returned by the GET endpoint and must be sent back when editing Route53.
+     * @type {string}
+     * @memberof Route53StaticCredentialsRequest
+     */
+    'aws_access_key_id': string;
+    /**
+     * AWS secret access key. Must be provided when editing Route53 DNS provider.
+     * @type {string}
+     * @memberof Route53StaticCredentialsRequest
+     */
+    'aws_secret_access_key': string;
+}
+
+export const Route53StaticCredentialsRequestTypeEnum = {
+    STATIC: 'STATIC'
+} as const;
+
+export type Route53StaticCredentialsRequestTypeEnum = typeof Route53StaticCredentialsRequestTypeEnum[keyof typeof Route53StaticCredentialsRequestTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface Route53StaticCredentialsResponse
+ */
+export interface Route53StaticCredentialsResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof Route53StaticCredentialsResponse
+     */
+    'type': Route53StaticCredentialsResponseTypeEnum;
+    /**
+     * AWS access key identifier.
+     * @type {string}
+     * @memberof Route53StaticCredentialsResponse
+     */
+    'aws_access_key_id': string;
+}
+
+export const Route53StaticCredentialsResponseTypeEnum = {
+    STATIC: 'STATIC'
+} as const;
+
+export type Route53StaticCredentialsResponseTypeEnum = typeof Route53StaticCredentialsResponseTypeEnum[keyof typeof Route53StaticCredentialsResponseTypeEnum];
 
 /**
  * 
@@ -34574,6 +34904,53 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Update the DNS provider associated with a cluster. Requires an Enterprise plan. Cloudflare api_token and Route53 STATIC credentials aws_secret_access_key must be provided on every edit. 
+         * @summary Edit cluster DNS provider
+         * @param {string} clusterId Cluster ID
+         * @param {ClusterDnsProviderRequest} clusterDnsProviderRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editClusterDnsProvider: async (clusterId: string, clusterDnsProviderRequest: ClusterDnsProviderRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('editClusterDnsProvider', 'clusterId', clusterId)
+            // verify required parameter 'clusterDnsProviderRequest' is not null or undefined
+            assertParamExists('editClusterDnsProvider', 'clusterDnsProviderRequest', clusterDnsProviderRequest)
+            const localVarPath = `/cluster/{clusterId}/dnsProvider`
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(clusterDnsProviderRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Edit cluster kubeconfig
          * @param {string} organizationId Organization ID
@@ -34686,6 +35063,47 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists('getClusterAdvancedSettings', 'clusterId', clusterId)
             const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/advancedSettings`
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve the DNS provider currently associated with a cluster. Requires VIEWER role.
+         * @summary Get cluster DNS provider
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusterDnsProvider: async (clusterId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('getClusterDnsProvider', 'clusterId', clusterId)
+            const localVarPath = `/cluster/{clusterId}/dnsProvider`
                 .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -35982,6 +36400,20 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Update the DNS provider associated with a cluster. Requires an Enterprise plan. Cloudflare api_token and Route53 STATIC credentials aws_secret_access_key must be provided on every edit. 
+         * @summary Edit cluster DNS provider
+         * @param {string} clusterId Cluster ID
+         * @param {ClusterDnsProviderRequest} clusterDnsProviderRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editClusterDnsProvider(clusterId: string, clusterDnsProviderRequest: ClusterDnsProviderRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterDnsProviderResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editClusterDnsProvider(clusterId, clusterDnsProviderRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ClustersApi.editClusterDnsProvider']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Edit cluster kubeconfig
          * @param {string} organizationId Organization ID
@@ -36023,6 +36455,19 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterAdvancedSettings(organizationId, clusterId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ClustersApi.getClusterAdvancedSettings']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Retrieve the DNS provider currently associated with a cluster. Requires VIEWER role.
+         * @summary Get cluster DNS provider
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getClusterDnsProvider(clusterId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterDnsProviderResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterDnsProvider(clusterId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ClustersApi.getClusterDnsProvider']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -36442,6 +36887,17 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.editClusterAdvancedSettings(organizationId, clusterId, clusterAdvancedSettings, options).then((request) => request(axios, basePath));
         },
         /**
+         * Update the DNS provider associated with a cluster. Requires an Enterprise plan. Cloudflare api_token and Route53 STATIC credentials aws_secret_access_key must be provided on every edit. 
+         * @summary Edit cluster DNS provider
+         * @param {string} clusterId Cluster ID
+         * @param {ClusterDnsProviderRequest} clusterDnsProviderRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editClusterDnsProvider(clusterId: string, clusterDnsProviderRequest: ClusterDnsProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClusterDnsProviderResponse> {
+            return localVarFp.editClusterDnsProvider(clusterId, clusterDnsProviderRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Edit cluster kubeconfig
          * @param {string} organizationId Organization ID
@@ -36475,6 +36931,16 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          */
         getClusterAdvancedSettings(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterAdvancedSettings> {
             return localVarFp.getClusterAdvancedSettings(organizationId, clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Retrieve the DNS provider currently associated with a cluster. Requires VIEWER role.
+         * @summary Get cluster DNS provider
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusterDnsProvider(clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterDnsProviderResponse> {
+            return localVarFp.getClusterDnsProvider(clusterId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -36834,6 +37300,19 @@ export class ClustersApi extends BaseAPI {
     }
 
     /**
+     * Update the DNS provider associated with a cluster. Requires an Enterprise plan. Cloudflare api_token and Route53 STATIC credentials aws_secret_access_key must be provided on every edit. 
+     * @summary Edit cluster DNS provider
+     * @param {string} clusterId Cluster ID
+     * @param {ClusterDnsProviderRequest} clusterDnsProviderRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClustersApi
+     */
+    public editClusterDnsProvider(clusterId: string, clusterDnsProviderRequest: ClusterDnsProviderRequest, options?: RawAxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).editClusterDnsProvider(clusterId, clusterDnsProviderRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * 
      * @summary Edit cluster kubeconfig
      * @param {string} organizationId Organization ID
@@ -36872,6 +37351,18 @@ export class ClustersApi extends BaseAPI {
      */
     public getClusterAdvancedSettings(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig) {
         return ClustersApiFp(this.configuration).getClusterAdvancedSettings(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Retrieve the DNS provider currently associated with a cluster. Requires VIEWER role.
+     * @summary Get cluster DNS provider
+     * @param {string} clusterId Cluster ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClustersApi
+     */
+    public getClusterDnsProvider(clusterId: string, options?: RawAxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).getClusterDnsProvider(clusterId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
