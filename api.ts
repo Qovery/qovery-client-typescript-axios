@@ -11734,6 +11734,82 @@ export interface EnvironmentVariableResponseList {
 /**
  * 
  * @export
+ * @interface ExternalSecretAssociatedServiceResponse
+ */
+export interface ExternalSecretAssociatedServiceResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalSecretAssociatedServiceResponse
+     */
+    'project_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalSecretAssociatedServiceResponse
+     */
+    'project_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalSecretAssociatedServiceResponse
+     */
+    'environment_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalSecretAssociatedServiceResponse
+     */
+    'environment_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalSecretAssociatedServiceResponse
+     */
+    'service_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalSecretAssociatedServiceResponse
+     */
+    'service_name'?: string;
+    /**
+     * 
+     * @type {APIVariableScopeEnum}
+     * @memberof ExternalSecretAssociatedServiceResponse
+     */
+    'service_type'?: APIVariableScopeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalSecretAssociatedServiceResponse
+     */
+    'variable_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalSecretAssociatedServiceResponse
+     */
+    'external_secret_name': string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ExternalSecretAssociatedServiceResponseList
+ */
+export interface ExternalSecretAssociatedServiceResponseList {
+    /**
+     * 
+     * @type {Array<ExternalSecretAssociatedServiceResponse>}
+     * @memberof ExternalSecretAssociatedServiceResponseList
+     */
+    'results': Array<ExternalSecretAssociatedServiceResponse>;
+}
+/**
+ * 
+ * @export
  * @interface GcpCredentialsRequest
  */
 export interface GcpCredentialsRequest {
@@ -19317,6 +19393,19 @@ export interface ProjectStatsResponseList {
      * @memberof ProjectStatsResponseList
      */
     'results'?: Array<ProjectStats>;
+}
+/**
+ * 
+ * @export
+ * @interface ProviderSecrets
+ */
+export interface ProviderSecrets {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ProviderSecrets
+     */
+    'results': Array<string>;
 }
 /**
  * 
@@ -66021,6 +66110,205 @@ export class ReferralRewardsApi extends BaseAPI {
      */
     public postAccountRewardClaim(rewardClaim?: RewardClaim, options?: RawAxiosRequestConfig) {
         return ReferralRewardsApiFp(this.configuration).postAccountRewardClaim(rewardClaim, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * SecretManagerAccessApi - axios parameter creator
+ * @export
+ */
+export const SecretManagerAccessApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * List external secrets used by a secret manager access
+         * @summary List external secrets used by a secret manager access
+         * @param {string} secretManagerAccessId Secret Manager Access ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listSecretManagerAccessExternalSecrets: async (secretManagerAccessId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'secretManagerAccessId' is not null or undefined
+            assertParamExists('listSecretManagerAccessExternalSecrets', 'secretManagerAccessId', secretManagerAccessId)
+            const localVarPath = `/api/secretManagerAccess/{secretManagerAccessId}/associatedServices`
+                .replace(`{${"secretManagerAccessId"}}`, encodeURIComponent(String(secretManagerAccessId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List upstream secrets from secret provider
+         * @summary List upstream secrets from secret provider
+         * @param {string} secretManagerAccessId Secret Manager Access ID
+         * @param {string} [namePrefix] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listUpstreamSecretsFromSecretProvider: async (secretManagerAccessId: string, namePrefix?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'secretManagerAccessId' is not null or undefined
+            assertParamExists('listUpstreamSecretsFromSecretProvider', 'secretManagerAccessId', secretManagerAccessId)
+            const localVarPath = `/api/secretManagerAccess/{secretManagerAccessId}/secrets`
+                .replace(`{${"secretManagerAccessId"}}`, encodeURIComponent(String(secretManagerAccessId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (namePrefix !== undefined) {
+                localVarQueryParameter['namePrefix'] = namePrefix;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * SecretManagerAccessApi - functional programming interface
+ * @export
+ */
+export const SecretManagerAccessApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = SecretManagerAccessApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * List external secrets used by a secret manager access
+         * @summary List external secrets used by a secret manager access
+         * @param {string} secretManagerAccessId Secret Manager Access ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listSecretManagerAccessExternalSecrets(secretManagerAccessId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExternalSecretAssociatedServiceResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listSecretManagerAccessExternalSecrets(secretManagerAccessId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SecretManagerAccessApi.listSecretManagerAccessExternalSecrets']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * List upstream secrets from secret provider
+         * @summary List upstream secrets from secret provider
+         * @param {string} secretManagerAccessId Secret Manager Access ID
+         * @param {string} [namePrefix] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listUpstreamSecretsFromSecretProvider(secretManagerAccessId: string, namePrefix?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProviderSecrets>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listUpstreamSecretsFromSecretProvider(secretManagerAccessId, namePrefix, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SecretManagerAccessApi.listUpstreamSecretsFromSecretProvider']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * SecretManagerAccessApi - factory interface
+ * @export
+ */
+export const SecretManagerAccessApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = SecretManagerAccessApiFp(configuration)
+    return {
+        /**
+         * List external secrets used by a secret manager access
+         * @summary List external secrets used by a secret manager access
+         * @param {string} secretManagerAccessId Secret Manager Access ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listSecretManagerAccessExternalSecrets(secretManagerAccessId: string, options?: RawAxiosRequestConfig): AxiosPromise<ExternalSecretAssociatedServiceResponseList> {
+            return localVarFp.listSecretManagerAccessExternalSecrets(secretManagerAccessId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List upstream secrets from secret provider
+         * @summary List upstream secrets from secret provider
+         * @param {string} secretManagerAccessId Secret Manager Access ID
+         * @param {string} [namePrefix] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listUpstreamSecretsFromSecretProvider(secretManagerAccessId: string, namePrefix?: string, options?: RawAxiosRequestConfig): AxiosPromise<ProviderSecrets> {
+            return localVarFp.listUpstreamSecretsFromSecretProvider(secretManagerAccessId, namePrefix, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * SecretManagerAccessApi - object-oriented interface
+ * @export
+ * @class SecretManagerAccessApi
+ * @extends {BaseAPI}
+ */
+export class SecretManagerAccessApi extends BaseAPI {
+    /**
+     * List external secrets used by a secret manager access
+     * @summary List external secrets used by a secret manager access
+     * @param {string} secretManagerAccessId Secret Manager Access ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SecretManagerAccessApi
+     */
+    public listSecretManagerAccessExternalSecrets(secretManagerAccessId: string, options?: RawAxiosRequestConfig) {
+        return SecretManagerAccessApiFp(this.configuration).listSecretManagerAccessExternalSecrets(secretManagerAccessId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List upstream secrets from secret provider
+     * @summary List upstream secrets from secret provider
+     * @param {string} secretManagerAccessId Secret Manager Access ID
+     * @param {string} [namePrefix] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SecretManagerAccessApi
+     */
+    public listUpstreamSecretsFromSecretProvider(secretManagerAccessId: string, namePrefix?: string, options?: RawAxiosRequestConfig) {
+        return SecretManagerAccessApiFp(this.configuration).listUpstreamSecretsFromSecretProvider(secretManagerAccessId, namePrefix, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
