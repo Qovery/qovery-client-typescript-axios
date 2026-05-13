@@ -66131,7 +66131,7 @@ export const SecretManagerAccessApiAxiosParamCreator = function (configuration?:
         listSecretManagerAccessExternalSecrets: async (secretManagerAccessId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'secretManagerAccessId' is not null or undefined
             assertParamExists('listSecretManagerAccessExternalSecrets', 'secretManagerAccessId', secretManagerAccessId)
-            const localVarPath = `/api/secretManagerAccess/{secretManagerAccessId}/associatedServices`
+            const localVarPath = `/secretManagerAccess/{secretManagerAccessId}/associatedServices`
                 .replace(`{${"secretManagerAccessId"}}`, encodeURIComponent(String(secretManagerAccessId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -66173,7 +66173,7 @@ export const SecretManagerAccessApiAxiosParamCreator = function (configuration?:
         listUpstreamSecretsFromSecretProvider: async (secretManagerAccessId: string, namePrefix?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'secretManagerAccessId' is not null or undefined
             assertParamExists('listUpstreamSecretsFromSecretProvider', 'secretManagerAccessId', secretManagerAccessId)
-            const localVarPath = `/api/secretManagerAccess/{secretManagerAccessId}/secrets`
+            const localVarPath = `/secretManagerAccess/{secretManagerAccessId}/secrets`
                 .replace(`{${"secretManagerAccessId"}}`, encodeURIComponent(String(secretManagerAccessId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
