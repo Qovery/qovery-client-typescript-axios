@@ -4928,6 +4928,112 @@ export interface ClusterFeatureKarpenterParametersResponse {
 /**
  * 
  * @export
+ * @interface ClusterFeatureNatGatewayParameters
+ */
+export interface ClusterFeatureNatGatewayParameters {
+    /**
+     * 
+     * @type {ClusterFeatureNatGatewayParametersNatGatewayType}
+     * @memberof ClusterFeatureNatGatewayParameters
+     */
+    'nat_gateway_type'?: ClusterFeatureNatGatewayParametersNatGatewayType | null;
+}
+/**
+ * @type ClusterFeatureNatGatewayParametersNatGatewayType
+ * @export
+ */
+export type ClusterFeatureNatGatewayParametersNatGatewayType = { provider: 'gcp' } & ClusterFeatureNatGatewayTypeGcp | { provider: 'scaleway' } & ClusterFeatureNatGatewayTypeScaleway;
+
+/**
+ * 
+ * @export
+ * @interface ClusterFeatureNatGatewayParametersResponse
+ */
+export interface ClusterFeatureNatGatewayParametersResponse {
+    /**
+     * 
+     * @type {ClusterFeatureResponseTypeEnum}
+     * @memberof ClusterFeatureNatGatewayParametersResponse
+     */
+    'type': ClusterFeatureResponseTypeEnum;
+    /**
+     * 
+     * @type {ClusterFeatureNatGatewayParameters}
+     * @memberof ClusterFeatureNatGatewayParametersResponse
+     */
+    'value': ClusterFeatureNatGatewayParameters | null;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ClusterFeatureNatGatewayTypeGcp
+ */
+export interface ClusterFeatureNatGatewayTypeGcp {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeatureNatGatewayTypeGcp
+     */
+    'provider': ClusterFeatureNatGatewayTypeGcpProviderEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterFeatureNatGatewayTypeGcp
+     */
+    'static_ips_enabled': boolean;
+    /**
+     * Number of static IPs to allocate. Must be >= 1 when static_ips_enabled is true.
+     * @type {number}
+     * @memberof ClusterFeatureNatGatewayTypeGcp
+     */
+    'static_ips_count': number;
+}
+
+export const ClusterFeatureNatGatewayTypeGcpProviderEnum = {
+    GCP: 'gcp'
+} as const;
+
+export type ClusterFeatureNatGatewayTypeGcpProviderEnum = typeof ClusterFeatureNatGatewayTypeGcpProviderEnum[keyof typeof ClusterFeatureNatGatewayTypeGcpProviderEnum];
+
+/**
+ * 
+ * @export
+ * @interface ClusterFeatureNatGatewayTypeScaleway
+ */
+export interface ClusterFeatureNatGatewayTypeScaleway {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeatureNatGatewayTypeScaleway
+     */
+    'provider': ClusterFeatureNatGatewayTypeScalewayProviderEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFeatureNatGatewayTypeScaleway
+     */
+    'type': ClusterFeatureNatGatewayTypeScalewayTypeEnum;
+}
+
+export const ClusterFeatureNatGatewayTypeScalewayProviderEnum = {
+    SCALEWAY: 'scaleway'
+} as const;
+
+export type ClusterFeatureNatGatewayTypeScalewayProviderEnum = typeof ClusterFeatureNatGatewayTypeScalewayProviderEnum[keyof typeof ClusterFeatureNatGatewayTypeScalewayProviderEnum];
+export const ClusterFeatureNatGatewayTypeScalewayTypeEnum = {
+    S: 'VPC-GW-S',
+    M: 'VPC-GW-M',
+    L: 'VPC-GW-L',
+    XL: 'VPC-GW-XL'
+} as const;
+
+export type ClusterFeatureNatGatewayTypeScalewayTypeEnum = typeof ClusterFeatureNatGatewayTypeScalewayTypeEnum[keyof typeof ClusterFeatureNatGatewayTypeScalewayTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface ClusterFeatureResponse
  */
 export interface ClusterFeatureResponse {
@@ -5056,7 +5162,8 @@ export const ClusterFeatureResponseTypeEnum = {
     BOOLEAN: 'BOOLEAN',
     AWS_USER_PROVIDED_NETWORK: 'AWS_USER_PROVIDED_NETWORK',
     GCP_USER_PROVIDED_NETWORK: 'GCP_USER_PROVIDED_NETWORK',
-    KARPENTER: 'KARPENTER'
+    KARPENTER: 'KARPENTER',
+    NAT_GATEWAY: 'NAT_GATEWAY'
 } as const;
 
 export type ClusterFeatureResponseTypeEnum = typeof ClusterFeatureResponseTypeEnum[keyof typeof ClusterFeatureResponseTypeEnum];
@@ -5066,7 +5173,7 @@ export type ClusterFeatureResponseTypeEnum = typeof ClusterFeatureResponseTypeEn
  * @type ClusterFeatureResponseValueObject
  * @export
  */
-export type ClusterFeatureResponseValueObject = { type: 'AWS_USER_PROVIDED_NETWORK' } & ClusterFeatureAwsExistingVpcResponse | { type: 'BOOLEAN' } & ClusterFeatureBooleanResponse | { type: 'GCP_USER_PROVIDED_NETWORK' } & ClusterFeatureGcpExistingVpcResponse | { type: 'KARPENTER' } & ClusterFeatureKarpenterParametersResponse | { type: 'STRING' } & ClusterFeatureStringResponse;
+export type ClusterFeatureResponseValueObject = { type: 'AWS_USER_PROVIDED_NETWORK' } & ClusterFeatureAwsExistingVpcResponse | { type: 'BOOLEAN' } & ClusterFeatureBooleanResponse | { type: 'GCP_USER_PROVIDED_NETWORK' } & ClusterFeatureGcpExistingVpcResponse | { type: 'KARPENTER' } & ClusterFeatureKarpenterParametersResponse | { type: 'NAT_GATEWAY' } & ClusterFeatureNatGatewayParametersResponse | { type: 'STRING' } & ClusterFeatureStringResponse;
 
 /**
  * 
@@ -6027,7 +6134,7 @@ export interface ClusterRequestFeaturesInner {
  * @type ClusterRequestFeaturesInnerValue
  * @export
  */
-export type ClusterRequestFeaturesInnerValue = ClusterFeatureAwsExistingVpc | ClusterFeatureGcpExistingVpc | ClusterFeatureKarpenterParameters | boolean | string;
+export type ClusterRequestFeaturesInnerValue = ClusterFeatureAwsExistingVpc | ClusterFeatureGcpExistingVpc | ClusterFeatureKarpenterParameters | ClusterFeatureNatGatewayParameters | boolean | string;
 
 /**
  * 
