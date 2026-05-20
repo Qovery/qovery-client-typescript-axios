@@ -2376,16 +2376,10 @@ export interface ArgocdAppResponse {
     'manifest_revision'?: string | null;
     /**
      * 
-     * @type {string}
+     * @type {ApplicationGitRepository}
      * @memberof ArgocdAppResponse
      */
-    'source_repo_url'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ArgocdAppResponse
-     */
-    'source_target_revision'?: string | null;
+    'git_repository'?: ApplicationGitRepository | null;
 }
 
 
