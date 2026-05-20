@@ -6247,19 +6247,19 @@ export interface ClusterStatus {
      * @type {string}
      * @memberof ClusterStatus
      */
-    'cluster_id'?: string;
+    'cluster_id': string;
     /**
      * 
      * @type {ClusterStateEnum}
      * @memberof ClusterStatus
      */
-    'status'?: ClusterStateEnum;
+    'status': ClusterStateEnum;
     /**
      * 
      * @type {boolean}
      * @memberof ClusterStatus
      */
-    'is_deployed'?: boolean;
+    'is_deployed': boolean;
     /**
      * 
      * @type {string}
@@ -6271,19 +6271,25 @@ export interface ClusterStatus {
      * @type {string}
      * @memberof ClusterStatus
      */
-    'last_execution_id'?: string;
+    'last_execution_id'?: string | null;
     /**
      * 
      * @type {ClusterLock}
      * @memberof ClusterStatus
      */
-    'cluster_lock'?: ClusterLock;
+    'cluster_lock'?: ClusterLock | null;
     /**
      * 
      * @type {string}
      * @memberof ClusterStatus
      */
-    'last_deployment_date'?: string;
+    'last_deployment_date'?: string | null;
+    /**
+     * 
+     * @type {DeploymentInfraReason}
+     * @memberof ClusterStatus
+     */
+    'reason': DeploymentInfraReason;
 }
 
 
@@ -9823,6 +9829,20 @@ export const DeploymentHistoryTriggerAction = {
 } as const;
 
 export type DeploymentHistoryTriggerAction = typeof DeploymentHistoryTriggerAction[keyof typeof DeploymentHistoryTriggerAction];
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const DeploymentInfraReason = {
+    UNSPECIFIED: 'UNSPECIFIED',
+    MAINTENANCE: 'MAINTENANCE'
+} as const;
+
+export type DeploymentInfraReason = typeof DeploymentInfraReason[keyof typeof DeploymentInfraReason];
 
 
 /**
