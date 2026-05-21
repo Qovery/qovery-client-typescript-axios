@@ -29320,6 +29320,61 @@ export const ArgoCDApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Remove the mapping between an ArgoCD destination cluster URL and a Qovery cluster. Requires ADMIN role on the agent cluster. 
+         * @summary Delete an ArgoCD destination cluster mapping
+         * @param {string} organizationId Organization ID
+         * @param {string} agentClusterId ID of the Qovery cluster where the ArgoCD instance is running
+         * @param {string} argocdClusterUrl ArgoCD destination cluster URL as reported by ArgoCD
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteArgoCdDestinationClusterMapping: async (organizationId: string, agentClusterId: string, argocdClusterUrl: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('deleteArgoCdDestinationClusterMapping', 'organizationId', organizationId)
+            // verify required parameter 'agentClusterId' is not null or undefined
+            assertParamExists('deleteArgoCdDestinationClusterMapping', 'agentClusterId', agentClusterId)
+            // verify required parameter 'argocdClusterUrl' is not null or undefined
+            assertParamExists('deleteArgoCdDestinationClusterMapping', 'argocdClusterUrl', argocdClusterUrl)
+            const localVarPath = `/organization/{organizationId}/argoCdDestinationClusterMapping`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (agentClusterId !== undefined) {
+                localVarQueryParameter['agentClusterId'] = agentClusterId;
+            }
+
+            if (argocdClusterUrl !== undefined) {
+                localVarQueryParameter['argocdClusterUrl'] = argocdClusterUrl;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Get ArgoCD app by ID
          * @param {string} argocdAppId ArgoCD App ID
@@ -29615,6 +29670,21 @@ export const ArgoCDApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Remove the mapping between an ArgoCD destination cluster URL and a Qovery cluster. Requires ADMIN role on the agent cluster. 
+         * @summary Delete an ArgoCD destination cluster mapping
+         * @param {string} organizationId Organization ID
+         * @param {string} agentClusterId ID of the Qovery cluster where the ArgoCD instance is running
+         * @param {string} argocdClusterUrl ArgoCD destination cluster URL as reported by ArgoCD
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteArgoCdDestinationClusterMapping(organizationId: string, agentClusterId: string, argocdClusterUrl: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteArgoCdDestinationClusterMapping(organizationId, agentClusterId, argocdClusterUrl, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ArgoCDApi.deleteArgoCdDestinationClusterMapping']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Get ArgoCD app by ID
          * @param {string} argocdAppId ArgoCD App ID
@@ -29726,6 +29796,18 @@ export const ArgoCDApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.deleteArgoCdCredentials(clusterId, options).then((request) => request(axios, basePath));
         },
         /**
+         * Remove the mapping between an ArgoCD destination cluster URL and a Qovery cluster. Requires ADMIN role on the agent cluster. 
+         * @summary Delete an ArgoCD destination cluster mapping
+         * @param {string} organizationId Organization ID
+         * @param {string} agentClusterId ID of the Qovery cluster where the ArgoCD instance is running
+         * @param {string} argocdClusterUrl ArgoCD destination cluster URL as reported by ArgoCD
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteArgoCdDestinationClusterMapping(organizationId: string, agentClusterId: string, argocdClusterUrl: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteArgoCdDestinationClusterMapping(organizationId, agentClusterId, argocdClusterUrl, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Get ArgoCD app by ID
          * @param {string} argocdAppId ArgoCD App ID
@@ -29820,6 +29902,20 @@ export class ArgoCDApi extends BaseAPI {
      */
     public deleteArgoCdCredentials(clusterId: string, options?: RawAxiosRequestConfig) {
         return ArgoCDApiFp(this.configuration).deleteArgoCdCredentials(clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Remove the mapping between an ArgoCD destination cluster URL and a Qovery cluster. Requires ADMIN role on the agent cluster. 
+     * @summary Delete an ArgoCD destination cluster mapping
+     * @param {string} organizationId Organization ID
+     * @param {string} agentClusterId ID of the Qovery cluster where the ArgoCD instance is running
+     * @param {string} argocdClusterUrl ArgoCD destination cluster URL as reported by ArgoCD
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ArgoCDApi
+     */
+    public deleteArgoCdDestinationClusterMapping(organizationId: string, agentClusterId: string, argocdClusterUrl: string, options?: RawAxiosRequestConfig) {
+        return ArgoCDApiFp(this.configuration).deleteArgoCdDestinationClusterMapping(organizationId, agentClusterId, argocdClusterUrl, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
