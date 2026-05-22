@@ -12010,7 +12010,7 @@ export interface GcpCredentialsRequest {
      */
     'name': string;
     /**
-     * 
+     * The json must be base64 encoded
      * @type {string}
      * @memberof GcpCredentialsRequest
      */
@@ -12029,7 +12029,7 @@ export interface GcpJsonCredentialsAuthDto {
      */
     'mode': GcpJsonCredentialsAuthDtoModeEnum;
     /**
-     * 
+     * The json must be base64 encoded
      * @type {string}
      * @memberof GcpJsonCredentialsAuthDto
      */
