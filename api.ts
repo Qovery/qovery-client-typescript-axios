@@ -12065,7 +12065,7 @@ export interface GcpSecretManagerEndpointDto {
      * @type {string}
      * @memberof GcpSecretManagerEndpointDto
      */
-    'projectId': string;
+    'project_id': string;
 }
 
 export const GcpSecretManagerEndpointDtoModeEnum = {
