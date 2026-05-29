@@ -2386,6 +2386,83 @@ export interface ArgocdAppResponse {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export const ArgocdAssociatedServiceType = {
+    ARGOCD_APP: 'ARGOCD_APP'
+} as const;
+
+export type ArgocdAssociatedServiceType = typeof ArgocdAssociatedServiceType[keyof typeof ArgocdAssociatedServiceType];
+
+
+/**
+ * 
+ * @export
+ * @interface ArgocdAssociatedServicesResponse
+ */
+export interface ArgocdAssociatedServicesResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgocdAssociatedServicesResponse
+     */
+    'project_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgocdAssociatedServicesResponse
+     */
+    'project_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgocdAssociatedServicesResponse
+     */
+    'environment_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgocdAssociatedServicesResponse
+     */
+    'environment_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgocdAssociatedServicesResponse
+     */
+    'service_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArgocdAssociatedServicesResponse
+     */
+    'service_name': string;
+    /**
+     * 
+     * @type {ArgocdAssociatedServiceType}
+     * @memberof ArgocdAssociatedServicesResponse
+     */
+    'service_type': ArgocdAssociatedServiceType;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ArgocdAssociatedServicesResponseList
+ */
+export interface ArgocdAssociatedServicesResponseList {
+    /**
+     * 
+     * @type {Array<ArgocdAssociatedServicesResponse>}
+     * @memberof ArgocdAssociatedServicesResponseList
+     */
+    'results'?: Array<ArgocdAssociatedServicesResponse>;
+}
+/**
+ * 
+ * @export
  * @interface ArgocdManagedResource
  */
 export interface ArgocdManagedResource {
@@ -29495,6 +29572,47 @@ export const ArgoCDApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * List the ArgoCD discovered apps for a cluster, mapped to their project, environment, and service context. Requires VIEWER role.
+         * @summary Get ArgoCD associated services for a cluster
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getArgoCdAssociatedServices: async (clusterId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('getArgoCdAssociatedServices', 'clusterId', clusterId)
+            const localVarPath = `/cluster/{clusterId}/argocdApps/associatedServices`
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Retrieve the stored ArgoCD configuration for a cluster. The token is always returned as REDACTED. Requires VIEWER role.
          * @summary Get ArgoCD credentials for a cluster
          * @param {string} clusterId Cluster ID
@@ -29749,6 +29867,19 @@ export const ArgoCDApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * List the ArgoCD discovered apps for a cluster, mapped to their project, environment, and service context. Requires VIEWER role.
+         * @summary Get ArgoCD associated services for a cluster
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getArgoCdAssociatedServices(clusterId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgocdAssociatedServicesResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getArgoCdAssociatedServices(clusterId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ArgoCDApi.getArgoCdAssociatedServices']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Retrieve the stored ArgoCD configuration for a cluster. The token is always returned as REDACTED. Requires VIEWER role.
          * @summary Get ArgoCD credentials for a cluster
          * @param {string} clusterId Cluster ID
@@ -29866,6 +29997,16 @@ export const ArgoCDApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getArgoCdAppManifest(argocdAppId, options).then((request) => request(axios, basePath));
         },
         /**
+         * List the ArgoCD discovered apps for a cluster, mapped to their project, environment, and service context. Requires VIEWER role.
+         * @summary Get ArgoCD associated services for a cluster
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getArgoCdAssociatedServices(clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<ArgocdAssociatedServicesResponseList> {
+            return localVarFp.getArgoCdAssociatedServices(clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Retrieve the stored ArgoCD configuration for a cluster. The token is always returned as REDACTED. Requires VIEWER role.
          * @summary Get ArgoCD credentials for a cluster
          * @param {string} clusterId Cluster ID
@@ -29978,6 +30119,18 @@ export class ArgoCDApi extends BaseAPI {
      */
     public getArgoCdAppManifest(argocdAppId: string, options?: RawAxiosRequestConfig) {
         return ArgoCDApiFp(this.configuration).getArgoCdAppManifest(argocdAppId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List the ArgoCD discovered apps for a cluster, mapped to their project, environment, and service context. Requires VIEWER role.
+     * @summary Get ArgoCD associated services for a cluster
+     * @param {string} clusterId Cluster ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ArgoCDApi
+     */
+    public getArgoCdAssociatedServices(clusterId: string, options?: RawAxiosRequestConfig) {
+        return ArgoCDApiFp(this.configuration).getArgoCdAssociatedServices(clusterId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
