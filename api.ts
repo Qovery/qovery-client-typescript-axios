@@ -10360,6 +10360,12 @@ export interface EksInfrastructureOutputs {
      * @memberof EksInfrastructureOutputs
      */
     'vpc_id': string;
+    /**
+     * 
+     * @type {EksInfrastructureOutputsExternalSecretsAutomaticAuthentication}
+     * @memberof EksInfrastructureOutputs
+     */
+    'external_secrets_automatic_authentication'?: EksInfrastructureOutputsExternalSecretsAutomaticAuthentication | null;
 }
 
 export const EksInfrastructureOutputsKindEnum = {
@@ -10368,6 +10374,19 @@ export const EksInfrastructureOutputsKindEnum = {
 
 export type EksInfrastructureOutputsKindEnum = typeof EksInfrastructureOutputsKindEnum[keyof typeof EksInfrastructureOutputsKindEnum];
 
+/**
+ * 
+ * @export
+ * @interface EksInfrastructureOutputsExternalSecretsAutomaticAuthentication
+ */
+export interface EksInfrastructureOutputsExternalSecretsAutomaticAuthentication {
+    /**
+     * ARN of the IAM role used by External Secrets Operator on EKS
+     * @type {string}
+     * @memberof EksInfrastructureOutputsExternalSecretsAutomaticAuthentication
+     */
+    'eks_role_arn': string;
+}
 /**
  * 
  * @export
@@ -12781,6 +12800,12 @@ export interface GkeInfrastructureOutputs {
      * @memberof GkeInfrastructureOutputs
      */
     'cluster_self_link': string;
+    /**
+     * 
+     * @type {GkeInfrastructureOutputsExternalSecretsAutomaticAuthentication}
+     * @memberof GkeInfrastructureOutputs
+     */
+    'external_secrets_automatic_authentication'?: GkeInfrastructureOutputsExternalSecretsAutomaticAuthentication | null;
 }
 
 export const GkeInfrastructureOutputsKindEnum = {
@@ -12789,6 +12814,19 @@ export const GkeInfrastructureOutputsKindEnum = {
 
 export type GkeInfrastructureOutputsKindEnum = typeof GkeInfrastructureOutputsKindEnum[keyof typeof GkeInfrastructureOutputsKindEnum];
 
+/**
+ * 
+ * @export
+ * @interface GkeInfrastructureOutputsExternalSecretsAutomaticAuthentication
+ */
+export interface GkeInfrastructureOutputsExternalSecretsAutomaticAuthentication {
+    /**
+     * GCP service account email used by External Secrets Operator on GKE
+     * @type {string}
+     * @memberof GkeInfrastructureOutputsExternalSecretsAutomaticAuthentication
+     */
+    'gke_service_account': string;
+}
 /**
  * 
  * @export
