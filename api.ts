@@ -6034,6 +6034,12 @@ export interface ClusterRegion {
      */
     'city': string;
     /**
+     * Whether ARM instance types are available in this region
+     * @type {boolean}
+     * @memberof ClusterRegion
+     */
+    'arm_supported'?: boolean;
+    /**
      * List of availability zones supported by this region
      * @type {Array<string>}
      * @memberof ClusterRegion
