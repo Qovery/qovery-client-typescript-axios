@@ -4516,7 +4516,7 @@ export interface ClusterCloudProviderInfoRequest {
  * @type ClusterCredentials
  * @export
  */
-export type ClusterCredentials = { object_type: 'AWS' } & AwsStaticClusterCredentials | { object_type: 'AWS_ROLE' } & AwsRoleClusterCredentials | { object_type: 'AZURE' } & AzureStaticClusterCredentials | { object_type: 'EKS_ANYWHERE_VSPHERE' } & EksAnywhereVsphereClusterCredentials | { object_type: 'GCP' } & GcpStaticClusterCredentials | { object_type: 'OTHER' } & GenericClusterCredentials | { object_type: 'SCW' } & ScalewayClusterCredentials;
+export type ClusterCredentials = { object_type: 'AWS' } & AwsStaticClusterCredentials | { object_type: 'AWS_ROLE' } & AwsRoleClusterCredentials | { object_type: 'AZURE' } & AzureStaticClusterCredentials | { object_type: 'EKS_ANYWHERE_VSPHERE' } & EksAnywhereVsphereClusterCredentials | { object_type: 'GCP' } & GcpStaticClusterCredentials | { object_type: 'GCP_WORKLOAD_IDENTITY_FEDERATION' } & GcpWorkloadIdentityFederationClusterCredentials | { object_type: 'OTHER' } & GenericClusterCredentials | { object_type: 'SCW' } & ScalewayClusterCredentials;
 
 /**
  * 
@@ -12094,24 +12094,11 @@ export interface ExternalSecretAssociatedServiceResponseList {
     'results': Array<ExternalSecretAssociatedServiceResponse>;
 }
 /**
- * 
+ * @type GcpCredentialsRequest
  * @export
- * @interface GcpCredentialsRequest
  */
-export interface GcpCredentialsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof GcpCredentialsRequest
-     */
-    'name': string;
-    /**
-     * The json must be base64 encoded
-     * @type {string}
-     * @memberof GcpCredentialsRequest
-     */
-    'gcp_credentials': string;
-}
+export type GcpCredentialsRequest = GcpServiceAccountKeyCredentialsRequest | GcpWorkloadIdentityFederationCredentialsRequest;
+
 /**
  * 
  * @export
@@ -12173,6 +12160,38 @@ export type GcpSecretManagerEndpointDtoModeEnum = typeof GcpSecretManagerEndpoin
 /**
  * 
  * @export
+ * @interface GcpServiceAccountKeyCredentialsRequest
+ */
+export interface GcpServiceAccountKeyCredentialsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof GcpServiceAccountKeyCredentialsRequest
+     */
+    'name': string;
+    /**
+     * Optional explicit credential type.
+     * @type {string}
+     * @memberof GcpServiceAccountKeyCredentialsRequest
+     */
+    'credential_type'?: GcpServiceAccountKeyCredentialsRequestCredentialTypeEnum;
+    /**
+     * The json must be base64 encoded
+     * @type {string}
+     * @memberof GcpServiceAccountKeyCredentialsRequest
+     */
+    'gcp_credentials': string;
+}
+
+export const GcpServiceAccountKeyCredentialsRequestCredentialTypeEnum = {
+    SERVICE_ACCOUNT_KEY: 'SERVICE_ACCOUNT_KEY'
+} as const;
+
+export type GcpServiceAccountKeyCredentialsRequestCredentialTypeEnum = typeof GcpServiceAccountKeyCredentialsRequestCredentialTypeEnum[keyof typeof GcpServiceAccountKeyCredentialsRequestCredentialTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface GcpStaticClusterCredentials
  */
 export interface GcpStaticClusterCredentials {
@@ -12201,6 +12220,113 @@ export const GcpStaticClusterCredentialsObjectTypeEnum = {
 } as const;
 
 export type GcpStaticClusterCredentialsObjectTypeEnum = typeof GcpStaticClusterCredentialsObjectTypeEnum[keyof typeof GcpStaticClusterCredentialsObjectTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface GcpWorkloadIdentityFederationClusterCredentials
+ */
+export interface GcpWorkloadIdentityFederationClusterCredentials {
+    /**
+     * 
+     * @type {string}
+     * @memberof GcpWorkloadIdentityFederationClusterCredentials
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GcpWorkloadIdentityFederationClusterCredentials
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GcpWorkloadIdentityFederationClusterCredentials
+     */
+    'object_type': GcpWorkloadIdentityFederationClusterCredentialsObjectTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof GcpWorkloadIdentityFederationClusterCredentials
+     */
+    'project_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GcpWorkloadIdentityFederationClusterCredentials
+     */
+    'service_account_email': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GcpWorkloadIdentityFederationClusterCredentials
+     */
+    'workload_identity_project_number': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GcpWorkloadIdentityFederationClusterCredentials
+     */
+    'workload_identity_pool_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GcpWorkloadIdentityFederationClusterCredentials
+     */
+    'workload_identity_provider_id': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof GcpWorkloadIdentityFederationClusterCredentials
+     */
+    'token_lifetime_seconds': number;
+}
+
+export const GcpWorkloadIdentityFederationClusterCredentialsObjectTypeEnum = {
+    GCP_WORKLOAD_IDENTITY_FEDERATION: 'GCP_WORKLOAD_IDENTITY_FEDERATION'
+} as const;
+
+export type GcpWorkloadIdentityFederationClusterCredentialsObjectTypeEnum = typeof GcpWorkloadIdentityFederationClusterCredentialsObjectTypeEnum[keyof typeof GcpWorkloadIdentityFederationClusterCredentialsObjectTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface GcpWorkloadIdentityFederationCredentialsRequest
+ */
+export interface GcpWorkloadIdentityFederationCredentialsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof GcpWorkloadIdentityFederationCredentialsRequest
+     */
+    'name': string;
+    /**
+     * Optional explicit credential type.
+     * @type {string}
+     * @memberof GcpWorkloadIdentityFederationCredentialsRequest
+     */
+    'credential_type'?: GcpWorkloadIdentityFederationCredentialsRequestCredentialTypeEnum;
+    /**
+     * GCP service account email to impersonate.
+     * @type {string}
+     * @memberof GcpWorkloadIdentityFederationCredentialsRequest
+     */
+    'service_account_email': string;
+    /**
+     * Full Workload Identity Provider resource.
+     * @type {string}
+     * @memberof GcpWorkloadIdentityFederationCredentialsRequest
+     */
+    'workload_identity_provider_resource': string;
+}
+
+export const GcpWorkloadIdentityFederationCredentialsRequestCredentialTypeEnum = {
+    WORKLOAD_IDENTITY_FEDERATION: 'WORKLOAD_IDENTITY_FEDERATION',
+    WIF: 'WIF'
+} as const;
+
+export type GcpWorkloadIdentityFederationCredentialsRequestCredentialTypeEnum = typeof GcpWorkloadIdentityFederationCredentialsRequestCredentialTypeEnum[keyof typeof GcpWorkloadIdentityFederationCredentialsRequestCredentialTypeEnum];
 
 /**
  * 
