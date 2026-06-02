@@ -32025,6 +32025,142 @@ export class BillingApi extends BaseAPI {
 
 
 /**
+ * BlueprintCatalogApi - axios parameter creator
+ * @export
+ */
+export const BlueprintCatalogApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get the README of a blueprint catalog service
+         * @param {string} organizationId Organization ID
+         * @param {string} provider Cloud provider (e.g. aws, gcp, azure)
+         * @param {string} serviceFamily Service family (e.g. mysql, postgresql)
+         * @param {string} serviceVersion Service version (e.g. 8, 14)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBlueprintCatalogServiceReadme: async (organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getBlueprintCatalogServiceReadme', 'organizationId', organizationId)
+            // verify required parameter 'provider' is not null or undefined
+            assertParamExists('getBlueprintCatalogServiceReadme', 'provider', provider)
+            // verify required parameter 'serviceFamily' is not null or undefined
+            assertParamExists('getBlueprintCatalogServiceReadme', 'serviceFamily', serviceFamily)
+            // verify required parameter 'serviceVersion' is not null or undefined
+            assertParamExists('getBlueprintCatalogServiceReadme', 'serviceVersion', serviceVersion)
+            const localVarPath = `/organization/{organizationId}/blueprint/catalog/{provider}/{serviceFamily}/{serviceVersion}/readme`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"provider"}}`, encodeURIComponent(String(provider)))
+                .replace(`{${"serviceFamily"}}`, encodeURIComponent(String(serviceFamily)))
+                .replace(`{${"serviceVersion"}}`, encodeURIComponent(String(serviceVersion)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BlueprintCatalogApi - functional programming interface
+ * @export
+ */
+export const BlueprintCatalogApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BlueprintCatalogApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get the README of a blueprint catalog service
+         * @param {string} organizationId Organization ID
+         * @param {string} provider Cloud provider (e.g. aws, gcp, azure)
+         * @param {string} serviceFamily Service family (e.g. mysql, postgresql)
+         * @param {string} serviceVersion Service version (e.g. 8, 14)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBlueprintCatalogServiceReadme(organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBlueprintCatalogServiceReadme(organizationId, provider, serviceFamily, serviceVersion, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BlueprintCatalogApi.getBlueprintCatalogServiceReadme']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * BlueprintCatalogApi - factory interface
+ * @export
+ */
+export const BlueprintCatalogApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BlueprintCatalogApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get the README of a blueprint catalog service
+         * @param {string} organizationId Organization ID
+         * @param {string} provider Cloud provider (e.g. aws, gcp, azure)
+         * @param {string} serviceFamily Service family (e.g. mysql, postgresql)
+         * @param {string} serviceVersion Service version (e.g. 8, 14)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBlueprintCatalogServiceReadme(organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, options?: RawAxiosRequestConfig): AxiosPromise<string> {
+            return localVarFp.getBlueprintCatalogServiceReadme(organizationId, provider, serviceFamily, serviceVersion, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * BlueprintCatalogApi - object-oriented interface
+ * @export
+ * @class BlueprintCatalogApi
+ * @extends {BaseAPI}
+ */
+export class BlueprintCatalogApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get the README of a blueprint catalog service
+     * @param {string} organizationId Organization ID
+     * @param {string} provider Cloud provider (e.g. aws, gcp, azure)
+     * @param {string} serviceFamily Service family (e.g. mysql, postgresql)
+     * @param {string} serviceVersion Service version (e.g. 8, 14)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlueprintCatalogApi
+     */
+    public getBlueprintCatalogServiceReadme(organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, options?: RawAxiosRequestConfig) {
+        return BlueprintCatalogApiFp(this.configuration).getBlueprintCatalogServiceReadme(organizationId, provider, serviceFamily, serviceVersion, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * BlueprintMainCallsApi - axios parameter creator
  * @export
  */
