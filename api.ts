@@ -3445,6 +3445,105 @@ export interface BillingStatus {
 /**
  * 
  * @export
+ * @interface BlueprintCatalogResponse
+ */
+export interface BlueprintCatalogResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintCatalogResponse
+     */
+    'version': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintCatalogResponse
+     */
+    'generatedAt': string;
+    /**
+     * 
+     * @type {Array<BlueprintItem>}
+     * @memberof BlueprintCatalogResponse
+     */
+    'blueprints': Array<BlueprintItem>;
+}
+/**
+ * 
+ * @export
+ * @interface BlueprintItem
+ */
+export interface BlueprintItem {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintItem
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintItem
+     */
+    'kind': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintItem
+     */
+    'description': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintItem
+     */
+    'icon': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BlueprintItem
+     */
+    'categories': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintItem
+     */
+    'provider': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintItem
+     */
+    'serviceFamily': string;
+    /**
+     * 
+     * @type {Array<BlueprintMajorVersion>}
+     * @memberof BlueprintItem
+     */
+    'majorVersions': Array<BlueprintMajorVersion>;
+}
+/**
+ * 
+ * @export
+ * @interface BlueprintMajorVersion
+ */
+export interface BlueprintMajorVersion {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintMajorVersion
+     */
+    'serviceVersion': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintMajorVersion
+     */
+    'latestTag': string;
+}
+/**
+ * 
+ * @export
  * @interface Budget
  */
 export interface Budget {
@@ -31920,6 +32019,121 @@ export class BillingApi extends BaseAPI {
      */
     public organizationDownloadAllInvoices(organizationId: string, options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).organizationDownloadAllInvoices(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * BlueprintMainCallsApi - axios parameter creator
+ * @export
+ */
+export const BlueprintMainCallsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Retrieves the Qovery service catalog from the public GitHub repository (Qovery/service-catalog). The catalog lists all available blueprints that can be deployed.
+         * @summary Get the blueprint service catalog
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBlueprintCatalog: async (organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getBlueprintCatalog', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/blueprint/catalog`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BlueprintMainCallsApi - functional programming interface
+ * @export
+ */
+export const BlueprintMainCallsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BlueprintMainCallsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Retrieves the Qovery service catalog from the public GitHub repository (Qovery/service-catalog). The catalog lists all available blueprints that can be deployed.
+         * @summary Get the blueprint service catalog
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBlueprintCatalog(organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintCatalogResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBlueprintCatalog(organizationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BlueprintMainCallsApi.getBlueprintCatalog']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * BlueprintMainCallsApi - factory interface
+ * @export
+ */
+export const BlueprintMainCallsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BlueprintMainCallsApiFp(configuration)
+    return {
+        /**
+         * Retrieves the Qovery service catalog from the public GitHub repository (Qovery/service-catalog). The catalog lists all available blueprints that can be deployed.
+         * @summary Get the blueprint service catalog
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBlueprintCatalog(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<BlueprintCatalogResponse> {
+            return localVarFp.getBlueprintCatalog(organizationId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * BlueprintMainCallsApi - object-oriented interface
+ * @export
+ * @class BlueprintMainCallsApi
+ * @extends {BaseAPI}
+ */
+export class BlueprintMainCallsApi extends BaseAPI {
+    /**
+     * Retrieves the Qovery service catalog from the public GitHub repository (Qovery/service-catalog). The catalog lists all available blueprints that can be deployed.
+     * @summary Get the blueprint service catalog
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlueprintMainCallsApi
+     */
+    public getBlueprintCatalog(organizationId: string, options?: RawAxiosRequestConfig) {
+        return BlueprintMainCallsApiFp(this.configuration).getBlueprintCatalog(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
