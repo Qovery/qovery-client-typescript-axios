@@ -7144,19 +7144,7 @@ export interface ContainerRegistryRequestConfig {
      * @type {string}
      * @memberof ContainerRegistryRequestConfig
      */
-    'workload_identity_project_number'?: string;
-    /**
-     * Required if kind is `GCP_ARTIFACT_REGISTRY` and gcp_credentials_type is `workload_identity_federation`
-     * @type {string}
-     * @memberof ContainerRegistryRequestConfig
-     */
-    'workload_identity_pool_id'?: string;
-    /**
-     * Required if kind is `GCP_ARTIFACT_REGISTRY` and gcp_credentials_type is `workload_identity_federation`
-     * @type {string}
-     * @memberof ContainerRegistryRequestConfig
-     */
-    'workload_identity_provider_id'?: string;
+    'workload_identity_provider_resource'?: string;
     /**
      * Optional if kind is `GCP_ARTIFACT_REGISTRY` and gcp_credentials_type is `workload_identity_federation`
      * @type {number}
@@ -7354,19 +7342,7 @@ export interface ContainerRegistryResponseAllOfConfig {
      * @type {string}
      * @memberof ContainerRegistryResponseAllOfConfig
      */
-    'workload_identity_project_number'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContainerRegistryResponseAllOfConfig
-     */
-    'workload_identity_pool_id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContainerRegistryResponseAllOfConfig
-     */
-    'workload_identity_provider_id'?: string;
+    'workload_identity_provider_resource'?: string;
     /**
      * 
      * @type {number}
@@ -12465,19 +12441,7 @@ export interface GcpWorkloadIdentityFederationClusterCredentials {
      * @type {string}
      * @memberof GcpWorkloadIdentityFederationClusterCredentials
      */
-    'workload_identity_project_number': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GcpWorkloadIdentityFederationClusterCredentials
-     */
-    'workload_identity_pool_id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GcpWorkloadIdentityFederationClusterCredentials
-     */
-    'workload_identity_provider_id': string;
+    'workload_identity_provider_resource': string;
     /**
      * 
      * @type {number}
