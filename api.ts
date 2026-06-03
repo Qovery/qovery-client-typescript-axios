@@ -7116,11 +7116,53 @@ export interface ContainerRegistryRequestConfig {
      */
     'scaleway_project_id'?: string;
     /**
-     * Required if kind is `GCP_ARTIFACT_REGISTRY`
+     * Required if kind is `GCP_ARTIFACT_REGISTRY`. For GCP Artifact Registry, you can either set a service account JSON key with json_credentials or use Workload Identity Federation with gcp_credentials_type.
      * @type {string}
      * @memberof ContainerRegistryRequestConfig
      */
     'json_credentials'?: string;
+    /**
+     * For GCP Artifact Registry, you can either set a service account JSON key with json_credentials or use Workload Identity Federation with gcp_credentials_type.
+     * @type {string}
+     * @memberof ContainerRegistryRequestConfig
+     */
+    'gcp_credentials_type'?: ContainerRegistryRequestConfigGcpCredentialsTypeEnum;
+    /**
+     * Required if kind is `GCP_ARTIFACT_REGISTRY` and gcp_credentials_type is `workload_identity_federation`
+     * @type {string}
+     * @memberof ContainerRegistryRequestConfig
+     */
+    'project_id'?: string;
+    /**
+     * Required if kind is `GCP_ARTIFACT_REGISTRY` and gcp_credentials_type is `workload_identity_federation`
+     * @type {string}
+     * @memberof ContainerRegistryRequestConfig
+     */
+    'service_account_email'?: string;
+    /**
+     * Required if kind is `GCP_ARTIFACT_REGISTRY` and gcp_credentials_type is `workload_identity_federation`
+     * @type {string}
+     * @memberof ContainerRegistryRequestConfig
+     */
+    'workload_identity_project_number'?: string;
+    /**
+     * Required if kind is `GCP_ARTIFACT_REGISTRY` and gcp_credentials_type is `workload_identity_federation`
+     * @type {string}
+     * @memberof ContainerRegistryRequestConfig
+     */
+    'workload_identity_pool_id'?: string;
+    /**
+     * Required if kind is `GCP_ARTIFACT_REGISTRY` and gcp_credentials_type is `workload_identity_federation`
+     * @type {string}
+     * @memberof ContainerRegistryRequestConfig
+     */
+    'workload_identity_provider_id'?: string;
+    /**
+     * Optional if kind is `GCP_ARTIFACT_REGISTRY` and gcp_credentials_type is `workload_identity_federation`
+     * @type {number}
+     * @memberof ContainerRegistryRequestConfig
+     */
+    'token_lifetime_seconds'?: number;
     /**
      * optional, for kind `DOCKER_HUB`   We encourage you to set credentials for Docker Hub due to the limits on the pull rate 
      * @type {string}
@@ -7152,6 +7194,13 @@ export interface ContainerRegistryRequestConfig {
      */
     'azure_subscription_id'?: string;
 }
+
+export const ContainerRegistryRequestConfigGcpCredentialsTypeEnum = {
+    WORKLOAD_IDENTITY_FEDERATION: 'workload_identity_federation'
+} as const;
+
+export type ContainerRegistryRequestConfigGcpCredentialsTypeEnum = typeof ContainerRegistryRequestConfigGcpCredentialsTypeEnum[keyof typeof ContainerRegistryRequestConfigGcpCredentialsTypeEnum];
+
 /**
  * 
  * @export
@@ -7287,6 +7336,48 @@ export interface ContainerRegistryResponseAllOfConfig {
      * @type {string}
      * @memberof ContainerRegistryResponseAllOfConfig
      */
+    'gcp_credentials_type'?: ContainerRegistryResponseAllOfConfigGcpCredentialsTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOfConfig
+     */
+    'project_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOfConfig
+     */
+    'service_account_email'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOfConfig
+     */
+    'workload_identity_project_number'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOfConfig
+     */
+    'workload_identity_pool_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOfConfig
+     */
+    'workload_identity_provider_id'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ContainerRegistryResponseAllOfConfig
+     */
+    'token_lifetime_seconds'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerRegistryResponseAllOfConfig
+     */
     'azure_tenant_id'?: string;
     /**
      * 
@@ -7307,6 +7398,13 @@ export interface ContainerRegistryResponseAllOfConfig {
      */
     'azure_application_object_id'?: string;
 }
+
+export const ContainerRegistryResponseAllOfConfigGcpCredentialsTypeEnum = {
+    WORKLOAD_IDENTITY_FEDERATION: 'workload_identity_federation'
+} as const;
+
+export type ContainerRegistryResponseAllOfConfigGcpCredentialsTypeEnum = typeof ContainerRegistryResponseAllOfConfigGcpCredentialsTypeEnum[keyof typeof ContainerRegistryResponseAllOfConfigGcpCredentialsTypeEnum];
+
 /**
  * 
  * @export
