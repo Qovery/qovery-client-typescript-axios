@@ -1201,6 +1201,12 @@ export interface ApplicationAdvancedSettings {
      */
     'build.disable_buildkit_cache'?: boolean;
     /**
+     * skip git submodules update when cloning the repository
+     * @type {boolean}
+     * @memberof ApplicationAdvancedSettings
+     */
+    'build.skip_git_submodules'?: boolean;
+    /**
      * 
      * @type {number}
      * @memberof ApplicationAdvancedSettings
@@ -14567,6 +14573,12 @@ export interface HelmResponse {
      * @memberof HelmResponse
      */
     'service_type': ServiceTypeEnum;
+    /**
+     * The blueprint ID the service has been created from 
+     * @type {string}
+     * @memberof HelmResponse
+     */
+    'blueprintId'?: string | null;
 }
 
 
@@ -15115,6 +15127,12 @@ export interface JobAdvancedSettings {
      * @memberof JobAdvancedSettings
      */
     'build.disable_buildkit_cache'?: boolean;
+    /**
+     * skip git submodules update when cloning the repository
+     * @type {boolean}
+     * @memberof JobAdvancedSettings
+     */
+    'build.skip_git_submodules'?: boolean;
     /**
      * define how long in seconds an application is supposed to be stopped gracefully
      * @type {number}
@@ -22469,6 +22487,12 @@ export interface TerraformAdvancedSettings {
      */
     'build.ephemeral_storage_in_gib'?: number;
     /**
+     * skip git submodules update when cloning the repository
+     * @type {boolean}
+     * @memberof TerraformAdvancedSettings
+     */
+    'build.skip_git_submodules'?: boolean;
+    /**
      * define how long in seconds an application is supposed to be stopped gracefully
      * @type {number}
      * @memberof TerraformAdvancedSettings
@@ -23222,6 +23246,12 @@ export interface TerraformResponse {
      * @memberof TerraformResponse
      */
     'dockerfile_fragment'?: TerraformResponseAllOfDockerfileFragment | null;
+    /**
+     * The blueprint ID the service has been created from 
+     * @type {string}
+     * @memberof TerraformResponse
+     */
+    'blueprintId'?: string | null;
 }
 
 
