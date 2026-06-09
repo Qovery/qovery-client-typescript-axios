@@ -14400,11 +14400,11 @@ export interface HelmRequest {
      */
     'icon_uri'?: string;
     /**
-     * The blueprint ID the service has been created from  
+     * The blueprint ID the service has been created from 
      * @type {string}
      * @memberof HelmRequest
      */
-    'blueprintId'?: string | null;
+    'blueprint_id'?: string | null;
 }
 /**
  * @type HelmRequestAllOfSource
@@ -14671,7 +14671,7 @@ export interface HelmResponse {
      * @type {string}
      * @memberof HelmResponse
      */
-    'blueprintId'?: string | null;
+    'blueprint_id'?: string | null;
 }
 
 
@@ -23047,11 +23047,11 @@ export interface TerraformRequest {
      */
     'dockerfile_fragment'?: TerraformRequestDockerfileFragment | null;
     /**
-     * The blueprint ID the service has been created from  
+     * The blueprint ID the service has been created from 
      * @type {string}
      * @memberof TerraformRequest
      */
-    'blueprintId'?: string | null;
+    'blueprint_id'?: string | null;
 }
 
 
@@ -23344,7 +23344,7 @@ export interface TerraformResponse {
      * @type {string}
      * @memberof TerraformResponse
      */
-    'blueprintId'?: string | null;
+    'blueprint_id'?: string | null;
 }
 
 
