@@ -3476,6 +3476,43 @@ export interface BlueprintCatalogResponse {
 /**
  * 
  * @export
+ * @interface BlueprintCreateRequest
+ */
+export interface BlueprintCreateRequest {
+    /**
+     * Display name for the service
+     * @type {string}
+     * @memberof BlueprintCreateRequest
+     */
+    'name': string;
+    /**
+     * Catalog tag identifying the blueprint version
+     * @type {string}
+     * @memberof BlueprintCreateRequest
+     */
+    'tag': string;
+    /**
+     * Icon URL for the service
+     * @type {string}
+     * @memberof BlueprintCreateRequest
+     */
+    'icon': string;
+    /**
+     * Variable overrides for the blueprint
+     * @type {Array<BlueprintVariableRequest>}
+     * @memberof BlueprintCreateRequest
+     */
+    'variables'?: Array<BlueprintVariableRequest>;
+    /**
+     * Partial spec overrides merged on top of the blueprint manifest
+     * @type {{ [key: string]: any; }}
+     * @memberof BlueprintCreateRequest
+     */
+    'specOverrides'?: { [key: string]: any; } | null;
+}
+/**
+ * 
+ * @export
  * @interface BlueprintItem
  */
 export interface BlueprintItem {
@@ -3546,6 +3583,62 @@ export interface BlueprintMajorVersion {
      * @memberof BlueprintMajorVersion
      */
     'latestTag': string;
+}
+/**
+ * 
+ * @export
+ * @interface BlueprintResponse
+ */
+export interface BlueprintResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintResponse
+     */
+    'id': string;
+    /**
+     * URL to the blueprint catalog entry
+     * @type {string}
+     * @memberof BlueprintResponse
+     */
+    'catalogUrl': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintResponse
+     */
+    'tag': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintResponse
+     */
+    'environmentId': string;
+}
+/**
+ * 
+ * @export
+ * @interface BlueprintVariableRequest
+ */
+export interface BlueprintVariableRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintVariableRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintVariableRequest
+     */
+    'value': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BlueprintVariableRequest
+     */
+    'isSecret'?: boolean;
 }
 /**
  * 
@@ -32271,6 +32364,58 @@ export class BlueprintCatalogApi extends BaseAPI {
 export const BlueprintMainCallsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Instantiates a blueprint from the service catalog into the given environment. Pass `deploy=true` to trigger an immediate deployment after creation.
+         * @summary Create a blueprint service in an environment
+         * @param {string} environmentId Environment ID
+         * @param {BlueprintCreateRequest} blueprintCreateRequest 
+         * @param {boolean} [deploy] Trigger a deployment immediately after creation
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createBlueprint: async (environmentId: string, blueprintCreateRequest: BlueprintCreateRequest, deploy?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('createBlueprint', 'environmentId', environmentId)
+            // verify required parameter 'blueprintCreateRequest' is not null or undefined
+            assertParamExists('createBlueprint', 'blueprintCreateRequest', blueprintCreateRequest)
+            const localVarPath = `/environment/{environmentId}/blueprint`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (deploy !== undefined) {
+                localVarQueryParameter['deploy'] = deploy;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(blueprintCreateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Retrieves the Qovery service catalog from the public GitHub repository (Qovery/service-catalog). The catalog lists all available blueprints that can be deployed.
          * @summary Get the blueprint service catalog
          * @param {string} organizationId Organization ID
@@ -32322,6 +32467,21 @@ export const BlueprintMainCallsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BlueprintMainCallsApiAxiosParamCreator(configuration)
     return {
         /**
+         * Instantiates a blueprint from the service catalog into the given environment. Pass `deploy=true` to trigger an immediate deployment after creation.
+         * @summary Create a blueprint service in an environment
+         * @param {string} environmentId Environment ID
+         * @param {BlueprintCreateRequest} blueprintCreateRequest 
+         * @param {boolean} [deploy] Trigger a deployment immediately after creation
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createBlueprint(environmentId: string, blueprintCreateRequest: BlueprintCreateRequest, deploy?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createBlueprint(environmentId, blueprintCreateRequest, deploy, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BlueprintMainCallsApi.createBlueprint']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Retrieves the Qovery service catalog from the public GitHub repository (Qovery/service-catalog). The catalog lists all available blueprints that can be deployed.
          * @summary Get the blueprint service catalog
          * @param {string} organizationId Organization ID
@@ -32345,6 +32505,18 @@ export const BlueprintMainCallsApiFactory = function (configuration?: Configurat
     const localVarFp = BlueprintMainCallsApiFp(configuration)
     return {
         /**
+         * Instantiates a blueprint from the service catalog into the given environment. Pass `deploy=true` to trigger an immediate deployment after creation.
+         * @summary Create a blueprint service in an environment
+         * @param {string} environmentId Environment ID
+         * @param {BlueprintCreateRequest} blueprintCreateRequest 
+         * @param {boolean} [deploy] Trigger a deployment immediately after creation
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createBlueprint(environmentId: string, blueprintCreateRequest: BlueprintCreateRequest, deploy?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BlueprintResponse> {
+            return localVarFp.createBlueprint(environmentId, blueprintCreateRequest, deploy, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Retrieves the Qovery service catalog from the public GitHub repository (Qovery/service-catalog). The catalog lists all available blueprints that can be deployed.
          * @summary Get the blueprint service catalog
          * @param {string} organizationId Organization ID
@@ -32364,6 +32536,20 @@ export const BlueprintMainCallsApiFactory = function (configuration?: Configurat
  * @extends {BaseAPI}
  */
 export class BlueprintMainCallsApi extends BaseAPI {
+    /**
+     * Instantiates a blueprint from the service catalog into the given environment. Pass `deploy=true` to trigger an immediate deployment after creation.
+     * @summary Create a blueprint service in an environment
+     * @param {string} environmentId Environment ID
+     * @param {BlueprintCreateRequest} blueprintCreateRequest 
+     * @param {boolean} [deploy] Trigger a deployment immediately after creation
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlueprintMainCallsApi
+     */
+    public createBlueprint(environmentId: string, blueprintCreateRequest: BlueprintCreateRequest, deploy?: boolean, options?: RawAxiosRequestConfig) {
+        return BlueprintMainCallsApiFp(this.configuration).createBlueprint(environmentId, blueprintCreateRequest, deploy, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Retrieves the Qovery service catalog from the public GitHub repository (Qovery/service-catalog). The catalog lists all available blueprints that can be deployed.
      * @summary Get the blueprint service catalog
