@@ -3585,6 +3585,134 @@ export interface BlueprintMajorVersion {
     'latestTag': string;
 }
 /**
+ * An auto-sourced, read-only value (from spec.contextVariables); not user-editable.
+ * @export
+ * @interface BlueprintManifestContextVariableField
+ */
+export interface BlueprintManifestContextVariableField {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintManifestContextVariableField
+     */
+    'kind': BlueprintManifestContextVariableFieldKindEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintManifestContextVariableField
+     */
+    'name': string;
+    /**
+     * Origin of the auto-sourced value (e.g. cluster.region)
+     * @type {string}
+     * @memberof BlueprintManifestContextVariableField
+     */
+    'source'?: string | null;
+}
+
+export const BlueprintManifestContextVariableFieldKindEnum = {
+    CONTEXT_VARIABLE: 'contextVariable'
+} as const;
+
+export type BlueprintManifestContextVariableFieldKindEnum = typeof BlueprintManifestContextVariableFieldKindEnum[keyof typeof BlueprintManifestContextVariableFieldKindEnum];
+
+/**
+ * Field type with its type-specific validation conditions, discriminated by \"type\".
+ * @export
+ * @interface BlueprintManifestFieldType
+ */
+export interface BlueprintManifestFieldType {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintManifestFieldType
+     */
+    'type': BlueprintManifestFieldTypeTypeEnum;
+    /**
+     * Lower bound, only present for number fields
+     * @type {number}
+     * @memberof BlueprintManifestFieldType
+     */
+    'min'?: number | null;
+    /**
+     * Upper bound, only present for number fields
+     * @type {number}
+     * @memberof BlueprintManifestFieldType
+     */
+    'max'?: number | null;
+}
+
+export const BlueprintManifestFieldTypeTypeEnum = {
+    STRING: 'string',
+    BOOL: 'bool',
+    NUMBER: 'number'
+} as const;
+
+export type BlueprintManifestFieldTypeTypeEnum = typeof BlueprintManifestFieldTypeTypeEnum[keyof typeof BlueprintManifestFieldTypeTypeEnum];
+
+/**
+ * An editable form input the user fills in (from spec.variables).
+ * @export
+ * @interface BlueprintManifestVariableField
+ */
+export interface BlueprintManifestVariableField {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintManifestVariableField
+     */
+    'kind': BlueprintManifestVariableFieldKindEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintManifestVariableField
+     */
+    'name': string;
+    /**
+     * 
+     * @type {BlueprintManifestFieldType}
+     * @memberof BlueprintManifestVariableField
+     */
+    'type': BlueprintManifestFieldType;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BlueprintManifestVariableField
+     */
+    'required': boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BlueprintManifestVariableField
+     */
+    'is_secret': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintManifestVariableField
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BlueprintManifestVariableField
+     */
+    'allowed_values'?: Array<string> | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintManifestVariableField
+     */
+    'default_value'?: string | null;
+}
+
+export const BlueprintManifestVariableFieldKindEnum = {
+    VARIABLE: 'variable'
+} as const;
+
+export type BlueprintManifestVariableFieldKindEnum = typeof BlueprintManifestVariableFieldKindEnum[keyof typeof BlueprintManifestVariableFieldKindEnum];
+
+/**
  * 
  * @export
  * @interface BlueprintResponse
@@ -12657,6 +12785,25 @@ export interface GenericObjectCurrentCost {
      */
     'cost': Cost;
 }
+/**
+ * 
+ * @export
+ * @interface GetBlueprintCatalogServiceManifest200Response
+ */
+export interface GetBlueprintCatalogServiceManifest200Response {
+    /**
+     * 
+     * @type {Array<GetBlueprintCatalogServiceManifest200ResponseResultsInner>}
+     * @memberof GetBlueprintCatalogServiceManifest200Response
+     */
+    'results'?: Array<GetBlueprintCatalogServiceManifest200ResponseResultsInner>;
+}
+/**
+ * @type GetBlueprintCatalogServiceManifest200ResponseResultsInner
+ * @export
+ */
+export type GetBlueprintCatalogServiceManifest200ResponseResultsInner = { kind: 'contextVariable' } & BlueprintManifestContextVariableField | { kind: 'variable' } & BlueprintManifestVariableField;
+
 /**
  * 
  * @export
@@ -32228,6 +32375,59 @@ export class BillingApi extends BaseAPI {
 export const BlueprintCatalogApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Returns the list of form fields the console must display to deploy the selected blueprint, derived from the blueprint\'s qbm.yml manifest. Includes editable variables (overridable=true) and auto-sourced context variables (overridable=false, with a source).
+         * @summary Get the input fields to display for a blueprint catalog service
+         * @param {string} organizationId Organization ID
+         * @param {string} provider Cloud provider (e.g. aws, gcp, azure)
+         * @param {string} serviceFamily Service family (e.g. mysql, postgresql)
+         * @param {string} serviceVersion Service version (e.g. 8, 14)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBlueprintCatalogServiceManifest: async (organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getBlueprintCatalogServiceManifest', 'organizationId', organizationId)
+            // verify required parameter 'provider' is not null or undefined
+            assertParamExists('getBlueprintCatalogServiceManifest', 'provider', provider)
+            // verify required parameter 'serviceFamily' is not null or undefined
+            assertParamExists('getBlueprintCatalogServiceManifest', 'serviceFamily', serviceFamily)
+            // verify required parameter 'serviceVersion' is not null or undefined
+            assertParamExists('getBlueprintCatalogServiceManifest', 'serviceVersion', serviceVersion)
+            const localVarPath = `/organization/{organizationId}/blueprint/catalog/{provider}/{serviceFamily}/{serviceVersion}/manifest`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"provider"}}`, encodeURIComponent(String(provider)))
+                .replace(`{${"serviceFamily"}}`, encodeURIComponent(String(serviceFamily)))
+                .replace(`{${"serviceVersion"}}`, encodeURIComponent(String(serviceVersion)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Get the README of a blueprint catalog service
          * @param {string} organizationId Organization ID
@@ -32291,6 +32491,22 @@ export const BlueprintCatalogApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BlueprintCatalogApiAxiosParamCreator(configuration)
     return {
         /**
+         * Returns the list of form fields the console must display to deploy the selected blueprint, derived from the blueprint\'s qbm.yml manifest. Includes editable variables (overridable=true) and auto-sourced context variables (overridable=false, with a source).
+         * @summary Get the input fields to display for a blueprint catalog service
+         * @param {string} organizationId Organization ID
+         * @param {string} provider Cloud provider (e.g. aws, gcp, azure)
+         * @param {string} serviceFamily Service family (e.g. mysql, postgresql)
+         * @param {string} serviceVersion Service version (e.g. 8, 14)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBlueprintCatalogServiceManifest(organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBlueprintCatalogServiceManifest200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBlueprintCatalogServiceManifest(organizationId, provider, serviceFamily, serviceVersion, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BlueprintCatalogApi.getBlueprintCatalogServiceManifest']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Get the README of a blueprint catalog service
          * @param {string} organizationId Organization ID
@@ -32317,6 +32533,19 @@ export const BlueprintCatalogApiFactory = function (configuration?: Configuratio
     const localVarFp = BlueprintCatalogApiFp(configuration)
     return {
         /**
+         * Returns the list of form fields the console must display to deploy the selected blueprint, derived from the blueprint\'s qbm.yml manifest. Includes editable variables (overridable=true) and auto-sourced context variables (overridable=false, with a source).
+         * @summary Get the input fields to display for a blueprint catalog service
+         * @param {string} organizationId Organization ID
+         * @param {string} provider Cloud provider (e.g. aws, gcp, azure)
+         * @param {string} serviceFamily Service family (e.g. mysql, postgresql)
+         * @param {string} serviceVersion Service version (e.g. 8, 14)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBlueprintCatalogServiceManifest(organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, options?: RawAxiosRequestConfig): AxiosPromise<GetBlueprintCatalogServiceManifest200Response> {
+            return localVarFp.getBlueprintCatalogServiceManifest(organizationId, provider, serviceFamily, serviceVersion, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Get the README of a blueprint catalog service
          * @param {string} organizationId Organization ID
@@ -32339,6 +32568,21 @@ export const BlueprintCatalogApiFactory = function (configuration?: Configuratio
  * @extends {BaseAPI}
  */
 export class BlueprintCatalogApi extends BaseAPI {
+    /**
+     * Returns the list of form fields the console must display to deploy the selected blueprint, derived from the blueprint\'s qbm.yml manifest. Includes editable variables (overridable=true) and auto-sourced context variables (overridable=false, with a source).
+     * @summary Get the input fields to display for a blueprint catalog service
+     * @param {string} organizationId Organization ID
+     * @param {string} provider Cloud provider (e.g. aws, gcp, azure)
+     * @param {string} serviceFamily Service family (e.g. mysql, postgresql)
+     * @param {string} serviceVersion Service version (e.g. 8, 14)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlueprintCatalogApi
+     */
+    public getBlueprintCatalogServiceManifest(organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, options?: RawAxiosRequestConfig) {
+        return BlueprintCatalogApiFp(this.configuration).getBlueprintCatalogServiceManifest(organizationId, provider, serviceFamily, serviceVersion, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Get the README of a blueprint catalog service
