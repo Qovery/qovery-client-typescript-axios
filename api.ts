@@ -36554,10 +36554,11 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
          * @param {boolean} [withTokenFromCli] If true, the user auth part will have an exec command with qovery cli
+         * @param {boolean} [readOnly] If true, the kubeconfig exec plugin will request a read-only token backed by a Kubernetes ServiceAccount with the view ClusterRole
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getClusterKubeconfig: async (organizationId: string, clusterId: string, withTokenFromCli?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getClusterKubeconfig: async (organizationId: string, clusterId: string, withTokenFromCli?: boolean, readOnly?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('getClusterKubeconfig', 'organizationId', organizationId)
             // verify required parameter 'clusterId' is not null or undefined
@@ -36585,6 +36586,10 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
 
             if (withTokenFromCli !== undefined) {
                 localVarQueryParameter['with_token_from_cli'] = withTokenFromCli;
+            }
+
+            if (readOnly !== undefined) {
+                localVarQueryParameter['read_only'] = readOnly;
             }
 
 
@@ -37890,11 +37895,12 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
          * @param {boolean} [withTokenFromCli] If true, the user auth part will have an exec command with qovery cli
+         * @param {boolean} [readOnly] If true, the kubeconfig exec plugin will request a read-only token backed by a Kubernetes ServiceAccount with the view ClusterRole
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getClusterKubeconfig(organizationId: string, clusterId: string, withTokenFromCli?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterKubeconfig(organizationId, clusterId, withTokenFromCli, options);
+        async getClusterKubeconfig(organizationId: string, clusterId: string, withTokenFromCli?: boolean, readOnly?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterKubeconfig(organizationId, clusterId, withTokenFromCli, readOnly, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ClustersApi.getClusterKubeconfig']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -38362,11 +38368,12 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
          * @param {boolean} [withTokenFromCli] If true, the user auth part will have an exec command with qovery cli
+         * @param {boolean} [readOnly] If true, the kubeconfig exec plugin will request a read-only token backed by a Kubernetes ServiceAccount with the view ClusterRole
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getClusterKubeconfig(organizationId: string, clusterId: string, withTokenFromCli?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.getClusterKubeconfig(organizationId, clusterId, withTokenFromCli, options).then((request) => request(axios, basePath));
+        getClusterKubeconfig(organizationId: string, clusterId: string, withTokenFromCli?: boolean, readOnly?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<string> {
+            return localVarFp.getClusterKubeconfig(organizationId, clusterId, withTokenFromCli, readOnly, options).then((request) => request(axios, basePath));
         },
         /**
          * List Cluster Kubernetes Events
@@ -38785,12 +38792,13 @@ export class ClustersApi extends BaseAPI {
      * @param {string} organizationId Organization ID
      * @param {string} clusterId Cluster ID
      * @param {boolean} [withTokenFromCli] If true, the user auth part will have an exec command with qovery cli
+     * @param {boolean} [readOnly] If true, the kubeconfig exec plugin will request a read-only token backed by a Kubernetes ServiceAccount with the view ClusterRole
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ClustersApi
      */
-    public getClusterKubeconfig(organizationId: string, clusterId: string, withTokenFromCli?: boolean, options?: RawAxiosRequestConfig) {
-        return ClustersApiFp(this.configuration).getClusterKubeconfig(organizationId, clusterId, withTokenFromCli, options).then((request) => request(this.axios, this.basePath));
+    public getClusterKubeconfig(organizationId: string, clusterId: string, withTokenFromCli?: boolean, readOnly?: boolean, options?: RawAxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).getClusterKubeconfig(organizationId, clusterId, withTokenFromCli, readOnly, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -45527,10 +45535,11 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary Get cluster token by clusterId
          * @param {string} clusterId 
+         * @param {boolean} [readOnly] If true, returns a short-lived token for the qovery-readonly ServiceAccount (bound to view ClusterRole) generated by the cluster-agent
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getClusterTokenByClusterId: async (clusterId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getClusterTokenByClusterId: async (clusterId: string, readOnly?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'clusterId' is not null or undefined
             assertParamExists('getClusterTokenByClusterId', 'clusterId', clusterId)
             const localVarPath = `/cluster/{clusterId}/token`
@@ -45552,6 +45561,10 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (readOnly !== undefined) {
+                localVarQueryParameter['read_only'] = readOnly;
+            }
 
 
     
@@ -45622,11 +45635,12 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get cluster token by clusterId
          * @param {string} clusterId 
+         * @param {boolean} [readOnly] If true, returns a short-lived token for the qovery-readonly ServiceAccount (bound to view ClusterRole) generated by the cluster-agent
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getClusterTokenByClusterId(clusterId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetClusterTokenByClusterId200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterTokenByClusterId(clusterId, options);
+        async getClusterTokenByClusterId(clusterId: string, readOnly?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetClusterTokenByClusterId200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterTokenByClusterId(clusterId, readOnly, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.getClusterTokenByClusterId']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -45658,11 +45672,12 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * 
          * @summary Get cluster token by clusterId
          * @param {string} clusterId 
+         * @param {boolean} [readOnly] If true, returns a short-lived token for the qovery-readonly ServiceAccount (bound to view ClusterRole) generated by the cluster-agent
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getClusterTokenByClusterId(clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<GetClusterTokenByClusterId200Response> {
-            return localVarFp.getClusterTokenByClusterId(clusterId, options).then((request) => request(axios, basePath));
+        getClusterTokenByClusterId(clusterId: string, readOnly?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<GetClusterTokenByClusterId200Response> {
+            return localVarFp.getClusterTokenByClusterId(clusterId, readOnly, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -45688,12 +45703,13 @@ export class DefaultApi extends BaseAPI {
      * 
      * @summary Get cluster token by clusterId
      * @param {string} clusterId 
+     * @param {boolean} [readOnly] If true, returns a short-lived token for the qovery-readonly ServiceAccount (bound to view ClusterRole) generated by the cluster-agent
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public getClusterTokenByClusterId(clusterId: string, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getClusterTokenByClusterId(clusterId, options).then((request) => request(this.axios, this.basePath));
+    public getClusterTokenByClusterId(clusterId: string, readOnly?: boolean, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getClusterTokenByClusterId(clusterId, readOnly, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
