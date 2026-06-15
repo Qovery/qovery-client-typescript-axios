@@ -5467,6 +5467,12 @@ export interface ClusterFeatureGcpExistingVpc {
      * @memberof ClusterFeatureGcpExistingVpc
      */
     'additional_ip_range_pods_names'?: Array<string>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterFeatureGcpExistingVpc
+     */
+    'private_nodes'?: boolean;
 }
 /**
  * 
