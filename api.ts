@@ -3509,7 +3509,7 @@ export interface BlueprintCreateRequest {
      * @type {{ [key: string]: any; }}
      * @memberof BlueprintCreateRequest
      */
-    'specOverrides'?: { [key: string]: any; } | null;
+    'spec_overrides'?: { [key: string]: any; } | null;
 }
 /**
  * 
@@ -3609,6 +3609,12 @@ export interface BlueprintManifestContextVariableField {
      * @memberof BlueprintManifestContextVariableField
      */
     'source'?: string | null;
+    /**
+     * Resolved value of the context variable at the time of the request
+     * @type {string}
+     * @memberof BlueprintManifestContextVariableField
+     */
+    'value'?: string | null;
 }
 
 export const BlueprintManifestContextVariableFieldKindEnum = {
@@ -3629,6 +3635,24 @@ export interface BlueprintManifestFieldType {
      * @memberof BlueprintManifestFieldType
      */
     'type': BlueprintManifestFieldTypeTypeEnum;
+    /**
+     * Regex pattern, only present for string fields
+     * @type {string}
+     * @memberof BlueprintManifestFieldType
+     */
+    'pattern'?: string | null;
+    /**
+     * Minimum length, only present for string fields
+     * @type {number}
+     * @memberof BlueprintManifestFieldType
+     */
+    'min_length'?: number | null;
+    /**
+     * Maximum length, only present for string fields
+     * @type {number}
+     * @memberof BlueprintManifestFieldType
+     */
+    'max_length'?: number | null;
     /**
      * Lower bound, only present for number fields
      * @type {number}
@@ -3716,6 +3740,25 @@ export type BlueprintManifestVariableFieldKindEnum = typeof BlueprintManifestVar
 /**
  * 
  * @export
+ * @interface BlueprintReadmeResponse
+ */
+export interface BlueprintReadmeResponse {
+    /**
+     * README content in Markdown format
+     * @type {string}
+     * @memberof BlueprintReadmeResponse
+     */
+    'content': string;
+    /**
+     * URL of the GitHub repository hosting the blueprint
+     * @type {string}
+     * @memberof BlueprintReadmeResponse
+     */
+    'repository_url': string;
+}
+/**
+ * 
+ * @export
  * @interface BlueprintResponse
  */
 export interface BlueprintResponse {
@@ -3730,7 +3773,7 @@ export interface BlueprintResponse {
      * @type {string}
      * @memberof BlueprintResponse
      */
-    'catalogUrl': string;
+    'catalog_url': string;
     /**
      * 
      * @type {string}
@@ -3742,7 +3785,196 @@ export interface BlueprintResponse {
      * @type {string}
      * @memberof BlueprintResponse
      */
-    'environmentId': string;
+    'environment_id': string;
+}
+/**
+ * 
+ * @export
+ * @interface BlueprintUpdateNewOptionalValue
+ */
+export interface BlueprintUpdateNewOptionalValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintUpdateNewOptionalValue
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintUpdateNewOptionalValue
+     */
+    'default_value'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface BlueprintUpdateNewRequiredValue
+ */
+export interface BlueprintUpdateNewRequiredValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintUpdateNewRequiredValue
+     */
+    'name': string;
+}
+/**
+ * 
+ * @export
+ * @interface BlueprintUpdatePreviewRequest
+ */
+export interface BlueprintUpdatePreviewRequest {
+    /**
+     * Display name for the service
+     * @type {string}
+     * @memberof BlueprintUpdatePreviewRequest
+     */
+    'name': string;
+    /**
+     * Catalog tag identifying the target blueprint version
+     * @type {string}
+     * @memberof BlueprintUpdatePreviewRequest
+     */
+    'tag': string;
+    /**
+     * Icon URL for the service
+     * @type {string}
+     * @memberof BlueprintUpdatePreviewRequest
+     */
+    'icon': string;
+    /**
+     * Variable overrides to apply in the preview
+     * @type {Array<BlueprintVariableRequest>}
+     * @memberof BlueprintUpdatePreviewRequest
+     */
+    'variables'?: Array<BlueprintVariableRequest> | null;
+    /**
+     * Partial spec overrides merged on top of the blueprint manifest
+     * @type {{ [key: string]: any; }}
+     * @memberof BlueprintUpdatePreviewRequest
+     */
+    'spec_overrides'?: { [key: string]: any; } | null;
+}
+/**
+ * 
+ * @export
+ * @interface BlueprintUpdatePreviewResponse
+ */
+export interface BlueprintUpdatePreviewResponse {
+    /**
+     * Identifier of the preview execution
+     * @type {string}
+     * @memberof BlueprintUpdatePreviewResponse
+     */
+    'preview_id': string;
+    /**
+     * Type of the underlying service backing this blueprint
+     * @type {string}
+     * @memberof BlueprintUpdatePreviewResponse
+     */
+    'service_type': BlueprintUpdatePreviewResponseServiceTypeEnum;
+}
+
+export const BlueprintUpdatePreviewResponseServiceTypeEnum = {
+    HELM: 'HELM',
+    TERRAFORM: 'TERRAFORM'
+} as const;
+
+export type BlueprintUpdatePreviewResponseServiceTypeEnum = typeof BlueprintUpdatePreviewResponseServiceTypeEnum[keyof typeof BlueprintUpdatePreviewResponseServiceTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BlueprintUpdateRemovedValue
+ */
+export interface BlueprintUpdateRemovedValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintUpdateRemovedValue
+     */
+    'name': string;
+}
+/**
+ * 
+ * @export
+ * @interface BlueprintUpdateResponse
+ */
+export interface BlueprintUpdateResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BlueprintUpdateResponse
+     */
+    'is_up_to_date': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintUpdateResponse
+     */
+    'latest_tag': string;
+    /**
+     * Variables added in the latest version that are required with no default
+     * @type {Array<BlueprintUpdateNewRequiredValue>}
+     * @memberof BlueprintUpdateResponse
+     */
+    'new_required_values': Array<BlueprintUpdateNewRequiredValue>;
+    /**
+     * Variables added in the latest version that have a default value
+     * @type {Array<BlueprintUpdateNewOptionalValue>}
+     * @memberof BlueprintUpdateResponse
+     */
+    'new_optional_values': Array<BlueprintUpdateNewOptionalValue>;
+    /**
+     * Variables that were optional but are now required in the latest version
+     * @type {Array<BlueprintUpdateNewRequiredValue>}
+     * @memberof BlueprintUpdateResponse
+     */
+    'now_required_values': Array<BlueprintUpdateNewRequiredValue>;
+    /**
+     * Variables whose default value changed between the current and latest versions
+     * @type {Array<BlueprintUpdateUpdatedValue>}
+     * @memberof BlueprintUpdateResponse
+     */
+    'updated_values': Array<BlueprintUpdateUpdatedValue>;
+    /**
+     * Variables that no longer exist in the latest version
+     * @type {Array<BlueprintUpdateRemovedValue>}
+     * @memberof BlueprintUpdateResponse
+     */
+    'removed_values': Array<BlueprintUpdateRemovedValue>;
+}
+/**
+ * 
+ * @export
+ * @interface BlueprintUpdateUpdatedValue
+ */
+export interface BlueprintUpdateUpdatedValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintUpdateUpdatedValue
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintUpdateUpdatedValue
+     */
+    'current_default_value'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintUpdateUpdatedValue
+     */
+    'new_default_value'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintUpdateUpdatedValue
+     */
+    'current_value'?: string | null;
 }
 /**
  * 
@@ -3767,7 +3999,7 @@ export interface BlueprintVariableRequest {
      * @type {boolean}
      * @memberof BlueprintVariableRequest
      */
-    'isSecret'?: boolean;
+    'is_secret'?: boolean;
 }
 /**
  * 
@@ -32382,10 +32614,11 @@ export const BlueprintCatalogApiAxiosParamCreator = function (configuration?: Co
          * @param {string} provider Cloud provider (e.g. aws, gcp, azure)
          * @param {string} serviceFamily Service family (e.g. mysql, postgresql)
          * @param {string} serviceVersion Service version (e.g. 8, 14)
+         * @param {string} environmentId Environment ID used to resolve context variables
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBlueprintCatalogServiceManifest: async (organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBlueprintCatalogServiceManifest: async (organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, environmentId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('getBlueprintCatalogServiceManifest', 'organizationId', organizationId)
             // verify required parameter 'provider' is not null or undefined
@@ -32394,6 +32627,8 @@ export const BlueprintCatalogApiAxiosParamCreator = function (configuration?: Co
             assertParamExists('getBlueprintCatalogServiceManifest', 'serviceFamily', serviceFamily)
             // verify required parameter 'serviceVersion' is not null or undefined
             assertParamExists('getBlueprintCatalogServiceManifest', 'serviceVersion', serviceVersion)
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('getBlueprintCatalogServiceManifest', 'environmentId', environmentId)
             const localVarPath = `/organization/{organizationId}/blueprint/catalog/{provider}/{serviceFamily}/{serviceVersion}/manifest`
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)))
@@ -32416,6 +32651,10 @@ export const BlueprintCatalogApiAxiosParamCreator = function (configuration?: Co
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (environmentId !== undefined) {
+                localVarQueryParameter['environmentId'] = environmentId;
+            }
 
 
     
@@ -32498,11 +32737,12 @@ export const BlueprintCatalogApiFp = function(configuration?: Configuration) {
          * @param {string} provider Cloud provider (e.g. aws, gcp, azure)
          * @param {string} serviceFamily Service family (e.g. mysql, postgresql)
          * @param {string} serviceVersion Service version (e.g. 8, 14)
+         * @param {string} environmentId Environment ID used to resolve context variables
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBlueprintCatalogServiceManifest(organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBlueprintCatalogServiceManifest200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getBlueprintCatalogServiceManifest(organizationId, provider, serviceFamily, serviceVersion, options);
+        async getBlueprintCatalogServiceManifest(organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, environmentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBlueprintCatalogServiceManifest200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBlueprintCatalogServiceManifest(organizationId, provider, serviceFamily, serviceVersion, environmentId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BlueprintCatalogApi.getBlueprintCatalogServiceManifest']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -32517,7 +32757,7 @@ export const BlueprintCatalogApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBlueprintCatalogServiceReadme(organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+        async getBlueprintCatalogServiceReadme(organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintReadmeResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBlueprintCatalogServiceReadme(organizationId, provider, serviceFamily, serviceVersion, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BlueprintCatalogApi.getBlueprintCatalogServiceReadme']?.[localVarOperationServerIndex]?.url;
@@ -32540,11 +32780,12 @@ export const BlueprintCatalogApiFactory = function (configuration?: Configuratio
          * @param {string} provider Cloud provider (e.g. aws, gcp, azure)
          * @param {string} serviceFamily Service family (e.g. mysql, postgresql)
          * @param {string} serviceVersion Service version (e.g. 8, 14)
+         * @param {string} environmentId Environment ID used to resolve context variables
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBlueprintCatalogServiceManifest(organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, options?: RawAxiosRequestConfig): AxiosPromise<GetBlueprintCatalogServiceManifest200Response> {
-            return localVarFp.getBlueprintCatalogServiceManifest(organizationId, provider, serviceFamily, serviceVersion, options).then((request) => request(axios, basePath));
+        getBlueprintCatalogServiceManifest(organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, environmentId: string, options?: RawAxiosRequestConfig): AxiosPromise<GetBlueprintCatalogServiceManifest200Response> {
+            return localVarFp.getBlueprintCatalogServiceManifest(organizationId, provider, serviceFamily, serviceVersion, environmentId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -32556,7 +32797,7 @@ export const BlueprintCatalogApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBlueprintCatalogServiceReadme(organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, options?: RawAxiosRequestConfig): AxiosPromise<string> {
+        getBlueprintCatalogServiceReadme(organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, options?: RawAxiosRequestConfig): AxiosPromise<BlueprintReadmeResponse> {
             return localVarFp.getBlueprintCatalogServiceReadme(organizationId, provider, serviceFamily, serviceVersion, options).then((request) => request(axios, basePath));
         },
     };
@@ -32576,12 +32817,13 @@ export class BlueprintCatalogApi extends BaseAPI {
      * @param {string} provider Cloud provider (e.g. aws, gcp, azure)
      * @param {string} serviceFamily Service family (e.g. mysql, postgresql)
      * @param {string} serviceVersion Service version (e.g. 8, 14)
+     * @param {string} environmentId Environment ID used to resolve context variables
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BlueprintCatalogApi
      */
-    public getBlueprintCatalogServiceManifest(organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, options?: RawAxiosRequestConfig) {
-        return BlueprintCatalogApiFp(this.configuration).getBlueprintCatalogServiceManifest(organizationId, provider, serviceFamily, serviceVersion, options).then((request) => request(this.axios, this.basePath));
+    public getBlueprintCatalogServiceManifest(organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, environmentId: string, options?: RawAxiosRequestConfig) {
+        return BlueprintCatalogApiFp(this.configuration).getBlueprintCatalogServiceManifest(organizationId, provider, serviceFamily, serviceVersion, environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -32608,6 +32850,47 @@ export class BlueprintCatalogApi extends BaseAPI {
  */
 export const BlueprintMainCallsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Returns the update availability for a deployed blueprint service, including the latest tag, and a diff of variables that are new, changed, or removed.
+         * @summary Check if a blueprint service has an available update
+         * @param {string} blueprintId Blueprint ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkBlueprintUpdate: async (blueprintId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'blueprintId' is not null or undefined
+            assertParamExists('checkBlueprintUpdate', 'blueprintId', blueprintId)
+            const localVarPath = `/blueprint/{blueprintId}/update`
+                .replace(`{${"blueprintId"}}`, encodeURIComponent(String(blueprintId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Instantiates a blueprint from the service catalog into the given environment. Pass `deploy=true` to trigger an immediate deployment after creation.
          * @summary Create a blueprint service in an environment
@@ -32701,6 +32984,53 @@ export const BlueprintMainCallsApiAxiosParamCreator = function (configuration?: 
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Dry-runs a blueprint update by applying the given variables and spec overrides without persisting any changes. Returns a preview ID and the resolved service type.
+         * @summary Preview a blueprint update
+         * @param {string} blueprintId Blueprint ID
+         * @param {BlueprintUpdatePreviewRequest} blueprintUpdatePreviewRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        previewBlueprintUpdate: async (blueprintId: string, blueprintUpdatePreviewRequest: BlueprintUpdatePreviewRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'blueprintId' is not null or undefined
+            assertParamExists('previewBlueprintUpdate', 'blueprintId', blueprintId)
+            // verify required parameter 'blueprintUpdatePreviewRequest' is not null or undefined
+            assertParamExists('previewBlueprintUpdate', 'blueprintUpdatePreviewRequest', blueprintUpdatePreviewRequest)
+            const localVarPath = `/blueprint/{blueprintId}/update/preview`
+                .replace(`{${"blueprintId"}}`, encodeURIComponent(String(blueprintId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(blueprintUpdatePreviewRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -32711,6 +33041,19 @@ export const BlueprintMainCallsApiAxiosParamCreator = function (configuration?: 
 export const BlueprintMainCallsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BlueprintMainCallsApiAxiosParamCreator(configuration)
     return {
+        /**
+         * Returns the update availability for a deployed blueprint service, including the latest tag, and a diff of variables that are new, changed, or removed.
+         * @summary Check if a blueprint service has an available update
+         * @param {string} blueprintId Blueprint ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async checkBlueprintUpdate(blueprintId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkBlueprintUpdate(blueprintId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BlueprintMainCallsApi.checkBlueprintUpdate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
         /**
          * Instantiates a blueprint from the service catalog into the given environment. Pass `deploy=true` to trigger an immediate deployment after creation.
          * @summary Create a blueprint service in an environment
@@ -32739,6 +33082,20 @@ export const BlueprintMainCallsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['BlueprintMainCallsApi.getBlueprintCatalog']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Dry-runs a blueprint update by applying the given variables and spec overrides without persisting any changes. Returns a preview ID and the resolved service type.
+         * @summary Preview a blueprint update
+         * @param {string} blueprintId Blueprint ID
+         * @param {BlueprintUpdatePreviewRequest} blueprintUpdatePreviewRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async previewBlueprintUpdate(blueprintId: string, blueprintUpdatePreviewRequest: BlueprintUpdatePreviewRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintUpdatePreviewResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.previewBlueprintUpdate(blueprintId, blueprintUpdatePreviewRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BlueprintMainCallsApi.previewBlueprintUpdate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -32749,6 +33106,16 @@ export const BlueprintMainCallsApiFp = function(configuration?: Configuration) {
 export const BlueprintMainCallsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = BlueprintMainCallsApiFp(configuration)
     return {
+        /**
+         * Returns the update availability for a deployed blueprint service, including the latest tag, and a diff of variables that are new, changed, or removed.
+         * @summary Check if a blueprint service has an available update
+         * @param {string} blueprintId Blueprint ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkBlueprintUpdate(blueprintId: string, options?: RawAxiosRequestConfig): AxiosPromise<BlueprintUpdateResponse> {
+            return localVarFp.checkBlueprintUpdate(blueprintId, options).then((request) => request(axios, basePath));
+        },
         /**
          * Instantiates a blueprint from the service catalog into the given environment. Pass `deploy=true` to trigger an immediate deployment after creation.
          * @summary Create a blueprint service in an environment
@@ -32771,6 +33138,17 @@ export const BlueprintMainCallsApiFactory = function (configuration?: Configurat
         getBlueprintCatalog(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<BlueprintCatalogResponse> {
             return localVarFp.getBlueprintCatalog(organizationId, options).then((request) => request(axios, basePath));
         },
+        /**
+         * Dry-runs a blueprint update by applying the given variables and spec overrides without persisting any changes. Returns a preview ID and the resolved service type.
+         * @summary Preview a blueprint update
+         * @param {string} blueprintId Blueprint ID
+         * @param {BlueprintUpdatePreviewRequest} blueprintUpdatePreviewRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        previewBlueprintUpdate(blueprintId: string, blueprintUpdatePreviewRequest: BlueprintUpdatePreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<BlueprintUpdatePreviewResponse> {
+            return localVarFp.previewBlueprintUpdate(blueprintId, blueprintUpdatePreviewRequest, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -32781,6 +33159,18 @@ export const BlueprintMainCallsApiFactory = function (configuration?: Configurat
  * @extends {BaseAPI}
  */
 export class BlueprintMainCallsApi extends BaseAPI {
+    /**
+     * Returns the update availability for a deployed blueprint service, including the latest tag, and a diff of variables that are new, changed, or removed.
+     * @summary Check if a blueprint service has an available update
+     * @param {string} blueprintId Blueprint ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlueprintMainCallsApi
+     */
+    public checkBlueprintUpdate(blueprintId: string, options?: RawAxiosRequestConfig) {
+        return BlueprintMainCallsApiFp(this.configuration).checkBlueprintUpdate(blueprintId, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Instantiates a blueprint from the service catalog into the given environment. Pass `deploy=true` to trigger an immediate deployment after creation.
      * @summary Create a blueprint service in an environment
@@ -32805,6 +33195,19 @@ export class BlueprintMainCallsApi extends BaseAPI {
      */
     public getBlueprintCatalog(organizationId: string, options?: RawAxiosRequestConfig) {
         return BlueprintMainCallsApiFp(this.configuration).getBlueprintCatalog(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Dry-runs a blueprint update by applying the given variables and spec overrides without persisting any changes. Returns a preview ID and the resolved service type.
+     * @summary Preview a blueprint update
+     * @param {string} blueprintId Blueprint ID
+     * @param {BlueprintUpdatePreviewRequest} blueprintUpdatePreviewRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlueprintMainCallsApi
+     */
+    public previewBlueprintUpdate(blueprintId: string, blueprintUpdatePreviewRequest: BlueprintUpdatePreviewRequest, options?: RawAxiosRequestConfig) {
+        return BlueprintMainCallsApiFp(this.configuration).previewBlueprintUpdate(blueprintId, blueprintUpdatePreviewRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
