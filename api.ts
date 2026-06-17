@@ -3844,17 +3844,17 @@ export interface BlueprintUpdatePreviewRequest {
      */
     'icon': string;
     /**
-     * Variable overrides to apply in the preview
-     * @type {Array<BlueprintVariableRequest>}
+     * RFC 7396 patch map keyed by variable name. Non-null value upserts the variable; null value removes it. Absent keys are left untouched. Omitting the field entirely is equivalent to an empty map — no variables are modified.
+     * @type {{ [key: string]: BlueprintUpdateVariableValue; }}
      * @memberof BlueprintUpdatePreviewRequest
      */
-    'variables'?: Array<BlueprintVariableRequest> | null;
+    'variables'?: { [key: string]: BlueprintUpdateVariableValue; };
     /**
-     * Partial spec overrides merged on top of the blueprint manifest
-     * @type {{ [key: string]: any; }}
+     * JSON Merge Patch (RFC 7396) applied to the stored spec_overrides. Keys with a non-null value are upserted; keys with a null value are removed. Pass null or omit the field to leave all existing overrides unchanged.
+     * @type {{ [key: string]: any | null; }}
      * @memberof BlueprintUpdatePreviewRequest
      */
-    'spec_overrides'?: { [key: string]: any; } | null;
+    'spec_overrides'?: { [key: string]: any | null; } | null;
 }
 /**
  * 
@@ -3895,6 +3895,43 @@ export interface BlueprintUpdateRemovedValue {
      * @memberof BlueprintUpdateRemovedValue
      */
     'name': string;
+}
+/**
+ * 
+ * @export
+ * @interface BlueprintUpdateRequest
+ */
+export interface BlueprintUpdateRequest {
+    /**
+     * Display name for the service
+     * @type {string}
+     * @memberof BlueprintUpdateRequest
+     */
+    'name': string;
+    /**
+     * Catalog tag identifying the target blueprint version
+     * @type {string}
+     * @memberof BlueprintUpdateRequest
+     */
+    'tag': string;
+    /**
+     * Icon URL for the service
+     * @type {string}
+     * @memberof BlueprintUpdateRequest
+     */
+    'icon': string;
+    /**
+     * RFC 7396 patch map keyed by variable name. Non-null value upserts the variable; null value removes it. Absent keys are left untouched. Omitting the field entirely is equivalent to an empty map — no variables are modified.
+     * @type {{ [key: string]: BlueprintUpdateVariableValue; }}
+     * @memberof BlueprintUpdateRequest
+     */
+    'variables'?: { [key: string]: BlueprintUpdateVariableValue; };
+    /**
+     * JSON Merge Patch (RFC 7396) applied to the stored spec_overrides. Keys with a non-null value are upserted; keys with a null value are removed. Pass null or omit the field to leave all existing overrides unchanged.
+     * @type {{ [key: string]: any | null; }}
+     * @memberof BlueprintUpdateRequest
+     */
+    'spec_overrides'?: { [key: string]: any | null; } | null;
 }
 /**
  * 
@@ -3975,6 +4012,25 @@ export interface BlueprintUpdateUpdatedValue {
      * @memberof BlueprintUpdateUpdatedValue
      */
     'current_value'?: string | null;
+}
+/**
+ * Value object for a variable in a patch map. Set the map value to null to remove the variable.
+ * @export
+ * @interface BlueprintUpdateVariableValue
+ */
+export interface BlueprintUpdateVariableValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintUpdateVariableValue
+     */
+    'value': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BlueprintUpdateVariableValue
+     */
+    'is_secret'?: boolean;
 }
 /**
  * 
@@ -32991,7 +33047,7 @@ export const BlueprintMainCallsApiAxiosParamCreator = function (configuration?: 
             };
         },
         /**
-         * Dry-runs a blueprint update by applying the given variables and spec overrides without persisting any changes. Returns a preview ID and the resolved service type.
+         * Dry-runs a blueprint update without persisting any changes. Returns a preview ID and the resolved service type. Both `variables` and `spec_overrides` follow RFC 7396 patch semantics.
          * @summary Preview a blueprint update
          * @param {string} blueprintId Blueprint ID
          * @param {BlueprintUpdatePreviewRequest} blueprintUpdatePreviewRequest 
@@ -33031,6 +33087,53 @@ export const BlueprintMainCallsApiAxiosParamCreator = function (configuration?: 
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(blueprintUpdatePreviewRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Persists new values for a deployed blueprint service. Intended to be called after reviewing the diff returned by GET /blueprint/{blueprintId}/update. `variables` and `spec_overrides` follow JSON Merge Patch (RFC 7396) semantics: non-null value on a key upserts it, null value removes it, absent keys are left untouched, and passing null for the whole field leaves all existing values unchanged. **Note:** `name`, `tag`, and `icon` are required on every call.
+         * @summary Update a blueprint service
+         * @param {string} blueprintId Blueprint ID
+         * @param {BlueprintUpdateRequest} blueprintUpdateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateBlueprint: async (blueprintId: string, blueprintUpdateRequest: BlueprintUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'blueprintId' is not null or undefined
+            assertParamExists('updateBlueprint', 'blueprintId', blueprintId)
+            // verify required parameter 'blueprintUpdateRequest' is not null or undefined
+            assertParamExists('updateBlueprint', 'blueprintUpdateRequest', blueprintUpdateRequest)
+            const localVarPath = `/blueprint/{blueprintId}`
+                .replace(`{${"blueprintId"}}`, encodeURIComponent(String(blueprintId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(blueprintUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -33089,7 +33192,7 @@ export const BlueprintMainCallsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Dry-runs a blueprint update by applying the given variables and spec overrides without persisting any changes. Returns a preview ID and the resolved service type.
+         * Dry-runs a blueprint update without persisting any changes. Returns a preview ID and the resolved service type. Both `variables` and `spec_overrides` follow RFC 7396 patch semantics.
          * @summary Preview a blueprint update
          * @param {string} blueprintId Blueprint ID
          * @param {BlueprintUpdatePreviewRequest} blueprintUpdatePreviewRequest 
@@ -33100,6 +33203,20 @@ export const BlueprintMainCallsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.previewBlueprintUpdate(blueprintId, blueprintUpdatePreviewRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BlueprintMainCallsApi.previewBlueprintUpdate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Persists new values for a deployed blueprint service. Intended to be called after reviewing the diff returned by GET /blueprint/{blueprintId}/update. `variables` and `spec_overrides` follow JSON Merge Patch (RFC 7396) semantics: non-null value on a key upserts it, null value removes it, absent keys are left untouched, and passing null for the whole field leaves all existing values unchanged. **Note:** `name`, `tag`, and `icon` are required on every call.
+         * @summary Update a blueprint service
+         * @param {string} blueprintId Blueprint ID
+         * @param {BlueprintUpdateRequest} blueprintUpdateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateBlueprint(blueprintId: string, blueprintUpdateRequest: BlueprintUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateBlueprint(blueprintId, blueprintUpdateRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BlueprintMainCallsApi.updateBlueprint']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -33145,7 +33262,7 @@ export const BlueprintMainCallsApiFactory = function (configuration?: Configurat
             return localVarFp.getBlueprintCatalog(organizationId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Dry-runs a blueprint update by applying the given variables and spec overrides without persisting any changes. Returns a preview ID and the resolved service type.
+         * Dry-runs a blueprint update without persisting any changes. Returns a preview ID and the resolved service type. Both `variables` and `spec_overrides` follow RFC 7396 patch semantics.
          * @summary Preview a blueprint update
          * @param {string} blueprintId Blueprint ID
          * @param {BlueprintUpdatePreviewRequest} blueprintUpdatePreviewRequest 
@@ -33154,6 +33271,17 @@ export const BlueprintMainCallsApiFactory = function (configuration?: Configurat
          */
         previewBlueprintUpdate(blueprintId: string, blueprintUpdatePreviewRequest: BlueprintUpdatePreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<BlueprintUpdatePreviewResponse> {
             return localVarFp.previewBlueprintUpdate(blueprintId, blueprintUpdatePreviewRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Persists new values for a deployed blueprint service. Intended to be called after reviewing the diff returned by GET /blueprint/{blueprintId}/update. `variables` and `spec_overrides` follow JSON Merge Patch (RFC 7396) semantics: non-null value on a key upserts it, null value removes it, absent keys are left untouched, and passing null for the whole field leaves all existing values unchanged. **Note:** `name`, `tag`, and `icon` are required on every call.
+         * @summary Update a blueprint service
+         * @param {string} blueprintId Blueprint ID
+         * @param {BlueprintUpdateRequest} blueprintUpdateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateBlueprint(blueprintId: string, blueprintUpdateRequest: BlueprintUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<BlueprintResponse> {
+            return localVarFp.updateBlueprint(blueprintId, blueprintUpdateRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -33204,7 +33332,7 @@ export class BlueprintMainCallsApi extends BaseAPI {
     }
 
     /**
-     * Dry-runs a blueprint update by applying the given variables and spec overrides without persisting any changes. Returns a preview ID and the resolved service type.
+     * Dry-runs a blueprint update without persisting any changes. Returns a preview ID and the resolved service type. Both `variables` and `spec_overrides` follow RFC 7396 patch semantics.
      * @summary Preview a blueprint update
      * @param {string} blueprintId Blueprint ID
      * @param {BlueprintUpdatePreviewRequest} blueprintUpdatePreviewRequest 
@@ -33214,6 +33342,19 @@ export class BlueprintMainCallsApi extends BaseAPI {
      */
     public previewBlueprintUpdate(blueprintId: string, blueprintUpdatePreviewRequest: BlueprintUpdatePreviewRequest, options?: RawAxiosRequestConfig) {
         return BlueprintMainCallsApiFp(this.configuration).previewBlueprintUpdate(blueprintId, blueprintUpdatePreviewRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Persists new values for a deployed blueprint service. Intended to be called after reviewing the diff returned by GET /blueprint/{blueprintId}/update. `variables` and `spec_overrides` follow JSON Merge Patch (RFC 7396) semantics: non-null value on a key upserts it, null value removes it, absent keys are left untouched, and passing null for the whole field leaves all existing values unchanged. **Note:** `name`, `tag`, and `icon` are required on every call.
+     * @summary Update a blueprint service
+     * @param {string} blueprintId Blueprint ID
+     * @param {BlueprintUpdateRequest} blueprintUpdateRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlueprintMainCallsApi
+     */
+    public updateBlueprint(blueprintId: string, blueprintUpdateRequest: BlueprintUpdateRequest, options?: RawAxiosRequestConfig) {
+        return BlueprintMainCallsApiFp(this.configuration).updateBlueprint(blueprintId, blueprintUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
