@@ -3586,6 +3586,62 @@ export interface BlueprintMajorVersion {
     'latestTag': string;
 }
 /**
+ * Backend override metadata. Catalog default + which values are allowed, plus the user-provided backend block when the catalog ships one.
+ * @export
+ * @interface BlueprintManifestBackendConfig
+ */
+export interface BlueprintManifestBackendConfig {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintManifestBackendConfig
+     */
+    'default'?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BlueprintManifestBackendConfig
+     */
+    'allowed_values'?: Array<string> | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BlueprintManifestBackendConfig
+     */
+    'overridable'?: boolean;
+    /**
+     * 
+     * @type {BlueprintManifestUserProvidedBackend}
+     * @memberof BlueprintManifestBackendConfig
+     */
+    'user_provided'?: BlueprintManifestUserProvidedBackend;
+}
+/**
+ * 
+ * @export
+ * @interface BlueprintManifestChartConfig
+ */
+export interface BlueprintManifestChartConfig {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintManifestChartConfig
+     */
+    'repository': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintManifestChartConfig
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintManifestChartConfig
+     */
+    'version': string;
+}
+/**
  * An auto-sourced, read-only value (from spec.contextVariables); not user-editable.
  * @export
  * @interface BlueprintManifestContextVariableField
@@ -3622,6 +3678,188 @@ export const BlueprintManifestContextVariableFieldKindEnum = {
 } as const;
 
 export type BlueprintManifestContextVariableFieldKindEnum = typeof BlueprintManifestContextVariableFieldKindEnum[keyof typeof BlueprintManifestContextVariableFieldKindEnum];
+
+/**
+ * Credentials override metadata. Catalog default + which values are allowed and whether the user can override at all.
+ * @export
+ * @interface BlueprintManifestCredentialsConfig
+ */
+export interface BlueprintManifestCredentialsConfig {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintManifestCredentialsConfig
+     */
+    'default'?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BlueprintManifestCredentialsConfig
+     */
+    'allowed_values'?: Array<string> | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BlueprintManifestCredentialsConfig
+     */
+    'overridable'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface BlueprintManifestEngineHelm
+ */
+export interface BlueprintManifestEngineHelm {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintManifestEngineHelm
+     */
+    'type': BlueprintManifestEngineHelmTypeEnum;
+    /**
+     * 
+     * @type {BlueprintManifestChartConfig}
+     * @memberof BlueprintManifestEngineHelm
+     */
+    'chart': BlueprintManifestChartConfig;
+    /**
+     * 
+     * @type {number}
+     * @memberof BlueprintManifestEngineHelm
+     */
+    'timeout'?: number | null;
+    /**
+     * 
+     * @type {BlueprintManifestResourcesConfig}
+     * @memberof BlueprintManifestEngineHelm
+     */
+    'resources'?: BlueprintManifestResourcesConfig;
+}
+
+export const BlueprintManifestEngineHelmTypeEnum = {
+    HELM: 'helm'
+} as const;
+
+export type BlueprintManifestEngineHelmTypeEnum = typeof BlueprintManifestEngineHelmTypeEnum[keyof typeof BlueprintManifestEngineHelmTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BlueprintManifestEngineOpenTofu
+ */
+export interface BlueprintManifestEngineOpenTofu {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintManifestEngineOpenTofu
+     */
+    'type': BlueprintManifestEngineOpenTofuTypeEnum;
+    /**
+     * 
+     * @type {CloudVendorEnum}
+     * @memberof BlueprintManifestEngineOpenTofu
+     */
+    'provider': CloudVendorEnum;
+    /**
+     * 
+     * @type {BlueprintManifestVersionBlock}
+     * @memberof BlueprintManifestEngineOpenTofu
+     */
+    'opentofu': BlueprintManifestVersionBlock;
+    /**
+     * 
+     * @type {BlueprintManifestCredentialsConfig}
+     * @memberof BlueprintManifestEngineOpenTofu
+     */
+    'credentials'?: BlueprintManifestCredentialsConfig;
+    /**
+     * 
+     * @type {BlueprintManifestBackendConfig}
+     * @memberof BlueprintManifestEngineOpenTofu
+     */
+    'backend'?: BlueprintManifestBackendConfig;
+    /**
+     * 
+     * @type {number}
+     * @memberof BlueprintManifestEngineOpenTofu
+     */
+    'timeout'?: number | null;
+    /**
+     * 
+     * @type {BlueprintManifestResourcesConfig}
+     * @memberof BlueprintManifestEngineOpenTofu
+     */
+    'resources'?: BlueprintManifestResourcesConfig;
+}
+
+export const BlueprintManifestEngineOpenTofuTypeEnum = {
+    OPENTOFU: 'opentofu'
+} as const;
+
+export type BlueprintManifestEngineOpenTofuTypeEnum = typeof BlueprintManifestEngineOpenTofuTypeEnum[keyof typeof BlueprintManifestEngineOpenTofuTypeEnum];
+
+/**
+ * @type BlueprintManifestEngineSpec
+ * Engine spec discriminated by `type`. Catalog-declared execution config + per-knob default/allowedValues/overridable metadata for the console to render.
+ * @export
+ */
+export type BlueprintManifestEngineSpec = { type: 'helm' } & BlueprintManifestEngineHelm | { type: 'opentofu' } & BlueprintManifestEngineOpenTofu | { type: 'terraform' } & BlueprintManifestEngineTerraform;
+
+/**
+ * 
+ * @export
+ * @interface BlueprintManifestEngineTerraform
+ */
+export interface BlueprintManifestEngineTerraform {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintManifestEngineTerraform
+     */
+    'type': BlueprintManifestEngineTerraformTypeEnum;
+    /**
+     * 
+     * @type {CloudVendorEnum}
+     * @memberof BlueprintManifestEngineTerraform
+     */
+    'provider': CloudVendorEnum;
+    /**
+     * 
+     * @type {BlueprintManifestVersionBlock}
+     * @memberof BlueprintManifestEngineTerraform
+     */
+    'terraform': BlueprintManifestVersionBlock;
+    /**
+     * 
+     * @type {BlueprintManifestCredentialsConfig}
+     * @memberof BlueprintManifestEngineTerraform
+     */
+    'credentials'?: BlueprintManifestCredentialsConfig;
+    /**
+     * 
+     * @type {BlueprintManifestBackendConfig}
+     * @memberof BlueprintManifestEngineTerraform
+     */
+    'backend'?: BlueprintManifestBackendConfig;
+    /**
+     * Default execution timeout in seconds.
+     * @type {number}
+     * @memberof BlueprintManifestEngineTerraform
+     */
+    'timeout'?: number | null;
+    /**
+     * 
+     * @type {BlueprintManifestResourcesConfig}
+     * @memberof BlueprintManifestEngineTerraform
+     */
+    'resources'?: BlueprintManifestResourcesConfig;
+}
+
+export const BlueprintManifestEngineTerraformTypeEnum = {
+    TERRAFORM: 'terraform'
+} as const;
+
+export type BlueprintManifestEngineTerraformTypeEnum = typeof BlueprintManifestEngineTerraformTypeEnum[keyof typeof BlueprintManifestEngineTerraformTypeEnum];
 
 /**
  * Field type with its type-specific validation conditions, discriminated by \"type\".
@@ -3675,6 +3913,75 @@ export const BlueprintManifestFieldTypeTypeEnum = {
 
 export type BlueprintManifestFieldTypeTypeEnum = typeof BlueprintManifestFieldTypeTypeEnum[keyof typeof BlueprintManifestFieldTypeTypeEnum];
 
+/**
+ * Catalog-declared default compute resources for the execution job.
+ * @export
+ * @interface BlueprintManifestResourcesConfig
+ */
+export interface BlueprintManifestResourcesConfig {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintManifestResourcesConfig
+     */
+    'cpu'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintManifestResourcesConfig
+     */
+    'ram'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintManifestResourcesConfig
+     */
+    'storage'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface BlueprintManifestResponse
+ */
+export interface BlueprintManifestResponse {
+    /**
+     * Form fields the console renders for the user (variables + auto-sourced context variables).
+     * @type {Array<BlueprintManifestResponseResultsInner>}
+     * @memberof BlueprintManifestResponse
+     */
+    'results': Array<BlueprintManifestResponseResultsInner>;
+    /**
+     * 
+     * @type {BlueprintManifestEngineSpec}
+     * @memberof BlueprintManifestResponse
+     */
+    'engine'?: BlueprintManifestEngineSpec;
+}
+/**
+ * @type BlueprintManifestResponseResultsInner
+ * @export
+ */
+export type BlueprintManifestResponseResultsInner = { kind: 'contextVariable' } & BlueprintManifestContextVariableField | { kind: 'variable' } & BlueprintManifestVariableField;
+
+/**
+ * 
+ * @export
+ * @interface BlueprintManifestUserProvidedBackend
+ */
+export interface BlueprintManifestUserProvidedBackend {
+    /**
+     * Terraform backend type (e.g. \"s3\", \"gcs\", \"azurerm\").
+     * @type {string}
+     * @memberof BlueprintManifestUserProvidedBackend
+     */
+    'type': string;
+    /**
+     * Static backend config (bucket, region, etc.).
+     * @type {{ [key: string]: string; }}
+     * @memberof BlueprintManifestUserProvidedBackend
+     */
+    'config'?: { [key: string]: string; };
+}
 /**
  * An editable form input the user fills in (from spec.variables).
  * @export
@@ -3740,6 +4047,25 @@ export type BlueprintManifestVariableFieldKindEnum = typeof BlueprintManifestVar
 /**
  * 
  * @export
+ * @interface BlueprintManifestVersionBlock
+ */
+export interface BlueprintManifestVersionBlock {
+    /**
+     * Catalog-declared default version for this engine.
+     * @type {string}
+     * @memberof BlueprintManifestVersionBlock
+     */
+    'version': string;
+    /**
+     * Versions the user may choose from. Null = unrestricted.
+     * @type {Array<string>}
+     * @memberof BlueprintManifestVersionBlock
+     */
+    'allowed_values'?: Array<string> | null;
+}
+/**
+ * 
+ * @export
  * @interface BlueprintReadmeResponse
  */
 export interface BlueprintReadmeResponse {
@@ -3788,6 +4114,19 @@ export interface BlueprintResponse {
     'environment_id': string;
 }
 /**
+ * Catalog engine-block deltas between the current and latest blueprint tag.
+ * @export
+ * @interface BlueprintUpdateEngineDiff
+ */
+export interface BlueprintUpdateEngineDiff {
+    /**
+     * 
+     * @type {Array<BlueprintUpdateUpdatedValue>}
+     * @memberof BlueprintUpdateEngineDiff
+     */
+    'updated_values': Array<BlueprintUpdateUpdatedValue>;
+}
+/**
  * 
  * @export
  * @interface BlueprintUpdateNewOptionalValue
@@ -3818,43 +4157,6 @@ export interface BlueprintUpdateNewRequiredValue {
      * @memberof BlueprintUpdateNewRequiredValue
      */
     'name': string;
-}
-/**
- * 
- * @export
- * @interface BlueprintUpdatePreviewRequest
- */
-export interface BlueprintUpdatePreviewRequest {
-    /**
-     * Display name for the service
-     * @type {string}
-     * @memberof BlueprintUpdatePreviewRequest
-     */
-    'name': string;
-    /**
-     * Catalog tag identifying the target blueprint version
-     * @type {string}
-     * @memberof BlueprintUpdatePreviewRequest
-     */
-    'tag': string;
-    /**
-     * Icon URL for the service
-     * @type {string}
-     * @memberof BlueprintUpdatePreviewRequest
-     */
-    'icon': string;
-    /**
-     * RFC 7396 patch map keyed by variable name. Non-null value upserts the variable; null value removes it. Absent keys are left untouched. Omitting the field entirely is equivalent to an empty map — no variables are modified.
-     * @type {{ [key: string]: BlueprintUpdateVariableValue; }}
-     * @memberof BlueprintUpdatePreviewRequest
-     */
-    'variables'?: { [key: string]: BlueprintUpdateVariableValue; };
-    /**
-     * JSON Merge Patch (RFC 7396) applied to the stored spec_overrides. Keys with a non-null value are upserted; keys with a null value are removed. Pass null or omit the field to leave all existing overrides unchanged.
-     * @type {{ [key: string]: any | null; }}
-     * @memberof BlueprintUpdatePreviewRequest
-     */
-    'spec_overrides'?: { [key: string]: any | null; } | null;
 }
 /**
  * 
@@ -3981,6 +4283,12 @@ export interface BlueprintUpdateResponse {
      * @memberof BlueprintUpdateResponse
      */
     'removed_values': Array<BlueprintUpdateRemovedValue>;
+    /**
+     * 
+     * @type {BlueprintUpdateEngineDiff}
+     * @memberof BlueprintUpdateResponse
+     */
+    'engine_diff': BlueprintUpdateEngineDiff;
 }
 /**
  * 
@@ -13080,25 +13388,6 @@ export interface GenericObjectCurrentCost {
      */
     'cost': Cost;
 }
-/**
- * 
- * @export
- * @interface GetBlueprintCatalogServiceManifest200Response
- */
-export interface GetBlueprintCatalogServiceManifest200Response {
-    /**
-     * 
-     * @type {Array<GetBlueprintCatalogServiceManifest200ResponseResultsInner>}
-     * @memberof GetBlueprintCatalogServiceManifest200Response
-     */
-    'results'?: Array<GetBlueprintCatalogServiceManifest200ResponseResultsInner>;
-}
-/**
- * @type GetBlueprintCatalogServiceManifest200ResponseResultsInner
- * @export
- */
-export type GetBlueprintCatalogServiceManifest200ResponseResultsInner = { kind: 'contextVariable' } & BlueprintManifestContextVariableField | { kind: 'variable' } & BlueprintManifestVariableField;
-
 /**
  * 
  * @export
@@ -32803,7 +33092,7 @@ export const BlueprintCatalogApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBlueprintCatalogServiceManifest(organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, environmentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBlueprintCatalogServiceManifest200Response>> {
+        async getBlueprintCatalogServiceManifest(organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, environmentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintManifestResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBlueprintCatalogServiceManifest(organizationId, provider, serviceFamily, serviceVersion, environmentId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BlueprintCatalogApi.getBlueprintCatalogServiceManifest']?.[localVarOperationServerIndex]?.url;
@@ -32846,7 +33135,7 @@ export const BlueprintCatalogApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBlueprintCatalogServiceManifest(organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, environmentId: string, options?: RawAxiosRequestConfig): AxiosPromise<GetBlueprintCatalogServiceManifest200Response> {
+        getBlueprintCatalogServiceManifest(organizationId: string, provider: string, serviceFamily: string, serviceVersion: string, environmentId: string, options?: RawAxiosRequestConfig): AxiosPromise<BlueprintManifestResponse> {
             return localVarFp.getBlueprintCatalogServiceManifest(organizationId, provider, serviceFamily, serviceVersion, environmentId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -33050,15 +33339,15 @@ export const BlueprintMainCallsApiAxiosParamCreator = function (configuration?: 
          * Dry-runs a blueprint update without persisting any changes. Returns a preview ID and the resolved service type. Both `variables` and `spec_overrides` follow RFC 7396 patch semantics.
          * @summary Preview a blueprint update
          * @param {string} blueprintId Blueprint ID
-         * @param {BlueprintUpdatePreviewRequest} blueprintUpdatePreviewRequest 
+         * @param {BlueprintUpdateRequest} blueprintUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        previewBlueprintUpdate: async (blueprintId: string, blueprintUpdatePreviewRequest: BlueprintUpdatePreviewRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        previewBlueprintUpdate: async (blueprintId: string, blueprintUpdateRequest: BlueprintUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'blueprintId' is not null or undefined
             assertParamExists('previewBlueprintUpdate', 'blueprintId', blueprintId)
-            // verify required parameter 'blueprintUpdatePreviewRequest' is not null or undefined
-            assertParamExists('previewBlueprintUpdate', 'blueprintUpdatePreviewRequest', blueprintUpdatePreviewRequest)
+            // verify required parameter 'blueprintUpdateRequest' is not null or undefined
+            assertParamExists('previewBlueprintUpdate', 'blueprintUpdateRequest', blueprintUpdateRequest)
             const localVarPath = `/blueprint/{blueprintId}/update/preview`
                 .replace(`{${"blueprintId"}}`, encodeURIComponent(String(blueprintId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -33086,7 +33375,7 @@ export const BlueprintMainCallsApiAxiosParamCreator = function (configuration?: 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(blueprintUpdatePreviewRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(blueprintUpdateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -33195,12 +33484,12 @@ export const BlueprintMainCallsApiFp = function(configuration?: Configuration) {
          * Dry-runs a blueprint update without persisting any changes. Returns a preview ID and the resolved service type. Both `variables` and `spec_overrides` follow RFC 7396 patch semantics.
          * @summary Preview a blueprint update
          * @param {string} blueprintId Blueprint ID
-         * @param {BlueprintUpdatePreviewRequest} blueprintUpdatePreviewRequest 
+         * @param {BlueprintUpdateRequest} blueprintUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async previewBlueprintUpdate(blueprintId: string, blueprintUpdatePreviewRequest: BlueprintUpdatePreviewRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintUpdatePreviewResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.previewBlueprintUpdate(blueprintId, blueprintUpdatePreviewRequest, options);
+        async previewBlueprintUpdate(blueprintId: string, blueprintUpdateRequest: BlueprintUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintUpdatePreviewResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.previewBlueprintUpdate(blueprintId, blueprintUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BlueprintMainCallsApi.previewBlueprintUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -33265,12 +33554,12 @@ export const BlueprintMainCallsApiFactory = function (configuration?: Configurat
          * Dry-runs a blueprint update without persisting any changes. Returns a preview ID and the resolved service type. Both `variables` and `spec_overrides` follow RFC 7396 patch semantics.
          * @summary Preview a blueprint update
          * @param {string} blueprintId Blueprint ID
-         * @param {BlueprintUpdatePreviewRequest} blueprintUpdatePreviewRequest 
+         * @param {BlueprintUpdateRequest} blueprintUpdateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        previewBlueprintUpdate(blueprintId: string, blueprintUpdatePreviewRequest: BlueprintUpdatePreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<BlueprintUpdatePreviewResponse> {
-            return localVarFp.previewBlueprintUpdate(blueprintId, blueprintUpdatePreviewRequest, options).then((request) => request(axios, basePath));
+        previewBlueprintUpdate(blueprintId: string, blueprintUpdateRequest: BlueprintUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<BlueprintUpdatePreviewResponse> {
+            return localVarFp.previewBlueprintUpdate(blueprintId, blueprintUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Persists new values for a deployed blueprint service. Intended to be called after reviewing the diff returned by GET /blueprint/{blueprintId}/update. `variables` and `spec_overrides` follow JSON Merge Patch (RFC 7396) semantics: non-null value on a key upserts it, null value removes it, absent keys are left untouched, and passing null for the whole field leaves all existing values unchanged. **Note:** `name`, `tag`, and `icon` are required on every call.
@@ -33335,13 +33624,13 @@ export class BlueprintMainCallsApi extends BaseAPI {
      * Dry-runs a blueprint update without persisting any changes. Returns a preview ID and the resolved service type. Both `variables` and `spec_overrides` follow RFC 7396 patch semantics.
      * @summary Preview a blueprint update
      * @param {string} blueprintId Blueprint ID
-     * @param {BlueprintUpdatePreviewRequest} blueprintUpdatePreviewRequest 
+     * @param {BlueprintUpdateRequest} blueprintUpdateRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BlueprintMainCallsApi
      */
-    public previewBlueprintUpdate(blueprintId: string, blueprintUpdatePreviewRequest: BlueprintUpdatePreviewRequest, options?: RawAxiosRequestConfig) {
-        return BlueprintMainCallsApiFp(this.configuration).previewBlueprintUpdate(blueprintId, blueprintUpdatePreviewRequest, options).then((request) => request(this.axios, this.basePath));
+    public previewBlueprintUpdate(blueprintId: string, blueprintUpdateRequest: BlueprintUpdateRequest, options?: RawAxiosRequestConfig) {
+        return BlueprintMainCallsApiFp(this.configuration).previewBlueprintUpdate(blueprintId, blueprintUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
