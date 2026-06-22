@@ -1025,6 +1025,12 @@ export interface Application {
      */
     'gpu'?: number;
     /**
+     * Ephemeral storage of the service in GiB. When omitted, the platform default is used.
+     * @type {number}
+     * @memberof Application
+     */
+    'ephemeral_storage_in_gib'?: number;
+    /**
      * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no application running. 
      * @type {number}
      * @memberof Application
@@ -1567,6 +1573,12 @@ export interface ApplicationEditRequest {
      */
     'gpu'?: number;
     /**
+     * Ephemeral storage of the service in GiB. When omitted, the platform default is used.
+     * @type {number}
+     * @memberof ApplicationEditRequest
+     */
+    'ephemeral_storage_in_gib'?: number;
+    /**
      * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no application running. 
      * @type {number}
      * @memberof ApplicationEditRequest
@@ -1865,6 +1877,12 @@ export interface ApplicationRequest {
      * @memberof ApplicationRequest
      */
     'gpu'?: number;
+    /**
+     * Ephemeral storage of the service in GiB. When omitted, the platform default is used.
+     * @type {number}
+     * @memberof ApplicationRequest
+     */
+    'ephemeral_storage_in_gib'?: number;
     /**
      * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no application running. 
      * @type {number}
@@ -3194,6 +3212,12 @@ export interface BaseJobResponse {
      * @memberof BaseJobResponse
      */
     'gpu': number;
+    /**
+     * Ephemeral storage of the service in GiB. When omitted, the platform default is used.
+     * @type {number}
+     * @memberof BaseJobResponse
+     */
+    'ephemeral_storage_in_gib'?: number;
     /**
      * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
      * @type {number}
@@ -8366,6 +8390,12 @@ export interface ContainerRequest {
      */
     'gpu'?: number;
     /**
+     * Ephemeral storage of the service in GiB. When omitted, the platform default is used.
+     * @type {number}
+     * @memberof ContainerRequest
+     */
+    'ephemeral_storage_in_gib'?: number;
+    /**
      * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no container running. 
      * @type {number}
      * @memberof ContainerRequest
@@ -8540,6 +8570,12 @@ export interface ContainerResponse {
      * @memberof ContainerResponse
      */
     'gpu': number;
+    /**
+     * Ephemeral storage of the service in GiB. When omitted, the platform default is used.
+     * @type {number}
+     * @memberof ContainerResponse
+     */
+    'ephemeral_storage_in_gib'?: number;
     /**
      * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no container running. 
      * @type {number}
@@ -9057,6 +9093,12 @@ export interface CronJobResponse {
      * @memberof CronJobResponse
      */
     'gpu': number;
+    /**
+     * Ephemeral storage of the service in GiB. When omitted, the platform default is used.
+     * @type {number}
+     * @memberof CronJobResponse
+     */
+    'ephemeral_storage_in_gib'?: number;
     /**
      * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
      * @type {number}
@@ -16297,6 +16339,12 @@ export interface JobRequest {
      */
     'gpu'?: number;
     /**
+     * Ephemeral storage of the service in GiB. When omitted, the platform default is used.
+     * @type {number}
+     * @memberof JobRequest
+     */
+    'ephemeral_storage_in_gib'?: number;
+    /**
      * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
      * @type {number}
      * @memberof JobRequest
@@ -17470,6 +17518,12 @@ export interface LifecycleJobResponse {
      * @memberof LifecycleJobResponse
      */
     'gpu': number;
+    /**
+     * Ephemeral storage of the service in GiB. When omitted, the platform default is used.
+     * @type {number}
+     * @memberof LifecycleJobResponse
+     */
+    'ephemeral_storage_in_gib'?: number;
     /**
      * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
      * @type {number}
