@@ -3505,11 +3505,11 @@ export interface BlueprintCreateRequest {
      */
     'variables'?: Array<BlueprintVariableRequest>;
     /**
-     * Partial spec overrides merged on top of the blueprint manifest
-     * @type {{ [key: string]: any; }}
+     * 
+     * @type {BlueprintSpecOverrides}
      * @memberof BlueprintCreateRequest
      */
-    'spec_overrides'?: { [key: string]: any; } | null;
+    'spec_overrides'?: BlueprintSpecOverrides;
 }
 /**
  * 
@@ -4114,6 +4114,69 @@ export interface BlueprintResponse {
     'environment_id': string;
 }
 /**
+ * Engine-level overrides applied on top of the blueprint manifest. Only fields whose corresponding manifest field is `overridable: true` are accepted; submitting a non-overridable field returns 422. **Terraform / OpenTofu blueprints** `engine_version` is **required** on create. The value must be one of the versions listed in `spec.engine.terraform.allowedValues` (or `opentofu.allowedValues`) in the manifest. **Helm blueprints** `engine_version`, `credentials`, and `backend` are ignored. Only `timeout` and the resource fields apply.
+ * @export
+ * @interface BlueprintSpecOverrides
+ */
+export interface BlueprintSpecOverrides {
+    /**
+     * Terraform or OpenTofu version to use for the apply job. Required when the blueprint engine type is `terraform` or `opentofu`. Must be one of the versions in the manifest\'s `allowedValues` list.
+     * @type {string}
+     * @memberof BlueprintSpecOverrides
+     */
+    'engine_version'?: string;
+    /**
+     * How the apply job authenticates against the cloud provider. `cluster` reuses the cluster\'s cloud credentials (default). `env` expects the user to supply provider credentials as environment variables on the service.
+     * @type {string}
+     * @memberof BlueprintSpecOverrides
+     */
+    'credentials'?: BlueprintSpecOverridesCredentialsEnum;
+    /**
+     * Where the Terraform state is stored. `qovery` stores state in a Kubernetes secret managed by Qovery (default). `user_provided` delegates to a user-controlled remote backend declared in the manifest\'s `backend.user_provided` block.
+     * @type {string}
+     * @memberof BlueprintSpecOverrides
+     */
+    'backend'?: BlueprintSpecOverridesBackendEnum;
+    /**
+     * Maximum duration in seconds for a single apply job before it is marked as timed out. Overrides the manifest\'s `spec.engine.timeout`.
+     * @type {number}
+     * @memberof BlueprintSpecOverrides
+     */
+    'timeout'?: number;
+    /**
+     * CPU request/limit for the apply job pod (Kubernetes-style, e.g. `500m`). Overrides `spec.engine.resources.cpu` in the manifest.
+     * @type {string}
+     * @memberof BlueprintSpecOverrides
+     */
+    'cpu'?: string;
+    /**
+     * Memory request/limit for the apply job pod (e.g. `512Mi`, `1Gi`). Overrides `spec.engine.resources.ram` in the manifest.
+     * @type {string}
+     * @memberof BlueprintSpecOverrides
+     */
+    'ram'?: string;
+    /**
+     * Ephemeral storage for the apply job pod — used for state files and provider plugins (e.g. `1Gi`). Overrides `spec.engine.resources.storage` in the manifest.
+     * @type {string}
+     * @memberof BlueprintSpecOverrides
+     */
+    'storage'?: string;
+}
+
+export const BlueprintSpecOverridesCredentialsEnum = {
+    CLUSTER: 'cluster',
+    ENV: 'env'
+} as const;
+
+export type BlueprintSpecOverridesCredentialsEnum = typeof BlueprintSpecOverridesCredentialsEnum[keyof typeof BlueprintSpecOverridesCredentialsEnum];
+export const BlueprintSpecOverridesBackendEnum = {
+    QOVERY: 'qovery',
+    USER_PROVIDED: 'user_provided'
+} as const;
+
+export type BlueprintSpecOverridesBackendEnum = typeof BlueprintSpecOverridesBackendEnum[keyof typeof BlueprintSpecOverridesBackendEnum];
+
+/**
  * Catalog engine-block deltas between the current and latest blueprint tag.
  * @export
  * @interface BlueprintUpdateEngineDiff
@@ -4229,11 +4292,11 @@ export interface BlueprintUpdateRequest {
      */
     'variables'?: { [key: string]: BlueprintUpdateVariableValue; };
     /**
-     * JSON Merge Patch (RFC 7396) applied to the stored spec_overrides. Keys with a non-null value are upserted; keys with a null value are removed. Pass null or omit the field to leave all existing overrides unchanged.
-     * @type {{ [key: string]: any | null; }}
+     * JSON Merge Patch (RFC 7396) applied to the stored spec_overrides (see `BlueprintSpecOverrides` for the list of valid fields). A non-null field value upserts the override; a null value removes it. Pass null or omit the field entirely to leave all existing overrides unchanged.
+     * @type {BlueprintSpecOverrides}
      * @memberof BlueprintUpdateRequest
      */
-    'spec_overrides'?: { [key: string]: any | null; } | null;
+    'spec_overrides'?: BlueprintSpecOverrides | null;
 }
 /**
  * 
