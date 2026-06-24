@@ -5452,6 +5452,217 @@ export type ClusterAdvancedSettingsAwsEksEc2MetadataImdsEnum = typeof ClusterAdv
 /**
  * 
  * @export
+ * @enum {string}
+ */
+
+export const ClusterAnalysisKind = {
+    COST_RECOMMENDATION: 'COST_RECOMMENDATION',
+    DEPRECATED_API_CHECK: 'DEPRECATED_API_CHECK'
+} as const;
+
+export type ClusterAnalysisKind = typeof ClusterAnalysisKind[keyof typeof ClusterAnalysisKind];
+
+
+/**
+ * 
+ * @export
+ * @interface ClusterAnalysisLogResponse
+ */
+export interface ClusterAnalysisLogResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterAnalysisLogResponse
+     */
+    'timestamp': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterAnalysisLogResponse
+     */
+    'level': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterAnalysisLogResponse
+     */
+    'message': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterAnalysisLogResponse
+     */
+    'line_order': number;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterAnalysisLogResponseList
+ */
+export interface ClusterAnalysisLogResponseList {
+    /**
+     * 
+     * @type {Array<ClusterAnalysisLogResponse>}
+     * @memberof ClusterAnalysisLogResponseList
+     */
+    'results'?: Array<ClusterAnalysisLogResponse>;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ClusterAnalysisOutputFormat = {
+    TABLE: 'TABLE',
+    JSON: 'JSON',
+    CSV: 'CSV'
+} as const;
+
+export type ClusterAnalysisOutputFormat = typeof ClusterAnalysisOutputFormat[keyof typeof ClusterAnalysisOutputFormat];
+
+
+/**
+ * 
+ * @export
+ * @interface ClusterAnalysisRequest
+ */
+export interface ClusterAnalysisRequest {
+    /**
+     * 
+     * @type {ClusterAnalysisKind}
+     * @memberof ClusterAnalysisRequest
+     */
+    'kind': ClusterAnalysisKind;
+    /**
+     * 
+     * @type {ClusterAnalysisOutputFormat}
+     * @memberof ClusterAnalysisRequest
+     */
+    'output_format': ClusterAnalysisOutputFormat;
+    /**
+     * Optional Prometheus URL for COST_RECOMMENDATION analysis. When omitted, the engine resolves the default Qovery OBS endpoint.
+     * @type {string}
+     * @memberof ClusterAnalysisRequest
+     */
+    'prometheus_url'?: string | null;
+    /**
+     * Optional history duration in hours for COST_RECOMMENDATION analysis.
+     * @type {number}
+     * @memberof ClusterAnalysisRequest
+     */
+    'history_duration_hours'?: number | null;
+    /**
+     * Optional target Kubernetes version for DEPRECATED_API_CHECK analysis.
+     * @type {string}
+     * @memberof ClusterAnalysisRequest
+     */
+    'target_kubernetes_version'?: string | null;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ClusterAnalysisResponse
+ */
+export interface ClusterAnalysisResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterAnalysisResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterAnalysisResponse
+     */
+    'cluster_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterAnalysisResponse
+     */
+    'organization_id': string;
+    /**
+     * 
+     * @type {ClusterAnalysisKind}
+     * @memberof ClusterAnalysisResponse
+     */
+    'kind': ClusterAnalysisKind;
+    /**
+     * 
+     * @type {ClusterAnalysisStatus}
+     * @memberof ClusterAnalysisResponse
+     */
+    'status': ClusterAnalysisStatus;
+    /**
+     * 
+     * @type {ClusterAnalysisOutputFormat}
+     * @memberof ClusterAnalysisResponse
+     */
+    'output_format': ClusterAnalysisOutputFormat;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterAnalysisResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterAnalysisResponse
+     */
+    'updated_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterAnalysisResponse
+     */
+    'triggered_by': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterAnalysisResponse
+     */
+    'error_message'?: string | null;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ClusterAnalysisResponseList
+ */
+export interface ClusterAnalysisResponseList {
+    /**
+     * 
+     * @type {Array<ClusterAnalysisResponse>}
+     * @memberof ClusterAnalysisResponseList
+     */
+    'results'?: Array<ClusterAnalysisResponse>;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ClusterAnalysisStatus = {
+    PENDING: 'PENDING',
+    RUNNING: 'RUNNING',
+    SUCCEEDED: 'SUCCEEDED',
+    FAILED: 'FAILED',
+    TERMINATED: 'TERMINATED'
+} as const;
+
+export type ClusterAnalysisStatus = typeof ClusterAnalysisStatus[keyof typeof ClusterAnalysisStatus];
+
+
+/**
+ * 
+ * @export
  * @interface ClusterCloudProviderInfo
  */
 export interface ClusterCloudProviderInfo {
@@ -37709,6 +37920,51 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Returns metadata and status for one cluster analysis execution.
+         * @summary Get cluster analysis
+         * @param {string} clusterId Cluster ID
+         * @param {string} analysisId Cluster analysis ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusterAnalysis: async (clusterId: string, analysisId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('getClusterAnalysis', 'clusterId', clusterId)
+            // verify required parameter 'analysisId' is not null or undefined
+            assertParamExists('getClusterAnalysis', 'analysisId', analysisId)
+            const localVarPath = `/clusters/{clusterId}/analysis/{analysisId}`
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)))
+                .replace(`{${"analysisId"}}`, encodeURIComponent(String(analysisId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Retrieve the DNS provider currently associated with a cluster. Requires VIEWER role.
          * @summary Get cluster DNS provider
          * @param {string} clusterId Cluster ID
@@ -38484,6 +38740,92 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Lists previous analysis executions for the cluster.
+         * @summary List cluster analyses
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listClusterAnalyses: async (clusterId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('listClusterAnalyses', 'clusterId', clusterId)
+            const localVarPath = `/clusters/{clusterId}/analysis`
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the persisted cluster analysis report/log lines in order.
+         * @summary List cluster analysis logs
+         * @param {string} clusterId Cluster ID
+         * @param {string} analysisId Cluster analysis ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listClusterAnalysisLogs: async (clusterId: string, analysisId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('listClusterAnalysisLogs', 'clusterId', clusterId)
+            // verify required parameter 'analysisId' is not null or undefined
+            assertParamExists('listClusterAnalysisLogs', 'analysisId', analysisId)
+            const localVarPath = `/clusters/{clusterId}/analysis/{analysisId}/logs`
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)))
+                .replace(`{${"analysisId"}}`, encodeURIComponent(String(analysisId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * List Cluster Logs
          * @summary List Cluster Logs
          * @param {string} organizationId Organization ID
@@ -38702,6 +39044,53 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(clusterCloudProviderInfoRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Starts a read-only analysis for the cluster. The result and logs can be retrieved later from the cluster analysis endpoints.
+         * @summary Start cluster analysis
+         * @param {string} clusterId Cluster ID
+         * @param {ClusterAnalysisRequest} clusterAnalysisRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startClusterAnalysis: async (clusterId: string, clusterAnalysisRequest: ClusterAnalysisRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('startClusterAnalysis', 'clusterId', clusterId)
+            // verify required parameter 'clusterAnalysisRequest' is not null or undefined
+            assertParamExists('startClusterAnalysis', 'clusterAnalysisRequest', clusterAnalysisRequest)
+            const localVarPath = `/clusters/{clusterId}/analysis`
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(clusterAnalysisRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -39078,6 +39467,20 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns metadata and status for one cluster analysis execution.
+         * @summary Get cluster analysis
+         * @param {string} clusterId Cluster ID
+         * @param {string} analysisId Cluster analysis ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getClusterAnalysis(clusterId: string, analysisId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterAnalysisResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterAnalysis(clusterId, analysisId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ClustersApi.getClusterAnalysis']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Retrieve the DNS provider currently associated with a cluster. Requires VIEWER role.
          * @summary Get cluster DNS provider
          * @param {string} clusterId Cluster ID
@@ -39299,6 +39702,33 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Lists previous analysis executions for the cluster.
+         * @summary List cluster analyses
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listClusterAnalyses(clusterId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterAnalysisResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listClusterAnalyses(clusterId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ClustersApi.listClusterAnalyses']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the persisted cluster analysis report/log lines in order.
+         * @summary List cluster analysis logs
+         * @param {string} clusterId Cluster ID
+         * @param {string} analysisId Cluster analysis ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listClusterAnalysisLogs(clusterId: string, analysisId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterAnalysisLogResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listClusterAnalysisLogs(clusterId, analysisId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ClustersApi.listClusterAnalysisLogs']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * List Cluster Logs
          * @summary List Cluster Logs
          * @param {string} organizationId Organization ID
@@ -39366,6 +39796,20 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.specifyClusterCloudProviderInfo(organizationId, clusterId, clusterCloudProviderInfoRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ClustersApi.specifyClusterCloudProviderInfo']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Starts a read-only analysis for the cluster. The result and logs can be retrieved later from the cluster analysis endpoints.
+         * @summary Start cluster analysis
+         * @param {string} clusterId Cluster ID
+         * @param {ClusterAnalysisRequest} clusterAnalysisRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async startClusterAnalysis(clusterId: string, clusterAnalysisRequest: ClusterAnalysisRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterAnalysisResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.startClusterAnalysis(clusterId, clusterAnalysisRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ClustersApi.startClusterAnalysis']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -39554,6 +39998,17 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getClusterAdvancedSettings(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns metadata and status for one cluster analysis execution.
+         * @summary Get cluster analysis
+         * @param {string} clusterId Cluster ID
+         * @param {string} analysisId Cluster analysis ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusterAnalysis(clusterId: string, analysisId: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterAnalysisResponse> {
+            return localVarFp.getClusterAnalysis(clusterId, analysisId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Retrieve the DNS provider currently associated with a cluster. Requires VIEWER role.
          * @summary Get cluster DNS provider
          * @param {string} clusterId Cluster ID
@@ -39733,6 +40188,27 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getRoutingTable(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
         /**
+         * Lists previous analysis executions for the cluster.
+         * @summary List cluster analyses
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listClusterAnalyses(clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterAnalysisResponseList> {
+            return localVarFp.listClusterAnalyses(clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the persisted cluster analysis report/log lines in order.
+         * @summary List cluster analysis logs
+         * @param {string} clusterId Cluster ID
+         * @param {string} analysisId Cluster analysis ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listClusterAnalysisLogs(clusterId: string, analysisId: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterAnalysisLogResponseList> {
+            return localVarFp.listClusterAnalysisLogs(clusterId, analysisId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * List Cluster Logs
          * @summary List Cluster Logs
          * @param {string} organizationId Organization ID
@@ -39786,6 +40262,17 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          */
         specifyClusterCloudProviderInfo(organizationId: string, clusterId: string, clusterCloudProviderInfoRequest?: ClusterCloudProviderInfoRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClusterCloudProviderInfo> {
             return localVarFp.specifyClusterCloudProviderInfo(organizationId, clusterId, clusterCloudProviderInfoRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Starts a read-only analysis for the cluster. The result and logs can be retrieved later from the cluster analysis endpoints.
+         * @summary Start cluster analysis
+         * @param {string} clusterId Cluster ID
+         * @param {ClusterAnalysisRequest} clusterAnalysisRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startClusterAnalysis(clusterId: string, clusterAnalysisRequest: ClusterAnalysisRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClusterAnalysisResponse> {
+            return localVarFp.startClusterAnalysis(clusterId, clusterAnalysisRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Cluster stop has been requester.
@@ -39973,6 +40460,19 @@ export class ClustersApi extends BaseAPI {
      */
     public getClusterAdvancedSettings(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig) {
         return ClustersApiFp(this.configuration).getClusterAdvancedSettings(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns metadata and status for one cluster analysis execution.
+     * @summary Get cluster analysis
+     * @param {string} clusterId Cluster ID
+     * @param {string} analysisId Cluster analysis ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClustersApi
+     */
+    public getClusterAnalysis(clusterId: string, analysisId: string, options?: RawAxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).getClusterAnalysis(clusterId, analysisId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -40183,6 +40683,31 @@ export class ClustersApi extends BaseAPI {
     }
 
     /**
+     * Lists previous analysis executions for the cluster.
+     * @summary List cluster analyses
+     * @param {string} clusterId Cluster ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClustersApi
+     */
+    public listClusterAnalyses(clusterId: string, options?: RawAxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).listClusterAnalyses(clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the persisted cluster analysis report/log lines in order.
+     * @summary List cluster analysis logs
+     * @param {string} clusterId Cluster ID
+     * @param {string} analysisId Cluster analysis ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClustersApi
+     */
+    public listClusterAnalysisLogs(clusterId: string, analysisId: string, options?: RawAxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).listClusterAnalysisLogs(clusterId, analysisId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * List Cluster Logs
      * @summary List Cluster Logs
      * @param {string} organizationId Organization ID
@@ -40245,6 +40770,19 @@ export class ClustersApi extends BaseAPI {
      */
     public specifyClusterCloudProviderInfo(organizationId: string, clusterId: string, clusterCloudProviderInfoRequest?: ClusterCloudProviderInfoRequest, options?: RawAxiosRequestConfig) {
         return ClustersApiFp(this.configuration).specifyClusterCloudProviderInfo(organizationId, clusterId, clusterCloudProviderInfoRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Starts a read-only analysis for the cluster. The result and logs can be retrieved later from the cluster analysis endpoints.
+     * @summary Start cluster analysis
+     * @param {string} clusterId Cluster ID
+     * @param {ClusterAnalysisRequest} clusterAnalysisRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClustersApi
+     */
+    public startClusterAnalysis(clusterId: string, clusterAnalysisRequest: ClusterAnalysisRequest, options?: RawAxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).startClusterAnalysis(clusterId, clusterAnalysisRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
