@@ -1031,6 +1031,12 @@ export interface Application {
      */
     'ephemeral_storage_in_gib'?: number;
     /**
+     * CPU architecture this service runs on. If null, the cluster default architecture is used.
+     * @type {CpuArchitectureEnum}
+     * @memberof Application
+     */
+    'cpu_architecture'?: CpuArchitectureEnum | null;
+    /**
      * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no application running. 
      * @type {number}
      * @memberof Application
@@ -1651,6 +1657,12 @@ export interface ApplicationEditRequest {
      */
     'docker_target_build_stage'?: string | null;
     /**
+     * CPU architecture to run this service on. If null, the cluster default architecture is used.
+     * @type {CpuArchitectureEnum}
+     * @memberof ApplicationEditRequest
+     */
+    'cpu_architecture'?: CpuArchitectureEnum | null;
+    /**
      * 
      * @type {AutoscalingPolicyRequest}
      * @memberof ApplicationEditRequest
@@ -1949,6 +1961,12 @@ export interface ApplicationRequest {
      * @memberof ApplicationRequest
      */
     'docker_target_build_stage'?: string | null;
+    /**
+     * CPU architecture to run this service on. If null, the cluster default architecture is used.
+     * @type {CpuArchitectureEnum}
+     * @memberof ApplicationRequest
+     */
+    'cpu_architecture'?: CpuArchitectureEnum | null;
     /**
      * 
      * @type {AutoscalingPolicyRequest}
@@ -3218,6 +3236,12 @@ export interface BaseJobResponse {
      * @memberof BaseJobResponse
      */
     'ephemeral_storage_in_gib'?: number;
+    /**
+     * CPU architecture this service runs on. If null, the cluster default architecture is used.
+     * @type {CpuArchitectureEnum}
+     * @memberof BaseJobResponse
+     */
+    'cpu_architecture'?: CpuArchitectureEnum | null;
     /**
      * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
      * @type {number}
@@ -8607,6 +8631,12 @@ export interface ContainerRequest {
      */
     'ephemeral_storage_in_gib'?: number;
     /**
+     * CPU architecture to run this service on. If null, the cluster default architecture is used.
+     * @type {CpuArchitectureEnum}
+     * @memberof ContainerRequest
+     */
+    'cpu_architecture'?: CpuArchitectureEnum | null;
+    /**
      * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no container running. 
      * @type {number}
      * @memberof ContainerRequest
@@ -8661,6 +8691,8 @@ export interface ContainerRequest {
      */
     'autoscaling'?: AutoscalingPolicyRequest;
 }
+
+
 /**
  * 
  * @export
@@ -8787,6 +8819,12 @@ export interface ContainerResponse {
      * @memberof ContainerResponse
      */
     'ephemeral_storage_in_gib'?: number;
+    /**
+     * CPU architecture this service runs on. If null, the cluster default architecture is used.
+     * @type {CpuArchitectureEnum}
+     * @memberof ContainerResponse
+     */
+    'cpu_architecture'?: CpuArchitectureEnum | null;
     /**
      * Minimum number of instances running. This resource auto-scale based on the CPU and Memory consumption. Note: 0 means that there is no container running. 
      * @type {number}
@@ -9310,6 +9348,12 @@ export interface CronJobResponse {
      * @memberof CronJobResponse
      */
     'ephemeral_storage_in_gib'?: number;
+    /**
+     * CPU architecture this service runs on. If null, the cluster default architecture is used.
+     * @type {CpuArchitectureEnum}
+     * @memberof CronJobResponse
+     */
+    'cpu_architecture'?: CpuArchitectureEnum | null;
     /**
      * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
      * @type {number}
@@ -16586,6 +16630,12 @@ export interface JobRequest {
      */
     'source'?: JobRequestAllOfSource;
     /**
+     * CPU architecture to run this service on. If null, the cluster default architecture is used.
+     * @type {CpuArchitectureEnum}
+     * @memberof JobRequest
+     */
+    'cpu_architecture'?: CpuArchitectureEnum | null;
+    /**
      * 
      * @type {Healthcheck}
      * @memberof JobRequest
@@ -16622,6 +16672,8 @@ export interface JobRequest {
      */
     'icon_uri'?: string;
 }
+
+
 /**
  * If you want to define a Cron job, only the `cronjob` property must be filled   A Lifecycle job should contain at least one property `on_XXX` among the 3 properties: `on_start`, `on_stop`, `on_delete` 
  * @export
@@ -17735,6 +17787,12 @@ export interface LifecycleJobResponse {
      * @memberof LifecycleJobResponse
      */
     'ephemeral_storage_in_gib'?: number;
+    /**
+     * CPU architecture this service runs on. If null, the cluster default architecture is used.
+     * @type {CpuArchitectureEnum}
+     * @memberof LifecycleJobResponse
+     */
+    'cpu_architecture'?: CpuArchitectureEnum | null;
     /**
      * Maximum number of restart allowed before the job is considered as failed 0 means that no restart/crash of the job is allowed 
      * @type {number}
