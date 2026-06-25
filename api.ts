@@ -20331,6 +20331,57 @@ export interface OrganizationLabelsGroupResponse {
 /**
  * 
  * @export
+ * @interface OrganizationOnboardingPatchRequest
+ */
+export interface OrganizationOnboardingPatchRequest {
+    /**
+     * 
+     * @type {OrganizationOnboardingStatusEnum}
+     * @memberof OrganizationOnboardingPatchRequest
+     */
+    'status': OrganizationOnboardingStatusEnum;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface OrganizationOnboardingResponse
+ */
+export interface OrganizationOnboardingResponse {
+    /**
+     * Comma-separated list of use cases selected by the organization owner at sign-up (e.g. \"ephemeral-environments,rde\")
+     * @type {string}
+     * @memberof OrganizationOnboardingResponse
+     */
+    'use_cases'?: string | null;
+    /**
+     * 
+     * @type {OrganizationOnboardingStatusEnum}
+     * @memberof OrganizationOnboardingResponse
+     */
+    'status'?: OrganizationOnboardingStatusEnum;
+}
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const OrganizationOnboardingStatusEnum = {
+    IN_PROGRESS: 'IN_PROGRESS',
+    DISMISSED: 'DISMISSED',
+    COMPLETED: 'COMPLETED'
+} as const;
+
+export type OrganizationOnboardingStatusEnum = typeof OrganizationOnboardingStatusEnum[keyof typeof OrganizationOnboardingStatusEnum];
+
+
+/**
+ * 
+ * @export
  * @interface OrganizationRequest
  */
 export interface OrganizationRequest {
@@ -65254,6 +65305,47 @@ export const OrganizationMainCallsApiAxiosParamCreator = function (configuration
             };
         },
         /**
+         * Returns the onboarding status for the given organization and the use cases selected by the owner at sign-up.
+         * @summary Get the onboarding status of an organization
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationOnboarding: async (organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getOrganizationOnboarding', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/onboarding`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary List Environments By OrganizationId
          * @param {string} organizationId 
@@ -65604,6 +65696,53 @@ export const OrganizationMainCallsApiAxiosParamCreator = function (configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Updates the onboarding status for the calling user\'s organization. Only the authenticated user\'s own sign-up record is updated.
+         * @summary Update the onboarding status of an organization
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationOnboardingPatchRequest} organizationOnboardingPatchRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateOrganizationOnboarding: async (organizationId: string, organizationOnboardingPatchRequest: OrganizationOnboardingPatchRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('updateOrganizationOnboarding', 'organizationId', organizationId)
+            // verify required parameter 'organizationOnboardingPatchRequest' is not null or undefined
+            assertParamExists('updateOrganizationOnboarding', 'organizationOnboardingPatchRequest', organizationOnboardingPatchRequest)
+            const localVarPath = `/organization/{organizationId}/onboarding`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organizationOnboardingPatchRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -65767,6 +65906,19 @@ export const OrganizationMainCallsApiFp = function(configuration?: Configuration
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns the onboarding status for the given organization and the use cases selected by the owner at sign-up.
+         * @summary Get the onboarding status of an organization
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationOnboarding(organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationOnboardingResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationOnboarding(organizationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrganizationMainCallsApi.getOrganizationOnboarding']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary List Environments By OrganizationId
          * @param {string} organizationId 
@@ -65872,6 +66024,20 @@ export const OrganizationMainCallsApiFp = function(configuration?: Configuration
             const localVarAxiosArgs = await localVarAxiosParamCreator.parseTerraformVariablesFromGitRepo(organizationId, terraformVariableParsingRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OrganizationMainCallsApi.parseTerraformVariablesFromGitRepo']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Updates the onboarding status for the calling user\'s organization. Only the authenticated user\'s own sign-up record is updated.
+         * @summary Update the onboarding status of an organization
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationOnboardingPatchRequest} organizationOnboardingPatchRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateOrganizationOnboarding(organizationId: string, organizationOnboardingPatchRequest: OrganizationOnboardingPatchRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationOnboardingResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateOrganizationOnboarding(organizationId, organizationOnboardingPatchRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrganizationMainCallsApi.updateOrganizationOnboarding']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -66004,6 +66170,16 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
             return localVarFp.getOrganizationGitToken(organizationId, gitTokenId, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns the onboarding status for the given organization and the use cases selected by the owner at sign-up.
+         * @summary Get the onboarding status of an organization
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationOnboarding(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<OrganizationOnboardingResponse> {
+            return localVarFp.getOrganizationOnboarding(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary List Environments By OrganizationId
          * @param {string} organizationId 
@@ -66086,6 +66262,17 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
          */
         parseTerraformVariablesFromGitRepo(organizationId: string, terraformVariableParsingRequest: TerraformVariableParsingRequest, options?: RawAxiosRequestConfig): AxiosPromise<ParseTerraformVariablesFromGitRepo200Response> {
             return localVarFp.parseTerraformVariablesFromGitRepo(organizationId, terraformVariableParsingRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Updates the onboarding status for the calling user\'s organization. Only the authenticated user\'s own sign-up record is updated.
+         * @summary Update the onboarding status of an organization
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationOnboardingPatchRequest} organizationOnboardingPatchRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateOrganizationOnboarding(organizationId: string, organizationOnboardingPatchRequest: OrganizationOnboardingPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<OrganizationOnboardingResponse> {
+            return localVarFp.updateOrganizationOnboarding(organizationId, organizationOnboardingPatchRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -66239,6 +66426,18 @@ export class OrganizationMainCallsApi extends BaseAPI {
     }
 
     /**
+     * Returns the onboarding status for the given organization and the use cases selected by the owner at sign-up.
+     * @summary Get the onboarding status of an organization
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationMainCallsApi
+     */
+    public getOrganizationOnboarding(organizationId: string, options?: RawAxiosRequestConfig) {
+        return OrganizationMainCallsApiFp(this.configuration).getOrganizationOnboarding(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * 
      * @summary List Environments By OrganizationId
      * @param {string} organizationId 
@@ -66336,6 +66535,19 @@ export class OrganizationMainCallsApi extends BaseAPI {
      */
     public parseTerraformVariablesFromGitRepo(organizationId: string, terraformVariableParsingRequest: TerraformVariableParsingRequest, options?: RawAxiosRequestConfig) {
         return OrganizationMainCallsApiFp(this.configuration).parseTerraformVariablesFromGitRepo(organizationId, terraformVariableParsingRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Updates the onboarding status for the calling user\'s organization. Only the authenticated user\'s own sign-up record is updated.
+     * @summary Update the onboarding status of an organization
+     * @param {string} organizationId Organization ID
+     * @param {OrganizationOnboardingPatchRequest} organizationOnboardingPatchRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationMainCallsApi
+     */
+    public updateOrganizationOnboarding(organizationId: string, organizationOnboardingPatchRequest: OrganizationOnboardingPatchRequest, options?: RawAxiosRequestConfig) {
+        return OrganizationMainCallsApiFp(this.configuration).updateOrganizationOnboarding(organizationId, organizationOnboardingPatchRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
