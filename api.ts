@@ -5571,11 +5571,11 @@ export interface ClusterAnalysisRequest {
      */
     'prometheus_url'?: string | null;
     /**
-     * Optional history duration in hours for COST_RECOMMENDATION analysis.
-     * @type {number}
+     * Optional allowlisted KRR arguments for COST_RECOMMENDATION analysis. The engine validates and rejects unsupported or unsafe KRR flags.
+     * @type {Array<string>}
      * @memberof ClusterAnalysisRequest
      */
-    'history_duration_hours'?: number | null;
+    'cmd_args'?: Array<string>;
     /**
      * Optional target Kubernetes version for DEPRECATED_API_CHECK analysis.
      * @type {string}
