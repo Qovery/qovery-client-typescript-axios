@@ -4232,10 +4232,41 @@ export type BlueprintSpecOverridesBackendEnum = typeof BlueprintSpecOverridesBac
 export interface BlueprintUpdateEngineDiff {
     /**
      * 
-     * @type {Array<BlueprintUpdateUpdatedValue>}
+     * @type {Array<BlueprintUpdateEngineFieldChange>}
      * @memberof BlueprintUpdateEngineDiff
      */
-    'updated_values': Array<BlueprintUpdateUpdatedValue>;
+    'updated_values': Array<BlueprintUpdateEngineFieldChange>;
+}
+/**
+ * A single engine-block field delta (e.g. version, cpu, ram). Not a manifest variable, so it carries no field type or constraints.
+ * @export
+ * @interface BlueprintUpdateEngineFieldChange
+ */
+export interface BlueprintUpdateEngineFieldChange {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintUpdateEngineFieldChange
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintUpdateEngineFieldChange
+     */
+    'current_default_value'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintUpdateEngineFieldChange
+     */
+    'new_default_value'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintUpdateEngineFieldChange
+     */
+    'current_value'?: string | null;
 }
 /**
  * 
@@ -4255,6 +4286,24 @@ export interface BlueprintUpdateNewOptionalValue {
      * @memberof BlueprintUpdateNewOptionalValue
      */
     'default_value'?: string | null;
+    /**
+     * 
+     * @type {BlueprintManifestFieldType}
+     * @memberof BlueprintUpdateNewOptionalValue
+     */
+    'type': BlueprintManifestFieldType;
+    /**
+     * Values the user may choose from. Null = unrestricted.
+     * @type {Array<string>}
+     * @memberof BlueprintUpdateNewOptionalValue
+     */
+    'allowed_values'?: Array<string> | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BlueprintUpdateNewOptionalValue
+     */
+    'is_secret': boolean;
 }
 /**
  * 
@@ -4268,6 +4317,24 @@ export interface BlueprintUpdateNewRequiredValue {
      * @memberof BlueprintUpdateNewRequiredValue
      */
     'name': string;
+    /**
+     * 
+     * @type {BlueprintManifestFieldType}
+     * @memberof BlueprintUpdateNewRequiredValue
+     */
+    'type': BlueprintManifestFieldType;
+    /**
+     * Values the user may choose from. Null = unrestricted.
+     * @type {Array<string>}
+     * @memberof BlueprintUpdateNewRequiredValue
+     */
+    'allowed_values'?: Array<string> | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BlueprintUpdateNewRequiredValue
+     */
+    'is_secret': boolean;
 }
 /**
  * 
@@ -4431,6 +4498,24 @@ export interface BlueprintUpdateUpdatedValue {
      * @memberof BlueprintUpdateUpdatedValue
      */
     'current_value'?: string | null;
+    /**
+     * 
+     * @type {BlueprintManifestFieldType}
+     * @memberof BlueprintUpdateUpdatedValue
+     */
+    'type': BlueprintManifestFieldType;
+    /**
+     * Values the user may choose from. Null = unrestricted.
+     * @type {Array<string>}
+     * @memberof BlueprintUpdateUpdatedValue
+     */
+    'allowed_values'?: Array<string> | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BlueprintUpdateUpdatedValue
+     */
+    'is_secret': boolean;
 }
 /**
  * Value object for a variable in a patch map. Set the map value to null to remove the variable.
