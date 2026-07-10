@@ -4269,6 +4269,25 @@ export interface BlueprintUpdateEngineFieldChange {
     'current_value'?: string | null;
 }
 /**
+ * A newer major version of the blueprint available for a major upgrade.
+ * @export
+ * @interface BlueprintUpdateNewMajorVersion
+ */
+export interface BlueprintUpdateNewMajorVersion {
+    /**
+     * The engine major version (e.g. \"17\").
+     * @type {string}
+     * @memberof BlueprintUpdateNewMajorVersion
+     */
+    'service_version': string;
+    /**
+     * Latest catalog tag for that major version.
+     * @type {string}
+     * @memberof BlueprintUpdateNewMajorVersion
+     */
+    'latest_tag': string;
+}
+/**
  * 
  * @export
  * @interface BlueprintUpdateNewOptionalValue
@@ -4467,6 +4486,12 @@ export interface BlueprintUpdateResponse {
      * @memberof BlueprintUpdateResponse
      */
     'engine_diff': BlueprintUpdateEngineDiff;
+    /**
+     * Major versions of the same blueprint newer than the service\'s current one (e.g. service on aws/postgres/16 while 17 and 18 exist). Empty when already on the latest major or when the current version is non-numeric.
+     * @type {Array<BlueprintUpdateNewMajorVersion>}
+     * @memberof BlueprintUpdateResponse
+     */
+    'new_major_versions': Array<BlueprintUpdateNewMajorVersion>;
 }
 /**
  * 
