@@ -7354,6 +7354,131 @@ export interface ClusterOverviewResponse {
 /**
  * 
  * @export
+ * @interface ClusterPlatformBindingLayerResponse
+ */
+export interface ClusterPlatformBindingLayerResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterPlatformBindingLayerResponse
+     */
+    'key': string;
+    /**
+     * 
+     * @type {PlatformLayerResolutionStatus}
+     * @memberof ClusterPlatformBindingLayerResponse
+     */
+    'status': PlatformLayerResolutionStatus;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterPlatformBindingLayerResponse
+     */
+    'reason': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ClusterPlatformBindingLayerResponse
+     */
+    'componentKeys': Array<string>;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ClusterPlatformBindingRequest
+ */
+export interface ClusterPlatformBindingRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterPlatformBindingRequest
+     */
+    'templateKey': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterPlatformBindingRequest
+     */
+    'templateVersion': string;
+    /**
+     * 
+     * @type {{ [key: string]: boolean; }}
+     * @memberof ClusterPlatformBindingRequest
+     */
+    'layerSelections'?: { [key: string]: boolean; };
+    /**
+     * Component configuration values keyed by component key
+     * @type {{ [key: string]: { [key: string]: any; }; }}
+     * @memberof ClusterPlatformBindingRequest
+     */
+    'managedConfig'?: { [key: string]: { [key: string]: any; }; };
+    /**
+     * String values keyed first by component key and then by input key
+     * @type {{ [key: string]: { [key: string]: string; }; }}
+     * @memberof ClusterPlatformBindingRequest
+     */
+    'customerProvidedInputs'?: { [key: string]: { [key: string]: string; }; };
+}
+/**
+ * 
+ * @export
+ * @interface ClusterPlatformBindingResponse
+ */
+export interface ClusterPlatformBindingResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterPlatformBindingResponse
+     */
+    'clusterId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterPlatformBindingResponse
+     */
+    'organizationId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterPlatformBindingResponse
+     */
+    'templateKey': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterPlatformBindingResponse
+     */
+    'templateVersion': string;
+    /**
+     * 
+     * @type {{ [key: string]: boolean; }}
+     * @memberof ClusterPlatformBindingResponse
+     */
+    'layerSelections': { [key: string]: boolean; };
+    /**
+     * Component configuration values keyed by component key
+     * @type {{ [key: string]: { [key: string]: any; }; }}
+     * @memberof ClusterPlatformBindingResponse
+     */
+    'managedConfig': { [key: string]: { [key: string]: any; }; };
+    /**
+     * String values keyed first by component key and then by input key
+     * @type {{ [key: string]: { [key: string]: string; }; }}
+     * @memberof ClusterPlatformBindingResponse
+     */
+    'customerProvidedInputs': { [key: string]: { [key: string]: string; }; };
+    /**
+     * 
+     * @type {Array<ClusterPlatformBindingLayerResponse>}
+     * @memberof ClusterPlatformBindingResponse
+     */
+    'layers': Array<ClusterPlatformBindingLayerResponse>;
+}
+/**
+ * 
+ * @export
  * @interface ClusterReadinessStatus
  */
 export interface ClusterReadinessStatus {
@@ -20862,6 +20987,534 @@ export const PlanEnum = {
 } as const;
 
 export type PlanEnum = typeof PlanEnum[keyof typeof PlanEnum];
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const PlatformCloudVendor = {
+    AWS: 'AWS',
+    SCW: 'SCW',
+    GCP: 'GCP',
+    DO: 'DO',
+    AZURE: 'AZURE',
+    OVH: 'OVH',
+    CIVO: 'CIVO',
+    HETZNER: 'HETZNER',
+    ORACLE: 'ORACLE',
+    IBM: 'IBM',
+    UNKNOWN: 'UNKNOWN'
+} as const;
+
+export type PlatformCloudVendor = typeof PlatformCloudVendor[keyof typeof PlatformCloudVendor];
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const PlatformClusterMode = {
+    QOVERY_MANAGED: 'QOVERY_MANAGED',
+    CUSTOMER_MANAGED: 'CUSTOMER_MANAGED'
+} as const;
+
+export type PlatformClusterMode = typeof PlatformClusterMode[keyof typeof PlatformClusterMode];
+
+
+/**
+ * 
+ * @export
+ * @interface PlatformComponentConfigurationConstraintsResponse
+ */
+export interface PlatformComponentConfigurationConstraintsResponse {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof PlatformComponentConfigurationConstraintsResponse
+     */
+    'allowedValues'?: Array<string> | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlatformComponentConfigurationConstraintsResponse
+     */
+    'min'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlatformComponentConfigurationConstraintsResponse
+     */
+    'max'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlatformComponentConfigurationConstraintsResponse
+     */
+    'minLength'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlatformComponentConfigurationConstraintsResponse
+     */
+    'maxLength'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformComponentConfigurationConstraintsResponse
+     */
+    'pattern'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface PlatformComponentConfigurationFieldResponse
+ */
+export interface PlatformComponentConfigurationFieldResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformComponentConfigurationFieldResponse
+     */
+    'key': string;
+    /**
+     * Field type understood by the Console, such as string, number, or bool
+     * @type {string}
+     * @memberof PlatformComponentConfigurationFieldResponse
+     */
+    'type': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PlatformComponentConfigurationFieldResponse
+     */
+    'required': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformComponentConfigurationFieldResponse
+     */
+    'defaultValue'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformComponentConfigurationFieldResponse
+     */
+    'label': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformComponentConfigurationFieldResponse
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PlatformComponentConfigurationFieldResponse
+     */
+    'sensitive': boolean;
+    /**
+     * 
+     * @type {PlatformComponentConfigurationConstraintsResponse}
+     * @memberof PlatformComponentConfigurationFieldResponse
+     */
+    'constraints': PlatformComponentConfigurationConstraintsResponse;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const PlatformComponentConfigurationInputScope = {
+    PLATFORM_PROFILE: 'PLATFORM_PROFILE',
+    CLUSTER: 'CLUSTER'
+} as const;
+
+export type PlatformComponentConfigurationInputScope = typeof PlatformComponentConfigurationInputScope[keyof typeof PlatformComponentConfigurationInputScope];
+
+
+/**
+ * 
+ * @export
+ * @interface PlatformComponentConfigurationPreviewRequest
+ */
+export interface PlatformComponentConfigurationPreviewRequest {
+    /**
+     * Configuration values keyed by their catalog field name
+     * @type {{ [key: string]: any; }}
+     * @memberof PlatformComponentConfigurationPreviewRequest
+     */
+    'profileConfig'?: { [key: string]: any; };
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof PlatformComponentConfigurationPreviewRequest
+     */
+    'clusterInputs'?: { [key: string]: string; };
+    /**
+     * String values keyed first by component key and then by input key
+     * @type {{ [key: string]: { [key: string]: string; }; }}
+     * @memberof PlatformComponentConfigurationPreviewRequest
+     */
+    'componentOutputs'?: { [key: string]: { [key: string]: string; }; };
+}
+/**
+ * 
+ * @export
+ * @interface PlatformComponentConfigurationPreviewResponse
+ */
+export interface PlatformComponentConfigurationPreviewResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformComponentConfigurationPreviewResponse
+     */
+    'clusterId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformComponentConfigurationPreviewResponse
+     */
+    'componentKey': string;
+    /**
+     * 
+     * @type {Array<PlatformComponentConfigurationFieldResponse>}
+     * @memberof PlatformComponentConfigurationPreviewResponse
+     */
+    'fields': Array<PlatformComponentConfigurationFieldResponse>;
+    /**
+     * 
+     * @type {Array<PlatformComponentInputRequirementResponse>}
+     * @memberof PlatformComponentConfigurationPreviewResponse
+     */
+    'requirements': Array<PlatformComponentInputRequirementResponse>;
+    /**
+     * 
+     * @type {Array<PlatformComponentOutputBindingResponse>}
+     * @memberof PlatformComponentConfigurationPreviewResponse
+     */
+    'componentBindings': Array<PlatformComponentOutputBindingResponse>;
+    /**
+     * 
+     * @type {Array<PlatformComponentConfigurationViolationResponse>}
+     * @memberof PlatformComponentConfigurationPreviewResponse
+     */
+    'violations': Array<PlatformComponentConfigurationViolationResponse>;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const PlatformComponentConfigurationRequirementStatus = {
+    MISSING: 'MISSING',
+    READY: 'READY'
+} as const;
+
+export type PlatformComponentConfigurationRequirementStatus = typeof PlatformComponentConfigurationRequirementStatus[keyof typeof PlatformComponentConfigurationRequirementStatus];
+
+
+/**
+ * 
+ * @export
+ * @interface PlatformComponentConfigurationViolationResponse
+ */
+export interface PlatformComponentConfigurationViolationResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformComponentConfigurationViolationResponse
+     */
+    'code': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformComponentConfigurationViolationResponse
+     */
+    'fieldPath': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformComponentConfigurationViolationResponse
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
+ * @interface PlatformComponentInputRequirementResponse
+ */
+export interface PlatformComponentInputRequirementResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformComponentInputRequirementResponse
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformComponentInputRequirementResponse
+     */
+    'type': string;
+    /**
+     * 
+     * @type {PlatformComponentConfigurationInputScope}
+     * @memberof PlatformComponentInputRequirementResponse
+     */
+    'scope': PlatformComponentConfigurationInputScope;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformComponentInputRequirementResponse
+     */
+    'label': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformComponentInputRequirementResponse
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PlatformComponentInputRequirementResponse
+     */
+    'required': boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PlatformComponentInputRequirementResponse
+     */
+    'sensitive': boolean;
+    /**
+     * 
+     * @type {PlatformComponentConfigurationConstraintsResponse}
+     * @memberof PlatformComponentInputRequirementResponse
+     */
+    'constraints': PlatformComponentConfigurationConstraintsResponse;
+    /**
+     * 
+     * @type {PlatformComponentConfigurationRequirementStatus}
+     * @memberof PlatformComponentInputRequirementResponse
+     */
+    'status': PlatformComponentConfigurationRequirementStatus;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface PlatformComponentOutputBindingResponse
+ */
+export interface PlatformComponentOutputBindingResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformComponentOutputBindingResponse
+     */
+    'input': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformComponentOutputBindingResponse
+     */
+    'fromComponent': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformComponentOutputBindingResponse
+     */
+    'output': string;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const PlatformLayerResolutionStatus = {
+    ENABLED: 'ENABLED',
+    DISABLED: 'DISABLED',
+    SKIPPED: 'SKIPPED'
+} as const;
+
+export type PlatformLayerResolutionStatus = typeof PlatformLayerResolutionStatus[keyof typeof PlatformLayerResolutionStatus];
+
+
+/**
+ * 
+ * @export
+ * @interface PlatformTemplateCatalogResponse
+ */
+export interface PlatformTemplateCatalogResponse {
+    /**
+     * 
+     * @type {Array<PlatformTemplateSummaryResponse>}
+     * @memberof PlatformTemplateCatalogResponse
+     */
+    'results': Array<PlatformTemplateSummaryResponse>;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const PlatformTemplateComponentKind = {
+    HELM: 'HELM',
+    TERRAFORM: 'TERRAFORM'
+} as const;
+
+export type PlatformTemplateComponentKind = typeof PlatformTemplateComponentKind[keyof typeof PlatformTemplateComponentKind];
+
+
+/**
+ * 
+ * @export
+ * @interface PlatformTemplateComponentResponse
+ */
+export interface PlatformTemplateComponentResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformTemplateComponentResponse
+     */
+    'key': string;
+    /**
+     * 
+     * @type {PlatformTemplateComponentKind}
+     * @memberof PlatformTemplateComponentResponse
+     */
+    'kind': PlatformTemplateComponentKind;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformTemplateComponentResponse
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {Array<PlatformComponentConfigurationFieldResponse>}
+     * @memberof PlatformTemplateComponentResponse
+     */
+    'fields': Array<PlatformComponentConfigurationFieldResponse>;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface PlatformTemplateLayerResponse
+ */
+export interface PlatformTemplateLayerResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformTemplateLayerResponse
+     */
+    'key': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PlatformTemplateLayerResponse
+     */
+    'mandatory': boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PlatformTemplateLayerResponse
+     */
+    'enabledByDefault': boolean;
+    /**
+     * 
+     * @type {Array<PlatformClusterMode>}
+     * @memberof PlatformTemplateLayerResponse
+     */
+    'modes': Array<PlatformClusterMode>;
+    /**
+     * 
+     * @type {Array<PlatformCloudVendor>}
+     * @memberof PlatformTemplateLayerResponse
+     */
+    'providers'?: Array<PlatformCloudVendor> | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof PlatformTemplateLayerResponse
+     */
+    'componentKeys': Array<string>;
+    /**
+     * 
+     * @type {Array<PlatformTemplateComponentResponse>}
+     * @memberof PlatformTemplateLayerResponse
+     */
+    'components': Array<PlatformTemplateComponentResponse>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformTemplateLayerResponse
+     */
+    'description'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const PlatformTemplateReleaseStatus = {
+    DRAFT: 'DRAFT',
+    PUBLISHED: 'PUBLISHED',
+    DEPRECATED: 'DEPRECATED'
+} as const;
+
+export type PlatformTemplateReleaseStatus = typeof PlatformTemplateReleaseStatus[keyof typeof PlatformTemplateReleaseStatus];
+
+
+/**
+ * 
+ * @export
+ * @interface PlatformTemplateSummaryResponse
+ */
+export interface PlatformTemplateSummaryResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformTemplateSummaryResponse
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformTemplateSummaryResponse
+     */
+    'version': string;
+    /**
+     * 
+     * @type {PlatformTemplateReleaseStatus}
+     * @memberof PlatformTemplateSummaryResponse
+     */
+    'status': PlatformTemplateReleaseStatus;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformTemplateSummaryResponse
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {Array<PlatformTemplateLayerResponse>}
+     * @memberof PlatformTemplateSummaryResponse
+     */
+    'layers': Array<PlatformTemplateLayerResponse>;
+}
 
 
 /**
@@ -67195,6 +67848,395 @@ export class OrganizationWebhookApi extends BaseAPI {
      */
     public listWebhookEvent(organizationId: string, webhookId: string, options?: RawAxiosRequestConfig) {
         return OrganizationWebhookApiFp(this.configuration).listWebhookEvent(organizationId, webhookId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * PlatformConfigurationApi - axios parameter creator
+ * @export
+ */
+export const PlatformConfigurationApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Returns the platform template selected for the cluster, its layer resolution, and the currently stored component configuration.
+         * @summary Get the cluster platform binding
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusterPlatformBinding: async (organizationId: string, clusterId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getClusterPlatformBinding', 'organizationId', organizationId)
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('getClusterPlatformBinding', 'clusterId', clusterId)
+            const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/platformBinding`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the published platform templates available to the organization. Each template contains its layers, components, and the configuration fields that the Console can render.
+         * @summary List platform templates
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listPlatformTemplates: async (organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listPlatformTemplates', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/platformTemplate`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Resolves the fields and runtime requirements to display for a component using the cluster context and the values currently entered in the Console. This operation is read-only.
+         * @summary Resolve a platform component configuration
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {string} componentKey Platform component key
+         * @param {PlatformComponentConfigurationPreviewRequest} platformComponentConfigurationPreviewRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resolvePlatformComponentConfiguration: async (organizationId: string, clusterId: string, componentKey: string, platformComponentConfigurationPreviewRequest: PlatformComponentConfigurationPreviewRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('resolvePlatformComponentConfiguration', 'organizationId', organizationId)
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('resolvePlatformComponentConfiguration', 'clusterId', clusterId)
+            // verify required parameter 'componentKey' is not null or undefined
+            assertParamExists('resolvePlatformComponentConfiguration', 'componentKey', componentKey)
+            // verify required parameter 'platformComponentConfigurationPreviewRequest' is not null or undefined
+            assertParamExists('resolvePlatformComponentConfiguration', 'platformComponentConfigurationPreviewRequest', platformComponentConfigurationPreviewRequest)
+            const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/platformBinding/component/{componentKey}/resolve`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)))
+                .replace(`{${"componentKey"}}`, encodeURIComponent(String(componentKey)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(platformComponentConfigurationPreviewRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Selects a platform template and stores layer selections, component profile values, and customer-provided runtime inputs for the cluster.
+         * @summary Update the cluster platform binding
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {ClusterPlatformBindingRequest} clusterPlatformBindingRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateClusterPlatformBinding: async (organizationId: string, clusterId: string, clusterPlatformBindingRequest: ClusterPlatformBindingRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('updateClusterPlatformBinding', 'organizationId', organizationId)
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('updateClusterPlatformBinding', 'clusterId', clusterId)
+            // verify required parameter 'clusterPlatformBindingRequest' is not null or undefined
+            assertParamExists('updateClusterPlatformBinding', 'clusterPlatformBindingRequest', clusterPlatformBindingRequest)
+            const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/platformBinding`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(clusterPlatformBindingRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PlatformConfigurationApi - functional programming interface
+ * @export
+ */
+export const PlatformConfigurationApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PlatformConfigurationApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Returns the platform template selected for the cluster, its layer resolution, and the currently stored component configuration.
+         * @summary Get the cluster platform binding
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getClusterPlatformBinding(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterPlatformBindingResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterPlatformBinding(organizationId, clusterId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformConfigurationApi.getClusterPlatformBinding']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the published platform templates available to the organization. Each template contains its layers, components, and the configuration fields that the Console can render.
+         * @summary List platform templates
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listPlatformTemplates(organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformTemplateCatalogResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listPlatformTemplates(organizationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformConfigurationApi.listPlatformTemplates']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Resolves the fields and runtime requirements to display for a component using the cluster context and the values currently entered in the Console. This operation is read-only.
+         * @summary Resolve a platform component configuration
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {string} componentKey Platform component key
+         * @param {PlatformComponentConfigurationPreviewRequest} platformComponentConfigurationPreviewRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async resolvePlatformComponentConfiguration(organizationId: string, clusterId: string, componentKey: string, platformComponentConfigurationPreviewRequest: PlatformComponentConfigurationPreviewRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformComponentConfigurationPreviewResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.resolvePlatformComponentConfiguration(organizationId, clusterId, componentKey, platformComponentConfigurationPreviewRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformConfigurationApi.resolvePlatformComponentConfiguration']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Selects a platform template and stores layer selections, component profile values, and customer-provided runtime inputs for the cluster.
+         * @summary Update the cluster platform binding
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {ClusterPlatformBindingRequest} clusterPlatformBindingRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateClusterPlatformBinding(organizationId: string, clusterId: string, clusterPlatformBindingRequest: ClusterPlatformBindingRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterPlatformBindingResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateClusterPlatformBinding(organizationId, clusterId, clusterPlatformBindingRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformConfigurationApi.updateClusterPlatformBinding']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * PlatformConfigurationApi - factory interface
+ * @export
+ */
+export const PlatformConfigurationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PlatformConfigurationApiFp(configuration)
+    return {
+        /**
+         * Returns the platform template selected for the cluster, its layer resolution, and the currently stored component configuration.
+         * @summary Get the cluster platform binding
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusterPlatformBinding(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterPlatformBindingResponse> {
+            return localVarFp.getClusterPlatformBinding(organizationId, clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the published platform templates available to the organization. Each template contains its layers, components, and the configuration fields that the Console can render.
+         * @summary List platform templates
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listPlatformTemplates(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<PlatformTemplateCatalogResponse> {
+            return localVarFp.listPlatformTemplates(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Resolves the fields and runtime requirements to display for a component using the cluster context and the values currently entered in the Console. This operation is read-only.
+         * @summary Resolve a platform component configuration
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {string} componentKey Platform component key
+         * @param {PlatformComponentConfigurationPreviewRequest} platformComponentConfigurationPreviewRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resolvePlatformComponentConfiguration(organizationId: string, clusterId: string, componentKey: string, platformComponentConfigurationPreviewRequest: PlatformComponentConfigurationPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformComponentConfigurationPreviewResponse> {
+            return localVarFp.resolvePlatformComponentConfiguration(organizationId, clusterId, componentKey, platformComponentConfigurationPreviewRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Selects a platform template and stores layer selections, component profile values, and customer-provided runtime inputs for the cluster.
+         * @summary Update the cluster platform binding
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {ClusterPlatformBindingRequest} clusterPlatformBindingRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateClusterPlatformBinding(organizationId: string, clusterId: string, clusterPlatformBindingRequest: ClusterPlatformBindingRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClusterPlatformBindingResponse> {
+            return localVarFp.updateClusterPlatformBinding(organizationId, clusterId, clusterPlatformBindingRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PlatformConfigurationApi - object-oriented interface
+ * @export
+ * @class PlatformConfigurationApi
+ * @extends {BaseAPI}
+ */
+export class PlatformConfigurationApi extends BaseAPI {
+    /**
+     * Returns the platform template selected for the cluster, its layer resolution, and the currently stored component configuration.
+     * @summary Get the cluster platform binding
+     * @param {string} organizationId Organization ID
+     * @param {string} clusterId Cluster ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformConfigurationApi
+     */
+    public getClusterPlatformBinding(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig) {
+        return PlatformConfigurationApiFp(this.configuration).getClusterPlatformBinding(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the published platform templates available to the organization. Each template contains its layers, components, and the configuration fields that the Console can render.
+     * @summary List platform templates
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformConfigurationApi
+     */
+    public listPlatformTemplates(organizationId: string, options?: RawAxiosRequestConfig) {
+        return PlatformConfigurationApiFp(this.configuration).listPlatformTemplates(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Resolves the fields and runtime requirements to display for a component using the cluster context and the values currently entered in the Console. This operation is read-only.
+     * @summary Resolve a platform component configuration
+     * @param {string} organizationId Organization ID
+     * @param {string} clusterId Cluster ID
+     * @param {string} componentKey Platform component key
+     * @param {PlatformComponentConfigurationPreviewRequest} platformComponentConfigurationPreviewRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformConfigurationApi
+     */
+    public resolvePlatformComponentConfiguration(organizationId: string, clusterId: string, componentKey: string, platformComponentConfigurationPreviewRequest: PlatformComponentConfigurationPreviewRequest, options?: RawAxiosRequestConfig) {
+        return PlatformConfigurationApiFp(this.configuration).resolvePlatformComponentConfiguration(organizationId, clusterId, componentKey, platformComponentConfigurationPreviewRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Selects a platform template and stores layer selections, component profile values, and customer-provided runtime inputs for the cluster.
+     * @summary Update the cluster platform binding
+     * @param {string} organizationId Organization ID
+     * @param {string} clusterId Cluster ID
+     * @param {ClusterPlatformBindingRequest} clusterPlatformBindingRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformConfigurationApi
+     */
+    public updateClusterPlatformBinding(organizationId: string, clusterId: string, clusterPlatformBindingRequest: ClusterPlatformBindingRequest, options?: RawAxiosRequestConfig) {
+        return PlatformConfigurationApiFp(this.configuration).updateClusterPlatformBinding(organizationId, clusterId, clusterPlatformBindingRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
