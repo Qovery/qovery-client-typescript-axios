@@ -22108,6 +22108,19 @@ export type QoveryDnsProviderResponseProviderEnum = typeof QoveryDnsProviderResp
 /**
  * 
  * @export
+ * @interface QoveryIpsResponse
+ */
+export interface QoveryIpsResponse {
+    /**
+     * IP addresses used by Qovery\'s NAT gateways for outbound traffic.
+     * @type {Array<string>}
+     * @memberof QoveryIpsResponse
+     */
+    'ips': Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface QueuedDeploymentRequestForService
  */
 export interface QueuedDeploymentRequestForService {
@@ -57996,6 +58009,107 @@ export class HelmsApi extends BaseAPI {
      */
     public listHelms(environmentId: string, options?: RawAxiosRequestConfig) {
         return HelmsApiFp(this.configuration).listHelms(environmentId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * IPsApi - axios parameter creator
+ * @export
+ */
+export const IPsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Returns the list of static IP addresses used by Qovery\'s NAT gateways for outbound traffic. Customers can allow-list these IPs on their side. This endpoint is public and does not require authentication.
+         * @summary List Qovery NAT gateway IP addresses
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listQoveryIps: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/ips`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * IPsApi - functional programming interface
+ * @export
+ */
+export const IPsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = IPsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Returns the list of static IP addresses used by Qovery\'s NAT gateways for outbound traffic. Customers can allow-list these IPs on their side. This endpoint is public and does not require authentication.
+         * @summary List Qovery NAT gateway IP addresses
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listQoveryIps(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QoveryIpsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listQoveryIps(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IPsApi.listQoveryIps']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * IPsApi - factory interface
+ * @export
+ */
+export const IPsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = IPsApiFp(configuration)
+    return {
+        /**
+         * Returns the list of static IP addresses used by Qovery\'s NAT gateways for outbound traffic. Customers can allow-list these IPs on their side. This endpoint is public and does not require authentication.
+         * @summary List Qovery NAT gateway IP addresses
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listQoveryIps(options?: RawAxiosRequestConfig): AxiosPromise<QoveryIpsResponse> {
+            return localVarFp.listQoveryIps(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * IPsApi - object-oriented interface
+ * @export
+ * @class IPsApi
+ * @extends {BaseAPI}
+ */
+export class IPsApi extends BaseAPI {
+    /**
+     * Returns the list of static IP addresses used by Qovery\'s NAT gateways for outbound traffic. Customers can allow-list these IPs on their side. This endpoint is public and does not require authentication.
+     * @summary List Qovery NAT gateway IP addresses
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IPsApi
+     */
+    public listQoveryIps(options?: RawAxiosRequestConfig) {
+        return IPsApiFp(this.configuration).listQoveryIps(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
