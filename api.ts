@@ -13698,6 +13698,104 @@ export interface ExternalSecretAssociatedServiceResponseList {
     'results': Array<ExternalSecretAssociatedServiceResponse>;
 }
 /**
+ * Validation constraints attached to a catalog field descriptor.
+ * @export
+ * @interface FieldSchemaConstraintsResponse
+ */
+export interface FieldSchemaConstraintsResponse {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof FieldSchemaConstraintsResponse
+     */
+    'allowedValues'?: Array<string> | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof FieldSchemaConstraintsResponse
+     */
+    'min'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof FieldSchemaConstraintsResponse
+     */
+    'max'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof FieldSchemaConstraintsResponse
+     */
+    'minLength'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof FieldSchemaConstraintsResponse
+     */
+    'maxLength'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof FieldSchemaConstraintsResponse
+     */
+    'pattern'?: string | null;
+}
+/**
+ * Canonical platform catalog field descriptor. Mirrors the q-core `FieldSchemaResponse` DTO.
+ * @export
+ * @interface FieldSchemaResponse
+ */
+export interface FieldSchemaResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof FieldSchemaResponse
+     */
+    'key': string;
+    /**
+     * Field type understood by the Console, such as string, number, or bool
+     * @type {string}
+     * @memberof FieldSchemaResponse
+     */
+    'type': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FieldSchemaResponse
+     */
+    'required': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof FieldSchemaResponse
+     */
+    'defaultValue'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof FieldSchemaResponse
+     */
+    'label': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FieldSchemaResponse
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FieldSchemaResponse
+     */
+    'sensitive': boolean;
+    /**
+     * 
+     * @type {FieldSchemaConstraintsResponse}
+     * @memberof FieldSchemaResponse
+     */
+    'constraints': FieldSchemaConstraintsResponse;
+}
+/**
  * @type GcpCredentialsRequest
  * @export
  */
@@ -21029,104 +21127,6 @@ export type PlatformClusterMode = typeof PlatformClusterMode[keyof typeof Platfo
 /**
  * 
  * @export
- * @interface PlatformComponentConfigurationConstraintsResponse
- */
-export interface PlatformComponentConfigurationConstraintsResponse {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof PlatformComponentConfigurationConstraintsResponse
-     */
-    'allowedValues'?: Array<string> | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof PlatformComponentConfigurationConstraintsResponse
-     */
-    'min'?: number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof PlatformComponentConfigurationConstraintsResponse
-     */
-    'max'?: number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof PlatformComponentConfigurationConstraintsResponse
-     */
-    'minLength'?: number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof PlatformComponentConfigurationConstraintsResponse
-     */
-    'maxLength'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlatformComponentConfigurationConstraintsResponse
-     */
-    'pattern'?: string | null;
-}
-/**
- * 
- * @export
- * @interface PlatformComponentConfigurationFieldResponse
- */
-export interface PlatformComponentConfigurationFieldResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof PlatformComponentConfigurationFieldResponse
-     */
-    'key': string;
-    /**
-     * Field type understood by the Console, such as string, number, or bool
-     * @type {string}
-     * @memberof PlatformComponentConfigurationFieldResponse
-     */
-    'type': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof PlatformComponentConfigurationFieldResponse
-     */
-    'required': boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlatformComponentConfigurationFieldResponse
-     */
-    'defaultValue'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlatformComponentConfigurationFieldResponse
-     */
-    'label': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlatformComponentConfigurationFieldResponse
-     */
-    'description'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof PlatformComponentConfigurationFieldResponse
-     */
-    'sensitive': boolean;
-    /**
-     * 
-     * @type {PlatformComponentConfigurationConstraintsResponse}
-     * @memberof PlatformComponentConfigurationFieldResponse
-     */
-    'constraints': PlatformComponentConfigurationConstraintsResponse;
-}
-/**
- * 
- * @export
  * @enum {string}
  */
 
@@ -21183,10 +21183,10 @@ export interface PlatformComponentConfigurationPreviewResponse {
     'componentKey': string;
     /**
      * 
-     * @type {Array<PlatformComponentConfigurationFieldResponse>}
+     * @type {Array<FieldSchemaResponse>}
      * @memberof PlatformComponentConfigurationPreviewResponse
      */
-    'fields': Array<PlatformComponentConfigurationFieldResponse>;
+    'fields': Array<FieldSchemaResponse>;
     /**
      * 
      * @type {Array<PlatformComponentInputRequirementResponse>}
@@ -21227,26 +21227,26 @@ export type PlatformComponentConfigurationRequirementStatus = typeof PlatformCom
  */
 export interface PlatformComponentConfigurationViolationResponse {
     /**
-     * 
+     * Stable machine-readable violation code.
      * @type {string}
      * @memberof PlatformComponentConfigurationViolationResponse
      */
     'code': string;
     /**
-     * 
+     * Path of the offending field. Convention: profile configuration fields use the bare field key (e.g. `storage`); cluster-provided inputs are prefixed with `clusterInputs.` (e.g. `clusterInputs.s3BucketName`). Consumers match violations to form fields using these exact paths.
      * @type {string}
      * @memberof PlatformComponentConfigurationViolationResponse
      */
     'fieldPath': string;
     /**
-     * 
+     * Customer-facing message describing how to fix the violation.
      * @type {string}
      * @memberof PlatformComponentConfigurationViolationResponse
      */
     'message': string;
 }
 /**
- * 
+ * A catalog field the cluster must provide for the selected configuration: the shared field descriptor extended with its resolution scope and readiness.
  * @export
  * @interface PlatformComponentInputRequirementResponse
  */
@@ -21258,17 +21258,23 @@ export interface PlatformComponentInputRequirementResponse {
      */
     'key': string;
     /**
-     * 
+     * Field type understood by the Console, such as string, number, or bool
      * @type {string}
      * @memberof PlatformComponentInputRequirementResponse
      */
     'type': string;
     /**
      * 
-     * @type {PlatformComponentConfigurationInputScope}
+     * @type {boolean}
      * @memberof PlatformComponentInputRequirementResponse
      */
-    'scope': PlatformComponentConfigurationInputScope;
+    'required': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformComponentInputRequirementResponse
+     */
+    'defaultValue'?: string | null;
     /**
      * 
      * @type {string}
@@ -21286,19 +21292,19 @@ export interface PlatformComponentInputRequirementResponse {
      * @type {boolean}
      * @memberof PlatformComponentInputRequirementResponse
      */
-    'required': boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof PlatformComponentInputRequirementResponse
-     */
     'sensitive': boolean;
     /**
      * 
-     * @type {PlatformComponentConfigurationConstraintsResponse}
+     * @type {FieldSchemaConstraintsResponse}
      * @memberof PlatformComponentInputRequirementResponse
      */
-    'constraints': PlatformComponentConfigurationConstraintsResponse;
+    'constraints': FieldSchemaConstraintsResponse;
+    /**
+     * 
+     * @type {PlatformComponentConfigurationInputScope}
+     * @memberof PlatformComponentInputRequirementResponse
+     */
+    'scope': PlatformComponentConfigurationInputScope;
     /**
      * 
      * @type {PlatformComponentConfigurationRequirementStatus}
@@ -21401,10 +21407,10 @@ export interface PlatformTemplateComponentResponse {
     'description'?: string | null;
     /**
      * 
-     * @type {Array<PlatformComponentConfigurationFieldResponse>}
+     * @type {Array<FieldSchemaResponse>}
      * @memberof PlatformTemplateComponentResponse
      */
-    'fields': Array<PlatformComponentConfigurationFieldResponse>;
+    'fields': Array<FieldSchemaResponse>;
 }
 
 
