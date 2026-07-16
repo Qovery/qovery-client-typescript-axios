@@ -68025,13 +68025,15 @@ export const PlatformConfigurationApiAxiosParamCreator = function (configuration
             };
         },
         /**
-         * Returns the published platform templates available to the organization. Each template contains its layers, components, and the configuration fields that the Console can render.
+         * Returns the published platform templates available to the organization. Each template contains its layers, components, and the configuration fields that the Console can render. When clusterMode and cloudProvider are supplied together, component field constraints are narrowed to the effective choices for that cluster context.
          * @summary List platform templates
          * @param {string} organizationId Organization ID
+         * @param {PlatformClusterMode} [clusterMode] Cluster management mode. Must be supplied together with cloudProvider.
+         * @param {PlatformCloudVendor} [cloudProvider] Cluster cloud provider. Must be supplied together with clusterMode.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listPlatformTemplates: async (organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listPlatformTemplates: async (organizationId: string, clusterMode?: PlatformClusterMode, cloudProvider?: PlatformCloudVendor, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('listPlatformTemplates', 'organizationId', organizationId)
             const localVarPath = `/organization/{organizationId}/platformTemplate`
@@ -68053,6 +68055,14 @@ export const PlatformConfigurationApiAxiosParamCreator = function (configuration
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (clusterMode !== undefined) {
+                localVarQueryParameter['clusterMode'] = clusterMode;
+            }
+
+            if (cloudProvider !== undefined) {
+                localVarQueryParameter['cloudProvider'] = cloudProvider;
+            }
 
 
     
@@ -68196,14 +68206,16 @@ export const PlatformConfigurationApiFp = function(configuration?: Configuration
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the published platform templates available to the organization. Each template contains its layers, components, and the configuration fields that the Console can render.
+         * Returns the published platform templates available to the organization. Each template contains its layers, components, and the configuration fields that the Console can render. When clusterMode and cloudProvider are supplied together, component field constraints are narrowed to the effective choices for that cluster context.
          * @summary List platform templates
          * @param {string} organizationId Organization ID
+         * @param {PlatformClusterMode} [clusterMode] Cluster management mode. Must be supplied together with cloudProvider.
+         * @param {PlatformCloudVendor} [cloudProvider] Cluster cloud provider. Must be supplied together with clusterMode.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listPlatformTemplates(organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformTemplateCatalogResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listPlatformTemplates(organizationId, options);
+        async listPlatformTemplates(organizationId: string, clusterMode?: PlatformClusterMode, cloudProvider?: PlatformCloudVendor, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformTemplateCatalogResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listPlatformTemplates(organizationId, clusterMode, cloudProvider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformConfigurationApi.listPlatformTemplates']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -68261,14 +68273,16 @@ export const PlatformConfigurationApiFactory = function (configuration?: Configu
             return localVarFp.getClusterPlatformBinding(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the published platform templates available to the organization. Each template contains its layers, components, and the configuration fields that the Console can render.
+         * Returns the published platform templates available to the organization. Each template contains its layers, components, and the configuration fields that the Console can render. When clusterMode and cloudProvider are supplied together, component field constraints are narrowed to the effective choices for that cluster context.
          * @summary List platform templates
          * @param {string} organizationId Organization ID
+         * @param {PlatformClusterMode} [clusterMode] Cluster management mode. Must be supplied together with cloudProvider.
+         * @param {PlatformCloudVendor} [cloudProvider] Cluster cloud provider. Must be supplied together with clusterMode.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listPlatformTemplates(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<PlatformTemplateCatalogResponse> {
-            return localVarFp.listPlatformTemplates(organizationId, options).then((request) => request(axios, basePath));
+        listPlatformTemplates(organizationId: string, clusterMode?: PlatformClusterMode, cloudProvider?: PlatformCloudVendor, options?: RawAxiosRequestConfig): AxiosPromise<PlatformTemplateCatalogResponse> {
+            return localVarFp.listPlatformTemplates(organizationId, clusterMode, cloudProvider, options).then((request) => request(axios, basePath));
         },
         /**
          * Resolves the fields and runtime requirements to display for a component using the cluster context and the values currently entered in the Console. This operation is read-only.
@@ -68319,15 +68333,17 @@ export class PlatformConfigurationApi extends BaseAPI {
     }
 
     /**
-     * Returns the published platform templates available to the organization. Each template contains its layers, components, and the configuration fields that the Console can render.
+     * Returns the published platform templates available to the organization. Each template contains its layers, components, and the configuration fields that the Console can render. When clusterMode and cloudProvider are supplied together, component field constraints are narrowed to the effective choices for that cluster context.
      * @summary List platform templates
      * @param {string} organizationId Organization ID
+     * @param {PlatformClusterMode} [clusterMode] Cluster management mode. Must be supplied together with cloudProvider.
+     * @param {PlatformCloudVendor} [cloudProvider] Cluster cloud provider. Must be supplied together with clusterMode.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformConfigurationApi
      */
-    public listPlatformTemplates(organizationId: string, options?: RawAxiosRequestConfig) {
-        return PlatformConfigurationApiFp(this.configuration).listPlatformTemplates(organizationId, options).then((request) => request(this.axios, this.basePath));
+    public listPlatformTemplates(organizationId: string, clusterMode?: PlatformClusterMode, cloudProvider?: PlatformCloudVendor, options?: RawAxiosRequestConfig) {
+        return PlatformConfigurationApiFp(this.configuration).listPlatformTemplates(organizationId, clusterMode, cloudProvider, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
