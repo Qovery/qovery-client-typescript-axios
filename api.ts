@@ -127,6 +127,326 @@ export interface AccountInfoEditRequest {
 /**
  * 
  * @export
+ * @interface AgenticWorkflowConnector
+ */
+export interface AgenticWorkflowConnector {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowConnector
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowConnector
+     */
+    'url': string;
+    /**
+     * 
+     * @type {Array<AgenticWorkflowHeader>}
+     * @memberof AgenticWorkflowConnector
+     */
+    'headers'?: Array<AgenticWorkflowHeader>;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowConnector
+     */
+    'instructions'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface AgenticWorkflowHeader
+ */
+export interface AgenticWorkflowHeader {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowHeader
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowHeader
+     */
+    'value': string;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const AgenticWorkflowModel = {
+    CLAUDE: 'CLAUDE',
+    BEDROCK: 'BEDROCK'
+} as const;
+
+export type AgenticWorkflowModel = typeof AgenticWorkflowModel[keyof typeof AgenticWorkflowModel];
+
+
+/**
+ * 
+ * @export
+ * @interface AgenticWorkflowOutput
+ */
+export interface AgenticWorkflowOutput {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowOutput
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowOutput
+     */
+    'url'?: string | null;
+    /**
+     * 
+     * @type {Array<AgenticWorkflowHeader>}
+     * @memberof AgenticWorkflowOutput
+     */
+    'headers'?: Array<AgenticWorkflowHeader>;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowOutput
+     */
+    'instructions'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface AgenticWorkflowProjectRepository
+ */
+export interface AgenticWorkflowProjectRepository {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowProjectRepository
+     */
+    'url': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowProjectRepository
+     */
+    'branch': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowProjectRepository
+     */
+    'root_path': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowProjectRepository
+     */
+    'git_token_id': string;
+}
+/**
+ * 
+ * @export
+ * @interface AgenticWorkflowRequest
+ */
+export interface AgenticWorkflowRequest {
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof AgenticWorkflowRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowRequest
+     */
+    'description'?: string;
+    /**
+     * Hosts the agentic workflow is allowed to reach
+     * @type {Array<string>}
+     * @memberof AgenticWorkflowRequest
+     */
+    'whitelist_hosts'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowRequest
+     */
+    'model_settings'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowRequest
+     */
+    'docker_fragment'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AgenticWorkflowRequest
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {Array<AgenticWorkflowConnector>}
+     * @memberof AgenticWorkflowRequest
+     */
+    'mcp_connectors'?: Array<AgenticWorkflowConnector>;
+    /**
+     * 
+     * @type {Array<AgenticWorkflowOutput>}
+     * @memberof AgenticWorkflowRequest
+     */
+    'outputs'?: Array<AgenticWorkflowOutput>;
+    /**
+     * 
+     * @type {AgenticWorkflowModel}
+     * @memberof AgenticWorkflowRequest
+     */
+    'model'?: AgenticWorkflowModel;
+    /**
+     * 
+     * @type {Array<AgenticWorkflowProjectRepository>}
+     * @memberof AgenticWorkflowRequest
+     */
+    'project_repositories'?: Array<AgenticWorkflowProjectRepository>;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface AgenticWorkflowResponse
+ */
+export interface AgenticWorkflowResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowResponse
+     */
+    'updated_at'?: string;
+    /**
+     * name is case insensitive
+     * @type {string}
+     * @memberof AgenticWorkflowResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowResponse
+     */
+    'description': string;
+    /**
+     * Hosts the agentic workflow is allowed to reach
+     * @type {Array<string>}
+     * @memberof AgenticWorkflowResponse
+     */
+    'whitelist_hosts': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowResponse
+     */
+    'model_settings': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowResponse
+     */
+    'docker_fragment': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AgenticWorkflowResponse
+     */
+    'enabled': boolean;
+    /**
+     * 
+     * @type {Array<AgenticWorkflowConnector>}
+     * @memberof AgenticWorkflowResponse
+     */
+    'mcp_connectors': Array<AgenticWorkflowConnector>;
+    /**
+     * 
+     * @type {Array<AgenticWorkflowOutput>}
+     * @memberof AgenticWorkflowResponse
+     */
+    'outputs': Array<AgenticWorkflowOutput>;
+    /**
+     * 
+     * @type {AgenticWorkflowModel}
+     * @memberof AgenticWorkflowResponse
+     */
+    'model': AgenticWorkflowModel;
+    /**
+     * 
+     * @type {Array<AgenticWorkflowProjectRepository>}
+     * @memberof AgenticWorkflowResponse
+     */
+    'project_repositories': Array<AgenticWorkflowProjectRepository>;
+    /**
+     * 
+     * @type {AgenticWorkflowWebhook}
+     * @memberof AgenticWorkflowResponse
+     */
+    'webhook': AgenticWorkflowWebhook;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface AgenticWorkflowResponseList
+ */
+export interface AgenticWorkflowResponseList {
+    /**
+     * 
+     * @type {Array<AgenticWorkflowResponse>}
+     * @memberof AgenticWorkflowResponseList
+     */
+    'results'?: Array<AgenticWorkflowResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface AgenticWorkflowWebhook
+ */
+export interface AgenticWorkflowWebhook {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowWebhook
+     */
+    'url': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowWebhook
+     */
+    'secret': string;
+}
+/**
+ * 
+ * @export
  * @interface AksInfrastructureOutputs
  */
 export interface AksInfrastructureOutputs {
@@ -26480,6 +26800,439 @@ export class AccountInfoApi extends BaseAPI {
      */
     public getAccountInformation(options?: RawAxiosRequestConfig) {
         return AccountInfoApiFp(this.configuration).getAccountInformation(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * AgenticWorkflowsApi - axios parameter creator
+ * @export
+ */
+export const AgenticWorkflowsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Create an agentic workflow
+         * @param {string} environmentId Environment ID
+         * @param {AgenticWorkflowRequest} [agenticWorkflowRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAgenticWorkflow: async (environmentId: string, agenticWorkflowRequest?: AgenticWorkflowRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('createAgenticWorkflow', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/agenticWorkflow`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(agenticWorkflowRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete an agentic workflow
+         * @param {string} agenticWorkflowId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAgenticWorkflow: async (agenticWorkflowId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'agenticWorkflowId' is not null or undefined
+            assertParamExists('deleteAgenticWorkflow', 'agenticWorkflowId', agenticWorkflowId)
+            const localVarPath = `/agenticWorkflow/{agenticWorkflowId}`
+                .replace(`{${"agenticWorkflowId"}}`, encodeURIComponent(String(agenticWorkflowId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Edit an agentic workflow
+         * @param {string} agenticWorkflowId 
+         * @param {AgenticWorkflowRequest} [agenticWorkflowRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editAgenticWorkflow: async (agenticWorkflowId: string, agenticWorkflowRequest?: AgenticWorkflowRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'agenticWorkflowId' is not null or undefined
+            assertParamExists('editAgenticWorkflow', 'agenticWorkflowId', agenticWorkflowId)
+            const localVarPath = `/agenticWorkflow/{agenticWorkflowId}`
+                .replace(`{${"agenticWorkflowId"}}`, encodeURIComponent(String(agenticWorkflowId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(agenticWorkflowRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get an agentic workflow
+         * @param {string} agenticWorkflowId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgenticWorkflow: async (agenticWorkflowId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'agenticWorkflowId' is not null or undefined
+            assertParamExists('getAgenticWorkflow', 'agenticWorkflowId', agenticWorkflowId)
+            const localVarPath = `/agenticWorkflow/{agenticWorkflowId}`
+                .replace(`{${"agenticWorkflowId"}}`, encodeURIComponent(String(agenticWorkflowId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List agentic workflows
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAgenticWorkflows: async (environmentId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('listAgenticWorkflows', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/agenticWorkflow`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AgenticWorkflowsApi - functional programming interface
+ * @export
+ */
+export const AgenticWorkflowsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AgenticWorkflowsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Create an agentic workflow
+         * @param {string} environmentId Environment ID
+         * @param {AgenticWorkflowRequest} [agenticWorkflowRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createAgenticWorkflow(environmentId: string, agenticWorkflowRequest?: AgenticWorkflowRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgenticWorkflowResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createAgenticWorkflow(environmentId, agenticWorkflowRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgenticWorkflowsApi.createAgenticWorkflow']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Delete an agentic workflow
+         * @param {string} agenticWorkflowId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteAgenticWorkflow(agenticWorkflowId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAgenticWorkflow(agenticWorkflowId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgenticWorkflowsApi.deleteAgenticWorkflow']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Edit an agentic workflow
+         * @param {string} agenticWorkflowId 
+         * @param {AgenticWorkflowRequest} [agenticWorkflowRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editAgenticWorkflow(agenticWorkflowId: string, agenticWorkflowRequest?: AgenticWorkflowRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgenticWorkflowResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editAgenticWorkflow(agenticWorkflowId, agenticWorkflowRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgenticWorkflowsApi.editAgenticWorkflow']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get an agentic workflow
+         * @param {string} agenticWorkflowId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAgenticWorkflow(agenticWorkflowId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgenticWorkflowResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgenticWorkflow(agenticWorkflowId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgenticWorkflowsApi.getAgenticWorkflow']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary List agentic workflows
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listAgenticWorkflows(environmentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgenticWorkflowResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAgenticWorkflows(environmentId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgenticWorkflowsApi.listAgenticWorkflows']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AgenticWorkflowsApi - factory interface
+ * @export
+ */
+export const AgenticWorkflowsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AgenticWorkflowsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Create an agentic workflow
+         * @param {string} environmentId Environment ID
+         * @param {AgenticWorkflowRequest} [agenticWorkflowRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAgenticWorkflow(environmentId: string, agenticWorkflowRequest?: AgenticWorkflowRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgenticWorkflowResponse> {
+            return localVarFp.createAgenticWorkflow(environmentId, agenticWorkflowRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete an agentic workflow
+         * @param {string} agenticWorkflowId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAgenticWorkflow(agenticWorkflowId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteAgenticWorkflow(agenticWorkflowId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Edit an agentic workflow
+         * @param {string} agenticWorkflowId 
+         * @param {AgenticWorkflowRequest} [agenticWorkflowRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editAgenticWorkflow(agenticWorkflowId: string, agenticWorkflowRequest?: AgenticWorkflowRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgenticWorkflowResponse> {
+            return localVarFp.editAgenticWorkflow(agenticWorkflowId, agenticWorkflowRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get an agentic workflow
+         * @param {string} agenticWorkflowId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgenticWorkflow(agenticWorkflowId: string, options?: RawAxiosRequestConfig): AxiosPromise<AgenticWorkflowResponse> {
+            return localVarFp.getAgenticWorkflow(agenticWorkflowId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List agentic workflows
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAgenticWorkflows(environmentId: string, options?: RawAxiosRequestConfig): AxiosPromise<AgenticWorkflowResponseList> {
+            return localVarFp.listAgenticWorkflows(environmentId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AgenticWorkflowsApi - object-oriented interface
+ * @export
+ * @class AgenticWorkflowsApi
+ * @extends {BaseAPI}
+ */
+export class AgenticWorkflowsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create an agentic workflow
+     * @param {string} environmentId Environment ID
+     * @param {AgenticWorkflowRequest} [agenticWorkflowRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgenticWorkflowsApi
+     */
+    public createAgenticWorkflow(environmentId: string, agenticWorkflowRequest?: AgenticWorkflowRequest, options?: RawAxiosRequestConfig) {
+        return AgenticWorkflowsApiFp(this.configuration).createAgenticWorkflow(environmentId, agenticWorkflowRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete an agentic workflow
+     * @param {string} agenticWorkflowId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgenticWorkflowsApi
+     */
+    public deleteAgenticWorkflow(agenticWorkflowId: string, options?: RawAxiosRequestConfig) {
+        return AgenticWorkflowsApiFp(this.configuration).deleteAgenticWorkflow(agenticWorkflowId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Edit an agentic workflow
+     * @param {string} agenticWorkflowId 
+     * @param {AgenticWorkflowRequest} [agenticWorkflowRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgenticWorkflowsApi
+     */
+    public editAgenticWorkflow(agenticWorkflowId: string, agenticWorkflowRequest?: AgenticWorkflowRequest, options?: RawAxiosRequestConfig) {
+        return AgenticWorkflowsApiFp(this.configuration).editAgenticWorkflow(agenticWorkflowId, agenticWorkflowRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get an agentic workflow
+     * @param {string} agenticWorkflowId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgenticWorkflowsApi
+     */
+    public getAgenticWorkflow(agenticWorkflowId: string, options?: RawAxiosRequestConfig) {
+        return AgenticWorkflowsApiFp(this.configuration).getAgenticWorkflow(agenticWorkflowId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List agentic workflows
+     * @param {string} environmentId Environment ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgenticWorkflowsApi
+     */
+    public listAgenticWorkflows(environmentId: string, options?: RawAxiosRequestConfig) {
+        return AgenticWorkflowsApiFp(this.configuration).listAgenticWorkflows(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
