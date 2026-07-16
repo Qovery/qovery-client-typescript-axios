@@ -21541,6 +21541,43 @@ export type PlatformComponentConfigurationRequirementStatus = typeof PlatformCom
 
 
 /**
+ * Component configuration resolved from an explicit template and cluster context before an actual cluster exists.
+ * @export
+ * @interface PlatformComponentConfigurationResolutionResponse
+ */
+export interface PlatformComponentConfigurationResolutionResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformComponentConfigurationResolutionResponse
+     */
+    'componentKey': string;
+    /**
+     * 
+     * @type {Array<FieldSchemaResponse>}
+     * @memberof PlatformComponentConfigurationResolutionResponse
+     */
+    'fields': Array<FieldSchemaResponse>;
+    /**
+     * 
+     * @type {Array<PlatformComponentInputRequirementResponse>}
+     * @memberof PlatformComponentConfigurationResolutionResponse
+     */
+    'requirements': Array<PlatformComponentInputRequirementResponse>;
+    /**
+     * 
+     * @type {Array<PlatformComponentOutputBindingResponse>}
+     * @memberof PlatformComponentConfigurationResolutionResponse
+     */
+    'componentBindings': Array<PlatformComponentOutputBindingResponse>;
+    /**
+     * 
+     * @type {Array<PlatformComponentConfigurationViolationResponse>}
+     * @memberof PlatformComponentConfigurationResolutionResponse
+     */
+    'violations': Array<PlatformComponentConfigurationViolationResponse>;
+}
+/**
  * 
  * @export
  * @interface PlatformComponentConfigurationViolationResponse
@@ -68884,6 +68921,79 @@ export const PlatformConfigurationApiAxiosParamCreator = function (configuration
             };
         },
         /**
+         * Resolves the fields and runtime requirements to display for a component using an explicit cluster context and the values currently entered in the Console. This operation is read-only and does not require an existing cluster or platform binding.
+         * @summary Resolve a platform component configuration before cluster creation
+         * @param {string} organizationId Organization ID
+         * @param {string} templateKey Platform template key
+         * @param {string} templateVersion Platform template version
+         * @param {string} componentKey Platform component key
+         * @param {PlatformClusterMode} clusterMode Cluster management mode used to resolve component applicability
+         * @param {PlatformCloudVendor} cloudProvider Cluster cloud provider used to resolve component applicability
+         * @param {PlatformComponentConfigurationPreviewRequest} platformComponentConfigurationPreviewRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resolvePlatformTemplateComponentConfiguration: async (organizationId: string, templateKey: string, templateVersion: string, componentKey: string, clusterMode: PlatformClusterMode, cloudProvider: PlatformCloudVendor, platformComponentConfigurationPreviewRequest: PlatformComponentConfigurationPreviewRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('resolvePlatformTemplateComponentConfiguration', 'organizationId', organizationId)
+            // verify required parameter 'templateKey' is not null or undefined
+            assertParamExists('resolvePlatformTemplateComponentConfiguration', 'templateKey', templateKey)
+            // verify required parameter 'templateVersion' is not null or undefined
+            assertParamExists('resolvePlatformTemplateComponentConfiguration', 'templateVersion', templateVersion)
+            // verify required parameter 'componentKey' is not null or undefined
+            assertParamExists('resolvePlatformTemplateComponentConfiguration', 'componentKey', componentKey)
+            // verify required parameter 'clusterMode' is not null or undefined
+            assertParamExists('resolvePlatformTemplateComponentConfiguration', 'clusterMode', clusterMode)
+            // verify required parameter 'cloudProvider' is not null or undefined
+            assertParamExists('resolvePlatformTemplateComponentConfiguration', 'cloudProvider', cloudProvider)
+            // verify required parameter 'platformComponentConfigurationPreviewRequest' is not null or undefined
+            assertParamExists('resolvePlatformTemplateComponentConfiguration', 'platformComponentConfigurationPreviewRequest', platformComponentConfigurationPreviewRequest)
+            const localVarPath = `/organization/{organizationId}/platformTemplate/{templateKey}/{templateVersion}/component/{componentKey}/resolve`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"templateKey"}}`, encodeURIComponent(String(templateKey)))
+                .replace(`{${"templateVersion"}}`, encodeURIComponent(String(templateVersion)))
+                .replace(`{${"componentKey"}}`, encodeURIComponent(String(componentKey)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (clusterMode !== undefined) {
+                localVarQueryParameter['clusterMode'] = clusterMode;
+            }
+
+            if (cloudProvider !== undefined) {
+                localVarQueryParameter['cloudProvider'] = cloudProvider;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(platformComponentConfigurationPreviewRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Selects a platform template and stores layer selections, component profile values, and customer-provided runtime inputs for the cluster.
          * @summary Update the cluster platform binding
          * @param {string} organizationId Organization ID
@@ -68990,6 +69100,25 @@ export const PlatformConfigurationApiFp = function(configuration?: Configuration
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Resolves the fields and runtime requirements to display for a component using an explicit cluster context and the values currently entered in the Console. This operation is read-only and does not require an existing cluster or platform binding.
+         * @summary Resolve a platform component configuration before cluster creation
+         * @param {string} organizationId Organization ID
+         * @param {string} templateKey Platform template key
+         * @param {string} templateVersion Platform template version
+         * @param {string} componentKey Platform component key
+         * @param {PlatformClusterMode} clusterMode Cluster management mode used to resolve component applicability
+         * @param {PlatformCloudVendor} cloudProvider Cluster cloud provider used to resolve component applicability
+         * @param {PlatformComponentConfigurationPreviewRequest} platformComponentConfigurationPreviewRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async resolvePlatformTemplateComponentConfiguration(organizationId: string, templateKey: string, templateVersion: string, componentKey: string, clusterMode: PlatformClusterMode, cloudProvider: PlatformCloudVendor, platformComponentConfigurationPreviewRequest: PlatformComponentConfigurationPreviewRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformComponentConfigurationResolutionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.resolvePlatformTemplateComponentConfiguration(organizationId, templateKey, templateVersion, componentKey, clusterMode, cloudProvider, platformComponentConfigurationPreviewRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformConfigurationApi.resolvePlatformTemplateComponentConfiguration']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Selects a platform template and stores layer selections, component profile values, and customer-provided runtime inputs for the cluster.
          * @summary Update the cluster platform binding
          * @param {string} organizationId Organization ID
@@ -69049,6 +69178,22 @@ export const PlatformConfigurationApiFactory = function (configuration?: Configu
          */
         resolvePlatformComponentConfiguration(organizationId: string, clusterId: string, componentKey: string, platformComponentConfigurationPreviewRequest: PlatformComponentConfigurationPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformComponentConfigurationPreviewResponse> {
             return localVarFp.resolvePlatformComponentConfiguration(organizationId, clusterId, componentKey, platformComponentConfigurationPreviewRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Resolves the fields and runtime requirements to display for a component using an explicit cluster context and the values currently entered in the Console. This operation is read-only and does not require an existing cluster or platform binding.
+         * @summary Resolve a platform component configuration before cluster creation
+         * @param {string} organizationId Organization ID
+         * @param {string} templateKey Platform template key
+         * @param {string} templateVersion Platform template version
+         * @param {string} componentKey Platform component key
+         * @param {PlatformClusterMode} clusterMode Cluster management mode used to resolve component applicability
+         * @param {PlatformCloudVendor} cloudProvider Cluster cloud provider used to resolve component applicability
+         * @param {PlatformComponentConfigurationPreviewRequest} platformComponentConfigurationPreviewRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resolvePlatformTemplateComponentConfiguration(organizationId: string, templateKey: string, templateVersion: string, componentKey: string, clusterMode: PlatformClusterMode, cloudProvider: PlatformCloudVendor, platformComponentConfigurationPreviewRequest: PlatformComponentConfigurationPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformComponentConfigurationResolutionResponse> {
+            return localVarFp.resolvePlatformTemplateComponentConfiguration(organizationId, templateKey, templateVersion, componentKey, clusterMode, cloudProvider, platformComponentConfigurationPreviewRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Selects a platform template and stores layer selections, component profile values, and customer-provided runtime inputs for the cluster.
@@ -69112,6 +69257,24 @@ export class PlatformConfigurationApi extends BaseAPI {
      */
     public resolvePlatformComponentConfiguration(organizationId: string, clusterId: string, componentKey: string, platformComponentConfigurationPreviewRequest: PlatformComponentConfigurationPreviewRequest, options?: RawAxiosRequestConfig) {
         return PlatformConfigurationApiFp(this.configuration).resolvePlatformComponentConfiguration(organizationId, clusterId, componentKey, platformComponentConfigurationPreviewRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Resolves the fields and runtime requirements to display for a component using an explicit cluster context and the values currently entered in the Console. This operation is read-only and does not require an existing cluster or platform binding.
+     * @summary Resolve a platform component configuration before cluster creation
+     * @param {string} organizationId Organization ID
+     * @param {string} templateKey Platform template key
+     * @param {string} templateVersion Platform template version
+     * @param {string} componentKey Platform component key
+     * @param {PlatformClusterMode} clusterMode Cluster management mode used to resolve component applicability
+     * @param {PlatformCloudVendor} cloudProvider Cluster cloud provider used to resolve component applicability
+     * @param {PlatformComponentConfigurationPreviewRequest} platformComponentConfigurationPreviewRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformConfigurationApi
+     */
+    public resolvePlatformTemplateComponentConfiguration(organizationId: string, templateKey: string, templateVersion: string, componentKey: string, clusterMode: PlatformClusterMode, cloudProvider: PlatformCloudVendor, platformComponentConfigurationPreviewRequest: PlatformComponentConfigurationPreviewRequest, options?: RawAxiosRequestConfig) {
+        return PlatformConfigurationApiFp(this.configuration).resolvePlatformTemplateComponentConfiguration(organizationId, templateKey, templateVersion, componentKey, clusterMode, cloudProvider, platformComponentConfigurationPreviewRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
