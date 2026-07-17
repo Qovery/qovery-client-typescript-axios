@@ -269,11 +269,11 @@ export interface AgenticWorkflowRequest {
      */
     'description'?: string;
     /**
-     * Hosts the agentic workflow is allowed to reach
+     * CIDR ranges the incoming webhook request\'s source IP is checked against
      * @type {Array<string>}
      * @memberof AgenticWorkflowRequest
      */
-    'whitelist_hosts'?: Array<string>;
+    'ip_allowlist'?: Array<string>;
     /**
      * 
      * @type {string}
@@ -356,11 +356,11 @@ export interface AgenticWorkflowResponse {
      */
     'description': string;
     /**
-     * Hosts the agentic workflow is allowed to reach
+     * CIDR ranges the incoming webhook request\'s source IP is checked against
      * @type {Array<string>}
      * @memberof AgenticWorkflowResponse
      */
-    'whitelist_hosts': Array<string>;
+    'ip_allowlist': Array<string>;
     /**
      * 
      * @type {string}
@@ -437,12 +437,6 @@ export interface AgenticWorkflowWebhook {
      * @memberof AgenticWorkflowWebhook
      */
     'url': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AgenticWorkflowWebhook
-     */
-    'secret': string;
 }
 /**
  * 
