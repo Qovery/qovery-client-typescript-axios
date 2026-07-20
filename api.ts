@@ -127,33 +127,15 @@ export interface AccountInfoEditRequest {
 /**
  * 
  * @export
- * @interface AgenticWorkflowConnector
+ * @interface AgenticWorkflowGovernance
  */
-export interface AgenticWorkflowConnector {
+export interface AgenticWorkflowGovernance {
     /**
-     * 
-     * @type {string}
-     * @memberof AgenticWorkflowConnector
+     * Hostnames the agent is allowed to reach
+     * @type {Array<string>}
+     * @memberof AgenticWorkflowGovernance
      */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AgenticWorkflowConnector
-     */
-    'url': string;
-    /**
-     * 
-     * @type {Array<AgenticWorkflowHeader>}
-     * @memberof AgenticWorkflowConnector
-     */
-    'headers'?: Array<AgenticWorkflowHeader>;
-    /**
-     * 
-     * @type {string}
-     * @memberof AgenticWorkflowConnector
-     */
-    'instructions'?: string;
+    'host_allowlist': Array<string>;
 }
 /**
  * 
@@ -177,15 +159,63 @@ export interface AgenticWorkflowHeader {
 /**
  * 
  * @export
+ * @interface AgenticWorkflowModelRequest
+ */
+export interface AgenticWorkflowModelRequest {
+    /**
+     * 
+     * @type {AgenticWorkflowModelType}
+     * @memberof AgenticWorkflowModelRequest
+     */
+    'type': AgenticWorkflowModelType;
+    /**
+     * Write-only. Provider API key; accepted on create/edit but never returned in responses.
+     * @type {string}
+     * @memberof AgenticWorkflowModelRequest
+     */
+    'api_key'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowModelRequest
+     */
+    'settings'?: string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface AgenticWorkflowModelResponse
+ */
+export interface AgenticWorkflowModelResponse {
+    /**
+     * 
+     * @type {AgenticWorkflowModelType}
+     * @memberof AgenticWorkflowModelResponse
+     */
+    'type': AgenticWorkflowModelType;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowModelResponse
+     */
+    'settings': string;
+}
+
+
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
-export const AgenticWorkflowModel = {
+export const AgenticWorkflowModelType = {
     CLAUDE: 'CLAUDE',
     BEDROCK: 'BEDROCK'
 } as const;
 
-export type AgenticWorkflowModel = typeof AgenticWorkflowModel[keyof typeof AgenticWorkflowModel];
+export type AgenticWorkflowModelType = typeof AgenticWorkflowModelType[keyof typeof AgenticWorkflowModelType];
 
 
 /**
@@ -242,12 +272,6 @@ export interface AgenticWorkflowProjectRepository {
      * @type {string}
      * @memberof AgenticWorkflowProjectRepository
      */
-    'root_path': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AgenticWorkflowProjectRepository
-     */
     'git_token_id': string;
 }
 /**
@@ -273,13 +297,7 @@ export interface AgenticWorkflowRequest {
      * @type {Array<string>}
      * @memberof AgenticWorkflowRequest
      */
-    'ip_allowlist'?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof AgenticWorkflowRequest
-     */
-    'model_settings'?: string;
+    'webhook_ip_allowlist'?: Array<string>;
     /**
      * 
      * @type {string}
@@ -293,11 +311,11 @@ export interface AgenticWorkflowRequest {
      */
     'enabled'?: boolean;
     /**
-     * 
-     * @type {Array<AgenticWorkflowConnector>}
+     * Raw JSON blob describing the MCP servers configured for this workflow
+     * @type {string}
      * @memberof AgenticWorkflowRequest
      */
-    'mcp_connectors'?: Array<AgenticWorkflowConnector>;
+    'mcp'?: string;
     /**
      * 
      * @type {Array<AgenticWorkflowOutput>}
@@ -306,19 +324,29 @@ export interface AgenticWorkflowRequest {
     'outputs'?: Array<AgenticWorkflowOutput>;
     /**
      * 
-     * @type {AgenticWorkflowModel}
+     * @type {AgenticWorkflowModelRequest}
      * @memberof AgenticWorkflowRequest
      */
-    'model'?: AgenticWorkflowModel;
+    'model'?: AgenticWorkflowModelRequest;
     /**
      * 
      * @type {Array<AgenticWorkflowProjectRepository>}
      * @memberof AgenticWorkflowRequest
      */
     'project_repositories'?: Array<AgenticWorkflowProjectRepository>;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowRequest
+     */
+    'agent_prompt'?: string;
+    /**
+     * 
+     * @type {AgenticWorkflowGovernance}
+     * @memberof AgenticWorkflowRequest
+     */
+    'governance'?: AgenticWorkflowGovernance;
 }
-
-
 /**
  * 
  * @export
@@ -360,13 +388,7 @@ export interface AgenticWorkflowResponse {
      * @type {Array<string>}
      * @memberof AgenticWorkflowResponse
      */
-    'ip_allowlist': Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof AgenticWorkflowResponse
-     */
-    'model_settings': string;
+    'webhook_ip_allowlist': Array<string>;
     /**
      * 
      * @type {string}
@@ -380,11 +402,11 @@ export interface AgenticWorkflowResponse {
      */
     'enabled': boolean;
     /**
-     * 
-     * @type {Array<AgenticWorkflowConnector>}
+     * Raw JSON blob describing the MCP servers configured for this workflow
+     * @type {string}
      * @memberof AgenticWorkflowResponse
      */
-    'mcp_connectors': Array<AgenticWorkflowConnector>;
+    'mcp': string;
     /**
      * 
      * @type {Array<AgenticWorkflowOutput>}
@@ -393,10 +415,10 @@ export interface AgenticWorkflowResponse {
     'outputs': Array<AgenticWorkflowOutput>;
     /**
      * 
-     * @type {AgenticWorkflowModel}
+     * @type {AgenticWorkflowModelResponse}
      * @memberof AgenticWorkflowResponse
      */
-    'model': AgenticWorkflowModel;
+    'model': AgenticWorkflowModelResponse;
     /**
      * 
      * @type {Array<AgenticWorkflowProjectRepository>}
@@ -405,13 +427,23 @@ export interface AgenticWorkflowResponse {
     'project_repositories': Array<AgenticWorkflowProjectRepository>;
     /**
      * 
+     * @type {string}
+     * @memberof AgenticWorkflowResponse
+     */
+    'agent_prompt': string;
+    /**
+     * 
+     * @type {AgenticWorkflowGovernance}
+     * @memberof AgenticWorkflowResponse
+     */
+    'governance': AgenticWorkflowGovernance;
+    /**
+     * 
      * @type {AgenticWorkflowWebhook}
      * @memberof AgenticWorkflowResponse
      */
     'webhook': AgenticWorkflowWebhook;
 }
-
-
 /**
  * 
  * @export
