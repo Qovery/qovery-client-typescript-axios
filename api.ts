@@ -4795,6 +4795,12 @@ export interface BlueprintUpdateResponse {
      * @type {string}
      * @memberof BlueprintUpdateResponse
      */
+    'current_tag': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintUpdateResponse
+     */
     'latest_tag': string;
     /**
      * Variables added in the latest version that are required with no default
