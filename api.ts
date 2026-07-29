@@ -30996,10 +30996,11 @@ export const ApplicationMainCallsApiAxiosParamCreator = function (configuration?
          * To delete the application you must have the admin permission
          * @summary Delete application
          * @param {string} applicationId Application ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteApplication: async (applicationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteApplication: async (applicationId: string, skipReconcile?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'applicationId' is not null or undefined
             assertParamExists('deleteApplication', 'applicationId', applicationId)
             const localVarPath = `/application/{applicationId}`
@@ -31021,6 +31022,10 @@ export const ApplicationMainCallsApiAxiosParamCreator = function (configuration?
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (skipReconcile !== undefined) {
+                localVarQueryParameter['skipReconcile'] = skipReconcile;
+            }
 
 
     
@@ -31307,11 +31312,12 @@ export const ApplicationMainCallsApiFp = function(configuration?: Configuration)
          * To delete the application you must have the admin permission
          * @summary Delete application
          * @param {string} applicationId Application ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteApplication(applicationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteApplication(applicationId, options);
+        async deleteApplication(applicationId: string, skipReconcile?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteApplication(applicationId, skipReconcile, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApplicationMainCallsApi.deleteApplication']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -31411,11 +31417,12 @@ export const ApplicationMainCallsApiFactory = function (configuration?: Configur
          * To delete the application you must have the admin permission
          * @summary Delete application
          * @param {string} applicationId Application ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteApplication(applicationId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteApplication(applicationId, options).then((request) => request(axios, basePath));
+        deleteApplication(applicationId: string, skipReconcile?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteApplication(applicationId, skipReconcile, options).then((request) => request(axios, basePath));
         },
         /**
          * - To edit the application you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. 
@@ -31494,12 +31501,13 @@ export class ApplicationMainCallsApi extends BaseAPI {
      * To delete the application you must have the admin permission
      * @summary Delete application
      * @param {string} applicationId Application ID
+     * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApplicationMainCallsApi
      */
-    public deleteApplication(applicationId: string, options?: RawAxiosRequestConfig) {
-        return ApplicationMainCallsApiFp(this.configuration).deleteApplication(applicationId, options).then((request) => request(this.axios, this.basePath));
+    public deleteApplication(applicationId: string, skipReconcile?: boolean, options?: RawAxiosRequestConfig) {
+        return ApplicationMainCallsApiFp(this.configuration).deleteApplication(applicationId, skipReconcile, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -39345,10 +39353,11 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
          * @param {ClusterDeleteMode} [deleteMode] 
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy Terraform/Helm apply and tear down best-effort, tolerating already-absent resources. Not allowed with deleteMode&#x3D;DELETE_QOVERY_CONFIG.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCluster: async (organizationId: string, clusterId: string, deleteMode?: ClusterDeleteMode, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCluster: async (organizationId: string, clusterId: string, deleteMode?: ClusterDeleteMode, skipReconcile?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('deleteCluster', 'organizationId', organizationId)
             // verify required parameter 'clusterId' is not null or undefined
@@ -39376,6 +39385,10 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
 
             if (deleteMode !== undefined) {
                 localVarQueryParameter['deleteMode'] = deleteMode;
+            }
+
+            if (skipReconcile !== undefined) {
+                localVarQueryParameter['skipReconcile'] = skipReconcile;
             }
 
 
@@ -41162,11 +41175,12 @@ export const ClustersApiFp = function(configuration?: Configuration) {
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
          * @param {ClusterDeleteMode} [deleteMode] 
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy Terraform/Helm apply and tear down best-effort, tolerating already-absent resources. Not allowed with deleteMode&#x3D;DELETE_QOVERY_CONFIG.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteCluster(organizationId: string, clusterId: string, deleteMode?: ClusterDeleteMode, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCluster(organizationId, clusterId, deleteMode, options);
+        async deleteCluster(organizationId: string, clusterId: string, deleteMode?: ClusterDeleteMode, skipReconcile?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCluster(organizationId, clusterId, deleteMode, skipReconcile, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ClustersApi.deleteCluster']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -41717,11 +41731,12 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
          * @param {ClusterDeleteMode} [deleteMode] 
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy Terraform/Helm apply and tear down best-effort, tolerating already-absent resources. Not allowed with deleteMode&#x3D;DELETE_QOVERY_CONFIG.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCluster(organizationId: string, clusterId: string, deleteMode?: ClusterDeleteMode, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteCluster(organizationId, clusterId, deleteMode, options).then((request) => request(axios, basePath));
+        deleteCluster(organizationId: string, clusterId: string, deleteMode?: ClusterDeleteMode, skipReconcile?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCluster(organizationId, clusterId, deleteMode, skipReconcile, options).then((request) => request(axios, basePath));
         },
         /**
          * allows to deploy a cluster
@@ -42166,12 +42181,13 @@ export class ClustersApi extends BaseAPI {
      * @param {string} organizationId Organization ID
      * @param {string} clusterId Cluster ID
      * @param {ClusterDeleteMode} [deleteMode] 
+     * @param {boolean} [skipReconcile] When true, skip the pre-destroy Terraform/Helm apply and tear down best-effort, tolerating already-absent resources. Not allowed with deleteMode&#x3D;DELETE_QOVERY_CONFIG.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ClustersApi
      */
-    public deleteCluster(organizationId: string, clusterId: string, deleteMode?: ClusterDeleteMode, options?: RawAxiosRequestConfig) {
-        return ClustersApiFp(this.configuration).deleteCluster(organizationId, clusterId, deleteMode, options).then((request) => request(this.axios, this.basePath));
+    public deleteCluster(organizationId: string, clusterId: string, deleteMode?: ClusterDeleteMode, skipReconcile?: boolean, options?: RawAxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).deleteCluster(organizationId, clusterId, deleteMode, skipReconcile, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -44941,10 +44957,11 @@ export const ContainerMainCallsApiAxiosParamCreator = function (configuration?: 
          * To delete the container you must have the admin permission
          * @summary Delete container
          * @param {string} containerId Container ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteContainer: async (containerId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteContainer: async (containerId: string, skipReconcile?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'containerId' is not null or undefined
             assertParamExists('deleteContainer', 'containerId', containerId)
             const localVarPath = `/container/{containerId}`
@@ -44966,6 +44983,10 @@ export const ContainerMainCallsApiAxiosParamCreator = function (configuration?: 
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (skipReconcile !== undefined) {
+                localVarQueryParameter['skipReconcile'] = skipReconcile;
+            }
 
 
     
@@ -45160,11 +45181,12 @@ export const ContainerMainCallsApiFp = function(configuration?: Configuration) {
          * To delete the container you must have the admin permission
          * @summary Delete container
          * @param {string} containerId Container ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteContainer(containerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteContainer(containerId, options);
+        async deleteContainer(containerId: string, skipReconcile?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteContainer(containerId, skipReconcile, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ContainerMainCallsApi.deleteContainer']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -45236,11 +45258,12 @@ export const ContainerMainCallsApiFactory = function (configuration?: Configurat
          * To delete the container you must have the admin permission
          * @summary Delete container
          * @param {string} containerId Container ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteContainer(containerId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteContainer(containerId, options).then((request) => request(axios, basePath));
+        deleteContainer(containerId: string, skipReconcile?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteContainer(containerId, skipReconcile, options).then((request) => request(axios, basePath));
         },
         /**
          * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. 
@@ -45297,12 +45320,13 @@ export class ContainerMainCallsApi extends BaseAPI {
      * To delete the container you must have the admin permission
      * @summary Delete container
      * @param {string} containerId Container ID
+     * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContainerMainCallsApi
      */
-    public deleteContainer(containerId: string, options?: RawAxiosRequestConfig) {
-        return ContainerMainCallsApiFp(this.configuration).deleteContainer(containerId, options).then((request) => request(this.axios, this.basePath));
+    public deleteContainer(containerId: string, skipReconcile?: boolean, options?: RawAxiosRequestConfig) {
+        return ContainerMainCallsApiFp(this.configuration).deleteContainer(containerId, skipReconcile, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -48064,10 +48088,11 @@ export const DatabaseMainCallsApiAxiosParamCreator = function (configuration?: C
          * To delete a database you must have the admin permission
          * @summary Delete a database 
          * @param {string} databaseId Database ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteDatabase: async (databaseId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteDatabase: async (databaseId: string, skipReconcile?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'databaseId' is not null or undefined
             assertParamExists('deleteDatabase', 'databaseId', databaseId)
             const localVarPath = `/database/{databaseId}`
@@ -48089,6 +48114,10 @@ export const DatabaseMainCallsApiAxiosParamCreator = function (configuration?: C
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (skipReconcile !== undefined) {
+                localVarQueryParameter['skipReconcile'] = skipReconcile;
+            }
 
 
     
@@ -48369,11 +48398,12 @@ export const DatabaseMainCallsApiFp = function(configuration?: Configuration) {
          * To delete a database you must have the admin permission
          * @summary Delete a database 
          * @param {string} databaseId Database ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteDatabase(databaseId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDatabase(databaseId, options);
+        async deleteDatabase(databaseId: string, skipReconcile?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDatabase(databaseId, skipReconcile, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DatabaseMainCallsApi.deleteDatabase']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -48472,11 +48502,12 @@ export const DatabaseMainCallsApiFactory = function (configuration?: Configurati
          * To delete a database you must have the admin permission
          * @summary Delete a database 
          * @param {string} databaseId Database ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteDatabase(databaseId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteDatabase(databaseId, options).then((request) => request(axios, basePath));
+        deleteDatabase(databaseId: string, skipReconcile?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteDatabase(databaseId, skipReconcile, options).then((request) => request(axios, basePath));
         },
         /**
          * To edit a database  you must have the admin permission
@@ -48554,12 +48585,13 @@ export class DatabaseMainCallsApi extends BaseAPI {
      * To delete a database you must have the admin permission
      * @summary Delete a database 
      * @param {string} databaseId Database ID
+     * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DatabaseMainCallsApi
      */
-    public deleteDatabase(databaseId: string, options?: RawAxiosRequestConfig) {
-        return DatabaseMainCallsApiFp(this.configuration).deleteDatabase(databaseId, options).then((request) => request(this.axios, this.basePath));
+    public deleteDatabase(databaseId: string, skipReconcile?: boolean, options?: RawAxiosRequestConfig) {
+        return DatabaseMainCallsApiFp(this.configuration).deleteDatabase(databaseId, skipReconcile, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -50753,11 +50785,12 @@ export const EnvironmentActionsApiAxiosParamCreator = function (configuration?: 
          * Delete selected services
          * @summary Delete services
          * @param {string} environmentId Environment ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {EnvironmentServiceIdsAllRequest} [environmentServiceIdsAllRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteSelectedServices: async (environmentId: string, environmentServiceIdsAllRequest?: EnvironmentServiceIdsAllRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteSelectedServices: async (environmentId: string, skipReconcile?: boolean, environmentServiceIdsAllRequest?: EnvironmentServiceIdsAllRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'environmentId' is not null or undefined
             assertParamExists('deleteSelectedServices', 'environmentId', environmentId)
             const localVarPath = `/environment/{environmentId}/service/delete`
@@ -50779,6 +50812,10 @@ export const EnvironmentActionsApiAxiosParamCreator = function (configuration?: 
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (skipReconcile !== undefined) {
+                localVarQueryParameter['skipReconcile'] = skipReconcile;
+            }
 
 
     
@@ -51194,12 +51231,13 @@ export const EnvironmentActionsApiFp = function(configuration?: Configuration) {
          * Delete selected services
          * @summary Delete services
          * @param {string} environmentId Environment ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {EnvironmentServiceIdsAllRequest} [environmentServiceIdsAllRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteSelectedServices(environmentId: string, environmentServiceIdsAllRequest?: EnvironmentServiceIdsAllRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSelectedServices(environmentId, environmentServiceIdsAllRequest, options);
+        async deleteSelectedServices(environmentId: string, skipReconcile?: boolean, environmentServiceIdsAllRequest?: EnvironmentServiceIdsAllRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSelectedServices(environmentId, skipReconcile, environmentServiceIdsAllRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EnvironmentActionsApi.deleteSelectedServices']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -51359,12 +51397,13 @@ export const EnvironmentActionsApiFactory = function (configuration?: Configurat
          * Delete selected services
          * @summary Delete services
          * @param {string} environmentId Environment ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {EnvironmentServiceIdsAllRequest} [environmentServiceIdsAllRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteSelectedServices(environmentId: string, environmentServiceIdsAllRequest?: EnvironmentServiceIdsAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteSelectedServices(environmentId, environmentServiceIdsAllRequest, options).then((request) => request(axios, basePath));
+        deleteSelectedServices(environmentId: string, skipReconcile?: boolean, environmentServiceIdsAllRequest?: EnvironmentServiceIdsAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteSelectedServices(environmentId, skipReconcile, environmentServiceIdsAllRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Update and deploy the selected services
@@ -51503,13 +51542,14 @@ export class EnvironmentActionsApi extends BaseAPI {
      * Delete selected services
      * @summary Delete services
      * @param {string} environmentId Environment ID
+     * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
      * @param {EnvironmentServiceIdsAllRequest} [environmentServiceIdsAllRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EnvironmentActionsApi
      */
-    public deleteSelectedServices(environmentId: string, environmentServiceIdsAllRequest?: EnvironmentServiceIdsAllRequest, options?: RawAxiosRequestConfig) {
-        return EnvironmentActionsApiFp(this.configuration).deleteSelectedServices(environmentId, environmentServiceIdsAllRequest, options).then((request) => request(this.axios, this.basePath));
+    public deleteSelectedServices(environmentId: string, skipReconcile?: boolean, environmentServiceIdsAllRequest?: EnvironmentServiceIdsAllRequest, options?: RawAxiosRequestConfig) {
+        return EnvironmentActionsApiFp(this.configuration).deleteSelectedServices(environmentId, skipReconcile, environmentServiceIdsAllRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -52442,10 +52482,11 @@ export const EnvironmentMainCallsApiAxiosParamCreator = function (configuration?
          * To delete an environment you must have the admin permission
          * @summary Delete an environment
          * @param {string} environmentId Environment ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteEnvironment: async (environmentId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteEnvironment: async (environmentId: string, skipReconcile?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'environmentId' is not null or undefined
             assertParamExists('deleteEnvironment', 'environmentId', environmentId)
             const localVarPath = `/environment/{environmentId}`
@@ -52467,6 +52508,10 @@ export const EnvironmentMainCallsApiAxiosParamCreator = function (configuration?
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (skipReconcile !== undefined) {
+                localVarQueryParameter['skipReconcile'] = skipReconcile;
+            }
 
 
     
@@ -52825,11 +52870,12 @@ export const EnvironmentMainCallsApiFp = function(configuration?: Configuration)
          * To delete an environment you must have the admin permission
          * @summary Delete an environment
          * @param {string} environmentId Environment ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteEnvironment(environmentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEnvironment(environmentId, options);
+        async deleteEnvironment(environmentId: string, skipReconcile?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEnvironment(environmentId, skipReconcile, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EnvironmentMainCallsApi.deleteEnvironment']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -52953,11 +52999,12 @@ export const EnvironmentMainCallsApiFactory = function (configuration?: Configur
          * To delete an environment you must have the admin permission
          * @summary Delete an environment
          * @param {string} environmentId Environment ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteEnvironment(environmentId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteEnvironment(environmentId, options).then((request) => request(axios, basePath));
+        deleteEnvironment(environmentId: string, skipReconcile?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteEnvironment(environmentId, skipReconcile, options).then((request) => request(axios, basePath));
         },
         /**
          * To edit an environment you must have the admin permission
@@ -53054,12 +53101,13 @@ export class EnvironmentMainCallsApi extends BaseAPI {
      * To delete an environment you must have the admin permission
      * @summary Delete an environment
      * @param {string} environmentId Environment ID
+     * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EnvironmentMainCallsApi
      */
-    public deleteEnvironment(environmentId: string, options?: RawAxiosRequestConfig) {
-        return EnvironmentMainCallsApiFp(this.configuration).deleteEnvironment(environmentId, options).then((request) => request(this.axios, this.basePath));
+    public deleteEnvironment(environmentId: string, skipReconcile?: boolean, options?: RawAxiosRequestConfig) {
+        return EnvironmentMainCallsApiFp(this.configuration).deleteEnvironment(environmentId, skipReconcile, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -57238,10 +57286,11 @@ export const HelmMainCallsApiAxiosParamCreator = function (configuration?: Confi
          * To delete the helm you must have the admin permission
          * @summary Delete helm
          * @param {string} helmId Helm ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteHelm: async (helmId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteHelm: async (helmId: string, skipReconcile?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'helmId' is not null or undefined
             assertParamExists('deleteHelm', 'helmId', helmId)
             const localVarPath = `/helm/{helmId}`
@@ -57263,6 +57312,10 @@ export const HelmMainCallsApiAxiosParamCreator = function (configuration?: Confi
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (skipReconcile !== undefined) {
+                localVarQueryParameter['skipReconcile'] = skipReconcile;
+            }
 
 
     
@@ -57544,11 +57597,12 @@ export const HelmMainCallsApiFp = function(configuration?: Configuration) {
          * To delete the helm you must have the admin permission
          * @summary Delete helm
          * @param {string} helmId Helm ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteHelm(helmId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteHelm(helmId, options);
+        async deleteHelm(helmId: string, skipReconcile?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteHelm(helmId, skipReconcile, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['HelmMainCallsApi.deleteHelm']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -57647,11 +57701,12 @@ export const HelmMainCallsApiFactory = function (configuration?: Configuration, 
          * To delete the helm you must have the admin permission
          * @summary Delete helm
          * @param {string} helmId Helm ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteHelm(helmId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteHelm(helmId, options).then((request) => request(axios, basePath));
+        deleteHelm(helmId: string, skipReconcile?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteHelm(helmId, skipReconcile, options).then((request) => request(axios, basePath));
         },
         /**
          * - To edit the helm you must have the admin permission. 
@@ -57729,12 +57784,13 @@ export class HelmMainCallsApi extends BaseAPI {
      * To delete the helm you must have the admin permission
      * @summary Delete helm
      * @param {string} helmId Helm ID
+     * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof HelmMainCallsApi
      */
-    public deleteHelm(helmId: string, options?: RawAxiosRequestConfig) {
-        return HelmMainCallsApiFp(this.configuration).deleteHelm(helmId, options).then((request) => request(this.axios, this.basePath));
+    public deleteHelm(helmId: string, skipReconcile?: boolean, options?: RawAxiosRequestConfig) {
+        return HelmMainCallsApiFp(this.configuration).deleteHelm(helmId, skipReconcile, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -60901,10 +60957,11 @@ export const JobMainCallsApiAxiosParamCreator = function (configuration?: Config
          * To delete the job you must have the admin permission
          * @summary Delete job
          * @param {string} jobId Job ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteJob: async (jobId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteJob: async (jobId: string, skipReconcile?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'jobId' is not null or undefined
             assertParamExists('deleteJob', 'jobId', jobId)
             const localVarPath = `/job/{jobId}`
@@ -60926,6 +60983,10 @@ export const JobMainCallsApiAxiosParamCreator = function (configuration?: Config
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (skipReconcile !== undefined) {
+                localVarQueryParameter['skipReconcile'] = skipReconcile;
+            }
 
 
     
@@ -61130,11 +61191,12 @@ export const JobMainCallsApiFp = function(configuration?: Configuration) {
          * To delete the job you must have the admin permission
          * @summary Delete job
          * @param {string} jobId Job ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteJob(jobId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteJob(jobId, options);
+        async deleteJob(jobId: string, skipReconcile?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteJob(jobId, skipReconcile, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['JobMainCallsApi.deleteJob']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -61208,11 +61270,12 @@ export const JobMainCallsApiFactory = function (configuration?: Configuration, b
          * To delete the job you must have the admin permission
          * @summary Delete job
          * @param {string} jobId Job ID
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteJob(jobId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteJob(jobId, options).then((request) => request(axios, basePath));
+        deleteJob(jobId: string, skipReconcile?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteJob(jobId, skipReconcile, options).then((request) => request(axios, basePath));
         },
         /**
          * - To edit the job you must have the admin permission. 
@@ -61271,12 +61334,13 @@ export class JobMainCallsApi extends BaseAPI {
      * To delete the job you must have the admin permission
      * @summary Delete job
      * @param {string} jobId Job ID
+     * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof JobMainCallsApi
      */
-    public deleteJob(jobId: string, options?: RawAxiosRequestConfig) {
-        return JobMainCallsApiFp(this.configuration).deleteJob(jobId, options).then((request) => request(this.axios, this.basePath));
+    public deleteJob(jobId: string, skipReconcile?: boolean, options?: RawAxiosRequestConfig) {
+        return JobMainCallsApiFp(this.configuration).deleteJob(jobId, skipReconcile, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -73309,11 +73373,12 @@ export const TerraformMainCallsApiAxiosParamCreator = function (configuration?: 
          * @summary Delete Terraform
          * @param {string} terraformId Terraform ID
          * @param {boolean} [resourcesOnly] When true, only resources are deleted and Qovery configuration is kept.
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {DeleteTerraformAction} [forceTerraformAction] Force a specific action to be executed by Terraform during deletion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTerraform: async (terraformId: string, resourcesOnly?: boolean, forceTerraformAction?: DeleteTerraformAction, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteTerraform: async (terraformId: string, resourcesOnly?: boolean, skipReconcile?: boolean, forceTerraformAction?: DeleteTerraformAction, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'terraformId' is not null or undefined
             assertParamExists('deleteTerraform', 'terraformId', terraformId)
             const localVarPath = `/terraform/{terraformId}`
@@ -73338,6 +73403,10 @@ export const TerraformMainCallsApiAxiosParamCreator = function (configuration?: 
 
             if (resourcesOnly !== undefined) {
                 localVarQueryParameter['resources_only'] = resourcesOnly;
+            }
+
+            if (skipReconcile !== undefined) {
+                localVarQueryParameter['skipReconcile'] = skipReconcile;
             }
 
             if (forceTerraformAction !== undefined) {
@@ -73534,12 +73603,13 @@ export const TerraformMainCallsApiFp = function(configuration?: Configuration) {
          * @summary Delete Terraform
          * @param {string} terraformId Terraform ID
          * @param {boolean} [resourcesOnly] When true, only resources are deleted and Qovery configuration is kept.
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {DeleteTerraformAction} [forceTerraformAction] Force a specific action to be executed by Terraform during deletion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteTerraform(terraformId: string, resourcesOnly?: boolean, forceTerraformAction?: DeleteTerraformAction, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTerraform(terraformId, resourcesOnly, forceTerraformAction, options);
+        async deleteTerraform(terraformId: string, resourcesOnly?: boolean, skipReconcile?: boolean, forceTerraformAction?: DeleteTerraformAction, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTerraform(terraformId, resourcesOnly, skipReconcile, forceTerraformAction, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TerraformMainCallsApi.deleteTerraform']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -73611,12 +73681,13 @@ export const TerraformMainCallsApiFactory = function (configuration?: Configurat
          * @summary Delete Terraform
          * @param {string} terraformId Terraform ID
          * @param {boolean} [resourcesOnly] When true, only resources are deleted and Qovery configuration is kept.
+         * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
          * @param {DeleteTerraformAction} [forceTerraformAction] Force a specific action to be executed by Terraform during deletion.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTerraform(terraformId: string, resourcesOnly?: boolean, forceTerraformAction?: DeleteTerraformAction, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteTerraform(terraformId, resourcesOnly, forceTerraformAction, options).then((request) => request(axios, basePath));
+        deleteTerraform(terraformId: string, resourcesOnly?: boolean, skipReconcile?: boolean, forceTerraformAction?: DeleteTerraformAction, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteTerraform(terraformId, resourcesOnly, skipReconcile, forceTerraformAction, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -73673,13 +73744,14 @@ export class TerraformMainCallsApi extends BaseAPI {
      * @summary Delete Terraform
      * @param {string} terraformId Terraform ID
      * @param {boolean} [resourcesOnly] When true, only resources are deleted and Qovery configuration is kept.
+     * @param {boolean} [skipReconcile] When true, skip the pre-destroy apply/reconcile and tear down best-effort, tolerating already-absent resources.
      * @param {DeleteTerraformAction} [forceTerraformAction] Force a specific action to be executed by Terraform during deletion.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TerraformMainCallsApi
      */
-    public deleteTerraform(terraformId: string, resourcesOnly?: boolean, forceTerraformAction?: DeleteTerraformAction, options?: RawAxiosRequestConfig) {
-        return TerraformMainCallsApiFp(this.configuration).deleteTerraform(terraformId, resourcesOnly, forceTerraformAction, options).then((request) => request(this.axios, this.basePath));
+    public deleteTerraform(terraformId: string, resourcesOnly?: boolean, skipReconcile?: boolean, forceTerraformAction?: DeleteTerraformAction, options?: RawAxiosRequestConfig) {
+        return TerraformMainCallsApiFp(this.configuration).deleteTerraform(terraformId, resourcesOnly, skipReconcile, forceTerraformAction, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
