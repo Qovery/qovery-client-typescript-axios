@@ -4998,6 +4998,19 @@ export type BuildModeEnum = typeof BuildModeEnum[keyof typeof BuildModeEnum];
 /**
  * 
  * @export
+ * @interface CancelAgenticWorkflowDeploymentRequest
+ */
+export interface CancelAgenticWorkflowDeploymentRequest {
+    /**
+     * When false, the engine stops the deployment at the next safe point, letting the workflow\'s job terminate on its own. When true it stops waiting for that job and abandons it immediately.
+     * @type {boolean}
+     * @memberof CancelAgenticWorkflowDeploymentRequest
+     */
+    'force_cancel'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface CancelEnvironmentDeploymentRequest
  */
 export interface CancelEnvironmentDeploymentRequest {
@@ -26900,6 +26913,51 @@ export class AccountInfoApi extends BaseAPI {
 export const AgenticWorkflowsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Cancel the deployment currently running the agentic workflow. An agentic workflow only ever runs as part of a deployment of its environment, so this cancels that environment deployment and aborts the workflow\'s running job.
+         * @summary Cancel agentic workflow deployment
+         * @param {string} agenticWorkflowId 
+         * @param {CancelAgenticWorkflowDeploymentRequest} [cancelAgenticWorkflowDeploymentRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cancelAgenticWorkflowDeployment: async (agenticWorkflowId: string, cancelAgenticWorkflowDeploymentRequest?: CancelAgenticWorkflowDeploymentRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'agenticWorkflowId' is not null or undefined
+            assertParamExists('cancelAgenticWorkflowDeployment', 'agenticWorkflowId', agenticWorkflowId)
+            const localVarPath = `/agenticWorkflow/{agenticWorkflowId}/cancelDeployment`
+                .replace(`{${"agenticWorkflowId"}}`, encodeURIComponent(String(agenticWorkflowId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cancelAgenticWorkflowDeploymentRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Create an agentic workflow
          * @param {string} environmentId Environment ID
@@ -26945,7 +27003,7 @@ export const AgenticWorkflowsApiAxiosParamCreator = function (configuration?: Co
             };
         },
         /**
-         * 
+         * Delete an agentic workflow. This queues a deployment that removes the workflow\'s Kubernetes resources, and the workflow is deleted once that deployment completes. A workflow that was never deployed is removed immediately, with no deployment.
          * @summary Delete an agentic workflow
          * @param {string} agenticWorkflowId 
          * @param {*} [options] Override http request option.
@@ -27123,6 +27181,20 @@ export const AgenticWorkflowsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AgenticWorkflowsApiAxiosParamCreator(configuration)
     return {
         /**
+         * Cancel the deployment currently running the agentic workflow. An agentic workflow only ever runs as part of a deployment of its environment, so this cancels that environment deployment and aborts the workflow\'s running job.
+         * @summary Cancel agentic workflow deployment
+         * @param {string} agenticWorkflowId 
+         * @param {CancelAgenticWorkflowDeploymentRequest} [cancelAgenticWorkflowDeploymentRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cancelAgenticWorkflowDeployment(agenticWorkflowId: string, cancelAgenticWorkflowDeploymentRequest?: CancelAgenticWorkflowDeploymentRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cancelAgenticWorkflowDeployment(agenticWorkflowId, cancelAgenticWorkflowDeploymentRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgenticWorkflowsApi.cancelAgenticWorkflowDeployment']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Create an agentic workflow
          * @param {string} environmentId Environment ID
@@ -27137,13 +27209,13 @@ export const AgenticWorkflowsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Delete an agentic workflow. This queues a deployment that removes the workflow\'s Kubernetes resources, and the workflow is deleted once that deployment completes. A workflow that was never deployed is removed immediately, with no deployment.
          * @summary Delete an agentic workflow
          * @param {string} agenticWorkflowId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAgenticWorkflow(agenticWorkflowId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAgenticWorkflow(agenticWorkflowId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAgenticWorkflow(agenticWorkflowId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgenticWorkflowsApi.deleteAgenticWorkflow']?.[localVarOperationServerIndex]?.url;
@@ -27200,6 +27272,17 @@ export const AgenticWorkflowsApiFactory = function (configuration?: Configuratio
     const localVarFp = AgenticWorkflowsApiFp(configuration)
     return {
         /**
+         * Cancel the deployment currently running the agentic workflow. An agentic workflow only ever runs as part of a deployment of its environment, so this cancels that environment deployment and aborts the workflow\'s running job.
+         * @summary Cancel agentic workflow deployment
+         * @param {string} agenticWorkflowId 
+         * @param {CancelAgenticWorkflowDeploymentRequest} [cancelAgenticWorkflowDeploymentRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cancelAgenticWorkflowDeployment(agenticWorkflowId: string, cancelAgenticWorkflowDeploymentRequest?: CancelAgenticWorkflowDeploymentRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.cancelAgenticWorkflowDeployment(agenticWorkflowId, cancelAgenticWorkflowDeploymentRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Create an agentic workflow
          * @param {string} environmentId Environment ID
@@ -27211,13 +27294,13 @@ export const AgenticWorkflowsApiFactory = function (configuration?: Configuratio
             return localVarFp.createAgenticWorkflow(environmentId, agenticWorkflowRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Delete an agentic workflow. This queues a deployment that removes the workflow\'s Kubernetes resources, and the workflow is deleted once that deployment completes. A workflow that was never deployed is removed immediately, with no deployment.
          * @summary Delete an agentic workflow
          * @param {string} agenticWorkflowId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAgenticWorkflow(agenticWorkflowId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAgenticWorkflow(agenticWorkflowId: string, options?: RawAxiosRequestConfig): AxiosPromise<Status> {
             return localVarFp.deleteAgenticWorkflow(agenticWorkflowId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -27262,6 +27345,19 @@ export const AgenticWorkflowsApiFactory = function (configuration?: Configuratio
  */
 export class AgenticWorkflowsApi extends BaseAPI {
     /**
+     * Cancel the deployment currently running the agentic workflow. An agentic workflow only ever runs as part of a deployment of its environment, so this cancels that environment deployment and aborts the workflow\'s running job.
+     * @summary Cancel agentic workflow deployment
+     * @param {string} agenticWorkflowId 
+     * @param {CancelAgenticWorkflowDeploymentRequest} [cancelAgenticWorkflowDeploymentRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgenticWorkflowsApi
+     */
+    public cancelAgenticWorkflowDeployment(agenticWorkflowId: string, cancelAgenticWorkflowDeploymentRequest?: CancelAgenticWorkflowDeploymentRequest, options?: RawAxiosRequestConfig) {
+        return AgenticWorkflowsApiFp(this.configuration).cancelAgenticWorkflowDeployment(agenticWorkflowId, cancelAgenticWorkflowDeploymentRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * 
      * @summary Create an agentic workflow
      * @param {string} environmentId Environment ID
@@ -27275,7 +27371,7 @@ export class AgenticWorkflowsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Delete an agentic workflow. This queues a deployment that removes the workflow\'s Kubernetes resources, and the workflow is deleted once that deployment completes. A workflow that was never deployed is removed immediately, with no deployment.
      * @summary Delete an agentic workflow
      * @param {string} agenticWorkflowId 
      * @param {*} [options] Override http request option.
