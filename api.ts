@@ -372,11 +372,23 @@ export interface AgenticWorkflowResponse {
      */
     'updated_at'?: string;
     /**
+     * 
+     * @type {ServiceTypeEnum}
+     * @memberof AgenticWorkflowResponse
+     */
+    'service_type': ServiceTypeEnum;
+    /**
      * name is case insensitive
      * @type {string}
      * @memberof AgenticWorkflowResponse
      */
     'name': string;
+    /**
+     * URL-friendly identifier derived from the name
+     * @type {string}
+     * @memberof AgenticWorkflowResponse
+     */
+    'slug': string;
     /**
      * 
      * @type {string}
@@ -444,6 +456,8 @@ export interface AgenticWorkflowResponse {
      */
     'webhook': AgenticWorkflowWebhook;
 }
+
+
 /**
  * 
  * @export
@@ -19108,7 +19122,7 @@ export interface ListServicesByEnvironmentId200Response {
  * @type ListServicesByEnvironmentId200ResponseResultsInner
  * @export
  */
-export type ListServicesByEnvironmentId200ResponseResultsInner = { service_type: 'APPLICATION' } & Application | { service_type: 'ARGOCD_APP' } & ArgocdAppResponse | { service_type: 'CONTAINER' } & ContainerResponse | { service_type: 'DATABASE' } & Database | { service_type: 'HELM' } & HelmResponse | { service_type: 'JOB' } & JobResponse | { service_type: 'TERRAFORM' } & TerraformResponse;
+export type ListServicesByEnvironmentId200ResponseResultsInner = { service_type: 'AGENTIC_WORKFLOW' } & AgenticWorkflowResponse | { service_type: 'APPLICATION' } & Application | { service_type: 'ARGOCD_APP' } & ArgocdAppResponse | { service_type: 'CONTAINER' } & ContainerResponse | { service_type: 'DATABASE' } & Database | { service_type: 'HELM' } & HelmResponse | { service_type: 'JOB' } & JobResponse | { service_type: 'TERRAFORM' } & TerraformResponse;
 
 /**
  * 
@@ -24185,7 +24199,8 @@ export const ServiceTypeEnum = {
     JOB: 'JOB',
     HELM: 'HELM',
     TERRAFORM: 'TERRAFORM',
-    ARGOCD_APP: 'ARGOCD_APP'
+    ARGOCD_APP: 'ARGOCD_APP',
+    AGENTIC_WORKFLOW: 'AGENTIC_WORKFLOW'
 } as const;
 
 export type ServiceTypeEnum = typeof ServiceTypeEnum[keyof typeof ServiceTypeEnum];
