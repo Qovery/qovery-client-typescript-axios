@@ -13610,6 +13610,7 @@ export const EnvironmentStatusEventOriginEnum = {
     CONSOLE: 'CONSOLE',
     GIT: 'GIT',
     QOVERY_INTERNAL: 'QOVERY_INTERNAL',
+    SKILL: 'SKILL',
     TERRAFORM_PROVIDER: 'TERRAFORM_PROVIDER'
 } as const;
 
@@ -20527,6 +20528,7 @@ export const OrganizationEventOrigin = {
     CONSOLE: 'CONSOLE',
     GIT: 'GIT',
     QOVERY_INTERNAL: 'QOVERY_INTERNAL',
+    SKILL: 'SKILL',
     TERRAFORM_PROVIDER: 'TERRAFORM_PROVIDER'
 } as const;
 
