@@ -378,6 +378,12 @@ export interface AgenticWorkflowResponse {
      */
     'service_type': ServiceTypeEnum;
     /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowResponse
+     */
+    'environment_id': string;
+    /**
      * name is case insensitive
      * @type {string}
      * @memberof AgenticWorkflowResponse
