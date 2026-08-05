@@ -268,11 +268,11 @@ export interface AgenticWorkflowProjectRepository {
      */
     'branch': string;
     /**
-     * 
+     * Qovery git token id used to clone the repository. Omit it (or send null) for a public repository, which is cloned without credentials. 
      * @type {string}
      * @memberof AgenticWorkflowProjectRepository
      */
-    'git_token_id': string;
+    'git_token_id'?: string | null;
 }
 /**
  * 
@@ -346,6 +346,43 @@ export interface AgenticWorkflowRequest {
      * @memberof AgenticWorkflowRequest
      */
     'governance'?: AgenticWorkflowGovernance;
+    /**
+     * 
+     * @type {AgenticWorkflowResources}
+     * @memberof AgenticWorkflowRequest
+     */
+    'resources'?: AgenticWorkflowResources;
+}
+/**
+ * 
+ * @export
+ * @interface AgenticWorkflowResources
+ */
+export interface AgenticWorkflowResources {
+    /**
+     * CPU allocated to the workflow, in milli CPU. Used as both request and limit.
+     * @type {number}
+     * @memberof AgenticWorkflowResources
+     */
+    'cpu_milli': number;
+    /**
+     * RAM allocated to the workflow, in MiB. Used as both request and limit.
+     * @type {number}
+     * @memberof AgenticWorkflowResources
+     */
+    'ram_mib': number;
+    /**
+     * Number of GPUs. Accepted and stored, but not yet applied by the engine.
+     * @type {number}
+     * @memberof AgenticWorkflowResources
+     */
+    'gpu': number;
+    /**
+     * Storage size in GiB. Accepted and stored, but not yet applied by the engine.
+     * @type {number}
+     * @memberof AgenticWorkflowResources
+     */
+    'storage_gib': number;
 }
 /**
  * 
@@ -457,10 +494,22 @@ export interface AgenticWorkflowResponse {
     'governance': AgenticWorkflowGovernance;
     /**
      * 
+     * @type {AgenticWorkflowResources}
+     * @memberof AgenticWorkflowResponse
+     */
+    'resources': AgenticWorkflowResources;
+    /**
+     * 
      * @type {AgenticWorkflowWebhook}
      * @memberof AgenticWorkflowResponse
      */
     'webhook': AgenticWorkflowWebhook;
+    /**
+     * Icon URI representing the agentic workflow.
+     * @type {string}
+     * @memberof AgenticWorkflowResponse
+     */
+    'icon_uri'?: string;
 }
 
 
