@@ -19614,6 +19614,166 @@ export interface Organization {
 /**
  * 
  * @export
+ * @interface OrganizationAgentApiToken
+ */
+export interface OrganizationAgentApiToken {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAgentApiToken
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAgentApiToken
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAgentApiToken
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAgentApiToken
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAgentApiToken
+     */
+    'description'?: string;
+    /**
+     * the Open Policy Agent (rego) policy evaluated on every request made with this token
+     * @type {string}
+     * @memberof OrganizationAgentApiToken
+     */
+    'opa_policy'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAgentApiToken
+     */
+    'creator_name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAgentApiToken
+     */
+    'expires_at'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationAgentApiTokenCreate
+ */
+export interface OrganizationAgentApiTokenCreate {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAgentApiTokenCreate
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAgentApiTokenCreate
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAgentApiTokenCreate
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAgentApiTokenCreate
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAgentApiTokenCreate
+     */
+    'description'?: string;
+    /**
+     * the generated token to send in \'Authorization\' header prefixed by \'Token \'. It is returned only here and cannot be retrieved afterwards.
+     * @type {string}
+     * @memberof OrganizationAgentApiTokenCreate
+     */
+    'token'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAgentApiTokenCreate
+     */
+    'creator_name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAgentApiTokenCreate
+     */
+    'user_sub'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAgentApiTokenCreate
+     */
+    'expires_at'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationAgentApiTokenCreateRequest
+ */
+export interface OrganizationAgentApiTokenCreateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAgentApiTokenCreateRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAgentApiTokenCreateRequest
+     */
+    'description'?: string;
+    /**
+     * Open Policy Agent (rego) rule definitions, without a `package` declaration: Qovery prepends a per-token package so that one token\'s rules cannot authorize another\'s. The policy must define an `allow` rule, and the request is denied unless it evaluates to true.
+     * @type {string}
+     * @memberof OrganizationAgentApiTokenCreateRequest
+     */
+    'opa_policy': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationAgentApiTokenCreateRequest
+     */
+    'expires_at'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationAgentApiTokenResponseList
+ */
+export interface OrganizationAgentApiTokenResponseList {
+    /**
+     * 
+     * @type {Array<OrganizationAgentApiToken>}
+     * @memberof OrganizationAgentApiTokenResponseList
+     */
+    'results'?: Array<OrganizationAgentApiToken>;
+}
+/**
+ * 
+ * @export
  * @interface OrganizationAllOfOrganizationPlan
  */
 export interface OrganizationAllOfOrganizationPlan {
@@ -64243,6 +64403,287 @@ export class OrganizationAccountGitRepositoriesApi extends BaseAPI {
      */
     public getOrganizationGitlabRepositoryBranches(organizationId: string, name?: string, gitTokenId?: string, options?: RawAxiosRequestConfig) {
         return OrganizationAccountGitRepositoriesApiFp(this.configuration).getOrganizationGitlabRepositoryBranches(organizationId, name, gitTokenId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * OrganizationAgentApiTokenApi - axios parameter creator
+ * @export
+ */
+export const OrganizationAgentApiTokenApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Create an agent api token, intended for autonomous agents calling the Qovery API.  Unlike a regular api token, an agent api token carries **no organization role**. The Open Policy Agent (rego) policy attached to it is evaluated on every request and is the only thing constraining what the token can do: a policy that allows everything grants full organization admin access. For that reason only an organization owner or admin can create one.  The generated token value is returned only in this response and cannot be retrieved afterwards.
+         * @summary Create an organization agent api token
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationAgentApiTokenCreateRequest} [organizationAgentApiTokenCreateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrganizationAgentApiToken: async (organizationId: string, organizationAgentApiTokenCreateRequest?: OrganizationAgentApiTokenCreateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('createOrganizationAgentApiToken', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/agentApiToken`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organizationAgentApiTokenCreateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete organization agent api token
+         * @summary Delete organization agent api token
+         * @param {string} organizationId Organization ID
+         * @param {string} agentApiTokenId Organization Agent Api Token ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteOrganizationAgentApiToken: async (organizationId: string, agentApiTokenId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('deleteOrganizationAgentApiToken', 'organizationId', organizationId)
+            // verify required parameter 'agentApiTokenId' is not null or undefined
+            assertParamExists('deleteOrganizationAgentApiToken', 'agentApiTokenId', agentApiTokenId)
+            const localVarPath = `/organization/{organizationId}/agentApiToken/{agentApiTokenId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"agentApiTokenId"}}`, encodeURIComponent(String(agentApiTokenId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List the agent api tokens of the organization, each with the Open Policy Agent (rego) policy it carries. The token value itself is never returned here, it is only shown once at creation.
+         * @summary List organization agent api tokens
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationAgentApiTokens: async (organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listOrganizationAgentApiTokens', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/agentApiToken`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * OrganizationAgentApiTokenApi - functional programming interface
+ * @export
+ */
+export const OrganizationAgentApiTokenApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = OrganizationAgentApiTokenApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Create an agent api token, intended for autonomous agents calling the Qovery API.  Unlike a regular api token, an agent api token carries **no organization role**. The Open Policy Agent (rego) policy attached to it is evaluated on every request and is the only thing constraining what the token can do: a policy that allows everything grants full organization admin access. For that reason only an organization owner or admin can create one.  The generated token value is returned only in this response and cannot be retrieved afterwards.
+         * @summary Create an organization agent api token
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationAgentApiTokenCreateRequest} [organizationAgentApiTokenCreateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createOrganizationAgentApiToken(organizationId: string, organizationAgentApiTokenCreateRequest?: OrganizationAgentApiTokenCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationAgentApiTokenCreate>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createOrganizationAgentApiToken(organizationId, organizationAgentApiTokenCreateRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrganizationAgentApiTokenApi.createOrganizationAgentApiToken']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Delete organization agent api token
+         * @summary Delete organization agent api token
+         * @param {string} organizationId Organization ID
+         * @param {string} agentApiTokenId Organization Agent Api Token ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteOrganizationAgentApiToken(organizationId: string, agentApiTokenId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOrganizationAgentApiToken(organizationId, agentApiTokenId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrganizationAgentApiTokenApi.deleteOrganizationAgentApiToken']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * List the agent api tokens of the organization, each with the Open Policy Agent (rego) policy it carries. The token value itself is never returned here, it is only shown once at creation.
+         * @summary List organization agent api tokens
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listOrganizationAgentApiTokens(organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationAgentApiTokenResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizationAgentApiTokens(organizationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrganizationAgentApiTokenApi.listOrganizationAgentApiTokens']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * OrganizationAgentApiTokenApi - factory interface
+ * @export
+ */
+export const OrganizationAgentApiTokenApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = OrganizationAgentApiTokenApiFp(configuration)
+    return {
+        /**
+         * Create an agent api token, intended for autonomous agents calling the Qovery API.  Unlike a regular api token, an agent api token carries **no organization role**. The Open Policy Agent (rego) policy attached to it is evaluated on every request and is the only thing constraining what the token can do: a policy that allows everything grants full organization admin access. For that reason only an organization owner or admin can create one.  The generated token value is returned only in this response and cannot be retrieved afterwards.
+         * @summary Create an organization agent api token
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationAgentApiTokenCreateRequest} [organizationAgentApiTokenCreateRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrganizationAgentApiToken(organizationId: string, organizationAgentApiTokenCreateRequest?: OrganizationAgentApiTokenCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<OrganizationAgentApiTokenCreate> {
+            return localVarFp.createOrganizationAgentApiToken(organizationId, organizationAgentApiTokenCreateRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete organization agent api token
+         * @summary Delete organization agent api token
+         * @param {string} organizationId Organization ID
+         * @param {string} agentApiTokenId Organization Agent Api Token ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteOrganizationAgentApiToken(organizationId: string, agentApiTokenId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteOrganizationAgentApiToken(organizationId, agentApiTokenId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List the agent api tokens of the organization, each with the Open Policy Agent (rego) policy it carries. The token value itself is never returned here, it is only shown once at creation.
+         * @summary List organization agent api tokens
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationAgentApiTokens(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<OrganizationAgentApiTokenResponseList> {
+            return localVarFp.listOrganizationAgentApiTokens(organizationId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * OrganizationAgentApiTokenApi - object-oriented interface
+ * @export
+ * @class OrganizationAgentApiTokenApi
+ * @extends {BaseAPI}
+ */
+export class OrganizationAgentApiTokenApi extends BaseAPI {
+    /**
+     * Create an agent api token, intended for autonomous agents calling the Qovery API.  Unlike a regular api token, an agent api token carries **no organization role**. The Open Policy Agent (rego) policy attached to it is evaluated on every request and is the only thing constraining what the token can do: a policy that allows everything grants full organization admin access. For that reason only an organization owner or admin can create one.  The generated token value is returned only in this response and cannot be retrieved afterwards.
+     * @summary Create an organization agent api token
+     * @param {string} organizationId Organization ID
+     * @param {OrganizationAgentApiTokenCreateRequest} [organizationAgentApiTokenCreateRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationAgentApiTokenApi
+     */
+    public createOrganizationAgentApiToken(organizationId: string, organizationAgentApiTokenCreateRequest?: OrganizationAgentApiTokenCreateRequest, options?: RawAxiosRequestConfig) {
+        return OrganizationAgentApiTokenApiFp(this.configuration).createOrganizationAgentApiToken(organizationId, organizationAgentApiTokenCreateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete organization agent api token
+     * @summary Delete organization agent api token
+     * @param {string} organizationId Organization ID
+     * @param {string} agentApiTokenId Organization Agent Api Token ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationAgentApiTokenApi
+     */
+    public deleteOrganizationAgentApiToken(organizationId: string, agentApiTokenId: string, options?: RawAxiosRequestConfig) {
+        return OrganizationAgentApiTokenApiFp(this.configuration).deleteOrganizationAgentApiToken(organizationId, agentApiTokenId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List the agent api tokens of the organization, each with the Open Policy Agent (rego) policy it carries. The token value itself is never returned here, it is only shown once at creation.
+     * @summary List organization agent api tokens
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationAgentApiTokenApi
+     */
+    public listOrganizationAgentApiTokens(organizationId: string, options?: RawAxiosRequestConfig) {
+        return OrganizationAgentApiTokenApiFp(this.configuration).listOrganizationAgentApiTokens(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
