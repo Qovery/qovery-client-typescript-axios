@@ -12174,6 +12174,12 @@ export interface DeploymentStageWithServicesStatuses {
     'terraforms'?: Array<Status>;
     /**
      * 
+     * @type {Array<Status>}
+     * @memberof DeploymentStageWithServicesStatuses
+     */
+    'agentic_workflows'?: Array<Status>;
+    /**
+     * 
      * @type {Stage}
      * @memberof DeploymentStageWithServicesStatuses
      */
@@ -13733,6 +13739,12 @@ export interface EnvironmentStatuses {
      * @memberof EnvironmentStatuses
      */
     'terraforms': Array<Status>;
+    /**
+     * 
+     * @type {Array<Status>}
+     * @memberof EnvironmentStatuses
+     */
+    'agentic_workflows'?: Array<Status>;
 }
 /**
  * 
