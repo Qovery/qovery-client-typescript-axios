@@ -19311,6 +19311,99 @@ export interface ManagedDatabaseTypeResponseList {
 /**
  * 
  * @export
+ * @interface McpServerRequest
+ */
+export interface McpServerRequest {
+    /**
+     * Unique MCP server name within the organization
+     * @type {string}
+     * @memberof McpServerRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof McpServerRequest
+     */
+    'description'?: string;
+    /**
+     * HTTPS URL of the remote MCP server
+     * @type {string}
+     * @memberof McpServerRequest
+     */
+    'url': string;
+    /**
+     * HTTP headers sent to the MCP server. Header values are encrypted and never returned by the API.
+     * @type {{ [key: string]: string; }}
+     * @memberof McpServerRequest
+     */
+    'headers'?: { [key: string]: string; };
+}
+/**
+ * 
+ * @export
+ * @interface McpServerResponse
+ */
+export interface McpServerResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof McpServerResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof McpServerResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof McpServerResponse
+     */
+    'updated_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof McpServerResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof McpServerResponse
+     */
+    'description': string;
+    /**
+     * HTTPS URL of the remote MCP server
+     * @type {string}
+     * @memberof McpServerResponse
+     */
+    'url': string;
+    /**
+     * Names of the configured HTTP headers. Header values are never returned.
+     * @type {Set<string>}
+     * @memberof McpServerResponse
+     */
+    'header_names': Set<string>;
+}
+/**
+ * 
+ * @export
+ * @interface McpServerResponseList
+ */
+export interface McpServerResponseList {
+    /**
+     * 
+     * @type {Array<McpServerResponse>}
+     * @memberof McpServerResponseList
+     */
+    'results': Array<McpServerResponse>;
+}
+/**
+ * 
+ * @export
  * @interface Member
  */
 export interface Member {
@@ -62988,6 +63081,443 @@ export class LifecycleTemplateMainCallsApi extends BaseAPI {
      */
     public listEnvironmentLifecycleTemplates(environmentId: string, options?: RawAxiosRequestConfig) {
         return LifecycleTemplateMainCallsApiFp(this.configuration).listEnvironmentLifecycleTemplates(environmentId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * MCPServersApi - axios parameter creator
+ * @export
+ */
+export const MCPServersApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Configure a remote HTTPS MCP server for an organization.
+         * @summary Create an MCP server
+         * @param {string} organizationId Organization ID
+         * @param {McpServerRequest} mcpServerRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createMcpServer: async (organizationId: string, mcpServerRequest: McpServerRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('createMcpServer', 'organizationId', organizationId)
+            // verify required parameter 'mcpServerRequest' is not null or undefined
+            assertParamExists('createMcpServer', 'mcpServerRequest', mcpServerRequest)
+            const localVarPath = `/organization/{organizationId}/mcpServer`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(mcpServerRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete a remote MCP server configuration.
+         * @summary Delete an MCP server
+         * @param {string} mcpServerId MCP Server ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMcpServer: async (mcpServerId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'mcpServerId' is not null or undefined
+            assertParamExists('deleteMcpServer', 'mcpServerId', mcpServerId)
+            const localVarPath = `/mcpServer/{mcpServerId}`
+                .replace(`{${"mcpServerId"}}`, encodeURIComponent(String(mcpServerId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Replace a remote MCP server configuration, including all configured headers.
+         * @summary Edit an MCP server
+         * @param {string} mcpServerId MCP Server ID
+         * @param {McpServerRequest} mcpServerRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editMcpServer: async (mcpServerId: string, mcpServerRequest: McpServerRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'mcpServerId' is not null or undefined
+            assertParamExists('editMcpServer', 'mcpServerId', mcpServerId)
+            // verify required parameter 'mcpServerRequest' is not null or undefined
+            assertParamExists('editMcpServer', 'mcpServerRequest', mcpServerRequest)
+            const localVarPath = `/mcpServer/{mcpServerId}`
+                .replace(`{${"mcpServerId"}}`, encodeURIComponent(String(mcpServerId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(mcpServerRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get a remote MCP server configuration. Header values are never returned.
+         * @summary Get an MCP server
+         * @param {string} mcpServerId MCP Server ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMcpServer: async (mcpServerId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'mcpServerId' is not null or undefined
+            assertParamExists('getMcpServer', 'mcpServerId', mcpServerId)
+            const localVarPath = `/mcpServer/{mcpServerId}`
+                .replace(`{${"mcpServerId"}}`, encodeURIComponent(String(mcpServerId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List the remote MCP servers configured for an organization. Header values are never returned.
+         * @summary List organization MCP servers
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listMcpServers: async (organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listMcpServers', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/mcpServer`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * MCPServersApi - functional programming interface
+ * @export
+ */
+export const MCPServersApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = MCPServersApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Configure a remote HTTPS MCP server for an organization.
+         * @summary Create an MCP server
+         * @param {string} organizationId Organization ID
+         * @param {McpServerRequest} mcpServerRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createMcpServer(organizationId: string, mcpServerRequest: McpServerRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<McpServerResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createMcpServer(organizationId, mcpServerRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MCPServersApi.createMcpServer']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Delete a remote MCP server configuration.
+         * @summary Delete an MCP server
+         * @param {string} mcpServerId MCP Server ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteMcpServer(mcpServerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMcpServer(mcpServerId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MCPServersApi.deleteMcpServer']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Replace a remote MCP server configuration, including all configured headers.
+         * @summary Edit an MCP server
+         * @param {string} mcpServerId MCP Server ID
+         * @param {McpServerRequest} mcpServerRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editMcpServer(mcpServerId: string, mcpServerRequest: McpServerRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<McpServerResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editMcpServer(mcpServerId, mcpServerRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MCPServersApi.editMcpServer']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Get a remote MCP server configuration. Header values are never returned.
+         * @summary Get an MCP server
+         * @param {string} mcpServerId MCP Server ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMcpServer(mcpServerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<McpServerResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMcpServer(mcpServerId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MCPServersApi.getMcpServer']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * List the remote MCP servers configured for an organization. Header values are never returned.
+         * @summary List organization MCP servers
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listMcpServers(organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<McpServerResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listMcpServers(organizationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MCPServersApi.listMcpServers']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * MCPServersApi - factory interface
+ * @export
+ */
+export const MCPServersApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = MCPServersApiFp(configuration)
+    return {
+        /**
+         * Configure a remote HTTPS MCP server for an organization.
+         * @summary Create an MCP server
+         * @param {string} organizationId Organization ID
+         * @param {McpServerRequest} mcpServerRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createMcpServer(organizationId: string, mcpServerRequest: McpServerRequest, options?: RawAxiosRequestConfig): AxiosPromise<McpServerResponse> {
+            return localVarFp.createMcpServer(organizationId, mcpServerRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete a remote MCP server configuration.
+         * @summary Delete an MCP server
+         * @param {string} mcpServerId MCP Server ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMcpServer(mcpServerId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteMcpServer(mcpServerId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Replace a remote MCP server configuration, including all configured headers.
+         * @summary Edit an MCP server
+         * @param {string} mcpServerId MCP Server ID
+         * @param {McpServerRequest} mcpServerRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editMcpServer(mcpServerId: string, mcpServerRequest: McpServerRequest, options?: RawAxiosRequestConfig): AxiosPromise<McpServerResponse> {
+            return localVarFp.editMcpServer(mcpServerId, mcpServerRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get a remote MCP server configuration. Header values are never returned.
+         * @summary Get an MCP server
+         * @param {string} mcpServerId MCP Server ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMcpServer(mcpServerId: string, options?: RawAxiosRequestConfig): AxiosPromise<McpServerResponse> {
+            return localVarFp.getMcpServer(mcpServerId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List the remote MCP servers configured for an organization. Header values are never returned.
+         * @summary List organization MCP servers
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listMcpServers(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<McpServerResponseList> {
+            return localVarFp.listMcpServers(organizationId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * MCPServersApi - object-oriented interface
+ * @export
+ * @class MCPServersApi
+ * @extends {BaseAPI}
+ */
+export class MCPServersApi extends BaseAPI {
+    /**
+     * Configure a remote HTTPS MCP server for an organization.
+     * @summary Create an MCP server
+     * @param {string} organizationId Organization ID
+     * @param {McpServerRequest} mcpServerRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MCPServersApi
+     */
+    public createMcpServer(organizationId: string, mcpServerRequest: McpServerRequest, options?: RawAxiosRequestConfig) {
+        return MCPServersApiFp(this.configuration).createMcpServer(organizationId, mcpServerRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete a remote MCP server configuration.
+     * @summary Delete an MCP server
+     * @param {string} mcpServerId MCP Server ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MCPServersApi
+     */
+    public deleteMcpServer(mcpServerId: string, options?: RawAxiosRequestConfig) {
+        return MCPServersApiFp(this.configuration).deleteMcpServer(mcpServerId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Replace a remote MCP server configuration, including all configured headers.
+     * @summary Edit an MCP server
+     * @param {string} mcpServerId MCP Server ID
+     * @param {McpServerRequest} mcpServerRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MCPServersApi
+     */
+    public editMcpServer(mcpServerId: string, mcpServerRequest: McpServerRequest, options?: RawAxiosRequestConfig) {
+        return MCPServersApiFp(this.configuration).editMcpServer(mcpServerId, mcpServerRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get a remote MCP server configuration. Header values are never returned.
+     * @summary Get an MCP server
+     * @param {string} mcpServerId MCP Server ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MCPServersApi
+     */
+    public getMcpServer(mcpServerId: string, options?: RawAxiosRequestConfig) {
+        return MCPServersApiFp(this.configuration).getMcpServer(mcpServerId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List the remote MCP servers configured for an organization. Header values are never returned.
+     * @summary List organization MCP servers
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MCPServersApi
+     */
+    public listMcpServers(organizationId: string, options?: RawAxiosRequestConfig) {
+        return MCPServersApiFp(this.configuration).listMcpServers(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
