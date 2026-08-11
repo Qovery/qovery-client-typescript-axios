@@ -27468,6 +27468,52 @@ export const AgenticWorkflowsApiAxiosParamCreator = function (configuration?: Co
             };
         },
         /**
+         * Returns the 20 last agentic workflow deployments
+         * @summary List agentic workflow deployments
+         * @param {string} agenticWorkflowId 
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAgenticWorkflowDeploymentHistoryV2: async (agenticWorkflowId: string, pageSize?: number | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'agenticWorkflowId' is not null or undefined
+            assertParamExists('listAgenticWorkflowDeploymentHistoryV2', 'agenticWorkflowId', agenticWorkflowId)
+            const localVarPath = `/agenticWorkflow/{agenticWorkflowId}/deploymentHistoryV2`
+                .replace(`{${"agenticWorkflowId"}}`, encodeURIComponent(String(agenticWorkflowId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary List agentic workflows
          * @param {string} environmentId Environment ID
@@ -27587,6 +27633,20 @@ export const AgenticWorkflowsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns the 20 last agentic workflow deployments
+         * @summary List agentic workflow deployments
+         * @param {string} agenticWorkflowId 
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listAgenticWorkflowDeploymentHistoryV2(agenticWorkflowId: string, pageSize?: number | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAgenticWorkflowDeploymentHistoryV2(agenticWorkflowId, pageSize, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgenticWorkflowsApi.listAgenticWorkflowDeploymentHistoryV2']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary List agentic workflows
          * @param {string} environmentId Environment ID
@@ -27661,6 +27721,17 @@ export const AgenticWorkflowsApiFactory = function (configuration?: Configuratio
          */
         getAgenticWorkflow(agenticWorkflowId: string, options?: RawAxiosRequestConfig): AxiosPromise<AgenticWorkflowResponse> {
             return localVarFp.getAgenticWorkflow(agenticWorkflowId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the 20 last agentic workflow deployments
+         * @summary List agentic workflow deployments
+         * @param {string} agenticWorkflowId 
+         * @param {number | null} [pageSize] The number of deployments to return in the current page
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAgenticWorkflowDeploymentHistoryV2(agenticWorkflowId: string, pageSize?: number | null, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2> {
+            return localVarFp.listAgenticWorkflowDeploymentHistoryV2(agenticWorkflowId, pageSize, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -27743,6 +27814,19 @@ export class AgenticWorkflowsApi extends BaseAPI {
      */
     public getAgenticWorkflow(agenticWorkflowId: string, options?: RawAxiosRequestConfig) {
         return AgenticWorkflowsApiFp(this.configuration).getAgenticWorkflow(agenticWorkflowId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the 20 last agentic workflow deployments
+     * @summary List agentic workflow deployments
+     * @param {string} agenticWorkflowId 
+     * @param {number | null} [pageSize] The number of deployments to return in the current page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgenticWorkflowsApi
+     */
+    public listAgenticWorkflowDeploymentHistoryV2(agenticWorkflowId: string, pageSize?: number | null, options?: RawAxiosRequestConfig) {
+        return AgenticWorkflowsApiFp(this.configuration).listAgenticWorkflowDeploymentHistoryV2(agenticWorkflowId, pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
