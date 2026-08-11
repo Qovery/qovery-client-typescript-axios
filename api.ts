@@ -12931,6 +12931,12 @@ export interface Environment {
      * @memberof Environment
      */
     'cluster_name'?: string;
+    /**
+     * Date after which the environment is automatically deleted. Null when the environment never expires, which is the case for every environment except the throwaway ones created for a single agentic workflow run.
+     * @type {string}
+     * @memberof Environment
+     */
+    'expires_at'?: string | null;
 }
 
 
