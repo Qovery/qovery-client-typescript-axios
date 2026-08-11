@@ -20921,6 +20921,7 @@ export interface OrganizationEventTargetResponseList {
  */
 
 export const OrganizationEventTargetType = {
+    AGENTIC_WORKFLOW: 'AGENTIC_WORKFLOW',
     APPLICATION: 'APPLICATION',
     CLUSTER: 'CLUSTER',
     CONTAINER: 'CONTAINER',
