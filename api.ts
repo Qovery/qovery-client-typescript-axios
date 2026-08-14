@@ -37,7 +37,8 @@ export const APIVariableScopeEnum = {
     CONTAINER: 'CONTAINER',
     JOB: 'JOB',
     HELM: 'HELM',
-    TERRAFORM: 'TERRAFORM'
+    TERRAFORM: 'TERRAFORM',
+    AGENTIC_WORKFLOW: 'AGENTIC_WORKFLOW'
 } as const;
 
 export type APIVariableScopeEnum = typeof APIVariableScopeEnum[keyof typeof APIVariableScopeEnum];
@@ -24546,7 +24547,8 @@ export const ServiceTypeForVariableEnum = {
     CONTAINER: 'CONTAINER',
     JOB: 'JOB',
     HELM: 'HELM',
-    TERRAFORM: 'TERRAFORM'
+    TERRAFORM: 'TERRAFORM',
+    AGENTIC_WORKFLOW: 'AGENTIC_WORKFLOW'
 } as const;
 
 export type ServiceTypeForVariableEnum = typeof ServiceTypeForVariableEnum[keyof typeof ServiceTypeForVariableEnum];
