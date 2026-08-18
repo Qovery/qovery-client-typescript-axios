@@ -7773,6 +7773,262 @@ export interface ClusterMetricsResponse {
     'metrics'?: string;
 }
 /**
+ * Sensitive bootstrap material used to install or manually upgrade the Qovery Operator on a self-managed cluster.
+ * @export
+ * @interface ClusterOperatorBootstrapResponse
+ */
+export interface ClusterOperatorBootstrapResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOperatorBootstrapResponse
+     */
+    'chart_repository': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOperatorBootstrapResponse
+     */
+    'chart_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOperatorBootstrapResponse
+     */
+    'chart_version': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOperatorBootstrapResponse
+     */
+    'chart_reference': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOperatorBootstrapResponse
+     */
+    'namespace': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOperatorBootstrapResponse
+     */
+    'release_name': string;
+    /**
+     * Structured Helm values. This object can contain cluster credentials.
+     * @type {{ [key: string]: any; }}
+     * @memberof ClusterOperatorBootstrapResponse
+     */
+    'values': { [key: string]: any; };
+    /**
+     * Ready-to-write Helm values file. This value can contain cluster credentials.
+     * @type {string}
+     * @memberof ClusterOperatorBootstrapResponse
+     */
+    'values_yaml': string;
+    /**
+     * Ready-to-run Helm upgrade/install command using values_yaml.
+     * @type {string}
+     * @memberof ClusterOperatorBootstrapResponse
+     */
+    'helm_command': string;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterOperatorFleetInventoryResponse
+ */
+export interface ClusterOperatorFleetInventoryResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOperatorFleetInventoryResponse
+     */
+    'organization_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOperatorFleetInventoryResponse
+     */
+    'cluster_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOperatorFleetInventoryResponse
+     */
+    'cluster_name': string;
+    /**
+     * 
+     * @type {SelfManagedClusterKind}
+     * @memberof ClusterOperatorFleetInventoryResponse
+     */
+    'cluster_kind': SelfManagedClusterKind;
+    /**
+     * Whether the cluster is explicitly routed through the Operator execution path.
+     * @type {boolean}
+     * @memberof ClusterOperatorFleetInventoryResponse
+     */
+    'attached': boolean;
+    /**
+     * Whether the last heartbeat is within the Operator presence window.
+     * @type {boolean}
+     * @memberof ClusterOperatorFleetInventoryResponse
+     */
+    'connected': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOperatorFleetInventoryResponse
+     */
+    'last_heartbeat'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOperatorFleetInventoryResponse
+     */
+    'desired_image_version'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOperatorFleetInventoryResponse
+     */
+    'reported_image_version'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOperatorFleetInventoryResponse
+     */
+    'desired_chart_version'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOperatorFleetInventoryResponse
+     */
+    'reported_chart_version'?: string | null;
+    /**
+     * 
+     * @type {ClusterOperatorFleetStatus}
+     * @memberof ClusterOperatorFleetInventoryResponse
+     */
+    'status': ClusterOperatorFleetStatus;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ClusterOperatorFleetInventoryResponseList
+ */
+export interface ClusterOperatorFleetInventoryResponseList {
+    /**
+     * 
+     * @type {Array<ClusterOperatorFleetInventoryResponse>}
+     * @memberof ClusterOperatorFleetInventoryResponseList
+     */
+    'results': Array<ClusterOperatorFleetInventoryResponse>;
+}
+/**
+ * Stable fleet classification. OUTDATED_IMAGE and OUTDATED_CHART identify which globally selected bootstrap target differs from the version reported by the running Operator.
+ * @export
+ * @enum {string}
+ */
+
+export const ClusterOperatorFleetStatus = {
+    NOT_ATTACHED: 'NOT_ATTACHED',
+    DISCONNECTED: 'DISCONNECTED',
+    TARGET_UNKNOWN: 'TARGET_UNKNOWN',
+    REPORTED_VERSION_UNKNOWN: 'REPORTED_VERSION_UNKNOWN',
+    CURRENT: 'CURRENT',
+    OUTDATED_IMAGE: 'OUTDATED_IMAGE',
+    OUTDATED_CHART: 'OUTDATED_CHART',
+    OUTDATED_IMAGE_AND_CHART: 'OUTDATED_IMAGE_AND_CHART'
+} as const;
+
+export type ClusterOperatorFleetStatus = typeof ClusterOperatorFleetStatus[keyof typeof ClusterOperatorFleetStatus];
+
+
+/**
+ * 
+ * @export
+ * @interface ClusterOperatorStatusResponse
+ */
+export interface ClusterOperatorStatusResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOperatorStatusResponse
+     */
+    'organization_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOperatorStatusResponse
+     */
+    'cluster_id': string;
+    /**
+     * Whether the last heartbeat is within the Operator presence window.
+     * @type {boolean}
+     * @memberof ClusterOperatorStatusResponse
+     */
+    'operator_connected': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOperatorStatusResponse
+     */
+    'last_heartbeat'?: string | null;
+    /**
+     * Display version reported by the Operator. For the POC version-reporting heartbeat, the official chart sets this to the exact installed image tag. Legacy Operators can report opaque build metadata instead.
+     * @type {string}
+     * @memberof ClusterOperatorStatusResponse
+     */
+    'operator_version'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOperatorStatusResponse
+     */
+    'controller_version'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterOperatorStatusResponse
+     */
+    'request_schema_version'?: string | null;
+    /**
+     * Image tag currently selected for a newly compiled Operator bootstrap.
+     * @type {string}
+     * @memberof ClusterOperatorStatusResponse
+     */
+    'desired_image_version'?: string | null;
+    /**
+     * Helm chart version currently selected for a newly compiled Operator bootstrap.
+     * @type {string}
+     * @memberof ClusterOperatorStatusResponse
+     */
+    'desired_chart_version'?: string | null;
+    /**
+     * 
+     * @type {ClusterOperatorFleetStatus}
+     * @memberof ClusterOperatorStatusResponse
+     */
+    'status': ClusterOperatorFleetStatus;
+    /**
+     * Helm chart version reported by the Operator, even without immutable identity.
+     * @type {string}
+     * @memberof ClusterOperatorStatusResponse
+     */
+    'reported_chart_version'?: string | null;
+    /**
+     * 
+     * @type {ReportedClusterOperatorIdentity}
+     * @memberof ClusterOperatorStatusResponse
+     */
+    'reported_identity'?: ReportedClusterOperatorIdentity | null;
+}
+
+
+/**
  * 
  * @export
  * @interface ClusterOverviewResponse
@@ -23328,6 +23584,37 @@ export type RegistryMirroringModeEnum = typeof RegistryMirroringModeEnum[keyof t
 /**
  * 
  * @export
+ * @interface ReportedClusterOperatorIdentity
+ */
+export interface ReportedClusterOperatorIdentity {
+    /**
+     * Multi-architecture OCI index digest selected for the installed release.
+     * @type {string}
+     * @memberof ReportedClusterOperatorIdentity
+     */
+    'release_digest': string;
+    /**
+     * OCI image reference resolved by the Kubernetes runtime.
+     * @type {string}
+     * @memberof ReportedClusterOperatorIdentity
+     */
+    'runtime_image_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportedClusterOperatorIdentity
+     */
+    'chart_version': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportedClusterOperatorIdentity
+     */
+    'observed_at'?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface RewardClaim
  */
 export interface RewardClaim {
@@ -23958,6 +24245,23 @@ export interface SecretResponseList {
      */
     'results'?: Array<Secret>;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const SelfManagedClusterKind = {
+    EKS_SELF_MANAGED: 'EKS_SELF_MANAGED',
+    SCW_SELF_MANAGED: 'SCW_SELF_MANAGED',
+    GKE_SELF_MANAGED: 'GKE_SELF_MANAGED',
+    AKS_SELF_MANAGED: 'AKS_SELF_MANAGED',
+    SELF_MANAGED: 'SELF_MANAGED'
+} as const;
+
+export type SelfManagedClusterKind = typeof SelfManagedClusterKind[keyof typeof SelfManagedClusterKind];
+
+
 /**
  * 
  * @export
@@ -39828,6 +40132,363 @@ export class CloudProviderCredentialsApi extends BaseAPI {
      */
     public listScalewayCredentials(organizationId: string, options?: RawAxiosRequestConfig) {
         return CloudProviderCredentialsApiFp(this.configuration).listScalewayCredentials(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * ClusterOperatorApi - axios parameter creator
+ * @export
+ */
+export const ClusterOperatorApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Marks a self-managed cluster for routing through the Qovery Operator. This records the routing intent only; it does not install the Operator or prove that it is connected. Cluster administrator permission is required.
+         * @summary Attach a cluster to the Qovery Operator execution path
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        attachClusterOperator: async (organizationId: string, clusterId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('attachClusterOperator', 'organizationId', organizationId)
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('attachClusterOperator', 'clusterId', clusterId)
+            const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/operator/attach`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Compiles the Helm chart coordinates, values file, and ready-to-run Helm command for a self-managed cluster. The response contains cluster credentials and must be handled as sensitive data. Cluster administrator permission is required.
+         * @summary Get the Qovery Operator bootstrap
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusterOperatorBootstrap: async (organizationId: string, clusterId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getClusterOperatorBootstrap', 'organizationId', organizationId)
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('getClusterOperatorBootstrap', 'clusterId', clusterId)
+            const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/operator/bootstrap`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns heartbeat freshness and the image, chart, and protocol versions last reported by the running Operator, together with the current bootstrap targets and a stable drift status. A false operator_connected value means that no heartbeat was received within the presence window. The status is a display-version drift verdict, not an immutable release compatibility decision. Cluster viewer permission is sufficient.
+         * @summary Get the Qovery Operator status for a cluster
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusterOperatorStatus: async (organizationId: string, clusterId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getClusterOperatorStatus', 'organizationId', organizationId)
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('getClusterOperatorStatus', 'clusterId', clusterId)
+            const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/operator/status`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns every self-managed cluster with its attachment, heartbeat freshness, desired and reported image and Helm chart versions, and a stable drift status. This operation is restricted to Qovery administrators and is the source for internal fleet CLI and dashboard consumers.
+         * @summary List the Qovery Operator fleet
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listClusterOperatorFleet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/admin/operator/clusters`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ClusterOperatorApi - functional programming interface
+ * @export
+ */
+export const ClusterOperatorApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ClusterOperatorApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Marks a self-managed cluster for routing through the Qovery Operator. This records the routing intent only; it does not install the Operator or prove that it is connected. Cluster administrator permission is required.
+         * @summary Attach a cluster to the Qovery Operator execution path
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async attachClusterOperator(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.attachClusterOperator(organizationId, clusterId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ClusterOperatorApi.attachClusterOperator']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Compiles the Helm chart coordinates, values file, and ready-to-run Helm command for a self-managed cluster. The response contains cluster credentials and must be handled as sensitive data. Cluster administrator permission is required.
+         * @summary Get the Qovery Operator bootstrap
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getClusterOperatorBootstrap(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterOperatorBootstrapResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterOperatorBootstrap(organizationId, clusterId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ClusterOperatorApi.getClusterOperatorBootstrap']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns heartbeat freshness and the image, chart, and protocol versions last reported by the running Operator, together with the current bootstrap targets and a stable drift status. A false operator_connected value means that no heartbeat was received within the presence window. The status is a display-version drift verdict, not an immutable release compatibility decision. Cluster viewer permission is sufficient.
+         * @summary Get the Qovery Operator status for a cluster
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getClusterOperatorStatus(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterOperatorStatusResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterOperatorStatus(organizationId, clusterId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ClusterOperatorApi.getClusterOperatorStatus']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns every self-managed cluster with its attachment, heartbeat freshness, desired and reported image and Helm chart versions, and a stable drift status. This operation is restricted to Qovery administrators and is the source for internal fleet CLI and dashboard consumers.
+         * @summary List the Qovery Operator fleet
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listClusterOperatorFleet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterOperatorFleetInventoryResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listClusterOperatorFleet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ClusterOperatorApi.listClusterOperatorFleet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * ClusterOperatorApi - factory interface
+ * @export
+ */
+export const ClusterOperatorApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ClusterOperatorApiFp(configuration)
+    return {
+        /**
+         * Marks a self-managed cluster for routing through the Qovery Operator. This records the routing intent only; it does not install the Operator or prove that it is connected. Cluster administrator permission is required.
+         * @summary Attach a cluster to the Qovery Operator execution path
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        attachClusterOperator(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.attachClusterOperator(organizationId, clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Compiles the Helm chart coordinates, values file, and ready-to-run Helm command for a self-managed cluster. The response contains cluster credentials and must be handled as sensitive data. Cluster administrator permission is required.
+         * @summary Get the Qovery Operator bootstrap
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusterOperatorBootstrap(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterOperatorBootstrapResponse> {
+            return localVarFp.getClusterOperatorBootstrap(organizationId, clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns heartbeat freshness and the image, chart, and protocol versions last reported by the running Operator, together with the current bootstrap targets and a stable drift status. A false operator_connected value means that no heartbeat was received within the presence window. The status is a display-version drift verdict, not an immutable release compatibility decision. Cluster viewer permission is sufficient.
+         * @summary Get the Qovery Operator status for a cluster
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusterOperatorStatus(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterOperatorStatusResponse> {
+            return localVarFp.getClusterOperatorStatus(organizationId, clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns every self-managed cluster with its attachment, heartbeat freshness, desired and reported image and Helm chart versions, and a stable drift status. This operation is restricted to Qovery administrators and is the source for internal fleet CLI and dashboard consumers.
+         * @summary List the Qovery Operator fleet
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listClusterOperatorFleet(options?: RawAxiosRequestConfig): AxiosPromise<ClusterOperatorFleetInventoryResponseList> {
+            return localVarFp.listClusterOperatorFleet(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ClusterOperatorApi - object-oriented interface
+ * @export
+ * @class ClusterOperatorApi
+ * @extends {BaseAPI}
+ */
+export class ClusterOperatorApi extends BaseAPI {
+    /**
+     * Marks a self-managed cluster for routing through the Qovery Operator. This records the routing intent only; it does not install the Operator or prove that it is connected. Cluster administrator permission is required.
+     * @summary Attach a cluster to the Qovery Operator execution path
+     * @param {string} organizationId Organization ID
+     * @param {string} clusterId Cluster ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClusterOperatorApi
+     */
+    public attachClusterOperator(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig) {
+        return ClusterOperatorApiFp(this.configuration).attachClusterOperator(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Compiles the Helm chart coordinates, values file, and ready-to-run Helm command for a self-managed cluster. The response contains cluster credentials and must be handled as sensitive data. Cluster administrator permission is required.
+     * @summary Get the Qovery Operator bootstrap
+     * @param {string} organizationId Organization ID
+     * @param {string} clusterId Cluster ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClusterOperatorApi
+     */
+    public getClusterOperatorBootstrap(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig) {
+        return ClusterOperatorApiFp(this.configuration).getClusterOperatorBootstrap(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns heartbeat freshness and the image, chart, and protocol versions last reported by the running Operator, together with the current bootstrap targets and a stable drift status. A false operator_connected value means that no heartbeat was received within the presence window. The status is a display-version drift verdict, not an immutable release compatibility decision. Cluster viewer permission is sufficient.
+     * @summary Get the Qovery Operator status for a cluster
+     * @param {string} organizationId Organization ID
+     * @param {string} clusterId Cluster ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClusterOperatorApi
+     */
+    public getClusterOperatorStatus(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig) {
+        return ClusterOperatorApiFp(this.configuration).getClusterOperatorStatus(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns every self-managed cluster with its attachment, heartbeat freshness, desired and reported image and Helm chart versions, and a stable drift status. This operation is restricted to Qovery administrators and is the source for internal fleet CLI and dashboard consumers.
+     * @summary List the Qovery Operator fleet
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClusterOperatorApi
+     */
+    public listClusterOperatorFleet(options?: RawAxiosRequestConfig) {
+        return ClusterOperatorApiFp(this.configuration).listClusterOperatorFleet(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
