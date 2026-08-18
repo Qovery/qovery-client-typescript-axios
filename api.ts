@@ -21021,7 +21021,7 @@ export const OrganizationEventType = {
     IMPORT: 'IMPORT',
     LOCK: 'LOCK',
     UNLOCK: 'UNLOCK',
-    REJECTED: 'REJECTED'
+    POLICY_FAILED: 'POLICY_FAILED'
 } as const;
 
 export type OrganizationEventType = typeof OrganizationEventType[keyof typeof OrganizationEventType];
