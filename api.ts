@@ -8031,6 +8031,50 @@ export interface ClusterOperatorStatusResponse {
 /**
  * 
  * @export
+ * @interface ClusterOperatorUpdateRequest
+ */
+export interface ClusterOperatorUpdateRequest {
+    /**
+     * Exact Qovery Operator Helm chart version to install.
+     * @type {string}
+     * @memberof ClusterOperatorUpdateRequest
+     */
+    'chart_version': string;
+    /**
+     * Optional Operator image tag overriding the image target selected by q-core.
+     * @type {string}
+     * @memberof ClusterOperatorUpdateRequest
+     */
+    'image_version'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterOperatorUpdateResponse
+ */
+export interface ClusterOperatorUpdateResponse {
+    /**
+     * Identifier shared by the queued Engine execution and its infrastructure logs.
+     * @type {string}
+     * @memberof ClusterOperatorUpdateResponse
+     */
+    'execution_id': string;
+    /**
+     * Operator image tag resolved for this execution.
+     * @type {string}
+     * @memberof ClusterOperatorUpdateResponse
+     */
+    'image_version': string;
+    /**
+     * Operator Helm chart version resolved for this execution.
+     * @type {string}
+     * @memberof ClusterOperatorUpdateResponse
+     */
+    'chart_version': string;
+}
+/**
+ * 
+ * @export
  * @interface ClusterOverviewResponse
  */
 export interface ClusterOverviewResponse {
@@ -40315,6 +40359,57 @@ export const ClusterOperatorApiAxiosParamCreator = function (configuration?: Con
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Queues an Engine v2 execution containing only the Qovery Operator Helm release. The chart version is required; the optional image version overrides the image target selected by q-core. The current Operator must be attached, connected, and protocol-compatible. A successful response means that the execution was accepted, not that Helm has completed. Cluster administrator permission is required.
+         * @summary Update the Qovery Operator on a cluster
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {ClusterOperatorUpdateRequest} clusterOperatorUpdateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateClusterOperator: async (organizationId: string, clusterId: string, clusterOperatorUpdateRequest: ClusterOperatorUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('updateClusterOperator', 'organizationId', organizationId)
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('updateClusterOperator', 'clusterId', clusterId)
+            // verify required parameter 'clusterOperatorUpdateRequest' is not null or undefined
+            assertParamExists('updateClusterOperator', 'clusterOperatorUpdateRequest', clusterOperatorUpdateRequest)
+            const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/operator/update`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(clusterOperatorUpdateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -40379,6 +40474,21 @@ export const ClusterOperatorApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['ClusterOperatorApi.listClusterOperatorFleet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Queues an Engine v2 execution containing only the Qovery Operator Helm release. The chart version is required; the optional image version overrides the image target selected by q-core. The current Operator must be attached, connected, and protocol-compatible. A successful response means that the execution was accepted, not that Helm has completed. Cluster administrator permission is required.
+         * @summary Update the Qovery Operator on a cluster
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {ClusterOperatorUpdateRequest} clusterOperatorUpdateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateClusterOperator(organizationId: string, clusterId: string, clusterOperatorUpdateRequest: ClusterOperatorUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterOperatorUpdateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateClusterOperator(organizationId, clusterId, clusterOperatorUpdateRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ClusterOperatorApi.updateClusterOperator']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -40430,6 +40540,18 @@ export const ClusterOperatorApiFactory = function (configuration?: Configuration
          */
         listClusterOperatorFleet(options?: RawAxiosRequestConfig): AxiosPromise<ClusterOperatorFleetInventoryResponseList> {
             return localVarFp.listClusterOperatorFleet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Queues an Engine v2 execution containing only the Qovery Operator Helm release. The chart version is required; the optional image version overrides the image target selected by q-core. The current Operator must be attached, connected, and protocol-compatible. A successful response means that the execution was accepted, not that Helm has completed. Cluster administrator permission is required.
+         * @summary Update the Qovery Operator on a cluster
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {ClusterOperatorUpdateRequest} clusterOperatorUpdateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateClusterOperator(organizationId: string, clusterId: string, clusterOperatorUpdateRequest: ClusterOperatorUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClusterOperatorUpdateResponse> {
+            return localVarFp.updateClusterOperator(organizationId, clusterId, clusterOperatorUpdateRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -40489,6 +40611,20 @@ export class ClusterOperatorApi extends BaseAPI {
      */
     public listClusterOperatorFleet(options?: RawAxiosRequestConfig) {
         return ClusterOperatorApiFp(this.configuration).listClusterOperatorFleet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Queues an Engine v2 execution containing only the Qovery Operator Helm release. The chart version is required; the optional image version overrides the image target selected by q-core. The current Operator must be attached, connected, and protocol-compatible. A successful response means that the execution was accepted, not that Helm has completed. Cluster administrator permission is required.
+     * @summary Update the Qovery Operator on a cluster
+     * @param {string} organizationId Organization ID
+     * @param {string} clusterId Cluster ID
+     * @param {ClusterOperatorUpdateRequest} clusterOperatorUpdateRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClusterOperatorApi
+     */
+    public updateClusterOperator(organizationId: string, clusterId: string, clusterOperatorUpdateRequest: ClusterOperatorUpdateRequest, options?: RawAxiosRequestConfig) {
+        return ClusterOperatorApiFp(this.configuration).updateClusterOperator(organizationId, clusterId, clusterOperatorUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
