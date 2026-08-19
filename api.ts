@@ -6752,9 +6752,10 @@ export interface ClusterFeatureGcpExistingVpcResponse {
  */
 export interface ClusterFeatureKarpenterParameters {
     /**
-     * 
+     * Deprecated: use the per-pool `spot_enabled` fields on `qovery_node_pools.default_override`, `qovery_node_pools.stable_override` and `qovery_node_pools.cronjob_override` instead.  On read, this is a derived value: it is recomputed on every write as the logical OR of the per-pool `spot_enabled` fields of the node pools present (the default and stable node pools, plus the cronjob node pool only while its `cronjob_override` block exists).  On write, it is only honoured for legacy clients: when none of the per-pool `spot_enabled` fields are present in the request, this value is applied to all node pools, including the stable one. As soon as the per-pool fields are present they take precedence and this value is ignored.
      * @type {boolean}
      * @memberof ClusterFeatureKarpenterParameters
+     * @deprecated
      */
     'spot_enabled': boolean;
     /**
@@ -18069,6 +18070,12 @@ export interface KarpenterCronjobNodePoolOverride {
      */
     'limits'?: KarpenterNodePoolLimits;
     /**
+     * Whether this node pool runs on spot instances. `null` or absent means the pool inherits the deprecated top-level `spot_enabled`: on write that value applies to this pool, on read only a deviating value is surfaced. Only meaningful while the cronjob node pool is enabled — the presence of `cronjob_override` is what enables it.
+     * @type {boolean}
+     * @memberof KarpenterCronjobNodePoolOverride
+     */
+    'spot_enabled'?: boolean | null;
+    /**
      * Time to wait before consolidating empty or underutilized nodes (e.g., 1m, 10m, 1h). Maximum: 24h
      * @type {string}
      * @memberof KarpenterCronjobNodePoolOverride
@@ -18087,6 +18094,12 @@ export interface KarpenterDefaultNodePoolOverride {
      * @memberof KarpenterDefaultNodePoolOverride
      */
     'limits'?: KarpenterNodePoolLimits;
+    /**
+     * Whether this node pool runs on spot instances. `null` or absent means the pool inherits the deprecated top-level `spot_enabled`: on write that value applies to this pool, on read only a deviating value is surfaced. `default_override` is omitted from a response when it would carry nothing else.
+     * @type {boolean}
+     * @memberof KarpenterDefaultNodePoolOverride
+     */
+    'spot_enabled'?: boolean | null;
     /**
      * Time to wait before consolidating empty or underutilized nodes (e.g., 1m, 10m, 1h). Maximum: 24h
      * @type {string}
@@ -18323,6 +18336,12 @@ export interface KarpenterStableNodePoolOverride {
      * @memberof KarpenterStableNodePoolOverride
      */
     'limits'?: KarpenterNodePoolLimits;
+    /**
+     * Whether this node pool runs on spot instances. `null` or absent means the pool inherits the deprecated top-level `spot_enabled`: on write that value applies to this pool, on read only a deviating value is surfaced.
+     * @type {boolean}
+     * @memberof KarpenterStableNodePoolOverride
+     */
+    'spot_enabled'?: boolean | null;
     /**
      * Time to wait before consolidating empty or underutilized nodes (e.g., 1m, 10m, 1h). Maximum: 24h
      * @type {string}
