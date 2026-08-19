@@ -318,6 +318,12 @@ export interface AgenticWorkflowRequest {
      */
     'mcp'?: string;
     /**
+     * Organization MCP servers used by this workflow
+     * @type {Set<string>}
+     * @memberof AgenticWorkflowRequest
+     */
+    'mcp_server_ids'?: Set<string>;
+    /**
      * 
      * @type {Array<AgenticWorkflowOutput>}
      * @memberof AgenticWorkflowRequest
@@ -463,6 +469,12 @@ export interface AgenticWorkflowResponse {
      * @memberof AgenticWorkflowResponse
      */
     'mcp': string;
+    /**
+     * Organization MCP servers used by this workflow
+     * @type {Set<string>}
+     * @memberof AgenticWorkflowResponse
+     */
+    'mcp_server_ids': Set<string>;
     /**
      * 
      * @type {Array<AgenticWorkflowOutput>}
