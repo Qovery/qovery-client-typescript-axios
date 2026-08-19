@@ -319,10 +319,10 @@ export interface AgenticWorkflowRequest {
     'mcp'?: string;
     /**
      * Organization MCP servers used by this workflow
-     * @type {Set<string>}
+     * @type {Array<string>}
      * @memberof AgenticWorkflowRequest
      */
-    'mcp_server_ids'?: Set<string>;
+    'mcp_server_ids'?: Array<string>;
     /**
      * 
      * @type {Array<AgenticWorkflowOutput>}
@@ -471,10 +471,10 @@ export interface AgenticWorkflowResponse {
     'mcp': string;
     /**
      * Organization MCP servers used by this workflow
-     * @type {Set<string>}
+     * @type {Array<string>}
      * @memberof AgenticWorkflowResponse
      */
-    'mcp_server_ids': Set<string>;
+    'mcp_server_ids': Array<string>;
     /**
      * 
      * @type {Array<AgenticWorkflowOutput>}
