@@ -21628,6 +21628,18 @@ export interface OrganizationPolicyApiToken {
      */
     'description'?: string;
     /**
+     * 
+     * @type {string}
+     * @memberof OrganizationPolicyApiToken
+     */
+    'role_name'?: string;
+    /**
+     * the organization role this token acts as once its policy has allowed a request. Effective access is the intersection of this role and `opa_policy`.
+     * @type {string}
+     * @memberof OrganizationPolicyApiToken
+     */
+    'role_id'?: string;
+    /**
      * the Open Policy Agent (rego) policy evaluated on every request made with this token
      * @type {string}
      * @memberof OrganizationPolicyApiToken
@@ -21683,6 +21695,18 @@ export interface OrganizationPolicyApiTokenCreate {
      */
     'description'?: string;
     /**
+     * 
+     * @type {string}
+     * @memberof OrganizationPolicyApiTokenCreate
+     */
+    'role_name'?: string;
+    /**
+     * the organization role this token acts as once its policy has allowed a request. Effective access is the intersection of this role and its policy.
+     * @type {string}
+     * @memberof OrganizationPolicyApiTokenCreate
+     */
+    'role_id'?: string;
+    /**
      * the generated token to send in \'Authorization\' header prefixed by \'Token \'. It is returned only here and cannot be retrieved afterwards.
      * @type {string}
      * @memberof OrganizationPolicyApiTokenCreate
@@ -21731,6 +21755,12 @@ export interface OrganizationPolicyApiTokenCreateRequest {
      * @memberof OrganizationPolicyApiTokenCreateRequest
      */
     'opa_policy': string;
+    /**
+     * the roleId provided by the \"List organization custom roles\" endpoint. The role bounds what the token may do once its policy has allowed a request, so effective access is the intersection of the two. Omit it, or send null, for organization-admin.
+     * @type {string}
+     * @memberof OrganizationPolicyApiTokenCreateRequest
+     */
+    'role_id'?: string | null;
     /**
      * 
      * @type {string}
