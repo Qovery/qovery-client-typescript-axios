@@ -10151,25 +10151,6 @@ export interface Credentials {
 /**
  * 
  * @export
- * @interface CredentialsRequest
- */
-export interface CredentialsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CredentialsRequest
-     */
-    'login': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CredentialsRequest
-     */
-    'password': string;
-}
-/**
- * 
- * @export
  * @interface CreditCard
  */
 export interface CreditCard {
@@ -49572,51 +49553,6 @@ export const DatabaseMainCallsApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary Edit database  master credentials
-         * @param {string} databaseId Database ID
-         * @param {CredentialsRequest} [credentialsRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        editDatabaseCredentials: async (databaseId: string, credentialsRequest?: CredentialsRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'databaseId' is not null or undefined
-            assertParamExists('editDatabaseCredentials', 'databaseId', databaseId)
-            const localVarPath = `/database/{databaseId}/masterCredentials`
-                .replace(`{${"databaseId"}}`, encodeURIComponent(String(databaseId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(credentialsRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Get database by ID
          * @param {string} databaseId Database ID
          * @param {*} [options] Override http request option.
@@ -49819,20 +49755,6 @@ export const DatabaseMainCallsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Edit database  master credentials
-         * @param {string} databaseId Database ID
-         * @param {CredentialsRequest} [credentialsRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async editDatabaseCredentials(databaseId: string, credentialsRequest?: CredentialsRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Credentials>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.editDatabaseCredentials(databaseId, credentialsRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DatabaseMainCallsApi.editDatabaseCredentials']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary Get database by ID
          * @param {string} databaseId Database ID
          * @param {*} [options] Override http request option.
@@ -49917,17 +49839,6 @@ export const DatabaseMainCallsApiFactory = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Edit database  master credentials
-         * @param {string} databaseId Database ID
-         * @param {CredentialsRequest} [credentialsRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        editDatabaseCredentials(databaseId: string, credentialsRequest?: CredentialsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Credentials> {
-            return localVarFp.editDatabaseCredentials(databaseId, credentialsRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Get database by ID
          * @param {string} databaseId Database ID
          * @param {*} [options] Override http request option.
@@ -50000,19 +49911,6 @@ export class DatabaseMainCallsApi extends BaseAPI {
      */
     public editDatabase(databaseId: string, databaseEditRequest?: DatabaseEditRequest, options?: RawAxiosRequestConfig) {
         return DatabaseMainCallsApiFp(this.configuration).editDatabase(databaseId, databaseEditRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Edit database  master credentials
-     * @param {string} databaseId Database ID
-     * @param {CredentialsRequest} [credentialsRequest] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DatabaseMainCallsApi
-     */
-    public editDatabaseCredentials(databaseId: string, credentialsRequest?: CredentialsRequest, options?: RawAxiosRequestConfig) {
-        return DatabaseMainCallsApiFp(this.configuration).editDatabaseCredentials(databaseId, credentialsRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
