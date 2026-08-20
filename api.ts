@@ -14520,11 +14520,11 @@ export interface FieldSchemaResponse {
      */
     'key': string;
     /**
-     * Field type understood by the Console, such as string, number, or bool
+     * Field type understood by the Console.
      * @type {string}
      * @memberof FieldSchemaResponse
      */
-    'type': string;
+    'type': FieldSchemaResponseTypeEnum;
     /**
      * 
      * @type {boolean}
@@ -14562,6 +14562,15 @@ export interface FieldSchemaResponse {
      */
     'constraints': FieldSchemaConstraintsResponse;
 }
+
+export const FieldSchemaResponseTypeEnum = {
+    STRING: 'string',
+    NUMBER: 'number',
+    BOOL: 'bool'
+} as const;
+
+export type FieldSchemaResponseTypeEnum = typeof FieldSchemaResponseTypeEnum[keyof typeof FieldSchemaResponseTypeEnum];
+
 /**
  * @type GcpCredentialsRequest
  * @export
@@ -22376,11 +22385,11 @@ export interface PlatformComponentInputRequirementResponse {
      */
     'key': string;
     /**
-     * Field type understood by the Console, such as string, number, or bool
+     * Field type understood by the Console.
      * @type {string}
      * @memberof PlatformComponentInputRequirementResponse
      */
-    'type': string;
+    'type': PlatformComponentInputRequirementResponseTypeEnum;
     /**
      * 
      * @type {boolean}
@@ -22431,6 +22440,13 @@ export interface PlatformComponentInputRequirementResponse {
     'status': PlatformComponentConfigurationRequirementStatus;
 }
 
+export const PlatformComponentInputRequirementResponseTypeEnum = {
+    STRING: 'string',
+    NUMBER: 'number',
+    BOOL: 'bool'
+} as const;
+
+export type PlatformComponentInputRequirementResponseTypeEnum = typeof PlatformComponentInputRequirementResponseTypeEnum[keyof typeof PlatformComponentInputRequirementResponseTypeEnum];
 
 /**
  * 
