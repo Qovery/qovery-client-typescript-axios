@@ -24761,6 +24761,12 @@ export interface ServiceStepMetric {
      * @memberof ServiceStepMetric
      */
     'duration_sec'?: number;
+    /**
+     * The time at which the step started. Present while the step is ongoing and may be retained after completion.
+     * @type {string}
+     * @memberof ServiceStepMetric
+     */
+    'started_at'?: string | null;
 }
 
 
@@ -25449,6 +25455,12 @@ export interface StageStepMetric {
      * @memberof StageStepMetric
      */
     'duration_sec'?: number;
+    /**
+     * The time at which the step started. Present while the step is ongoing and may be retained after completion.
+     * @type {string}
+     * @memberof StageStepMetric
+     */
+    'started_at'?: string | null;
 }
 
 
@@ -25655,12 +25667,13 @@ export type StatusKindEnum = typeof StatusKindEnum[keyof typeof StatusKindEnum];
 
 
 /**
- * The status of completion for the step: - SUCCESS: The step completed successfully. - ERROR: The step completed with an error. - CANCEL: The step was canceled. - SKIP: The step was skipped because it was not necessary. 
+ * The lifecycle status of the step: - ONGOING: The step is currently running. - SUCCESS: The step completed successfully. - ERROR: The step completed with an error. - CANCEL: The step was canceled. - SKIP: The step was skipped because it was not necessary. 
  * @export
  * @enum {string}
  */
 
 export const StepMetricStatusEnum = {
+    ONGOING: 'ONGOING',
     SUCCESS: 'SUCCESS',
     ERROR: 'ERROR',
     CANCEL: 'CANCEL',
