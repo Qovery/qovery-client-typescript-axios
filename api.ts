@@ -359,6 +359,12 @@ export interface AgenticWorkflowRequest {
      * @memberof AgenticWorkflowRequest
      */
     'resources'?: AgenticWorkflowResources;
+    /**
+     * Cron schedule firing runs of this workflow, on top of the webhook every workflow already has. Omit it, or send null, for a webhook-only workflow.
+     * @type {AgenticWorkflowScheduleRequest}
+     * @memberof AgenticWorkflowRequest
+     */
+    'schedule'?: AgenticWorkflowScheduleRequest | null;
 }
 /**
  * 
@@ -518,6 +524,12 @@ export interface AgenticWorkflowResponse {
      */
     'webhook': AgenticWorkflowWebhook;
     /**
+     * Cron schedule firing runs of this workflow. Null when the workflow is webhook-only.
+     * @type {AgenticWorkflowScheduleResponse}
+     * @memberof AgenticWorkflowResponse
+     */
+    'schedule': AgenticWorkflowScheduleResponse | null;
+    /**
      * Icon URI representing the agentic workflow.
      * @type {string}
      * @memberof AgenticWorkflowResponse
@@ -538,6 +550,50 @@ export interface AgenticWorkflowResponseList {
      * @memberof AgenticWorkflowResponseList
      */
     'results'?: Array<AgenticWorkflowResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface AgenticWorkflowScheduleRequest
+ */
+export interface AgenticWorkflowScheduleRequest {
+    /**
+     * Five-field cron expression, the same syntax Kubernetes cron jobs accept. Rejected if it fires more than once every 5 minutes, since each run deploys a full environment.
+     * @type {string}
+     * @memberof AgenticWorkflowScheduleRequest
+     */
+    'cron_expression': string;
+    /**
+     * tz database identifier the expression is evaluated in.
+     * @type {string}
+     * @memberof AgenticWorkflowScheduleRequest
+     */
+    'timezone': string;
+}
+/**
+ * 
+ * @export
+ * @interface AgenticWorkflowScheduleResponse
+ */
+export interface AgenticWorkflowScheduleResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowScheduleResponse
+     */
+    'cron_expression': string;
+    /**
+     * tz database identifier the expression is evaluated in.
+     * @type {string}
+     * @memberof AgenticWorkflowScheduleResponse
+     */
+    'timezone': string;
+    /**
+     * When the schedule fires next. Null while the workflow is disabled, since a disabled workflow accumulates no occurrences.
+     * @type {string}
+     * @memberof AgenticWorkflowScheduleResponse
+     */
+    'next_run_at': string | null;
 }
 /**
  * 
