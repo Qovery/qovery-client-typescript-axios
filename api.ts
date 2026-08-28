@@ -126,6 +126,20 @@ export interface AccountInfoEditRequest {
     'communication_email'?: string;
 }
 /**
+ * Where a run executes. IN_PLACE deploys the workflow in the environment it belongs to, and is the default. CLONE_ENVIRONMENT gives each run a throwaway copy of the whole environment, which is the only mode that isolates concurrent runs from each other.
+ * @export
+ * @enum {string}
+ */
+
+export const AgenticWorkflowExecutionMode = {
+    IN_PLACE: 'IN_PLACE',
+    CLONE_ENVIRONMENT: 'CLONE_ENVIRONMENT'
+} as const;
+
+export type AgenticWorkflowExecutionMode = typeof AgenticWorkflowExecutionMode[keyof typeof AgenticWorkflowExecutionMode];
+
+
+/**
  * 
  * @export
  * @interface AgenticWorkflowGovernance
@@ -365,7 +379,15 @@ export interface AgenticWorkflowRequest {
      * @memberof AgenticWorkflowRequest
      */
     'schedule'?: AgenticWorkflowScheduleRequest | null;
+    /**
+     * 
+     * @type {AgenticWorkflowExecutionMode}
+     * @memberof AgenticWorkflowRequest
+     */
+    'execution_mode'?: AgenticWorkflowExecutionMode;
 }
+
+
 /**
  * 
  * @export
@@ -529,6 +551,12 @@ export interface AgenticWorkflowResponse {
      * @memberof AgenticWorkflowResponse
      */
     'schedule': AgenticWorkflowScheduleResponse | null;
+    /**
+     * 
+     * @type {AgenticWorkflowExecutionMode}
+     * @memberof AgenticWorkflowResponse
+     */
+    'execution_mode': AgenticWorkflowExecutionMode;
     /**
      * Icon URI representing the agentic workflow.
      * @type {string}
