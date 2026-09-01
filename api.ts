@@ -4072,6 +4072,49 @@ export interface BlueprintCreateRequest {
     'spec_overrides'?: BlueprintSpecOverrides;
 }
 /**
+ * Answer to a blueprint creation: the blueprint exists and an engine dispatch was started. The service it should materialize does not exist yet.
+ * @export
+ * @interface BlueprintCreationResponse
+ */
+export interface BlueprintCreationResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintCreationResponse
+     */
+    'id': string;
+    /**
+     * URL to the blueprint catalog entry
+     * @type {string}
+     * @memberof BlueprintCreationResponse
+     */
+    'catalog_url': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintCreationResponse
+     */
+    'tag': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintCreationResponse
+     */
+    'environment_id': string;
+    /**
+     * Identifier of the dispatch started by this creation. Resolve its status with GET /blueprint/{blueprintId}, and match it against `latest_deployment.id` there to confirm that dispatch is this one rather than a later re-dispatch.
+     * @type {string}
+     * @memberof BlueprintCreationResponse
+     */
+    'deployment_id': string;
+    /**
+     * Engine execution identifier for this dispatch
+     * @type {string}
+     * @memberof BlueprintCreationResponse
+     */
+    'execution_id': string;
+}
+/**
  * 
  * @export
  * @interface BlueprintDeploymentAckResponse
@@ -4090,6 +4133,125 @@ export interface BlueprintDeploymentAckResponse {
      */
     'execution_id': string;
 }
+/**
+ * 
+ * @export
+ * @interface BlueprintDeploymentStatusResponse
+ */
+export interface BlueprintDeploymentStatusResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintDeploymentStatusResponse
+     */
+    'id': string;
+    /**
+     * Engine execution identifier for this dispatch
+     * @type {string}
+     * @memberof BlueprintDeploymentStatusResponse
+     */
+    'execution_id': string;
+    /**
+     * Status of the dispatch. Only the states a blueprint dispatch can reach, which is a subset of the deployment statuses used elsewhere in the API.
+     * @type {string}
+     * @memberof BlueprintDeploymentStatusResponse
+     */
+    'status': BlueprintDeploymentStatusResponseStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintDeploymentStatusResponse
+     */
+    'started_at': string;
+    /**
+     * When the dispatch reached a terminal state. Null while it is still running.
+     * @type {string}
+     * @memberof BlueprintDeploymentStatusResponse
+     */
+    'terminated_at': string | null;
+    /**
+     * The engine\'s failure message. Null unless the dispatch failed.
+     * @type {string}
+     * @memberof BlueprintDeploymentStatusResponse
+     */
+    'error_message': string | null;
+}
+
+export const BlueprintDeploymentStatusResponseStatusEnum = {
+    WAITING_RUNNING: 'WAITING_RUNNING',
+    DEPLOYING: 'DEPLOYING',
+    RUNNING: 'RUNNING',
+    FAILED: 'FAILED',
+    CANCELING: 'CANCELING',
+    CANCELED: 'CANCELED',
+    INTERNAL_ERROR: 'INTERNAL_ERROR'
+} as const;
+
+export type BlueprintDeploymentStatusResponseStatusEnum = typeof BlueprintDeploymentStatusResponseStatusEnum[keyof typeof BlueprintDeploymentStatusResponseStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface BlueprintDetailsResponse
+ */
+export interface BlueprintDetailsResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintDetailsResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintDetailsResponse
+     */
+    'name': string;
+    /**
+     * URL to the blueprint catalog entry
+     * @type {string}
+     * @memberof BlueprintDetailsResponse
+     */
+    'catalog_url': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintDetailsResponse
+     */
+    'tag': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintDetailsResponse
+     */
+    'environment_id': string;
+    /**
+     * Type of the underlying service backing this blueprint
+     * @type {string}
+     * @memberof BlueprintDetailsResponse
+     */
+    'service_type': BlueprintDetailsResponseServiceTypeEnum;
+    /**
+     * The service the dispatch produced. Null while the dispatch is still running, and null if it failed.
+     * @type {string}
+     * @memberof BlueprintDetailsResponse
+     */
+    'service_id': string | null;
+    /**
+     * Latest dispatch for this blueprint. Null if it was never dispatched.
+     * @type {BlueprintDeploymentStatusResponse}
+     * @memberof BlueprintDetailsResponse
+     */
+    'latest_deployment': BlueprintDeploymentStatusResponse | null;
+}
+
+export const BlueprintDetailsResponseServiceTypeEnum = {
+    HELM: 'HELM',
+    TERRAFORM: 'TERRAFORM'
+} as const;
+
+export type BlueprintDetailsResponseServiceTypeEnum = typeof BlueprintDetailsResponseServiceTypeEnum[keyof typeof BlueprintDetailsResponseServiceTypeEnum];
+
 /**
  * 
  * @export
@@ -36403,6 +36565,58 @@ export const BlueprintMainCallsApiAxiosParamCreator = function (configuration?: 
             };
         },
         /**
+         * Instantiates a blueprint from the service catalog into the given environment and returns the ids of the engine dispatch it started. Pass `deploy=true` to trigger an immediate deployment after creation. Takes the same request as POST /environment/{environmentId}/blueprint. That endpoint answers 201, which claims a service that does not exist yet: the dispatch creating the underlying Helm/Terraform service runs on a background executor after the transaction commits. This one always answers 202 and hands back `deployment_id` and `execution_id`, which GET /blueprint/{blueprintId} resolves.
+         * @summary Create a blueprint service and report the dispatch it started
+         * @param {string} environmentId Environment ID
+         * @param {BlueprintCreateRequest} blueprintCreateRequest 
+         * @param {boolean} [deploy] Trigger a deployment immediately after creation
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createBlueprintDeployment: async (environmentId: string, blueprintCreateRequest: BlueprintCreateRequest, deploy?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('createBlueprintDeployment', 'environmentId', environmentId)
+            // verify required parameter 'blueprintCreateRequest' is not null or undefined
+            assertParamExists('createBlueprintDeployment', 'blueprintCreateRequest', blueprintCreateRequest)
+            const localVarPath = `/environment/{environmentId}/blueprintDeployment`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (deploy !== undefined) {
+                localVarQueryParameter['deploy'] = deploy;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(blueprintCreateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Deploys the blueprint\'s currently saved settings to its service. Call this after saving changes with PATCH /blueprint/{blueprintId} (and, optionally, previewing them) to roll them out. No request body: it deploys whatever is currently saved on the blueprint.
          * @summary Deploy (apply) the current blueprint spec
          * @param {string} blueprintId Blueprint ID
@@ -36422,6 +36636,47 @@ export const BlueprintMainCallsApiAxiosParamCreator = function (configuration?: 
             }
 
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the blueprint, the Helm/Terraform service its dispatch produced once that service exists, and the latest dispatch with its status and the engine\'s error message. This is the only way to learn that a dispatch failed. Success is pushed over the `/blueprint/service-created` websocket, but there is no failure counterpart, so a client that only listens on the websocket waits forever on a dispatch that errored.
+         * @summary Get a blueprint service and the status of its latest dispatch
+         * @param {string} blueprintId Blueprint ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBlueprint: async (blueprintId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'blueprintId' is not null or undefined
+            assertParamExists('getBlueprint', 'blueprintId', blueprintId)
+            const localVarPath = `/blueprint/{blueprintId}`
+                .replace(`{${"blueprintId"}}`, encodeURIComponent(String(blueprintId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -36617,6 +36872,21 @@ export const BlueprintMainCallsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Instantiates a blueprint from the service catalog into the given environment and returns the ids of the engine dispatch it started. Pass `deploy=true` to trigger an immediate deployment after creation. Takes the same request as POST /environment/{environmentId}/blueprint. That endpoint answers 201, which claims a service that does not exist yet: the dispatch creating the underlying Helm/Terraform service runs on a background executor after the transaction commits. This one always answers 202 and hands back `deployment_id` and `execution_id`, which GET /blueprint/{blueprintId} resolves.
+         * @summary Create a blueprint service and report the dispatch it started
+         * @param {string} environmentId Environment ID
+         * @param {BlueprintCreateRequest} blueprintCreateRequest 
+         * @param {boolean} [deploy] Trigger a deployment immediately after creation
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createBlueprintDeployment(environmentId: string, blueprintCreateRequest: BlueprintCreateRequest, deploy?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintCreationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createBlueprintDeployment(environmentId, blueprintCreateRequest, deploy, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BlueprintMainCallsApi.createBlueprintDeployment']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Deploys the blueprint\'s currently saved settings to its service. Call this after saving changes with PATCH /blueprint/{blueprintId} (and, optionally, previewing them) to roll them out. No request body: it deploys whatever is currently saved on the blueprint.
          * @summary Deploy (apply) the current blueprint spec
          * @param {string} blueprintId Blueprint ID
@@ -36627,6 +36897,19 @@ export const BlueprintMainCallsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deployBlueprint(blueprintId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BlueprintMainCallsApi.deployBlueprint']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the blueprint, the Helm/Terraform service its dispatch produced once that service exists, and the latest dispatch with its status and the engine\'s error message. This is the only way to learn that a dispatch failed. Success is pushed over the `/blueprint/service-created` websocket, but there is no failure counterpart, so a client that only listens on the websocket waits forever on a dispatch that errored.
+         * @summary Get a blueprint service and the status of its latest dispatch
+         * @param {string} blueprintId Blueprint ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBlueprint(blueprintId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintDetailsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBlueprint(blueprintId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BlueprintMainCallsApi.getBlueprint']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -36703,6 +36986,18 @@ export const BlueprintMainCallsApiFactory = function (configuration?: Configurat
             return localVarFp.createBlueprint(environmentId, blueprintCreateRequest, deploy, options).then((request) => request(axios, basePath));
         },
         /**
+         * Instantiates a blueprint from the service catalog into the given environment and returns the ids of the engine dispatch it started. Pass `deploy=true` to trigger an immediate deployment after creation. Takes the same request as POST /environment/{environmentId}/blueprint. That endpoint answers 201, which claims a service that does not exist yet: the dispatch creating the underlying Helm/Terraform service runs on a background executor after the transaction commits. This one always answers 202 and hands back `deployment_id` and `execution_id`, which GET /blueprint/{blueprintId} resolves.
+         * @summary Create a blueprint service and report the dispatch it started
+         * @param {string} environmentId Environment ID
+         * @param {BlueprintCreateRequest} blueprintCreateRequest 
+         * @param {boolean} [deploy] Trigger a deployment immediately after creation
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createBlueprintDeployment(environmentId: string, blueprintCreateRequest: BlueprintCreateRequest, deploy?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BlueprintCreationResponse> {
+            return localVarFp.createBlueprintDeployment(environmentId, blueprintCreateRequest, deploy, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Deploys the blueprint\'s currently saved settings to its service. Call this after saving changes with PATCH /blueprint/{blueprintId} (and, optionally, previewing them) to roll them out. No request body: it deploys whatever is currently saved on the blueprint.
          * @summary Deploy (apply) the current blueprint spec
          * @param {string} blueprintId Blueprint ID
@@ -36711,6 +37006,16 @@ export const BlueprintMainCallsApiFactory = function (configuration?: Configurat
          */
         deployBlueprint(blueprintId: string, options?: RawAxiosRequestConfig): AxiosPromise<BlueprintDeploymentAckResponse> {
             return localVarFp.deployBlueprint(blueprintId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the blueprint, the Helm/Terraform service its dispatch produced once that service exists, and the latest dispatch with its status and the engine\'s error message. This is the only way to learn that a dispatch failed. Success is pushed over the `/blueprint/service-created` websocket, but there is no failure counterpart, so a client that only listens on the websocket waits forever on a dispatch that errored.
+         * @summary Get a blueprint service and the status of its latest dispatch
+         * @param {string} blueprintId Blueprint ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBlueprint(blueprintId: string, options?: RawAxiosRequestConfig): AxiosPromise<BlueprintDetailsResponse> {
+            return localVarFp.getBlueprint(blueprintId, options).then((request) => request(axios, basePath));
         },
         /**
          * Retrieves the Qovery service catalog from the public GitHub repository (Qovery/service-catalog). The catalog lists all available blueprints that can be deployed.
@@ -36781,6 +37086,20 @@ export class BlueprintMainCallsApi extends BaseAPI {
     }
 
     /**
+     * Instantiates a blueprint from the service catalog into the given environment and returns the ids of the engine dispatch it started. Pass `deploy=true` to trigger an immediate deployment after creation. Takes the same request as POST /environment/{environmentId}/blueprint. That endpoint answers 201, which claims a service that does not exist yet: the dispatch creating the underlying Helm/Terraform service runs on a background executor after the transaction commits. This one always answers 202 and hands back `deployment_id` and `execution_id`, which GET /blueprint/{blueprintId} resolves.
+     * @summary Create a blueprint service and report the dispatch it started
+     * @param {string} environmentId Environment ID
+     * @param {BlueprintCreateRequest} blueprintCreateRequest 
+     * @param {boolean} [deploy] Trigger a deployment immediately after creation
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlueprintMainCallsApi
+     */
+    public createBlueprintDeployment(environmentId: string, blueprintCreateRequest: BlueprintCreateRequest, deploy?: boolean, options?: RawAxiosRequestConfig) {
+        return BlueprintMainCallsApiFp(this.configuration).createBlueprintDeployment(environmentId, blueprintCreateRequest, deploy, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Deploys the blueprint\'s currently saved settings to its service. Call this after saving changes with PATCH /blueprint/{blueprintId} (and, optionally, previewing them) to roll them out. No request body: it deploys whatever is currently saved on the blueprint.
      * @summary Deploy (apply) the current blueprint spec
      * @param {string} blueprintId Blueprint ID
@@ -36790,6 +37109,18 @@ export class BlueprintMainCallsApi extends BaseAPI {
      */
     public deployBlueprint(blueprintId: string, options?: RawAxiosRequestConfig) {
         return BlueprintMainCallsApiFp(this.configuration).deployBlueprint(blueprintId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the blueprint, the Helm/Terraform service its dispatch produced once that service exists, and the latest dispatch with its status and the engine\'s error message. This is the only way to learn that a dispatch failed. Success is pushed over the `/blueprint/service-created` websocket, but there is no failure counterpart, so a client that only listens on the websocket waits forever on a dispatch that errored.
+     * @summary Get a blueprint service and the status of its latest dispatch
+     * @param {string} blueprintId Blueprint ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlueprintMainCallsApi
+     */
+    public getBlueprint(blueprintId: string, options?: RawAxiosRequestConfig) {
+        return BlueprintMainCallsApiFp(this.configuration).getBlueprint(blueprintId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
