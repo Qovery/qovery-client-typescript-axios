@@ -73993,7 +73993,7 @@ export const SecretManagerAccessApiAxiosParamCreator = function (configuration?:
         /**
          * List external secrets used by a secret manager access
          * @summary List external secrets used by a secret manager access
-         * @param {string} secretManagerAccessId Secret Manager Access ID
+         * @param {string} secretManagerAccessId Secret Manager Access Id - Use the endpoint [&#x60;GET /organization/{organizationId}/cluster&#x60;](#operation/listOrganizationCluster) to retrieve your secret manager access 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -74034,7 +74034,7 @@ export const SecretManagerAccessApiAxiosParamCreator = function (configuration?:
         /**
          * List upstream secrets from secret provider
          * @summary List upstream secrets from secret provider
-         * @param {string} secretManagerAccessId Secret Manager Access ID
+         * @param {string} secretManagerAccessId Secret Manager Access Id - Use the endpoint [&#x60;GET /organization/{organizationId}/cluster&#x60;](#operation/listOrganizationCluster) to retrieve your secret manager access 
          * @param {string} [namePrefix] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -74090,7 +74090,7 @@ export const SecretManagerAccessApiFp = function(configuration?: Configuration) 
         /**
          * List external secrets used by a secret manager access
          * @summary List external secrets used by a secret manager access
-         * @param {string} secretManagerAccessId Secret Manager Access ID
+         * @param {string} secretManagerAccessId Secret Manager Access Id - Use the endpoint [&#x60;GET /organization/{organizationId}/cluster&#x60;](#operation/listOrganizationCluster) to retrieve your secret manager access 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -74103,7 +74103,7 @@ export const SecretManagerAccessApiFp = function(configuration?: Configuration) 
         /**
          * List upstream secrets from secret provider
          * @summary List upstream secrets from secret provider
-         * @param {string} secretManagerAccessId Secret Manager Access ID
+         * @param {string} secretManagerAccessId Secret Manager Access Id - Use the endpoint [&#x60;GET /organization/{organizationId}/cluster&#x60;](#operation/listOrganizationCluster) to retrieve your secret manager access 
          * @param {string} [namePrefix] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -74127,7 +74127,7 @@ export const SecretManagerAccessApiFactory = function (configuration?: Configura
         /**
          * List external secrets used by a secret manager access
          * @summary List external secrets used by a secret manager access
-         * @param {string} secretManagerAccessId Secret Manager Access ID
+         * @param {string} secretManagerAccessId Secret Manager Access Id - Use the endpoint [&#x60;GET /organization/{organizationId}/cluster&#x60;](#operation/listOrganizationCluster) to retrieve your secret manager access 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -74137,7 +74137,7 @@ export const SecretManagerAccessApiFactory = function (configuration?: Configura
         /**
          * List upstream secrets from secret provider
          * @summary List upstream secrets from secret provider
-         * @param {string} secretManagerAccessId Secret Manager Access ID
+         * @param {string} secretManagerAccessId Secret Manager Access Id - Use the endpoint [&#x60;GET /organization/{organizationId}/cluster&#x60;](#operation/listOrganizationCluster) to retrieve your secret manager access 
          * @param {string} [namePrefix] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -74158,7 +74158,7 @@ export class SecretManagerAccessApi extends BaseAPI {
     /**
      * List external secrets used by a secret manager access
      * @summary List external secrets used by a secret manager access
-     * @param {string} secretManagerAccessId Secret Manager Access ID
+     * @param {string} secretManagerAccessId Secret Manager Access Id - Use the endpoint [&#x60;GET /organization/{organizationId}/cluster&#x60;](#operation/listOrganizationCluster) to retrieve your secret manager access 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SecretManagerAccessApi
@@ -74170,7 +74170,7 @@ export class SecretManagerAccessApi extends BaseAPI {
     /**
      * List upstream secrets from secret provider
      * @summary List upstream secrets from secret provider
-     * @param {string} secretManagerAccessId Secret Manager Access ID
+     * @param {string} secretManagerAccessId Secret Manager Access Id - Use the endpoint [&#x60;GET /organization/{organizationId}/cluster&#x60;](#operation/listOrganizationCluster) to retrieve your secret manager access 
      * @param {string} [namePrefix] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
