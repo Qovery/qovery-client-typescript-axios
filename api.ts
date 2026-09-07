@@ -4265,6 +4265,12 @@ export interface BlueprintItem {
      */
     'name': string;
     /**
+     * Customer-facing name for the blueprint.
+     * @type {string}
+     * @memberof BlueprintItem
+     */
+    'displayName': string;
+    /**
      * 
      * @type {string}
      * @memberof BlueprintItem
@@ -4288,6 +4294,12 @@ export interface BlueprintItem {
      * @memberof BlueprintItem
      */
     'categories': Array<string>;
+    /**
+     * Customer-facing category used to group blueprints in the service catalog.
+     * @type {string}
+     * @memberof BlueprintItem
+     */
+    'primaryCategory': string;
     /**
      * 
      * @type {string}
