@@ -8259,12 +8259,6 @@ export interface ClusterOperatorStatusResponse {
      * @type {string}
      * @memberof ClusterOperatorStatusResponse
      */
-    'controller_version'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ClusterOperatorStatusResponse
-     */
     'request_schema_version'?: string | null;
     /**
      * Image tag currently selected for a newly compiled Operator bootstrap.
