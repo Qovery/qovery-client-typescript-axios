@@ -6628,6 +6628,146 @@ export type ClusterDeleteMode = typeof ClusterDeleteMode[keyof typeof ClusterDel
 /**
  * 
  * @export
+ * @interface ClusterDeploymentHistory
+ */
+export interface ClusterDeploymentHistory {
+    /**
+     * 
+     * @type {ClusterDeploymentHistoryIdentifier}
+     * @memberof ClusterDeploymentHistory
+     */
+    'identifier': ClusterDeploymentHistoryIdentifier;
+    /**
+     * 
+     * @type {ClusterDeploymentHistoryAuditingData}
+     * @memberof ClusterDeploymentHistory
+     */
+    'auditing_data': ClusterDeploymentHistoryAuditingData;
+    /**
+     * 
+     * @type {StateEnum}
+     * @memberof ClusterDeploymentHistory
+     */
+    'status': StateEnum;
+    /**
+     * 
+     * @type {DeploymentHistoryActionStatus}
+     * @memberof ClusterDeploymentHistory
+     */
+    'action_status': DeploymentHistoryActionStatus;
+    /**
+     * 
+     * @type {DeploymentHistoryTriggerAction}
+     * @memberof ClusterDeploymentHistory
+     */
+    'trigger_action': DeploymentHistoryTriggerAction;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterDeploymentHistory
+     */
+    'reason': ClusterDeploymentHistoryReasonEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterDeploymentHistory
+     */
+    'total_duration'?: string | null;
+}
+
+export const ClusterDeploymentHistoryReasonEnum = {
+    UNSPECIFIED: 'UNSPECIFIED',
+    MAINTENANCE: 'MAINTENANCE'
+} as const;
+
+export type ClusterDeploymentHistoryReasonEnum = typeof ClusterDeploymentHistoryReasonEnum[keyof typeof ClusterDeploymentHistoryReasonEnum];
+
+/**
+ * 
+ * @export
+ * @interface ClusterDeploymentHistoryAuditingData
+ */
+export interface ClusterDeploymentHistoryAuditingData {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterDeploymentHistoryAuditingData
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterDeploymentHistoryAuditingData
+     */
+    'updated_at': string;
+    /**
+     * 
+     * @type {OrganizationEventOrigin}
+     * @memberof ClusterDeploymentHistoryAuditingData
+     */
+    'origin'?: OrganizationEventOrigin | null;
+    /**
+     * Who triggered the deployment. Null for deployments created before this metadata was recorded
+     * @type {string}
+     * @memberof ClusterDeploymentHistoryAuditingData
+     */
+    'triggered_by'?: string | null;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ClusterDeploymentHistoryIdentifier
+ */
+export interface ClusterDeploymentHistoryIdentifier {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterDeploymentHistoryIdentifier
+     */
+    'deployment_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterDeploymentHistoryIdentifier
+     */
+    'execution_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterDeploymentHistoryIdentifier
+     */
+    'cluster_id': string;
+}
+/**
+ * 
+ * @export
+ * @interface ClusterDeploymentHistoryPaginatedResponseListV2
+ */
+export interface ClusterDeploymentHistoryPaginatedResponseListV2 {
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterDeploymentHistoryPaginatedResponseListV2
+     */
+    'page': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClusterDeploymentHistoryPaginatedResponseListV2
+     */
+    'page_size': number;
+    /**
+     * 
+     * @type {Array<ClusterDeploymentHistory>}
+     * @memberof ClusterDeploymentHistoryPaginatedResponseListV2
+     */
+    'results'?: Array<ClusterDeploymentHistory>;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -11572,7 +11712,8 @@ export const DeploymentHistoryActionStatus = {
     ERROR: 'ERROR',
     CANCELED: 'CANCELED',
     CANCELING: 'CANCELING',
-    NEVER: 'NEVER'
+    NEVER: 'NEVER',
+    EXECUTING: 'EXECUTING'
 } as const;
 
 export type DeploymentHistoryActionStatus = typeof DeploymentHistoryActionStatus[keyof typeof DeploymentHistoryActionStatus];
@@ -40674,6 +40815,226 @@ export class CloudProviderCredentialsApi extends BaseAPI {
 
 
 /**
+ * ClusterDeploymentHistoryApi - axios parameter creator
+ * @export
+ */
+export const ClusterDeploymentHistoryApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * List previous and current cluster deployments. It returns actual deployments only: dry-runs and stop/delete operations are excluded. By default it returns the 20 last results. Use the pageSize query parameter to adjust the number of returned results
+         * @summary List cluster deployments
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {number | null} [pageSize] The number of deployments to return in the current page. Must be greater than or equal to 1
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listClusterDeploymentHistoryV2: async (organizationId: string, clusterId: string, pageSize?: number | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listClusterDeploymentHistoryV2', 'organizationId', organizationId)
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('listClusterDeploymentHistoryV2', 'clusterId', clusterId)
+            const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/deploymentHistoryV2`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List the logs of a specific cluster deployment
+         * @summary List logs for a specific cluster deployment
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {string} deploymentId Deployment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listClusterDeploymentLogs: async (organizationId: string, clusterId: string, deploymentId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listClusterDeploymentLogs', 'organizationId', organizationId)
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('listClusterDeploymentLogs', 'clusterId', clusterId)
+            // verify required parameter 'deploymentId' is not null or undefined
+            assertParamExists('listClusterDeploymentLogs', 'deploymentId', deploymentId)
+            const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/deployment/{deploymentId}/logs`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)))
+                .replace(`{${"deploymentId"}}`, encodeURIComponent(String(deploymentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ClusterDeploymentHistoryApi - functional programming interface
+ * @export
+ */
+export const ClusterDeploymentHistoryApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ClusterDeploymentHistoryApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * List previous and current cluster deployments. It returns actual deployments only: dry-runs and stop/delete operations are excluded. By default it returns the 20 last results. Use the pageSize query parameter to adjust the number of returned results
+         * @summary List cluster deployments
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {number | null} [pageSize] The number of deployments to return in the current page. Must be greater than or equal to 1
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listClusterDeploymentHistoryV2(organizationId: string, clusterId: string, pageSize?: number | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterDeploymentHistoryPaginatedResponseListV2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listClusterDeploymentHistoryV2(organizationId, clusterId, pageSize, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ClusterDeploymentHistoryApi.listClusterDeploymentHistoryV2']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * List the logs of a specific cluster deployment
+         * @summary List logs for a specific cluster deployment
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {string} deploymentId Deployment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listClusterDeploymentLogs(organizationId: string, clusterId: string, deploymentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterLogsResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listClusterDeploymentLogs(organizationId, clusterId, deploymentId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ClusterDeploymentHistoryApi.listClusterDeploymentLogs']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * ClusterDeploymentHistoryApi - factory interface
+ * @export
+ */
+export const ClusterDeploymentHistoryApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ClusterDeploymentHistoryApiFp(configuration)
+    return {
+        /**
+         * List previous and current cluster deployments. It returns actual deployments only: dry-runs and stop/delete operations are excluded. By default it returns the 20 last results. Use the pageSize query parameter to adjust the number of returned results
+         * @summary List cluster deployments
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {number | null} [pageSize] The number of deployments to return in the current page. Must be greater than or equal to 1
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listClusterDeploymentHistoryV2(organizationId: string, clusterId: string, pageSize?: number | null, options?: RawAxiosRequestConfig): AxiosPromise<ClusterDeploymentHistoryPaginatedResponseListV2> {
+            return localVarFp.listClusterDeploymentHistoryV2(organizationId, clusterId, pageSize, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List the logs of a specific cluster deployment
+         * @summary List logs for a specific cluster deployment
+         * @param {string} organizationId Organization ID
+         * @param {string} clusterId Cluster ID
+         * @param {string} deploymentId Deployment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listClusterDeploymentLogs(organizationId: string, clusterId: string, deploymentId: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterLogsResponseList> {
+            return localVarFp.listClusterDeploymentLogs(organizationId, clusterId, deploymentId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ClusterDeploymentHistoryApi - object-oriented interface
+ * @export
+ * @class ClusterDeploymentHistoryApi
+ * @extends {BaseAPI}
+ */
+export class ClusterDeploymentHistoryApi extends BaseAPI {
+    /**
+     * List previous and current cluster deployments. It returns actual deployments only: dry-runs and stop/delete operations are excluded. By default it returns the 20 last results. Use the pageSize query parameter to adjust the number of returned results
+     * @summary List cluster deployments
+     * @param {string} organizationId Organization ID
+     * @param {string} clusterId Cluster ID
+     * @param {number | null} [pageSize] The number of deployments to return in the current page. Must be greater than or equal to 1
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClusterDeploymentHistoryApi
+     */
+    public listClusterDeploymentHistoryV2(organizationId: string, clusterId: string, pageSize?: number | null, options?: RawAxiosRequestConfig) {
+        return ClusterDeploymentHistoryApiFp(this.configuration).listClusterDeploymentHistoryV2(organizationId, clusterId, pageSize, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List the logs of a specific cluster deployment
+     * @summary List logs for a specific cluster deployment
+     * @param {string} organizationId Organization ID
+     * @param {string} clusterId Cluster ID
+     * @param {string} deploymentId Deployment ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClusterDeploymentHistoryApi
+     */
+    public listClusterDeploymentLogs(organizationId: string, clusterId: string, deploymentId: string, options?: RawAxiosRequestConfig) {
+        return ClusterDeploymentHistoryApiFp(this.configuration).listClusterDeploymentLogs(organizationId, clusterId, deploymentId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * ClusterOperatorApi - axios parameter creator
  * @export
  */
@@ -42473,11 +42834,12 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * List Cluster Logs
+         * List Cluster Logs. Deprecated: use listClusterDeploymentLogs instead to fetch the logs of a specific cluster deployment.
          * @summary List Cluster Logs
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         listClusterLogs: async (organizationId: string, clusterId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -43377,11 +43739,12 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * List Cluster Logs
+         * List Cluster Logs. Deprecated: use listClusterDeploymentLogs instead to fetch the logs of a specific cluster deployment.
          * @summary List Cluster Logs
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async listClusterLogs(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterLogsResponseList>> {
@@ -43858,11 +44221,12 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.listClusterAnalysisLogs(clusterId, analysisId, options).then((request) => request(axios, basePath));
         },
         /**
-         * List Cluster Logs
+         * List Cluster Logs. Deprecated: use listClusterDeploymentLogs instead to fetch the logs of a specific cluster deployment.
          * @summary List Cluster Logs
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         listClusterLogs(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterLogsResponseList> {
@@ -44358,11 +44722,12 @@ export class ClustersApi extends BaseAPI {
     }
 
     /**
-     * List Cluster Logs
+     * List Cluster Logs. Deprecated: use listClusterDeploymentLogs instead to fetch the logs of a specific cluster deployment.
      * @summary List Cluster Logs
      * @param {string} organizationId Organization ID
      * @param {string} clusterId Cluster ID
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ClustersApi
      */
