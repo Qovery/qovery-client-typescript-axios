@@ -332,7 +332,7 @@ export interface AgenticWorkflowRequest {
      */
     'mcp'?: string;
     /**
-     * Organization MCP servers used by this workflow
+     * MCP connectors attached to this workflow. May include a USER-scoped connector, which only its owner can attach or keep attached when saving.
      * @type {Array<string>}
      * @memberof AgenticWorkflowRequest
      */
@@ -498,7 +498,7 @@ export interface AgenticWorkflowResponse {
      */
     'mcp': string;
     /**
-     * Organization MCP servers used by this workflow
+     * MCP connectors attached to this workflow. May include a USER-scoped connector, which only its owner can attach or keep attached when saving.
      * @type {Array<string>}
      * @memberof AgenticWorkflowResponse
      */
@@ -20048,7 +20048,7 @@ export interface ManagedDatabaseTypeResponseList {
  */
 export interface McpServerRequest {
     /**
-     * Unique MCP server name within the organization
+     * MCP server name, unique per scope owner within the organization
      * @type {string}
      * @memberof McpServerRequest
      */
@@ -20071,7 +20071,15 @@ export interface McpServerRequest {
      * @memberof McpServerRequest
      */
     'headers'?: { [key: string]: string; };
+    /**
+     * Cannot be changed after creation. On create, omitting it means ORGANIZATION, which requires the MANAGE_INFRASTRUCTURE permission; creating a USER connector requires CREATE_PROJECT. On edit, omitting it leaves the connector\'s scope unchanged, and stating a scope that differs from the connector\'s is refused with 400.
+     * @type {McpServerScope}
+     * @memberof McpServerRequest
+     */
+    'scope'?: McpServerScope;
 }
+
+
 /**
  * 
  * @export
@@ -20120,7 +20128,33 @@ export interface McpServerResponse {
      * @memberof McpServerResponse
      */
     'header_names': Set<string>;
+    /**
+     * 
+     * @type {McpServerScope}
+     * @memberof McpServerResponse
+     */
+    'scope': McpServerScope;
+    /**
+     * Identity of the owning member. Null for an ORGANIZATION connector.
+     * @type {string}
+     * @memberof McpServerResponse
+     */
+    'owner_user_sub'?: string | null;
+    /**
+     * Display name of the owning member. Null for an ORGANIZATION connector.
+     * @type {string}
+     * @memberof McpServerResponse
+     */
+    'owner_name'?: string | null;
+    /**
+     * Whether the member making this request may attach the connector to an agentic workflow. Computed per caller: an organization admin sees every USER connector but can attach none of them, so a picker must use this rather than scope alone.
+     * @type {boolean}
+     * @memberof McpServerResponse
+     */
+    'attachable': boolean;
 }
+
+
 /**
  * 
  * @export
@@ -20134,6 +20168,20 @@ export interface McpServerResponseList {
      */
     'results': Array<McpServerResponse>;
 }
+/**
+ * ORGANIZATION: usable by every member who can edit an agentic workflow. USER: personal to the member who created it; only that member can attach or edit it.
+ * @export
+ * @enum {string}
+ */
+
+export const McpServerScope = {
+    ORGANIZATION: 'ORGANIZATION',
+    USER: 'USER'
+} as const;
+
+export type McpServerScope = typeof McpServerScope[keyof typeof McpServerScope];
+
+
 /**
  * 
  * @export
