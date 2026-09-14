@@ -15014,6 +15014,31 @@ export interface FieldSchemaConstraintsResponse {
 export type FieldSchemaResponse = { type: 'array' } & ArrayFieldSchemaResponse | { type: 'bool' } & ScalarFieldSchemaResponse | { type: 'number' } & ScalarFieldSchemaResponse | { type: 'object' } & ObjectFieldSchemaResponse | { type: 'string' } & ScalarFieldSchemaResponse;
 
 /**
+ * A catalog-owned starting text for a field editor, not an applied default.
+ * @export
+ * @interface FieldTemplateResponse
+ */
+export interface FieldTemplateResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof FieldTemplateResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FieldTemplateResponse
+     */
+    'label': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FieldTemplateResponse
+     */
+    'value': string;
+}
+/**
  * @type GcpCredentialsRequest
  * @export
  */
@@ -22999,6 +23024,18 @@ export interface PlatformComponentInputRequirementResponse {
      */
     'constraints': FieldSchemaConstraintsResponse;
     /**
+     * Optional editor format for a string field, independent of its scalar type. kubernetes-resource-yaml selects a single Kubernetes YAML object editor. Unknown formats should fall back to the ordinary string editor.
+     * @type {string}
+     * @memberof PlatformComponentInputRequirementResponse
+     */
+    'format'?: string;
+    /**
+     * Optional starting texts for an explicit user choice, with unique IDs within the field. Present only with format. Never apply as defaults or overwrite a saved value. The format selects the editor even when templates are absent.
+     * @type {Array<FieldTemplateResponse>}
+     * @memberof PlatformComponentInputRequirementResponse
+     */
+    'templates'?: Array<FieldTemplateResponse>;
+    /**
      * 
      * @type {PlatformComponentConfigurationInputScope}
      * @memberof PlatformComponentInputRequirementResponse
@@ -24552,6 +24589,18 @@ export interface ScalarFieldSchemaResponse {
      * @memberof ScalarFieldSchemaResponse
      */
     'constraints': FieldSchemaConstraintsResponse;
+    /**
+     * Optional editor format for a string field, independent of its scalar type. kubernetes-resource-yaml selects a single Kubernetes YAML object editor. Unknown formats should fall back to the ordinary string editor.
+     * @type {string}
+     * @memberof ScalarFieldSchemaResponse
+     */
+    'format'?: string;
+    /**
+     * Optional starting texts for an explicit user choice, with unique IDs within the field. Present only with format. Never apply as defaults or overwrite a saved value. The format selects the editor even when templates are absent.
+     * @type {Array<FieldTemplateResponse>}
+     * @memberof ScalarFieldSchemaResponse
+     */
+    'templates'?: Array<FieldTemplateResponse>;
 }
 
 export const ScalarFieldSchemaResponseTypeEnum = {
