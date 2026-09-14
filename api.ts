@@ -3055,6 +3055,81 @@ export interface ArgocdManagedResource {
 /**
  * 
  * @export
+ * @interface ArrayFieldSchemaResponse
+ */
+export interface ArrayFieldSchemaResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ArrayFieldSchemaResponse
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArrayFieldSchemaResponse
+     */
+    'type': ArrayFieldSchemaResponseTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ArrayFieldSchemaResponse
+     */
+    'required': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArrayFieldSchemaResponse
+     */
+    'label': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ArrayFieldSchemaResponse
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ArrayFieldSchemaResponse
+     */
+    'sensitive': boolean;
+    /**
+     * 
+     * @type {CollectionConstraintsResponse}
+     * @memberof ArrayFieldSchemaResponse
+     */
+    'constraints': CollectionConstraintsResponse;
+    /**
+     * 
+     * @type {ArrayItemResponse}
+     * @memberof ArrayFieldSchemaResponse
+     */
+    'items': ArrayItemResponse;
+    /**
+     * Evaluated field descriptors for each object item, in the same order as the configuration array. Use these row-specific descriptors when available; items.fields describes an object\'s fields before per-item evaluation. Omitted when unavailable, including scalar arrays. An evaluated empty object array has an empty itemFields array.
+     * @type {Array<Array<FieldSchemaResponse>>}
+     * @memberof ArrayFieldSchemaResponse
+     */
+    'itemFields'?: Array<Array<FieldSchemaResponse>>;
+}
+
+export const ArrayFieldSchemaResponseTypeEnum = {
+    ARRAY: 'array'
+} as const;
+
+export type ArrayFieldSchemaResponseTypeEnum = typeof ArrayFieldSchemaResponseTypeEnum[keyof typeof ArrayFieldSchemaResponseTypeEnum];
+
+/**
+ * @type ArrayItemResponse
+ * Descriptor for an array element. Elements are scalars or objects; an object\'s fields can themselves contain arrays.
+ * @export
+ */
+export type ArrayItemResponse = { type: 'bool' } & ScalarArrayItemResponse | { type: 'number' } & ScalarArrayItemResponse | { type: 'object' } & ObjectArrayItemResponse | { type: 'string' } & ScalarArrayItemResponse;
+
+/**
+ * 
+ * @export
  * @interface AttachServiceToDeploymentStageRequest
  */
 export interface AttachServiceToDeploymentStageRequest {
@@ -9031,6 +9106,31 @@ export interface ClusterStatusResponseList {
 /**
  * 
  * @export
+ * @interface CollectionConstraintsResponse
+ */
+export interface CollectionConstraintsResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof CollectionConstraintsResponse
+     */
+    'minItems'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof CollectionConstraintsResponse
+     */
+    'maxItems'?: number | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CollectionConstraintsResponse
+     */
+    'uniqueItems': boolean;
+}
+/**
+ * 
+ * @export
  * @interface Commit
  */
 export interface Commit {
@@ -14907,68 +15007,11 @@ export interface FieldSchemaConstraintsResponse {
     'pattern'?: string | null;
 }
 /**
- * Canonical platform catalog field descriptor. Mirrors the q-core `FieldSchemaResponse` DTO.
+ * @type FieldSchemaResponse
+ * Generic catalog field descriptor matching the shared q-core field response. Scalar fields retain their existing shape; objects and arrays describe nested configuration without flattening its values. Blueprint keeps its existing BlueprintManifestVariableField response contract through a dedicated adapter.
  * @export
- * @interface FieldSchemaResponse
  */
-export interface FieldSchemaResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof FieldSchemaResponse
-     */
-    'key': string;
-    /**
-     * Field type understood by the Console.
-     * @type {string}
-     * @memberof FieldSchemaResponse
-     */
-    'type': FieldSchemaResponseTypeEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof FieldSchemaResponse
-     */
-    'required': boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof FieldSchemaResponse
-     */
-    'defaultValue'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof FieldSchemaResponse
-     */
-    'label': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FieldSchemaResponse
-     */
-    'description'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof FieldSchemaResponse
-     */
-    'sensitive': boolean;
-    /**
-     * 
-     * @type {FieldSchemaConstraintsResponse}
-     * @memberof FieldSchemaResponse
-     */
-    'constraints': FieldSchemaConstraintsResponse;
-}
-
-export const FieldSchemaResponseTypeEnum = {
-    STRING: 'string',
-    NUMBER: 'number',
-    BOOL: 'bool'
-} as const;
-
-export type FieldSchemaResponseTypeEnum = typeof FieldSchemaResponseTypeEnum[keyof typeof FieldSchemaResponseTypeEnum];
+export type FieldSchemaResponse = { type: 'array' } & ArrayFieldSchemaResponse | { type: 'bool' } & ScalarFieldSchemaResponse | { type: 'number' } & ScalarFieldSchemaResponse | { type: 'object' } & ObjectFieldSchemaResponse | { type: 'string' } & ScalarFieldSchemaResponse;
 
 /**
  * @type GcpCredentialsRequest
@@ -20373,6 +20416,88 @@ export type MetricsParametersConfiguration = { kind: 'MANAGED_BY_QOVERY' } & Met
 /**
  * 
  * @export
+ * @interface ObjectArrayItemResponse
+ */
+export interface ObjectArrayItemResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ObjectArrayItemResponse
+     */
+    'type': ObjectArrayItemResponseTypeEnum;
+    /**
+     * 
+     * @type {Array<FieldSchemaResponse>}
+     * @memberof ObjectArrayItemResponse
+     */
+    'fields': Array<FieldSchemaResponse>;
+}
+
+export const ObjectArrayItemResponseTypeEnum = {
+    OBJECT: 'object'
+} as const;
+
+export type ObjectArrayItemResponseTypeEnum = typeof ObjectArrayItemResponseTypeEnum[keyof typeof ObjectArrayItemResponseTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface ObjectFieldSchemaResponse
+ */
+export interface ObjectFieldSchemaResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ObjectFieldSchemaResponse
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ObjectFieldSchemaResponse
+     */
+    'type': ObjectFieldSchemaResponseTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ObjectFieldSchemaResponse
+     */
+    'required': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ObjectFieldSchemaResponse
+     */
+    'label': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ObjectFieldSchemaResponse
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ObjectFieldSchemaResponse
+     */
+    'sensitive': boolean;
+    /**
+     * Nested field descriptors for this object\'s properties.
+     * @type {Array<FieldSchemaResponse>}
+     * @memberof ObjectFieldSchemaResponse
+     */
+    'fields': Array<FieldSchemaResponse>;
+}
+
+export const ObjectFieldSchemaResponseTypeEnum = {
+    OBJECT: 'object'
+} as const;
+
+export type ObjectFieldSchemaResponseTypeEnum = typeof ObjectFieldSchemaResponseTypeEnum[keyof typeof ObjectFieldSchemaResponseTypeEnum];
+
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -22820,7 +22945,7 @@ export interface PlatformComponentConfigurationViolationResponse {
     'message': string;
 }
 /**
- * A catalog field the cluster must provide for the selected configuration: the shared field descriptor extended with its resolution scope and readiness.
+ * A catalog field the cluster must provide for the selected configuration: the scalar field descriptor extended with its resolution scope and readiness. Input requirements cannot be object or array descriptors.
  * @export
  * @interface PlatformComponentInputRequirementResponse
  */
@@ -24344,6 +24469,98 @@ export const Route53StaticCredentialsResponseTypeEnum = {
 } as const;
 
 export type Route53StaticCredentialsResponseTypeEnum = typeof Route53StaticCredentialsResponseTypeEnum[keyof typeof Route53StaticCredentialsResponseTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface ScalarArrayItemResponse
+ */
+export interface ScalarArrayItemResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ScalarArrayItemResponse
+     */
+    'type': ScalarArrayItemResponseTypeEnum;
+    /**
+     * 
+     * @type {FieldSchemaConstraintsResponse}
+     * @memberof ScalarArrayItemResponse
+     */
+    'constraints': FieldSchemaConstraintsResponse;
+}
+
+export const ScalarArrayItemResponseTypeEnum = {
+    STRING: 'string',
+    NUMBER: 'number',
+    BOOL: 'bool'
+} as const;
+
+export type ScalarArrayItemResponseTypeEnum = typeof ScalarArrayItemResponseTypeEnum[keyof typeof ScalarArrayItemResponseTypeEnum];
+
+/**
+ * Scalar catalog field descriptor, also used for platform cluster input requirements. FieldSchemaResponse is the union of scalar, object and array descriptors.
+ * @export
+ * @interface ScalarFieldSchemaResponse
+ */
+export interface ScalarFieldSchemaResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ScalarFieldSchemaResponse
+     */
+    'key': string;
+    /**
+     * Field type understood by the Console.
+     * @type {string}
+     * @memberof ScalarFieldSchemaResponse
+     */
+    'type': ScalarFieldSchemaResponseTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ScalarFieldSchemaResponse
+     */
+    'required': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScalarFieldSchemaResponse
+     */
+    'defaultValue'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScalarFieldSchemaResponse
+     */
+    'label': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ScalarFieldSchemaResponse
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ScalarFieldSchemaResponse
+     */
+    'sensitive': boolean;
+    /**
+     * 
+     * @type {FieldSchemaConstraintsResponse}
+     * @memberof ScalarFieldSchemaResponse
+     */
+    'constraints': FieldSchemaConstraintsResponse;
+}
+
+export const ScalarFieldSchemaResponseTypeEnum = {
+    STRING: 'string',
+    NUMBER: 'number',
+    BOOL: 'bool'
+} as const;
+
+export type ScalarFieldSchemaResponseTypeEnum = typeof ScalarFieldSchemaResponseTypeEnum[keyof typeof ScalarFieldSchemaResponseTypeEnum];
 
 /**
  * 
