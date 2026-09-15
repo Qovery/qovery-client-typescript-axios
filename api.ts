@@ -32264,7 +32264,7 @@ export const ApplicationEnvironmentVariableApiAxiosParamCreator = function (conf
             };
         },
         /**
-         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
          * @summary Edit an environment variable belonging to the application
          * @param {string} applicationId Application ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -32469,7 +32469,7 @@ export const ApplicationEnvironmentVariableApiFp = function(configuration?: Conf
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
          * @summary Edit an environment variable belonging to the application
          * @param {string} applicationId Application ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -32567,7 +32567,7 @@ export const ApplicationEnvironmentVariableApiFactory = function (configuration?
             return localVarFp.deleteApplicationEnvironmentVariable(applicationId, environmentVariableId, options).then((request) => request(axios, basePath));
         },
         /**
-         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
          * @summary Edit an environment variable belonging to the application
          * @param {string} applicationId Application ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -32664,7 +32664,7 @@ export class ApplicationEnvironmentVariableApi extends BaseAPI {
     }
 
     /**
-     * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+     * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
      * @summary Edit an environment variable belonging to the application
      * @param {string} applicationId Application ID
      * @param {string} environmentVariableId Environment Variable ID
@@ -33617,7 +33617,7 @@ export const ApplicationSecretApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
          * @summary Edit a secret belonging to the application
          * @param {string} applicationId Application ID
          * @param {string} secretId Secret ID
@@ -33777,7 +33777,7 @@ export const ApplicationSecretApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
          * @summary Edit a secret belonging to the application
          * @param {string} applicationId Application ID
          * @param {string} secretId Secret ID
@@ -33861,7 +33861,7 @@ export const ApplicationSecretApiFactory = function (configuration?: Configurati
             return localVarFp.deleteApplicationSecret(applicationId, secretId, options).then((request) => request(axios, basePath));
         },
         /**
-         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
          * @summary Edit a secret belonging to the application
          * @param {string} applicationId Application ID
          * @param {string} secretId Secret ID
@@ -33947,7 +33947,7 @@ export class ApplicationSecretApi extends BaseAPI {
     }
 
     /**
-     * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+     * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
      * @summary Edit a secret belonging to the application
      * @param {string} applicationId Application ID
      * @param {string} secretId Secret ID
@@ -47067,7 +47067,7 @@ export const ContainerEnvironmentVariableApiAxiosParamCreator = function (config
             };
         },
         /**
-         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
          * @summary Edit an environment variable belonging to the container
          * @param {string} containerId Container ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -47272,7 +47272,7 @@ export const ContainerEnvironmentVariableApiFp = function(configuration?: Config
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
          * @summary Edit an environment variable belonging to the container
          * @param {string} containerId Container ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -47370,7 +47370,7 @@ export const ContainerEnvironmentVariableApiFactory = function (configuration?: 
             return localVarFp.deleteContainerEnvironmentVariable(containerId, environmentVariableId, options).then((request) => request(axios, basePath));
         },
         /**
-         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
          * @summary Edit an environment variable belonging to the container
          * @param {string} containerId Container ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -47467,7 +47467,7 @@ export class ContainerEnvironmentVariableApi extends BaseAPI {
     }
 
     /**
-     * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+     * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
      * @summary Edit an environment variable belonging to the container
      * @param {string} containerId Container ID
      * @param {string} environmentVariableId Environment Variable ID
@@ -48874,7 +48874,7 @@ export const ContainerSecretApiAxiosParamCreator = function (configuration?: Con
             };
         },
         /**
-         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
          * @summary Edit a secret belonging to the container
          * @param {string} containerId Container ID
          * @param {string} secretId Secret ID
@@ -49034,7 +49034,7 @@ export const ContainerSecretApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
          * @summary Edit a secret belonging to the container
          * @param {string} containerId Container ID
          * @param {string} secretId Secret ID
@@ -49118,7 +49118,7 @@ export const ContainerSecretApiFactory = function (configuration?: Configuration
             return localVarFp.deleteContainerSecret(containerId, secretId, options).then((request) => request(axios, basePath));
         },
         /**
-         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
          * @summary Edit a secret belonging to the container
          * @param {string} containerId Container ID
          * @param {string} secretId Secret ID
@@ -49204,7 +49204,7 @@ export class ContainerSecretApi extends BaseAPI {
     }
 
     /**
-     * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+     * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
      * @summary Edit a secret belonging to the container
      * @param {string} containerId Container ID
      * @param {string} secretId Secret ID
@@ -55810,7 +55810,7 @@ export class EnvironmentMainCallsApi extends BaseAPI {
 export const EnvironmentSecretApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * - Add a secret to the environment.   - If the secret key already exists, then it will be replaced by the new one.   - If the secret value points toward an existing secret key, it will be considered as an alias. 
+         * - Add a secret to the environment.   - If the secret key already exists in this scope, the request is rejected with a 409 conflict.   - A value matching the key of an existing secret is stored as a plain string, not as an alias. To create an alias, use POST /variable/{variableId}/alias on the secret to target. 
          * @summary Add a secret to the environment
          * @param {string} environmentId Environment ID
          * @param {SecretRequest} [secretRequest] 
@@ -55998,7 +55998,7 @@ export const EnvironmentSecretApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
          * @summary Edit a secret belonging to the environment
          * @param {string} environmentId Environment ID
          * @param {string} secretId Secret ID
@@ -56100,7 +56100,7 @@ export const EnvironmentSecretApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = EnvironmentSecretApiAxiosParamCreator(configuration)
     return {
         /**
-         * - Add a secret to the environment.   - If the secret key already exists, then it will be replaced by the new one.   - If the secret value points toward an existing secret key, it will be considered as an alias. 
+         * - Add a secret to the environment.   - If the secret key already exists in this scope, the request is rejected with a 409 conflict.   - A value matching the key of an existing secret is stored as a plain string, not as an alias. To create an alias, use POST /variable/{variableId}/alias on the secret to target. 
          * @summary Add a secret to the environment
          * @param {string} environmentId Environment ID
          * @param {SecretRequest} [secretRequest] 
@@ -56158,7 +56158,7 @@ export const EnvironmentSecretApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
          * @summary Edit a secret belonging to the environment
          * @param {string} environmentId Environment ID
          * @param {string} secretId Secret ID
@@ -56196,7 +56196,7 @@ export const EnvironmentSecretApiFactory = function (configuration?: Configurati
     const localVarFp = EnvironmentSecretApiFp(configuration)
     return {
         /**
-         * - Add a secret to the environment.   - If the secret key already exists, then it will be replaced by the new one.   - If the secret value points toward an existing secret key, it will be considered as an alias. 
+         * - Add a secret to the environment.   - If the secret key already exists in this scope, the request is rejected with a 409 conflict.   - A value matching the key of an existing secret is stored as a plain string, not as an alias. To create an alias, use POST /variable/{variableId}/alias on the secret to target. 
          * @summary Add a secret to the environment
          * @param {string} environmentId Environment ID
          * @param {SecretRequest} [secretRequest] 
@@ -56242,7 +56242,7 @@ export const EnvironmentSecretApiFactory = function (configuration?: Configurati
             return localVarFp.deleteEnvironmentSecret(environmentId, secretId, options).then((request) => request(axios, basePath));
         },
         /**
-         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
          * @summary Edit a secret belonging to the environment
          * @param {string} environmentId Environment ID
          * @param {string} secretId Secret ID
@@ -56274,7 +56274,7 @@ export const EnvironmentSecretApiFactory = function (configuration?: Configurati
  */
 export class EnvironmentSecretApi extends BaseAPI {
     /**
-     * - Add a secret to the environment.   - If the secret key already exists, then it will be replaced by the new one.   - If the secret value points toward an existing secret key, it will be considered as an alias. 
+     * - Add a secret to the environment.   - If the secret key already exists in this scope, the request is rejected with a 409 conflict.   - A value matching the key of an existing secret is stored as a plain string, not as an alias. To create an alias, use POST /variable/{variableId}/alias on the secret to target. 
      * @summary Add a secret to the environment
      * @param {string} environmentId Environment ID
      * @param {SecretRequest} [secretRequest] 
@@ -56328,7 +56328,7 @@ export class EnvironmentSecretApi extends BaseAPI {
     }
 
     /**
-     * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+     * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
      * @summary Edit a secret belonging to the environment
      * @param {string} environmentId Environment ID
      * @param {string} secretId Secret ID
@@ -56363,7 +56363,7 @@ export class EnvironmentSecretApi extends BaseAPI {
 export const EnvironmentVariableApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * - Add an environment variable to the environment.   - If the environment variable key already exists, then it will be replaced by the new one.   - If the environment variable value points toward an existing environment variable key, it will be considered as an alias. 
+         * - Add an environment variable to the environment.   - If the environment variable key already exists in this scope, the request is rejected with a 409 conflict.   - A value matching the key of an existing variable is stored as a plain string, not as an alias. To create an alias, use POST /variable/{variableId}/alias on the variable to target. 
          * @summary Add an environment variable to the environment
          * @param {string} environmentId Environment ID
          * @param {EnvironmentVariableRequest} [environmentVariableRequest] 
@@ -56551,7 +56551,7 @@ export const EnvironmentVariableApiAxiosParamCreator = function (configuration?:
             };
         },
         /**
-         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
          * @summary Edit an environment variable belonging to the environment
          * @param {string} environmentId Environment ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -56653,7 +56653,7 @@ export const EnvironmentVariableApiFp = function(configuration?: Configuration) 
     const localVarAxiosParamCreator = EnvironmentVariableApiAxiosParamCreator(configuration)
     return {
         /**
-         * - Add an environment variable to the environment.   - If the environment variable key already exists, then it will be replaced by the new one.   - If the environment variable value points toward an existing environment variable key, it will be considered as an alias. 
+         * - Add an environment variable to the environment.   - If the environment variable key already exists in this scope, the request is rejected with a 409 conflict.   - A value matching the key of an existing variable is stored as a plain string, not as an alias. To create an alias, use POST /variable/{variableId}/alias on the variable to target. 
          * @summary Add an environment variable to the environment
          * @param {string} environmentId Environment ID
          * @param {EnvironmentVariableRequest} [environmentVariableRequest] 
@@ -56711,7 +56711,7 @@ export const EnvironmentVariableApiFp = function(configuration?: Configuration) 
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
          * @summary Edit an environment variable belonging to the environment
          * @param {string} environmentId Environment ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -56749,7 +56749,7 @@ export const EnvironmentVariableApiFactory = function (configuration?: Configura
     const localVarFp = EnvironmentVariableApiFp(configuration)
     return {
         /**
-         * - Add an environment variable to the environment.   - If the environment variable key already exists, then it will be replaced by the new one.   - If the environment variable value points toward an existing environment variable key, it will be considered as an alias. 
+         * - Add an environment variable to the environment.   - If the environment variable key already exists in this scope, the request is rejected with a 409 conflict.   - A value matching the key of an existing variable is stored as a plain string, not as an alias. To create an alias, use POST /variable/{variableId}/alias on the variable to target. 
          * @summary Add an environment variable to the environment
          * @param {string} environmentId Environment ID
          * @param {EnvironmentVariableRequest} [environmentVariableRequest] 
@@ -56795,7 +56795,7 @@ export const EnvironmentVariableApiFactory = function (configuration?: Configura
             return localVarFp.deleteEnvironmentEnvironmentVariable(environmentId, environmentVariableId, options).then((request) => request(axios, basePath));
         },
         /**
-         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
          * @summary Edit an environment variable belonging to the environment
          * @param {string} environmentId Environment ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -56827,7 +56827,7 @@ export const EnvironmentVariableApiFactory = function (configuration?: Configura
  */
 export class EnvironmentVariableApi extends BaseAPI {
     /**
-     * - Add an environment variable to the environment.   - If the environment variable key already exists, then it will be replaced by the new one.   - If the environment variable value points toward an existing environment variable key, it will be considered as an alias. 
+     * - Add an environment variable to the environment.   - If the environment variable key already exists in this scope, the request is rejected with a 409 conflict.   - A value matching the key of an existing variable is stored as a plain string, not as an alias. To create an alias, use POST /variable/{variableId}/alias on the variable to target. 
      * @summary Add an environment variable to the environment
      * @param {string} environmentId Environment ID
      * @param {EnvironmentVariableRequest} [environmentVariableRequest] 
@@ -56881,7 +56881,7 @@ export class EnvironmentVariableApi extends BaseAPI {
     }
 
     /**
-     * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+     * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
      * @summary Edit an environment variable belonging to the environment
      * @param {string} environmentId Environment ID
      * @param {string} environmentVariableId Environment Variable ID
@@ -63099,7 +63099,7 @@ export const JobEnvironmentVariableApiAxiosParamCreator = function (configuratio
             };
         },
         /**
-         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
          * @summary Edit an environment variable belonging to the job
          * @param {string} jobId Job ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -63304,7 +63304,7 @@ export const JobEnvironmentVariableApiFp = function(configuration?: Configuratio
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
          * @summary Edit an environment variable belonging to the job
          * @param {string} jobId Job ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -63402,7 +63402,7 @@ export const JobEnvironmentVariableApiFactory = function (configuration?: Config
             return localVarFp.deleteJobEnvironmentVariable(jobId, environmentVariableId, options).then((request) => request(axios, basePath));
         },
         /**
-         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
          * @summary Edit an environment variable belonging to the job
          * @param {string} jobId Job ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -63499,7 +63499,7 @@ export class JobEnvironmentVariableApi extends BaseAPI {
     }
 
     /**
-     * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+     * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
      * @summary Edit an environment variable belonging to the job
      * @param {string} jobId Job ID
      * @param {string} environmentVariableId Environment Variable ID
@@ -64185,7 +64185,7 @@ export const JobSecretApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
          * @summary Edit a secret belonging to the job
          * @param {string} jobId Job ID
          * @param {string} secretId Secret ID
@@ -64345,7 +64345,7 @@ export const JobSecretApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
          * @summary Edit a secret belonging to the job
          * @param {string} jobId Job ID
          * @param {string} secretId Secret ID
@@ -64429,7 +64429,7 @@ export const JobSecretApiFactory = function (configuration?: Configuration, base
             return localVarFp.deleteJobSecret(jobId, secretId, options).then((request) => request(axios, basePath));
         },
         /**
-         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
          * @summary Edit a secret belonging to the job
          * @param {string} jobId Job ID
          * @param {string} secretId Secret ID
@@ -64515,7 +64515,7 @@ export class JobSecretApi extends BaseAPI {
     }
 
     /**
-     * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
+     * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > CONTAINER) 
      * @summary Edit a secret belonging to the job
      * @param {string} jobId Job ID
      * @param {string} secretId Secret ID
@@ -73423,7 +73423,7 @@ export class ProjectDeploymentRuleApi extends BaseAPI {
 export const ProjectEnvironmentVariableApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * - Add an environment variable to the project.   - If the environment variable key already exists, then it will be replaced by the new one.   - If the environment variable value points toward an existing environment variable key, it will be considered as an alias. 
+         * - Add an environment variable to the project.   - If the environment variable key already exists in this scope, the request is rejected with a 409 conflict.   - A value matching the key of an existing variable is stored as a plain string, not as an alias. To create an alias, use POST /variable/{variableId}/alias on the variable to target. 
          * @summary Add an environment variable to the project
          * @param {string} projectId Project ID
          * @param {EnvironmentVariableRequest} [environmentVariableRequest] 
@@ -73611,7 +73611,7 @@ export const ProjectEnvironmentVariableApiAxiosParamCreator = function (configur
             };
         },
         /**
-         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
          * @summary Edit an environment variable belonging to the project
          * @param {string} projectId Project ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -73713,7 +73713,7 @@ export const ProjectEnvironmentVariableApiFp = function(configuration?: Configur
     const localVarAxiosParamCreator = ProjectEnvironmentVariableApiAxiosParamCreator(configuration)
     return {
         /**
-         * - Add an environment variable to the project.   - If the environment variable key already exists, then it will be replaced by the new one.   - If the environment variable value points toward an existing environment variable key, it will be considered as an alias. 
+         * - Add an environment variable to the project.   - If the environment variable key already exists in this scope, the request is rejected with a 409 conflict.   - A value matching the key of an existing variable is stored as a plain string, not as an alias. To create an alias, use POST /variable/{variableId}/alias on the variable to target. 
          * @summary Add an environment variable to the project
          * @param {string} projectId Project ID
          * @param {EnvironmentVariableRequest} [environmentVariableRequest] 
@@ -73771,7 +73771,7 @@ export const ProjectEnvironmentVariableApiFp = function(configuration?: Configur
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
          * @summary Edit an environment variable belonging to the project
          * @param {string} projectId Project ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -73809,7 +73809,7 @@ export const ProjectEnvironmentVariableApiFactory = function (configuration?: Co
     const localVarFp = ProjectEnvironmentVariableApiFp(configuration)
     return {
         /**
-         * - Add an environment variable to the project.   - If the environment variable key already exists, then it will be replaced by the new one.   - If the environment variable value points toward an existing environment variable key, it will be considered as an alias. 
+         * - Add an environment variable to the project.   - If the environment variable key already exists in this scope, the request is rejected with a 409 conflict.   - A value matching the key of an existing variable is stored as a plain string, not as an alias. To create an alias, use POST /variable/{variableId}/alias on the variable to target. 
          * @summary Add an environment variable to the project
          * @param {string} projectId Project ID
          * @param {EnvironmentVariableRequest} [environmentVariableRequest] 
@@ -73855,7 +73855,7 @@ export const ProjectEnvironmentVariableApiFactory = function (configuration?: Co
             return localVarFp.deleteProjectEnvironmentVariable(projectId, environmentVariableId, options).then((request) => request(axios, basePath));
         },
         /**
-         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
          * @summary Edit an environment variable belonging to the project
          * @param {string} projectId Project ID
          * @param {string} environmentVariableId Environment Variable ID
@@ -73887,7 +73887,7 @@ export const ProjectEnvironmentVariableApiFactory = function (configuration?: Co
  */
 export class ProjectEnvironmentVariableApi extends BaseAPI {
     /**
-     * - Add an environment variable to the project.   - If the environment variable key already exists, then it will be replaced by the new one.   - If the environment variable value points toward an existing environment variable key, it will be considered as an alias. 
+     * - Add an environment variable to the project.   - If the environment variable key already exists in this scope, the request is rejected with a 409 conflict.   - A value matching the key of an existing variable is stored as a plain string, not as an alias. To create an alias, use POST /variable/{variableId}/alias on the variable to target. 
      * @summary Add an environment variable to the project
      * @param {string} projectId Project ID
      * @param {EnvironmentVariableRequest} [environmentVariableRequest] 
@@ -73941,7 +73941,7 @@ export class ProjectEnvironmentVariableApi extends BaseAPI {
     }
 
     /**
-     * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+     * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the variable it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
      * @summary Edit an environment variable belonging to the project
      * @param {string} projectId Project ID
      * @param {string} environmentVariableId Environment Variable ID
@@ -74250,7 +74250,7 @@ export class ProjectMainCallsApi extends BaseAPI {
 export const ProjectSecretApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * - Add a secret to the project.   - If the secret key already exists, then it will be replaced by the new one.   - If the secret value points toward an existing secret key, it will be considered as an alias. 
+         * - Add a secret to the project.   - If the secret key already exists in this scope, the request is rejected with a 409 conflict.   - A value matching the key of an existing secret is stored as a plain string, not as an alias. To create an alias, use POST /variable/{variableId}/alias on the secret to target. 
          * @summary Add a secret to the project
          * @param {string} projectId Project ID
          * @param {SecretRequest} [secretRequest] 
@@ -74438,7 +74438,7 @@ export const ProjectSecretApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
          * @summary Edit a secret belonging to the project
          * @param {string} projectId Project ID
          * @param {string} secretId Secret ID
@@ -74540,7 +74540,7 @@ export const ProjectSecretApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ProjectSecretApiAxiosParamCreator(configuration)
     return {
         /**
-         * - Add a secret to the project.   - If the secret key already exists, then it will be replaced by the new one.   - If the secret value points toward an existing secret key, it will be considered as an alias. 
+         * - Add a secret to the project.   - If the secret key already exists in this scope, the request is rejected with a 409 conflict.   - A value matching the key of an existing secret is stored as a plain string, not as an alias. To create an alias, use POST /variable/{variableId}/alias on the secret to target. 
          * @summary Add a secret to the project
          * @param {string} projectId Project ID
          * @param {SecretRequest} [secretRequest] 
@@ -74598,7 +74598,7 @@ export const ProjectSecretApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
          * @summary Edit a secret belonging to the project
          * @param {string} projectId Project ID
          * @param {string} secretId Secret ID
@@ -74636,7 +74636,7 @@ export const ProjectSecretApiFactory = function (configuration?: Configuration, 
     const localVarFp = ProjectSecretApiFp(configuration)
     return {
         /**
-         * - Add a secret to the project.   - If the secret key already exists, then it will be replaced by the new one.   - If the secret value points toward an existing secret key, it will be considered as an alias. 
+         * - Add a secret to the project.   - If the secret key already exists in this scope, the request is rejected with a 409 conflict.   - A value matching the key of an existing secret is stored as a plain string, not as an alias. To create an alias, use POST /variable/{variableId}/alias on the secret to target. 
          * @summary Add a secret to the project
          * @param {string} projectId Project ID
          * @param {SecretRequest} [secretRequest] 
@@ -74682,7 +74682,7 @@ export const ProjectSecretApiFactory = function (configuration?: Configuration, 
             return localVarFp.deleteProjectSecret(projectId, secretId, options).then((request) => request(axios, basePath));
         },
         /**
-         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+         * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
          * @summary Edit a secret belonging to the project
          * @param {string} projectId Project ID
          * @param {string} secretId Secret ID
@@ -74714,7 +74714,7 @@ export const ProjectSecretApiFactory = function (configuration?: Configuration, 
  */
 export class ProjectSecretApi extends BaseAPI {
     /**
-     * - Add a secret to the project.   - If the secret key already exists, then it will be replaced by the new one.   - If the secret value points toward an existing secret key, it will be considered as an alias. 
+     * - Add a secret to the project.   - If the secret key already exists in this scope, the request is rejected with a 409 conflict.   - A value matching the key of an existing secret is stored as a plain string, not as an alias. To create an alias, use POST /variable/{variableId}/alias on the secret to target. 
      * @summary Add a secret to the project
      * @param {string} projectId Project ID
      * @param {SecretRequest} [secretRequest] 
@@ -74768,7 +74768,7 @@ export class ProjectSecretApi extends BaseAPI {
     }
 
     /**
-     * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, you can\'t edit the value - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
+     * - You can\'t edit a BUILT_IN secret - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) - An override can only have a scope lower to the secret it is overriding (hierarchy is BUILT_IN > PROJECT > ENVIRONMENT > APPLICATION) 
      * @summary Edit a secret belonging to the project
      * @param {string} projectId Project ID
      * @param {string} secretId Secret ID
@@ -78027,7 +78027,7 @@ export const VariableMainCallsApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value 
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) 
          * @summary Edit a variable
          * @param {string} variableId Variable ID
          * @param {VariableEditRequest} variableEditRequest 
@@ -78249,7 +78249,7 @@ export const VariableMainCallsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value 
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) 
          * @summary Edit a variable
          * @param {string} variableId Variable ID
          * @param {VariableEditRequest} variableEditRequest 
@@ -78345,7 +78345,7 @@ export const VariableMainCallsApiFactory = function (configuration?: Configurati
             return localVarFp.deleteVariable(variableId, options).then((request) => request(axios, basePath));
         },
         /**
-         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value 
+         * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) 
          * @summary Edit a variable
          * @param {string} variableId Variable ID
          * @param {VariableEditRequest} variableEditRequest 
@@ -78440,7 +78440,7 @@ export class VariableMainCallsApi extends BaseAPI {
     }
 
     /**
-     * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, you can\'t edit the value 
+     * - You can\'t edit a BUILT_IN variable - For an override, you can\'t edit the key - For an alias, the value is the key of the variable it targets. Editing it re-points the alias to that other variable, which must already exist and be of the same kind (secret or not) 
      * @summary Edit a variable
      * @param {string} variableId Variable ID
      * @param {VariableEditRequest} variableEditRequest 
