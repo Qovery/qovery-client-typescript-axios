@@ -20061,6 +20061,155 @@ export interface ListTfVarsFilesFromGitRepo200Response {
 /**
  * 
  * @export
+ * @interface LlmProviderRequest
+ */
+export interface LlmProviderRequest {
+    /**
+     * LLM provider name, unique per scope owner within the organization
+     * @type {string}
+     * @memberof LlmProviderRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LlmProviderRequest
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {LlmProviderType}
+     * @memberof LlmProviderRequest
+     */
+    'type': LlmProviderType;
+    /**
+     * The provider credential. Encrypted at rest and never returned by the API. Blank means unchanged: on create no credential is stored, on edit the stored one is kept. Sending a nonblank value rotates it.
+     * @type {string}
+     * @memberof LlmProviderRequest
+     */
+    'credential'?: string;
+    /**
+     * Cannot be changed after creation. On create, omitting it means ORGANIZATION, which requires the MANAGE_INFRASTRUCTURE permission; creating a USER provider requires CREATE_PROJECT. On edit, omitting it leaves the provider\'s scope unchanged, and stating a scope that differs from the provider\'s is refused with 400.
+     * @type {LlmProviderScope}
+     * @memberof LlmProviderRequest
+     */
+    'scope'?: LlmProviderScope;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface LlmProviderResponse
+ */
+export interface LlmProviderResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof LlmProviderResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LlmProviderResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LlmProviderResponse
+     */
+    'updated_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LlmProviderResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LlmProviderResponse
+     */
+    'description': string;
+    /**
+     * 
+     * @type {LlmProviderType}
+     * @memberof LlmProviderResponse
+     */
+    'type': LlmProviderType;
+    /**
+     * Whether a credential is stored. The credential itself is never returned.
+     * @type {boolean}
+     * @memberof LlmProviderResponse
+     */
+    'has_credential': boolean;
+    /**
+     * 
+     * @type {LlmProviderScope}
+     * @memberof LlmProviderResponse
+     */
+    'scope': LlmProviderScope;
+    /**
+     * Identity of the owning member. Null for an ORGANIZATION provider.
+     * @type {string}
+     * @memberof LlmProviderResponse
+     */
+    'owner_user_sub'?: string | null;
+    /**
+     * Display name of the owning member. Null for an ORGANIZATION provider.
+     * @type {string}
+     * @memberof LlmProviderResponse
+     */
+    'owner_name'?: string | null;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface LlmProviderResponseList
+ */
+export interface LlmProviderResponseList {
+    /**
+     * 
+     * @type {Array<LlmProviderResponse>}
+     * @memberof LlmProviderResponseList
+     */
+    'results': Array<LlmProviderResponse>;
+}
+/**
+ * ORGANIZATION: usable by every member who can edit an agentic workflow. USER: personal to the member who created it; only that member can edit it.
+ * @export
+ * @enum {string}
+ */
+
+export const LlmProviderScope = {
+    ORGANIZATION: 'ORGANIZATION',
+    USER: 'USER'
+} as const;
+
+export type LlmProviderScope = typeof LlmProviderScope[keyof typeof LlmProviderScope];
+
+
+/**
+ * The LLM vendor this provider authenticates against. Matches the type an agentic workflow\'s inline model already uses.
+ * @export
+ * @enum {string}
+ */
+
+export const LlmProviderType = {
+    CLAUDE: 'CLAUDE',
+    BEDROCK: 'BEDROCK'
+} as const;
+
+export type LlmProviderType = typeof LlmProviderType[keyof typeof LlmProviderType];
+
+
+/**
+ * 
+ * @export
  * @interface Log
  */
 export interface Log {
@@ -65055,6 +65204,443 @@ export class JobsApi extends BaseAPI {
      */
     public listJobs(environmentId: string, toUpdate?: boolean, options?: RawAxiosRequestConfig) {
         return JobsApiFp(this.configuration).listJobs(environmentId, toUpdate, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * LLMProvidersApi - axios parameter creator
+ * @export
+ */
+export const LLMProvidersApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Configure a reusable LLM provider for an organization.
+         * @summary Create an LLM provider
+         * @param {string} organizationId Organization ID
+         * @param {LlmProviderRequest} llmProviderRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createLlmProvider: async (organizationId: string, llmProviderRequest: LlmProviderRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('createLlmProvider', 'organizationId', organizationId)
+            // verify required parameter 'llmProviderRequest' is not null or undefined
+            assertParamExists('createLlmProvider', 'llmProviderRequest', llmProviderRequest)
+            const localVarPath = `/organization/{organizationId}/llmProvider`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(llmProviderRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete an LLM provider.
+         * @summary Delete an LLM provider
+         * @param {string} llmProviderId LLM Provider ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteLlmProvider: async (llmProviderId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'llmProviderId' is not null or undefined
+            assertParamExists('deleteLlmProvider', 'llmProviderId', llmProviderId)
+            const localVarPath = `/llmProvider/{llmProviderId}`
+                .replace(`{${"llmProviderId"}}`, encodeURIComponent(String(llmProviderId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Replace an LLM provider. Sending a blank credential keeps the stored one; sending a nonblank credential rotates it.
+         * @summary Edit an LLM provider
+         * @param {string} llmProviderId LLM Provider ID
+         * @param {LlmProviderRequest} llmProviderRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editLlmProvider: async (llmProviderId: string, llmProviderRequest: LlmProviderRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'llmProviderId' is not null or undefined
+            assertParamExists('editLlmProvider', 'llmProviderId', llmProviderId)
+            // verify required parameter 'llmProviderRequest' is not null or undefined
+            assertParamExists('editLlmProvider', 'llmProviderRequest', llmProviderRequest)
+            const localVarPath = `/llmProvider/{llmProviderId}`
+                .replace(`{${"llmProviderId"}}`, encodeURIComponent(String(llmProviderId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(llmProviderRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get an LLM provider. The credential is never returned.
+         * @summary Get an LLM provider
+         * @param {string} llmProviderId LLM Provider ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLlmProvider: async (llmProviderId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'llmProviderId' is not null or undefined
+            assertParamExists('getLlmProvider', 'llmProviderId', llmProviderId)
+            const localVarPath = `/llmProvider/{llmProviderId}`
+                .replace(`{${"llmProviderId"}}`, encodeURIComponent(String(llmProviderId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List the LLM providers configured for an organization. Credentials are never returned.
+         * @summary List organization LLM providers
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listLlmProviders: async (organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listLlmProviders', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/llmProvider`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * LLMProvidersApi - functional programming interface
+ * @export
+ */
+export const LLMProvidersApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = LLMProvidersApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Configure a reusable LLM provider for an organization.
+         * @summary Create an LLM provider
+         * @param {string} organizationId Organization ID
+         * @param {LlmProviderRequest} llmProviderRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createLlmProvider(organizationId: string, llmProviderRequest: LlmProviderRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LlmProviderResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createLlmProvider(organizationId, llmProviderRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LLMProvidersApi.createLlmProvider']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Delete an LLM provider.
+         * @summary Delete an LLM provider
+         * @param {string} llmProviderId LLM Provider ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteLlmProvider(llmProviderId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteLlmProvider(llmProviderId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LLMProvidersApi.deleteLlmProvider']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Replace an LLM provider. Sending a blank credential keeps the stored one; sending a nonblank credential rotates it.
+         * @summary Edit an LLM provider
+         * @param {string} llmProviderId LLM Provider ID
+         * @param {LlmProviderRequest} llmProviderRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editLlmProvider(llmProviderId: string, llmProviderRequest: LlmProviderRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LlmProviderResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editLlmProvider(llmProviderId, llmProviderRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LLMProvidersApi.editLlmProvider']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Get an LLM provider. The credential is never returned.
+         * @summary Get an LLM provider
+         * @param {string} llmProviderId LLM Provider ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getLlmProvider(llmProviderId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LlmProviderResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLlmProvider(llmProviderId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LLMProvidersApi.getLlmProvider']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * List the LLM providers configured for an organization. Credentials are never returned.
+         * @summary List organization LLM providers
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listLlmProviders(organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LlmProviderResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listLlmProviders(organizationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LLMProvidersApi.listLlmProviders']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * LLMProvidersApi - factory interface
+ * @export
+ */
+export const LLMProvidersApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = LLMProvidersApiFp(configuration)
+    return {
+        /**
+         * Configure a reusable LLM provider for an organization.
+         * @summary Create an LLM provider
+         * @param {string} organizationId Organization ID
+         * @param {LlmProviderRequest} llmProviderRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createLlmProvider(organizationId: string, llmProviderRequest: LlmProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<LlmProviderResponse> {
+            return localVarFp.createLlmProvider(organizationId, llmProviderRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete an LLM provider.
+         * @summary Delete an LLM provider
+         * @param {string} llmProviderId LLM Provider ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteLlmProvider(llmProviderId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteLlmProvider(llmProviderId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Replace an LLM provider. Sending a blank credential keeps the stored one; sending a nonblank credential rotates it.
+         * @summary Edit an LLM provider
+         * @param {string} llmProviderId LLM Provider ID
+         * @param {LlmProviderRequest} llmProviderRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editLlmProvider(llmProviderId: string, llmProviderRequest: LlmProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<LlmProviderResponse> {
+            return localVarFp.editLlmProvider(llmProviderId, llmProviderRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get an LLM provider. The credential is never returned.
+         * @summary Get an LLM provider
+         * @param {string} llmProviderId LLM Provider ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLlmProvider(llmProviderId: string, options?: RawAxiosRequestConfig): AxiosPromise<LlmProviderResponse> {
+            return localVarFp.getLlmProvider(llmProviderId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List the LLM providers configured for an organization. Credentials are never returned.
+         * @summary List organization LLM providers
+         * @param {string} organizationId Organization ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listLlmProviders(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<LlmProviderResponseList> {
+            return localVarFp.listLlmProviders(organizationId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * LLMProvidersApi - object-oriented interface
+ * @export
+ * @class LLMProvidersApi
+ * @extends {BaseAPI}
+ */
+export class LLMProvidersApi extends BaseAPI {
+    /**
+     * Configure a reusable LLM provider for an organization.
+     * @summary Create an LLM provider
+     * @param {string} organizationId Organization ID
+     * @param {LlmProviderRequest} llmProviderRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LLMProvidersApi
+     */
+    public createLlmProvider(organizationId: string, llmProviderRequest: LlmProviderRequest, options?: RawAxiosRequestConfig) {
+        return LLMProvidersApiFp(this.configuration).createLlmProvider(organizationId, llmProviderRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete an LLM provider.
+     * @summary Delete an LLM provider
+     * @param {string} llmProviderId LLM Provider ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LLMProvidersApi
+     */
+    public deleteLlmProvider(llmProviderId: string, options?: RawAxiosRequestConfig) {
+        return LLMProvidersApiFp(this.configuration).deleteLlmProvider(llmProviderId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Replace an LLM provider. Sending a blank credential keeps the stored one; sending a nonblank credential rotates it.
+     * @summary Edit an LLM provider
+     * @param {string} llmProviderId LLM Provider ID
+     * @param {LlmProviderRequest} llmProviderRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LLMProvidersApi
+     */
+    public editLlmProvider(llmProviderId: string, llmProviderRequest: LlmProviderRequest, options?: RawAxiosRequestConfig) {
+        return LLMProvidersApiFp(this.configuration).editLlmProvider(llmProviderId, llmProviderRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get an LLM provider. The credential is never returned.
+     * @summary Get an LLM provider
+     * @param {string} llmProviderId LLM Provider ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LLMProvidersApi
+     */
+    public getLlmProvider(llmProviderId: string, options?: RawAxiosRequestConfig) {
+        return LLMProvidersApiFp(this.configuration).getLlmProvider(llmProviderId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List the LLM providers configured for an organization. Credentials are never returned.
+     * @summary List organization LLM providers
+     * @param {string} organizationId Organization ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LLMProvidersApi
+     */
+    public listLlmProviders(organizationId: string, options?: RawAxiosRequestConfig) {
+        return LLMProvidersApiFp(this.configuration).listLlmProviders(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
