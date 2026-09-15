@@ -23083,6 +23083,25 @@ export interface PlatformComponentOutputBindingResponse {
     'output': string;
 }
 /**
+ * Displays selected top-level fields of another component in the same layer. The source component remains the resolver, configuration binding and deployment owner. This declaration does not move data or change Helm releases.
+ * @export
+ * @interface PlatformConfigurationSectionResponse
+ */
+export interface PlatformConfigurationSectionResponse {
+    /**
+     * Component key to use for resolve requests and stored configuration.
+     * @type {string}
+     * @memberof PlatformConfigurationSectionResponse
+     */
+    'sourceComponentKey': string;
+    /**
+     * Unique top-level source fields displayed here instead of in the source component editor.
+     * @type {Array<string>}
+     * @memberof PlatformConfigurationSectionResponse
+     */
+    'fieldKeys': Array<string>;
+}
+/**
  * 
  * @export
  * @enum {string}
@@ -23154,6 +23173,12 @@ export interface PlatformTemplateComponentResponse {
      * @memberof PlatformTemplateComponentResponse
      */
     'fields': Array<FieldSchemaResponse>;
+    /**
+     * Additional configuration sections displayed under this component. Its own configuration and cluster inputs remain available. Omitted or empty keeps the existing editor behavior; fields always remain declared on their owner.
+     * @type {Array<PlatformConfigurationSectionResponse>}
+     * @memberof PlatformTemplateComponentResponse
+     */
+    'configurationSections'?: Array<PlatformConfigurationSectionResponse>;
 }
 
 
