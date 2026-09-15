@@ -174,6 +174,25 @@ export interface AgenticWorkflowHeader {
 /**
  * 
  * @export
+ * @interface AgenticWorkflowMcpServer
+ */
+export interface AgenticWorkflowMcpServer {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgenticWorkflowMcpServer
+     */
+    'id': string;
+    /**
+     * Whether the initial configuration or template requires this MCP server.
+     * @type {boolean}
+     * @memberof AgenticWorkflowMcpServer
+     */
+    'required': boolean;
+}
+/**
+ * 
+ * @export
  * @interface AgenticWorkflowModelRequest
  */
 export interface AgenticWorkflowModelRequest {
@@ -335,8 +354,21 @@ export interface AgenticWorkflowRequest {
      * MCP connectors attached to this workflow. May include a USER-scoped connector, which only its owner can attach or keep attached when saving.
      * @type {Array<string>}
      * @memberof AgenticWorkflowRequest
+     * @deprecated
      */
     'mcp_server_ids'?: Array<string>;
+    /**
+     * MCP connectors attached to this workflow. A required connector must be present during creation, but may be removed during a later settings update.
+     * @type {Array<AgenticWorkflowMcpServer>}
+     * @memberof AgenticWorkflowRequest
+     */
+    'mcp_servers'?: Array<AgenticWorkflowMcpServer>;
+    /**
+     * Qovery services explicitly provided as context to this workflow.
+     * @type {Array<string>}
+     * @memberof AgenticWorkflowRequest
+     */
+    'context_service_ids'?: Array<string>;
     /**
      * 
      * @type {Array<AgenticWorkflowOutput>}
@@ -501,8 +533,21 @@ export interface AgenticWorkflowResponse {
      * MCP connectors attached to this workflow. May include a USER-scoped connector, which only its owner can attach or keep attached when saving.
      * @type {Array<string>}
      * @memberof AgenticWorkflowResponse
+     * @deprecated
      */
     'mcp_server_ids': Array<string>;
+    /**
+     * MCP connectors attached to this workflow, including their configuration metadata.
+     * @type {Array<AgenticWorkflowMcpServer>}
+     * @memberof AgenticWorkflowResponse
+     */
+    'mcp_servers': Array<AgenticWorkflowMcpServer>;
+    /**
+     * Qovery services explicitly provided as context to this workflow.
+     * @type {Array<string>}
+     * @memberof AgenticWorkflowResponse
+     */
+    'context_service_ids': Array<string>;
     /**
      * 
      * @type {Array<AgenticWorkflowOutput>}
