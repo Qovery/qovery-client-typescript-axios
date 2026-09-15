@@ -23870,6 +23870,25 @@ export interface QoveryIpsResponse {
 /**
  * 
  * @export
+ * @interface QoveryMcpServerRequest
+ */
+export interface QoveryMcpServerRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryMcpServerRequest
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof QoveryMcpServerRequest
+     */
+    'description'?: string;
+}
+/**
+ * 
+ * @export
  * @interface QueuedDeploymentRequestForService
  */
 export interface QueuedDeploymentRequestForService {
@@ -65223,6 +65242,51 @@ export const MCPServersApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
+         * Create a connector to Qovery\'s own MCP server in READ-ONLY mode. Scope is always `ORGANIZATION`; this endpoint accepts no scope parameter.  During the request, an organization API token is generated, bound to the Viewer role, and stored as the encrypted `Authorization` connector header. The token is never returned in the response; `header_names` will contain `Authorization`.  The generated token is visible and revocable in the organization\'s API token list. Deleting the connector does not revoke the generated token; revoke it separately from the API token list.  **403 — Access forbidden:** Requires the `MANAGE_INFRASTRUCTURE` permission. Viewer and Billing callers cannot mint API tokens and are rejected with 403.  Only one Qovery MCP connector is allowed per organization; a second call returns 409. 
+         * @summary Create a read-only Qovery MCP connector
+         * @param {string} organizationId Organization ID
+         * @param {QoveryMcpServerRequest} [qoveryMcpServerRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createQoveryMcpServer: async (organizationId: string, qoveryMcpServerRequest?: QoveryMcpServerRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('createQoveryMcpServer', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/mcpServer/qovery`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(qoveryMcpServerRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Delete a remote MCP server configuration.
          * @summary Delete an MCP server
          * @param {string} mcpServerId MCP Server ID
@@ -65417,6 +65481,20 @@ export const MCPServersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Create a connector to Qovery\'s own MCP server in READ-ONLY mode. Scope is always `ORGANIZATION`; this endpoint accepts no scope parameter.  During the request, an organization API token is generated, bound to the Viewer role, and stored as the encrypted `Authorization` connector header. The token is never returned in the response; `header_names` will contain `Authorization`.  The generated token is visible and revocable in the organization\'s API token list. Deleting the connector does not revoke the generated token; revoke it separately from the API token list.  **403 — Access forbidden:** Requires the `MANAGE_INFRASTRUCTURE` permission. Viewer and Billing callers cannot mint API tokens and are rejected with 403.  Only one Qovery MCP connector is allowed per organization; a second call returns 409. 
+         * @summary Create a read-only Qovery MCP connector
+         * @param {string} organizationId Organization ID
+         * @param {QoveryMcpServerRequest} [qoveryMcpServerRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createQoveryMcpServer(organizationId: string, qoveryMcpServerRequest?: QoveryMcpServerRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<McpServerResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createQoveryMcpServer(organizationId, qoveryMcpServerRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MCPServersApi.createQoveryMcpServer']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Delete a remote MCP server configuration.
          * @summary Delete an MCP server
          * @param {string} mcpServerId MCP Server ID
@@ -65491,6 +65569,17 @@ export const MCPServersApiFactory = function (configuration?: Configuration, bas
             return localVarFp.createMcpServer(organizationId, mcpServerRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * Create a connector to Qovery\'s own MCP server in READ-ONLY mode. Scope is always `ORGANIZATION`; this endpoint accepts no scope parameter.  During the request, an organization API token is generated, bound to the Viewer role, and stored as the encrypted `Authorization` connector header. The token is never returned in the response; `header_names` will contain `Authorization`.  The generated token is visible and revocable in the organization\'s API token list. Deleting the connector does not revoke the generated token; revoke it separately from the API token list.  **403 — Access forbidden:** Requires the `MANAGE_INFRASTRUCTURE` permission. Viewer and Billing callers cannot mint API tokens and are rejected with 403.  Only one Qovery MCP connector is allowed per organization; a second call returns 409. 
+         * @summary Create a read-only Qovery MCP connector
+         * @param {string} organizationId Organization ID
+         * @param {QoveryMcpServerRequest} [qoveryMcpServerRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createQoveryMcpServer(organizationId: string, qoveryMcpServerRequest?: QoveryMcpServerRequest, options?: RawAxiosRequestConfig): AxiosPromise<McpServerResponse> {
+            return localVarFp.createQoveryMcpServer(organizationId, qoveryMcpServerRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Delete a remote MCP server configuration.
          * @summary Delete an MCP server
          * @param {string} mcpServerId MCP Server ID
@@ -65552,6 +65641,19 @@ export class MCPServersApi extends BaseAPI {
      */
     public createMcpServer(organizationId: string, mcpServerRequest: McpServerRequest, options?: RawAxiosRequestConfig) {
         return MCPServersApiFp(this.configuration).createMcpServer(organizationId, mcpServerRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Create a connector to Qovery\'s own MCP server in READ-ONLY mode. Scope is always `ORGANIZATION`; this endpoint accepts no scope parameter.  During the request, an organization API token is generated, bound to the Viewer role, and stored as the encrypted `Authorization` connector header. The token is never returned in the response; `header_names` will contain `Authorization`.  The generated token is visible and revocable in the organization\'s API token list. Deleting the connector does not revoke the generated token; revoke it separately from the API token list.  **403 — Access forbidden:** Requires the `MANAGE_INFRASTRUCTURE` permission. Viewer and Billing callers cannot mint API tokens and are rejected with 403.  Only one Qovery MCP connector is allowed per organization; a second call returns 409. 
+     * @summary Create a read-only Qovery MCP connector
+     * @param {string} organizationId Organization ID
+     * @param {QoveryMcpServerRequest} [qoveryMcpServerRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MCPServersApi
+     */
+    public createQoveryMcpServer(organizationId: string, qoveryMcpServerRequest?: QoveryMcpServerRequest, options?: RawAxiosRequestConfig) {
+        return MCPServersApiFp(this.configuration).createQoveryMcpServer(organizationId, qoveryMcpServerRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
