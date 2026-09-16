@@ -214,6 +214,12 @@ export interface AgenticWorkflowModelRequest {
      * @memberof AgenticWorkflowModelRequest
      */
     'settings'?: string;
+    /**
+     * An existing LLM provider to take the credential from, instead of `api_key`. The two are mutually exclusive: a request setting both is rejected. The provider must belong to the workflow\'s organization, be one the caller may use, and match `type`.
+     * @type {string}
+     * @memberof AgenticWorkflowModelRequest
+     */
+    'llm_provider_id'?: string | null;
 }
 
 
@@ -235,6 +241,12 @@ export interface AgenticWorkflowModelResponse {
      * @memberof AgenticWorkflowModelResponse
      */
     'settings': string;
+    /**
+     * The LLM provider the workflow takes its credential from, or null when it carries its own `api_key`. Unlike `api_key` this is returned: it names a credential rather than carrying one.
+     * @type {string}
+     * @memberof AgenticWorkflowModelResponse
+     */
+    'llm_provider_id'?: string | null;
 }
 
 
