@@ -4169,6 +4169,31 @@ export interface BlueprintCatalogResponse {
 /**
  * 
  * @export
+ * @interface BlueprintConfigurationVariable
+ */
+export interface BlueprintConfigurationVariable {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlueprintConfigurationVariable
+     */
+    'name': string;
+    /**
+     * Omitted for secret variables.
+     * @type {string}
+     * @memberof BlueprintConfigurationVariable
+     */
+    'value'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BlueprintConfigurationVariable
+     */
+    'is_secret': boolean;
+}
+/**
+ * 
+ * @export
  * @interface BlueprintCreateRequest
  */
 export interface BlueprintCreateRequest {
@@ -37533,6 +37558,47 @@ export const BlueprintMainCallsApiAxiosParamCreator = function (configuration?: 
             };
         },
         /**
+         * Returns the persisted variables for a blueprint. Secret variables are identified by `is_secret` and never include their value.
+         * @summary Get persisted blueprint variables
+         * @param {string} blueprintId Blueprint ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBlueprintVariables: async (blueprintId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'blueprintId' is not null or undefined
+            assertParamExists('getBlueprintVariables', 'blueprintId', blueprintId)
+            const localVarPath = `/blueprint/{blueprintId}/variables`
+                .replace(`{${"blueprintId"}}`, encodeURIComponent(String(blueprintId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Dry-runs a blueprint update without persisting any changes. Returns a preview ID and the resolved service type. Both `variables` and `spec_overrides` follow RFC 7396 patch semantics.
          * @summary Preview a blueprint update
          * @param {string} blueprintId Blueprint ID
@@ -37719,6 +37785,19 @@ export const BlueprintMainCallsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns the persisted variables for a blueprint. Secret variables are identified by `is_secret` and never include their value.
+         * @summary Get persisted blueprint variables
+         * @param {string} blueprintId Blueprint ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBlueprintVariables(blueprintId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BlueprintConfigurationVariable>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBlueprintVariables(blueprintId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BlueprintMainCallsApi.getBlueprintVariables']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Dry-runs a blueprint update without persisting any changes. Returns a preview ID and the resolved service type. Both `variables` and `spec_overrides` follow RFC 7396 patch semantics.
          * @summary Preview a blueprint update
          * @param {string} blueprintId Blueprint ID
@@ -37819,6 +37898,16 @@ export const BlueprintMainCallsApiFactory = function (configuration?: Configurat
          */
         getBlueprintCatalog(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<BlueprintCatalogResponse> {
             return localVarFp.getBlueprintCatalog(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the persisted variables for a blueprint. Secret variables are identified by `is_secret` and never include their value.
+         * @summary Get persisted blueprint variables
+         * @param {string} blueprintId Blueprint ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBlueprintVariables(blueprintId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<BlueprintConfigurationVariable>> {
+            return localVarFp.getBlueprintVariables(blueprintId, options).then((request) => request(axios, basePath));
         },
         /**
          * Dry-runs a blueprint update without persisting any changes. Returns a preview ID and the resolved service type. Both `variables` and `spec_overrides` follow RFC 7396 patch semantics.
@@ -37926,6 +38015,18 @@ export class BlueprintMainCallsApi extends BaseAPI {
      */
     public getBlueprintCatalog(organizationId: string, options?: RawAxiosRequestConfig) {
         return BlueprintMainCallsApiFp(this.configuration).getBlueprintCatalog(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the persisted variables for a blueprint. Secret variables are identified by `is_secret` and never include their value.
+     * @summary Get persisted blueprint variables
+     * @param {string} blueprintId Blueprint ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlueprintMainCallsApi
+     */
+    public getBlueprintVariables(blueprintId: string, options?: RawAxiosRequestConfig) {
+        return BlueprintMainCallsApiFp(this.configuration).getBlueprintVariables(blueprintId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
