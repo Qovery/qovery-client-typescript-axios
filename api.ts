@@ -6820,6 +6820,12 @@ export interface ClusterDeploymentHistory {
     'trigger_action': DeploymentHistoryTriggerAction;
     /**
      * 
+     * @type {boolean}
+     * @memberof ClusterDeploymentHistory
+     */
+    'is_dry_run': boolean;
+    /**
+     * 
      * @type {string}
      * @memberof ClusterDeploymentHistory
      */
@@ -41568,7 +41574,7 @@ export class CloudProviderCredentialsApi extends BaseAPI {
 export const ClusterDeploymentHistoryApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * List previous and current cluster deployments. It returns actual deployments only: dry-runs and stop/delete operations are excluded. By default it returns the 20 last results. Use the pageSize query parameter to adjust the number of returned results
+         * List previous and current cluster deployment operations. It returns applied deployments and dry-runs; stop/delete operations are excluded. By default it returns the 20 last results. Use the pageSize query parameter to adjust the number of returned results
          * @summary List cluster deployments
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
@@ -41677,7 +41683,7 @@ export const ClusterDeploymentHistoryApiFp = function(configuration?: Configurat
     const localVarAxiosParamCreator = ClusterDeploymentHistoryApiAxiosParamCreator(configuration)
     return {
         /**
-         * List previous and current cluster deployments. It returns actual deployments only: dry-runs and stop/delete operations are excluded. By default it returns the 20 last results. Use the pageSize query parameter to adjust the number of returned results
+         * List previous and current cluster deployment operations. It returns applied deployments and dry-runs; stop/delete operations are excluded. By default it returns the 20 last results. Use the pageSize query parameter to adjust the number of returned results
          * @summary List cluster deployments
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
@@ -41717,7 +41723,7 @@ export const ClusterDeploymentHistoryApiFactory = function (configuration?: Conf
     const localVarFp = ClusterDeploymentHistoryApiFp(configuration)
     return {
         /**
-         * List previous and current cluster deployments. It returns actual deployments only: dry-runs and stop/delete operations are excluded. By default it returns the 20 last results. Use the pageSize query parameter to adjust the number of returned results
+         * List previous and current cluster deployment operations. It returns applied deployments and dry-runs; stop/delete operations are excluded. By default it returns the 20 last results. Use the pageSize query parameter to adjust the number of returned results
          * @summary List cluster deployments
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
@@ -41751,7 +41757,7 @@ export const ClusterDeploymentHistoryApiFactory = function (configuration?: Conf
  */
 export class ClusterDeploymentHistoryApi extends BaseAPI {
     /**
-     * List previous and current cluster deployments. It returns actual deployments only: dry-runs and stop/delete operations are excluded. By default it returns the 20 last results. Use the pageSize query parameter to adjust the number of returned results
+     * List previous and current cluster deployment operations. It returns applied deployments and dry-runs; stop/delete operations are excluded. By default it returns the 20 last results. Use the pageSize query parameter to adjust the number of returned results
      * @summary List cluster deployments
      * @param {string} organizationId Organization ID
      * @param {string} clusterId Cluster ID
