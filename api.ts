@@ -23075,6 +23075,12 @@ export interface PlatformComponentConfigurationPreviewRequest {
      */
     'profileConfig'?: { [key: string]: any; };
     /**
+     * For an existing cluster, validate profileConfig as a complete draft instead of merging it with saved values. Omitted keys are reset to their catalog defaults. Template previews already use a complete draft and ignore this flag.
+     * @type {boolean}
+     * @memberof PlatformComponentConfigurationPreviewRequest
+     */
+    'replaceProfileConfig'?: boolean;
+    /**
      * 
      * @type {{ [key: string]: string; }}
      * @memberof PlatformComponentConfigurationPreviewRequest
@@ -23519,6 +23525,12 @@ export interface PlatformTemplateSummaryResponse {
      * @memberof PlatformTemplateSummaryResponse
      */
     'description'?: string | null;
+    /**
+     * Mandatory bootstrap component and its configurable fields, when declared by the template.
+     * @type {PlatformTemplateComponentResponse}
+     * @memberof PlatformTemplateSummaryResponse
+     */
+    'bootstrapComponent'?: PlatformTemplateComponentResponse | null;
     /**
      * 
      * @type {Array<PlatformTemplateLayerResponse>}
