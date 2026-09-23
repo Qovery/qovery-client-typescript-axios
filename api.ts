@@ -1762,32 +1762,44 @@ export interface ApplicationAdvancedSettings {
      * 
      * @type {number}
      * @memberof ApplicationAdvancedSettings
+     * @deprecated
      */
     'build.timeout_max_sec'?: number;
     /**
      * define the max cpu resources (in milli)
      * @type {number}
      * @memberof ApplicationAdvancedSettings
+     * @deprecated
      */
     'build.cpu_max_in_milli'?: number;
     /**
      * define the max ram resources (in gib)
      * @type {number}
      * @memberof ApplicationAdvancedSettings
+     * @deprecated
      */
     'build.ram_max_in_gib'?: number;
     /**
      * disable buildkit registry cache during build
      * @type {boolean}
      * @memberof ApplicationAdvancedSettings
+     * @deprecated
      */
     'build.disable_buildkit_cache'?: boolean;
     /**
      * skip git submodules update when cloning the repository
      * @type {boolean}
      * @memberof ApplicationAdvancedSettings
+     * @deprecated
      */
     'build.skip_git_submodules'?: boolean;
+    /**
+     * Ephemeral storage for the build (in GiB)
+     * @type {number}
+     * @memberof ApplicationAdvancedSettings
+     * @deprecated
+     */
+    'build.ephemeral_storage_in_gib'?: number;
     /**
      * 
      * @type {number}
@@ -2237,6 +2249,12 @@ export interface ApplicationEditRequest {
      * @memberof ApplicationEditRequest
      */
     'autoscaling'?: AutoscalingPolicyRequest;
+    /**
+     * 
+     * @type {BuildSettings}
+     * @memberof ApplicationEditRequest
+     */
+    'build_settings'?: BuildSettings;
 }
 
 
@@ -2542,6 +2560,12 @@ export interface ApplicationRequest {
      * @memberof ApplicationRequest
      */
     'autoscaling'?: AutoscalingPolicyRequest;
+    /**
+     * 
+     * @type {BuildSettings}
+     * @memberof ApplicationRequest
+     */
+    'build_settings'?: BuildSettings;
 }
 
 
@@ -5492,6 +5516,49 @@ export const BuildModeEnum = {
 export type BuildModeEnum = typeof BuildModeEnum[keyof typeof BuildModeEnum];
 
 
+/**
+ * Build configuration settings for the service. When sent, it replaces all six values entirely — omitted properties fall back to their defaults, not to the service\'s current values. 
+ * @export
+ * @interface BuildSettings
+ */
+export interface BuildSettings {
+    /**
+     * Maximum build timeout in seconds
+     * @type {number}
+     * @memberof BuildSettings
+     */
+    'timeout_max_sec'?: number;
+    /**
+     * Maximum CPU resources for the build (in millicores)
+     * @type {number}
+     * @memberof BuildSettings
+     */
+    'cpu_max_in_milli'?: number;
+    /**
+     * Maximum RAM resources for the build (in GiB)
+     * @type {number}
+     * @memberof BuildSettings
+     */
+    'ram_max_in_gib'?: number;
+    /**
+     * Ephemeral storage for the build (in GiB). When null, the platform default is used.
+     * @type {number}
+     * @memberof BuildSettings
+     */
+    'ephemeral_storage_in_gib'?: number | null;
+    /**
+     * Disable buildkit registry cache during build
+     * @type {boolean}
+     * @memberof BuildSettings
+     */
+    'disable_buildkit_cache'?: boolean;
+    /**
+     * Skip git submodules update when cloning the repository
+     * @type {boolean}
+     * @memberof BuildSettings
+     */
+    'skip_git_submodules'?: boolean;
+}
 /**
  * 
  * @export
@@ -17955,32 +18022,44 @@ export interface JobAdvancedSettings {
      * define the max timeout for the build
      * @type {number}
      * @memberof JobAdvancedSettings
+     * @deprecated
      */
     'build.timeout_max_sec'?: number;
     /**
      * define the max cpu resources (in milli)
      * @type {number}
      * @memberof JobAdvancedSettings
+     * @deprecated
      */
     'build.cpu_max_in_milli'?: number;
     /**
      * define the max ram resources (in gib)
      * @type {number}
      * @memberof JobAdvancedSettings
+     * @deprecated
      */
     'build.ram_max_in_gib'?: number;
     /**
      * disable buildkit registry cache during build
      * @type {boolean}
      * @memberof JobAdvancedSettings
+     * @deprecated
      */
     'build.disable_buildkit_cache'?: boolean;
     /**
      * skip git submodules update when cloning the repository
      * @type {boolean}
      * @memberof JobAdvancedSettings
+     * @deprecated
      */
     'build.skip_git_submodules'?: boolean;
+    /**
+     * Ephemeral storage for the build (in GiB)
+     * @type {number}
+     * @memberof JobAdvancedSettings
+     * @deprecated
+     */
+    'build.ephemeral_storage_in_gib'?: number;
     /**
      * define how long in seconds an application is supposed to be stopped gracefully
      * @type {number}
@@ -18335,6 +18414,12 @@ export interface JobRequest {
      * @memberof JobRequest
      */
     'icon_uri'?: string;
+    /**
+     * 
+     * @type {BuildSettings}
+     * @memberof JobRequest
+     */
+    'build_settings'?: BuildSettings;
 }
 
 
@@ -26712,30 +26797,35 @@ export interface TerraformAdvancedSettings {
      * define the max timeout for the build
      * @type {number}
      * @memberof TerraformAdvancedSettings
+     * @deprecated
      */
     'build.timeout_max_sec'?: number;
     /**
      * define the max cpu resources (in milli)
      * @type {number}
      * @memberof TerraformAdvancedSettings
+     * @deprecated
      */
     'build.cpu_max_in_milli'?: number;
     /**
      * define the max ram resources (in gib)
      * @type {number}
      * @memberof TerraformAdvancedSettings
+     * @deprecated
      */
     'build.ram_max_in_gib'?: number;
     /**
-     * 
+     * Ephemeral storage for the build (in GiB)
      * @type {number}
      * @memberof TerraformAdvancedSettings
+     * @deprecated
      */
     'build.ephemeral_storage_in_gib'?: number;
     /**
      * skip git submodules update when cloning the repository
      * @type {boolean}
      * @memberof TerraformAdvancedSettings
+     * @deprecated
      */
     'build.skip_git_submodules'?: boolean;
     /**
@@ -27205,6 +27295,12 @@ export interface TerraformRequest {
      * @memberof TerraformRequest
      */
     'blueprint_id'?: string | null;
+    /**
+     * 
+     * @type {BuildSettings}
+     * @memberof TerraformRequest
+     */
+    'build_settings'?: BuildSettings;
 }
 
 
