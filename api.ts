@@ -20274,6 +20274,44 @@ export interface ListTfVarsFilesFromGitRepo200Response {
 /**
  * 
  * @export
+ * @interface LlmProviderModelResponse
+ */
+export interface LlmProviderModelResponse {
+    /**
+     * Anthropic model id, or Bedrock inference profile id
+     * @type {string}
+     * @memberof LlmProviderModelResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LlmProviderModelResponse
+     */
+    'display_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LlmProviderModelResponse
+     */
+    'created_at'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface LlmProviderModelResponseList
+ */
+export interface LlmProviderModelResponseList {
+    /**
+     * 
+     * @type {Array<LlmProviderModelResponse>}
+     * @memberof LlmProviderModelResponseList
+     */
+    'results': Array<LlmProviderModelResponse>;
+}
+/**
+ * 
+ * @export
  * @interface LlmProviderRequest
  */
 export interface LlmProviderRequest {
@@ -65796,6 +65834,47 @@ export const LLMProvidersApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
+         * List the models the provider\'s stored credential can reach, fetched live from the provider. CLAUDE lists Anthropic models; BEDROCK lists Anthropic inference profiles in us-east-1. The credential is never returned. A USER provider can only be listed by its owner.
+         * @summary List the models of an LLM provider
+         * @param {string} llmProviderId LLM Provider ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listLlmProviderModels: async (llmProviderId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'llmProviderId' is not null or undefined
+            assertParamExists('listLlmProviderModels', 'llmProviderId', llmProviderId)
+            const localVarPath = `/llmProvider/{llmProviderId}/models`
+                .replace(`{${"llmProviderId"}}`, encodeURIComponent(String(llmProviderId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * List the LLM providers configured for an organization. Credentials are never returned.
          * @summary List organization LLM providers
          * @param {string} organizationId Organization ID
@@ -65901,6 +65980,19 @@ export const LLMProvidersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * List the models the provider\'s stored credential can reach, fetched live from the provider. CLAUDE lists Anthropic models; BEDROCK lists Anthropic inference profiles in us-east-1. The credential is never returned. A USER provider can only be listed by its owner.
+         * @summary List the models of an LLM provider
+         * @param {string} llmProviderId LLM Provider ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listLlmProviderModels(llmProviderId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LlmProviderModelResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listLlmProviderModels(llmProviderId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LLMProvidersApi.listLlmProviderModels']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * List the LLM providers configured for an organization. Credentials are never returned.
          * @summary List organization LLM providers
          * @param {string} organizationId Organization ID
@@ -65964,6 +66056,16 @@ export const LLMProvidersApiFactory = function (configuration?: Configuration, b
          */
         getLlmProvider(llmProviderId: string, options?: RawAxiosRequestConfig): AxiosPromise<LlmProviderResponse> {
             return localVarFp.getLlmProvider(llmProviderId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List the models the provider\'s stored credential can reach, fetched live from the provider. CLAUDE lists Anthropic models; BEDROCK lists Anthropic inference profiles in us-east-1. The credential is never returned. A USER provider can only be listed by its owner.
+         * @summary List the models of an LLM provider
+         * @param {string} llmProviderId LLM Provider ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listLlmProviderModels(llmProviderId: string, options?: RawAxiosRequestConfig): AxiosPromise<LlmProviderModelResponseList> {
+            return localVarFp.listLlmProviderModels(llmProviderId, options).then((request) => request(axios, basePath));
         },
         /**
          * List the LLM providers configured for an organization. Credentials are never returned.
@@ -66033,6 +66135,18 @@ export class LLMProvidersApi extends BaseAPI {
      */
     public getLlmProvider(llmProviderId: string, options?: RawAxiosRequestConfig) {
         return LLMProvidersApiFp(this.configuration).getLlmProvider(llmProviderId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List the models the provider\'s stored credential can reach, fetched live from the provider. CLAUDE lists Anthropic models; BEDROCK lists Anthropic inference profiles in us-east-1. The credential is never returned. A USER provider can only be listed by its owner.
+     * @summary List the models of an LLM provider
+     * @param {string} llmProviderId LLM Provider ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LLMProvidersApi
+     */
+    public listLlmProviderModels(llmProviderId: string, options?: RawAxiosRequestConfig) {
+        return LLMProvidersApiFp(this.configuration).listLlmProviderModels(llmProviderId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
