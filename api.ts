@@ -637,6 +637,91 @@ export interface AgenticWorkflowResponseList {
     'results'?: Array<AgenticWorkflowResponse>;
 }
 /**
+ * One recorded run of an agentic workflow.
+ * @export
+ * @interface AgenticWorkflowRun
+ */
+export interface AgenticWorkflowRun {
+    /**
+     * Run ID.
+     * @type {string}
+     * @memberof AgenticWorkflowRun
+     */
+    'id': string;
+    /**
+     * ID of the workflow the run was requested for. A CLONE_ENVIRONMENT run executes as a fresh clone carrying its own ID, which run history does not report, so this is never the ID of the workflow that actually executed.
+     * @type {string}
+     * @memberof AgenticWorkflowRun
+     */
+    'source_workflow_id': string;
+    /**
+     * 
+     * @type {AgenticWorkflowRunTrigger}
+     * @memberof AgenticWorkflowRun
+     */
+    'trigger': AgenticWorkflowRunTrigger;
+    /**
+     * Agent prompt captured when the run was requested. It is a snapshot, so later edits to the workflow do not change it. Null when the workflow had no prompt.
+     * @type {string}
+     * @memberof AgenticWorkflowRun
+     */
+    'prompt': string | null;
+    /**
+     * Time the run was requested.
+     * @type {string}
+     * @memberof AgenticWorkflowRun
+     */
+    'created_at': string;
+    /**
+     * Time the run was registered in run history, shortly after it was requested. This is not a lifecycle start time: nothing reports when the agent itself started, so this value must not be used to measure a run. Null when it is unknown.
+     * @type {string}
+     * @memberof AgenticWorkflowRun
+     */
+    'recorded_at': string | null;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface AgenticWorkflowRunPaginatedResponseList
+ */
+export interface AgenticWorkflowRunPaginatedResponseList {
+    /**
+     * 
+     * @type {number}
+     * @memberof AgenticWorkflowRunPaginatedResponseList
+     */
+    'page': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgenticWorkflowRunPaginatedResponseList
+     */
+    'page_size': number;
+    /**
+     * 
+     * @type {Array<AgenticWorkflowRun>}
+     * @memberof AgenticWorkflowRunPaginatedResponseList
+     */
+    'results'?: Array<AgenticWorkflowRun>;
+}
+/**
+ * What triggered the run. MANUAL is reserved for manual runs; no backend producer emits it yet.
+ * @export
+ * @enum {string}
+ */
+
+export const AgenticWorkflowRunTrigger = {
+    MANUAL: 'MANUAL',
+    SCHEDULE: 'SCHEDULE',
+    WEBHOOK: 'WEBHOOK'
+} as const;
+
+export type AgenticWorkflowRunTrigger = typeof AgenticWorkflowRunTrigger[keyof typeof AgenticWorkflowRunTrigger];
+
+
+/**
  * 
  * @export
  * @interface AgenticWorkflowScheduleRequest
@@ -29095,6 +29180,57 @@ export const AgenticWorkflowsApiAxiosParamCreator = function (configuration?: Co
             };
         },
         /**
+         * Returns the runs recorded for this agentic workflow, newest first: sorted by created_at descending, then by id descending. Runs are added as they are triggered, so a run added between two requests shifts the runs after it towards later pages. agenticWorkflowId is matched against source_workflow_id, the workflow a run was requested for. A CLONE_ENVIRONMENT run is listed under that workflow, not under the clone that executed it. There is no lineage resolution either, so a clone\'s own ID returns no runs at all. Only runs that were launched appear here. A trigger that failed before launching, such as one turned away by the rate limiter, leaves no run. Runs that predate this endpoint are not backfilled.
+         * @summary List agentic workflow runs
+         * @param {string} agenticWorkflowId 
+         * @param {number} [page] Page number, starting at 1. Increment this value to retrieve subsequent pages of run history, keeping pageSize unchanged.
+         * @param {number} [pageSize] The number of runs to return in the current page. Must be between 1 and 100.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAgenticWorkflowRunHistory: async (agenticWorkflowId: string, page?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'agenticWorkflowId' is not null or undefined
+            assertParamExists('listAgenticWorkflowRunHistory', 'agenticWorkflowId', agenticWorkflowId)
+            const localVarPath = `/agenticWorkflow/{agenticWorkflowId}/runHistory`
+                .replace(`{${"agenticWorkflowId"}}`, encodeURIComponent(String(agenticWorkflowId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary List agentic workflows
          * @param {string} environmentId Environment ID
@@ -29241,6 +29377,21 @@ export const AgenticWorkflowsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns the runs recorded for this agentic workflow, newest first: sorted by created_at descending, then by id descending. Runs are added as they are triggered, so a run added between two requests shifts the runs after it towards later pages. agenticWorkflowId is matched against source_workflow_id, the workflow a run was requested for. A CLONE_ENVIRONMENT run is listed under that workflow, not under the clone that executed it. There is no lineage resolution either, so a clone\'s own ID returns no runs at all. Only runs that were launched appear here. A trigger that failed before launching, such as one turned away by the rate limiter, leaves no run. Runs that predate this endpoint are not backfilled.
+         * @summary List agentic workflow runs
+         * @param {string} agenticWorkflowId 
+         * @param {number} [page] Page number, starting at 1. Increment this value to retrieve subsequent pages of run history, keeping pageSize unchanged.
+         * @param {number} [pageSize] The number of runs to return in the current page. Must be between 1 and 100.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listAgenticWorkflowRunHistory(agenticWorkflowId: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgenticWorkflowRunPaginatedResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAgenticWorkflowRunHistory(agenticWorkflowId, page, pageSize, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgenticWorkflowsApi.listAgenticWorkflowRunHistory']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary List agentic workflows
          * @param {string} environmentId Environment ID
@@ -29336,6 +29487,18 @@ export const AgenticWorkflowsApiFactory = function (configuration?: Configuratio
          */
         listAgenticWorkflowDeploymentHistoryV2(agenticWorkflowId: string, pageSize?: number | null, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentHistoryServicePaginatedResponseListV2> {
             return localVarFp.listAgenticWorkflowDeploymentHistoryV2(agenticWorkflowId, pageSize, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the runs recorded for this agentic workflow, newest first: sorted by created_at descending, then by id descending. Runs are added as they are triggered, so a run added between two requests shifts the runs after it towards later pages. agenticWorkflowId is matched against source_workflow_id, the workflow a run was requested for. A CLONE_ENVIRONMENT run is listed under that workflow, not under the clone that executed it. There is no lineage resolution either, so a clone\'s own ID returns no runs at all. Only runs that were launched appear here. A trigger that failed before launching, such as one turned away by the rate limiter, leaves no run. Runs that predate this endpoint are not backfilled.
+         * @summary List agentic workflow runs
+         * @param {string} agenticWorkflowId 
+         * @param {number} [page] Page number, starting at 1. Increment this value to retrieve subsequent pages of run history, keeping pageSize unchanged.
+         * @param {number} [pageSize] The number of runs to return in the current page. Must be between 1 and 100.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAgenticWorkflowRunHistory(agenticWorkflowId: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): AxiosPromise<AgenticWorkflowRunPaginatedResponseList> {
+            return localVarFp.listAgenticWorkflowRunHistory(agenticWorkflowId, page, pageSize, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -29443,6 +29606,20 @@ export class AgenticWorkflowsApi extends BaseAPI {
      */
     public listAgenticWorkflowDeploymentHistoryV2(agenticWorkflowId: string, pageSize?: number | null, options?: RawAxiosRequestConfig) {
         return AgenticWorkflowsApiFp(this.configuration).listAgenticWorkflowDeploymentHistoryV2(agenticWorkflowId, pageSize, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the runs recorded for this agentic workflow, newest first: sorted by created_at descending, then by id descending. Runs are added as they are triggered, so a run added between two requests shifts the runs after it towards later pages. agenticWorkflowId is matched against source_workflow_id, the workflow a run was requested for. A CLONE_ENVIRONMENT run is listed under that workflow, not under the clone that executed it. There is no lineage resolution either, so a clone\'s own ID returns no runs at all. Only runs that were launched appear here. A trigger that failed before launching, such as one turned away by the rate limiter, leaves no run. Runs that predate this endpoint are not backfilled.
+     * @summary List agentic workflow runs
+     * @param {string} agenticWorkflowId 
+     * @param {number} [page] Page number, starting at 1. Increment this value to retrieve subsequent pages of run history, keeping pageSize unchanged.
+     * @param {number} [pageSize] The number of runs to return in the current page. Must be between 1 and 100.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgenticWorkflowsApi
+     */
+    public listAgenticWorkflowRunHistory(agenticWorkflowId: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig) {
+        return AgenticWorkflowsApiFp(this.configuration).listAgenticWorkflowRunHistory(agenticWorkflowId, page, pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
