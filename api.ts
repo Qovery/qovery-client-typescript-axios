@@ -20345,6 +20345,12 @@ export interface LlmProviderRequest {
      * @memberof LlmProviderRequest
      */
     'scope'?: LlmProviderScope;
+    /**
+     * On edit, omitting it or sending null clears the stored region. This differs from credential, where a blank value keeps the stored one. AWS region the Bedrock client calls, for example us-east-1 or eu-west-1; model availability differs by region. Only allowed for a BEDROCK provider. Any sent string, blank included, must match the pattern. Null keeps the engine default region.
+     * @type {string}
+     * @memberof LlmProviderRequest
+     */
+    'region'?: string | null;
 }
 
 
@@ -20414,6 +20420,12 @@ export interface LlmProviderResponse {
      * @memberof LlmProviderResponse
      */
     'owner_name'?: string | null;
+    /**
+     * AWS region of a BEDROCK provider. Null when unset or for CLAUDE.
+     * @type {string}
+     * @memberof LlmProviderResponse
+     */
+    'region'?: string | null;
 }
 
 
