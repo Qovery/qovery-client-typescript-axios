@@ -23581,6 +23581,37 @@ export type PlatformLayerResolutionStatus = typeof PlatformLayerResolutionStatus
 
 
 /**
+ * Platform template release selected for a cluster, with its layer selections and component configuration. Sensitive managedConfig values are redacted in responses.
+ * @export
+ * @interface PlatformSelection
+ */
+export interface PlatformSelection {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformSelection
+     */
+    'templateKey': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformSelection
+     */
+    'templateVersion': string;
+    /**
+     * 
+     * @type {{ [key: string]: boolean; }}
+     * @memberof PlatformSelection
+     */
+    'layerSelections'?: { [key: string]: boolean; };
+    /**
+     * Component configuration values keyed by component key
+     * @type {{ [key: string]: { [key: string]: any; }; }}
+     * @memberof PlatformSelection
+     */
+    'managedConfig'?: { [key: string]: { [key: string]: any; }; };
+}
+/**
  * 
  * @export
  * @interface PlatformTemplateCatalogResponse
@@ -25575,6 +25606,19 @@ export interface SecretResponseList {
     'results'?: Array<Secret>;
 }
 /**
+ * AWS cloud credential of the organization that the cluster runs on. This operation only takes and returns its id.
+ * @export
+ * @interface SelfManagedClusterCredentials
+ */
+export interface SelfManagedClusterCredentials {
+    /**
+     * Id of an existing AWS cloud credential of the organization
+     * @type {string}
+     * @memberof SelfManagedClusterCredentials
+     */
+    'id': string;
+}
+/**
  * 
  * @export
  * @enum {string}
@@ -25589,6 +25633,164 @@ export const SelfManagedClusterKind = {
 } as const;
 
 export type SelfManagedClusterKind = typeof SelfManagedClusterKind[keyof typeof SelfManagedClusterKind];
+
+
+/**
+ * Default ECR registry of the cluster, derived from its cloud credential and region.
+ * @export
+ * @interface SelfManagedClusterRegistryResponse
+ */
+export interface SelfManagedClusterRegistryResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof SelfManagedClusterRegistryResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {ContainerRegistryKindEnum}
+     * @memberof SelfManagedClusterRegistryResponse
+     */
+    'kind': ContainerRegistryKindEnum;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface SelfManagedClusterRequest
+ */
+export interface SelfManagedClusterRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SelfManagedClusterRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SelfManagedClusterRequest
+     */
+    'production'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof SelfManagedClusterRequest
+     */
+    'provider': SelfManagedClusterRequestProviderEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof SelfManagedClusterRequest
+     */
+    'region': string;
+    /**
+     * 
+     * @type {SelfManagedClusterCredentials}
+     * @memberof SelfManagedClusterRequest
+     */
+    'credentials': SelfManagedClusterCredentials;
+    /**
+     * 
+     * @type {PlatformSelection}
+     * @memberof SelfManagedClusterRequest
+     */
+    'platform': PlatformSelection;
+    /**
+     * String values keyed first by component key and then by input key
+     * @type {{ [key: string]: { [key: string]: string; }; }}
+     * @memberof SelfManagedClusterRequest
+     */
+    'clusterInputs'?: { [key: string]: { [key: string]: string; }; };
+}
+
+export const SelfManagedClusterRequestProviderEnum = {
+    AWS: 'AWS'
+} as const;
+
+export type SelfManagedClusterRequestProviderEnum = typeof SelfManagedClusterRequestProviderEnum[keyof typeof SelfManagedClusterRequestProviderEnum];
+
+/**
+ * 
+ * @export
+ * @interface SelfManagedClusterResponse
+ */
+export interface SelfManagedClusterResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof SelfManagedClusterResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SelfManagedClusterResponse
+     */
+    'organizationId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SelfManagedClusterResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SelfManagedClusterResponse
+     */
+    'production': boolean;
+    /**
+     * 
+     * @type {CloudVendorEnum}
+     * @memberof SelfManagedClusterResponse
+     */
+    'provider': CloudVendorEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof SelfManagedClusterResponse
+     */
+    'region': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SelfManagedClusterResponse
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {SelfManagedClusterCredentials}
+     * @memberof SelfManagedClusterResponse
+     */
+    'credentials': SelfManagedClusterCredentials;
+    /**
+     * 
+     * @type {SelfManagedClusterRegistryResponse}
+     * @memberof SelfManagedClusterResponse
+     */
+    'registry': SelfManagedClusterRegistryResponse;
+    /**
+     * 
+     * @type {PlatformSelection}
+     * @memberof SelfManagedClusterResponse
+     */
+    'platform': PlatformSelection;
+    /**
+     * String values keyed first by component key and then by input key
+     * @type {{ [key: string]: { [key: string]: string; }; }}
+     * @memberof SelfManagedClusterResponse
+     */
+    'clusterInputs': { [key: string]: { [key: string]: string; }; };
+    /**
+     * 
+     * @type {Array<ClusterPlatformBindingLayerResponse>}
+     * @memberof SelfManagedClusterResponse
+     */
+    'layers': Array<ClusterPlatformBindingLayerResponse>;
+}
 
 
 /**
@@ -42624,6 +42826,53 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Creates a self-managed cluster on an existing AWS cloud credential of the organization. The organization\'s plan must include self-managed clusters, otherwise the call answers 403. The credential only needs ECR permissions for the cluster itself, including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the credential whatever the cluster region; features that call other AWS services with the credential, such as managed databases or Terraform services using the cluster credentials, need more. The credential, including its ECR access in the cluster region, and the platform configuration are checked before anything is created. One transaction then writes the cluster, its Qovery DNS and build providers, its default ECR registry derived from the credential, its initial deployment status, its platform configuration and its Qovery Operator enrollment. Only the AWS provider is supported. Install the Operator next with the cluster\'s Operator bootstrap.
+         * @summary Create a self-managed cluster run by the Qovery Operator
+         * @param {string} organizationId Organization ID
+         * @param {SelfManagedClusterRequest} selfManagedClusterRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createSelfManagedCluster: async (organizationId: string, selfManagedClusterRequest: SelfManagedClusterRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('createSelfManagedCluster', 'organizationId', organizationId)
+            // verify required parameter 'selfManagedClusterRequest' is not null or undefined
+            assertParamExists('createSelfManagedCluster', 'selfManagedClusterRequest', selfManagedClusterRequest)
+            const localVarPath = `/v1/organization/{organizationId}/selfManagedCluster`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(selfManagedClusterRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Delete a cluster
          * @param {string} organizationId Organization ID
@@ -44447,6 +44696,20 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Creates a self-managed cluster on an existing AWS cloud credential of the organization. The organization\'s plan must include self-managed clusters, otherwise the call answers 403. The credential only needs ECR permissions for the cluster itself, including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the credential whatever the cluster region; features that call other AWS services with the credential, such as managed databases or Terraform services using the cluster credentials, need more. The credential, including its ECR access in the cluster region, and the platform configuration are checked before anything is created. One transaction then writes the cluster, its Qovery DNS and build providers, its default ECR registry derived from the credential, its initial deployment status, its platform configuration and its Qovery Operator enrollment. Only the AWS provider is supported. Install the Operator next with the cluster\'s Operator bootstrap.
+         * @summary Create a self-managed cluster run by the Qovery Operator
+         * @param {string} organizationId Organization ID
+         * @param {SelfManagedClusterRequest} selfManagedClusterRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createSelfManagedCluster(organizationId: string, selfManagedClusterRequest: SelfManagedClusterRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SelfManagedClusterResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createSelfManagedCluster(organizationId, selfManagedClusterRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ClustersApi.createSelfManagedCluster']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Delete a cluster
          * @param {string} organizationId Organization ID
@@ -45004,6 +45267,17 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.createCluster(organizationId, clusterRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * Creates a self-managed cluster on an existing AWS cloud credential of the organization. The organization\'s plan must include self-managed clusters, otherwise the call answers 403. The credential only needs ECR permissions for the cluster itself, including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the credential whatever the cluster region; features that call other AWS services with the credential, such as managed databases or Terraform services using the cluster credentials, need more. The credential, including its ECR access in the cluster region, and the platform configuration are checked before anything is created. One transaction then writes the cluster, its Qovery DNS and build providers, its default ECR registry derived from the credential, its initial deployment status, its platform configuration and its Qovery Operator enrollment. Only the AWS provider is supported. Install the Operator next with the cluster\'s Operator bootstrap.
+         * @summary Create a self-managed cluster run by the Qovery Operator
+         * @param {string} organizationId Organization ID
+         * @param {SelfManagedClusterRequest} selfManagedClusterRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createSelfManagedCluster(organizationId: string, selfManagedClusterRequest: SelfManagedClusterRequest, options?: RawAxiosRequestConfig): AxiosPromise<SelfManagedClusterResponse> {
+            return localVarFp.createSelfManagedCluster(organizationId, selfManagedClusterRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Delete a cluster
          * @param {string} organizationId Organization ID
@@ -45452,6 +45726,19 @@ export class ClustersApi extends BaseAPI {
      */
     public createCluster(organizationId: string, clusterRequest?: ClusterRequest, options?: RawAxiosRequestConfig) {
         return ClustersApiFp(this.configuration).createCluster(organizationId, clusterRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates a self-managed cluster on an existing AWS cloud credential of the organization. The organization\'s plan must include self-managed clusters, otherwise the call answers 403. The credential only needs ECR permissions for the cluster itself, including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the credential whatever the cluster region; features that call other AWS services with the credential, such as managed databases or Terraform services using the cluster credentials, need more. The credential, including its ECR access in the cluster region, and the platform configuration are checked before anything is created. One transaction then writes the cluster, its Qovery DNS and build providers, its default ECR registry derived from the credential, its initial deployment status, its platform configuration and its Qovery Operator enrollment. Only the AWS provider is supported. Install the Operator next with the cluster\'s Operator bootstrap.
+     * @summary Create a self-managed cluster run by the Qovery Operator
+     * @param {string} organizationId Organization ID
+     * @param {SelfManagedClusterRequest} selfManagedClusterRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClustersApi
+     */
+    public createSelfManagedCluster(organizationId: string, selfManagedClusterRequest: SelfManagedClusterRequest, options?: RawAxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).createSelfManagedCluster(organizationId, selfManagedClusterRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
