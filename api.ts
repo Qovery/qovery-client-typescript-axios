@@ -8951,6 +8951,62 @@ export interface ClusterPlatformBindingResponse {
     'layers': Array<ClusterPlatformBindingLayerResponse>;
 }
 /**
+ * Complete platform configuration of a cluster. It replaces the stored one; omitted layerSelections and managedConfig are stored empty.
+ * @export
+ * @interface ClusterPlatformConfigurationRequest
+ */
+export interface ClusterPlatformConfigurationRequest {
+    /**
+     * 
+     * @type {PlatformSelection}
+     * @memberof ClusterPlatformConfigurationRequest
+     */
+    'platform': PlatformSelection;
+    /**
+     * String values keyed first by component key and then by input key
+     * @type {{ [key: string]: { [key: string]: string; }; }}
+     * @memberof ClusterPlatformConfigurationRequest
+     */
+    'clusterInputs': { [key: string]: { [key: string]: string; }; };
+}
+/**
+ * 
+ * @export
+ * @interface ClusterPlatformConfigurationResponse
+ */
+export interface ClusterPlatformConfigurationResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterPlatformConfigurationResponse
+     */
+    'clusterId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterPlatformConfigurationResponse
+     */
+    'organizationId': string;
+    /**
+     * 
+     * @type {PlatformSelection}
+     * @memberof ClusterPlatformConfigurationResponse
+     */
+    'platform': PlatformSelection;
+    /**
+     * String values keyed first by component key and then by input key
+     * @type {{ [key: string]: { [key: string]: string; }; }}
+     * @memberof ClusterPlatformConfigurationResponse
+     */
+    'clusterInputs': { [key: string]: { [key: string]: string; }; };
+    /**
+     * 
+     * @type {Array<ClusterPlatformBindingLayerResponse>}
+     * @memberof ClusterPlatformConfigurationResponse
+     */
+    'layers': Array<ClusterPlatformBindingLayerResponse>;
+}
+/**
  * 
  * @export
  * @interface ClusterReadinessStatus
@@ -73759,11 +73815,12 @@ export class OrganizationWebhookApi extends BaseAPI {
 export const PlatformConfigurationApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Returns the platform template selected for the cluster, its layer resolution, and the currently stored component configuration.
+         * Returns the platform template selected for the cluster, its layer resolution, and the currently stored component configuration. Deprecated: use getClusterPlatformConfiguration instead.
          * @summary Get the cluster platform binding
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getClusterPlatformBinding: async (organizationId: string, clusterId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -73773,6 +73830,47 @@ export const PlatformConfigurationApiAxiosParamCreator = function (configuration
             assertParamExists('getClusterPlatformBinding', 'clusterId', clusterId)
             const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/platformBinding`
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the platform selection of the cluster (template release, layer selections and component configuration), its cluster inputs and the resolution of each layer. Sensitive managedConfig values are returned as `\"<redacted>\"`. Cluster inputs are identifiers, never secrets, and are returned as stored.
+         * @summary Get the cluster platform configuration
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusterPlatformConfiguration: async (clusterId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('getClusterPlatformConfiguration', 'clusterId', clusterId)
+            const localVarPath = `/v1/cluster/{clusterId}/platformConfiguration`
                 .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73855,13 +73953,65 @@ export const PlatformConfigurationApiAxiosParamCreator = function (configuration
             };
         },
         /**
-         * Resolves the fields and runtime requirements to display for a component using the cluster context and the values currently entered in the Console. This operation is read-only.
+         * Resolves the fields and runtime requirements of a component from the cluster context, its stored platform configuration (the default template release when it has none) and the draft values of the request. This operation is read-only.
+         * @summary Resolve a platform component configuration of the cluster
+         * @param {string} clusterId Cluster ID
+         * @param {string} componentKey Platform component key
+         * @param {PlatformComponentConfigurationPreviewRequest} platformComponentConfigurationPreviewRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resolveClusterPlatformComponentConfiguration: async (clusterId: string, componentKey: string, platformComponentConfigurationPreviewRequest: PlatformComponentConfigurationPreviewRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('resolveClusterPlatformComponentConfiguration', 'clusterId', clusterId)
+            // verify required parameter 'componentKey' is not null or undefined
+            assertParamExists('resolveClusterPlatformComponentConfiguration', 'componentKey', componentKey)
+            // verify required parameter 'platformComponentConfigurationPreviewRequest' is not null or undefined
+            assertParamExists('resolveClusterPlatformComponentConfiguration', 'platformComponentConfigurationPreviewRequest', platformComponentConfigurationPreviewRequest)
+            const localVarPath = `/v1/cluster/{clusterId}/platformConfiguration/component/{componentKey}/resolve`
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)))
+                .replace(`{${"componentKey"}}`, encodeURIComponent(String(componentKey)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(platformComponentConfigurationPreviewRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Resolves the fields and runtime requirements to display for a component using the cluster context and the values currently entered in the Console. This operation is read-only. Deprecated: use resolveClusterPlatformComponentConfiguration instead.
          * @summary Resolve a platform component configuration
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
          * @param {string} componentKey Platform component key
          * @param {PlatformComponentConfigurationPreviewRequest} platformComponentConfigurationPreviewRequest 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         resolvePlatformComponentConfiguration: async (organizationId: string, clusterId: string, componentKey: string, platformComponentConfigurationPreviewRequest: PlatformComponentConfigurationPreviewRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -73983,12 +74133,13 @@ export const PlatformConfigurationApiAxiosParamCreator = function (configuration
             };
         },
         /**
-         * Selects a platform template and stores layer selections, component profile values, and customer-provided runtime inputs for the cluster.
+         * Selects a platform template and stores layer selections, component profile values, and customer-provided runtime inputs for the cluster. Deprecated: use updateClusterPlatformConfiguration instead.
          * @summary Update the cluster platform binding
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
          * @param {ClusterPlatformBindingRequest} clusterPlatformBindingRequest 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         updateClusterPlatformBinding: async (organizationId: string, clusterId: string, clusterPlatformBindingRequest: ClusterPlatformBindingRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -74033,6 +74184,53 @@ export const PlatformConfigurationApiAxiosParamCreator = function (configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Replaces the whole platform configuration of the cluster, its platform selection and its cluster inputs, after validating it against the template release. Saving does not deploy it. `\"<redacted>\"` is not a keep-existing value: never send it back.
+         * @summary Update the cluster platform configuration
+         * @param {string} clusterId Cluster ID
+         * @param {ClusterPlatformConfigurationRequest} clusterPlatformConfigurationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateClusterPlatformConfiguration: async (clusterId: string, clusterPlatformConfigurationRequest: ClusterPlatformConfigurationRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('updateClusterPlatformConfiguration', 'clusterId', clusterId)
+            // verify required parameter 'clusterPlatformConfigurationRequest' is not null or undefined
+            assertParamExists('updateClusterPlatformConfiguration', 'clusterPlatformConfigurationRequest', clusterPlatformConfigurationRequest)
+            const localVarPath = `/v1/cluster/{clusterId}/platformConfiguration`
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(clusterPlatformConfigurationRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -74044,17 +74242,31 @@ export const PlatformConfigurationApiFp = function(configuration?: Configuration
     const localVarAxiosParamCreator = PlatformConfigurationApiAxiosParamCreator(configuration)
     return {
         /**
-         * Returns the platform template selected for the cluster, its layer resolution, and the currently stored component configuration.
+         * Returns the platform template selected for the cluster, its layer resolution, and the currently stored component configuration. Deprecated: use getClusterPlatformConfiguration instead.
          * @summary Get the cluster platform binding
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async getClusterPlatformBinding(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterPlatformBindingResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterPlatformBinding(organizationId, clusterId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformConfigurationApi.getClusterPlatformBinding']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the platform selection of the cluster (template release, layer selections and component configuration), its cluster inputs and the resolution of each layer. Sensitive managedConfig values are returned as `\"<redacted>\"`. Cluster inputs are identifiers, never secrets, and are returned as stored.
+         * @summary Get the cluster platform configuration
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getClusterPlatformConfiguration(clusterId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterPlatformConfigurationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterPlatformConfiguration(clusterId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformConfigurationApi.getClusterPlatformConfiguration']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -74073,13 +74285,29 @@ export const PlatformConfigurationApiFp = function(configuration?: Configuration
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Resolves the fields and runtime requirements to display for a component using the cluster context and the values currently entered in the Console. This operation is read-only.
+         * Resolves the fields and runtime requirements of a component from the cluster context, its stored platform configuration (the default template release when it has none) and the draft values of the request. This operation is read-only.
+         * @summary Resolve a platform component configuration of the cluster
+         * @param {string} clusterId Cluster ID
+         * @param {string} componentKey Platform component key
+         * @param {PlatformComponentConfigurationPreviewRequest} platformComponentConfigurationPreviewRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async resolveClusterPlatformComponentConfiguration(clusterId: string, componentKey: string, platformComponentConfigurationPreviewRequest: PlatformComponentConfigurationPreviewRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformComponentConfigurationPreviewResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.resolveClusterPlatformComponentConfiguration(clusterId, componentKey, platformComponentConfigurationPreviewRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformConfigurationApi.resolveClusterPlatformComponentConfiguration']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Resolves the fields and runtime requirements to display for a component using the cluster context and the values currently entered in the Console. This operation is read-only. Deprecated: use resolveClusterPlatformComponentConfiguration instead.
          * @summary Resolve a platform component configuration
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
          * @param {string} componentKey Platform component key
          * @param {PlatformComponentConfigurationPreviewRequest} platformComponentConfigurationPreviewRequest 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async resolvePlatformComponentConfiguration(organizationId: string, clusterId: string, componentKey: string, platformComponentConfigurationPreviewRequest: PlatformComponentConfigurationPreviewRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformComponentConfigurationPreviewResponse>> {
@@ -74108,18 +74336,33 @@ export const PlatformConfigurationApiFp = function(configuration?: Configuration
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Selects a platform template and stores layer selections, component profile values, and customer-provided runtime inputs for the cluster.
+         * Selects a platform template and stores layer selections, component profile values, and customer-provided runtime inputs for the cluster. Deprecated: use updateClusterPlatformConfiguration instead.
          * @summary Update the cluster platform binding
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
          * @param {ClusterPlatformBindingRequest} clusterPlatformBindingRequest 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async updateClusterPlatformBinding(organizationId: string, clusterId: string, clusterPlatformBindingRequest: ClusterPlatformBindingRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterPlatformBindingResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateClusterPlatformBinding(organizationId, clusterId, clusterPlatformBindingRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformConfigurationApi.updateClusterPlatformBinding']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Replaces the whole platform configuration of the cluster, its platform selection and its cluster inputs, after validating it against the template release. Saving does not deploy it. `\"<redacted>\"` is not a keep-existing value: never send it back.
+         * @summary Update the cluster platform configuration
+         * @param {string} clusterId Cluster ID
+         * @param {ClusterPlatformConfigurationRequest} clusterPlatformConfigurationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateClusterPlatformConfiguration(clusterId: string, clusterPlatformConfigurationRequest: ClusterPlatformConfigurationRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterPlatformConfigurationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateClusterPlatformConfiguration(clusterId, clusterPlatformConfigurationRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformConfigurationApi.updateClusterPlatformConfiguration']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -74133,15 +74376,26 @@ export const PlatformConfigurationApiFactory = function (configuration?: Configu
     const localVarFp = PlatformConfigurationApiFp(configuration)
     return {
         /**
-         * Returns the platform template selected for the cluster, its layer resolution, and the currently stored component configuration.
+         * Returns the platform template selected for the cluster, its layer resolution, and the currently stored component configuration. Deprecated: use getClusterPlatformConfiguration instead.
          * @summary Get the cluster platform binding
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getClusterPlatformBinding(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterPlatformBindingResponse> {
             return localVarFp.getClusterPlatformBinding(organizationId, clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the platform selection of the cluster (template release, layer selections and component configuration), its cluster inputs and the resolution of each layer. Sensitive managedConfig values are returned as `\"<redacted>\"`. Cluster inputs are identifiers, never secrets, and are returned as stored.
+         * @summary Get the cluster platform configuration
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getClusterPlatformConfiguration(clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterPlatformConfigurationResponse> {
+            return localVarFp.getClusterPlatformConfiguration(clusterId, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the published platform templates available to the organization. Each template contains its layers, components, and the configuration fields that the Console can render. When clusterMode and cloudProvider are supplied together, component field constraints are narrowed to the effective choices for that cluster context.
@@ -74156,13 +74410,26 @@ export const PlatformConfigurationApiFactory = function (configuration?: Configu
             return localVarFp.listPlatformTemplates(organizationId, clusterMode, cloudProvider, options).then((request) => request(axios, basePath));
         },
         /**
-         * Resolves the fields and runtime requirements to display for a component using the cluster context and the values currently entered in the Console. This operation is read-only.
+         * Resolves the fields and runtime requirements of a component from the cluster context, its stored platform configuration (the default template release when it has none) and the draft values of the request. This operation is read-only.
+         * @summary Resolve a platform component configuration of the cluster
+         * @param {string} clusterId Cluster ID
+         * @param {string} componentKey Platform component key
+         * @param {PlatformComponentConfigurationPreviewRequest} platformComponentConfigurationPreviewRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resolveClusterPlatformComponentConfiguration(clusterId: string, componentKey: string, platformComponentConfigurationPreviewRequest: PlatformComponentConfigurationPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformComponentConfigurationPreviewResponse> {
+            return localVarFp.resolveClusterPlatformComponentConfiguration(clusterId, componentKey, platformComponentConfigurationPreviewRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Resolves the fields and runtime requirements to display for a component using the cluster context and the values currently entered in the Console. This operation is read-only. Deprecated: use resolveClusterPlatformComponentConfiguration instead.
          * @summary Resolve a platform component configuration
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
          * @param {string} componentKey Platform component key
          * @param {PlatformComponentConfigurationPreviewRequest} platformComponentConfigurationPreviewRequest 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         resolvePlatformComponentConfiguration(organizationId: string, clusterId: string, componentKey: string, platformComponentConfigurationPreviewRequest: PlatformComponentConfigurationPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformComponentConfigurationPreviewResponse> {
@@ -74185,16 +74452,28 @@ export const PlatformConfigurationApiFactory = function (configuration?: Configu
             return localVarFp.resolvePlatformTemplateComponentConfiguration(organizationId, templateKey, templateVersion, componentKey, clusterMode, cloudProvider, platformComponentConfigurationPreviewRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Selects a platform template and stores layer selections, component profile values, and customer-provided runtime inputs for the cluster.
+         * Selects a platform template and stores layer selections, component profile values, and customer-provided runtime inputs for the cluster. Deprecated: use updateClusterPlatformConfiguration instead.
          * @summary Update the cluster platform binding
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
          * @param {ClusterPlatformBindingRequest} clusterPlatformBindingRequest 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         updateClusterPlatformBinding(organizationId: string, clusterId: string, clusterPlatformBindingRequest: ClusterPlatformBindingRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClusterPlatformBindingResponse> {
             return localVarFp.updateClusterPlatformBinding(organizationId, clusterId, clusterPlatformBindingRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Replaces the whole platform configuration of the cluster, its platform selection and its cluster inputs, after validating it against the template release. Saving does not deploy it. `\"<redacted>\"` is not a keep-existing value: never send it back.
+         * @summary Update the cluster platform configuration
+         * @param {string} clusterId Cluster ID
+         * @param {ClusterPlatformConfigurationRequest} clusterPlatformConfigurationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateClusterPlatformConfiguration(clusterId: string, clusterPlatformConfigurationRequest: ClusterPlatformConfigurationRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClusterPlatformConfigurationResponse> {
+            return localVarFp.updateClusterPlatformConfiguration(clusterId, clusterPlatformConfigurationRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -74207,16 +74486,29 @@ export const PlatformConfigurationApiFactory = function (configuration?: Configu
  */
 export class PlatformConfigurationApi extends BaseAPI {
     /**
-     * Returns the platform template selected for the cluster, its layer resolution, and the currently stored component configuration.
+     * Returns the platform template selected for the cluster, its layer resolution, and the currently stored component configuration. Deprecated: use getClusterPlatformConfiguration instead.
      * @summary Get the cluster platform binding
      * @param {string} organizationId Organization ID
      * @param {string} clusterId Cluster ID
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof PlatformConfigurationApi
      */
     public getClusterPlatformBinding(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig) {
         return PlatformConfigurationApiFp(this.configuration).getClusterPlatformBinding(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the platform selection of the cluster (template release, layer selections and component configuration), its cluster inputs and the resolution of each layer. Sensitive managedConfig values are returned as `\"<redacted>\"`. Cluster inputs are identifiers, never secrets, and are returned as stored.
+     * @summary Get the cluster platform configuration
+     * @param {string} clusterId Cluster ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformConfigurationApi
+     */
+    public getClusterPlatformConfiguration(clusterId: string, options?: RawAxiosRequestConfig) {
+        return PlatformConfigurationApiFp(this.configuration).getClusterPlatformConfiguration(clusterId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -74234,13 +74526,28 @@ export class PlatformConfigurationApi extends BaseAPI {
     }
 
     /**
-     * Resolves the fields and runtime requirements to display for a component using the cluster context and the values currently entered in the Console. This operation is read-only.
+     * Resolves the fields and runtime requirements of a component from the cluster context, its stored platform configuration (the default template release when it has none) and the draft values of the request. This operation is read-only.
+     * @summary Resolve a platform component configuration of the cluster
+     * @param {string} clusterId Cluster ID
+     * @param {string} componentKey Platform component key
+     * @param {PlatformComponentConfigurationPreviewRequest} platformComponentConfigurationPreviewRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformConfigurationApi
+     */
+    public resolveClusterPlatformComponentConfiguration(clusterId: string, componentKey: string, platformComponentConfigurationPreviewRequest: PlatformComponentConfigurationPreviewRequest, options?: RawAxiosRequestConfig) {
+        return PlatformConfigurationApiFp(this.configuration).resolveClusterPlatformComponentConfiguration(clusterId, componentKey, platformComponentConfigurationPreviewRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Resolves the fields and runtime requirements to display for a component using the cluster context and the values currently entered in the Console. This operation is read-only. Deprecated: use resolveClusterPlatformComponentConfiguration instead.
      * @summary Resolve a platform component configuration
      * @param {string} organizationId Organization ID
      * @param {string} clusterId Cluster ID
      * @param {string} componentKey Platform component key
      * @param {PlatformComponentConfigurationPreviewRequest} platformComponentConfigurationPreviewRequest 
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof PlatformConfigurationApi
      */
@@ -74267,17 +74574,31 @@ export class PlatformConfigurationApi extends BaseAPI {
     }
 
     /**
-     * Selects a platform template and stores layer selections, component profile values, and customer-provided runtime inputs for the cluster.
+     * Selects a platform template and stores layer selections, component profile values, and customer-provided runtime inputs for the cluster. Deprecated: use updateClusterPlatformConfiguration instead.
      * @summary Update the cluster platform binding
      * @param {string} organizationId Organization ID
      * @param {string} clusterId Cluster ID
      * @param {ClusterPlatformBindingRequest} clusterPlatformBindingRequest 
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof PlatformConfigurationApi
      */
     public updateClusterPlatformBinding(organizationId: string, clusterId: string, clusterPlatformBindingRequest: ClusterPlatformBindingRequest, options?: RawAxiosRequestConfig) {
         return PlatformConfigurationApiFp(this.configuration).updateClusterPlatformBinding(organizationId, clusterId, clusterPlatformBindingRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Replaces the whole platform configuration of the cluster, its platform selection and its cluster inputs, after validating it against the template release. Saving does not deploy it. `\"<redacted>\"` is not a keep-existing value: never send it back.
+     * @summary Update the cluster platform configuration
+     * @param {string} clusterId Cluster ID
+     * @param {ClusterPlatformConfigurationRequest} clusterPlatformConfigurationRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformConfigurationApi
+     */
+    public updateClusterPlatformConfiguration(clusterId: string, clusterPlatformConfigurationRequest: ClusterPlatformConfigurationRequest, options?: RawAxiosRequestConfig) {
+        return PlatformConfigurationApiFp(this.configuration).updateClusterPlatformConfiguration(clusterId, clusterPlatformConfigurationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
