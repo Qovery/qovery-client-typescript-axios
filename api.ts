@@ -21146,6 +21146,12 @@ export interface Organization {
      */
     'billing_deployment_restriction'?: string | null;
     /**
+     * Indicates if the organization uses SAML or OIDC
+     * @type {boolean}
+     * @memberof Organization
+     */
+    'has_enterprise_connection'?: boolean;
+    /**
      * 
      * @type {OrganizationAllOfOrganizationPlan}
      * @memberof Organization
