@@ -678,6 +678,30 @@ export interface AgenticWorkflowRun {
      * @memberof AgenticWorkflowRun
      */
     'recorded_at': string | null;
+    /**
+     * 
+     * @type {AgenticWorkflowRunStatus}
+     * @memberof AgenticWorkflowRun
+     */
+    'status': AgenticWorkflowRunStatus;
+    /**
+     * Time the run entered RUNNING. Separate from recorded_at. Null until that transition is observed, and null for a run that reached a terminal status without it being observed.
+     * @type {string}
+     * @memberof AgenticWorkflowRun
+     */
+    'started_at': string | null;
+    /**
+     * Time the run reached a terminal status. Null until then.
+     * @type {string}
+     * @memberof AgenticWorkflowRun
+     */
+    'finished_at': string | null;
+    /**
+     * finished_at minus started_at, in milliseconds. Derived, not stored. Null unless both timestamps are set.
+     * @type {number}
+     * @memberof AgenticWorkflowRun
+     */
+    'duration_ms': number | null;
 }
 
 
@@ -706,6 +730,23 @@ export interface AgenticWorkflowRunPaginatedResponseList {
      */
     'results'?: Array<AgenticWorkflowRun>;
 }
+/**
+ * Status of a run. COMPLETED, FAILED and CANCELLED are terminal and never change afterwards.
+ * @export
+ * @enum {string}
+ */
+
+export const AgenticWorkflowRunStatus = {
+    QUEUED: 'QUEUED',
+    RUNNING: 'RUNNING',
+    COMPLETED: 'COMPLETED',
+    FAILED: 'FAILED',
+    CANCELLED: 'CANCELLED'
+} as const;
+
+export type AgenticWorkflowRunStatus = typeof AgenticWorkflowRunStatus[keyof typeof AgenticWorkflowRunStatus];
+
+
 /**
  * What triggered the run. MANUAL is reserved for manual runs; no backend producer emits it yet.
  * @export
