@@ -667,6 +667,12 @@ export interface AgenticWorkflowRun {
      */
     'prompt': string | null;
     /**
+     * Body of the event that triggered the run, as it was received: the webhook request body for a WEBHOOK run, empty for a SCHEDULE or MANUAL run. Request headers are never stored. The value is unredacted and supplied by the caller of the webhook, so treat it as untrusted text. Null when the run has no stored payload.
+     * @type {string}
+     * @memberof AgenticWorkflowRun
+     */
+    'payload': string | null;
+    /**
      * Time the run was requested.
      * @type {string}
      * @memberof AgenticWorkflowRun
@@ -748,7 +754,7 @@ export type AgenticWorkflowRunStatus = typeof AgenticWorkflowRunStatus[keyof typ
 
 
 /**
- * What triggered the run. MANUAL is reserved for manual runs; no backend producer emits it yet.
+ * What triggered the run. MANUAL is a run started through the deploy endpoint, SCHEDULE a run started by the workflow\'s cron schedule, WEBHOOK a run started by its webhook.
  * @export
  * @enum {string}
  */
@@ -29364,7 +29370,7 @@ export const AgenticWorkflowsApiAxiosParamCreator = function (configuration?: Co
             };
         },
         /**
-         * Deploy the agentic workflow service so its configuration can be tested. Routine runs of the workflow are triggered by its webhook or its schedule, not by this endpoint.
+         * Deploy the agentic workflow service so its configuration can be tested. Routine runs of the workflow are triggered by its webhook or its schedule, not by this endpoint. Each deploy is recorded in the run history as a MANUAL run before it is queued: if the run cannot be recorded, the deploy is not queued and the call fails with a 500 that is safe to retry.
          * @summary Deploy an agentic workflow
          * @param {string} agenticWorkflowId 
          * @param {*} [options] Override http request option.
@@ -29680,7 +29686,7 @@ export const AgenticWorkflowsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Deploy the agentic workflow service so its configuration can be tested. Routine runs of the workflow are triggered by its webhook or its schedule, not by this endpoint.
+         * Deploy the agentic workflow service so its configuration can be tested. Routine runs of the workflow are triggered by its webhook or its schedule, not by this endpoint. Each deploy is recorded in the run history as a MANUAL run before it is queued: if the run cannot be recorded, the deploy is not queued and the call fails with a 500 that is safe to retry.
          * @summary Deploy an agentic workflow
          * @param {string} agenticWorkflowId 
          * @param {*} [options] Override http request option.
@@ -29804,7 +29810,7 @@ export const AgenticWorkflowsApiFactory = function (configuration?: Configuratio
             return localVarFp.deleteAgenticWorkflow(agenticWorkflowId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Deploy the agentic workflow service so its configuration can be tested. Routine runs of the workflow are triggered by its webhook or its schedule, not by this endpoint.
+         * Deploy the agentic workflow service so its configuration can be tested. Routine runs of the workflow are triggered by its webhook or its schedule, not by this endpoint. Each deploy is recorded in the run history as a MANUAL run before it is queued: if the run cannot be recorded, the deploy is not queued and the call fails with a 500 that is safe to retry.
          * @summary Deploy an agentic workflow
          * @param {string} agenticWorkflowId 
          * @param {*} [options] Override http request option.
@@ -29916,7 +29922,7 @@ export class AgenticWorkflowsApi extends BaseAPI {
     }
 
     /**
-     * Deploy the agentic workflow service so its configuration can be tested. Routine runs of the workflow are triggered by its webhook or its schedule, not by this endpoint.
+     * Deploy the agentic workflow service so its configuration can be tested. Routine runs of the workflow are triggered by its webhook or its schedule, not by this endpoint. Each deploy is recorded in the run history as a MANUAL run before it is queued: if the run cannot be recorded, the deploy is not queued and the call fails with a 500 that is safe to retry.
      * @summary Deploy an agentic workflow
      * @param {string} agenticWorkflowId 
      * @param {*} [options] Override http request option.
