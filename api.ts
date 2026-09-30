@@ -19149,7 +19149,7 @@ export type KarpenterNodePoolRequirementOperator = typeof KarpenterNodePoolRequi
 
 
 /**
- * 
+ * The optional `drift_blocking` setting defines one recurring UTC window during which Karpenter drift disruptions are blocked on the stable node pool. When omitted on creation or disabled, drift behavior is unchanged; omitting it on update preserves the existing setting. When enabled, `days` must contain all seven weekdays and `duration` must be between PT1M and PT23H, leaving at least one hour each day when drift is permitted.
  * @export
  * @interface KarpenterStableNodePoolOverride
  */
@@ -19160,6 +19160,12 @@ export interface KarpenterStableNodePoolOverride {
      * @memberof KarpenterStableNodePoolOverride
      */
     'consolidation'?: KarpenterNodePoolConsolidation;
+    /**
+     * 
+     * @type {KarpenterNodePoolConsolidation}
+     * @memberof KarpenterStableNodePoolOverride
+     */
+    'drift_blocking'?: KarpenterNodePoolConsolidation;
     /**
      * 
      * @type {KarpenterNodePoolLimits}
