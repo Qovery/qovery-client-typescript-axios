@@ -1654,6 +1654,12 @@ export interface Application {
      */
     'storage'?: Array<ServiceStorageStorageInner>;
     /**
+     * Non-blocking problems found while applying a service edit. Only present on the response of an edit, and only when there is at least one warning. The edit itself is saved. 
+     * @type {Array<ServiceEditWarning>}
+     * @memberof Application
+     */
+    'warnings'?: Array<ServiceEditWarning>;
+    /**
      * 
      * @type {ReferenceObject}
      * @memberof Application
@@ -3976,6 +3982,12 @@ export interface BaseJobResponse {
      * @memberof BaseJobResponse
      */
     'updated_at'?: string;
+    /**
+     * Non-blocking problems found while applying a service edit. Only present on the response of an edit, and only when there is at least one warning. The edit itself is saved. 
+     * @type {Array<ServiceEditWarning>}
+     * @memberof BaseJobResponse
+     */
+    'warnings'?: Array<ServiceEditWarning>;
     /**
      * 
      * @type {ReferenceObject}
@@ -11107,6 +11119,12 @@ export interface CronJobResponse {
      */
     'updated_at'?: string;
     /**
+     * Non-blocking problems found while applying a service edit. Only present on the response of an edit, and only when there is at least one warning. The edit itself is saved. 
+     * @type {Array<ServiceEditWarning>}
+     * @memberof CronJobResponse
+     */
+    'warnings'?: Array<ServiceEditWarning>;
+    /**
      * 
      * @type {ReferenceObject}
      * @memberof CronJobResponse
@@ -17599,6 +17617,12 @@ export interface HelmResponse {
      */
     'updated_at'?: string;
     /**
+     * Non-blocking problems found while applying a service edit. Only present on the response of an edit, and only when there is at least one warning. The edit itself is saved. 
+     * @type {Array<ServiceEditWarning>}
+     * @memberof HelmResponse
+     */
+    'warnings'?: Array<ServiceEditWarning>;
+    /**
      * 
      * @type {ReferenceObject}
      * @memberof HelmResponse
@@ -19688,6 +19712,12 @@ export interface LifecycleJobResponse {
      * @memberof LifecycleJobResponse
      */
     'updated_at'?: string;
+    /**
+     * Non-blocking problems found while applying a service edit. Only present on the response of an edit, and only when there is at least one warning. The edit itself is saved. 
+     * @type {Array<ServiceEditWarning>}
+     * @memberof LifecycleJobResponse
+     */
+    'warnings'?: Array<ServiceEditWarning>;
     /**
      * 
      * @type {ReferenceObject}
@@ -26052,6 +26082,55 @@ export type ServiceDeploymentStatusEnum = typeof ServiceDeploymentStatusEnum[key
 /**
  * 
  * @export
+ * @interface ServiceEditWarning
+ */
+export interface ServiceEditWarning {
+    /**
+     * 
+     * @type {ServiceEditWarningCodeEnum}
+     * @memberof ServiceEditWarning
+     */
+    'code': ServiceEditWarningCodeEnum;
+    /**
+     * Human-readable explanation of the warning
+     * @type {string}
+     * @memberof ServiceEditWarning
+     */
+    'message': string;
+}
+
+
+/**
+ * - GIT_WEBHOOK_PERMISSION_DENIED: the git account or token used by the service lacks admin rights on the repository, so the auto-deploy webhook could not be created - GIT_WEBHOOK_SETUP_FAILED: the auto-deploy webhook could not be created for another reason - GIT_REPOSITORY_OWNER_CHANGED: the previous git account lost access to the repository, so the account of the user who made the edit is now used for this service 
+ * @export
+ * @enum {string}
+ */
+
+export const ServiceEditWarningCodeEnum = {
+    WEBHOOK_PERMISSION_DENIED: 'GIT_WEBHOOK_PERMISSION_DENIED',
+    WEBHOOK_SETUP_FAILED: 'GIT_WEBHOOK_SETUP_FAILED',
+    REPOSITORY_OWNER_CHANGED: 'GIT_REPOSITORY_OWNER_CHANGED'
+} as const;
+
+export type ServiceEditWarningCodeEnum = typeof ServiceEditWarningCodeEnum[keyof typeof ServiceEditWarningCodeEnum];
+
+
+/**
+ * 
+ * @export
+ * @interface ServiceEditWarnings
+ */
+export interface ServiceEditWarnings {
+    /**
+     * Non-blocking problems found while applying a service edit. Only present on the response of an edit, and only when there is at least one warning. The edit itself is saved. 
+     * @type {Array<ServiceEditWarning>}
+     * @memberof ServiceEditWarnings
+     */
+    'warnings'?: Array<ServiceEditWarning>;
+}
+/**
+ * 
+ * @export
  * @interface ServiceLabelRequest
  */
 export interface ServiceLabelRequest {
@@ -27940,6 +28019,12 @@ export interface TerraformResponse {
      * @memberof TerraformResponse
      */
     'updated_at'?: string;
+    /**
+     * Non-blocking problems found while applying a service edit. Only present on the response of an edit, and only when there is at least one warning. The edit itself is saved. 
+     * @type {Array<ServiceEditWarning>}
+     * @memberof TerraformResponse
+     */
+    'warnings'?: Array<ServiceEditWarning>;
     /**
      * name is case insensitive
      * @type {string}
