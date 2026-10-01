@@ -25782,6 +25782,37 @@ export type SelfManagedClusterKind = typeof SelfManagedClusterKind[keyof typeof 
 
 
 /**
+ * Platform template release and configuration of a new self-managed cluster. Set templateKey and templateVersion together to select a release, or omit both and Qovery selects its self-managed platform template release; only one of them answers 400. layerSelections and managedConfig are validated against the selected release, and `{}` gives that release with its default configuration. Send them without templateKey and templateVersion only if you already know the components of the self-managed platform template; a client that renders the fields of a release must send that release\'s coordinates, and selections of mandatory layers are rejected. The response returns the selected release, and the cluster keeps it even if Qovery later selects another one.
+ * @export
+ * @interface SelfManagedClusterPlatformSelection
+ */
+export interface SelfManagedClusterPlatformSelection {
+    /**
+     * Key of the platform template release, set together with templateVersion.
+     * @type {string}
+     * @memberof SelfManagedClusterPlatformSelection
+     */
+    'templateKey'?: string;
+    /**
+     * Version of the platform template release, set together with templateKey.
+     * @type {string}
+     * @memberof SelfManagedClusterPlatformSelection
+     */
+    'templateVersion'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: boolean; }}
+     * @memberof SelfManagedClusterPlatformSelection
+     */
+    'layerSelections'?: { [key: string]: boolean; };
+    /**
+     * Component configuration values keyed by component key
+     * @type {{ [key: string]: { [key: string]: any; }; }}
+     * @memberof SelfManagedClusterPlatformSelection
+     */
+    'managedConfig'?: { [key: string]: { [key: string]: any; }; };
+}
+/**
  * Default ECR registry of the cluster, derived from its cloud credential and region.
  * @export
  * @interface SelfManagedClusterRegistryResponse
@@ -25840,10 +25871,10 @@ export interface SelfManagedClusterRequest {
     'credentials': SelfManagedClusterCredentials;
     /**
      * 
-     * @type {PlatformSelection}
+     * @type {SelfManagedClusterPlatformSelection}
      * @memberof SelfManagedClusterRequest
      */
-    'platform': PlatformSelection;
+    'platform': SelfManagedClusterPlatformSelection;
     /**
      * String values keyed first by component key and then by input key
      * @type {{ [key: string]: { [key: string]: string; }; }}
@@ -43027,7 +43058,7 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Creates a self-managed cluster on an existing AWS cloud credential of the organization. The organization\'s plan must include self-managed clusters, otherwise the call answers 403. The credential only needs ECR permissions for the cluster itself, including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the credential whatever the cluster region; features that call other AWS services with the credential, such as managed databases or Terraform services using the cluster credentials, need more. The credential, including its ECR access in the cluster region, and the platform configuration are checked before anything is created. One transaction then writes the cluster, its Qovery DNS and build providers, its default ECR registry derived from the credential, its initial deployment status, its platform configuration and its Qovery Operator enrollment. Only the AWS provider is supported. Install the Operator next with the cluster\'s Operator bootstrap.
+         * Creates a self-managed cluster on an existing AWS cloud credential of the organization. The organization\'s plan must include self-managed clusters, otherwise the call answers 403. The credential only needs ECR permissions for the cluster itself, including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the credential whatever the cluster region; features that call other AWS services with the credential, such as managed databases or Terraform services using the cluster credentials, need more. Without `platform.templateKey` and `platform.templateVersion`, Qovery selects its self-managed platform template release and the response returns it: `\"platform\": {}` gives that release with its default configuration. Without `clusterInputs`, the cluster has no cluster inputs. The credential, including its ECR access in the cluster region, and the platform configuration are checked before anything is created. One transaction then writes the cluster, its Qovery DNS and build providers, its default ECR registry derived from the credential, its initial deployment status, its platform configuration and its Qovery Operator enrollment. Only the AWS provider is supported. Install the Operator next with the cluster\'s Operator bootstrap.
          * @summary Create a self-managed cluster run by the Qovery Operator
          * @param {string} organizationId Organization ID
          * @param {SelfManagedClusterRequest} selfManagedClusterRequest 
@@ -44897,7 +44928,7 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates a self-managed cluster on an existing AWS cloud credential of the organization. The organization\'s plan must include self-managed clusters, otherwise the call answers 403. The credential only needs ECR permissions for the cluster itself, including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the credential whatever the cluster region; features that call other AWS services with the credential, such as managed databases or Terraform services using the cluster credentials, need more. The credential, including its ECR access in the cluster region, and the platform configuration are checked before anything is created. One transaction then writes the cluster, its Qovery DNS and build providers, its default ECR registry derived from the credential, its initial deployment status, its platform configuration and its Qovery Operator enrollment. Only the AWS provider is supported. Install the Operator next with the cluster\'s Operator bootstrap.
+         * Creates a self-managed cluster on an existing AWS cloud credential of the organization. The organization\'s plan must include self-managed clusters, otherwise the call answers 403. The credential only needs ECR permissions for the cluster itself, including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the credential whatever the cluster region; features that call other AWS services with the credential, such as managed databases or Terraform services using the cluster credentials, need more. Without `platform.templateKey` and `platform.templateVersion`, Qovery selects its self-managed platform template release and the response returns it: `\"platform\": {}` gives that release with its default configuration. Without `clusterInputs`, the cluster has no cluster inputs. The credential, including its ECR access in the cluster region, and the platform configuration are checked before anything is created. One transaction then writes the cluster, its Qovery DNS and build providers, its default ECR registry derived from the credential, its initial deployment status, its platform configuration and its Qovery Operator enrollment. Only the AWS provider is supported. Install the Operator next with the cluster\'s Operator bootstrap.
          * @summary Create a self-managed cluster run by the Qovery Operator
          * @param {string} organizationId Organization ID
          * @param {SelfManagedClusterRequest} selfManagedClusterRequest 
@@ -45468,7 +45499,7 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.createCluster(organizationId, clusterRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates a self-managed cluster on an existing AWS cloud credential of the organization. The organization\'s plan must include self-managed clusters, otherwise the call answers 403. The credential only needs ECR permissions for the cluster itself, including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the credential whatever the cluster region; features that call other AWS services with the credential, such as managed databases or Terraform services using the cluster credentials, need more. The credential, including its ECR access in the cluster region, and the platform configuration are checked before anything is created. One transaction then writes the cluster, its Qovery DNS and build providers, its default ECR registry derived from the credential, its initial deployment status, its platform configuration and its Qovery Operator enrollment. Only the AWS provider is supported. Install the Operator next with the cluster\'s Operator bootstrap.
+         * Creates a self-managed cluster on an existing AWS cloud credential of the organization. The organization\'s plan must include self-managed clusters, otherwise the call answers 403. The credential only needs ECR permissions for the cluster itself, including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the credential whatever the cluster region; features that call other AWS services with the credential, such as managed databases or Terraform services using the cluster credentials, need more. Without `platform.templateKey` and `platform.templateVersion`, Qovery selects its self-managed platform template release and the response returns it: `\"platform\": {}` gives that release with its default configuration. Without `clusterInputs`, the cluster has no cluster inputs. The credential, including its ECR access in the cluster region, and the platform configuration are checked before anything is created. One transaction then writes the cluster, its Qovery DNS and build providers, its default ECR registry derived from the credential, its initial deployment status, its platform configuration and its Qovery Operator enrollment. Only the AWS provider is supported. Install the Operator next with the cluster\'s Operator bootstrap.
          * @summary Create a self-managed cluster run by the Qovery Operator
          * @param {string} organizationId Organization ID
          * @param {SelfManagedClusterRequest} selfManagedClusterRequest 
@@ -45930,7 +45961,7 @@ export class ClustersApi extends BaseAPI {
     }
 
     /**
-     * Creates a self-managed cluster on an existing AWS cloud credential of the organization. The organization\'s plan must include self-managed clusters, otherwise the call answers 403. The credential only needs ECR permissions for the cluster itself, including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the credential whatever the cluster region; features that call other AWS services with the credential, such as managed databases or Terraform services using the cluster credentials, need more. The credential, including its ECR access in the cluster region, and the platform configuration are checked before anything is created. One transaction then writes the cluster, its Qovery DNS and build providers, its default ECR registry derived from the credential, its initial deployment status, its platform configuration and its Qovery Operator enrollment. Only the AWS provider is supported. Install the Operator next with the cluster\'s Operator bootstrap.
+     * Creates a self-managed cluster on an existing AWS cloud credential of the organization. The organization\'s plan must include self-managed clusters, otherwise the call answers 403. The credential only needs ECR permissions for the cluster itself, including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the credential whatever the cluster region; features that call other AWS services with the credential, such as managed databases or Terraform services using the cluster credentials, need more. Without `platform.templateKey` and `platform.templateVersion`, Qovery selects its self-managed platform template release and the response returns it: `\"platform\": {}` gives that release with its default configuration. Without `clusterInputs`, the cluster has no cluster inputs. The credential, including its ECR access in the cluster region, and the platform configuration are checked before anything is created. One transaction then writes the cluster, its Qovery DNS and build providers, its default ECR registry derived from the credential, its initial deployment status, its platform configuration and its Qovery Operator enrollment. Only the AWS provider is supported. Install the Operator next with the cluster\'s Operator bootstrap.
      * @summary Create a self-managed cluster run by the Qovery Operator
      * @param {string} organizationId Organization ID
      * @param {SelfManagedClusterRequest} selfManagedClusterRequest 
