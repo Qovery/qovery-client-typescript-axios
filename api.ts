@@ -23501,6 +23501,12 @@ export interface PlatformComponentConfigurationPreviewResponse {
      * @memberof PlatformComponentConfigurationPreviewResponse
      */
     'violations': Array<PlatformComponentConfigurationViolationResponse>;
+    /**
+     * Value of each read-only field in fields, keyed by field key, with no other entry; `{}` when no field is read-only. Values are encoded as strings, like defaultValue, and `null` means that no value is set, such as no CPU limit. A value is the configuration computed for this draft, not proof of what runs on the cluster.
+     * @type {{ [key: string]: string | null; }}
+     * @memberof PlatformComponentConfigurationPreviewResponse
+     */
+    'resolvedValues': { [key: string]: string | null; };
 }
 /**
  * 
@@ -23552,6 +23558,12 @@ export interface PlatformComponentConfigurationResolutionResponse {
      * @memberof PlatformComponentConfigurationResolutionResponse
      */
     'violations': Array<PlatformComponentConfigurationViolationResponse>;
+    /**
+     * Value of each read-only field in fields, keyed by field key, with no other entry; `{}` when no field is read-only. Values are encoded as strings, like defaultValue, and `null` means that no value is set, such as no CPU limit. A value is the configuration computed for this draft, not proof of what runs on the cluster.
+     * @type {{ [key: string]: string | null; }}
+     * @memberof PlatformComponentConfigurationResolutionResponse
+     */
+    'resolvedValues': { [key: string]: string | null; };
 }
 /**
  * 
@@ -23579,7 +23591,7 @@ export interface PlatformComponentConfigurationViolationResponse {
     'message': string;
 }
 /**
- * A catalog field the cluster must provide for the selected configuration: the scalar field descriptor extended with its resolution scope and readiness. Input requirements cannot be object or array descriptors.
+ * A catalog field the cluster must provide for the selected configuration: the scalar field descriptor extended with its resolution scope and readiness. Input requirements cannot be object or array descriptors and are never read-only.
  * @export
  * @interface PlatformComponentInputRequirementResponse
  */
@@ -23626,6 +23638,12 @@ export interface PlatformComponentInputRequirementResponse {
      * @memberof PlatformComponentInputRequirementResponse
      */
     'sensitive': boolean;
+    /**
+     * Omitted when false. A read-only field is never required or sensitive, and its defaultValue is null. Its value comes from resolvedValues in the same response, never from the client draft. Read-only fields appear only at the top level of the fields of a resolve response; catalog descriptors are never read-only.
+     * @type {boolean}
+     * @memberof PlatformComponentInputRequirementResponse
+     */
+    'readOnly'?: boolean;
     /**
      * 
      * @type {FieldSchemaConstraintsResponse}
@@ -25274,6 +25292,12 @@ export interface ScalarFieldSchemaResponse {
      * @memberof ScalarFieldSchemaResponse
      */
     'sensitive': boolean;
+    /**
+     * Omitted when false. A read-only field is never required or sensitive, and its defaultValue is null. Its value comes from resolvedValues in the same response, never from the client draft. Read-only fields appear only at the top level of the fields of a resolve response; catalog descriptors are never read-only.
+     * @type {boolean}
+     * @memberof ScalarFieldSchemaResponse
+     */
+    'readOnly'?: boolean;
     /**
      * 
      * @type {FieldSchemaConstraintsResponse}
