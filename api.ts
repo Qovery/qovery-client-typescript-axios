@@ -1520,7 +1520,7 @@ export interface AlertTarget {
      */
     'target_id': string;
     /**
-     * 
+     * Service details when target_type is APPLICATION, CONTAINER, JOB, CRONJOB, HELM or TERRAFORM
      * @type {ServiceLightResponse}
      * @memberof AlertTarget
      */
@@ -2393,6 +2393,12 @@ export interface ApplicationEditRequest {
      * @memberof ApplicationEditRequest
      */
     'build_settings'?: BuildSettings;
+    /**
+     * 
+     * @type {number}
+     * @memberof ApplicationEditRequest
+     */
+    'startup_timeout'?: number;
 }
 
 
@@ -2577,7 +2583,7 @@ export interface ApplicationRequest {
      * @type {string}
      * @memberof ApplicationRequest
      */
-    'description'?: string | null;
+    'description'?: string;
     /**
      * 
      * @type {ApplicationGitRepositoryRequest}
@@ -2643,7 +2649,7 @@ export interface ApplicationRequest {
      * @type {boolean}
      * @memberof ApplicationRequest
      */
-    'auto_preview'?: boolean;
+    'auto_preview'?: boolean | null;
     /**
      * 
      * @type {Array<string>}
@@ -2704,6 +2710,12 @@ export interface ApplicationRequest {
      * @memberof ApplicationRequest
      */
     'build_settings'?: BuildSettings;
+    /**
+     * 
+     * @type {number}
+     * @memberof ApplicationRequest
+     */
+    'startup_timeout'?: number;
 }
 
 
@@ -4394,7 +4406,7 @@ export interface BlueprintCreateRequest {
      * @type {BlueprintSpecOverrides}
      * @memberof BlueprintCreateRequest
      */
-    'spec_overrides'?: BlueprintSpecOverrides;
+    'spec_overrides'?: BlueprintSpecOverrides | null;
 }
 /**
  * Answer to a blueprint creation: the blueprint exists and an engine dispatch was started. The service it should materialize does not exist yet.
@@ -5451,10 +5463,10 @@ export interface BlueprintUpdateRequest {
     'icon': string;
     /**
      * RFC 7396 patch map keyed by variable name. Non-null value upserts the variable; null value removes it. Absent keys are left untouched. Omitting the field entirely is equivalent to an empty map — no variables are modified.
-     * @type {{ [key: string]: BlueprintUpdateVariableValue; }}
+     * @type {{ [key: string]: BlueprintUpdateVariableValue | null; }}
      * @memberof BlueprintUpdateRequest
      */
-    'variables'?: { [key: string]: BlueprintUpdateVariableValue; };
+    'variables'?: { [key: string]: BlueprintUpdateVariableValue | null; };
     /**
      * JSON Merge Patch (RFC 7396) applied to the stored spec_overrides (see `BlueprintSpecOverrides` for the list of valid fields). A non-null field value upserts the override; a null value removes it. Pass null or omit the field entirely to leave all existing overrides unchanged.
      * @type {BlueprintSpecOverrides}
@@ -7311,6 +7323,37 @@ export interface ClusterEnvironmentServiceResponse {
 /**
  * 
  * @export
+ * @interface ClusterFailureContextResponse
+ */
+export interface ClusterFailureContextResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFailureContextResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFailureContextResponse
+     */
+    'cluster_id': string;
+    /**
+     * 
+     * @type {GatewayStatusResponse}
+     * @memberof ClusterFailureContextResponse
+     */
+    'gateway_status': GatewayStatusResponse;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClusterFailureContextResponse
+     */
+    'created_at': string;
+}
+/**
+ * 
+ * @export
  * @interface ClusterFeatureAwsExistingVpc
  */
 export interface ClusterFeatureAwsExistingVpc {
@@ -8201,19 +8244,19 @@ export interface ClusterKarpenterPrivateSubnetIdsPutRequest {
      * @type {Array<string>}
      * @memberof ClusterKarpenterPrivateSubnetIdsPutRequest
      */
-    'eks_karpenter_fargate_subnets_zone_a_ids'?: Array<string>;
+    'eks_private_subnets_zone_a_ids': Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof ClusterKarpenterPrivateSubnetIdsPutRequest
      */
-    'eks_karpenter_fargate_subnets_zone_b_ids'?: Array<string>;
+    'eks_private_subnets_zone_b_ids': Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof ClusterKarpenterPrivateSubnetIdsPutRequest
      */
-    'eks_karpenter_fargate_subnets_zone_c_ids'?: Array<string>;
+    'eks_private_subnets_zone_c_ids': Array<string>;
 }
 /**
  * 
@@ -9260,6 +9303,18 @@ export interface ClusterRequest {
      * @memberof ClusterRequest
      */
     'secret_manager_accesses'?: Array<SecretManagerAccessRequest>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClusterRequest
+     */
+    'is_demo'?: boolean;
+    /**
+     * 
+     * @type {WidePermissionsDto}
+     * @memberof ClusterRequest
+     */
+    'wide_permissions_dto'?: WidePermissionsDto;
 }
 
 
@@ -9843,11 +9898,17 @@ export type ContainerAdvancedSettingsDeploymentUpdateStrategyTypeEnum = typeof C
  */
 export interface ContainerDeployRequest {
     /**
+     * 
+     * @type {string}
+     * @memberof ContainerDeployRequest
+     */
+    'id'?: string | null;
+    /**
      * Image tag to deploy
      * @type {string}
      * @memberof ContainerDeployRequest
      */
-    'image_tag': string;
+    'image_tag'?: string | null;
 }
 /**
  * 
@@ -10585,12 +10646,6 @@ export interface ContainerResponse {
      */
     'tag': string;
     /**
-     * tag of the image container
-     * @type {string}
-     * @memberof ContainerResponse
-     */
-    'registry_id'?: string;
-    /**
      * 
      * @type {ContainerRegistryProviderDetailsResponse}
      * @memberof ContainerResponse
@@ -10774,12 +10829,6 @@ export interface ContainerSource {
      * @memberof ContainerSource
      */
     'tag': string;
-    /**
-     * tag of the image container
-     * @type {string}
-     * @memberof ContainerSource
-     */
-    'registry_id'?: string;
     /**
      * 
      * @type {ContainerRegistryProviderDetailsResponse}
@@ -13946,6 +13995,57 @@ export interface EmailAlertReceiverResponse {
 /**
  * 
  * @export
+ * @interface EngineVersionResponse
+ */
+export interface EngineVersionResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof EngineVersionResponse
+     */
+    'version': string;
+}
+/**
+ * 
+ * @export
+ * @interface EnterpriseConnectionAccess
+ */
+export interface EnterpriseConnectionAccess {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnterpriseConnectionAccess
+     */
+    'organization_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnterpriseConnectionAccess
+     */
+    'role': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnterpriseConnectionAccess
+     */
+    'enforce_group_sync': boolean;
+}
+/**
+ * 
+ * @export
+ * @interface EnterpriseConnectionAccessList
+ */
+export interface EnterpriseConnectionAccessList {
+    /**
+     * 
+     * @type {Array<EnterpriseConnectionAccess>}
+     * @memberof EnterpriseConnectionAccessList
+     */
+    'results': Array<EnterpriseConnectionAccess>;
+}
+/**
+ * 
+ * @export
  * @interface EnterpriseConnectionDto
  */
 export interface EnterpriseConnectionDto {
@@ -13973,6 +14073,43 @@ export interface EnterpriseConnectionDto {
      * @memberof EnterpriseConnectionDto
      */
     'group_mappings': { [key: string]: Array<string>; };
+}
+/**
+ * 
+ * @export
+ * @interface EnterpriseConnectionMemberAccessUpdateRequest
+ */
+export interface EnterpriseConnectionMemberAccessUpdateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnterpriseConnectionMemberAccessUpdateRequest
+     */
+    'user_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnterpriseConnectionMemberAccessUpdateRequest
+     */
+    'user_email'?: string | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof EnterpriseConnectionMemberAccessUpdateRequest
+     */
+    'added_organization_ids': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof EnterpriseConnectionMemberAccessUpdateRequest
+     */
+    'removed_organization_ids': Array<string>;
+    /**
+     * 
+     * @type {Array<MemberAccessRoleUpdated>}
+     * @memberof EnterpriseConnectionMemberAccessUpdateRequest
+     */
+    'role_updates_by_organization_id': Array<MemberAccessRoleUpdated>;
 }
 /**
  * 
@@ -15400,6 +15537,56 @@ export interface FieldTemplateResponse {
     'value': string;
 }
 /**
+ * 
+ * @export
+ * @interface GatewayConditionEntryResponse
+ */
+export interface GatewayConditionEntryResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof GatewayConditionEntryResponse
+     */
+    'type': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GatewayConditionEntryResponse
+     */
+    'status': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GatewayConditionEntryResponse
+     */
+    'reason'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof GatewayConditionEntryResponse
+     */
+    'message'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface GatewayStatusResponse
+ */
+export interface GatewayStatusResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof GatewayStatusResponse
+     */
+    'gateway_name': string;
+    /**
+     * 
+     * @type {Array<GatewayConditionEntryResponse>}
+     * @memberof GatewayStatusResponse
+     */
+    'conditions': Array<GatewayConditionEntryResponse>;
+}
+/**
  * @type GcpCredentialsRequest
  * @export
  */
@@ -15861,7 +16048,7 @@ export interface GhostAlertRuleResponseAllOfTarget {
      */
     'target_id': string;
     /**
-     * 
+     * Service details when target_type is APPLICATION, CONTAINER, JOB, CRONJOB, HELM or TERRAFORM
      * @type {ServiceLightResponse}
      * @memberof GhostAlertRuleResponseAllOfTarget
      */
@@ -16562,6 +16749,12 @@ export type HelmDefaultValuesRequestAllOfSource = HelmRequestAllOfSourceOneOf | 
  * @interface HelmDeployRequest
  */
 export interface HelmDeployRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof HelmDeployRequest
+     */
+    'id'?: string | null;
     /**
      * version of the chart to deploy. Cannot be set if `git_commit_id` is defined 
      * @type {string}
@@ -17973,7 +18166,7 @@ export interface IngressDeploymentStatusResponse {
      * @type {string}
      * @memberof IngressDeploymentStatusResponse
      */
-    'routerId'?: string;
+    'router_id'?: string;
     /**
      * 
      * @type {StateEnum}
@@ -18364,6 +18557,12 @@ export interface JobCronSchedule {
  * @interface JobDeployRequest
  */
 export interface JobDeployRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof JobDeployRequest
+     */
+    'id'?: string | null;
     /**
      * Image tag to deploy.   Cannot be set if `git_commit_id` is defined 
      * @type {string}
@@ -20644,7 +20843,7 @@ export interface Log {
      * @type {string}
      * @memberof Log
      */
-    'version'?: string;
+    'application_commit_id'?: string;
 }
 /**
  * 
@@ -20930,6 +21129,25 @@ export interface Member {
 /**
  * 
  * @export
+ * @interface MemberAccessRoleUpdated
+ */
+export interface MemberAccessRoleUpdated {
+    /**
+     * 
+     * @type {string}
+     * @memberof MemberAccessRoleUpdated
+     */
+    'organization_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MemberAccessRoleUpdated
+     */
+    'role': string;
+}
+/**
+ * 
+ * @export
  * @interface MemberResponseList
  */
 export interface MemberResponseList {
@@ -21192,12 +21410,6 @@ export interface Organization {
      * @memberof Organization
      */
     'website_url'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Organization
-     */
-    'repository'?: string | null;
     /**
      * 
      * @type {string}
@@ -22132,12 +22344,6 @@ export interface OrganizationEditRequest {
      * @type {string}
      * @memberof OrganizationEditRequest
      */
-    'repository'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationEditRequest
-     */
     'logo_url'?: string | null;
     /**
      * 
@@ -23037,12 +23243,6 @@ export interface OrganizationRequest {
      * @type {string}
      * @memberof OrganizationRequest
      */
-    'repository'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationRequest
-     */
     'logo_url'?: string | null;
     /**
      * 
@@ -23591,7 +23791,7 @@ export interface PlatformComponentConfigurationViolationResponse {
     'message': string;
 }
 /**
- * A catalog field the cluster must provide for the selected configuration: the scalar field descriptor extended with its resolution scope and readiness. Input requirements cannot be object or array descriptors and are never read-only.
+ * A scalar catalog field the cluster must provide for the selected configuration.
  * @export
  * @interface PlatformComponentInputRequirementResponse
  */
@@ -23603,23 +23803,17 @@ export interface PlatformComponentInputRequirementResponse {
      */
     'key': string;
     /**
-     * Field type understood by the Console.
-     * @type {string}
-     * @memberof PlatformComponentInputRequirementResponse
-     */
-    'type': PlatformComponentInputRequirementResponseTypeEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof PlatformComponentInputRequirementResponse
-     */
-    'required': boolean;
-    /**
      * 
      * @type {string}
      * @memberof PlatformComponentInputRequirementResponse
      */
-    'defaultValue'?: string | null;
+    'type': string;
+    /**
+     * 
+     * @type {PlatformComponentConfigurationInputScope}
+     * @memberof PlatformComponentInputRequirementResponse
+     */
+    'scope': PlatformComponentConfigurationInputScope;
     /**
      * 
      * @type {string}
@@ -23637,37 +23831,19 @@ export interface PlatformComponentInputRequirementResponse {
      * @type {boolean}
      * @memberof PlatformComponentInputRequirementResponse
      */
-    'sensitive': boolean;
+    'required': boolean;
     /**
-     * Omitted when false. A read-only field is never required or sensitive, and its defaultValue is null. Its value comes from resolvedValues in the same response, never from the client draft. Read-only fields appear only at the top level of the fields of a resolve response; catalog descriptors are never read-only.
+     * 
      * @type {boolean}
      * @memberof PlatformComponentInputRequirementResponse
      */
-    'readOnly'?: boolean;
+    'sensitive': boolean;
     /**
      * 
      * @type {FieldSchemaConstraintsResponse}
      * @memberof PlatformComponentInputRequirementResponse
      */
     'constraints': FieldSchemaConstraintsResponse;
-    /**
-     * Optional editor format for a string field, independent of its scalar type. kubernetes-resource-yaml selects a single Kubernetes YAML object editor. Unknown formats should fall back to the ordinary string editor.
-     * @type {string}
-     * @memberof PlatformComponentInputRequirementResponse
-     */
-    'format'?: string;
-    /**
-     * Optional starting texts for an explicit user choice, with unique IDs within the field. Present only with format. Never apply as defaults or overwrite a saved value. The format selects the editor even when templates are absent.
-     * @type {Array<FieldTemplateResponse>}
-     * @memberof PlatformComponentInputRequirementResponse
-     */
-    'templates'?: Array<FieldTemplateResponse>;
-    /**
-     * 
-     * @type {PlatformComponentConfigurationInputScope}
-     * @memberof PlatformComponentInputRequirementResponse
-     */
-    'scope': PlatformComponentConfigurationInputScope;
     /**
      * 
      * @type {PlatformComponentConfigurationRequirementStatus}
@@ -23676,13 +23852,6 @@ export interface PlatformComponentInputRequirementResponse {
     'status': PlatformComponentConfigurationRequirementStatus;
 }
 
-export const PlatformComponentInputRequirementResponseTypeEnum = {
-    STRING: 'string',
-    NUMBER: 'number',
-    BOOL: 'bool'
-} as const;
-
-export type PlatformComponentInputRequirementResponseTypeEnum = typeof PlatformComponentInputRequirementResponseTypeEnum[keyof typeof PlatformComponentInputRequirementResponseTypeEnum];
 
 /**
  * 
@@ -23790,6 +23959,33 @@ export interface PlatformTemplateCatalogResponse {
 /**
  * 
  * @export
+ * @interface PlatformTemplateComponentDependencyResponse
+ */
+export interface PlatformTemplateComponentDependencyResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformTemplateComponentDependencyResponse
+     */
+    'component': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformTemplateComponentDependencyResponse
+     */
+    'kind': PlatformTemplateComponentDependencyResponseKindEnum;
+}
+
+export const PlatformTemplateComponentDependencyResponseKindEnum = {
+    REQUIRES: 'REQUIRES',
+    AFTER: 'AFTER'
+} as const;
+
+export type PlatformTemplateComponentDependencyResponseKindEnum = typeof PlatformTemplateComponentDependencyResponseKindEnum[keyof typeof PlatformTemplateComponentDependencyResponseKindEnum];
+
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -23819,6 +24015,12 @@ export interface PlatformTemplateComponentResponse {
      * @memberof PlatformTemplateComponentResponse
      */
     'kind': PlatformTemplateComponentKind;
+    /**
+     * 
+     * @type {Array<PlatformTemplateComponentDependencyResponse>}
+     * @memberof PlatformTemplateComponentResponse
+     */
+    'dependsOn': Array<PlatformTemplateComponentDependencyResponse>;
     /**
      * 
      * @type {string}
@@ -25529,7 +25731,7 @@ export interface SecretAlias {
      * @type {string}
      * @memberof SecretAlias
      */
-    'mount_path': string;
+    'mount_path'?: string | null;
     /**
      * 
      * @type {APIVariableScopeEnum}
@@ -25542,18 +25744,6 @@ export interface SecretAlias {
      * @memberof SecretAlias
      */
     'variable_type': APIVariableTypeEnum;
-    /**
-     * optional variable description (255 characters maximum)
-     * @type {string}
-     * @memberof SecretAlias
-     */
-    'description'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof SecretAlias
-     */
-    'enable_interpolation_in_file'?: boolean | null;
 }
 
 
@@ -25575,6 +25765,12 @@ export interface SecretEditRequest {
      * @memberof SecretEditRequest
      */
     'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SecretEditRequest
+     */
+    'mount_path'?: string | null;
     /**
      * optional variable description (255 characters maximum)
      * @type {string}
@@ -25697,7 +25893,7 @@ export interface SecretOverride {
      * @type {string}
      * @memberof SecretOverride
      */
-    'mount_path': string;
+    'mount_path'?: string | null;
     /**
      * 
      * @type {APIVariableScopeEnum}
@@ -25710,18 +25906,6 @@ export interface SecretOverride {
      * @memberof SecretOverride
      */
     'variable_type': APIVariableTypeEnum;
-    /**
-     * optional variable description (255 characters maximum)
-     * @type {string}
-     * @memberof SecretOverride
-     */
-    'description'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof SecretOverride
-     */
-    'enable_interpolation_in_file'?: boolean | null;
 }
 
 
@@ -26879,6 +27063,19 @@ export interface SignUpRequest {
 /**
  * 
  * @export
+ * @interface SkillTrackingRequest
+ */
+export interface SkillTrackingRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillTrackingRequest
+     */
+    'skill_name': string;
+}
+/**
+ * 
+ * @export
  * @interface SlackAlertReceiverCreationRequest
  */
 export interface SlackAlertReceiverCreationRequest {
@@ -27696,19 +27893,6 @@ export interface TerraformFilesSourceGit {
 /**
  * 
  * @export
- * @interface TerraformFilesSourceRequest
- */
-export interface TerraformFilesSourceRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof TerraformFilesSourceRequest
-     */
-    'id'?: string;
-}
-/**
- * 
- * @export
  * @interface TerraformGitRepositoryRequest
  */
 export interface TerraformGitRepositoryRequest {
@@ -27804,13 +27988,25 @@ export interface TerraformRequest {
      * @type {string}
      * @memberof TerraformRequest
      */
-    'description': string;
+    'description'?: string;
     /**
      * 
      * @type {TerraformAutoDeployConfig}
      * @memberof TerraformRequest
      */
-    'auto_deploy_config': TerraformAutoDeployConfig;
+    'auto_deploy_config'?: TerraformAutoDeployConfig;
+    /**
+     * Legacy alternative to auto_deploy_config.
+     * @type {boolean}
+     * @memberof TerraformRequest
+     */
+    'auto_deploy'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TerraformRequest
+     */
+    'auto_preview'?: boolean | null;
     /**
      * 
      * @type {TerraformRequestTerraformFilesSource}
@@ -27828,13 +28024,13 @@ export interface TerraformRequest {
      * @type {TerraformBackend}
      * @memberof TerraformRequest
      */
-    'backend': TerraformBackend;
+    'backend'?: TerraformBackend;
     /**
      * 
      * @type {TerraformEngineEnum}
      * @memberof TerraformRequest
      */
-    'engine': TerraformEngineEnum;
+    'engine'?: TerraformEngineEnum;
     /**
      * 
      * @type {TerraformProviderVersion}
@@ -27950,6 +28146,25 @@ export interface TerraformRequestTerraformFilesSourceOneOf {
     'git_repository'?: TerraformGitRepositoryRequest;
 }
 /**
+ * 
+ * @export
+ * @interface TerraformResourceAttribute
+ */
+export interface TerraformResourceAttribute {
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformResourceAttribute
+     */
+    'key': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerraformResourceAttribute
+     */
+    'value': string;
+}
+/**
  * A Terraform resource from a deployment execution
  * @export
  * @interface TerraformResourceResponse
@@ -27998,6 +28213,12 @@ export interface TerraformResourceResponse {
      */
     'attributes': { [key: string]: any; };
     /**
+     * 
+     * @type {Array<TerraformResourceAttribute>}
+     * @memberof TerraformResourceResponse
+     */
+    'key_attributes': Array<TerraformResourceAttribute>;
+    /**
      * Timestamp when the resource was extracted from Terraform state
      * @type {string}
      * @memberof TerraformResourceResponse
@@ -28012,31 +28233,6 @@ export const TerraformResourceResponseModeEnum = {
 
 export type TerraformResourceResponseModeEnum = typeof TerraformResourceResponseModeEnum[keyof typeof TerraformResourceResponseModeEnum];
 
-/**
- * Request to store terraform resources from engine after deployment
- * @export
- * @interface TerraformResourcesRequest
- */
-export interface TerraformResourcesRequest {
-    /**
-     * ID of the Terraform service
-     * @type {string}
-     * @memberof TerraformResourcesRequest
-     */
-    'terraformId': string;
-    /**
-     * Execution ID in format \"UUID-version\" or \"UUID-version-timestamp\" Example: 550e8400-e29b-41d4-a716-446655440000-1 
-     * @type {string}
-     * @memberof TerraformResourcesRequest
-     */
-    'executionId': string;
-    /**
-     * JSON array of terraform resources extracted from terraform show output. Each resource contains: resource_type, name, provider, address, mode, attributes 
-     * @type {string}
-     * @memberof TerraformResourcesRequest
-     */
-    'resourcesJson': string;
-}
 /**
  * List of Terraform resources from the latest deployment
  * @export
@@ -28104,6 +28300,18 @@ export interface TerraformResponse {
      * @memberof TerraformResponse
      */
     'auto_deploy': boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TerraformResponse
+     */
+    'auto_preview'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TerraformResponse
+     */
+    'build_settings_editable'?: boolean;
     /**
      * 
      * @type {TerraformAutoDeployConfig}
@@ -28550,6 +28758,110 @@ export interface UserResponseList {
      * @memberof UserResponseList
      */
     'results'?: Array<User>;
+}
+/**
+ * 
+ * @export
+ * @interface UserSignUpResponse
+ */
+export interface UserSignUpResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSignUpResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSignUpResponse
+     */
+    'first_name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSignUpResponse
+     */
+    'last_name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSignUpResponse
+     */
+    'user_email'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSignUpResponse
+     */
+    'type_of_use'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSignUpResponse
+     */
+    'company_name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSignUpResponse
+     */
+    'company_size'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSignUpResponse
+     */
+    'user_role'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSignUpResponse
+     */
+    'qovery_usage'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSignUpResponse
+     */
+    'qovery_usage_other'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSignUpResponse
+     */
+    'user_questions'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserSignUpResponse
+     */
+    'dx_auth'?: boolean | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSignUpResponse
+     */
+    'current_step'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSignUpResponse
+     */
+    'infrastructure_hosting'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface UserSignUpResponseList
+ */
+export interface UserSignUpResponseList {
+    /**
+     * 
+     * @type {Array<UserSignUpResponse>}
+     * @memberof UserSignUpResponseList
+     */
+    'results': Array<UserSignUpResponse>;
 }
 /**
  * 
@@ -29193,6 +29505,25 @@ export const WeekdayEnum = {
 export type WeekdayEnum = typeof WeekdayEnum[keyof typeof WeekdayEnum];
 
 
+/**
+ * 
+ * @export
+ * @interface WidePermissionsDto
+ */
+export interface WidePermissionsDto {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WidePermissionsDto
+     */
+    'using_restrictive_permissions'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidePermissionsDto
+     */
+    'wide_scope_cloud_account_id'?: string | null;
+}
 
 /**
  * AccountInfoApi - axios parameter creator
@@ -29376,6 +29707,304 @@ export class AccountInfoApi extends BaseAPI {
     }
 }
 
+
+
+/**
+ * AdminApi - axios parameter creator
+ * @export
+ */
+export const AdminApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Get the version of an engine related service. Worker service types are unavailable through this route.
+         * @summary Get a service version
+         * @param {GetPublicServiceVersionServiceTypeEnum} serviceType 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPublicServiceVersion: async (serviceType: GetPublicServiceVersionServiceTypeEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'serviceType' is not null or undefined
+            assertParamExists('getPublicServiceVersion', 'serviceType', serviceType)
+            const localVarPath = `/engine/serviceVersion`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (serviceType !== undefined) {
+                localVarQueryParameter['serviceType'] = serviceType;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Search user signups as a Qovery administrator.
+         * @summary Search user signups
+         * @param {string} search 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listUserSignUps: async (search: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'search' is not null or undefined
+            assertParamExists('listUserSignUps', 'search', search)
+            const localVarPath = `/admin/listUserSignUp`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Store CLI demo debug logs for an organization and cluster.
+         * @summary Store CLI demo debug logs
+         * @param {string} organization 
+         * @param {string} clusterName 
+         * @param {File} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeCliDemoDebugLogs: async (organization: string, clusterName: string, body?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organization' is not null or undefined
+            assertParamExists('storeCliDemoDebugLogs', 'organization', organization)
+            // verify required parameter 'clusterName' is not null or undefined
+            assertParamExists('storeCliDemoDebugLogs', 'clusterName', clusterName)
+            const localVarPath = `/admin/demoDebugLog`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (organization !== undefined) {
+                localVarQueryParameter['organization'] = organization;
+            }
+
+            if (clusterName !== undefined) {
+                localVarQueryParameter['clusterName'] = clusterName;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/octet-stream';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AdminApi - functional programming interface
+ * @export
+ */
+export const AdminApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AdminApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Get the version of an engine related service. Worker service types are unavailable through this route.
+         * @summary Get a service version
+         * @param {GetPublicServiceVersionServiceTypeEnum} serviceType 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPublicServiceVersion(serviceType: GetPublicServiceVersionServiceTypeEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EngineVersionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPublicServiceVersion(serviceType, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.getPublicServiceVersion']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Search user signups as a Qovery administrator.
+         * @summary Search user signups
+         * @param {string} search 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listUserSignUps(search: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserSignUpResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listUserSignUps(search, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.listUserSignUps']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Store CLI demo debug logs for an organization and cluster.
+         * @summary Store CLI demo debug logs
+         * @param {string} organization 
+         * @param {string} clusterName 
+         * @param {File} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async storeCliDemoDebugLogs(organization: string, clusterName: string, body?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.storeCliDemoDebugLogs(organization, clusterName, body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.storeCliDemoDebugLogs']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AdminApi - factory interface
+ * @export
+ */
+export const AdminApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AdminApiFp(configuration)
+    return {
+        /**
+         * Get the version of an engine related service. Worker service types are unavailable through this route.
+         * @summary Get a service version
+         * @param {GetPublicServiceVersionServiceTypeEnum} serviceType 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPublicServiceVersion(serviceType: GetPublicServiceVersionServiceTypeEnum, options?: RawAxiosRequestConfig): AxiosPromise<EngineVersionResponse> {
+            return localVarFp.getPublicServiceVersion(serviceType, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Search user signups as a Qovery administrator.
+         * @summary Search user signups
+         * @param {string} search 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listUserSignUps(search: string, options?: RawAxiosRequestConfig): AxiosPromise<UserSignUpResponseList> {
+            return localVarFp.listUserSignUps(search, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Store CLI demo debug logs for an organization and cluster.
+         * @summary Store CLI demo debug logs
+         * @param {string} organization 
+         * @param {string} clusterName 
+         * @param {File} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeCliDemoDebugLogs(organization: string, clusterName: string, body?: File, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.storeCliDemoDebugLogs(organization, clusterName, body, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AdminApi - object-oriented interface
+ * @export
+ * @class AdminApi
+ * @extends {BaseAPI}
+ */
+export class AdminApi extends BaseAPI {
+    /**
+     * Get the version of an engine related service. Worker service types are unavailable through this route.
+     * @summary Get a service version
+     * @param {GetPublicServiceVersionServiceTypeEnum} serviceType 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApi
+     */
+    public getPublicServiceVersion(serviceType: GetPublicServiceVersionServiceTypeEnum, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).getPublicServiceVersion(serviceType, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Search user signups as a Qovery administrator.
+     * @summary Search user signups
+     * @param {string} search 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApi
+     */
+    public listUserSignUps(search: string, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).listUserSignUps(search, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Store CLI demo debug logs for an organization and cluster.
+     * @summary Store CLI demo debug logs
+     * @param {string} organization 
+     * @param {string} clusterName 
+     * @param {File} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApi
+     */
+    public storeCliDemoDebugLogs(organization: string, clusterName: string, body?: File, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).storeCliDemoDebugLogs(organization, clusterName, body, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+/**
+ * @export
+ */
+export const GetPublicServiceVersionServiceTypeEnum = {
+    SHELL_AGENT: 'SHELL_AGENT',
+    CLUSTER_AGENT: 'CLUSTER_AGENT',
+    ENGINE: 'ENGINE',
+    PLATFORM_CATALOG: 'PLATFORM_CATALOG',
+    QOVERY_OPERATOR: 'QOVERY_OPERATOR',
+    QOVERY_OPERATOR_CHART: 'QOVERY_OPERATOR_CHART'
+} as const;
+export type GetPublicServiceVersionServiceTypeEnum = typeof GetPublicServiceVersionServiceTypeEnum[keyof typeof GetPublicServiceVersionServiceTypeEnum];
 
 
 /**
@@ -32134,19 +32763,19 @@ export const ApplicationCustomDomainApiAxiosParamCreator = function (configurati
             };
         },
         /**
-         * 
-         * @summary Get Custom Domain status
+         * Get a custom domain attached to an application.
+         * @summary Get an application custom domain
          * @param {string} applicationId Application ID
          * @param {string} customDomainId Custom Domain ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCustomDomainStatus: async (applicationId: string, customDomainId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getApplicationCustomDomain: async (applicationId: string, customDomainId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'applicationId' is not null or undefined
-            assertParamExists('getCustomDomainStatus', 'applicationId', applicationId)
+            assertParamExists('getApplicationCustomDomain', 'applicationId', applicationId)
             // verify required parameter 'customDomainId' is not null or undefined
-            assertParamExists('getCustomDomainStatus', 'customDomainId', customDomainId)
-            const localVarPath = `/application/{applicationId}/customDomain/{customDomainId}/status`
+            assertParamExists('getApplicationCustomDomain', 'customDomainId', customDomainId)
+            const localVarPath = `/application/{applicationId}/customDomain/{customDomainId}`
                 .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)))
                 .replace(`{${"customDomainId"}}`, encodeURIComponent(String(customDomainId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -32286,17 +32915,17 @@ export const ApplicationCustomDomainApiFp = function(configuration?: Configurati
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary Get Custom Domain status
+         * Get a custom domain attached to an application.
+         * @summary Get an application custom domain
          * @param {string} applicationId Application ID
          * @param {string} customDomainId Custom Domain ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCustomDomainStatus(applicationId: string, customDomainId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CustomDomain>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCustomDomainStatus(applicationId, customDomainId, options);
+        async getApplicationCustomDomain(applicationId: string, customDomainId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CustomDomain>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getApplicationCustomDomain(applicationId, customDomainId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApplicationCustomDomainApi.getCustomDomainStatus']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ApplicationCustomDomainApi.getApplicationCustomDomain']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -32367,15 +32996,15 @@ export const ApplicationCustomDomainApiFactory = function (configuration?: Confi
             return localVarFp.editCustomDomain(applicationId, customDomainId, customDomainRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Get Custom Domain status
+         * Get a custom domain attached to an application.
+         * @summary Get an application custom domain
          * @param {string} applicationId Application ID
          * @param {string} customDomainId Custom Domain ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCustomDomainStatus(applicationId: string, customDomainId: string, options?: RawAxiosRequestConfig): AxiosPromise<CustomDomain> {
-            return localVarFp.getCustomDomainStatus(applicationId, customDomainId, options).then((request) => request(axios, basePath));
+        getApplicationCustomDomain(applicationId: string, customDomainId: string, options?: RawAxiosRequestConfig): AxiosPromise<CustomDomain> {
+            return localVarFp.getApplicationCustomDomain(applicationId, customDomainId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -32450,16 +33079,16 @@ export class ApplicationCustomDomainApi extends BaseAPI {
     }
 
     /**
-     * 
-     * @summary Get Custom Domain status
+     * Get a custom domain attached to an application.
+     * @summary Get an application custom domain
      * @param {string} applicationId Application ID
      * @param {string} customDomainId Custom Domain ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApplicationCustomDomainApi
      */
-    public getCustomDomainStatus(applicationId: string, customDomainId: string, options?: RawAxiosRequestConfig) {
-        return ApplicationCustomDomainApiFp(this.configuration).getCustomDomainStatus(applicationId, customDomainId, options).then((request) => request(this.axios, this.basePath));
+    public getApplicationCustomDomain(applicationId: string, customDomainId: string, options?: RawAxiosRequestConfig) {
+        return ApplicationCustomDomainApiFp(this.configuration).getApplicationCustomDomain(applicationId, customDomainId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -33692,121 +34321,6 @@ export class ApplicationEnvironmentVariableApi extends BaseAPI {
 
 
 /**
- * ApplicationLogsApi - axios parameter creator
- * @export
- */
-export const ApplicationLogsApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * This will list the last 1000 logs of the application
-         * @summary List logs
-         * @param {string} applicationId Application ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listApplicationLog: async (applicationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'applicationId' is not null or undefined
-            assertParamExists('listApplicationLog', 'applicationId', applicationId)
-            const localVarPath = `/application/{applicationId}/log`
-                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * ApplicationLogsApi - functional programming interface
- * @export
- */
-export const ApplicationLogsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = ApplicationLogsApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * This will list the last 1000 logs of the application
-         * @summary List logs
-         * @param {string} applicationId Application ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listApplicationLog(applicationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LogResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listApplicationLog(applicationId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApplicationLogsApi.listApplicationLog']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * ApplicationLogsApi - factory interface
- * @export
- */
-export const ApplicationLogsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = ApplicationLogsApiFp(configuration)
-    return {
-        /**
-         * This will list the last 1000 logs of the application
-         * @summary List logs
-         * @param {string} applicationId Application ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listApplicationLog(applicationId: string, options?: RawAxiosRequestConfig): AxiosPromise<LogResponseList> {
-            return localVarFp.listApplicationLog(applicationId, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * ApplicationLogsApi - object-oriented interface
- * @export
- * @class ApplicationLogsApi
- * @extends {BaseAPI}
- */
-export class ApplicationLogsApi extends BaseAPI {
-    /**
-     * This will list the last 1000 logs of the application
-     * @summary List logs
-     * @param {string} applicationId Application ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApplicationLogsApi
-     */
-    public listApplicationLog(applicationId: string, options?: RawAxiosRequestConfig) {
-        return ApplicationLogsApiFp(this.configuration).listApplicationLog(applicationId, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
  * ApplicationMainCallsApi - axios parameter creator
  * @export
  */
@@ -34037,47 +34551,6 @@ export const ApplicationMainCallsApiAxiosParamCreator = function (configuration?
             };
         },
         /**
-         * 
-         * @summary List contributors
-         * @param {string} applicationId Application ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listApplicationContributor: async (applicationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'applicationId' is not null or undefined
-            assertParamExists('listApplicationContributor', 'applicationId', applicationId)
-            const localVarPath = `/application/{applicationId}/contributor`
-                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * This will return all the custom domains and Qovery autogenerated domain for the given application
          * @summary List all URLs of the application
          * @param {string} applicationId Application ID
@@ -34198,19 +34671,6 @@ export const ApplicationMainCallsApiFp = function(configuration?: Configuration)
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary List contributors
-         * @param {string} applicationId Application ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listApplicationContributor(applicationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listApplicationContributor(applicationId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApplicationMainCallsApi.listApplicationContributor']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * This will return all the custom domains and Qovery autogenerated domain for the given application
          * @summary List all URLs of the application
          * @param {string} applicationId Application ID
@@ -34286,16 +34746,6 @@ export const ApplicationMainCallsApiFactory = function (configuration?: Configur
          */
         listApplicationCommit(applicationId: string, startId?: string, gitCommitId?: string, options?: RawAxiosRequestConfig): AxiosPromise<CommitResponseList> {
             return localVarFp.listApplicationCommit(applicationId, startId, gitCommitId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary List contributors
-         * @param {string} applicationId Application ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listApplicationContributor(applicationId: string, options?: RawAxiosRequestConfig): AxiosPromise<UserResponseList> {
-            return localVarFp.listApplicationContributor(applicationId, options).then((request) => request(axios, basePath));
         },
         /**
          * This will return all the custom domains and Qovery autogenerated domain for the given application
@@ -34379,18 +34829,6 @@ export class ApplicationMainCallsApi extends BaseAPI {
      */
     public listApplicationCommit(applicationId: string, startId?: string, gitCommitId?: string, options?: RawAxiosRequestConfig) {
         return ApplicationMainCallsApiFp(this.configuration).listApplicationCommit(applicationId, startId, gitCommitId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary List contributors
-     * @param {string} applicationId Application ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApplicationMainCallsApi
-     */
-    public listApplicationContributor(applicationId: string, options?: RawAxiosRequestConfig) {
-        return ApplicationMainCallsApiFp(this.configuration).listApplicationContributor(applicationId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -36234,295 +36672,6 @@ export class ArgoCDApi extends BaseAPI {
 
 
 /**
- * BackupsApi - axios parameter creator
- * @export
- */
-export const BackupsApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary Add a backup to the Database 
-         * @param {string} databaseId Database ID
-         * @param {BackupRequest} [backupRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addBackupDatabase: async (databaseId: string, backupRequest?: BackupRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'databaseId' is not null or undefined
-            assertParamExists('addBackupDatabase', 'databaseId', databaseId)
-            const localVarPath = `/database/{databaseId}/backup`
-                .replace(`{${"databaseId"}}`, encodeURIComponent(String(databaseId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(backupRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
-         * @summary List database  backups
-         * @param {string} databaseId Database ID
-         * @param {string} [startId] Starting point after which to return results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listDatabaseBackup: async (databaseId: string, startId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'databaseId' is not null or undefined
-            assertParamExists('listDatabaseBackup', 'databaseId', databaseId)
-            const localVarPath = `/database/{databaseId}/backup`
-                .replace(`{${"databaseId"}}`, encodeURIComponent(String(databaseId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (startId !== undefined) {
-                localVarQueryParameter['startId'] = startId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Remove database  backup
-         * @param {string} databaseId Database ID
-         * @param {string} backupId Database Backup ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        removeDatabaseBackup: async (databaseId: string, backupId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'databaseId' is not null or undefined
-            assertParamExists('removeDatabaseBackup', 'databaseId', databaseId)
-            // verify required parameter 'backupId' is not null or undefined
-            assertParamExists('removeDatabaseBackup', 'backupId', backupId)
-            const localVarPath = `/database/{databaseId}/backup/{backupId}`
-                .replace(`{${"databaseId"}}`, encodeURIComponent(String(databaseId)))
-                .replace(`{${"backupId"}}`, encodeURIComponent(String(backupId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * BackupsApi - functional programming interface
- * @export
- */
-export const BackupsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = BackupsApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @summary Add a backup to the Database 
-         * @param {string} databaseId Database ID
-         * @param {BackupRequest} [backupRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async addBackupDatabase(databaseId: string, backupRequest?: BackupRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Backup>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addBackupDatabase(databaseId, backupRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BackupsApi.addBackupDatabase']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
-         * @summary List database  backups
-         * @param {string} databaseId Database ID
-         * @param {string} [startId] Starting point after which to return results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listDatabaseBackup(databaseId: string, startId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BackupPaginatedResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listDatabaseBackup(databaseId, startId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BackupsApi.listDatabaseBackup']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Remove database  backup
-         * @param {string} databaseId Database ID
-         * @param {string} backupId Database Backup ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async removeDatabaseBackup(databaseId: string, backupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.removeDatabaseBackup(databaseId, backupId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BackupsApi.removeDatabaseBackup']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * BackupsApi - factory interface
- * @export
- */
-export const BackupsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = BackupsApiFp(configuration)
-    return {
-        /**
-         * 
-         * @summary Add a backup to the Database 
-         * @param {string} databaseId Database ID
-         * @param {BackupRequest} [backupRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addBackupDatabase(databaseId: string, backupRequest?: BackupRequest, options?: RawAxiosRequestConfig): AxiosPromise<Backup> {
-            return localVarFp.addBackupDatabase(databaseId, backupRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
-         * @summary List database  backups
-         * @param {string} databaseId Database ID
-         * @param {string} [startId] Starting point after which to return results
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listDatabaseBackup(databaseId: string, startId?: string, options?: RawAxiosRequestConfig): AxiosPromise<BackupPaginatedResponseList> {
-            return localVarFp.listDatabaseBackup(databaseId, startId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Remove database  backup
-         * @param {string} databaseId Database ID
-         * @param {string} backupId Database Backup ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        removeDatabaseBackup(databaseId: string, backupId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.removeDatabaseBackup(databaseId, backupId, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * BackupsApi - object-oriented interface
- * @export
- * @class BackupsApi
- * @extends {BaseAPI}
- */
-export class BackupsApi extends BaseAPI {
-    /**
-     * 
-     * @summary Add a backup to the Database 
-     * @param {string} databaseId Database ID
-     * @param {BackupRequest} [backupRequest] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BackupsApi
-     */
-    public addBackupDatabase(databaseId: string, backupRequest?: BackupRequest, options?: RawAxiosRequestConfig) {
-        return BackupsApiFp(this.configuration).addBackupDatabase(databaseId, backupRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * By default it returns the 20 last results. The response is paginated. In order to request the next page, you can use the startId query parameter
-     * @summary List database  backups
-     * @param {string} databaseId Database ID
-     * @param {string} [startId] Starting point after which to return results
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BackupsApi
-     */
-    public listDatabaseBackup(databaseId: string, startId?: string, options?: RawAxiosRequestConfig) {
-        return BackupsApiFp(this.configuration).listDatabaseBackup(databaseId, startId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Remove database  backup
-     * @param {string} databaseId Database ID
-     * @param {string} backupId Database Backup ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BackupsApi
-     */
-    public removeDatabaseBackup(databaseId: string, backupId: string, options?: RawAxiosRequestConfig) {
-        return BackupsApiFp(this.configuration).removeDatabaseBackup(databaseId, backupId, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
  * BillingApi - axios parameter creator
  * @export
  */
@@ -36792,51 +36941,6 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(organizationBillingUsageReportRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get your cluster cost range. We are unable to give a precise cost of your infrastructure at the moment. But Qovery guarantees that the cost of your cluster will not exceed the max range. 
-         * @summary Get cluster current cost
-         * @param {string} organizationId Organization ID
-         * @param {string} clusterId Cluster ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getClusterCurrentCost: async (organizationId: string, clusterId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            assertParamExists('getClusterCurrentCost', 'organizationId', organizationId)
-            // verify required parameter 'clusterId' is not null or undefined
-            assertParamExists('getClusterCurrentCost', 'clusterId', clusterId)
-            const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/currentCost`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
-                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -37179,47 +37283,6 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @summary Download all invoices
-         * @param {string} organizationId Organization ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        organizationDownloadAllInvoices: async (organizationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            assertParamExists('organizationDownloadAllInvoices', 'organizationId', organizationId)
-            const localVarPath = `/organization/{organizationId}/downloadInvoices`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -37312,20 +37375,6 @@ export const BillingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.generateBillingUsageReport(organizationId, organizationBillingUsageReportRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.generateBillingUsageReport']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Get your cluster cost range. We are unable to give a precise cost of your infrastructure at the moment. But Qovery guarantees that the cost of your cluster will not exceed the max range. 
-         * @summary Get cluster current cost
-         * @param {string} organizationId Organization ID
-         * @param {string} clusterId Cluster ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getClusterCurrentCost(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CostRange>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterCurrentCost(organizationId, clusterId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BillingApi.getClusterCurrentCost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -37434,19 +37483,6 @@ export const BillingApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['BillingApi.listOrganizationInvoice']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * 
-         * @summary Download all invoices
-         * @param {string} organizationId Organization ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async organizationDownloadAllInvoices(organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.organizationDownloadAllInvoices(organizationId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BillingApi.organizationDownloadAllInvoices']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -37522,17 +37558,6 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          */
         generateBillingUsageReport(organizationId: string, organizationBillingUsageReportRequest?: OrganizationBillingUsageReportRequest, options?: RawAxiosRequestConfig): AxiosPromise<OrganizationBillingUsageReportResponse> {
             return localVarFp.generateBillingUsageReport(organizationId, organizationBillingUsageReportRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Get your cluster cost range. We are unable to give a precise cost of your infrastructure at the moment. But Qovery guarantees that the cost of your cluster will not exceed the max range. 
-         * @summary Get cluster current cost
-         * @param {string} organizationId Organization ID
-         * @param {string} clusterId Cluster ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getClusterCurrentCost(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<CostRange> {
-            return localVarFp.getClusterCurrentCost(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
         /**
          * This endpoint returns the external ID of the organization\'s billing account 
@@ -37615,16 +37640,6 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          */
         listOrganizationInvoice(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<InvoiceResponseList> {
             return localVarFp.listOrganizationInvoice(organizationId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Download all invoices
-         * @param {string} organizationId Organization ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        organizationDownloadAllInvoices(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.organizationDownloadAllInvoices(organizationId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -37712,19 +37727,6 @@ export class BillingApi extends BaseAPI {
      */
     public generateBillingUsageReport(organizationId: string, organizationBillingUsageReportRequest?: OrganizationBillingUsageReportRequest, options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).generateBillingUsageReport(organizationId, organizationBillingUsageReportRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get your cluster cost range. We are unable to give a precise cost of your infrastructure at the moment. But Qovery guarantees that the cost of your cluster will not exceed the max range. 
-     * @summary Get cluster current cost
-     * @param {string} organizationId Organization ID
-     * @param {string} clusterId Cluster ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BillingApi
-     */
-    public getClusterCurrentCost(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).getClusterCurrentCost(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -37823,18 +37825,6 @@ export class BillingApi extends BaseAPI {
      */
     public listOrganizationInvoice(organizationId: string, options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).listOrganizationInvoice(organizationId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Download all invoices
-     * @param {string} organizationId Organization ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BillingApi
-     */
-    public organizationDownloadAllInvoices(organizationId: string, options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).organizationDownloadAllInvoices(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -38958,58 +38948,21 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
-         * @summary List AWS available instance types
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listAWSInstanceType: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/aws/instanceType`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
+         * List AWS available managed database instance types
          * @summary List AWS available managed database instance types
          * @param {string} region region name
-         * @param {string} databaseType Database type
+         * @param {string} dbType Managed database type
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAWSManagedDatabaseInstanceType: async (region: string, databaseType: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listAWSManagedDatabaseInstanceType: async (region: string, dbType: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'region' is not null or undefined
             assertParamExists('listAWSManagedDatabaseInstanceType', 'region', region)
-            // verify required parameter 'databaseType' is not null or undefined
-            assertParamExists('listAWSManagedDatabaseInstanceType', 'databaseType', databaseType)
-            const localVarPath = `/aws/managedDatabase/instanceType/{region}/{databaseType}`
+            // verify required parameter 'dbType' is not null or undefined
+            assertParamExists('listAWSManagedDatabaseInstanceType', 'dbType', dbType)
+            const localVarPath = `/aws/managedDatabase/instanceType/{region}/{dbType}`
                 .replace(`{${"region"}}`, encodeURIComponent(String(region)))
-                .replace(`{${"databaseType"}}`, encodeURIComponent(String(databaseType)));
+                .replace(`{${"dbType"}}`, encodeURIComponent(String(dbType)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -39319,47 +39272,6 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary List GCP GKE available instance types
-         * @param {string} region region name
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listGcpGkeInstanceType: async (region: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'region' is not null or undefined
-            assertParamExists('listGcpGkeInstanceType', 'region', region)
-            const localVarPath = `/gcp/instanceType/{region}`
-                .replace(`{${"region"}}`, encodeURIComponent(String(region)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary List GCP regions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -39396,13 +39308,91 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
-         * @summary List Scaleway available managed database types
+         * List on-premise cluster features
+         * @summary List on-premise cluster features
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listSCWManagedDatabaseType: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/scaleway/managedDatabase/type`;
+        listOnPremiseClusterFeatures: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/onPremise/clusterFeature`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List on-premise instance types
+         * @summary List on-premise instance types
+         * @param {string} region region name
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOnPremiseInstanceTypes: async (region: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'region' is not null or undefined
+            assertParamExists('listOnPremiseInstanceTypes', 'region', region)
+            const localVarPath = `/onPremise/eks/instanceType/{region}`
+                .replace(`{${"region"}}`, encodeURIComponent(String(region)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List on-premise regions
+         * @summary List on-premise regions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOnPremiseRegions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/onPremise/region`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -39470,44 +39460,7 @@ export const CloudProviderApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
-         * @summary List Scaleway available instance types
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listScalewayInstanceType: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/scaleway/instanceType`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
+         * List Scaleway Kapsule available instance types
          * @summary List Scaleway Kapsule available instance types
          * @param {string} zone zone name
          * @param {*} [options] Override http request option.
@@ -39623,27 +39576,15 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary List AWS available instance types
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listAWSInstanceType(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterInstanceTypeResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listAWSInstanceType(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CloudProviderApi.listAWSInstanceType']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
+         * List AWS available managed database instance types
          * @summary List AWS available managed database instance types
          * @param {string} region region name
-         * @param {string} databaseType Database type
+         * @param {string} dbType Managed database type
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listAWSManagedDatabaseInstanceType(region: string, databaseType: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ManagedDatabaseInstanceTypeResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listAWSManagedDatabaseInstanceType(region, databaseType, options);
+        async listAWSManagedDatabaseInstanceType(region: string, dbType: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ManagedDatabaseInstanceTypeResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAWSManagedDatabaseInstanceType(region, dbType, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CloudProviderApi.listAWSManagedDatabaseInstanceType']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -39738,19 +39679,6 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List GCP GKE available instance types
-         * @param {string} region region name
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listGcpGkeInstanceType(region: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterInstanceTypeResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listGcpGkeInstanceType(region, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CloudProviderApi.listGcpGkeInstanceType']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary List GCP regions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -39762,15 +39690,40 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary List Scaleway available managed database types
+         * List on-premise cluster features
+         * @summary List on-premise cluster features
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listSCWManagedDatabaseType(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ManagedDatabaseTypeResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listSCWManagedDatabaseType(options);
+        async listOnPremiseClusterFeatures(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterFeatureResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listOnPremiseClusterFeatures(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CloudProviderApi.listSCWManagedDatabaseType']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CloudProviderApi.listOnPremiseClusterFeatures']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * List on-premise instance types
+         * @summary List on-premise instance types
+         * @param {string} region region name
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listOnPremiseInstanceTypes(region: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterInstanceTypeResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listOnPremiseInstanceTypes(region, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CloudProviderApi.listOnPremiseInstanceTypes']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * List on-premise regions
+         * @summary List on-premise regions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listOnPremiseRegions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterRegionResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listOnPremiseRegions(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CloudProviderApi.listOnPremiseRegions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -39786,19 +39739,7 @@ export const CloudProviderApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary List Scaleway available instance types
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listScalewayInstanceType(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterInstanceTypeResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listScalewayInstanceType(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CloudProviderApi.listScalewayInstanceType']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
+         * List Scaleway Kapsule available instance types
          * @summary List Scaleway Kapsule available instance types
          * @param {string} zone zone name
          * @param {*} [options] Override http request option.
@@ -39855,24 +39796,15 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
             return localVarFp.listAWSFeatures(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary List AWS available instance types
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listAWSInstanceType(options?: RawAxiosRequestConfig): AxiosPromise<ClusterInstanceTypeResponseList> {
-            return localVarFp.listAWSInstanceType(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
+         * List AWS available managed database instance types
          * @summary List AWS available managed database instance types
          * @param {string} region region name
-         * @param {string} databaseType Database type
+         * @param {string} dbType Managed database type
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAWSManagedDatabaseInstanceType(region: string, databaseType: string, options?: RawAxiosRequestConfig): AxiosPromise<ManagedDatabaseInstanceTypeResponseList> {
-            return localVarFp.listAWSManagedDatabaseInstanceType(region, databaseType, options).then((request) => request(axios, basePath));
+        listAWSManagedDatabaseInstanceType(region: string, dbType: string, options?: RawAxiosRequestConfig): AxiosPromise<ManagedDatabaseInstanceTypeResponseList> {
+            return localVarFp.listAWSManagedDatabaseInstanceType(region, dbType, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -39943,16 +39875,6 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
         },
         /**
          * 
-         * @summary List GCP GKE available instance types
-         * @param {string} region region name
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listGcpGkeInstanceType(region: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterInstanceTypeResponseList> {
-            return localVarFp.listGcpGkeInstanceType(region, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary List GCP regions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -39961,13 +39883,32 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
             return localVarFp.listGcpRegions(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary List Scaleway available managed database types
+         * List on-premise cluster features
+         * @summary List on-premise cluster features
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listSCWManagedDatabaseType(options?: RawAxiosRequestConfig): AxiosPromise<ManagedDatabaseTypeResponseList> {
-            return localVarFp.listSCWManagedDatabaseType(options).then((request) => request(axios, basePath));
+        listOnPremiseClusterFeatures(options?: RawAxiosRequestConfig): AxiosPromise<ClusterFeatureResponseList> {
+            return localVarFp.listOnPremiseClusterFeatures(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List on-premise instance types
+         * @summary List on-premise instance types
+         * @param {string} region region name
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOnPremiseInstanceTypes(region: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterInstanceTypeResponseList> {
+            return localVarFp.listOnPremiseInstanceTypes(region, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List on-premise regions
+         * @summary List on-premise regions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOnPremiseRegions(options?: RawAxiosRequestConfig): AxiosPromise<ClusterRegionResponseList> {
+            return localVarFp.listOnPremiseRegions(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -39979,16 +39920,7 @@ export const CloudProviderApiFactory = function (configuration?: Configuration, 
             return localVarFp.listScalewayFeatures(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary List Scaleway available instance types
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listScalewayInstanceType(options?: RawAxiosRequestConfig): AxiosPromise<ClusterInstanceTypeResponseList> {
-            return localVarFp.listScalewayInstanceType(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
+         * List Scaleway Kapsule available instance types
          * @summary List Scaleway Kapsule available instance types
          * @param {string} zone zone name
          * @param {*} [options] Override http request option.
@@ -40043,27 +39975,16 @@ export class CloudProviderApi extends BaseAPI {
     }
 
     /**
-     * 
-     * @summary List AWS available instance types
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CloudProviderApi
-     */
-    public listAWSInstanceType(options?: RawAxiosRequestConfig) {
-        return CloudProviderApiFp(this.configuration).listAWSInstanceType(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
+     * List AWS available managed database instance types
      * @summary List AWS available managed database instance types
      * @param {string} region region name
-     * @param {string} databaseType Database type
+     * @param {string} dbType Managed database type
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudProviderApi
      */
-    public listAWSManagedDatabaseInstanceType(region: string, databaseType: string, options?: RawAxiosRequestConfig) {
-        return CloudProviderApiFp(this.configuration).listAWSManagedDatabaseInstanceType(region, databaseType, options).then((request) => request(this.axios, this.basePath));
+    public listAWSManagedDatabaseInstanceType(region: string, dbType: string, options?: RawAxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listAWSManagedDatabaseInstanceType(region, dbType, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -40149,18 +40070,6 @@ export class CloudProviderApi extends BaseAPI {
 
     /**
      * 
-     * @summary List GCP GKE available instance types
-     * @param {string} region region name
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CloudProviderApi
-     */
-    public listGcpGkeInstanceType(region: string, options?: RawAxiosRequestConfig) {
-        return CloudProviderApiFp(this.configuration).listGcpGkeInstanceType(region, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary List GCP regions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -40171,14 +40080,37 @@ export class CloudProviderApi extends BaseAPI {
     }
 
     /**
-     * 
-     * @summary List Scaleway available managed database types
+     * List on-premise cluster features
+     * @summary List on-premise cluster features
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudProviderApi
      */
-    public listSCWManagedDatabaseType(options?: RawAxiosRequestConfig) {
-        return CloudProviderApiFp(this.configuration).listSCWManagedDatabaseType(options).then((request) => request(this.axios, this.basePath));
+    public listOnPremiseClusterFeatures(options?: RawAxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listOnPremiseClusterFeatures(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List on-premise instance types
+     * @summary List on-premise instance types
+     * @param {string} region region name
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderApi
+     */
+    public listOnPremiseInstanceTypes(region: string, options?: RawAxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listOnPremiseInstanceTypes(region, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List on-premise regions
+     * @summary List on-premise regions
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CloudProviderApi
+     */
+    public listOnPremiseRegions(options?: RawAxiosRequestConfig) {
+        return CloudProviderApiFp(this.configuration).listOnPremiseRegions(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -40193,18 +40125,7 @@ export class CloudProviderApi extends BaseAPI {
     }
 
     /**
-     * 
-     * @summary List Scaleway available instance types
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CloudProviderApi
-     */
-    public listScalewayInstanceType(options?: RawAxiosRequestConfig) {
-        return CloudProviderApiFp(this.configuration).listScalewayInstanceType(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
+     * List Scaleway Kapsule available instance types
      * @summary List Scaleway Kapsule available instance types
      * @param {string} zone zone name
      * @param {*} [options] Override http request option.
@@ -42723,43 +42644,6 @@ export const ClusterOperatorApiAxiosParamCreator = function (configuration?: Con
             };
         },
         /**
-         * Returns every self-managed cluster with its attachment, heartbeat freshness, desired and reported image and Helm chart versions, and a stable drift status. This operation is restricted to Qovery administrators and is the source for internal fleet CLI and dashboard consumers.
-         * @summary List the Qovery Operator fleet
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listClusterOperatorFleet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/admin/operator/clusters`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Queues an Engine v2 execution containing only the Qovery Operator Helm release. The chart version is required; the optional image version overrides the image target selected by q-core. The current Operator must be attached, connected, and protocol-compatible. A successful response means that the execution was accepted, not that Helm has completed. Cluster administrator permission is required.
          * @summary Update the Qovery Operator on a cluster
          * @param {string} organizationId Organization ID
@@ -42863,18 +42747,6 @@ export const ClusterOperatorApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns every self-managed cluster with its attachment, heartbeat freshness, desired and reported image and Helm chart versions, and a stable drift status. This operation is restricted to Qovery administrators and is the source for internal fleet CLI and dashboard consumers.
-         * @summary List the Qovery Operator fleet
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listClusterOperatorFleet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterOperatorFleetInventoryResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listClusterOperatorFleet(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ClusterOperatorApi.listClusterOperatorFleet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Queues an Engine v2 execution containing only the Qovery Operator Helm release. The chart version is required; the optional image version overrides the image target selected by q-core. The current Operator must be attached, connected, and protocol-compatible. A successful response means that the execution was accepted, not that Helm has completed. Cluster administrator permission is required.
          * @summary Update the Qovery Operator on a cluster
          * @param {string} organizationId Organization ID
@@ -42931,15 +42803,6 @@ export const ClusterOperatorApiFactory = function (configuration?: Configuration
          */
         getClusterOperatorStatus(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterOperatorStatusResponse> {
             return localVarFp.getClusterOperatorStatus(organizationId, clusterId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns every self-managed cluster with its attachment, heartbeat freshness, desired and reported image and Helm chart versions, and a stable drift status. This operation is restricted to Qovery administrators and is the source for internal fleet CLI and dashboard consumers.
-         * @summary List the Qovery Operator fleet
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listClusterOperatorFleet(options?: RawAxiosRequestConfig): AxiosPromise<ClusterOperatorFleetInventoryResponseList> {
-            return localVarFp.listClusterOperatorFleet(options).then((request) => request(axios, basePath));
         },
         /**
          * Queues an Engine v2 execution containing only the Qovery Operator Helm release. The chart version is required; the optional image version overrides the image target selected by q-core. The current Operator must be attached, connected, and protocol-compatible. A successful response means that the execution was accepted, not that Helm has completed. Cluster administrator permission is required.
@@ -43000,17 +42863,6 @@ export class ClusterOperatorApi extends BaseAPI {
      */
     public getClusterOperatorStatus(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig) {
         return ClusterOperatorApiFp(this.configuration).getClusterOperatorStatus(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns every self-managed cluster with its attachment, heartbeat freshness, desired and reported image and Helm chart versions, and a stable drift status. This operation is restricted to Qovery administrators and is the source for internal fleet CLI and dashboard consumers.
-     * @summary List the Qovery Operator fleet
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ClusterOperatorApi
-     */
-    public listClusterOperatorFleet(options?: RawAxiosRequestConfig) {
-        return ClusterOperatorApiFp(this.configuration).listClusterOperatorFleet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -43954,51 +43806,6 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary Know if a cluster is ready to be deployed or not
-         * @param {string} organizationId Organization ID
-         * @param {string} clusterId Cluster ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getClusterReadinessStatus: async (organizationId: string, clusterId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            assertParamExists('getClusterReadinessStatus', 'organizationId', organizationId)
-            // verify required parameter 'clusterId' is not null or undefined
-            assertParamExists('getClusterReadinessStatus', 'clusterId', clusterId)
-            const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/isReady`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
-                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Get cluster status
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
@@ -44180,6 +43987,47 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists('getInstallationHelmValues', 'clusterId', clusterId)
             const localVarPath = `/organization/{organizationId}/cluster/{clusterId}/installationHelmValues`
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get the latest cluster failure context
+         * @summary Get the latest cluster failure context
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLatestClusterFailureContext: async (clusterId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'clusterId' is not null or undefined
+            assertParamExists('getLatestClusterFailureContext', 'clusterId', clusterId)
+            const localVarPath = `/cluster/{clusterId}/clusterFailureContext/latest`
                 .replace(`{${"clusterId"}}`, encodeURIComponent(String(clusterId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -45199,20 +45047,6 @@ export const ClustersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Know if a cluster is ready to be deployed or not
-         * @param {string} organizationId Organization ID
-         * @param {string} clusterId Cluster ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getClusterReadinessStatus(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterReadinessStatus>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getClusterReadinessStatus(organizationId, clusterId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ClustersApi.getClusterReadinessStatus']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary Get cluster status
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
@@ -45276,6 +45110,19 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getInstallationHelmValues(organizationId, clusterId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ClustersApi.getInstallationHelmValues']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Get the latest cluster failure context
+         * @summary Get the latest cluster failure context
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getLatestClusterFailureContext(clusterId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusterFailureContextResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLatestClusterFailureContext(clusterId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ClustersApi.getLatestClusterFailureContext']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -45725,17 +45572,6 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
-         * @summary Know if a cluster is ready to be deployed or not
-         * @param {string} organizationId Organization ID
-         * @param {string} clusterId Cluster ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getClusterReadinessStatus(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterReadinessStatus> {
-            return localVarFp.getClusterReadinessStatus(organizationId, clusterId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Get cluster status
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
@@ -45785,6 +45621,16 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
          */
         getInstallationHelmValues(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.getInstallationHelmValues(organizationId, clusterId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get the latest cluster failure context
+         * @summary Get the latest cluster failure context
+         * @param {string} clusterId Cluster ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLatestClusterFailureContext(clusterId: string, options?: RawAxiosRequestConfig): AxiosPromise<ClusterFailureContextResponse> {
+            return localVarFp.getLatestClusterFailureContext(clusterId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -46217,19 +46063,6 @@ export class ClustersApi extends BaseAPI {
 
     /**
      * 
-     * @summary Know if a cluster is ready to be deployed or not
-     * @param {string} organizationId Organization ID
-     * @param {string} clusterId Cluster ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ClustersApi
-     */
-    public getClusterReadinessStatus(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig) {
-        return ClustersApiFp(this.configuration).getClusterReadinessStatus(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary Get cluster status
      * @param {string} organizationId Organization ID
      * @param {string} clusterId Cluster ID
@@ -46288,6 +46121,18 @@ export class ClustersApi extends BaseAPI {
      */
     public getInstallationHelmValues(organizationId: string, clusterId: string, options?: RawAxiosRequestConfig) {
         return ClustersApiFp(this.configuration).getInstallationHelmValues(organizationId, clusterId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get the latest cluster failure context
+     * @summary Get the latest cluster failure context
+     * @param {string} clusterId Cluster ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ClustersApi
+     */
+    public getLatestClusterFailureContext(clusterId: string, options?: RawAxiosRequestConfig) {
+        return ClustersApiFp(this.configuration).getLatestClusterFailureContext(clusterId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -47477,19 +47322,19 @@ export const ContainerCustomDomainApiAxiosParamCreator = function (configuration
             };
         },
         /**
-         * 
-         * @summary Get Custom Domain status
+         * Get a custom domain attached to a container.
+         * @summary Get a container custom domain
          * @param {string} containerId Container ID
          * @param {string} customDomainId Custom Domain ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getContainerCustomDomainStatus: async (containerId: string, customDomainId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getContainerCustomDomain: async (containerId: string, customDomainId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('getContainerCustomDomainStatus', 'containerId', containerId)
+            assertParamExists('getContainerCustomDomain', 'containerId', containerId)
             // verify required parameter 'customDomainId' is not null or undefined
-            assertParamExists('getContainerCustomDomainStatus', 'customDomainId', customDomainId)
-            const localVarPath = `/container/{containerId}/customDomain/{customDomainId}/status`
+            assertParamExists('getContainerCustomDomain', 'customDomainId', customDomainId)
+            const localVarPath = `/container/{containerId}/customDomain/{customDomainId}`
                 .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)))
                 .replace(`{${"customDomainId"}}`, encodeURIComponent(String(customDomainId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -47629,17 +47474,17 @@ export const ContainerCustomDomainApiFp = function(configuration?: Configuration
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary Get Custom Domain status
+         * Get a custom domain attached to a container.
+         * @summary Get a container custom domain
          * @param {string} containerId Container ID
          * @param {string} customDomainId Custom Domain ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getContainerCustomDomainStatus(containerId: string, customDomainId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CustomDomain>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getContainerCustomDomainStatus(containerId, customDomainId, options);
+        async getContainerCustomDomain(containerId: string, customDomainId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CustomDomain>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getContainerCustomDomain(containerId, customDomainId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ContainerCustomDomainApi.getContainerCustomDomainStatus']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ContainerCustomDomainApi.getContainerCustomDomain']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -47710,15 +47555,15 @@ export const ContainerCustomDomainApiFactory = function (configuration?: Configu
             return localVarFp.editContainerCustomDomain(containerId, customDomainId, customDomainRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Get Custom Domain status
+         * Get a custom domain attached to a container.
+         * @summary Get a container custom domain
          * @param {string} containerId Container ID
          * @param {string} customDomainId Custom Domain ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getContainerCustomDomainStatus(containerId: string, customDomainId: string, options?: RawAxiosRequestConfig): AxiosPromise<CustomDomain> {
-            return localVarFp.getContainerCustomDomainStatus(containerId, customDomainId, options).then((request) => request(axios, basePath));
+        getContainerCustomDomain(containerId: string, customDomainId: string, options?: RawAxiosRequestConfig): AxiosPromise<CustomDomain> {
+            return localVarFp.getContainerCustomDomain(containerId, customDomainId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -47793,16 +47638,16 @@ export class ContainerCustomDomainApi extends BaseAPI {
     }
 
     /**
-     * 
-     * @summary Get Custom Domain status
+     * Get a custom domain attached to a container.
+     * @summary Get a container custom domain
      * @param {string} containerId Container ID
      * @param {string} customDomainId Custom Domain ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContainerCustomDomainApi
      */
-    public getContainerCustomDomainStatus(containerId: string, customDomainId: string, options?: RawAxiosRequestConfig) {
-        return ContainerCustomDomainApiFp(this.configuration).getContainerCustomDomainStatus(containerId, customDomainId, options).then((request) => request(this.axios, this.basePath));
+    public getContainerCustomDomain(containerId: string, customDomainId: string, options?: RawAxiosRequestConfig) {
+        return ContainerCustomDomainApiFp(this.configuration).getContainerCustomDomain(containerId, customDomainId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -48650,121 +48495,6 @@ export class ContainerEnvironmentVariableApi extends BaseAPI {
      */
     public listContainerEnvironmentVariable(containerId: string, options?: RawAxiosRequestConfig) {
         return ContainerEnvironmentVariableApiFp(this.configuration).listContainerEnvironmentVariable(containerId, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * ContainerLogsApi - axios parameter creator
- * @export
- */
-export const ContainerLogsApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * This will list the last 1000 logs of the container
-         * @summary List logs
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listContainerLog: async (containerId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('listContainerLog', 'containerId', containerId)
-            const localVarPath = `/container/{containerId}/log`
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * ContainerLogsApi - functional programming interface
- * @export
- */
-export const ContainerLogsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = ContainerLogsApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * This will list the last 1000 logs of the container
-         * @summary List logs
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listContainerLog(containerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LogResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listContainerLog(containerId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ContainerLogsApi.listContainerLog']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * ContainerLogsApi - factory interface
- * @export
- */
-export const ContainerLogsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = ContainerLogsApiFp(configuration)
-    return {
-        /**
-         * This will list the last 1000 logs of the container
-         * @summary List logs
-         * @param {string} containerId Container ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listContainerLog(containerId: string, options?: RawAxiosRequestConfig): AxiosPromise<LogResponseList> {
-            return localVarFp.listContainerLog(containerId, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * ContainerLogsApi - object-oriented interface
- * @export
- * @class ContainerLogsApi
- * @extends {BaseAPI}
- */
-export class ContainerLogsApi extends BaseAPI {
-    /**
-     * This will list the last 1000 logs of the container
-     * @summary List logs
-     * @param {string} containerId Container ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ContainerLogsApi
-     */
-    public listContainerLog(containerId: string, options?: RawAxiosRequestConfig) {
-        return ContainerLogsApiFp(this.configuration).listContainerLog(containerId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -51491,204 +51221,6 @@ export class DatabaseActionsApi extends BaseAPI {
      */
     public uninstallDatabase(databaseId: string, body?: object, options?: RawAxiosRequestConfig) {
         return DatabaseActionsApiFp(this.configuration).uninstallDatabase(databaseId, body, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * DatabaseApplicationApi - axios parameter creator
- * @export
- */
-export const DatabaseApplicationApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary List applications using the database
-         * @param {string} databaseId Database ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listDatabaseApplication: async (databaseId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'databaseId' is not null or undefined
-            assertParamExists('listDatabaseApplication', 'databaseId', databaseId)
-            const localVarPath = `/database/{databaseId}/application`
-                .replace(`{${"databaseId"}}`, encodeURIComponent(String(databaseId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Remove an application from this database 
-         * @param {string} databaseId Database ID
-         * @param {string} targetApplicationId Target application ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        removeApplicationFromDatabase: async (databaseId: string, targetApplicationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'databaseId' is not null or undefined
-            assertParamExists('removeApplicationFromDatabase', 'databaseId', databaseId)
-            // verify required parameter 'targetApplicationId' is not null or undefined
-            assertParamExists('removeApplicationFromDatabase', 'targetApplicationId', targetApplicationId)
-            const localVarPath = `/database/{databaseId}/application/{targetApplicationId}`
-                .replace(`{${"databaseId"}}`, encodeURIComponent(String(databaseId)))
-                .replace(`{${"targetApplicationId"}}`, encodeURIComponent(String(targetApplicationId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * DatabaseApplicationApi - functional programming interface
- * @export
- */
-export const DatabaseApplicationApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = DatabaseApplicationApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @summary List applications using the database
-         * @param {string} databaseId Database ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listDatabaseApplication(databaseId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listDatabaseApplication(databaseId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DatabaseApplicationApi.listDatabaseApplication']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Remove an application from this database 
-         * @param {string} databaseId Database ID
-         * @param {string} targetApplicationId Target application ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async removeApplicationFromDatabase(databaseId: string, targetApplicationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.removeApplicationFromDatabase(databaseId, targetApplicationId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DatabaseApplicationApi.removeApplicationFromDatabase']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * DatabaseApplicationApi - factory interface
- * @export
- */
-export const DatabaseApplicationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = DatabaseApplicationApiFp(configuration)
-    return {
-        /**
-         * 
-         * @summary List applications using the database
-         * @param {string} databaseId Database ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listDatabaseApplication(databaseId: string, options?: RawAxiosRequestConfig): AxiosPromise<ApplicationResponseList> {
-            return localVarFp.listDatabaseApplication(databaseId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Remove an application from this database 
-         * @param {string} databaseId Database ID
-         * @param {string} targetApplicationId Target application ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        removeApplicationFromDatabase(databaseId: string, targetApplicationId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.removeApplicationFromDatabase(databaseId, targetApplicationId, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * DatabaseApplicationApi - object-oriented interface
- * @export
- * @class DatabaseApplicationApi
- * @extends {BaseAPI}
- */
-export class DatabaseApplicationApi extends BaseAPI {
-    /**
-     * 
-     * @summary List applications using the database
-     * @param {string} databaseId Database ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DatabaseApplicationApi
-     */
-    public listDatabaseApplication(databaseId: string, options?: RawAxiosRequestConfig) {
-        return DatabaseApplicationApiFp(this.configuration).listDatabaseApplication(databaseId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Remove an application from this database 
-     * @param {string} databaseId Database ID
-     * @param {string} targetApplicationId Target application ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DatabaseApplicationApi
-     */
-    public removeApplicationFromDatabase(databaseId: string, targetApplicationId: string, options?: RawAxiosRequestConfig) {
-        return DatabaseApplicationApiFp(this.configuration).removeApplicationFromDatabase(databaseId, targetApplicationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -54658,6 +54190,51 @@ export const EnvironmentActionsApiAxiosParamCreator = function (configuration?: 
             };
         },
         /**
+         * Move environment to another project and start it
+         * @summary Move environment to another project and start it
+         * @param {string} environmentId Environment ID
+         * @param {string} projectId Project ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        moveEnvironmentToProject: async (environmentId: string, projectId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('moveEnvironmentToProject', 'environmentId', environmentId)
+            // verify required parameter 'projectId' is not null or undefined
+            assertParamExists('moveEnvironmentToProject', 'projectId', projectId)
+            const localVarPath = `/environment/{environmentId}/moveToProject/{projectId}`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)))
+                .replace(`{${"projectId"}}`, encodeURIComponent(String(projectId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Update and reboot the selected services
          * @summary Reboot services
          * @param {string} environmentId Environment ID
@@ -54713,6 +54290,47 @@ export const EnvironmentActionsApiAxiosParamCreator = function (configuration?: 
             // verify required parameter 'environmentId' is not null or undefined
             assertParamExists('redeployEnvironment', 'environmentId', environmentId)
             const localVarPath = `/environment/{environmentId}/redeploy`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Restart environment
+         * @summary Restart environment
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restartEnvironment: async (environmentId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('restartEnvironment', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/restart`
                 .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -55010,6 +54628,20 @@ export const EnvironmentActionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Move environment to another project and start it
+         * @summary Move environment to another project and start it
+         * @param {string} environmentId Environment ID
+         * @param {string} projectId Project ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async moveEnvironmentToProject(environmentId: string, projectId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.moveEnvironmentToProject(environmentId, projectId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['EnvironmentActionsApi.moveEnvironmentToProject']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Update and reboot the selected services
          * @summary Reboot services
          * @param {string} environmentId Environment ID
@@ -55030,10 +54662,23 @@ export const EnvironmentActionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async redeployEnvironment(environmentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentStatus>> {
+        async redeployEnvironment(environmentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.redeployEnvironment(environmentId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EnvironmentActionsApi.redeployEnvironment']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Restart environment
+         * @summary Restart environment
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async restartEnvironment(environmentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.restartEnvironment(environmentId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['EnvironmentActionsApi.restartEnvironment']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -55167,6 +54812,17 @@ export const EnvironmentActionsApiFactory = function (configuration?: Configurat
             return localVarFp.deployEnvironment(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
+         * Move environment to another project and start it
+         * @summary Move environment to another project and start it
+         * @param {string} environmentId Environment ID
+         * @param {string} projectId Project ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        moveEnvironmentToProject(environmentId: string, projectId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.moveEnvironmentToProject(environmentId, projectId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Update and reboot the selected services
          * @summary Reboot services
          * @param {string} environmentId Environment ID
@@ -55184,8 +54840,18 @@ export const EnvironmentActionsApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        redeployEnvironment(environmentId: string, options?: RawAxiosRequestConfig): AxiosPromise<EnvironmentStatus> {
+        redeployEnvironment(environmentId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.redeployEnvironment(environmentId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Restart environment
+         * @summary Restart environment
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restartEnvironment(environmentId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.restartEnvironment(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -55318,6 +54984,19 @@ export class EnvironmentActionsApi extends BaseAPI {
     }
 
     /**
+     * Move environment to another project and start it
+     * @summary Move environment to another project and start it
+     * @param {string} environmentId Environment ID
+     * @param {string} projectId Project ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentActionsApi
+     */
+    public moveEnvironmentToProject(environmentId: string, projectId: string, options?: RawAxiosRequestConfig) {
+        return EnvironmentActionsApiFp(this.configuration).moveEnvironmentToProject(environmentId, projectId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Update and reboot the selected services
      * @summary Reboot services
      * @param {string} environmentId Environment ID
@@ -55340,6 +55019,18 @@ export class EnvironmentActionsApi extends BaseAPI {
      */
     public redeployEnvironment(environmentId: string, options?: RawAxiosRequestConfig) {
         return EnvironmentActionsApiFp(this.configuration).redeployEnvironment(environmentId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Restart environment
+     * @summary Restart environment
+     * @param {string} environmentId Environment ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentActionsApi
+     */
+    public restartEnvironment(environmentId: string, options?: RawAxiosRequestConfig) {
+        return EnvironmentActionsApiFp(this.configuration).restartEnvironment(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -56020,47 +55711,6 @@ export class EnvironmentExportApi extends BaseAPI {
 export const EnvironmentLogsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * This returns the last 1000 environment deployment logs.
-         * @summary List environment deployment logs
-         * @param {string} environmentId Environment ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listEnvironmentLog: async (environmentId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'environmentId' is not null or undefined
-            assertParamExists('listEnvironmentLog', 'environmentId', environmentId)
-            const localVarPath = `/environment/{environmentId}/log`
-                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * This returns the last 1000 environment deployment logs v2
          * @summary List environment deployment logs v2
          * @param {string} environmentId Environment ID
@@ -56117,19 +55767,6 @@ export const EnvironmentLogsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = EnvironmentLogsApiAxiosParamCreator(configuration)
     return {
         /**
-         * This returns the last 1000 environment deployment logs.
-         * @summary List environment deployment logs
-         * @param {string} environmentId Environment ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listEnvironmentLog(environmentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentLogResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listEnvironmentLog(environmentId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EnvironmentLogsApi.listEnvironmentLog']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * This returns the last 1000 environment deployment logs v2
          * @summary List environment deployment logs v2
          * @param {string} environmentId Environment ID
@@ -56154,16 +55791,6 @@ export const EnvironmentLogsApiFactory = function (configuration?: Configuration
     const localVarFp = EnvironmentLogsApiFp(configuration)
     return {
         /**
-         * This returns the last 1000 environment deployment logs.
-         * @summary List environment deployment logs
-         * @param {string} environmentId Environment ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listEnvironmentLog(environmentId: string, options?: RawAxiosRequestConfig): AxiosPromise<EnvironmentLogResponseList> {
-            return localVarFp.listEnvironmentLog(environmentId, options).then((request) => request(axios, basePath));
-        },
-        /**
          * This returns the last 1000 environment deployment logs v2
          * @summary List environment deployment logs v2
          * @param {string} environmentId Environment ID
@@ -56184,18 +55811,6 @@ export const EnvironmentLogsApiFactory = function (configuration?: Configuration
  * @extends {BaseAPI}
  */
 export class EnvironmentLogsApi extends BaseAPI {
-    /**
-     * This returns the last 1000 environment deployment logs.
-     * @summary List environment deployment logs
-     * @param {string} environmentId Environment ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof EnvironmentLogsApi
-     */
-    public listEnvironmentLog(environmentId: string, options?: RawAxiosRequestConfig) {
-        return EnvironmentLogsApiFp(this.configuration).listEnvironmentLog(environmentId, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * This returns the last 1000 environment deployment logs v2
      * @summary List environment deployment logs v2
@@ -57196,6 +56811,47 @@ export const EnvironmentSecretApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
+         * Get a secret by ID
+         * @summary Get a secret by ID
+         * @param {string} secretId Secret ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSecretById: async (secretId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'secretId' is not null or undefined
+            assertParamExists('getSecretById', 'secretId', secretId)
+            const localVarPath = `/secret/{secretId}`
+                .replace(`{${"secretId"}}`, encodeURIComponent(String(secretId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary List environment secrets
          * @param {string} environmentId Environment ID
@@ -57320,6 +56976,19 @@ export const EnvironmentSecretApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Get a secret by ID
+         * @summary Get a secret by ID
+         * @param {string} secretId Secret ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSecretById(secretId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Secret>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSecretById(secretId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['EnvironmentSecretApi.getSecretById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary List environment secrets
          * @param {string} environmentId Environment ID
@@ -57399,6 +57068,16 @@ export const EnvironmentSecretApiFactory = function (configuration?: Configurati
          */
         editEnvironmentSecret(environmentId: string, secretId: string, secretEditRequest: SecretEditRequest, options?: RawAxiosRequestConfig): AxiosPromise<Secret> {
             return localVarFp.editEnvironmentSecret(environmentId, secretId, secretEditRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get a secret by ID
+         * @summary Get a secret by ID
+         * @param {string} secretId Secret ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSecretById(secretId: string, options?: RawAxiosRequestConfig): AxiosPromise<Secret> {
+            return localVarFp.getSecretById(secretId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -57486,6 +57165,18 @@ export class EnvironmentSecretApi extends BaseAPI {
      */
     public editEnvironmentSecret(environmentId: string, secretId: string, secretEditRequest: SecretEditRequest, options?: RawAxiosRequestConfig) {
         return EnvironmentSecretApiFp(this.configuration).editEnvironmentSecret(environmentId, secretId, secretEditRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get a secret by ID
+     * @summary Get a secret by ID
+     * @param {string} secretId Secret ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentSecretApi
+     */
+    public getSecretById(secretId: string, options?: RawAxiosRequestConfig) {
+        return EnvironmentSecretApiFp(this.configuration).getSecretById(secretId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -58489,287 +58180,6 @@ export class EnvironmentsApi extends BaseAPI {
 export const GitRepositoriesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
-         * @summary Get bitbucket repositories of the connected user
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        getBitbucketRepositories: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/account/bitbucket/repository`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get bitbucket branches of the specified repository
-         * @param {string} [name] The name of the repository where to retrieve the branches
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        getBitbucketRepositoryBranches: async (name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/account/bitbucket/repository/branch`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get git provider accounts
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        getGitProviderAccount: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/account/gitAuthProvider`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get github repositories of the connected user
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        getGithubRepositories: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/account/github/repository`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get github branches of the specified repository
-         * @param {string} [name] The name of the repository where to retrieve the branches
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        getGithubRepositoryBranches: async (name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/account/github/repository/branch`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get gitlab repositories of the connected user
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        getGitlabRepositories: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/account/gitlab/repository`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get gitlab branches of the specified repository
-         * @param {string} [name] The name of the repository to retrieve the branches
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        getGitlabRepositoryBranches: async (name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/account/gitlab/repository/branch`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * List immediate subdirectories at a specified path in a git repository. This endpoint is used when creating Terraform services to help users browse and select the appropriate root path. 
          * @summary List directories from a git repository
          * @param {string} organizationId Organization ID
@@ -58825,100 +58235,6 @@ export const GitRepositoriesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = GitRepositoriesApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
-         * @summary Get bitbucket repositories of the connected user
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        async getBitbucketRepositories(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getBitbucketRepositories(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitRepositoriesApi.getBitbucketRepositories']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Get bitbucket branches of the specified repository
-         * @param {string} [name] The name of the repository where to retrieve the branches
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        async getBitbucketRepositoryBranches(name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryBranchResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getBitbucketRepositoryBranches(name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitRepositoriesApi.getBitbucketRepositoryBranches']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Get git provider accounts
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        async getGitProviderAccount(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitAuthProviderResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitProviderAccount(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitRepositoriesApi.getGitProviderAccount']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Get github repositories of the connected user
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        async getGithubRepositories(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getGithubRepositories(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitRepositoriesApi.getGithubRepositories']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Get github branches of the specified repository
-         * @param {string} [name] The name of the repository where to retrieve the branches
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        async getGithubRepositoryBranches(name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryBranchResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getGithubRepositoryBranches(name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitRepositoriesApi.getGithubRepositoryBranches']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Get gitlab repositories of the connected user
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        async getGitlabRepositories(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitlabRepositories(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitRepositoriesApi.getGitlabRepositories']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Get gitlab branches of the specified repository
-         * @param {string} [name] The name of the repository to retrieve the branches
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        async getGitlabRepositoryBranches(name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryBranchResponseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitlabRepositoryBranches(name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitRepositoriesApi.getGitlabRepositoryBranches']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * List immediate subdirectories at a specified path in a git repository. This endpoint is used when creating Terraform services to help users browse and select the appropriate root path. 
          * @summary List directories from a git repository
          * @param {string} organizationId Organization ID
@@ -58943,79 +58259,6 @@ export const GitRepositoriesApiFactory = function (configuration?: Configuration
     const localVarFp = GitRepositoriesApiFp(configuration)
     return {
         /**
-         * 
-         * @summary Get bitbucket repositories of the connected user
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        getBitbucketRepositories(options?: RawAxiosRequestConfig): AxiosPromise<GitRepositoryResponseList> {
-            return localVarFp.getBitbucketRepositories(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get bitbucket branches of the specified repository
-         * @param {string} [name] The name of the repository where to retrieve the branches
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        getBitbucketRepositoryBranches(name?: string, options?: RawAxiosRequestConfig): AxiosPromise<GitRepositoryBranchResponseList> {
-            return localVarFp.getBitbucketRepositoryBranches(name, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get git provider accounts
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        getGitProviderAccount(options?: RawAxiosRequestConfig): AxiosPromise<GitAuthProviderResponseList> {
-            return localVarFp.getGitProviderAccount(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get github repositories of the connected user
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        getGithubRepositories(options?: RawAxiosRequestConfig): AxiosPromise<GitRepositoryResponseList> {
-            return localVarFp.getGithubRepositories(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get github branches of the specified repository
-         * @param {string} [name] The name of the repository where to retrieve the branches
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        getGithubRepositoryBranches(name?: string, options?: RawAxiosRequestConfig): AxiosPromise<GitRepositoryBranchResponseList> {
-            return localVarFp.getGithubRepositoryBranches(name, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get gitlab repositories of the connected user
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        getGitlabRepositories(options?: RawAxiosRequestConfig): AxiosPromise<GitRepositoryResponseList> {
-            return localVarFp.getGitlabRepositories(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get gitlab branches of the specified repository
-         * @param {string} [name] The name of the repository to retrieve the branches
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        getGitlabRepositoryBranches(name?: string, options?: RawAxiosRequestConfig): AxiosPromise<GitRepositoryBranchResponseList> {
-            return localVarFp.getGitlabRepositoryBranches(name, options).then((request) => request(axios, basePath));
-        },
-        /**
          * List immediate subdirectories at a specified path in a git repository. This endpoint is used when creating Terraform services to help users browse and select the appropriate root path. 
          * @summary List directories from a git repository
          * @param {string} organizationId Organization ID
@@ -59036,93 +58279,6 @@ export const GitRepositoriesApiFactory = function (configuration?: Configuration
  * @extends {BaseAPI}
  */
 export class GitRepositoriesApi extends BaseAPI {
-    /**
-     * 
-     * @summary Get bitbucket repositories of the connected user
-     * @param {*} [options] Override http request option.
-     * @deprecated
-     * @throws {RequiredError}
-     * @memberof GitRepositoriesApi
-     */
-    public getBitbucketRepositories(options?: RawAxiosRequestConfig) {
-        return GitRepositoriesApiFp(this.configuration).getBitbucketRepositories(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get bitbucket branches of the specified repository
-     * @param {string} [name] The name of the repository where to retrieve the branches
-     * @param {*} [options] Override http request option.
-     * @deprecated
-     * @throws {RequiredError}
-     * @memberof GitRepositoriesApi
-     */
-    public getBitbucketRepositoryBranches(name?: string, options?: RawAxiosRequestConfig) {
-        return GitRepositoriesApiFp(this.configuration).getBitbucketRepositoryBranches(name, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get git provider accounts
-     * @param {*} [options] Override http request option.
-     * @deprecated
-     * @throws {RequiredError}
-     * @memberof GitRepositoriesApi
-     */
-    public getGitProviderAccount(options?: RawAxiosRequestConfig) {
-        return GitRepositoriesApiFp(this.configuration).getGitProviderAccount(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get github repositories of the connected user
-     * @param {*} [options] Override http request option.
-     * @deprecated
-     * @throws {RequiredError}
-     * @memberof GitRepositoriesApi
-     */
-    public getGithubRepositories(options?: RawAxiosRequestConfig) {
-        return GitRepositoriesApiFp(this.configuration).getGithubRepositories(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get github branches of the specified repository
-     * @param {string} [name] The name of the repository where to retrieve the branches
-     * @param {*} [options] Override http request option.
-     * @deprecated
-     * @throws {RequiredError}
-     * @memberof GitRepositoriesApi
-     */
-    public getGithubRepositoryBranches(name?: string, options?: RawAxiosRequestConfig) {
-        return GitRepositoriesApiFp(this.configuration).getGithubRepositoryBranches(name, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get gitlab repositories of the connected user
-     * @param {*} [options] Override http request option.
-     * @deprecated
-     * @throws {RequiredError}
-     * @memberof GitRepositoriesApi
-     */
-    public getGitlabRepositories(options?: RawAxiosRequestConfig) {
-        return GitRepositoriesApiFp(this.configuration).getGitlabRepositories(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get gitlab branches of the specified repository
-     * @param {string} [name] The name of the repository to retrieve the branches
-     * @param {*} [options] Override http request option.
-     * @deprecated
-     * @throws {RequiredError}
-     * @memberof GitRepositoriesApi
-     */
-    public getGitlabRepositoryBranches(name?: string, options?: RawAxiosRequestConfig) {
-        return GitRepositoriesApiFp(this.configuration).getGitlabRepositoryBranches(name, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * List immediate subdirectories at a specified path in a git repository. This endpoint is used when creating Terraform services to help users browse and select the appropriate root path. 
      * @summary List directories from a git repository
@@ -65697,51 +64853,6 @@ export class JobSecretApi extends BaseAPI {
 export const JobsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Triggers a new job deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the job should have the same image name and a different tag 
-         * @summary Auto deploy jobs
-         * @param {string} organizationId Organization ID
-         * @param {OrganizationJobAutoDeployRequest} [organizationJobAutoDeployRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        autoDeployJobEnvironments: async (organizationId: string, organizationJobAutoDeployRequest?: OrganizationJobAutoDeployRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            assertParamExists('autoDeployJobEnvironments', 'organizationId', organizationId)
-            const localVarPath = `/organization/{organizationId}/job/deploy`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(organizationJobAutoDeployRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * This will create a new job with the same configuration on the targeted environment Id.
          * @summary Clone job
          * @param {string} jobId Job ID
@@ -65966,20 +65077,6 @@ export const JobsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = JobsApiAxiosParamCreator(configuration)
     return {
         /**
-         * Triggers a new job deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the job should have the same image name and a different tag 
-         * @summary Auto deploy jobs
-         * @param {string} organizationId Organization ID
-         * @param {OrganizationJobAutoDeployRequest} [organizationJobAutoDeployRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async autoDeployJobEnvironments(organizationId: string, organizationJobAutoDeployRequest?: OrganizationJobAutoDeployRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Status>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.autoDeployJobEnvironments(organizationId, organizationJobAutoDeployRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['JobsApi.autoDeployJobEnvironments']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * This will create a new job with the same configuration on the targeted environment Id.
          * @summary Clone job
          * @param {string} jobId Job ID
@@ -66057,17 +65154,6 @@ export const JobsApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = JobsApiFp(configuration)
     return {
         /**
-         * Triggers a new job deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the job should have the same image name and a different tag 
-         * @summary Auto deploy jobs
-         * @param {string} organizationId Organization ID
-         * @param {OrganizationJobAutoDeployRequest} [organizationJobAutoDeployRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        autoDeployJobEnvironments(organizationId: string, organizationJobAutoDeployRequest?: OrganizationJobAutoDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<Status> {
-            return localVarFp.autoDeployJobEnvironments(organizationId, organizationJobAutoDeployRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
          * This will create a new job with the same configuration on the targeted environment Id.
          * @summary Clone job
          * @param {string} jobId Job ID
@@ -66129,19 +65215,6 @@ export const JobsApiFactory = function (configuration?: Configuration, basePath?
  * @extends {BaseAPI}
  */
 export class JobsApi extends BaseAPI {
-    /**
-     * Triggers a new job deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the job should have the same image name and a different tag 
-     * @summary Auto deploy jobs
-     * @param {string} organizationId Organization ID
-     * @param {OrganizationJobAutoDeployRequest} [organizationJobAutoDeployRequest] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof JobsApi
-     */
-    public autoDeployJobEnvironments(organizationId: string, organizationJobAutoDeployRequest?: OrganizationJobAutoDeployRequest, options?: RawAxiosRequestConfig) {
-        return JobsApiFp(this.configuration).autoDeployJobEnvironments(organizationId, organizationJobAutoDeployRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * This will create a new job with the same configuration on the targeted environment Id.
      * @summary Clone job
@@ -68211,11 +67284,250 @@ export class MembersApi extends BaseAPI {
 
 
 /**
+ * OrganizationApi - axios parameter creator
+ * @export
+ */
+export const OrganizationApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Track a skill call
+         * @summary Track a skill call
+         * @param {string} organizationId Organization ID
+         * @param {SkillTrackingRequest} skillTrackingRequest 
+         * @param {string} [userAgent] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        trackSkillCall: async (organizationId: string, skillTrackingRequest: SkillTrackingRequest, userAgent?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('trackSkillCall', 'organizationId', organizationId)
+            // verify required parameter 'skillTrackingRequest' is not null or undefined
+            assertParamExists('trackSkillCall', 'skillTrackingRequest', skillTrackingRequest)
+            const localVarPath = `/organization/{organizationId}/skill-tracking`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (userAgent != null) {
+                localVarHeaderParameter['User-Agent'] = String(userAgent);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(skillTrackingRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * OrganizationApi - functional programming interface
+ * @export
+ */
+export const OrganizationApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = OrganizationApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Track a skill call
+         * @summary Track a skill call
+         * @param {string} organizationId Organization ID
+         * @param {SkillTrackingRequest} skillTrackingRequest 
+         * @param {string} [userAgent] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async trackSkillCall(organizationId: string, skillTrackingRequest: SkillTrackingRequest, userAgent?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.trackSkillCall(organizationId, skillTrackingRequest, userAgent, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrganizationApi.trackSkillCall']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * OrganizationApi - factory interface
+ * @export
+ */
+export const OrganizationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = OrganizationApiFp(configuration)
+    return {
+        /**
+         * Track a skill call
+         * @summary Track a skill call
+         * @param {string} organizationId Organization ID
+         * @param {SkillTrackingRequest} skillTrackingRequest 
+         * @param {string} [userAgent] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        trackSkillCall(organizationId: string, skillTrackingRequest: SkillTrackingRequest, userAgent?: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.trackSkillCall(organizationId, skillTrackingRequest, userAgent, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * OrganizationApi - object-oriented interface
+ * @export
+ * @class OrganizationApi
+ * @extends {BaseAPI}
+ */
+export class OrganizationApi extends BaseAPI {
+    /**
+     * Track a skill call
+     * @summary Track a skill call
+     * @param {string} organizationId Organization ID
+     * @param {SkillTrackingRequest} skillTrackingRequest 
+     * @param {string} [userAgent] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationApi
+     */
+    public trackSkillCall(organizationId: string, skillTrackingRequest: SkillTrackingRequest, userAgent?: string, options?: RawAxiosRequestConfig) {
+        return OrganizationApiFp(this.configuration).trackSkillCall(organizationId, skillTrackingRequest, userAgent, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * OrganizationAccountGitRepositoriesApi - axios parameter creator
  * @export
  */
 export const OrganizationAccountGitRepositoriesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * List repositories from a Git provider
+         * @summary List repositories from a Git provider
+         * @param {string} organizationId Organization ID
+         * @param {string} gitProviderName 
+         * @param {string} [gitTokenId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitProviderRepositories: async (organizationId: string, gitProviderName: string, gitTokenId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getGitProviderRepositories', 'organizationId', organizationId)
+            // verify required parameter 'gitProviderName' is not null or undefined
+            assertParamExists('getGitProviderRepositories', 'gitProviderName', gitProviderName)
+            const localVarPath = `/organization/{organizationId}/account/{gitProviderName}/repository`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"gitProviderName"}}`, encodeURIComponent(String(gitProviderName)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (gitTokenId !== undefined) {
+                localVarQueryParameter['gitTokenId'] = gitTokenId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List repository branches from a Git provider
+         * @summary List repository branches from a Git provider
+         * @param {string} organizationId Organization ID
+         * @param {string} gitProviderName 
+         * @param {string} name 
+         * @param {string} [gitTokenId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitProviderRepositoryBranches: async (organizationId: string, gitProviderName: string, name: string, gitTokenId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getGitProviderRepositoryBranches', 'organizationId', organizationId)
+            // verify required parameter 'gitProviderName' is not null or undefined
+            assertParamExists('getGitProviderRepositoryBranches', 'gitProviderName', gitProviderName)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getGitProviderRepositoryBranches', 'name', name)
+            const localVarPath = `/organization/{organizationId}/account/{gitProviderName}/repository/branch`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"gitProviderName"}}`, encodeURIComponent(String(gitProviderName)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (gitTokenId !== undefined) {
+                localVarQueryParameter['gitTokenId'] = gitTokenId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @summary Get bitbucket repositories of the connected user
@@ -68559,6 +67871,37 @@ export const OrganizationAccountGitRepositoriesApiFp = function(configuration?: 
     const localVarAxiosParamCreator = OrganizationAccountGitRepositoriesApiAxiosParamCreator(configuration)
     return {
         /**
+         * List repositories from a Git provider
+         * @summary List repositories from a Git provider
+         * @param {string} organizationId Organization ID
+         * @param {string} gitProviderName 
+         * @param {string} [gitTokenId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGitProviderRepositories(organizationId: string, gitProviderName: string, gitTokenId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitProviderRepositories(organizationId, gitProviderName, gitTokenId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrganizationAccountGitRepositoriesApi.getGitProviderRepositories']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * List repository branches from a Git provider
+         * @summary List repository branches from a Git provider
+         * @param {string} organizationId Organization ID
+         * @param {string} gitProviderName 
+         * @param {string} name 
+         * @param {string} [gitTokenId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGitProviderRepositoryBranches(organizationId: string, gitProviderName: string, name: string, gitTokenId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitRepositoryBranchResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitProviderRepositoryBranches(organizationId, gitProviderName, name, gitTokenId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrganizationAccountGitRepositoriesApi.getGitProviderRepositoryBranches']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Get bitbucket repositories of the connected user
          * @param {string} organizationId Organization ID
@@ -68669,6 +68012,31 @@ export const OrganizationAccountGitRepositoriesApiFactory = function (configurat
     const localVarFp = OrganizationAccountGitRepositoriesApiFp(configuration)
     return {
         /**
+         * List repositories from a Git provider
+         * @summary List repositories from a Git provider
+         * @param {string} organizationId Organization ID
+         * @param {string} gitProviderName 
+         * @param {string} [gitTokenId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitProviderRepositories(organizationId: string, gitProviderName: string, gitTokenId?: string, options?: RawAxiosRequestConfig): AxiosPromise<GitRepositoryResponseList> {
+            return localVarFp.getGitProviderRepositories(organizationId, gitProviderName, gitTokenId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List repository branches from a Git provider
+         * @summary List repository branches from a Git provider
+         * @param {string} organizationId Organization ID
+         * @param {string} gitProviderName 
+         * @param {string} name 
+         * @param {string} [gitTokenId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitProviderRepositoryBranches(organizationId: string, gitProviderName: string, name: string, gitTokenId?: string, options?: RawAxiosRequestConfig): AxiosPromise<GitRepositoryBranchResponseList> {
+            return localVarFp.getGitProviderRepositoryBranches(organizationId, gitProviderName, name, gitTokenId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Get bitbucket repositories of the connected user
          * @param {string} organizationId Organization ID
@@ -68757,6 +68125,35 @@ export const OrganizationAccountGitRepositoriesApiFactory = function (configurat
  * @extends {BaseAPI}
  */
 export class OrganizationAccountGitRepositoriesApi extends BaseAPI {
+    /**
+     * List repositories from a Git provider
+     * @summary List repositories from a Git provider
+     * @param {string} organizationId Organization ID
+     * @param {string} gitProviderName 
+     * @param {string} [gitTokenId] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationAccountGitRepositoriesApi
+     */
+    public getGitProviderRepositories(organizationId: string, gitProviderName: string, gitTokenId?: string, options?: RawAxiosRequestConfig) {
+        return OrganizationAccountGitRepositoriesApiFp(this.configuration).getGitProviderRepositories(organizationId, gitProviderName, gitTokenId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List repository branches from a Git provider
+     * @summary List repository branches from a Git provider
+     * @param {string} organizationId Organization ID
+     * @param {string} gitProviderName 
+     * @param {string} name 
+     * @param {string} [gitTokenId] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationAccountGitRepositoriesApi
+     */
+    public getGitProviderRepositoryBranches(organizationId: string, gitProviderName: string, name: string, gitTokenId?: string, options?: RawAxiosRequestConfig) {
+        return OrganizationAccountGitRepositoriesApiFp(this.configuration).getGitProviderRepositoryBranches(organizationId, gitProviderName, name, gitTokenId, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Get bitbucket repositories of the connected user
@@ -70263,6 +69660,64 @@ export class OrganizationCustomRoleApi extends BaseAPI {
 export const OrganizationEnterpriseConnectionApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Resolve organization access for an Auth0 post-login action.
+         * @summary Resolve enterprise connection roles
+         * @param {string} xQoveryAuth0PostLoginToken 
+         * @param {string} connectionName 
+         * @param {string} federatedGroups 
+         * @param {string} userSub 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnterpriseConnectionRoles: async (xQoveryAuth0PostLoginToken: string, connectionName: string, federatedGroups: string, userSub: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'xQoveryAuth0PostLoginToken' is not null or undefined
+            assertParamExists('getEnterpriseConnectionRoles', 'xQoveryAuth0PostLoginToken', xQoveryAuth0PostLoginToken)
+            // verify required parameter 'connectionName' is not null or undefined
+            assertParamExists('getEnterpriseConnectionRoles', 'connectionName', connectionName)
+            // verify required parameter 'federatedGroups' is not null or undefined
+            assertParamExists('getEnterpriseConnectionRoles', 'federatedGroups', federatedGroups)
+            // verify required parameter 'userSub' is not null or undefined
+            assertParamExists('getEnterpriseConnectionRoles', 'userSub', userSub)
+            const localVarPath = `/account/enterpriseconnection/roles`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (connectionName !== undefined) {
+                localVarQueryParameter['connectionName'] = connectionName;
+            }
+
+            if (federatedGroups !== undefined) {
+                localVarQueryParameter['federatedGroups'] = federatedGroups;
+            }
+
+            if (userSub !== undefined) {
+                localVarQueryParameter['userSub'] = userSub;
+            }
+
+            if (xQoveryAuth0PostLoginToken != null) {
+                localVarHeaderParameter['X-Qovery-Auth0-Post-Login-Token'] = String(xQoveryAuth0PostLoginToken);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Get enterprise connection
          * @param {string} organizationId Organization ID
@@ -70349,6 +69804,49 @@ export const OrganizationEnterpriseConnectionApiAxiosParamCreator = function (co
             };
         },
         /**
+         * Notify q-core of member access changes from an Auth0 post-login action.
+         * @summary Notify enterprise member access changes
+         * @param {string} xQoveryAuth0PostLoginToken 
+         * @param {EnterpriseConnectionMemberAccessUpdateRequest} enterpriseConnectionMemberAccessUpdateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        notifyEnterpriseMemberAccessUpdated: async (xQoveryAuth0PostLoginToken: string, enterpriseConnectionMemberAccessUpdateRequest: EnterpriseConnectionMemberAccessUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'xQoveryAuth0PostLoginToken' is not null or undefined
+            assertParamExists('notifyEnterpriseMemberAccessUpdated', 'xQoveryAuth0PostLoginToken', xQoveryAuth0PostLoginToken)
+            // verify required parameter 'enterpriseConnectionMemberAccessUpdateRequest' is not null or undefined
+            assertParamExists('notifyEnterpriseMemberAccessUpdated', 'enterpriseConnectionMemberAccessUpdateRequest', enterpriseConnectionMemberAccessUpdateRequest)
+            const localVarPath = `/account/enterpriseconnection/notifyMemberAccessUpdated`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (xQoveryAuth0PostLoginToken != null) {
+                localVarHeaderParameter['X-Qovery-Auth0-Post-Login-Token'] = String(xQoveryAuth0PostLoginToken);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(enterpriseConnectionMemberAccessUpdateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Update enterprise connection
          * @param {string} organizationId Organization ID
@@ -70408,6 +69906,22 @@ export const OrganizationEnterpriseConnectionApiFp = function(configuration?: Co
     const localVarAxiosParamCreator = OrganizationEnterpriseConnectionApiAxiosParamCreator(configuration)
     return {
         /**
+         * Resolve organization access for an Auth0 post-login action.
+         * @summary Resolve enterprise connection roles
+         * @param {string} xQoveryAuth0PostLoginToken 
+         * @param {string} connectionName 
+         * @param {string} federatedGroups 
+         * @param {string} userSub 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEnterpriseConnectionRoles(xQoveryAuth0PostLoginToken: string, connectionName: string, federatedGroups: string, userSub: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnterpriseConnectionAccessList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEnterpriseConnectionRoles(xQoveryAuth0PostLoginToken, connectionName, federatedGroups, userSub, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrganizationEnterpriseConnectionApi.getEnterpriseConnectionRoles']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Get enterprise connection
          * @param {string} organizationId Organization ID
@@ -70432,6 +69946,20 @@ export const OrganizationEnterpriseConnectionApiFp = function(configuration?: Co
             const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizationEnterpriseConnections(organizationId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OrganizationEnterpriseConnectionApi.listOrganizationEnterpriseConnections']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Notify q-core of member access changes from an Auth0 post-login action.
+         * @summary Notify enterprise member access changes
+         * @param {string} xQoveryAuth0PostLoginToken 
+         * @param {EnterpriseConnectionMemberAccessUpdateRequest} enterpriseConnectionMemberAccessUpdateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async notifyEnterpriseMemberAccessUpdated(xQoveryAuth0PostLoginToken: string, enterpriseConnectionMemberAccessUpdateRequest: EnterpriseConnectionMemberAccessUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.notifyEnterpriseMemberAccessUpdated(xQoveryAuth0PostLoginToken, enterpriseConnectionMemberAccessUpdateRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrganizationEnterpriseConnectionApi.notifyEnterpriseMemberAccessUpdated']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -70460,6 +69988,19 @@ export const OrganizationEnterpriseConnectionApiFactory = function (configuratio
     const localVarFp = OrganizationEnterpriseConnectionApiFp(configuration)
     return {
         /**
+         * Resolve organization access for an Auth0 post-login action.
+         * @summary Resolve enterprise connection roles
+         * @param {string} xQoveryAuth0PostLoginToken 
+         * @param {string} connectionName 
+         * @param {string} federatedGroups 
+         * @param {string} userSub 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnterpriseConnectionRoles(xQoveryAuth0PostLoginToken: string, connectionName: string, federatedGroups: string, userSub: string, options?: RawAxiosRequestConfig): AxiosPromise<EnterpriseConnectionAccessList> {
+            return localVarFp.getEnterpriseConnectionRoles(xQoveryAuth0PostLoginToken, connectionName, federatedGroups, userSub, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Get enterprise connection
          * @param {string} organizationId Organization ID
@@ -70479,6 +70020,17 @@ export const OrganizationEnterpriseConnectionApiFactory = function (configuratio
          */
         listOrganizationEnterpriseConnections(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<EnterpriseConnectionResponseList> {
             return localVarFp.listOrganizationEnterpriseConnections(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Notify q-core of member access changes from an Auth0 post-login action.
+         * @summary Notify enterprise member access changes
+         * @param {string} xQoveryAuth0PostLoginToken 
+         * @param {EnterpriseConnectionMemberAccessUpdateRequest} enterpriseConnectionMemberAccessUpdateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        notifyEnterpriseMemberAccessUpdated(xQoveryAuth0PostLoginToken: string, enterpriseConnectionMemberAccessUpdateRequest: EnterpriseConnectionMemberAccessUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.notifyEnterpriseMemberAccessUpdated(xQoveryAuth0PostLoginToken, enterpriseConnectionMemberAccessUpdateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -70503,6 +70055,21 @@ export const OrganizationEnterpriseConnectionApiFactory = function (configuratio
  */
 export class OrganizationEnterpriseConnectionApi extends BaseAPI {
     /**
+     * Resolve organization access for an Auth0 post-login action.
+     * @summary Resolve enterprise connection roles
+     * @param {string} xQoveryAuth0PostLoginToken 
+     * @param {string} connectionName 
+     * @param {string} federatedGroups 
+     * @param {string} userSub 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationEnterpriseConnectionApi
+     */
+    public getEnterpriseConnectionRoles(xQoveryAuth0PostLoginToken: string, connectionName: string, federatedGroups: string, userSub: string, options?: RawAxiosRequestConfig) {
+        return OrganizationEnterpriseConnectionApiFp(this.configuration).getEnterpriseConnectionRoles(xQoveryAuth0PostLoginToken, connectionName, federatedGroups, userSub, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * 
      * @summary Get enterprise connection
      * @param {string} organizationId Organization ID
@@ -70525,6 +70092,19 @@ export class OrganizationEnterpriseConnectionApi extends BaseAPI {
      */
     public listOrganizationEnterpriseConnections(organizationId: string, options?: RawAxiosRequestConfig) {
         return OrganizationEnterpriseConnectionApiFp(this.configuration).listOrganizationEnterpriseConnections(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Notify q-core of member access changes from an Auth0 post-login action.
+     * @summary Notify enterprise member access changes
+     * @param {string} xQoveryAuth0PostLoginToken 
+     * @param {EnterpriseConnectionMemberAccessUpdateRequest} enterpriseConnectionMemberAccessUpdateRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationEnterpriseConnectionApi
+     */
+    public notifyEnterpriseMemberAccessUpdated(xQoveryAuth0PostLoginToken: string, enterpriseConnectionMemberAccessUpdateRequest: EnterpriseConnectionMemberAccessUpdateRequest, options?: RawAxiosRequestConfig) {
+        return OrganizationEnterpriseConnectionApiFp(this.configuration).notifyEnterpriseMemberAccessUpdated(xQoveryAuth0PostLoginToken, enterpriseConnectionMemberAccessUpdateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -77693,9 +77273,9 @@ export class ServiceStatusApi extends BaseAPI {
  * @export
  */
 export const GetIngressDeploymentStatusServiceTypeEnum = {
-    CONTAINER: 'CONTAINER',
-    APPLICATION: 'APPLICATION',
-    HELM: 'HELM'
+    CONTAINER: 'container',
+    APPLICATION: 'application',
+    HELM: 'helm'
 } as const;
 export type GetIngressDeploymentStatusServiceTypeEnum = typeof GetIngressDeploymentStatusServiceTypeEnum[keyof typeof GetIngressDeploymentStatusServiceTypeEnum];
 
