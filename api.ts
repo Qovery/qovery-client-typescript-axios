@@ -4452,6 +4452,33 @@ export interface BlueprintCreationResponse {
     'execution_id': string;
 }
 /**
+ * Database a blueprint manages
+ * @export
+ * @interface BlueprintDatabaseResponse
+ */
+export interface BlueprintDatabaseResponse {
+    /**
+     * 
+     * @type {DatabaseTypeEnum}
+     * @memberof BlueprintDatabaseResponse
+     */
+    'kind': DatabaseTypeEnum;
+    /**
+     * Terraform service the blueprint created; null before its first dispatch
+     * @type {string}
+     * @memberof BlueprintDatabaseResponse
+     */
+    'service_id': string | null;
+    /**
+     * Null until a deploy has reported the database endpoint
+     * @type {DatabaseEndpointsResponse}
+     * @memberof BlueprintDatabaseResponse
+     */
+    'endpoint': DatabaseEndpointsResponse | null;
+}
+
+
+/**
  * 
  * @export
  * @interface BlueprintDeploymentAckResponse
@@ -11799,6 +11826,25 @@ export const DatabaseEditRequestDiskTypeEnum = {
 
 export type DatabaseEditRequestDiskTypeEnum = typeof DatabaseEditRequestDiskTypeEnum[keyof typeof DatabaseEditRequestDiskTypeEnum];
 
+/**
+ * Endpoint of a database
+ * @export
+ * @interface DatabaseEndpointsResponse
+ */
+export interface DatabaseEndpointsResponse {
+    /**
+     * Database hostname, from the DB_ADDRESS terraform output
+     * @type {string}
+     * @memberof DatabaseEndpointsResponse
+     */
+    'host': string;
+    /**
+     * Database port, from the DB_PORT terraform output; null when none is reported
+     * @type {number}
+     * @memberof DatabaseEndpointsResponse
+     */
+    'port'?: number | null;
+}
 /**
  * 
  * @export
@@ -38348,6 +38394,47 @@ export const BlueprintMainCallsApiAxiosParamCreator = function (configuration?: 
             };
         },
         /**
+         * Returns the kind of database a blueprint manages and its endpoint, read from the `DB_ADDRESS` and `DB_PORT` outputs of its terraform service. `endpoint` is null until a deploy has reported it. Port-forward dials this endpoint to reach a blueprint database.
+         * @summary Get the database a blueprint manages
+         * @param {string} blueprintId Blueprint ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBlueprintDatabase: async (blueprintId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'blueprintId' is not null or undefined
+            assertParamExists('getBlueprintDatabase', 'blueprintId', blueprintId)
+            const localVarPath = `/blueprint/{blueprintId}/database`
+                .replace(`{${"blueprintId"}}`, encodeURIComponent(String(blueprintId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns the persisted variables for a blueprint. Secret variables are identified by `is_secret` and never include their value.
          * @summary Get persisted blueprint variables
          * @param {string} blueprintId Blueprint ID
@@ -38575,6 +38662,19 @@ export const BlueprintMainCallsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns the kind of database a blueprint manages and its endpoint, read from the `DB_ADDRESS` and `DB_PORT` outputs of its terraform service. `endpoint` is null until a deploy has reported it. Port-forward dials this endpoint to reach a blueprint database.
+         * @summary Get the database a blueprint manages
+         * @param {string} blueprintId Blueprint ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBlueprintDatabase(blueprintId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintDatabaseResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBlueprintDatabase(blueprintId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BlueprintMainCallsApi.getBlueprintDatabase']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the persisted variables for a blueprint. Secret variables are identified by `is_secret` and never include their value.
          * @summary Get persisted blueprint variables
          * @param {string} blueprintId Blueprint ID
@@ -38688,6 +38788,16 @@ export const BlueprintMainCallsApiFactory = function (configuration?: Configurat
          */
         getBlueprintCatalog(organizationId: string, options?: RawAxiosRequestConfig): AxiosPromise<BlueprintCatalogResponse> {
             return localVarFp.getBlueprintCatalog(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the kind of database a blueprint manages and its endpoint, read from the `DB_ADDRESS` and `DB_PORT` outputs of its terraform service. `endpoint` is null until a deploy has reported it. Port-forward dials this endpoint to reach a blueprint database.
+         * @summary Get the database a blueprint manages
+         * @param {string} blueprintId Blueprint ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBlueprintDatabase(blueprintId: string, options?: RawAxiosRequestConfig): AxiosPromise<BlueprintDatabaseResponse> {
+            return localVarFp.getBlueprintDatabase(blueprintId, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the persisted variables for a blueprint. Secret variables are identified by `is_secret` and never include their value.
@@ -38805,6 +38915,18 @@ export class BlueprintMainCallsApi extends BaseAPI {
      */
     public getBlueprintCatalog(organizationId: string, options?: RawAxiosRequestConfig) {
         return BlueprintMainCallsApiFp(this.configuration).getBlueprintCatalog(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the kind of database a blueprint manages and its endpoint, read from the `DB_ADDRESS` and `DB_PORT` outputs of its terraform service. `endpoint` is null until a deploy has reported it. Port-forward dials this endpoint to reach a blueprint database.
+     * @summary Get the database a blueprint manages
+     * @param {string} blueprintId Blueprint ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlueprintMainCallsApi
+     */
+    public getBlueprintDatabase(blueprintId: string, options?: RawAxiosRequestConfig) {
+        return BlueprintMainCallsApiFp(this.configuration).getBlueprintDatabase(blueprintId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
