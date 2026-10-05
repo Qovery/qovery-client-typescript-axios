@@ -38435,6 +38435,47 @@ export const BlueprintMainCallsApiAxiosParamCreator = function (configuration?: 
             };
         },
         /**
+         * Returns the host, port, login and password of the database a blueprint manages, read from the outputs of its terraform service. Requires the same permission as a managed database\'s master credentials.
+         * @summary Get master credentials of a blueprint database
+         * @param {string} blueprintId Blueprint ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBlueprintDatabaseMasterCredentials: async (blueprintId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'blueprintId' is not null or undefined
+            assertParamExists('getBlueprintDatabaseMasterCredentials', 'blueprintId', blueprintId)
+            const localVarPath = `/blueprint/{blueprintId}/database/masterCredentials`
+                .replace(`{${"blueprintId"}}`, encodeURIComponent(String(blueprintId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns the persisted variables for a blueprint. Secret variables are identified by `is_secret` and never include their value.
          * @summary Get persisted blueprint variables
          * @param {string} blueprintId Blueprint ID
@@ -38675,6 +38716,19 @@ export const BlueprintMainCallsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns the host, port, login and password of the database a blueprint manages, read from the outputs of its terraform service. Requires the same permission as a managed database\'s master credentials.
+         * @summary Get master credentials of a blueprint database
+         * @param {string} blueprintId Blueprint ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBlueprintDatabaseMasterCredentials(blueprintId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Credentials>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBlueprintDatabaseMasterCredentials(blueprintId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BlueprintMainCallsApi.getBlueprintDatabaseMasterCredentials']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the persisted variables for a blueprint. Secret variables are identified by `is_secret` and never include their value.
          * @summary Get persisted blueprint variables
          * @param {string} blueprintId Blueprint ID
@@ -38798,6 +38852,16 @@ export const BlueprintMainCallsApiFactory = function (configuration?: Configurat
          */
         getBlueprintDatabase(blueprintId: string, options?: RawAxiosRequestConfig): AxiosPromise<BlueprintDatabaseResponse> {
             return localVarFp.getBlueprintDatabase(blueprintId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the host, port, login and password of the database a blueprint manages, read from the outputs of its terraform service. Requires the same permission as a managed database\'s master credentials.
+         * @summary Get master credentials of a blueprint database
+         * @param {string} blueprintId Blueprint ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBlueprintDatabaseMasterCredentials(blueprintId: string, options?: RawAxiosRequestConfig): AxiosPromise<Credentials> {
+            return localVarFp.getBlueprintDatabaseMasterCredentials(blueprintId, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the persisted variables for a blueprint. Secret variables are identified by `is_secret` and never include their value.
@@ -38927,6 +38991,18 @@ export class BlueprintMainCallsApi extends BaseAPI {
      */
     public getBlueprintDatabase(blueprintId: string, options?: RawAxiosRequestConfig) {
         return BlueprintMainCallsApiFp(this.configuration).getBlueprintDatabase(blueprintId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the host, port, login and password of the database a blueprint manages, read from the outputs of its terraform service. Requires the same permission as a managed database\'s master credentials.
+     * @summary Get master credentials of a blueprint database
+     * @param {string} blueprintId Blueprint ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlueprintMainCallsApi
+     */
+    public getBlueprintDatabaseMasterCredentials(blueprintId: string, options?: RawAxiosRequestConfig) {
+        return BlueprintMainCallsApiFp(this.configuration).getBlueprintDatabaseMasterCredentials(blueprintId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
