@@ -6327,6 +6327,12 @@ export interface ClusterAdvancedSettings {
      */
     'aws.cloudwatch.eks_logs_retention_days'?: number;
     /**
+     * EKS control plane log types exported to CloudWatch. Defaults to all log types. Use an empty array to disable exports. Redeploy the cluster for changes to take effect.
+     * @type {Array<string>}
+     * @memberof ClusterAdvancedSettings
+     */
+    'aws.cloudwatch.eks_logs_types'?: Array<ClusterAdvancedSettingsAwsCloudwatchEksLogsTypesEnum>;
+    /**
      * Enable flow logs for on the VPC and store them in an S3 bucket
      * @type {boolean}
      * @memberof ClusterAdvancedSettings
@@ -6677,6 +6683,15 @@ export interface ClusterAdvancedSettings {
     'k8s.api.allowed_public_access_cidrs'?: Array<string>;
 }
 
+export const ClusterAdvancedSettingsAwsCloudwatchEksLogsTypesEnum = {
+    API: 'api',
+    AUDIT: 'audit',
+    AUTHENTICATOR: 'authenticator',
+    CONTROLLER_MANAGER: 'controllerManager',
+    SCHEDULER: 'scheduler'
+} as const;
+
+export type ClusterAdvancedSettingsAwsCloudwatchEksLogsTypesEnum = typeof ClusterAdvancedSettingsAwsCloudwatchEksLogsTypesEnum[keyof typeof ClusterAdvancedSettingsAwsCloudwatchEksLogsTypesEnum];
 export const ClusterAdvancedSettingsLokiDeploymentModeEnum = {
     SINGLE_BINARY: 'single_binary',
     SIMPLE_SCALABLE: 'simple_scalable'
