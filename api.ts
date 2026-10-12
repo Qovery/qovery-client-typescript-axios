@@ -6964,6 +6964,12 @@ export interface ClusterCloudProviderInfo {
      * @memberof ClusterCloudProviderInfo
      */
     'region'?: string;
+    /**
+     * 
+     * @type {ClusterCloudProviderInfoCredentials}
+     * @memberof ClusterCloudProviderInfo
+     */
+    'wide_permission_credentials'?: ClusterCloudProviderInfoCredentials;
 }
 
 
@@ -7010,6 +7016,12 @@ export interface ClusterCloudProviderInfoRequest {
      * @memberof ClusterCloudProviderInfoRequest
      */
     'region'?: string;
+    /**
+     * 
+     * @type {ClusterCloudProviderInfoCredentials}
+     * @memberof ClusterCloudProviderInfoRequest
+     */
+    'wide_permission_credentials'?: ClusterCloudProviderInfoCredentials;
 }
 
 
@@ -29624,6 +29636,12 @@ export interface WidePermissionsDto {
      * @memberof WidePermissionsDto
      */
     'wide_scope_cloud_account_id'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WidePermissionsDto
+     */
+    'require_wide_access_to_deploy'?: boolean;
 }
 
 /**
