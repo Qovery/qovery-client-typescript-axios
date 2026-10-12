@@ -7084,6 +7084,12 @@ export interface ClusterDeploymentHistory {
      */
     'trigger_action': DeploymentHistoryTriggerAction;
     /**
+     * OPERATOR_UPDATE for a Qovery Operator update, CLUSTER for any other cluster deployment, stop, or delete. Deployments recorded before this field existed read as CLUSTER.
+     * @type {string}
+     * @memberof ClusterDeploymentHistory
+     */
+    'operation': ClusterDeploymentHistoryOperationEnum;
+    /**
      * 
      * @type {boolean}
      * @memberof ClusterDeploymentHistory
@@ -7103,6 +7109,12 @@ export interface ClusterDeploymentHistory {
     'total_duration'?: string | null;
 }
 
+export const ClusterDeploymentHistoryOperationEnum = {
+    CLUSTER: 'CLUSTER',
+    OPERATOR_UPDATE: 'OPERATOR_UPDATE'
+} as const;
+
+export type ClusterDeploymentHistoryOperationEnum = typeof ClusterDeploymentHistoryOperationEnum[keyof typeof ClusterDeploymentHistoryOperationEnum];
 export const ClusterDeploymentHistoryReasonEnum = {
     UNSPECIFIED: 'UNSPECIFIED',
     MAINTENANCE: 'MAINTENANCE'
@@ -8777,6 +8789,12 @@ export interface ClusterOperatorFleetInventoryResponse {
     'reported_chart_version'?: string | null;
     /**
      * 
+     * @type {ClusterOperatorRuntime}
+     * @memberof ClusterOperatorFleetInventoryResponse
+     */
+    'reported_runtime': ClusterOperatorRuntime;
+    /**
+     * 
      * @type {ClusterOperatorFleetStatus}
      * @memberof ClusterOperatorFleetInventoryResponse
      */
@@ -8815,6 +8833,21 @@ export const ClusterOperatorFleetStatus = {
 } as const;
 
 export type ClusterOperatorFleetStatus = typeof ClusterOperatorFleetStatus[keyof typeof ClusterOperatorFleetStatus];
+
+
+/**
+ * Runtime reported by the Operator heartbeat. KUBERNETES is a Helm-installed Operator in the cluster, DOCKER a container on an EKS Anywhere bastion. UNKNOWN means no heartbeat reported a runtime (Operators that predate the field).
+ * @export
+ * @enum {string}
+ */
+
+export const ClusterOperatorRuntime = {
+    KUBERNETES: 'KUBERNETES',
+    DOCKER: 'DOCKER',
+    UNKNOWN: 'UNKNOWN'
+} as const;
+
+export type ClusterOperatorRuntime = typeof ClusterOperatorRuntime[keyof typeof ClusterOperatorRuntime];
 
 
 /**
@@ -8889,6 +8922,12 @@ export interface ClusterOperatorStatusResponse {
      * @memberof ClusterOperatorStatusResponse
      */
     'reported_identity'?: ReportedClusterOperatorIdentity | null;
+    /**
+     * 
+     * @type {ClusterOperatorRuntime}
+     * @memberof ClusterOperatorStatusResponse
+     */
+    'reported_runtime': ClusterOperatorRuntime;
 }
 
 
@@ -8899,11 +8938,11 @@ export interface ClusterOperatorStatusResponse {
  */
 export interface ClusterOperatorUpdateRequest {
     /**
-     * Exact Qovery Operator Helm chart version to install.
+     * Exact Qovery Operator Helm chart version to install. Required for a Kubernetes Operator, ignored for a Docker Operator.
      * @type {string}
      * @memberof ClusterOperatorUpdateRequest
      */
-    'chart_version': string;
+    'chart_version'?: string | null;
     /**
      * Optional Operator image tag overriding the image target selected by q-core.
      * @type {string}
@@ -8930,11 +8969,11 @@ export interface ClusterOperatorUpdateResponse {
      */
     'image_version': string;
     /**
-     * Operator Helm chart version resolved for this execution.
+     * Operator Helm chart version resolved for this execution. Null for a Docker Operator.
      * @type {string}
      * @memberof ClusterOperatorUpdateResponse
      */
-    'chart_version': string;
+    'chart_version'?: string | null;
 }
 /**
  * 
@@ -26044,6 +26083,7 @@ export const SelfManagedClusterKind = {
     SCW_SELF_MANAGED: 'SCW_SELF_MANAGED',
     GKE_SELF_MANAGED: 'GKE_SELF_MANAGED',
     AKS_SELF_MANAGED: 'AKS_SELF_MANAGED',
+    EKS_ANYWHERE: 'EKS_ANYWHERE',
     SELF_MANAGED: 'SELF_MANAGED'
 } as const;
 
@@ -42857,7 +42897,7 @@ export const ClusterOperatorApiAxiosParamCreator = function (configuration?: Con
             };
         },
         /**
-         * Queues an Engine v2 execution containing only the Qovery Operator Helm release. The chart version is required; the optional image version overrides the image target selected by q-core. The current Operator must be attached, connected, and protocol-compatible. A successful response means that the execution was accepted, not that Helm has completed. Cluster administrator permission is required.
+         * Queues an Engine v2 execution that updates only the Qovery Operator. The update follows the runtime reported by the Operator: a Kubernetes Operator gets a Helm upgrade of its release and requires the chart version; a Docker Operator (EKS Anywhere bastion) gets its container replaced and ignores the chart version. An Operator that has not reported its runtime cannot be updated. The optional image version overrides the image target selected by q-core. The current Operator must be connected and protocol-compatible. A successful response means that the execution was accepted, not that the update has completed. Cluster administrator permission is required.
          * @summary Update the Qovery Operator on a cluster
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
@@ -42960,7 +43000,7 @@ export const ClusterOperatorApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Queues an Engine v2 execution containing only the Qovery Operator Helm release. The chart version is required; the optional image version overrides the image target selected by q-core. The current Operator must be attached, connected, and protocol-compatible. A successful response means that the execution was accepted, not that Helm has completed. Cluster administrator permission is required.
+         * Queues an Engine v2 execution that updates only the Qovery Operator. The update follows the runtime reported by the Operator: a Kubernetes Operator gets a Helm upgrade of its release and requires the chart version; a Docker Operator (EKS Anywhere bastion) gets its container replaced and ignores the chart version. An Operator that has not reported its runtime cannot be updated. The optional image version overrides the image target selected by q-core. The current Operator must be connected and protocol-compatible. A successful response means that the execution was accepted, not that the update has completed. Cluster administrator permission is required.
          * @summary Update the Qovery Operator on a cluster
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
@@ -43018,7 +43058,7 @@ export const ClusterOperatorApiFactory = function (configuration?: Configuration
             return localVarFp.getClusterOperatorStatus(organizationId, clusterId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Queues an Engine v2 execution containing only the Qovery Operator Helm release. The chart version is required; the optional image version overrides the image target selected by q-core. The current Operator must be attached, connected, and protocol-compatible. A successful response means that the execution was accepted, not that Helm has completed. Cluster administrator permission is required.
+         * Queues an Engine v2 execution that updates only the Qovery Operator. The update follows the runtime reported by the Operator: a Kubernetes Operator gets a Helm upgrade of its release and requires the chart version; a Docker Operator (EKS Anywhere bastion) gets its container replaced and ignores the chart version. An Operator that has not reported its runtime cannot be updated. The optional image version overrides the image target selected by q-core. The current Operator must be connected and protocol-compatible. A successful response means that the execution was accepted, not that the update has completed. Cluster administrator permission is required.
          * @summary Update the Qovery Operator on a cluster
          * @param {string} organizationId Organization ID
          * @param {string} clusterId Cluster ID
@@ -43079,7 +43119,7 @@ export class ClusterOperatorApi extends BaseAPI {
     }
 
     /**
-     * Queues an Engine v2 execution containing only the Qovery Operator Helm release. The chart version is required; the optional image version overrides the image target selected by q-core. The current Operator must be attached, connected, and protocol-compatible. A successful response means that the execution was accepted, not that Helm has completed. Cluster administrator permission is required.
+     * Queues an Engine v2 execution that updates only the Qovery Operator. The update follows the runtime reported by the Operator: a Kubernetes Operator gets a Helm upgrade of its release and requires the chart version; a Docker Operator (EKS Anywhere bastion) gets its container replaced and ignores the chart version. An Operator that has not reported its runtime cannot be updated. The optional image version overrides the image target selected by q-core. The current Operator must be connected and protocol-compatible. A successful response means that the execution was accepted, not that the update has completed. Cluster administrator permission is required.
      * @summary Update the Qovery Operator on a cluster
      * @param {string} organizationId Organization ID
      * @param {string} clusterId Cluster ID
