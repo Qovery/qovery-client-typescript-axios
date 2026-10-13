@@ -9407,7 +9407,7 @@ export interface ClusterRequest {
      * @type {WidePermissionsDto}
      * @memberof ClusterRequest
      */
-    'wide_permissions_dto'?: WidePermissionsDto;
+    'wide_permissions'?: WidePermissionsDto;
 }
 
 
