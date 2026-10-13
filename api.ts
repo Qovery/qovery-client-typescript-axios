@@ -6311,6 +6311,12 @@ export interface Cluster {
      * @memberof Cluster
      */
     'secret_manager_accesses'?: Array<SecretManagerAccess>;
+    /**
+     * 
+     * @type {WidePermissionsResponseDto}
+     * @memberof Cluster
+     */
+    'wide_permissions'?: WidePermissionsResponseDto;
 }
 
 
@@ -9404,10 +9410,10 @@ export interface ClusterRequest {
     'is_demo'?: boolean;
     /**
      * 
-     * @type {WidePermissionsDto}
+     * @type {WidePermissionsRequestDto}
      * @memberof ClusterRequest
      */
-    'wide_permissions'?: WidePermissionsDto;
+    'wide_permissions'?: WidePermissionsRequestDto;
 }
 
 
@@ -29621,25 +29627,44 @@ export type WeekdayEnum = typeof WeekdayEnum[keyof typeof WeekdayEnum];
 /**
  * 
  * @export
- * @interface WidePermissionsDto
+ * @interface WidePermissionsRequestDto
  */
-export interface WidePermissionsDto {
+export interface WidePermissionsRequestDto {
     /**
      * 
      * @type {boolean}
-     * @memberof WidePermissionsDto
+     * @memberof WidePermissionsRequestDto
      */
     'using_restrictive_permissions'?: boolean;
     /**
      * 
      * @type {string}
-     * @memberof WidePermissionsDto
+     * @memberof WidePermissionsRequestDto
+     */
+    'wide_scope_cloud_account_id'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface WidePermissionsResponseDto
+ */
+export interface WidePermissionsResponseDto {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WidePermissionsResponseDto
+     */
+    'using_restrictive_permissions'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidePermissionsResponseDto
      */
     'wide_scope_cloud_account_id'?: string | null;
     /**
      * 
      * @type {boolean}
-     * @memberof WidePermissionsDto
+     * @memberof WidePermissionsResponseDto
      */
     'require_wide_access_to_deploy'?: boolean;
 }
