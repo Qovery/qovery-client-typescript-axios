@@ -21857,6 +21857,12 @@ export interface OrganizationApiToken {
      * @memberof OrganizationApiToken
      */
     'role_id'?: string;
+    /**
+     * Time when token usage was last recorded. Updated periodically, so recent usage may not appear immediately. Null when no usage has been recorded.
+     * @type {string}
+     * @memberof OrganizationApiToken
+     */
+    'last_used_at'?: string | null;
 }
 /**
  * 
@@ -23204,6 +23210,12 @@ export interface OrganizationPolicyApiToken {
      * @memberof OrganizationPolicyApiToken
      */
     'expires_at'?: string | null;
+    /**
+     * Time when token usage was last recorded. Updated periodically, so recent usage may not appear immediately. Null when no usage has been recorded.
+     * @type {string}
+     * @memberof OrganizationPolicyApiToken
+     */
+    'last_used_at'?: string | null;
 }
 /**
  * 
