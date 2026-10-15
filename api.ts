@@ -4684,6 +4684,21 @@ export interface BlueprintItem {
     'majorVersions': Array<BlueprintMajorVersion>;
 }
 /**
+ * What moving the blueprint to this major does: - `RELABEL`: the database already runs this major (e.g. upgraded on the cloud provider); only the blueprint and service records change. - `UPGRADE`: the database runs an older major; the next deploy upgrades it in place (downtime). The preview shows the change first. - `UNSUPPORTED`: the move is refused; see `unsupported_reason`.
+ * @export
+ * @enum {string}
+ */
+
+export const BlueprintMajorSwitchMode = {
+    RELABEL: 'RELABEL',
+    UPGRADE: 'UPGRADE',
+    UNSUPPORTED: 'UNSUPPORTED'
+} as const;
+
+export type BlueprintMajorSwitchMode = typeof BlueprintMajorSwitchMode[keyof typeof BlueprintMajorSwitchMode];
+
+
+/**
  * 
  * @export
  * @interface BlueprintMajorVersion
@@ -5338,7 +5353,7 @@ export interface BlueprintUpdateEngineFieldChange {
     'current_value'?: string | null;
 }
 /**
- * A newer major version of the blueprint available for a major upgrade.
+ * A newer major version of the blueprint, and what moving to it would do.
  * @export
  * @interface BlueprintUpdateNewMajorVersion
  */
@@ -5355,7 +5370,21 @@ export interface BlueprintUpdateNewMajorVersion {
      * @memberof BlueprintUpdateNewMajorVersion
      */
     'latest_tag': string;
+    /**
+     * 
+     * @type {BlueprintMajorSwitchMode}
+     * @memberof BlueprintUpdateNewMajorVersion
+     */
+    'mode': BlueprintMajorSwitchMode;
+    /**
+     * Why the move is refused. Set only when `mode` is `UNSUPPORTED`.
+     * @type {string}
+     * @memberof BlueprintUpdateNewMajorVersion
+     */
+    'unsupported_reason'?: string | null;
 }
+
+
 /**
  * 
  * @export
