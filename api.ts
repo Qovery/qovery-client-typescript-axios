@@ -35685,10 +35685,11 @@ export const ApplicationsApiAxiosParamCreator = function (configuration?: Config
         /**
          * Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)
          * @summary List default application advanced settings
+         * @param {string} [environmentId] When set, returns the defaults of the cluster running this environment, which can differ between clusters (for example build resources).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDefaultApplicationAdvancedSettings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDefaultApplicationAdvancedSettings: async (environmentId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/defaultApplicationAdvancedSettings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -35707,6 +35708,10 @@ export const ApplicationsApiAxiosParamCreator = function (configuration?: Config
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (environmentId !== undefined) {
+                localVarQueryParameter['environmentId'] = environmentId;
+            }
 
 
     
@@ -35842,11 +35847,12 @@ export const ApplicationsApiFp = function(configuration?: Configuration) {
         /**
          * Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)
          * @summary List default application advanced settings
+         * @param {string} [environmentId] When set, returns the defaults of the cluster running this environment, which can differ between clusters (for example build resources).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDefaultApplicationAdvancedSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationAdvancedSettings>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDefaultApplicationAdvancedSettings(options);
+        async getDefaultApplicationAdvancedSettings(environmentId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationAdvancedSettings>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDefaultApplicationAdvancedSettings(environmentId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApplicationsApi.getDefaultApplicationAdvancedSettings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -35912,11 +35918,12 @@ export const ApplicationsApiFactory = function (configuration?: Configuration, b
         /**
          * Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)
          * @summary List default application advanced settings
+         * @param {string} [environmentId] When set, returns the defaults of the cluster running this environment, which can differ between clusters (for example build resources).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDefaultApplicationAdvancedSettings(options?: RawAxiosRequestConfig): AxiosPromise<ApplicationAdvancedSettings> {
-            return localVarFp.getDefaultApplicationAdvancedSettings(options).then((request) => request(axios, basePath));
+        getDefaultApplicationAdvancedSettings(environmentId?: string, options?: RawAxiosRequestConfig): AxiosPromise<ApplicationAdvancedSettings> {
+            return localVarFp.getDefaultApplicationAdvancedSettings(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a list of applications with only their id and status.
@@ -35977,12 +35984,13 @@ export class ApplicationsApi extends BaseAPI {
     /**
      * Default values for each setting are available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)
      * @summary List default application advanced settings
+     * @param {string} [environmentId] When set, returns the defaults of the cluster running this environment, which can differ between clusters (for example build resources).
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApplicationsApi
      */
-    public getDefaultApplicationAdvancedSettings(options?: RawAxiosRequestConfig) {
-        return ApplicationsApiFp(this.configuration).getDefaultApplicationAdvancedSettings(options).then((request) => request(this.axios, this.basePath));
+    public getDefaultApplicationAdvancedSettings(environmentId?: string, options?: RawAxiosRequestConfig) {
+        return ApplicationsApiFp(this.configuration).getDefaultApplicationAdvancedSettings(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -65284,10 +65292,11 @@ export const JobsApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * Default values for each setting is available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)
          * @summary List default job advanced settings
+         * @param {string} [environmentId] When set, returns the defaults of the cluster running this environment, which can differ between clusters (for example build resources).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDefaultJobAdvancedSettings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDefaultJobAdvancedSettings: async (environmentId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/defaultJobAdvancedSettings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -65306,6 +65315,10 @@ export const JobsApiAxiosParamCreator = function (configuration?: Configuration)
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (environmentId !== undefined) {
+                localVarQueryParameter['environmentId'] = environmentId;
+            }
 
 
     
@@ -65446,11 +65459,12 @@ export const JobsApiFp = function(configuration?: Configuration) {
         /**
          * Default values for each setting is available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)
          * @summary List default job advanced settings
+         * @param {string} [environmentId] When set, returns the defaults of the cluster running this environment, which can differ between clusters (for example build resources).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDefaultJobAdvancedSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JobAdvancedSettings>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDefaultJobAdvancedSettings(options);
+        async getDefaultJobAdvancedSettings(environmentId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JobAdvancedSettings>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDefaultJobAdvancedSettings(environmentId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['JobsApi.getDefaultJobAdvancedSettings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -65517,11 +65531,12 @@ export const JobsApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Default values for each setting is available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)
          * @summary List default job advanced settings
+         * @param {string} [environmentId] When set, returns the defaults of the cluster running this environment, which can differ between clusters (for example build resources).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDefaultJobAdvancedSettings(options?: RawAxiosRequestConfig): AxiosPromise<JobAdvancedSettings> {
-            return localVarFp.getDefaultJobAdvancedSettings(options).then((request) => request(axios, basePath));
+        getDefaultJobAdvancedSettings(environmentId?: string, options?: RawAxiosRequestConfig): AxiosPromise<JobAdvancedSettings> {
+            return localVarFp.getDefaultJobAdvancedSettings(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a list of jobs with only their id and status.
@@ -65583,12 +65598,13 @@ export class JobsApi extends BaseAPI {
     /**
      * Default values for each setting is available in [our documentation](https://hub.qovery.com/docs/using-qovery/configuration/advanced-settings/)
      * @summary List default job advanced settings
+     * @param {string} [environmentId] When set, returns the defaults of the cluster running this environment, which can differ between clusters (for example build resources).
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof JobsApi
      */
-    public getDefaultJobAdvancedSettings(options?: RawAxiosRequestConfig) {
-        return JobsApiFp(this.configuration).getDefaultJobAdvancedSettings(options).then((request) => request(this.axios, this.basePath));
+    public getDefaultJobAdvancedSettings(environmentId?: string, options?: RawAxiosRequestConfig) {
+        return JobsApiFp(this.configuration).getDefaultJobAdvancedSettings(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -79257,10 +79273,11 @@ export const TerraformsApiAxiosParamCreator = function (configuration?: Configur
         /**
          * 
          * @summary List default terraform advanced settings
+         * @param {string} [environmentId] When set, returns the defaults of the cluster running this environment, which can differ between clusters (for example build resources).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDefaultTerraformAdvancedSettings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDefaultTerraformAdvancedSettings: async (environmentId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/defaultTerraformAdvancedSettings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -79279,6 +79296,10 @@ export const TerraformsApiAxiosParamCreator = function (configuration?: Configur
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (environmentId !== undefined) {
+                localVarQueryParameter['environmentId'] = environmentId;
+            }
 
 
     
@@ -79373,11 +79394,12 @@ export const TerraformsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary List default terraform advanced settings
+         * @param {string} [environmentId] When set, returns the defaults of the cluster running this environment, which can differ between clusters (for example build resources).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDefaultTerraformAdvancedSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TerraformAdvancedSettings>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDefaultTerraformAdvancedSettings(options);
+        async getDefaultTerraformAdvancedSettings(environmentId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TerraformAdvancedSettings>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDefaultTerraformAdvancedSettings(environmentId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TerraformsApi.getDefaultTerraformAdvancedSettings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -79430,11 +79452,12 @@ export const TerraformsApiFactory = function (configuration?: Configuration, bas
         /**
          * 
          * @summary List default terraform advanced settings
+         * @param {string} [environmentId] When set, returns the defaults of the cluster running this environment, which can differ between clusters (for example build resources).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDefaultTerraformAdvancedSettings(options?: RawAxiosRequestConfig): AxiosPromise<TerraformAdvancedSettings> {
-            return localVarFp.getDefaultTerraformAdvancedSettings(options).then((request) => request(axios, basePath));
+        getDefaultTerraformAdvancedSettings(environmentId?: string, options?: RawAxiosRequestConfig): AxiosPromise<TerraformAdvancedSettings> {
+            return localVarFp.getDefaultTerraformAdvancedSettings(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -79485,12 +79508,13 @@ export class TerraformsApi extends BaseAPI {
     /**
      * 
      * @summary List default terraform advanced settings
+     * @param {string} [environmentId] When set, returns the defaults of the cluster running this environment, which can differ between clusters (for example build resources).
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TerraformsApi
      */
-    public getDefaultTerraformAdvancedSettings(options?: RawAxiosRequestConfig) {
-        return TerraformsApiFp(this.configuration).getDefaultTerraformAdvancedSettings(options).then((request) => request(this.axios, this.basePath));
+    public getDefaultTerraformAdvancedSettings(environmentId?: string, options?: RawAxiosRequestConfig) {
+        return TerraformsApiFp(this.configuration).getDefaultTerraformAdvancedSettings(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
