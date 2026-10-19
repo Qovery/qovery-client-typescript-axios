@@ -6608,6 +6608,12 @@ export interface ClusterAdvancedSettings {
      */
     'aws.eks.ec2.ami'?: string;
     /**
+     * Run the kubelet with `cpuManagerPolicy: static` on the private node pool (Karpenter only). Guaranteed pods with an integer CPU request get dedicated cores, so tools that size their worker count from the CPU affinity mask see the pod\'s CPUs instead of the whole host. Only has an effect on clusters where Qovery has enabled the private node pool, with AL2023 or Bottlerocket nodes. Ignored otherwise. Changing it replaces every node of that pool. 
+     * @type {boolean}
+     * @memberof ClusterAdvancedSettings
+     */
+    'aws.eks.karpenter.private_pool.cpu_manager_policy_static'?: boolean;
+    /**
      * 
      * @type {number}
      * @memberof ClusterAdvancedSettings
