@@ -23738,7 +23738,10 @@ export const PlanEnum = {
     USER_2025: 'USER_2025',
     TEAM_2025: 'TEAM_2025',
     BUSINESS_2025: 'BUSINESS_2025',
-    ENTERPRISE_2025: 'ENTERPRISE_2025'
+    ENTERPRISE_2025: 'ENTERPRISE_2025',
+    STARTER_2026: 'STARTER_2026',
+    GROWTH_2026: 'GROWTH_2026',
+    SCALE_2026: 'SCALE_2026'
 } as const;
 
 export type PlanEnum = typeof PlanEnum[keyof typeof PlanEnum];
