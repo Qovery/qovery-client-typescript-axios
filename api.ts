@@ -3497,6 +3497,25 @@ export interface AvailableHelmRepositoryResponseList {
     'results'?: Array<AvailableHelmRepositoryResponse>;
 }
 /**
+ * 
+ * @export
+ * @interface AwsAssumeRole
+ */
+export interface AwsAssumeRole {
+    /**
+     * ARN of the IAM role to assume.
+     * @type {string}
+     * @memberof AwsAssumeRole
+     */
+    'role_arn': string;
+    /**
+     * STS external id expected by the trust policy of the assumed role, if it requires one.
+     * @type {string}
+     * @memberof AwsAssumeRole
+     */
+    'external_id'?: string | null;
+}
+/**
  * @type AwsCredentialsRequest
  * @export
  */
@@ -3546,6 +3565,12 @@ export interface AwsRoleArnAuthDto {
      * @memberof AwsRoleArnAuthDto
      */
     'role_arn': string;
+    /**
+     * Role that External Secrets Operator assumes with sts:AssumeRole after authenticating with role_arn, typically to read secrets stored in another AWS account. The trust policy of this role must allow role_arn, and role_arn needs sts:AssumeRole on it. Only available with AWS_ROLE_ARN authentication.
+     * @type {AwsAssumeRole}
+     * @memberof AwsRoleArnAuthDto
+     */
+    'assume_role'?: AwsAssumeRole | null;
 }
 
 export const AwsRoleArnAuthDtoModeEnum = {
