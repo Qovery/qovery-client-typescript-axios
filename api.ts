@@ -22355,7 +22355,7 @@ export interface OrganizationCustomRoleList {
     'results'?: Array<OrganizationCustomRole>;
 }
 /**
- * Indicates the permission for a target project and a given environment type, from the lowest to the highest: - `NO_ACCESS` user has no access - `VIEWER` user can access the environment (and applications / containers / databases / variables) - `DEPLOYER` user can deploy the environment (dependent on the required cluster permission `ENV_CREATOR`) - `MANAGER` user can create an environment (and applications / containers / databases / variables) 
+ * Indicates the permission for a target project and a given environment type, from the lowest to the highest: - `NO_ACCESS` user has no access - `VIEWER` user can access the environment (and applications / containers / databases / variables) - `DEPLOYER` user can deploy the environment (dependent on the required cluster permission `ENV_CREATOR`) - `MANAGER` user can create an environment (and applications / containers / databases / variables)  Shell and port-forward access are granted separately, with the `shell` and `port_forward` flags. 
  * @export
  * @enum {string}
  */
@@ -22396,11 +22396,44 @@ export interface OrganizationCustomRoleProjectPermissionsInner {
     'is_admin'?: boolean;
     /**
      * 
-     * @type {Array<OrganizationCustomRoleUpdateRequestProjectPermissionsInnerPermissionsInner>}
+     * @type {Array<OrganizationCustomRoleProjectPermissionsInnerPermissionsInner>}
      * @memberof OrganizationCustomRoleProjectPermissionsInner
      */
-    'permissions'?: Array<OrganizationCustomRoleUpdateRequestProjectPermissionsInnerPermissionsInner>;
+    'permissions'?: Array<OrganizationCustomRoleProjectPermissionsInnerPermissionsInner>;
 }
+/**
+ * 
+ * @export
+ * @interface OrganizationCustomRoleProjectPermissionsInnerPermissionsInner
+ */
+export interface OrganizationCustomRoleProjectPermissionsInnerPermissionsInner {
+    /**
+     * 
+     * @type {EnvironmentModeEnum}
+     * @memberof OrganizationCustomRoleProjectPermissionsInnerPermissionsInner
+     */
+    'environment_type'?: EnvironmentModeEnum;
+    /**
+     * 
+     * @type {OrganizationCustomRoleProjectPermission}
+     * @memberof OrganizationCustomRoleProjectPermissionsInnerPermissionsInner
+     */
+    'permission'?: OrganizationCustomRoleProjectPermission;
+    /**
+     * Allows opening a shell on the services of this environment type, from the CLI (`qovery shell`) or the console
+     * @type {boolean}
+     * @memberof OrganizationCustomRoleProjectPermissionsInnerPermissionsInner
+     */
+    'shell': boolean;
+    /**
+     * Allows port-forwarding to the services of this environment type (`qovery port-forward`)
+     * @type {boolean}
+     * @memberof OrganizationCustomRoleProjectPermissionsInnerPermissionsInner
+     */
+    'port_forward': boolean;
+}
+
+
 /**
  * 
  * @export
@@ -22496,6 +22529,18 @@ export interface OrganizationCustomRoleUpdateRequestProjectPermissionsInnerPermi
      * @memberof OrganizationCustomRoleUpdateRequestProjectPermissionsInnerPermissionsInner
      */
     'permission'?: OrganizationCustomRoleProjectPermission;
+    /**
+     * Allows opening a shell on the services of this environment type, from the CLI (`qovery shell`) or the console. Cannot be `true` with `NO_ACCESS`. 
+     * @type {boolean}
+     * @memberof OrganizationCustomRoleUpdateRequestProjectPermissionsInnerPermissionsInner
+     */
+    'shell': boolean;
+    /**
+     * Allows port-forwarding to the services of this environment type (`qovery port-forward`). Cannot be `true` with `NO_ACCESS`. 
+     * @type {boolean}
+     * @memberof OrganizationCustomRoleUpdateRequestProjectPermissionsInnerPermissionsInner
+     */
+    'port_forward': boolean;
 }
 
 
