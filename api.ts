@@ -5797,6 +5797,43 @@ export interface BuildSettings {
     'skip_git_submodules'?: boolean;
 }
 /**
+ * Resources the builder used during this build, image push and cache export included. Only set on BUILD. Compare them with the service\'s build CPU and memory settings. The four usage fields come together, or are all absent when no sample was taken (a build shorter than the sampling interval, or a cluster without a metrics API). 
+ * @export
+ * @interface BuilderUsage
+ */
+export interface BuilderUsage {
+    /**
+     * Highest CPU use seen, in millicores.
+     * @type {number}
+     * @memberof BuilderUsage
+     */
+    'cpu_milli_max'?: number;
+    /**
+     * Average CPU use over the samples, in millicores.
+     * @type {number}
+     * @memberof BuilderUsage
+     */
+    'cpu_milli_avg'?: number;
+    /**
+     * Highest memory use seen, in MiB.
+     * @type {number}
+     * @memberof BuilderUsage
+     */
+    'memory_mib_max'?: number;
+    /**
+     * Number of samples the values above come from. Usage is sampled periodically, so a short build has few samples and its peaks can be missed. 
+     * @type {number}
+     * @memberof BuilderUsage
+     */
+    'samples'?: number;
+    /**
+     * Present, and true, only when the builder was killed for running out of memory. Absent otherwise: never test it against false. Raising the build memory setting fixes it. 
+     * @type {boolean}
+     * @memberof BuilderUsage
+     */
+    'oom_killed'?: boolean;
+}
+/**
  * 
  * @export
  * @interface CancelAgenticWorkflowDeploymentRequest
@@ -26883,6 +26920,12 @@ export interface ServiceStepMetric {
      * @memberof ServiceStepMetric
      */
     'sub_steps'?: Array<ServiceSubStepMetric>;
+    /**
+     * 
+     * @type {BuilderUsage}
+     * @memberof ServiceStepMetric
+     */
+    'builder_usage'?: BuilderUsage;
 }
 
 
