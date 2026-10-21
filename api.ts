@@ -14760,6 +14760,12 @@ export interface EnvironmentLogsDetails {
      * @memberof EnvironmentLogsDetails
      */
     'stage'?: EnvironmentLogsDetailsStage;
+    /**
+     * Step of the deployment this line belongs to: REGISTRY_CREATE_REPOSITORY, GIT_CLONE, PROVISION_BUILDER, BUILD, IMAGE_PUSH, CACHE_EXPORT, MIRROR_IMAGE, DEPLOYMENT, ROUTER_DEPLOYMENT or EXECUTING. It matches a step\'s `step_name`, or the `name` of a BUILD sub-step, in the deployment statuses. The phase (build or deploy) is `stage.step`. Absent on older deployments and on pause, delete and restart. Clients must accept values not listed here. 
+     * @type {string}
+     * @memberof EnvironmentLogsDetails
+     */
+    'step_name'?: string | null;
 }
 /**
  * 
@@ -26871,6 +26877,12 @@ export interface ServiceStepMetric {
      * @memberof ServiceStepMetric
      */
     'started_at'?: string | null;
+    /**
+     * Steps that ran inside this one. Only set on BUILD. Their time is already part of this step\'s duration: never add it to a total. 
+     * @type {Array<ServiceSubStepMetric>}
+     * @memberof ServiceStepMetric
+     */
+    'sub_steps'?: Array<ServiceSubStepMetric>;
 }
 
 
@@ -27028,6 +27040,39 @@ export const ServiceSubActionEnum = {
 } as const;
 
 export type ServiceSubActionEnum = typeof ServiceSubActionEnum[keyof typeof ServiceSubActionEnum];
+
+
+/**
+ * 
+ * @export
+ * @interface ServiceSubStepMetric
+ */
+export interface ServiceSubStepMetric {
+    /**
+     * PROVISION_BUILDER, IMAGE_PUSH or CACHE_EXPORT. A string, not an enum, so a new sub-step never breaks a client: accept values not listed here. 
+     * @type {string}
+     * @memberof ServiceSubStepMetric
+     */
+    'name': string;
+    /**
+     * 
+     * @type {StepMetricStatusEnum}
+     * @memberof ServiceSubStepMetric
+     */
+    'status': StepMetricStatusEnum;
+    /**
+     * The duration of the sub-step in seconds.
+     * @type {number}
+     * @memberof ServiceSubStepMetric
+     */
+    'duration_sec': number;
+    /**
+     * The time at which the sub-step started.
+     * @type {string}
+     * @memberof ServiceSubStepMetric
+     */
+    'started_at'?: string | null;
+}
 
 
 /**
