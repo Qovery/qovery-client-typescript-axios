@@ -215,7 +215,7 @@ export interface AgenticWorkflowModelRequest {
      */
     'settings'?: string;
     /**
-     * An existing LLM provider to take the credential from, instead of `api_key`. The two are mutually exclusive: a request setting both is rejected. The provider must belong to the workflow\'s organization, be one the caller may use, and match `type`.
+     * An existing LLM provider to take the credential from, instead of `api_key`. The two are mutually exclusive: a request setting both is rejected. The provider must belong to the workflow\'s organization, be one the caller may use, and match `type`. A provider of type ANTHROPIC_COMPATIBLE matches a workflow `type` of CLAUDE.
      * @type {string}
      * @memberof AgenticWorkflowModelRequest
      */
@@ -20837,7 +20837,7 @@ export interface ListTfVarsFilesFromGitRepo200Response {
  */
 export interface LlmProviderModelResponse {
     /**
-     * Anthropic model id, or Bedrock inference profile id
+     * Anthropic model id, Bedrock inference profile id, or the model id of a custom Anthropic-compatible gateway, which can be any string
      * @type {string}
      * @memberof LlmProviderModelResponse
      */
@@ -20893,7 +20893,7 @@ export interface LlmProviderRequest {
      */
     'type': LlmProviderType;
     /**
-     * The provider credential. Encrypted at rest and never returned by the API. Blank means unchanged: on create no credential is stored, on edit the stored one is kept. Sending a nonblank value rotates it.
+     * The provider credential. Encrypted at rest and never returned by the API. Blank means unchanged: on create no credential is stored, on edit the stored one is kept. Sending a nonblank value rotates it. CLAUDE sends it to Anthropic as an API key. ANTHROPIC_COMPATIBLE sends it to its gateway as a bearer token only, never as an API key.
      * @type {string}
      * @memberof LlmProviderRequest
      */
@@ -20910,6 +20910,12 @@ export interface LlmProviderRequest {
      * @memberof LlmProviderRequest
      */
     'region'?: string | null;
+    /**
+     * Root of the custom Anthropic-compatible API. Required for an ANTHROPIC_COMPATIBLE provider and refused with 400 for CLAUDE and BEDROCK. It is an absolute HTTP or HTTPS URL with a host and an optional path prefix, and no user info, query or fragment. A port, when given, must be between 1 and 65535. Like region, an edit replaces it: omitting it or sending null is refused for ANTHROPIC_COMPATIBLE, so an edit must resend it.
+     * @type {string}
+     * @memberof LlmProviderRequest
+     */
+    'base_url'?: string | null;
 }
 
 
@@ -20985,6 +20991,12 @@ export interface LlmProviderResponse {
      * @memberof LlmProviderResponse
      */
     'region'?: string | null;
+    /**
+     * Root of the custom Anthropic-compatible API of an ANTHROPIC_COMPATIBLE provider. Null for CLAUDE and BEDROCK.
+     * @type {string}
+     * @memberof LlmProviderResponse
+     */
+    'base_url'?: string | null;
 }
 
 
@@ -21016,14 +21028,15 @@ export type LlmProviderScope = typeof LlmProviderScope[keyof typeof LlmProviderS
 
 
 /**
- * The LLM vendor this provider authenticates against. Matches the type an agentic workflow\'s inline model already uses.
+ * The LLM vendor this provider authenticates against. CLAUDE and BEDROCK match the type an agentic workflow\'s inline model already uses. ANTHROPIC_COMPATIBLE is a custom Anthropic-compatible API, such as a gateway, reached at its `base_url`; a workflow that uses it runs as a CLAUDE model.
  * @export
  * @enum {string}
  */
 
 export const LlmProviderType = {
     CLAUDE: 'CLAUDE',
-    BEDROCK: 'BEDROCK'
+    BEDROCK: 'BEDROCK',
+    ANTHROPIC_COMPATIBLE: 'ANTHROPIC_COMPATIBLE'
 } as const;
 
 export type LlmProviderType = typeof LlmProviderType[keyof typeof LlmProviderType];
@@ -65897,7 +65910,7 @@ export const LLMProvidersApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * Replace an LLM provider. Sending a blank credential keeps the stored one; sending a nonblank credential rotates it.
+         * Replace an LLM provider. Sending a blank credential keeps the stored one; sending a nonblank credential rotates it. An ANTHROPIC_COMPATIBLE provider must resend its `base_url`.
          * @summary Edit an LLM provider
          * @param {string} llmProviderId LLM Provider ID
          * @param {LlmProviderRequest} llmProviderRequest 
@@ -65985,7 +65998,7 @@ export const LLMProvidersApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * List the models the provider\'s stored credential can reach, fetched live from the provider. CLAUDE lists Anthropic models; BEDROCK lists Anthropic inference profiles in us-east-1. The credential is never returned. A USER provider can only be listed by its owner.
+         * List the models the provider\'s stored credential can reach, fetched live from the provider. CLAUDE lists Anthropic models; BEDROCK lists Anthropic inference profiles in us-east-1; ANTHROPIC_COMPATIBLE lists the models of its custom gateway, whose ids can be any string, including namespaced ones such as `anthropic/claude-sonnet-4`. A model without a display name is listed under its id, and one without a creation date has a null `created_at`. Models are listed for a saved provider only, by its id. The credential is never returned. A USER provider can only be listed by its owner.
          * @summary List the models of an LLM provider
          * @param {string} llmProviderId LLM Provider ID
          * @param {*} [options] Override http request option.
@@ -66104,7 +66117,7 @@ export const LLMProvidersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Replace an LLM provider. Sending a blank credential keeps the stored one; sending a nonblank credential rotates it.
+         * Replace an LLM provider. Sending a blank credential keeps the stored one; sending a nonblank credential rotates it. An ANTHROPIC_COMPATIBLE provider must resend its `base_url`.
          * @summary Edit an LLM provider
          * @param {string} llmProviderId LLM Provider ID
          * @param {LlmProviderRequest} llmProviderRequest 
@@ -66131,7 +66144,7 @@ export const LLMProvidersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * List the models the provider\'s stored credential can reach, fetched live from the provider. CLAUDE lists Anthropic models; BEDROCK lists Anthropic inference profiles in us-east-1. The credential is never returned. A USER provider can only be listed by its owner.
+         * List the models the provider\'s stored credential can reach, fetched live from the provider. CLAUDE lists Anthropic models; BEDROCK lists Anthropic inference profiles in us-east-1; ANTHROPIC_COMPATIBLE lists the models of its custom gateway, whose ids can be any string, including namespaced ones such as `anthropic/claude-sonnet-4`. A model without a display name is listed under its id, and one without a creation date has a null `created_at`. Models are listed for a saved provider only, by its id. The credential is never returned. A USER provider can only be listed by its owner.
          * @summary List the models of an LLM provider
          * @param {string} llmProviderId LLM Provider ID
          * @param {*} [options] Override http request option.
@@ -66188,7 +66201,7 @@ export const LLMProvidersApiFactory = function (configuration?: Configuration, b
             return localVarFp.deleteLlmProvider(llmProviderId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Replace an LLM provider. Sending a blank credential keeps the stored one; sending a nonblank credential rotates it.
+         * Replace an LLM provider. Sending a blank credential keeps the stored one; sending a nonblank credential rotates it. An ANTHROPIC_COMPATIBLE provider must resend its `base_url`.
          * @summary Edit an LLM provider
          * @param {string} llmProviderId LLM Provider ID
          * @param {LlmProviderRequest} llmProviderRequest 
@@ -66209,7 +66222,7 @@ export const LLMProvidersApiFactory = function (configuration?: Configuration, b
             return localVarFp.getLlmProvider(llmProviderId, options).then((request) => request(axios, basePath));
         },
         /**
-         * List the models the provider\'s stored credential can reach, fetched live from the provider. CLAUDE lists Anthropic models; BEDROCK lists Anthropic inference profiles in us-east-1. The credential is never returned. A USER provider can only be listed by its owner.
+         * List the models the provider\'s stored credential can reach, fetched live from the provider. CLAUDE lists Anthropic models; BEDROCK lists Anthropic inference profiles in us-east-1; ANTHROPIC_COMPATIBLE lists the models of its custom gateway, whose ids can be any string, including namespaced ones such as `anthropic/claude-sonnet-4`. A model without a display name is listed under its id, and one without a creation date has a null `created_at`. Models are listed for a saved provider only, by its id. The credential is never returned. A USER provider can only be listed by its owner.
          * @summary List the models of an LLM provider
          * @param {string} llmProviderId LLM Provider ID
          * @param {*} [options] Override http request option.
@@ -66264,7 +66277,7 @@ export class LLMProvidersApi extends BaseAPI {
     }
 
     /**
-     * Replace an LLM provider. Sending a blank credential keeps the stored one; sending a nonblank credential rotates it.
+     * Replace an LLM provider. Sending a blank credential keeps the stored one; sending a nonblank credential rotates it. An ANTHROPIC_COMPATIBLE provider must resend its `base_url`.
      * @summary Edit an LLM provider
      * @param {string} llmProviderId LLM Provider ID
      * @param {LlmProviderRequest} llmProviderRequest 
@@ -66289,7 +66302,7 @@ export class LLMProvidersApi extends BaseAPI {
     }
 
     /**
-     * List the models the provider\'s stored credential can reach, fetched live from the provider. CLAUDE lists Anthropic models; BEDROCK lists Anthropic inference profiles in us-east-1. The credential is never returned. A USER provider can only be listed by its owner.
+     * List the models the provider\'s stored credential can reach, fetched live from the provider. CLAUDE lists Anthropic models; BEDROCK lists Anthropic inference profiles in us-east-1; ANTHROPIC_COMPATIBLE lists the models of its custom gateway, whose ids can be any string, including namespaced ones such as `anthropic/claude-sonnet-4`. A model without a display name is listed under its id, and one without a creation date has a null `created_at`. Models are listed for a saved provider only, by its id. The credential is never returned. A USER provider can only be listed by its owner.
      * @summary List the models of an LLM provider
      * @param {string} llmProviderId LLM Provider ID
      * @param {*} [options] Override http request option.
