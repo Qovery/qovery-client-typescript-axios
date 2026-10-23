@@ -14798,7 +14798,7 @@ export interface EnvironmentLogsDetails {
      */
     'stage'?: EnvironmentLogsDetailsStage;
     /**
-     * Step of the deployment this line belongs to: REGISTRY_CREATE_REPOSITORY, GIT_CLONE, PROVISION_BUILDER, BUILD, IMAGE_PUSH, CACHE_EXPORT, MIRROR_IMAGE, DEPLOYMENT, ROUTER_DEPLOYMENT or EXECUTING. It matches a step\'s `step_name`, or the `name` of a BUILD sub-step, in the deployment statuses. The phase (build or deploy) is `stage.step`. Absent on older deployments and on pause, delete and restart. Clients must accept values not listed here. 
+     * Step of the deployment this line belongs to: - pre-check: CLOUD_CREDENTIALS_CHECK, GIT_CHECK (the `name` of a `pre_check_stage` step); - stage queueing: QUEUEING; - build and deploy: REGISTRY_CREATE_REPOSITORY, GIT_CLONE, PROVISION_BUILDER, BUILD,   IMAGE_PUSH, CACHE_EXPORT, MIRROR_IMAGE, DEPLOYMENT, ROUTER_DEPLOYMENT or EXECUTING   (a step\'s `step_name`, or the `name` of a BUILD sub-step, in the deployment statuses); A line that belongs to no specific step (deployment start and end, environment-level messages) carries the step of the line before it from the same source (the environment, or the service), so lines grouped by step stay in time order. The phase (build or deploy) is `stage.step`. Absent on older deployments, on infrastructure (cluster) and blueprint logs, and on a line with no earlier step to follow: group those by `stage.step`. Clients must accept values not listed here. 
      * @type {string}
      * @memberof EnvironmentLogsDetails
      */
@@ -15308,6 +15308,12 @@ export interface EnvironmentStatusesWithStagesPreCheckStage {
      * @memberof EnvironmentStatusesWithStagesPreCheckStage
      */
     'total_duration_sec'?: number;
+    /**
+     * One entry per check the pre-check ran, in order. Their time is already part of `total_duration_sec`: never add it to a total. 
+     * @type {Array<PreCheckStepMetric>}
+     * @memberof EnvironmentStatusesWithStagesPreCheckStage
+     */
+    'steps'?: Array<PreCheckStepMetric>;
 }
 
 
@@ -24467,6 +24473,45 @@ export const PortProtocolEnum = {
 } as const;
 
 export type PortProtocolEnum = typeof PortProtocolEnum[keyof typeof PortProtocolEnum];
+
+
+/**
+ * 
+ * @export
+ * @interface PreCheckStepMetric
+ */
+export interface PreCheckStepMetric {
+    /**
+     * CLOUD_CREDENTIALS_CHECK (once per deployment) or GIT_CHECK (once per service built or fetched from Git). A string, not an enum, so a new check never breaks a client: accept values not listed here. Log lines of the check carry the same value in `step_name`. 
+     * @type {string}
+     * @memberof PreCheckStepMetric
+     */
+    'name': string;
+    /**
+     * 
+     * @type {StepMetricStatusEnum}
+     * @memberof PreCheckStepMetric
+     */
+    'status': StepMetricStatusEnum;
+    /**
+     * The duration of the check in seconds, rounded down (0 means under a second).
+     * @type {number}
+     * @memberof PreCheckStepMetric
+     */
+    'duration_sec': number;
+    /**
+     * The time at which the check started.
+     * @type {string}
+     * @memberof PreCheckStepMetric
+     */
+    'started_at'?: string | null;
+    /**
+     * The service whose Git configuration was checked. Only set on GIT_CHECK.
+     * @type {string}
+     * @memberof PreCheckStepMetric
+     */
+    'service_id'?: string;
+}
 
 
 /**
