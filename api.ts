@@ -6343,6 +6343,12 @@ export interface Cluster {
      */
     'is_demo'?: boolean;
     /**
+     * True when the cluster\'s infrastructure is managed by the platform catalog, i.e. a self-managed (BYOK) cluster attached to the Qovery Operator and bound to a platform catalog profile. False otherwise.
+     * @type {boolean}
+     * @memberof Cluster
+     */
+    'is_catalog_managed'?: boolean;
+    /**
      * specific flag to indicate that this cluster is a production one
      * @type {boolean}
      * @memberof Cluster
