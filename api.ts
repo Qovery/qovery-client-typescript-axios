@@ -29918,6 +29918,12 @@ export interface WidePermissionsRequestDto {
      * @memberof WidePermissionsRequestDto
      */
     'wide_scope_cloud_account_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidePermissionsRequestDto
+     */
+    'slack_webhook_url'?: string | null;
 }
 /**
  * 
@@ -29943,6 +29949,12 @@ export interface WidePermissionsResponseDto {
      * @memberof WidePermissionsResponseDto
      */
     'require_wide_access_to_deploy'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof WidePermissionsResponseDto
+     */
+    'slack_webhook_url'?: string | null;
 }
 
 /**
