@@ -15438,6 +15438,12 @@ export interface EnvironmentVariable {
      * @memberof EnvironmentVariable
      */
     'owned_by'?: string;
+    /**
+     * True when Qovery created the variable on its own, such as the alias it adds for each output of a job, Terraform service or blueprint. False for variables a user created and for built-in variables, which `variable_type` already identifies. `owned_by` does not tell these apart. It stays true after a user edits the variable. Clients that sync variables, such as the Terraform provider, can leave these variables out.
+     * @type {boolean}
+     * @memberof EnvironmentVariable
+     */
+    'is_created_by_qovery'?: boolean;
 }
 
 
@@ -26041,6 +26047,12 @@ export interface Secret {
      */
     'owned_by'?: string;
     /**
+     * True when Qovery created the variable on its own, such as the alias it adds for each output of a job, Terraform service or blueprint. False for variables a user created and for built-in variables, which `variable_type` already identifies. `owned_by` does not tell these apart. It stays true after a user edits the variable. Clients that sync variables, such as the Terraform provider, can leave these variables out.
+     * @type {boolean}
+     * @memberof Secret
+     */
+    'is_created_by_qovery'?: boolean;
+    /**
      * optional variable description (255 characters maximum)
      * @type {string}
      * @memberof Secret
@@ -29745,6 +29757,12 @@ export interface VariableResponse {
      * @memberof VariableResponse
      */
     'owned_by'?: string;
+    /**
+     * True when Qovery created the variable on its own, such as the alias it adds for each output of a job, Terraform service or blueprint. False for variables a user created and for built-in variables, which `variable_type` already identifies. `owned_by` does not tell these apart. It stays true after a user edits the variable. Clients that sync variables, such as the Terraform provider, can leave these variables out.
+     * @type {boolean}
+     * @memberof VariableResponse
+     */
+    'is_created_by_qovery'?: boolean;
     /**
      * 
      * @type {boolean}
