@@ -1672,6 +1672,12 @@ export interface Application {
      */
     'git_repository'?: ApplicationGitRepository;
     /**
+     * 
+     * @type {BuildSettings}
+     * @memberof Application
+     */
+    'build_settings'?: BuildSettings;
+    /**
      * Maximum cpu that can be allocated to the application based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
      * @type {number}
      * @memberof Application
@@ -4032,6 +4038,12 @@ export interface BaseJobResponse {
      * @memberof BaseJobResponse
      */
     'environment': ReferenceObject;
+    /**
+     * 
+     * @type {BuildSettings}
+     * @memberof BaseJobResponse
+     */
+    'build_settings'?: BuildSettings;
     /**
      * Maximum cpu that can be allocated to the job based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -11383,6 +11395,12 @@ export interface CronJobResponse {
      * @memberof CronJobResponse
      */
     'environment': ReferenceObject;
+    /**
+     * 
+     * @type {BuildSettings}
+     * @memberof CronJobResponse
+     */
+    'build_settings'?: BuildSettings;
     /**
      * Maximum cpu that can be allocated to the job based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
      * @type {number}
@@ -20165,6 +20183,12 @@ export interface LifecycleJobResponse {
      */
     'environment': ReferenceObject;
     /**
+     * 
+     * @type {BuildSettings}
+     * @memberof LifecycleJobResponse
+     */
+    'build_settings'?: BuildSettings;
+    /**
      * Maximum cpu that can be allocated to the job based on organization cluster configuration. unit is millicores (m). 1000m = 1 cpu
      * @type {number}
      * @memberof LifecycleJobResponse
@@ -28721,6 +28745,12 @@ export interface TerraformResponse {
      * @memberof TerraformResponse
      */
     'build_settings_editable'?: boolean;
+    /**
+     * 
+     * @type {BuildSettings}
+     * @memberof TerraformResponse
+     */
+    'build_settings'?: BuildSettings;
     /**
      * 
      * @type {TerraformAutoDeployConfig}
