@@ -1855,7 +1855,7 @@ export interface ApplicationAdvancedSettings {
      */
     'deployment.affinity.node.required'?: { [key: string]: string; };
     /**
-     * Define how you want pods affinity to behave: * `Preferred` allows, but does not require, pods of a given service are not co-located (or co-hosted) on a single node * `Requirred` ensures that the pods of a given service are not co-located (or co-hosted) on a single node (safer in term of availability but can be expensive depending on the number of replicas) 
+     * Define how you want pods affinity to behave: * `Preferred` allows, but does not require, pods of a given service are not co-located (or co-hosted) on a single node * `Required` ensures that the pods of a given service are not co-located (or co-hosted) on a single node (safer in term of availability but can be expensive depending on the number of replicas) * `None` sets no anti-affinity, so pods of a given service can be packed on the same node 
      * @type {string}
      * @memberof ApplicationAdvancedSettings
      */
@@ -2134,7 +2134,8 @@ export interface ApplicationAdvancedSettings {
 
 export const ApplicationAdvancedSettingsDeploymentAntiaffinityPodEnum = {
     PREFERRED: 'Preferred',
-    REQUIRRED: 'Requirred'
+    REQUIRED: 'Required',
+    NONE: 'None'
 } as const;
 
 export type ApplicationAdvancedSettingsDeploymentAntiaffinityPodEnum = typeof ApplicationAdvancedSettingsDeploymentAntiaffinityPodEnum[keyof typeof ApplicationAdvancedSettingsDeploymentAntiaffinityPodEnum];
@@ -9844,7 +9845,7 @@ export interface ContainerAdvancedSettings {
      */
     'deployment.affinity.node.required'?: { [key: string]: string; };
     /**
-     * Define how you want pods affinity to behave: * `Preferred` allows, but does not require, pods of a given service are not co-located (or co-hosted) on a single node * `Requirred` ensures that the pods of a given service are not co-located (or co-hosted) on a single node (safer in term of availability but can be expensive depending on the number of replicas) 
+     * Define how you want pods affinity to behave: * `Preferred` allows, but does not require, pods of a given service are not co-located (or co-hosted) on a single node * `Required` ensures that the pods of a given service are not co-located (or co-hosted) on a single node (safer in term of availability but can be expensive depending on the number of replicas) * `None` sets no anti-affinity, so pods of a given service can be packed on the same node 
      * @type {string}
      * @memberof ContainerAdvancedSettings
      */
@@ -10075,7 +10076,8 @@ export interface ContainerAdvancedSettings {
 
 export const ContainerAdvancedSettingsDeploymentAntiaffinityPodEnum = {
     PREFERRED: 'Preferred',
-    REQUIRRED: 'Requirred'
+    REQUIRED: 'Required',
+    NONE: 'None'
 } as const;
 
 export type ContainerAdvancedSettingsDeploymentAntiaffinityPodEnum = typeof ContainerAdvancedSettingsDeploymentAntiaffinityPodEnum[keyof typeof ContainerAdvancedSettingsDeploymentAntiaffinityPodEnum];
