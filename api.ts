@@ -5062,6 +5062,12 @@ export interface BlueprintManifestFieldType {
      */
     'max_length'?: number | null;
     /**
+     * Optional editor format, only present for string fields that declare one. json selects a JSON editor; the value is still sent and stored as a string, and the API rejects text that is not one valid JSON document. Unknown formats should fall back to the ordinary string editor.
+     * @type {string}
+     * @memberof BlueprintManifestFieldType
+     */
+    'format'?: string;
+    /**
      * Lower bound, only present for number fields
      * @type {number}
      * @memberof BlueprintManifestFieldType
