@@ -15651,6 +15651,75 @@ export interface EnvironmentVariableResponseList {
     'results'?: Array<EnvironmentVariable>;
 }
 /**
+ * The variable that blocks the creation. Its value is never returned.
+ * @export
+ * @interface ExistingVariableResponse
+ */
+export interface ExistingVariableResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ExistingVariableResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExistingVariableResponse
+     */
+    'key': string;
+    /**
+     * 
+     * @type {APIVariableScopeEnum}
+     * @memberof ExistingVariableResponse
+     */
+    'scope': APIVariableScopeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExistingVariableResponse
+     */
+    'organization_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExistingVariableResponse
+     */
+    'project_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExistingVariableResponse
+     */
+    'environment_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExistingVariableResponse
+     */
+    'service_id'?: string | null;
+    /**
+     * 
+     * @type {APIVariableTypeEnum}
+     * @memberof ExistingVariableResponse
+     */
+    'variable_type': APIVariableTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ExistingVariableResponse
+     */
+    'is_secret': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExistingVariableResponse
+     */
+    'mount_path'?: string | null;
+}
+
+
+/**
  * 
  * @export
  * @interface ExternalSecretAssociatedServiceResponse
@@ -29417,6 +29486,49 @@ export interface VariableAliasRequest {
 }
 
 
+/**
+ * Problem details returned when a variable with the same key already exists
+ * @export
+ * @interface VariableConflictResponse
+ */
+export interface VariableConflictResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableConflictResponse
+     */
+    'type'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableConflictResponse
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof VariableConflictResponse
+     */
+    'status': number;
+    /**
+     * Says which scope holds the existing variable
+     * @type {string}
+     * @memberof VariableConflictResponse
+     */
+    'detail': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VariableConflictResponse
+     */
+    'instance'?: string;
+    /**
+     * 
+     * @type {ExistingVariableResponse}
+     * @memberof VariableConflictResponse
+     */
+    'existing_variable'?: ExistingVariableResponse | null;
+}
 /**
  * 
  * @export
