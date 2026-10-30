@@ -29702,6 +29702,12 @@ export interface VariableRequest {
      * @memberof VariableRequest
      */
     'secret_manager_access_id'?: string | null;
+    /**
+     * If true and a variable with the same key already exists at a higher scope (project or environment), an override of that variable is created instead of failing with 409. The override follows the usual rules: same secret kind, target must be a value or file variable, strictly lower scope. Defaults to false.
+     * @type {boolean}
+     * @memberof VariableRequest
+     */
+    'override_if_exists'?: boolean | null;
 }
 
 
@@ -80024,7 +80030,7 @@ export class UserSignUpApi extends BaseAPI {
 export const VariableMainCallsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * - Create a variable with the scope defined in the request body. 
+         * - Create a variable with the scope defined in the request body. - If a variable with the same key already exists, the call fails with 409. When that variable is at a higher scope (project or environment), set `override_if_exists` to true to create an override of it instead. 
          * @summary Create a variable
          * @param {VariableRequest} [variableRequest] 
          * @param {*} [options] Override http request option.
@@ -80364,7 +80370,7 @@ export const VariableMainCallsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = VariableMainCallsApiAxiosParamCreator(configuration)
     return {
         /**
-         * - Create a variable with the scope defined in the request body. 
+         * - Create a variable with the scope defined in the request body. - If a variable with the same key already exists, the call fails with 409. When that variable is at a higher scope (project or environment), set `override_if_exists` to true to create an override of it instead. 
          * @summary Create a variable
          * @param {VariableRequest} [variableRequest] 
          * @param {*} [options] Override http request option.
@@ -80472,7 +80478,7 @@ export const VariableMainCallsApiFactory = function (configuration?: Configurati
     const localVarFp = VariableMainCallsApiFp(configuration)
     return {
         /**
-         * - Create a variable with the scope defined in the request body. 
+         * - Create a variable with the scope defined in the request body. - If a variable with the same key already exists, the call fails with 409. When that variable is at a higher scope (project or environment), set `override_if_exists` to true to create an override of it instead. 
          * @summary Create a variable
          * @param {VariableRequest} [variableRequest] 
          * @param {*} [options] Override http request option.
@@ -80559,7 +80565,7 @@ export const VariableMainCallsApiFactory = function (configuration?: Configurati
  */
 export class VariableMainCallsApi extends BaseAPI {
     /**
-     * - Create a variable with the scope defined in the request body. 
+     * - Create a variable with the scope defined in the request body. - If a variable with the same key already exists, the call fails with 409. When that variable is at a higher scope (project or environment), set `override_if_exists` to true to create an override of it instead. 
      * @summary Create a variable
      * @param {VariableRequest} [variableRequest] 
      * @param {*} [options] Override http request option.
