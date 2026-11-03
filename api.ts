@@ -29565,6 +29565,12 @@ export interface VariableEditRequest {
      * @memberof VariableEditRequest
      */
     'secret_manager_access_id'?: string | null;
+    /**
+     * Optional JSON member/index path, only supported for `EXTERNAL_SECRET` variables (not external secret files). Use dots for nested members and numeric indexes for arrays, for example `accounts.0.password`. Escape literal dots with `\\.` and backslashes with `\\\\`; other query characters are treated literally. Members must be non-empty, with no leading or trailing whitespace, control characters, or unescaped trailing backslash. Omit or set to null to clear JSON selection and read the whole secret. Send the current selector on unrelated edits to preserve it.
+     * @type {string}
+     * @memberof VariableEditRequest
+     */
+    'json_target_key'?: string | null;
 }
 /**
  * 
@@ -29820,6 +29826,12 @@ export interface VariableRequest {
      * @memberof VariableRequest
      */
     'override_if_exists'?: boolean | null;
+    /**
+     * Optional JSON member/index path, only supported for `EXTERNAL_SECRET` variables (not external secret files). Use dots for nested members and numeric indexes for arrays, for example `accounts.0.password`. Escape literal dots with `\\.` and backslashes with `\\\\`; other query characters are treated literally. Members must be non-empty, with no leading or trailing whitespace, control characters, or unescaped trailing backslash. Omit or set to null to read the whole secret.
+     * @type {string}
+     * @memberof VariableRequest
+     */
+    'json_target_key'?: string | null;
 }
 
 
@@ -29943,6 +29955,12 @@ export interface VariableResponse {
      * @memberof VariableResponse
      */
     'secret_manager_access_id'?: string | null;
+    /**
+     * Optional JSON member/index path, only supported for `EXTERNAL_SECRET` variables (not external secret files). Use dots for nested members and numeric indexes for arrays, for example `accounts.0.password`. Escape literal dots with `\\.` and backslashes with `\\\\`; other query characters are treated literally. Members must be non-empty, with no leading or trailing whitespace, control characters, or unescaped trailing backslash. Null or absent means that no JSON selection is configured.
+     * @type {string}
+     * @memberof VariableResponse
+     */
+    'json_target_key'?: string | null;
 }
 
 
