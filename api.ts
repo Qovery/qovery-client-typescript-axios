@@ -16863,6 +16863,12 @@ export interface Healthcheck {
      * @memberof Healthcheck
      */
     'liveness_probe'?: Probe | null;
+    /**
+     * Optional probe checking that the container has started. Kubernetes runs the readiness and liveness probes only once it succeeds, so a slow start does not trip the liveness probe. Omitted or null means no startup probe. Like the other probes, an edit that leaves it out removes it.
+     * @type {Probe}
+     * @memberof Healthcheck
+     */
+    'startup_probe'?: Probe | null;
 }
 /**
  * 
