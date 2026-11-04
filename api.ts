@@ -5760,6 +5760,249 @@ export interface Budget {
     'currency_code'?: string;
 }
 /**
+ * What the analysis read. DOCKERFILE and BUILD_SETTINGS (build configuration and build argument names) are always read, DOCKERIGNORE when Qovery could check the repository for it, BUILD_LOGS when the build or earlier builds sharing its cache have logs.
+ * @export
+ * @enum {string}
+ */
+
+export const BuildAnalysisAsset = {
+    DOCKERFILE: 'DOCKERFILE',
+    DOCKERIGNORE: 'DOCKERIGNORE',
+    BUILD_LOGS: 'BUILD_LOGS',
+    BUILD_SETTINGS: 'BUILD_SETTINGS'
+} as const;
+
+export type BuildAnalysisAsset = typeof BuildAnalysisAsset[keyof typeof BuildAnalysisAsset];
+
+
+/**
+ * How sure the analysis is that applying the improvements saves `estimated_time_saved`. HIGH when the build logs, the cache history or the build metrics show both the cause and the time it costs, MEDIUM when one of the two is inferred, LOW when only the Dockerfile suggests it or there is no time estimate. With no improvement, how sure the analysis is that the build has nothing left to gain.
+ * @export
+ * @enum {string}
+ */
+
+export const BuildAnalysisConfidence = {
+    HIGH: 'HIGH',
+    MEDIUM: 'MEDIUM',
+    LOW: 'LOW'
+} as const;
+
+export type BuildAnalysisConfidence = typeof BuildAnalysisConfidence[keyof typeof BuildAnalysisConfidence];
+
+
+/**
+ * Where the analysed Dockerfile came from. GIT is the repository at the build commit, INLINE the Dockerfile stored on the job, PASTE a Dockerfile pasted by the user.
+ * @export
+ * @enum {string}
+ */
+
+export const BuildAnalysisDockerfileSource = {
+    GIT: 'GIT',
+    INLINE: 'INLINE',
+    PASTE: 'PASTE'
+} as const;
+
+export type BuildAnalysisDockerfileSource = typeof BuildAnalysisDockerfileSource[keyof typeof BuildAnalysisDockerfileSource];
+
+
+/**
+ * COPILOT_DISABLED when the organization opted out of AI features, MODEL_ERROR when the model call failed or returned an invalid result, TIMEOUT when the analysis took too long, INTERNAL_ERROR otherwise.
+ * @export
+ * @enum {string}
+ */
+
+export const BuildAnalysisFailureCode = {
+    COPILOT_DISABLED: 'COPILOT_DISABLED',
+    MODEL_ERROR: 'MODEL_ERROR',
+    TIMEOUT: 'TIMEOUT',
+    INTERNAL_ERROR: 'INTERNAL_ERROR'
+} as const;
+
+export type BuildAnalysisFailureCode = typeof BuildAnalysisFailureCode[keyof typeof BuildAnalysisFailureCode];
+
+
+/**
+ * 
+ * @export
+ * @interface BuildAnalysisResponse
+ */
+export interface BuildAnalysisResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildAnalysisResponse
+     */
+    'service_id': string;
+    /**
+     * Execution id of the analysed build.
+     * @type {string}
+     * @memberof BuildAnalysisResponse
+     */
+    'execution_id': string;
+    /**
+     * 
+     * @type {BuildAnalysisStatus}
+     * @memberof BuildAnalysisResponse
+     */
+    'status': BuildAnalysisStatus;
+    /**
+     * True when the latest build of the service is not the analysed one. The analysis stays readable, but only the latest build can be analysed.
+     * @type {boolean}
+     * @memberof BuildAnalysisResponse
+     */
+    'stale': boolean;
+    /**
+     * 
+     * @type {BuildAnalysisDockerfileSource}
+     * @memberof BuildAnalysisResponse
+     */
+    'dockerfile_source': BuildAnalysisDockerfileSource;
+    /**
+     * Why the analysis failed, when `status` is FAILED.
+     * @type {BuildAnalysisFailureCode}
+     * @memberof BuildAnalysisResponse
+     */
+    'failure_code': BuildAnalysisFailureCode | null;
+    /**
+     * Human-readable detail of the failure, when `status` is FAILED.
+     * @type {string}
+     * @memberof BuildAnalysisResponse
+     */
+    'failure_reason': string | null;
+    /**
+     * Set when `status` is DONE.
+     * @type {BuildAnalysisResult}
+     * @memberof BuildAnalysisResponse
+     */
+    'result': BuildAnalysisResult | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildAnalysisResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildAnalysisResponse
+     */
+    'updated_at': string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface BuildAnalysisResult
+ */
+export interface BuildAnalysisResult {
+    /**
+     * 
+     * @type {BuildAnalysisConfidence}
+     * @memberof BuildAnalysisResult
+     */
+    'confidence': BuildAnalysisConfidence;
+    /**
+     * Build time saved on each build once every improvement is applied. Null when there is nothing to save or no timing to base it on. `confidence` applies to this range.
+     * @type {BuildAnalysisTimeSaved}
+     * @memberof BuildAnalysisResult
+     */
+    'estimated_time_saved': BuildAnalysisTimeSaved | null;
+    /**
+     * 
+     * @type {Array<BuildAnalysisAsset>}
+     * @memberof BuildAnalysisResult
+     */
+    'assets_reviewed': Array<BuildAnalysisAsset>;
+    /**
+     * What slows the build and why, with the evidence from the build.
+     * @type {string}
+     * @memberof BuildAnalysisResult
+     */
+    'summary': string;
+    /**
+     * Changes to make, one sentence each, ordered by impact on build time, highest first. Empty when the build is already efficient.
+     * @type {Array<string>}
+     * @memberof BuildAnalysisResult
+     */
+    'improvements': Array<string>;
+    /**
+     * Reworked Dockerfile to copy. Null when no improvement is a Dockerfile change, for example a variable value. Values hidden from the analysis appear as `<redacted>` and must be put back before use.
+     * @type {string}
+     * @memberof BuildAnalysisResult
+     */
+    'dockerfile': string | null;
+    /**
+     * Why the reworked Dockerfile is faster.
+     * @type {string}
+     * @memberof BuildAnalysisResult
+     */
+    'dockerfile_rationale': string | null;
+    /**
+     * Prompt the customer pastes into their own AI agent to apply the improvements in their repository.
+     * @type {string}
+     * @memberof BuildAnalysisResult
+     */
+    'agent_prompt': string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface BuildAnalysisState
+ */
+export interface BuildAnalysisState {
+    /**
+     * Execution id of the latest build of the service, the only build that can be analysed. Null when no deployment in the kept history ran a build.
+     * @type {string}
+     * @memberof BuildAnalysisState
+     */
+    'latest_build_execution_id': string | null;
+    /**
+     * The latest analysis of the service. Null when none was run.
+     * @type {BuildAnalysisResponse}
+     * @memberof BuildAnalysisState
+     */
+    'analysis': BuildAnalysisResponse | null;
+}
+/**
+ * PENDING is queued, COLLECTING reads the build logs and the cache history, ANALYSING waits for the model, then DONE or FAILED.
+ * @export
+ * @enum {string}
+ */
+
+export const BuildAnalysisStatus = {
+    PENDING: 'PENDING',
+    COLLECTING: 'COLLECTING',
+    ANALYSING: 'ANALYSING',
+    DONE: 'DONE',
+    FAILED: 'FAILED'
+} as const;
+
+export type BuildAnalysisStatus = typeof BuildAnalysisStatus[keyof typeof BuildAnalysisStatus];
+
+
+/**
+ * Seconds saved on each build, as a range from min_seconds to max_seconds. When nothing is saved, the field holding it is null instead.
+ * @export
+ * @interface BuildAnalysisTimeSaved
+ */
+export interface BuildAnalysisTimeSaved {
+    /**
+     * 
+     * @type {number}
+     * @memberof BuildAnalysisTimeSaved
+     */
+    'min_seconds': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BuildAnalysisTimeSaved
+     */
+    'max_seconds': number;
+}
+/**
  * `DOCKER` requires `dockerfile_path` 
  * @export
  * @enum {string}
@@ -32869,6 +33112,121 @@ export class ApplicationActionsApi extends BaseAPI {
      */
     public uninstallApplication(applicationId: string, body?: object, options?: RawAxiosRequestConfig) {
         return ApplicationActionsApiFp(this.configuration).uninstallApplication(applicationId, body, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * ApplicationBuildAnalysisApi - axios parameter creator
+ * @export
+ */
+export const ApplicationBuildAnalysisApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Returns the latest build of the service that can be analysed and its latest analysis, if any. Only one analysis is kept per service.
+         * @summary Get the build analysis of an application
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getApplicationBuildAnalysis: async (applicationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'applicationId' is not null or undefined
+            assertParamExists('getApplicationBuildAnalysis', 'applicationId', applicationId)
+            const localVarPath = `/application/{applicationId}/buildAnalysis`
+                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ApplicationBuildAnalysisApi - functional programming interface
+ * @export
+ */
+export const ApplicationBuildAnalysisApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ApplicationBuildAnalysisApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Returns the latest build of the service that can be analysed and its latest analysis, if any. Only one analysis is kept per service.
+         * @summary Get the build analysis of an application
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getApplicationBuildAnalysis(applicationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BuildAnalysisState>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getApplicationBuildAnalysis(applicationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ApplicationBuildAnalysisApi.getApplicationBuildAnalysis']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * ApplicationBuildAnalysisApi - factory interface
+ * @export
+ */
+export const ApplicationBuildAnalysisApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ApplicationBuildAnalysisApiFp(configuration)
+    return {
+        /**
+         * Returns the latest build of the service that can be analysed and its latest analysis, if any. Only one analysis is kept per service.
+         * @summary Get the build analysis of an application
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getApplicationBuildAnalysis(applicationId: string, options?: RawAxiosRequestConfig): AxiosPromise<BuildAnalysisState> {
+            return localVarFp.getApplicationBuildAnalysis(applicationId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ApplicationBuildAnalysisApi - object-oriented interface
+ * @export
+ * @class ApplicationBuildAnalysisApi
+ * @extends {BaseAPI}
+ */
+export class ApplicationBuildAnalysisApi extends BaseAPI {
+    /**
+     * Returns the latest build of the service that can be analysed and its latest analysis, if any. Only one analysis is kept per service.
+     * @summary Get the build analysis of an application
+     * @param {string} applicationId Application ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApplicationBuildAnalysisApi
+     */
+    public getApplicationBuildAnalysis(applicationId: string, options?: RawAxiosRequestConfig) {
+        return ApplicationBuildAnalysisApiFp(this.configuration).getApplicationBuildAnalysis(applicationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -63249,6 +63607,121 @@ export class JobActionsApi extends BaseAPI {
      */
     public uninstallJob(jobId: string, body?: object, options?: RawAxiosRequestConfig) {
         return JobActionsApiFp(this.configuration).uninstallJob(jobId, body, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * JobBuildAnalysisApi - axios parameter creator
+ * @export
+ */
+export const JobBuildAnalysisApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Returns the latest build of the service that can be analysed and its latest analysis, if any. Only one analysis is kept per service.
+         * @summary Get the build analysis of a job
+         * @param {string} jobId Job ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getJobBuildAnalysis: async (jobId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'jobId' is not null or undefined
+            assertParamExists('getJobBuildAnalysis', 'jobId', jobId)
+            const localVarPath = `/job/{jobId}/buildAnalysis`
+                .replace(`{${"jobId"}}`, encodeURIComponent(String(jobId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * JobBuildAnalysisApi - functional programming interface
+ * @export
+ */
+export const JobBuildAnalysisApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = JobBuildAnalysisApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Returns the latest build of the service that can be analysed and its latest analysis, if any. Only one analysis is kept per service.
+         * @summary Get the build analysis of a job
+         * @param {string} jobId Job ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getJobBuildAnalysis(jobId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BuildAnalysisState>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getJobBuildAnalysis(jobId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['JobBuildAnalysisApi.getJobBuildAnalysis']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * JobBuildAnalysisApi - factory interface
+ * @export
+ */
+export const JobBuildAnalysisApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = JobBuildAnalysisApiFp(configuration)
+    return {
+        /**
+         * Returns the latest build of the service that can be analysed and its latest analysis, if any. Only one analysis is kept per service.
+         * @summary Get the build analysis of a job
+         * @param {string} jobId Job ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getJobBuildAnalysis(jobId: string, options?: RawAxiosRequestConfig): AxiosPromise<BuildAnalysisState> {
+            return localVarFp.getJobBuildAnalysis(jobId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * JobBuildAnalysisApi - object-oriented interface
+ * @export
+ * @class JobBuildAnalysisApi
+ * @extends {BaseAPI}
+ */
+export class JobBuildAnalysisApi extends BaseAPI {
+    /**
+     * Returns the latest build of the service that can be analysed and its latest analysis, if any. Only one analysis is kept per service.
+     * @summary Get the build analysis of a job
+     * @param {string} jobId Job ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobBuildAnalysisApi
+     */
+    public getJobBuildAnalysis(jobId: string, options?: RawAxiosRequestConfig) {
+        return JobBuildAnalysisApiFp(this.configuration).getJobBuildAnalysis(jobId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
