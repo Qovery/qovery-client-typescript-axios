@@ -21806,6 +21806,18 @@ export interface Organization {
      */
     'has_enterprise_connection'?: boolean;
     /**
+     * Initial value of `ai_features_enabled`, fixed at creation.
+     * @type {boolean}
+     * @memberof Organization
+     */
+    'ai_features_enabled_by_default'?: boolean;
+    /**
+     * Whether the organization opted in to AI features (DevOps Copilot, build analysis). Starts at `ai_features_enabled_by_default`.
+     * @type {boolean}
+     * @memberof Organization
+     */
+    'ai_features_enabled'?: boolean;
+    /**
      * 
      * @type {OrganizationAllOfOrganizationPlan}
      * @memberof Organization
@@ -21814,6 +21826,19 @@ export interface Organization {
 }
 
 
+/**
+ * 
+ * @export
+ * @interface OrganizationAiFeaturesRequest
+ */
+export interface OrganizationAiFeaturesRequest {
+    /**
+     * Whether the organization opts in to AI features
+     * @type {boolean}
+     * @memberof OrganizationAiFeaturesRequest
+     */
+    'enabled': boolean;
+}
 /**
  * 
  * @export
@@ -72099,6 +72124,51 @@ export const OrganizationMainCallsApiAxiosParamCreator = function (configuration
             };
         },
         /**
+         * To edit the AI features opt-in you must have the admin permission.
+         * @summary Edit the organization\'s AI features opt-in
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationAiFeaturesRequest} [organizationAiFeaturesRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editOrganizationAiFeatures: async (organizationId: string, organizationAiFeaturesRequest?: OrganizationAiFeaturesRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('editOrganizationAiFeatures', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/aiFeatures`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organizationAiFeaturesRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Get organization container registry associated services
          * @summary Get organization container registry associated services
          * @param {string} organizationId 
@@ -72852,6 +72922,20 @@ export const OrganizationMainCallsApiFp = function(configuration?: Configuration
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * To edit the AI features opt-in you must have the admin permission.
+         * @summary Edit the organization\'s AI features opt-in
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationAiFeaturesRequest} [organizationAiFeaturesRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editOrganizationAiFeatures(organizationId: string, organizationAiFeaturesRequest?: OrganizationAiFeaturesRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Organization>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editOrganizationAiFeatures(organizationId, organizationAiFeaturesRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrganizationMainCallsApi.editOrganizationAiFeatures']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Get organization container registry associated services
          * @summary Get organization container registry associated services
          * @param {string} organizationId 
@@ -73131,6 +73215,17 @@ export const OrganizationMainCallsApiFactory = function (configuration?: Configu
             return localVarFp.editOrganization(organizationId, organizationEditRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * To edit the AI features opt-in you must have the admin permission.
+         * @summary Edit the organization\'s AI features opt-in
+         * @param {string} organizationId Organization ID
+         * @param {OrganizationAiFeaturesRequest} [organizationAiFeaturesRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editOrganizationAiFeatures(organizationId: string, organizationAiFeaturesRequest?: OrganizationAiFeaturesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Organization> {
+            return localVarFp.editOrganizationAiFeatures(organizationId, organizationAiFeaturesRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Get organization container registry associated services
          * @summary Get organization container registry associated services
          * @param {string} organizationId 
@@ -73374,6 +73469,19 @@ export class OrganizationMainCallsApi extends BaseAPI {
      */
     public editOrganization(organizationId: string, organizationEditRequest?: OrganizationEditRequest, options?: RawAxiosRequestConfig) {
         return OrganizationMainCallsApiFp(this.configuration).editOrganization(organizationId, organizationEditRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * To edit the AI features opt-in you must have the admin permission.
+     * @summary Edit the organization\'s AI features opt-in
+     * @param {string} organizationId Organization ID
+     * @param {OrganizationAiFeaturesRequest} [organizationAiFeaturesRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationMainCallsApi
+     */
+    public editOrganizationAiFeatures(organizationId: string, organizationAiFeaturesRequest?: OrganizationAiFeaturesRequest, options?: RawAxiosRequestConfig) {
+        return OrganizationMainCallsApiFp(this.configuration).editOrganizationAiFeatures(organizationId, organizationAiFeaturesRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
