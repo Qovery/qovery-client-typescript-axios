@@ -56761,14 +56761,13 @@ export class EnvironmentDeploymentRuleApi extends BaseAPI {
 export const EnvironmentExportApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Secret values are never included in the export. Service secrets are preserved as empty input variables marked Redacted. Cloud, Git, registry and cluster credentials must be supplied through input variables without defaults.
          * @summary Export full environment and its resources into Terraform manifests
          * @param {string} environmentId Environment ID
-         * @param {boolean} [exportSecrets] export Secrets from configuration and include them into Terraform export
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        exportEnvironmentConfigurationIntoTerraform: async (environmentId: string, exportSecrets?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        exportEnvironmentConfigurationIntoTerraform: async (environmentId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'environmentId' is not null or undefined
             assertParamExists('exportEnvironmentConfigurationIntoTerraform', 'environmentId', environmentId)
             const localVarPath = `/environment/{environmentId}/terraformExport`
@@ -56790,10 +56789,6 @@ export const EnvironmentExportApiAxiosParamCreator = function (configuration?: C
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (exportSecrets !== undefined) {
-                localVarQueryParameter['exportSecrets'] = exportSecrets;
-            }
 
 
     
@@ -56817,15 +56812,14 @@ export const EnvironmentExportApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = EnvironmentExportApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Secret values are never included in the export. Service secrets are preserved as empty input variables marked Redacted. Cloud, Git, registry and cluster credentials must be supplied through input variables without defaults.
          * @summary Export full environment and its resources into Terraform manifests
          * @param {string} environmentId Environment ID
-         * @param {boolean} [exportSecrets] export Secrets from configuration and include them into Terraform export
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async exportEnvironmentConfigurationIntoTerraform(environmentId: string, exportSecrets?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.exportEnvironmentConfigurationIntoTerraform(environmentId, exportSecrets, options);
+        async exportEnvironmentConfigurationIntoTerraform(environmentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.exportEnvironmentConfigurationIntoTerraform(environmentId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['EnvironmentExportApi.exportEnvironmentConfigurationIntoTerraform']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -56841,15 +56835,14 @@ export const EnvironmentExportApiFactory = function (configuration?: Configurati
     const localVarFp = EnvironmentExportApiFp(configuration)
     return {
         /**
-         * 
+         * Secret values are never included in the export. Service secrets are preserved as empty input variables marked Redacted. Cloud, Git, registry and cluster credentials must be supplied through input variables without defaults.
          * @summary Export full environment and its resources into Terraform manifests
          * @param {string} environmentId Environment ID
-         * @param {boolean} [exportSecrets] export Secrets from configuration and include them into Terraform export
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        exportEnvironmentConfigurationIntoTerraform(environmentId: string, exportSecrets?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<File> {
-            return localVarFp.exportEnvironmentConfigurationIntoTerraform(environmentId, exportSecrets, options).then((request) => request(axios, basePath));
+        exportEnvironmentConfigurationIntoTerraform(environmentId: string, options?: RawAxiosRequestConfig): AxiosPromise<File> {
+            return localVarFp.exportEnvironmentConfigurationIntoTerraform(environmentId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -56862,16 +56855,15 @@ export const EnvironmentExportApiFactory = function (configuration?: Configurati
  */
 export class EnvironmentExportApi extends BaseAPI {
     /**
-     * 
+     * Secret values are never included in the export. Service secrets are preserved as empty input variables marked Redacted. Cloud, Git, registry and cluster credentials must be supplied through input variables without defaults.
      * @summary Export full environment and its resources into Terraform manifests
      * @param {string} environmentId Environment ID
-     * @param {boolean} [exportSecrets] export Secrets from configuration and include them into Terraform export
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EnvironmentExportApi
      */
-    public exportEnvironmentConfigurationIntoTerraform(environmentId: string, exportSecrets?: boolean, options?: RawAxiosRequestConfig) {
-        return EnvironmentExportApiFp(this.configuration).exportEnvironmentConfigurationIntoTerraform(environmentId, exportSecrets, options).then((request) => request(this.axios, this.basePath));
+    public exportEnvironmentConfigurationIntoTerraform(environmentId: string, options?: RawAxiosRequestConfig) {
+        return EnvironmentExportApiFp(this.configuration).exportEnvironmentConfigurationIntoTerraform(environmentId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
