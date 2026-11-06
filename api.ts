@@ -5791,28 +5791,26 @@ export type BuildAnalysisConfidence = typeof BuildAnalysisConfidence[keyof typeo
 
 
 /**
- * Where the analysed Dockerfile came from. GIT is the repository at the build commit, INLINE the Dockerfile stored on the job, PASTE a Dockerfile pasted by the user.
+ * Where the analysed Dockerfile came from. GIT is the repository at the build commit, INLINE the Dockerfile stored on the job.
  * @export
  * @enum {string}
  */
 
 export const BuildAnalysisDockerfileSource = {
     GIT: 'GIT',
-    INLINE: 'INLINE',
-    PASTE: 'PASTE'
+    INLINE: 'INLINE'
 } as const;
 
 export type BuildAnalysisDockerfileSource = typeof BuildAnalysisDockerfileSource[keyof typeof BuildAnalysisDockerfileSource];
 
 
 /**
- * COPILOT_DISABLED when the organization opted out of AI features, MODEL_ERROR when the model call failed or returned an invalid result, TIMEOUT when the analysis took too long, INTERNAL_ERROR otherwise.
+ * MODEL_ERROR when the model call failed or returned an invalid result, TIMEOUT when the analysis took too long, INTERNAL_ERROR otherwise.
  * @export
  * @enum {string}
  */
 
 export const BuildAnalysisFailureCode = {
-    COPILOT_DISABLED: 'COPILOT_DISABLED',
     MODEL_ERROR: 'MODEL_ERROR',
     TIMEOUT: 'TIMEOUT',
     INTERNAL_ERROR: 'INTERNAL_ERROR'
@@ -5950,6 +5948,19 @@ export interface BuildAnalysisResult {
 /**
  * 
  * @export
+ * @interface BuildAnalysisStartRequest
+ */
+export interface BuildAnalysisStartRequest {
+    /**
+     * Execution id of the build to analyse. It must be the latest build of the service, `latest_build_execution_id` in `BuildAnalysisState`.
+     * @type {string}
+     * @memberof BuildAnalysisStartRequest
+     */
+    'execution_id': string;
+}
+/**
+ * 
+ * @export
  * @interface BuildAnalysisState
  */
 export interface BuildAnalysisState {
@@ -5967,7 +5978,7 @@ export interface BuildAnalysisState {
     'analysis': BuildAnalysisResponse | null;
 }
 /**
- * PENDING is queued, COLLECTING reads the build logs and the cache history, ANALYSING waits for the model, then DONE or FAILED.
+ * PENDING is queued, COLLECTING reads the build logs and the cache history, ANALYSING waits for the model, then DONE or FAILED. The Dockerfile is resolved before the start answers 202.
  * @export
  * @enum {string}
  */
@@ -33164,6 +33175,53 @@ export const ApplicationBuildAnalysisApiAxiosParamCreator = function (configurat
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Starts an AI analysis of the latest build of the service. It runs in the background and reports its progress on the websocket route `/build/analysis`. The result gives a confidence, the estimated time saved, what was reviewed, a summary, the improvements to make, a prompt for the customer\'s own AI agent, and a reworked Dockerfile when an improvement is a Dockerfile change. Starting an analysis replaces the previous one. It never changes the build or the image.
+         * @summary Analyse the latest build of an application
+         * @param {string} applicationId Application ID
+         * @param {BuildAnalysisStartRequest} buildAnalysisStartRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startApplicationBuildAnalysis: async (applicationId: string, buildAnalysisStartRequest: BuildAnalysisStartRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'applicationId' is not null or undefined
+            assertParamExists('startApplicationBuildAnalysis', 'applicationId', applicationId)
+            // verify required parameter 'buildAnalysisStartRequest' is not null or undefined
+            assertParamExists('startApplicationBuildAnalysis', 'buildAnalysisStartRequest', buildAnalysisStartRequest)
+            const localVarPath = `/application/{applicationId}/buildAnalysis`
+                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(buildAnalysisStartRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -33187,6 +33245,20 @@ export const ApplicationBuildAnalysisApiFp = function(configuration?: Configurat
             const localVarOperationServerBasePath = operationServerMap['ApplicationBuildAnalysisApi.getApplicationBuildAnalysis']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Starts an AI analysis of the latest build of the service. It runs in the background and reports its progress on the websocket route `/build/analysis`. The result gives a confidence, the estimated time saved, what was reviewed, a summary, the improvements to make, a prompt for the customer\'s own AI agent, and a reworked Dockerfile when an improvement is a Dockerfile change. Starting an analysis replaces the previous one. It never changes the build or the image.
+         * @summary Analyse the latest build of an application
+         * @param {string} applicationId Application ID
+         * @param {BuildAnalysisStartRequest} buildAnalysisStartRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async startApplicationBuildAnalysis(applicationId: string, buildAnalysisStartRequest: BuildAnalysisStartRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BuildAnalysisResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.startApplicationBuildAnalysis(applicationId, buildAnalysisStartRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ApplicationBuildAnalysisApi.startApplicationBuildAnalysis']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -33206,6 +33278,17 @@ export const ApplicationBuildAnalysisApiFactory = function (configuration?: Conf
          */
         getApplicationBuildAnalysis(applicationId: string, options?: RawAxiosRequestConfig): AxiosPromise<BuildAnalysisState> {
             return localVarFp.getApplicationBuildAnalysis(applicationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Starts an AI analysis of the latest build of the service. It runs in the background and reports its progress on the websocket route `/build/analysis`. The result gives a confidence, the estimated time saved, what was reviewed, a summary, the improvements to make, a prompt for the customer\'s own AI agent, and a reworked Dockerfile when an improvement is a Dockerfile change. Starting an analysis replaces the previous one. It never changes the build or the image.
+         * @summary Analyse the latest build of an application
+         * @param {string} applicationId Application ID
+         * @param {BuildAnalysisStartRequest} buildAnalysisStartRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startApplicationBuildAnalysis(applicationId: string, buildAnalysisStartRequest: BuildAnalysisStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<BuildAnalysisResponse> {
+            return localVarFp.startApplicationBuildAnalysis(applicationId, buildAnalysisStartRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -33227,6 +33310,19 @@ export class ApplicationBuildAnalysisApi extends BaseAPI {
      */
     public getApplicationBuildAnalysis(applicationId: string, options?: RawAxiosRequestConfig) {
         return ApplicationBuildAnalysisApiFp(this.configuration).getApplicationBuildAnalysis(applicationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Starts an AI analysis of the latest build of the service. It runs in the background and reports its progress on the websocket route `/build/analysis`. The result gives a confidence, the estimated time saved, what was reviewed, a summary, the improvements to make, a prompt for the customer\'s own AI agent, and a reworked Dockerfile when an improvement is a Dockerfile change. Starting an analysis replaces the previous one. It never changes the build or the image.
+     * @summary Analyse the latest build of an application
+     * @param {string} applicationId Application ID
+     * @param {BuildAnalysisStartRequest} buildAnalysisStartRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApplicationBuildAnalysisApi
+     */
+    public startApplicationBuildAnalysis(applicationId: string, buildAnalysisStartRequest: BuildAnalysisStartRequest, options?: RawAxiosRequestConfig) {
+        return ApplicationBuildAnalysisApiFp(this.configuration).startApplicationBuildAnalysis(applicationId, buildAnalysisStartRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -63651,6 +63747,53 @@ export const JobBuildAnalysisApiAxiosParamCreator = function (configuration?: Co
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Starts an AI analysis of the latest build of the service. It runs in the background and reports its progress on the websocket route `/build/analysis`. The result gives a confidence, the estimated time saved, what was reviewed, a summary, the improvements to make, a prompt for the customer\'s own AI agent, and a reworked Dockerfile when an improvement is a Dockerfile change. Starting an analysis replaces the previous one. It never changes the build or the image.
+         * @summary Analyse the latest build of a job
+         * @param {string} jobId Job ID
+         * @param {BuildAnalysisStartRequest} buildAnalysisStartRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startJobBuildAnalysis: async (jobId: string, buildAnalysisStartRequest: BuildAnalysisStartRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'jobId' is not null or undefined
+            assertParamExists('startJobBuildAnalysis', 'jobId', jobId)
+            // verify required parameter 'buildAnalysisStartRequest' is not null or undefined
+            assertParamExists('startJobBuildAnalysis', 'buildAnalysisStartRequest', buildAnalysisStartRequest)
+            const localVarPath = `/job/{jobId}/buildAnalysis`
+                .replace(`{${"jobId"}}`, encodeURIComponent(String(jobId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(buildAnalysisStartRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -63674,6 +63817,20 @@ export const JobBuildAnalysisApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['JobBuildAnalysisApi.getJobBuildAnalysis']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Starts an AI analysis of the latest build of the service. It runs in the background and reports its progress on the websocket route `/build/analysis`. The result gives a confidence, the estimated time saved, what was reviewed, a summary, the improvements to make, a prompt for the customer\'s own AI agent, and a reworked Dockerfile when an improvement is a Dockerfile change. Starting an analysis replaces the previous one. It never changes the build or the image.
+         * @summary Analyse the latest build of a job
+         * @param {string} jobId Job ID
+         * @param {BuildAnalysisStartRequest} buildAnalysisStartRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async startJobBuildAnalysis(jobId: string, buildAnalysisStartRequest: BuildAnalysisStartRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BuildAnalysisResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.startJobBuildAnalysis(jobId, buildAnalysisStartRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['JobBuildAnalysisApi.startJobBuildAnalysis']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -63693,6 +63850,17 @@ export const JobBuildAnalysisApiFactory = function (configuration?: Configuratio
          */
         getJobBuildAnalysis(jobId: string, options?: RawAxiosRequestConfig): AxiosPromise<BuildAnalysisState> {
             return localVarFp.getJobBuildAnalysis(jobId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Starts an AI analysis of the latest build of the service. It runs in the background and reports its progress on the websocket route `/build/analysis`. The result gives a confidence, the estimated time saved, what was reviewed, a summary, the improvements to make, a prompt for the customer\'s own AI agent, and a reworked Dockerfile when an improvement is a Dockerfile change. Starting an analysis replaces the previous one. It never changes the build or the image.
+         * @summary Analyse the latest build of a job
+         * @param {string} jobId Job ID
+         * @param {BuildAnalysisStartRequest} buildAnalysisStartRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startJobBuildAnalysis(jobId: string, buildAnalysisStartRequest: BuildAnalysisStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<BuildAnalysisResponse> {
+            return localVarFp.startJobBuildAnalysis(jobId, buildAnalysisStartRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -63714,6 +63882,19 @@ export class JobBuildAnalysisApi extends BaseAPI {
      */
     public getJobBuildAnalysis(jobId: string, options?: RawAxiosRequestConfig) {
         return JobBuildAnalysisApiFp(this.configuration).getJobBuildAnalysis(jobId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Starts an AI analysis of the latest build of the service. It runs in the background and reports its progress on the websocket route `/build/analysis`. The result gives a confidence, the estimated time saved, what was reviewed, a summary, the improvements to make, a prompt for the customer\'s own AI agent, and a reworked Dockerfile when an improvement is a Dockerfile change. Starting an analysis replaces the previous one. It never changes the build or the image.
+     * @summary Analyse the latest build of a job
+     * @param {string} jobId Job ID
+     * @param {BuildAnalysisStartRequest} buildAnalysisStartRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobBuildAnalysisApi
+     */
+    public startJobBuildAnalysis(jobId: string, buildAnalysisStartRequest: BuildAnalysisStartRequest, options?: RawAxiosRequestConfig) {
+        return JobBuildAnalysisApiFp(this.configuration).startJobBuildAnalysis(jobId, buildAnalysisStartRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
