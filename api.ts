@@ -20117,13 +20117,13 @@ export interface KedaScalerRequest {
      */
     'role': KedaScalerRole;
     /**
-     * 
+     * Scaler `metadata` only, as an object of string values, e.g. `{\"query\": \"...\", \"threshold\": \"10\"}`. Other trigger fields (`name`, `metricType`, `useCachedMetrics`) cannot be set here: use `config_yaml`. Exactly one of `config_json` and `config_yaml` must be set.
      * @type {object}
      * @memberof KedaScalerRequest
      */
     'config_json'?: object;
     /**
-     * 
+     * Body of the KEDA trigger as YAML, without `type` (set from `scaler_type`) and `authenticationRef` (set from `trigger_authentication`). Scaler settings go under `metadata:`; `name`, `metricType` and `useCachedMetrics` can be set next to it. Exactly one of `config_json` and `config_yaml` must be set.
      * @type {string}
      * @memberof KedaScalerRequest
      */
@@ -20180,13 +20180,13 @@ export interface KedaScalerResponse {
      */
     'role': KedaScalerRole;
     /**
-     * 
+     * Scaler `metadata` only, as an object of string values, e.g. `{\"query\": \"...\", \"threshold\": \"10\"}`. Other trigger fields (`name`, `metricType`, `useCachedMetrics`) cannot be set here: use `config_yaml`.
      * @type {object}
      * @memberof KedaScalerResponse
      */
     'config_json'?: object | null;
     /**
-     * 
+     * Body of the KEDA trigger as YAML, without `type` (set from `scaler_type`) and `authenticationRef` (set from `trigger_authentication`). Scaler settings go under `metadata:`; `name`, `metricType` and `useCachedMetrics` can be set next to it.
      * @type {string}
      * @memberof KedaScalerResponse
      */
