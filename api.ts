@@ -20099,6 +20099,12 @@ export interface KedaAutoscalingResponse {
  */
 export interface KedaScalerRequest {
     /**
+     * Id of an existing scaler of this policy, as returned in KedaScalerResponse. The scaler and its inline trigger authentication are then updated in place, keeping the trigger authentication name. When omitted or not matching a scaler of this policy, a new scaler is created. Existing scalers missing from the request are deleted.
+     * @type {string}
+     * @memberof KedaScalerRequest
+     */
+    'id'?: string;
+    /**
      * 
      * @type {string}
      * @memberof KedaScalerRequest
