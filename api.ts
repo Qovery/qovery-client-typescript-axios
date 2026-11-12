@@ -20027,6 +20027,24 @@ export interface KedaAutoscalingRequest {
      */
     'cooldown_period_seconds'?: number;
     /**
+     * KEDA ScaledObject `initialCooldownPeriod`: seconds to wait after the ScaledObject is created before the service can scale to zero. Omitted or null leaves KEDA\'s default (0).
+     * @type {number}
+     * @memberof KedaAutoscalingRequest
+     */
+    'initial_cooldown_period_seconds'?: number | null;
+    /**
+     * KEDA ScaledObject `idleReplicaCount`: replicas to keep while no trigger is active. Only 0 is supported by KEDA, and it must be strictly less than the service\'s minimum running instances. Omitted or null disables the idle state.
+     * @type {number}
+     * @memberof KedaAutoscalingRequest
+     */
+    'idle_replica_count'?: number | null;
+    /**
+     * Raw YAML of the KEDA ScaledObject `advanced` field, e.g. `horizontalPodAutoscalerConfig.behavior` to tune how fast the HPA scales up and down. Must be a YAML mapping whose top-level keys are among `horizontalPodAutoscalerConfig`, `restoreToOriginalReplicaCount` and `scalingModifiers`. Omitted, null or blank means no advanced settings.
+     * @type {string}
+     * @memberof KedaAutoscalingRequest
+     */
+    'advanced_yaml'?: string | null;
+    /**
      * 
      * @type {Array<KedaScalerRequest>}
      * @memberof KedaAutoscalingRequest
@@ -20083,6 +20101,24 @@ export interface KedaAutoscalingResponse {
      * @memberof KedaAutoscalingResponse
      */
     'cooldown_period_seconds': number;
+    /**
+     * KEDA ScaledObject `initialCooldownPeriod`: seconds to wait after the ScaledObject is created before the service can scale to zero. Omitted or null leaves KEDA\'s default (0).
+     * @type {number}
+     * @memberof KedaAutoscalingResponse
+     */
+    'initial_cooldown_period_seconds'?: number | null;
+    /**
+     * KEDA ScaledObject `idleReplicaCount`: replicas to keep while no trigger is active. Only 0 is supported by KEDA, and it must be strictly less than the service\'s minimum running instances. Omitted or null disables the idle state.
+     * @type {number}
+     * @memberof KedaAutoscalingResponse
+     */
+    'idle_replica_count'?: number | null;
+    /**
+     * Raw YAML of the KEDA ScaledObject `advanced` field, e.g. `horizontalPodAutoscalerConfig.behavior` to tune how fast the HPA scales up and down. Must be a YAML mapping whose top-level keys are among `horizontalPodAutoscalerConfig`, `restoreToOriginalReplicaCount` and `scalingModifiers`. Omitted, null or blank means no advanced settings.
+     * @type {string}
+     * @memberof KedaAutoscalingResponse
+     */
+    'advanced_yaml'?: string | null;
     /**
      * 
      * @type {Array<KedaScalerResponse>}
