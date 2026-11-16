@@ -418,6 +418,12 @@ export interface AgenticWorkflowRequest {
      */
     'resources'?: AgenticWorkflowResources;
     /**
+     * How the webhook authenticates its callers. Omit it to keep the current configuration on edit; a new workflow then uses NONE.
+     * @type {AgenticWorkflowWebhookAuthRequest}
+     * @memberof AgenticWorkflowRequest
+     */
+    'webhook_auth'?: AgenticWorkflowWebhookAuthRequest;
+    /**
      * Cron schedule firing runs of this workflow, on top of the webhook every workflow already has. Omit it, or send null, for a webhook-only workflow.
      * @type {AgenticWorkflowScheduleRequest}
      * @memberof AgenticWorkflowRequest
@@ -602,6 +608,12 @@ export interface AgenticWorkflowResponse {
      * @memberof AgenticWorkflowResponse
      */
     'webhook': AgenticWorkflowWebhook;
+    /**
+     * 
+     * @type {AgenticWorkflowWebhookAuthResponse}
+     * @memberof AgenticWorkflowResponse
+     */
+    'webhook_auth': AgenticWorkflowWebhookAuthResponse;
     /**
      * Cron schedule firing runs of this workflow. Null when the workflow is webhook-only.
      * @type {AgenticWorkflowScheduleResponse}
@@ -825,6 +837,71 @@ export interface AgenticWorkflowWebhook {
      */
     'url': string;
 }
+/**
+ * How a call to the workflow\'s webhook URL is authenticated. The IP allowlist (`webhook_ip_allowlist`) applies on top of every mode. - `NONE`: no check. The URL is not secret, so the IP allowlist is the only guard. - `SECRET_HEADER`: the caller sends the secret as is in the `header_name` header.   Qovery stores only its SHA-256 hash and rejects a call without the right value with 401. - `LINEAR`, `SENTRY`, `INCIDENT_IO`: the provider signs the body with its webhook secret.   Not supported yet: a create or edit with one of these modes is rejected with 400 on   `webhook_auth.mode`. 
+ * @export
+ * @enum {string}
+ */
+
+export const AgenticWorkflowWebhookAuthMode = {
+    NONE: 'NONE',
+    SECRET_HEADER: 'SECRET_HEADER',
+    LINEAR: 'LINEAR',
+    SENTRY: 'SENTRY',
+    INCIDENT_IO: 'INCIDENT_IO'
+} as const;
+
+export type AgenticWorkflowWebhookAuthMode = typeof AgenticWorkflowWebhookAuthMode[keyof typeof AgenticWorkflowWebhookAuthMode];
+
+
+/**
+ * 
+ * @export
+ * @interface AgenticWorkflowWebhookAuthRequest
+ */
+export interface AgenticWorkflowWebhookAuthRequest {
+    /**
+     * 
+     * @type {AgenticWorkflowWebhookAuthMode}
+     * @memberof AgenticWorkflowWebhookAuthRequest
+     */
+    'mode': AgenticWorkflowWebhookAuthMode;
+    /**
+     * Write-only, never returned. Ignored for `NONE`.  For `SECRET_HEADER`, the secret the caller will send. It must be 16 to 1024 printable ASCII characters, without leading or trailing spaces. Required when entering the mode. Once in the mode, omit it (or send a blank value) to keep the current secret; send a new one to replace it, which is how the secret is rotated. Only its SHA-256 hash is stored.  For the provider modes, the provider\'s webhook signing secret. Required when entering the mode; omitted or blank keeps the stored one while the mode does not change.  An invalid or missing secret is rejected with 400 on `webhook_auth.secret`. 
+     * @type {string}
+     * @memberof AgenticWorkflowWebhookAuthRequest
+     */
+    'secret'?: string;
+    /**
+     * `SECRET_HEADER` only: the HTTP header that carries the secret. Must be a valid header name (RFC 9110 token) of at most 128 characters, and not a header that proxies rewrite or consume (`authorization`, `cookie`, `host`, `content-type`, `x-forwarded-*`...). It is trimmed and stored lowercased. Omitted or blank keeps the current name, or uses `x-qovery-webhook-secret` when entering the mode. An invalid name is rejected with 400 on `webhook_auth.header_name`.
+     * @type {string}
+     * @memberof AgenticWorkflowWebhookAuthRequest
+     */
+    'header_name'?: string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface AgenticWorkflowWebhookAuthResponse
+ */
+export interface AgenticWorkflowWebhookAuthResponse {
+    /**
+     * 
+     * @type {AgenticWorkflowWebhookAuthMode}
+     * @memberof AgenticWorkflowWebhookAuthResponse
+     */
+    'mode': AgenticWorkflowWebhookAuthMode;
+    /**
+     * The header a caller must send the secret in, lowercased. Set for `SECRET_HEADER` only, null for every other mode. The secret itself is never returned.
+     * @type {string}
+     * @memberof AgenticWorkflowWebhookAuthResponse
+     */
+    'header_name': string | null;
+}
+
+
 /**
  * 
  * @export
