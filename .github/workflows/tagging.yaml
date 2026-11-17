@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2.8.0
+      - uses: actions/checkout@v2
 
       - name: Create an incremental release
-        uses: aurestic/incremental-tag@master
+        uses: aurestic/incrementarl-create-release@master
         with:
           flag_branch: false
           message: Bump version

@@ -12016,6 +12016,77 @@ export interface CustomDomain {
 /**
  * 
  * @export
+ * @interface CustomDomainEnvironmentResponse
+ */
+export interface CustomDomainEnvironmentResponse {
+    /**
+     * Id of the environment.
+     * @type {string}
+     * @memberof CustomDomainEnvironmentResponse
+     */
+    'id': string;
+    /**
+     * Name of the environment.
+     * @type {string}
+     * @memberof CustomDomainEnvironmentResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {EnvironmentRoutingModeEnum}
+     * @memberof CustomDomainEnvironmentResponse
+     */
+    'routing_mode': EnvironmentRoutingModeEnum;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface CustomDomainPortResponse
+ */
+export interface CustomDomainPortResponse {
+    /**
+     * Id of the port.
+     * @type {string}
+     * @memberof CustomDomainPortResponse
+     */
+    'id': string;
+    /**
+     * Name of the port.
+     * @type {string}
+     * @memberof CustomDomainPortResponse
+     */
+    'name': string;
+    /**
+     * The port the service listens on.
+     * @type {number}
+     * @memberof CustomDomainPortResponse
+     */
+    'internal_port': number;
+}
+/**
+ * 
+ * @export
+ * @interface CustomDomainProjectResponse
+ */
+export interface CustomDomainProjectResponse {
+    /**
+     * Id of the project.
+     * @type {string}
+     * @memberof CustomDomainProjectResponse
+     */
+    'id': string;
+    /**
+     * Name of the project.
+     * @type {string}
+     * @memberof CustomDomainProjectResponse
+     */
+    'name': string;
+}
+/**
+ * 
+ * @export
  * @interface CustomDomainRequest
  */
 export interface CustomDomainRequest {
@@ -12051,6 +12122,76 @@ export interface CustomDomainResponseList {
      */
     'results'?: Array<CustomDomain>;
 }
+/**
+ * Requests to the domain on `path` go to `port` of `service`. `port` is null when the service has no public port.
+ * @export
+ * @interface CustomDomainRouteResponse
+ */
+export interface CustomDomainRouteResponse {
+    /**
+     * Id of the route.
+     * @type {string}
+     * @memberof CustomDomainRouteResponse
+     */
+    'id': string;
+    /**
+     * Id of this domain in the custom domain API of the service (`/application|container|helm/{id}/customDomain/{customDomainId}`).
+     * @type {string}
+     * @memberof CustomDomainRouteResponse
+     */
+    'custom_domain_id': string;
+    /**
+     * 
+     * @type {CustomDomainServiceResponse}
+     * @memberof CustomDomainRouteResponse
+     */
+    'service': CustomDomainServiceResponse;
+    /**
+     * 
+     * @type {CustomDomainPortResponse}
+     * @memberof CustomDomainRouteResponse
+     */
+    'port': CustomDomainPortResponse | null;
+    /**
+     * The path of the requests this route serves.
+     * @type {string}
+     * @memberof CustomDomainRouteResponse
+     */
+    'path': string;
+    /**
+     * The path that replaces `path` before the request reaches the service. Null when the path is not rewritten.
+     * @type {string}
+     * @memberof CustomDomainRouteResponse
+     */
+    'path_rewrite': string | null;
+}
+/**
+ * 
+ * @export
+ * @interface CustomDomainServiceResponse
+ */
+export interface CustomDomainServiceResponse {
+    /**
+     * Id of the service.
+     * @type {string}
+     * @memberof CustomDomainServiceResponse
+     */
+    'id': string;
+    /**
+     * Type of the service. Only `APPLICATION`, `CONTAINER` and `HELM` services have custom domains.
+     * @type {ServiceTypeEnum}
+     * @memberof CustomDomainServiceResponse
+     */
+    'type': ServiceTypeEnum;
+    /**
+     * Name of the service.
+     * @type {string}
+     * @memberof CustomDomainServiceResponse
+     */
+    'name': string;
+}
+
+
 /**
  * 
  * @export
@@ -15391,6 +15532,20 @@ export interface EnvironmentResponseList {
      */
     'results'?: Array<Environment>;
 }
+/**
+ * How the environment routes its custom domains. * `PER_ROUTER_LISTENER_SET`: a domain belongs to one service and follows its default public port and path. * `PER_HOSTNAME_LISTENER_SET`: several services can share a domain, and each route chooses its port, path and path rewrite. 
+ * @export
+ * @enum {string}
+ */
+
+export const EnvironmentRoutingModeEnum = {
+    ROUTER_LISTENER_SET: 'PER_ROUTER_LISTENER_SET',
+    HOSTNAME_LISTENER_SET: 'PER_HOSTNAME_LISTENER_SET'
+} as const;
+
+export type EnvironmentRoutingModeEnum = typeof EnvironmentRoutingModeEnum[keyof typeof EnvironmentRoutingModeEnum];
+
+
 /**
  * 
  * @export
@@ -22822,6 +22977,86 @@ export interface OrganizationCurrentCost {
 }
 
 
+/**
+ * 
+ * @export
+ * @interface OrganizationCustomDomainPaginatedResponseList
+ */
+export interface OrganizationCustomDomainPaginatedResponseList {
+    /**
+     * 
+     * @type {number}
+     * @memberof OrganizationCustomDomainPaginatedResponseList
+     */
+    'page': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrganizationCustomDomainPaginatedResponseList
+     */
+    'page_size': number;
+    /**
+     * 
+     * @type {Array<OrganizationCustomDomainResponse>}
+     * @memberof OrganizationCustomDomainPaginatedResponseList
+     */
+    'results': Array<OrganizationCustomDomainResponse>;
+    /**
+     * The number of domains matching the query, on all pages.
+     * @type {number}
+     * @memberof OrganizationCustomDomainPaginatedResponseList
+     */
+    'total_count': number;
+}
+/**
+ * One domain name of one environment, with every route that serves it. It has no id of its own; `environment_id` and `domain` identify it.
+ * @export
+ * @interface OrganizationCustomDomainResponse
+ */
+export interface OrganizationCustomDomainResponse {
+    /**
+     * Id of the environment of the domain.
+     * @type {string}
+     * @memberof OrganizationCustomDomainResponse
+     */
+    'environment_id': string;
+    /**
+     * The domain name.
+     * @type {string}
+     * @memberof OrganizationCustomDomainResponse
+     */
+    'domain': string;
+    /**
+     * 
+     * @type {CustomDomainProjectResponse}
+     * @memberof OrganizationCustomDomainResponse
+     */
+    'project': CustomDomainProjectResponse;
+    /**
+     * 
+     * @type {CustomDomainEnvironmentResponse}
+     * @memberof OrganizationCustomDomainResponse
+     */
+    'environment': CustomDomainEnvironmentResponse;
+    /**
+     * The routes of the domain, one per service and path.
+     * @type {Array<CustomDomainRouteResponse>}
+     * @memberof OrganizationCustomDomainResponse
+     */
+    'routes': Array<CustomDomainRouteResponse>;
+    /**
+     * Whether Qovery generates a certificate for the domain. `false` when a CDN or another party manages the certificate.
+     * @type {boolean}
+     * @memberof OrganizationCustomDomainResponse
+     */
+    'generate_certificate': boolean;
+    /**
+     * Whether the domain is behind a CDN. If `true`, Qovery only checks that the domain points to an IP; otherwise it checks that the domain resolves to the service load balancer.
+     * @type {boolean}
+     * @memberof OrganizationCustomDomainResponse
+     */
+    'use_cdn': boolean;
+}
 /**
  * 
  * @export
@@ -70782,6 +71017,161 @@ export class OrganizationClusterLockApi extends BaseAPI {
      */
     public listClusterLock(organizationId: string, options?: RawAxiosRequestConfig) {
         return OrganizationClusterLockApiFp(this.configuration).listClusterLock(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * OrganizationCustomDomainApi - axios parameter creator
+ * @export
+ */
+export const OrganizationCustomDomainApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * List the custom domains of every environment of the organization. Only organization admins can call it. Each result is one domain name of one environment, with every route that serves it: a domain shared by several services of an environment is a single result. Results are sorted by project name, environment name, environment id, then domain. A page never splits a domain. 
+         * @summary List organization custom domains
+         * @param {string} organizationId Organization ID
+         * @param {string} [projectId] Only list the domains of this project. A project of another organization gives an empty list.
+         * @param {string} [environmentId] Only list the domains of this environment. An environment of another organization gives an empty list.
+         * @param {string} [search] Only list the domains whose name contains this text, ignoring case. The text is trimmed and matched literally, with no wildcard. A blank value does not filter.
+         * @param {number} [page] The page to return, starting at 1. A page after the last one has no results.
+         * @param {number} [pageSize] The number of domains per page.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationCustomDomain: async (organizationId: string, projectId?: string, environmentId?: string, search?: string, page?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listOrganizationCustomDomain', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/customDomain`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (projectId !== undefined) {
+                localVarQueryParameter['projectId'] = projectId;
+            }
+
+            if (environmentId !== undefined) {
+                localVarQueryParameter['environmentId'] = environmentId;
+            }
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * OrganizationCustomDomainApi - functional programming interface
+ * @export
+ */
+export const OrganizationCustomDomainApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = OrganizationCustomDomainApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * List the custom domains of every environment of the organization. Only organization admins can call it. Each result is one domain name of one environment, with every route that serves it: a domain shared by several services of an environment is a single result. Results are sorted by project name, environment name, environment id, then domain. A page never splits a domain. 
+         * @summary List organization custom domains
+         * @param {string} organizationId Organization ID
+         * @param {string} [projectId] Only list the domains of this project. A project of another organization gives an empty list.
+         * @param {string} [environmentId] Only list the domains of this environment. An environment of another organization gives an empty list.
+         * @param {string} [search] Only list the domains whose name contains this text, ignoring case. The text is trimmed and matched literally, with no wildcard. A blank value does not filter.
+         * @param {number} [page] The page to return, starting at 1. A page after the last one has no results.
+         * @param {number} [pageSize] The number of domains per page.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listOrganizationCustomDomain(organizationId: string, projectId?: string, environmentId?: string, search?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationCustomDomainPaginatedResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizationCustomDomain(organizationId, projectId, environmentId, search, page, pageSize, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrganizationCustomDomainApi.listOrganizationCustomDomain']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * OrganizationCustomDomainApi - factory interface
+ * @export
+ */
+export const OrganizationCustomDomainApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = OrganizationCustomDomainApiFp(configuration)
+    return {
+        /**
+         * List the custom domains of every environment of the organization. Only organization admins can call it. Each result is one domain name of one environment, with every route that serves it: a domain shared by several services of an environment is a single result. Results are sorted by project name, environment name, environment id, then domain. A page never splits a domain. 
+         * @summary List organization custom domains
+         * @param {string} organizationId Organization ID
+         * @param {string} [projectId] Only list the domains of this project. A project of another organization gives an empty list.
+         * @param {string} [environmentId] Only list the domains of this environment. An environment of another organization gives an empty list.
+         * @param {string} [search] Only list the domains whose name contains this text, ignoring case. The text is trimmed and matched literally, with no wildcard. A blank value does not filter.
+         * @param {number} [page] The page to return, starting at 1. A page after the last one has no results.
+         * @param {number} [pageSize] The number of domains per page.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listOrganizationCustomDomain(organizationId: string, projectId?: string, environmentId?: string, search?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): AxiosPromise<OrganizationCustomDomainPaginatedResponseList> {
+            return localVarFp.listOrganizationCustomDomain(organizationId, projectId, environmentId, search, page, pageSize, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * OrganizationCustomDomainApi - object-oriented interface
+ * @export
+ * @class OrganizationCustomDomainApi
+ * @extends {BaseAPI}
+ */
+export class OrganizationCustomDomainApi extends BaseAPI {
+    /**
+     * List the custom domains of every environment of the organization. Only organization admins can call it. Each result is one domain name of one environment, with every route that serves it: a domain shared by several services of an environment is a single result. Results are sorted by project name, environment name, environment id, then domain. A page never splits a domain. 
+     * @summary List organization custom domains
+     * @param {string} organizationId Organization ID
+     * @param {string} [projectId] Only list the domains of this project. A project of another organization gives an empty list.
+     * @param {string} [environmentId] Only list the domains of this environment. An environment of another organization gives an empty list.
+     * @param {string} [search] Only list the domains whose name contains this text, ignoring case. The text is trimmed and matched literally, with no wildcard. A blank value does not filter.
+     * @param {number} [page] The page to return, starting at 1. A page after the last one has no results.
+     * @param {number} [pageSize] The number of domains per page.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationCustomDomainApi
+     */
+    public listOrganizationCustomDomain(organizationId: string, projectId?: string, environmentId?: string, search?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig) {
+        return OrganizationCustomDomainApiFp(this.configuration).listOrganizationCustomDomain(organizationId, projectId, environmentId, search, page, pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
