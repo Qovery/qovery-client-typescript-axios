@@ -4242,7 +4242,7 @@ export interface BaseJobResponse {
  * @type BaseJobResponseAllOfSource
  * @export
  */
-export type BaseJobResponseAllOfSource = BaseJobResponseAllOfSourceOneOf | BaseJobResponseAllOfSourceOneOf1;
+export type BaseJobResponseAllOfSource = BaseJobResponseAllOfSourceOneOf | ContainerSourceResponseOneOf;
 
 /**
  * 
@@ -4252,21 +4252,8 @@ export type BaseJobResponseAllOfSource = BaseJobResponseAllOfSourceOneOf | BaseJ
 export interface BaseJobResponseAllOfSourceOneOf {
     /**
      * 
-     * @type {ContainerSource}
-     * @memberof BaseJobResponseAllOfSourceOneOf
-     */
-    'image': ContainerSource;
-}
-/**
- * 
- * @export
- * @interface BaseJobResponseAllOfSourceOneOf1
- */
-export interface BaseJobResponseAllOfSourceOneOf1 {
-    /**
-     * 
      * @type {JobSourceDockerResponse}
-     * @memberof BaseJobResponseAllOfSourceOneOf1
+     * @memberof BaseJobResponseAllOfSourceOneOf
      */
     'docker': JobSourceDockerResponse;
 }
@@ -10457,12 +10444,168 @@ export interface ContainerDeployRequest {
      */
     'id'?: string | null;
     /**
-     * Image tag to deploy
+     * Image tag to deploy, for a container with an image source. Sending it for a container with a Git repository source returns 400. A `null` value counts as not sent. 
      * @type {string}
      * @memberof ContainerDeployRequest
      */
     'image_tag'?: string | null;
+    /**
+     * Commit to deploy, for a container with a Git repository source. When not specified, the container\'s stored commit is deployed. Sending it for a container with an image source returns 400. A `null` value counts as not sent. 
+     * @type {string}
+     * @memberof ContainerDeployRequest
+     */
+    'git_commit_id'?: string | null;
 }
+/**
+ * The Git repository and the Dockerfile that Qovery builds into the container image.
+ * @export
+ * @interface ContainerGitRepositorySourceRequest
+ */
+export interface ContainerGitRepositorySourceRequest {
+    /**
+     * application git repository URL
+     * @type {string}
+     * @memberof ContainerGitRepositorySourceRequest
+     */
+    'url': string;
+    /**
+     * Name of the branch to use. This is optional If not specified, then the branch used is the `main` or `master` one 
+     * @type {string}
+     * @memberof ContainerGitRepositorySourceRequest
+     */
+    'branch'?: string;
+    /**
+     * indicates the root path of the application.
+     * @type {string}
+     * @memberof ContainerGitRepositorySourceRequest
+     */
+    'root_path'?: string;
+    /**
+     * The git token id on Qovery side
+     * @type {string}
+     * @memberof ContainerGitRepositorySourceRequest
+     */
+    'git_token_id'?: string | null;
+    /**
+     * 
+     * @type {GitProviderEnum}
+     * @memberof ContainerGitRepositorySourceRequest
+     */
+    'provider': GitProviderEnum;
+    /**
+     * The path of the associated Dockerfile
+     * @type {string}
+     * @memberof ContainerGitRepositorySourceRequest
+     */
+    'dockerfile_path': string;
+    /**
+     * The target build stage in the Dockerfile to build. If null, the last stage of the Dockerfile is built.
+     * @type {string}
+     * @memberof ContainerGitRepositorySourceRequest
+     */
+    'docker_target_build_stage'?: string | null;
+}
+
+
+/**
+ * The Git repository and the Dockerfile that Qovery builds into the container image.
+ * @export
+ * @interface ContainerGitRepositorySourceResponse
+ */
+export interface ContainerGitRepositorySourceResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ContainerGitRepositorySourceResponse
+     */
+    'has_access'?: boolean;
+    /**
+     * 
+     * @type {GitProviderEnum}
+     * @memberof ContainerGitRepositorySourceResponse
+     */
+    'provider': GitProviderEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerGitRepositorySourceResponse
+     */
+    'owner': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerGitRepositorySourceResponse
+     */
+    'url': string;
+    /**
+     * repository name
+     * @type {string}
+     * @memberof ContainerGitRepositorySourceResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerGitRepositorySourceResponse
+     */
+    'branch'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerGitRepositorySourceResponse
+     */
+    'root_path'?: string;
+    /**
+     * Git commit ID corresponding to the deployed version of the app
+     * @type {string}
+     * @memberof ContainerGitRepositorySourceResponse
+     */
+    'deployed_commit_id'?: string;
+    /**
+     * Git commit date corresponding to the deployed version of the app
+     * @type {string}
+     * @memberof ContainerGitRepositorySourceResponse
+     */
+    'deployed_commit_date'?: string;
+    /**
+     * Git commit user corresponding to the deployed version of the app
+     * @type {string}
+     * @memberof ContainerGitRepositorySourceResponse
+     */
+    'deployed_commit_contributor'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerGitRepositorySourceResponse
+     */
+    'deployed_commit_tag'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerGitRepositorySourceResponse
+     */
+    'git_token_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContainerGitRepositorySourceResponse
+     */
+    'git_token_name'?: string | null;
+    /**
+     * The path of the associated Dockerfile
+     * @type {string}
+     * @memberof ContainerGitRepositorySourceResponse
+     */
+    'dockerfile_path': string;
+    /**
+     * The target build stage in the Dockerfile to build. If null, the last stage of the Dockerfile is built.
+     * @type {string}
+     * @memberof ContainerGitRepositorySourceResponse
+     */
+    'docker_target_build_stage'?: string | null;
+}
+
+
 /**
  * 
  * @export
@@ -11040,23 +11183,29 @@ export interface ContainerRequest {
      */
     'description'?: string;
     /**
-     * id of the linked registry
+     * id of the linked registry. Required on create unless `source` is sent. See `source` for the rules on update. 
      * @type {string}
      * @memberof ContainerRequest
      */
-    'registry_id': string;
+    'registry_id'?: string;
     /**
-     * The image name pattern differs according to chosen container registry provider:   * `ECR`: `repository` * `SCALEWAY_CR`: `namespace/image` * `DOCKER_HUB`: `image` or `repository/image` * `PUBLIC_ECR`: `registry_alias/repository` 
+     * The image name pattern differs according to chosen container registry provider:   * `ECR`: `repository` * `SCALEWAY_CR`: `namespace/image` * `DOCKER_HUB`: `image` or `repository/image` * `PUBLIC_ECR`: `registry_alias/repository`  Required on create unless `source` is sent. See `source` for the rules on update. 
      * @type {string}
      * @memberof ContainerRequest
      */
-    'image_name': string;
+    'image_name'?: string;
     /**
-     * tag of the image container
+     * tag of the image container. Required on create unless `source` is sent. See `source` for the rules on update. 
      * @type {string}
      * @memberof ContainerRequest
      */
-    'tag': string;
+    'tag'?: string;
+    /**
+     * 
+     * @type {ContainerSourceRequest}
+     * @memberof ContainerRequest
+     */
+    'source'?: ContainerSourceRequest;
     /**
      * 
      * @type {Array<string>}
@@ -11118,13 +11267,13 @@ export interface ContainerRequest {
      */
     'healthchecks': Healthcheck;
     /**
-     * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment. 
+     * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment.  On a container with a Git repository source, it must be false or not specified: `true` returns 400. When not specified on a switch to `git_repository`, it is set to false. 
      * @type {boolean}
      * @memberof ContainerRequest
      */
     'auto_preview'?: boolean;
     /**
-     * Specify if the container will be automatically updated after receiving a new image tag.  The new image tag shall be communicated via the \"Auto Deploy container\" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments 
+     * Specify if the container will be automatically updated after receiving a new image tag.  The new image tag shall be communicated via the \"Auto Deploy container\" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments  On a container with a Git repository source, it must be false or not specified: `true` returns 400. When not specified on a switch to `git_repository`, it is set to false. 
      * @type {boolean}
      * @memberof ContainerRequest
      */
@@ -11153,11 +11302,17 @@ export interface ContainerRequest {
      * @memberof ContainerRequest
      */
     'autoscaling'?: AutoscalingPolicyRequest;
+    /**
+     * Build settings of a container with a Git repository source (`source.git_repository`). They apply only to the build of its image. - When sent, it replaces all stored values: omitted properties take their defaults, they are not merged. - On update, when not sent, the stored values are kept. - On a switch to `git_repository` without it, the defaults of a new application are used. - Sending it when the container keeps, or switches to, an image source returns 400. This includes create. 
+     * @type {BuildSettings}
+     * @memberof ContainerRequest
+     */
+    'build_settings'?: BuildSettings;
 }
 
 
 /**
- * 
+ * `registry`, `image_name` and `tag` always hold the image this container runs: - with an image source, the configured image; - with a Git repository source, the image last deployed. Until the first successful deployment from Git, this is the image from before the switch to Git. After it, this is the built image in the cluster\'s registry, with its build tag.  `source` says where the image comes from. 
  * @export
  * @interface ContainerResponse
  */
@@ -11348,6 +11503,18 @@ export interface ContainerResponse {
      * @memberof ContainerResponse
      */
     'autoscaling'?: AutoscalingPolicyResponse;
+    /**
+     * 
+     * @type {ContainerSourceResponse}
+     * @memberof ContainerResponse
+     */
+    'source'?: ContainerSourceResponse;
+    /**
+     * Build settings of a container with a Git repository source. Absent for a container with an image source.
+     * @type {BuildSettings}
+     * @memberof ContainerResponse
+     */
+    'build_settings'?: BuildSettings;
 }
 
 
@@ -11388,6 +11555,97 @@ export interface ContainerSource {
      * @memberof ContainerSource
      */
     'registry': ContainerRegistryProviderDetailsResponse;
+}
+/**
+ * @type ContainerSourceRequest
+ * Where the container image comes from. Send exactly one of `image` or `git_repository`; both, or neither, returns 400. A `null` `image` or `git_repository` counts as not sent. - `image`: an image from a container registry, like the flat `registry_id`, `image_name` and `tag` fields. - `git_repository`: a Git repository with a Dockerfile. Qovery builds the image from the deployed commit. Accepted on update (`PUT /container/{containerId}`) only: sending it on create returns 400.  Switching the source keeps the same container: its id, Kubernetes names, volumes and built-in variables. The switch does not deploy; the next deployment uses the new source.  Rules: - `source` cannot be sent together with the flat `registry_id`, `image_name` and `tag` fields: 400. - When `source` is not sent, the stored source is kept. Flat fields never switch the source. - On a container with a Git repository source, flat fields equal to the `registry.id`, `image_name` and `tag` that GET returns are accepted and change nothing; different values return 400. A deployment that finishes between the GET and the PUT changes these values: get the container again and retry. Send `source.image` to switch back to an image. - A `git_repository` source requires `auto_deploy` and `auto_preview` to be false or not specified: 400 otherwise. When not specified on a switch to `git_repository`, both are set to false. 
+ * @export
+ */
+export type ContainerSourceRequest = ContainerSourceRequestOneOf | ContainerSourceRequestOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface ContainerSourceRequestOneOf
+ */
+export interface ContainerSourceRequestOneOf {
+    /**
+     * 
+     * @type {ContainerSourceRequestOneOfImage}
+     * @memberof ContainerSourceRequestOneOf
+     */
+    'image': ContainerSourceRequestOneOfImage;
+}
+/**
+ * 
+ * @export
+ * @interface ContainerSourceRequestOneOf1
+ */
+export interface ContainerSourceRequestOneOf1 {
+    /**
+     * 
+     * @type {ContainerGitRepositorySourceRequest}
+     * @memberof ContainerSourceRequestOneOf1
+     */
+    'git_repository': ContainerGitRepositorySourceRequest;
+}
+/**
+ * 
+ * @export
+ * @interface ContainerSourceRequestOneOfImage
+ */
+export interface ContainerSourceRequestOneOfImage {
+    /**
+     * id of the linked registry
+     * @type {string}
+     * @memberof ContainerSourceRequestOneOfImage
+     */
+    'registry_id': string;
+    /**
+     * The image name pattern differs according to chosen container registry provider: * `ECR`: `repository` * `SCALEWAY_CR`: `namespace/image` * `DOCKER_HUB`: `image` or `repository/image` * `PUBLIC_ECR`: `registry_alias/repository` 
+     * @type {string}
+     * @memberof ContainerSourceRequestOneOfImage
+     */
+    'image_name': string;
+    /**
+     * tag of the image container
+     * @type {string}
+     * @memberof ContainerSourceRequestOneOfImage
+     */
+    'tag': string;
+}
+/**
+ * @type ContainerSourceResponse
+ * Where the container image comes from: - `image`: an image from a container registry; - `git_repository`: a Git repository with a Dockerfile, that Qovery builds.  Only the key of the current source is returned. The other key is omitted, never sent as `null`.  Always returned by API servers that support container sources; absent on older servers. 
+ * @export
+ */
+export type ContainerSourceResponse = ContainerSourceResponseOneOf | ContainerSourceResponseOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface ContainerSourceResponseOneOf
+ */
+export interface ContainerSourceResponseOneOf {
+    /**
+     * 
+     * @type {ContainerSource}
+     * @memberof ContainerSourceResponseOneOf
+     */
+    'image': ContainerSource;
+}
+/**
+ * 
+ * @export
+ * @interface ContainerSourceResponseOneOf1
+ */
+export interface ContainerSourceResponseOneOf1 {
+    /**
+     * 
+     * @type {ContainerGitRepositorySourceResponse}
+     * @memberof ContainerSourceResponseOneOf1
+     */
+    'git_repository': ContainerGitRepositorySourceResponse;
 }
 /**
  * 
@@ -12776,7 +13034,7 @@ export interface DeployAllRequestContainersInner {
      */
     'id': string;
     /**
-     * new tag for the container. Can be empty only if the service has been already deployed (in this case the service version won\'t be changed)
+     * new tag for the container. Can be empty only if the service has been already deployed (in this case the service version won\'t be changed)  For a container with a Git repository source: - an absent or empty `image_tag`, or one equal to the `tag` that `GET /container/{containerId}` returns, deploys the container at its stored commit; - a different `image_tag` returns 400. 
      * @type {string}
      * @memberof DeployAllRequestContainersInner
      */
@@ -47975,7 +48233,7 @@ export class ClustersApi extends BaseAPI {
 export const ContainerActionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * You must provide a container image tag
+         * For a container with an image source, you must provide a container image tag in `image_tag`. For a container with a Git repository source, you can provide a commit in `git_commit_id`.  Returns 400 when: - `image_tag` is sent for a container with a Git repository source, or `git_commit_id` for a container with an image source. 
          * @summary Deploy container
          * @param {string} containerId Container ID
          * @param {ContainerDeployRequest} [containerDeployRequest] 
@@ -48198,7 +48456,7 @@ export const ContainerActionsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ContainerActionsApiAxiosParamCreator(configuration)
     return {
         /**
-         * You must provide a container image tag
+         * For a container with an image source, you must provide a container image tag in `image_tag`. For a container with a Git repository source, you can provide a commit in `git_commit_id`.  Returns 400 when: - `image_tag` is sent for a container with a Git repository source, or `git_commit_id` for a container with an image source. 
          * @summary Deploy container
          * @param {string} containerId Container ID
          * @param {ContainerDeployRequest} [containerDeployRequest] 
@@ -48275,7 +48533,7 @@ export const ContainerActionsApiFactory = function (configuration?: Configuratio
     const localVarFp = ContainerActionsApiFp(configuration)
     return {
         /**
-         * You must provide a container image tag
+         * For a container with an image source, you must provide a container image tag in `image_tag`. For a container with a Git repository source, you can provide a commit in `git_commit_id`.  Returns 400 when: - `image_tag` is sent for a container with a Git repository source, or `git_commit_id` for a container with an image source. 
          * @summary Deploy container
          * @param {string} containerId Container ID
          * @param {ContainerDeployRequest} [containerDeployRequest] 
@@ -48337,7 +48595,7 @@ export const ContainerActionsApiFactory = function (configuration?: Configuratio
  */
 export class ContainerActionsApi extends BaseAPI {
     /**
-     * You must provide a container image tag
+     * For a container with an image source, you must provide a container image tag in `image_tag`. For a container with a Git repository source, you can provide a commit in `git_commit_id`.  Returns 400 when: - `image_tag` is sent for a container with a Git repository source, or `git_commit_id` for a container with an image source. 
      * @summary Deploy container
      * @param {string} containerId Container ID
      * @param {ContainerDeployRequest} [containerDeployRequest] 
@@ -50176,7 +50434,7 @@ export const ContainerMainCallsApiAxiosParamCreator = function (configuration?: 
             };
         },
         /**
-         * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. 
+         * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. - To switch the container between an image and a Git repository, send `source`. The container keeps its id, Kubernetes names, volumes and built-in variables. When `source` is not sent, the stored source is kept.  Returns 400 when: - `source` is sent together with `registry_id`, `image_name` or `tag`; - `source` has both `image` and `git_repository`, or neither; - the container has an image source, `source` is not sent, and only some of `registry_id`, `image_name` and `tag` are sent: send all three, or none to keep the image; - the container has a Git repository source and `registry_id`, `image_name` or `tag` differ from the `registry.id`, `image_name` and `tag` that `GET /container/{containerId}` returns. A deployment that finishes between the GET and the PUT changes these values, so the PUT gets a 400: get the container again and retry; - `auto_deploy` or `auto_preview` is `true` while `source.git_repository` is sent, or while the container has a Git repository source and `source` is not sent; - `build_settings` is sent while the container keeps, or switches to, an image source. 
          * @summary Edit container
          * @param {string} containerId Container ID
          * @param {ContainerRequest} [containerRequest] 
@@ -50368,7 +50626,7 @@ export const ContainerMainCallsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. 
+         * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. - To switch the container between an image and a Git repository, send `source`. The container keeps its id, Kubernetes names, volumes and built-in variables. When `source` is not sent, the stored source is kept.  Returns 400 when: - `source` is sent together with `registry_id`, `image_name` or `tag`; - `source` has both `image` and `git_repository`, or neither; - the container has an image source, `source` is not sent, and only some of `registry_id`, `image_name` and `tag` are sent: send all three, or none to keep the image; - the container has a Git repository source and `registry_id`, `image_name` or `tag` differ from the `registry.id`, `image_name` and `tag` that `GET /container/{containerId}` returns. A deployment that finishes between the GET and the PUT changes these values, so the PUT gets a 400: get the container again and retry; - `auto_deploy` or `auto_preview` is `true` while `source.git_repository` is sent, or while the container has a Git repository source and `source` is not sent; - `build_settings` is sent while the container keeps, or switches to, an image source. 
          * @summary Edit container
          * @param {string} containerId Container ID
          * @param {ContainerRequest} [containerRequest] 
@@ -50442,7 +50700,7 @@ export const ContainerMainCallsApiFactory = function (configuration?: Configurat
             return localVarFp.deleteContainer(containerId, skipReconcile, options).then((request) => request(axios, basePath));
         },
         /**
-         * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. 
+         * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. - To switch the container between an image and a Git repository, send `source`. The container keeps its id, Kubernetes names, volumes and built-in variables. When `source` is not sent, the stored source is kept.  Returns 400 when: - `source` is sent together with `registry_id`, `image_name` or `tag`; - `source` has both `image` and `git_repository`, or neither; - the container has an image source, `source` is not sent, and only some of `registry_id`, `image_name` and `tag` are sent: send all three, or none to keep the image; - the container has a Git repository source and `registry_id`, `image_name` or `tag` differ from the `registry.id`, `image_name` and `tag` that `GET /container/{containerId}` returns. A deployment that finishes between the GET and the PUT changes these values, so the PUT gets a 400: get the container again and retry; - `auto_deploy` or `auto_preview` is `true` while `source.git_repository` is sent, or while the container has a Git repository source and `source` is not sent; - `build_settings` is sent while the container keeps, or switches to, an image source. 
          * @summary Edit container
          * @param {string} containerId Container ID
          * @param {ContainerRequest} [containerRequest] 
@@ -50506,7 +50764,7 @@ export class ContainerMainCallsApi extends BaseAPI {
     }
 
     /**
-     * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. 
+     * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. - To switch the container between an image and a Git repository, send `source`. The container keeps its id, Kubernetes names, volumes and built-in variables. When `source` is not sent, the stored source is kept.  Returns 400 when: - `source` is sent together with `registry_id`, `image_name` or `tag`; - `source` has both `image` and `git_repository`, or neither; - the container has an image source, `source` is not sent, and only some of `registry_id`, `image_name` and `tag` are sent: send all three, or none to keep the image; - the container has a Git repository source and `registry_id`, `image_name` or `tag` differ from the `registry.id`, `image_name` and `tag` that `GET /container/{containerId}` returns. A deployment that finishes between the GET and the PUT changes these values, so the PUT gets a 400: get the container again and retry; - `auto_deploy` or `auto_preview` is `true` while `source.git_repository` is sent, or while the container has a Git repository source and `source` is not sent; - `build_settings` is sent while the container keeps, or switches to, an image source. 
      * @summary Edit container
      * @param {string} containerId Container ID
      * @param {ContainerRequest} [containerRequest] 
@@ -51739,7 +51997,7 @@ export class ContainerSecretApi extends BaseAPI {
 export const ContainersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Triggers a new container deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the container should have the same image name and a different tag 
+         * Triggers a new container deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the container should have the same image name and a different tag - the container should have an image source: containers with a Git repository source are skipped 
          * @summary Auto deploy containers
          * @param {string} organizationId Organization ID
          * @param {OrganizationContainerAutoDeployRequest} [organizationContainerAutoDeployRequest] 
@@ -51829,7 +52087,7 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * A container is created from an image: send `registry_id`, `image_name` and `tag`, or `source.image`.  Returns 400 when: - `source.git_repository` is sent: a Git repository source can only be set on update, with `PUT /container/{containerId}`; - `source` is sent together with `registry_id`, `image_name` or `tag`; - `source` has both `image` and `git_repository`, or neither; - `source` is not sent and `registry_id`, `image_name` and `tag` are not all sent; - `build_settings` is sent. 
          * @summary Create a container
          * @param {string} environmentId Environment ID
          * @param {ContainerRequest} [containerRequest] 
@@ -52038,7 +52296,7 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag 
+         * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag - the container should have an image source: containers with a Git repository source are skipped 
          * @summary Preview container environments
          * @param {string} organizationId Organization ID
          * @param {OrganizationContainerPreviewRequest} [organizationContainerPreviewRequest] 
@@ -52093,7 +52351,7 @@ export const ContainersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ContainersApiAxiosParamCreator(configuration)
     return {
         /**
-         * Triggers a new container deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the container should have the same image name and a different tag 
+         * Triggers a new container deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the container should have the same image name and a different tag - the container should have an image source: containers with a Git repository source are skipped 
          * @summary Auto deploy containers
          * @param {string} organizationId Organization ID
          * @param {OrganizationContainerAutoDeployRequest} [organizationContainerAutoDeployRequest] 
@@ -52121,7 +52379,7 @@ export const ContainersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * A container is created from an image: send `registry_id`, `image_name` and `tag`, or `source.image`.  Returns 400 when: - `source.git_repository` is sent: a Git repository source can only be set on update, with `PUT /container/{containerId}`; - `source` is sent together with `registry_id`, `image_name` or `tag`; - `source` has both `image` and `git_repository`, or neither; - `source` is not sent and `registry_id`, `image_name` and `tag` are not all sent; - `build_settings` is sent. 
          * @summary Create a container
          * @param {string} environmentId Environment ID
          * @param {ContainerRequest} [containerRequest] 
@@ -52187,7 +52445,7 @@ export const ContainersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag 
+         * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag - the container should have an image source: containers with a Git repository source are skipped 
          * @summary Preview container environments
          * @param {string} organizationId Organization ID
          * @param {OrganizationContainerPreviewRequest} [organizationContainerPreviewRequest] 
@@ -52211,7 +52469,7 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
     const localVarFp = ContainersApiFp(configuration)
     return {
         /**
-         * Triggers a new container deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the container should have the same image name and a different tag 
+         * Triggers a new container deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the container should have the same image name and a different tag - the container should have an image source: containers with a Git repository source are skipped 
          * @summary Auto deploy containers
          * @param {string} organizationId Organization ID
          * @param {OrganizationContainerAutoDeployRequest} [organizationContainerAutoDeployRequest] 
@@ -52233,7 +52491,7 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
             return localVarFp.cloneContainer(containerId, cloneServiceRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * A container is created from an image: send `registry_id`, `image_name` and `tag`, or `source.image`.  Returns 400 when: - `source.git_repository` is sent: a Git repository source can only be set on update, with `PUT /container/{containerId}`; - `source` is sent together with `registry_id`, `image_name` or `tag`; - `source` has both `image` and `git_repository`, or neither; - `source` is not sent and `registry_id`, `image_name` and `tag` are not all sent; - `build_settings` is sent. 
          * @summary Create a container
          * @param {string} environmentId Environment ID
          * @param {ContainerRequest} [containerRequest] 
@@ -52284,7 +52542,7 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
             return localVarFp.listContainer(environmentId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag 
+         * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag - the container should have an image source: containers with a Git repository source are skipped 
          * @summary Preview container environments
          * @param {string} organizationId Organization ID
          * @param {OrganizationContainerPreviewRequest} [organizationContainerPreviewRequest] 
@@ -52305,7 +52563,7 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
  */
 export class ContainersApi extends BaseAPI {
     /**
-     * Triggers a new container deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the container should have the same image name and a different tag 
+     * Triggers a new container deploy in each environment matching the following conditions - environment should have the auto-deploy enabled - the container should have the same image name and a different tag - the container should have an image source: containers with a Git repository source are skipped 
      * @summary Auto deploy containers
      * @param {string} organizationId Organization ID
      * @param {OrganizationContainerAutoDeployRequest} [organizationContainerAutoDeployRequest] 
@@ -52331,7 +52589,7 @@ export class ContainersApi extends BaseAPI {
     }
 
     /**
-     * 
+     * A container is created from an image: send `registry_id`, `image_name` and `tag`, or `source.image`.  Returns 400 when: - `source.git_repository` is sent: a Git repository source can only be set on update, with `PUT /container/{containerId}`; - `source` is sent together with `registry_id`, `image_name` or `tag`; - `source` has both `image` and `git_repository`, or neither; - `source` is not sent and `registry_id`, `image_name` and `tag` are not all sent; - `build_settings` is sent. 
      * @summary Create a container
      * @param {string} environmentId Environment ID
      * @param {ContainerRequest} [containerRequest] 
@@ -52392,7 +52650,7 @@ export class ContainersApi extends BaseAPI {
     }
 
     /**
-     * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag 
+     * Triggers a new container preview for each environment matching the following conditions - preview environment feature should be enabled for the container - the container should have the same image name and a different tag - the container should have an image source: containers with a Git repository source are skipped 
      * @summary Preview container environments
      * @param {string} organizationId Organization ID
      * @param {OrganizationContainerPreviewRequest} [organizationContainerPreviewRequest] 
