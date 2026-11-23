@@ -12272,6 +12272,38 @@ export interface CustomDomain {
 
 
 /**
+ * A domain name to delete in an environment.
+ * @export
+ * @interface CustomDomainBulkDeleteItemRequest
+ */
+export interface CustomDomainBulkDeleteItemRequest {
+    /**
+     * Id of the environment of the domain. It must belong to the organization of the call.
+     * @type {string}
+     * @memberof CustomDomainBulkDeleteItemRequest
+     */
+    'environment_id': string;
+    /**
+     * The domain name. Every row of this name in the environment is deleted.
+     * @type {string}
+     * @memberof CustomDomainBulkDeleteItemRequest
+     */
+    'domain': string;
+}
+/**
+ * 
+ * @export
+ * @interface CustomDomainDeletionResponse
+ */
+export interface CustomDomainDeletionResponse {
+    /**
+     * The services that lost a custom domain. They need a redeploy to stop serving it.
+     * @type {Array<ImpactedServiceResponse>}
+     * @memberof CustomDomainDeletionResponse
+     */
+    'impacted_services': Array<ImpactedServiceResponse>;
+}
+/**
  * 
  * @export
  * @interface CustomDomainEnvironmentResponse
@@ -12299,6 +12331,82 @@ export interface CustomDomainEnvironmentResponse {
 
 
 /**
+ * Why a service cannot hold the custom domain. * `PATH_ALREADY_ROUTED`: another service already routes this path on the domain. * `GRPC_HOSTNAME_SHARED`: a gRPC port would share the hostname; gRPC has no path selection. * `SETTINGS_MISMATCH`: `generate_certificate` or `use_cdn` differs from the other services on the domain. * `DOMAIN_IN_OTHER_ENVIRONMENT`: the name, or a hostname it serves, is already used in another environment of the organization. * `DOMAIN_ALREADY_ON_SERVICE`: the service already has this domain. * `ROUTING_MODE_NOT_SHAREABLE`: the domain is already used and the routing mode of the environment cannot share it. 
+ * @export
+ * @enum {string}
+ */
+
+export const CustomDomainErrorCodeEnum = {
+    PATH_ALREADY_ROUTED: 'PATH_ALREADY_ROUTED',
+    GRPC_HOSTNAME_SHARED: 'GRPC_HOSTNAME_SHARED',
+    SETTINGS_MISMATCH: 'SETTINGS_MISMATCH',
+    DOMAIN_IN_OTHER_ENVIRONMENT: 'DOMAIN_IN_OTHER_ENVIRONMENT',
+    DOMAIN_ALREADY_ON_SERVICE: 'DOMAIN_ALREADY_ON_SERVICE',
+    ROUTING_MODE_NOT_SHAREABLE: 'ROUTING_MODE_NOT_SHAREABLE'
+} as const;
+
+export type CustomDomainErrorCodeEnum = typeof CustomDomainErrorCodeEnum[keyof typeof CustomDomainErrorCodeEnum];
+
+
+/**
+ * One reason a service cannot hold the custom domain, to show under the request field it blames.
+ * @export
+ * @interface CustomDomainErrorResponse
+ */
+export interface CustomDomainErrorResponse {
+    /**
+     * 
+     * @type {CustomDomainErrorCodeEnum}
+     * @memberof CustomDomainErrorResponse
+     */
+    'code': CustomDomainErrorCodeEnum;
+    /**
+     * The request field to blame, named as on the wire, such as `domain`, `path`, `port_id`, `generate_certificate` or `use_cdn`.
+     * @type {string}
+     * @memberof CustomDomainErrorResponse
+     */
+    'field': string;
+    /**
+     * The path in conflict. Null when the error is not about a path.
+     * @type {string}
+     * @memberof CustomDomainErrorResponse
+     */
+    'path': string | null;
+    /**
+     * Id of the service of the request that cannot hold the domain.
+     * @type {string}
+     * @memberof CustomDomainErrorResponse
+     */
+    'service_id': string;
+    /**
+     * The service of the same environment the domain conflicts with. Null when the conflict is with another environment, which the caller may not have access to.
+     * @type {CustomDomainServiceResponse}
+     * @memberof CustomDomainErrorResponse
+     */
+    'conflicting_service': CustomDomainServiceResponse | null;
+    /**
+     * A message to show to the user.
+     * @type {string}
+     * @memberof CustomDomainErrorResponse
+     */
+    'message': string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface CustomDomainErrorsResponse
+ */
+export interface CustomDomainErrorsResponse {
+    /**
+     * Every conflict of the request. Empty when the domain can be saved.
+     * @type {Array<CustomDomainErrorResponse>}
+     * @memberof CustomDomainErrorsResponse
+     */
+    'errors': Array<CustomDomainErrorResponse>;
+}
+/**
  * 
  * @export
  * @interface CustomDomainPortResponse
@@ -12322,6 +12430,49 @@ export interface CustomDomainPortResponse {
      * @memberof CustomDomainPortResponse
      */
     'internal_port': number;
+}
+/**
+ * A problem detail (RFC 9457). `errors` is set when the custom domain conflicts with other domains.
+ * @export
+ * @interface CustomDomainProblemResponse
+ */
+export interface CustomDomainProblemResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomDomainProblemResponse
+     */
+    'type'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomDomainProblemResponse
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomDomainProblemResponse
+     */
+    'status'?: number;
+    /**
+     * All the error messages, joined.
+     * @type {string}
+     * @memberof CustomDomainProblemResponse
+     */
+    'detail'?: string;
+    /**
+     * The path of the request.
+     * @type {string}
+     * @memberof CustomDomainProblemResponse
+     */
+    'instance'?: string;
+    /**
+     * 
+     * @type {Array<CustomDomainErrorResponse>}
+     * @memberof CustomDomainProblemResponse
+     */
+    'errors'?: Array<CustomDomainErrorResponse>;
 }
 /**
  * 
@@ -12426,6 +12577,27 @@ export interface CustomDomainRouteResponse {
 /**
  * 
  * @export
+ * @interface CustomDomainServiceRequest
+ */
+export interface CustomDomainServiceRequest {
+    /**
+     * Id of the service. It must belong to the environment.
+     * @type {string}
+     * @memberof CustomDomainServiceRequest
+     */
+    'id': string;
+    /**
+     * Type of the service. Only `APPLICATION`, `CONTAINER` and `HELM` services have custom domains.
+     * @type {ServiceTypeEnum}
+     * @memberof CustomDomainServiceRequest
+     */
+    'type': ServiceTypeEnum;
+}
+
+
+/**
+ * 
+ * @export
  * @interface CustomDomainServiceResponse
  */
 export interface CustomDomainServiceResponse {
@@ -12463,6 +12635,43 @@ export const CustomDomainStatusEnum = {
 export type CustomDomainStatusEnum = typeof CustomDomainStatusEnum[keyof typeof CustomDomainStatusEnum];
 
 
+/**
+ * 
+ * @export
+ * @interface CustomDomainValidationRequest
+ */
+export interface CustomDomainValidationRequest {
+    /**
+     * The domain name.
+     * @type {string}
+     * @memberof CustomDomainValidationRequest
+     */
+    'domain': string;
+    /**
+     * Whether Qovery generates a certificate for the domain. Set it to `false` when a CDN or another party manages the certificate.
+     * @type {boolean}
+     * @memberof CustomDomainValidationRequest
+     */
+    'generate_certificate'?: boolean;
+    /**
+     * Whether the domain is behind a CDN. If `true`, Qovery only checks that the domain points to an IP; otherwise it checks that the domain resolves to the service load balancer.
+     * @type {boolean}
+     * @memberof CustomDomainValidationRequest
+     */
+    'use_cdn'?: boolean;
+    /**
+     * Every service the domain routes to, each with one `/` route served by its default port. Between 1 and 50 services; more than one only when the environment `routing_capabilities.can_share` is `true`.
+     * @type {Array<CustomDomainServiceRequest>}
+     * @memberof CustomDomainValidationRequest
+     */
+    'services': Array<CustomDomainServiceRequest>;
+    /**
+     * The current name of a domain being edited, so the rows the services hold for it are ignored. Null or absent for a new domain.
+     * @type {string}
+     * @memberof CustomDomainValidationRequest
+     */
+    'original_domain'?: string | null;
+}
 /**
  * 
  * @export
@@ -15212,6 +15421,12 @@ export interface Environment {
      * @memberof Environment
      */
     'expires_at'?: string | null;
+    /**
+     * 
+     * @type {RoutingCapabilitiesResponse}
+     * @memberof Environment
+     */
+    'routing_capabilities'?: RoutingCapabilitiesResponse;
 }
 
 
@@ -15233,6 +15448,81 @@ export interface EnvironmentAllOfCloudProvider {
      * @memberof EnvironmentAllOfCloudProvider
      */
     'cluster'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentCnameTargetResponse
+ */
+export interface EnvironmentCnameTargetResponse {
+    /**
+     * The hostname a custom domain of the environment must point to with a CNAME record.
+     * @type {string}
+     * @memberof EnvironmentCnameTargetResponse
+     */
+    'cname_target': string;
+}
+/**
+ * The full state of a custom domain name of an environment.
+ * @export
+ * @interface EnvironmentCustomDomainRequest
+ */
+export interface EnvironmentCustomDomainRequest {
+    /**
+     * The domain name.
+     * @type {string}
+     * @memberof EnvironmentCustomDomainRequest
+     */
+    'domain': string;
+    /**
+     * Whether Qovery generates a certificate for the domain. Set it to `false` when a CDN or another party manages the certificate.
+     * @type {boolean}
+     * @memberof EnvironmentCustomDomainRequest
+     */
+    'generate_certificate'?: boolean;
+    /**
+     * Whether the domain is behind a CDN. If `true`, Qovery only checks that the domain points to an IP; otherwise it checks that the domain resolves to the service load balancer.
+     * @type {boolean}
+     * @memberof EnvironmentCustomDomainRequest
+     */
+    'use_cdn'?: boolean;
+    /**
+     * Every service the domain routes to, each with one `/` route served by its default port. Between 1 and 50 services; more than one only when the environment `routing_capabilities.can_share` is `true`.
+     * @type {Array<CustomDomainServiceRequest>}
+     * @memberof EnvironmentCustomDomainRequest
+     */
+    'services': Array<CustomDomainServiceRequest>;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentCustomDomainResponse
+ */
+export interface EnvironmentCustomDomainResponse {
+    /**
+     * The domain name.
+     * @type {string}
+     * @memberof EnvironmentCustomDomainResponse
+     */
+    'domain': string;
+    /**
+     * Whether Qovery generates a certificate for the domain.
+     * @type {boolean}
+     * @memberof EnvironmentCustomDomainResponse
+     */
+    'generate_certificate': boolean;
+    /**
+     * Whether the domain is behind a CDN.
+     * @type {boolean}
+     * @memberof EnvironmentCustomDomainResponse
+     */
+    'use_cdn': boolean;
+    /**
+     * The services whose custom domains changed, removed services included. They need a redeploy to serve the change.
+     * @type {Array<ImpactedServiceResponse>}
+     * @memberof EnvironmentCustomDomainResponse
+     */
+    'impacted_services': Array<ImpactedServiceResponse>;
 }
 /**
  * 
@@ -16892,6 +17182,59 @@ export const GcpWorkloadIdentityFederationCredentialsRequestCredentialTypeEnum =
 } as const;
 
 export type GcpWorkloadIdentityFederationCredentialsRequestCredentialTypeEnum = typeof GcpWorkloadIdentityFederationCredentialsRequestCredentialTypeEnum[keyof typeof GcpWorkloadIdentityFederationCredentialsRequestCredentialTypeEnum];
+
+/**
+ * * `ROOT`: the domain itself (and the parent of a wildcard). It follows the route port, path and rewrite. * `PORT_SUBDOMAIN`: `<port name>.<domain>`, always served by that port at its own public path. 
+ * @export
+ * @enum {string}
+ */
+
+export const GeneratedHostnameKindEnum = {
+    ROOT: 'ROOT',
+    PORT_SUBDOMAIN: 'PORT_SUBDOMAIN'
+} as const;
+
+export type GeneratedHostnameKindEnum = typeof GeneratedHostnameKindEnum[keyof typeof GeneratedHostnameKindEnum];
+
+
+/**
+ * A hostname Qovery serves for a domain, and the port it reaches.
+ * @export
+ * @interface GeneratedHostnameResponse
+ */
+export interface GeneratedHostnameResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof GeneratedHostnameResponse
+     */
+    'hostname': string;
+    /**
+     * Id of the port the hostname reaches.
+     * @type {string}
+     * @memberof GeneratedHostnameResponse
+     */
+    'port_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GeneratedHostnameResponse
+     */
+    'port_name': string;
+    /**
+     * The public path of the hostname.
+     * @type {string}
+     * @memberof GeneratedHostnameResponse
+     */
+    'path': string;
+    /**
+     * 
+     * @type {GeneratedHostnameKindEnum}
+     * @memberof GeneratedHostnameResponse
+     */
+    'kind': GeneratedHostnameKindEnum;
+}
+
 
 /**
  * 
@@ -19239,6 +19582,27 @@ export interface HelmVersionResponseList {
      */
     'results'?: Array<HelmVersionResponse>;
 }
+/**
+ * A service a custom domain write changed. Nothing is deployed; the service needs a redeploy to serve the change.
+ * @export
+ * @interface ImpactedServiceResponse
+ */
+export interface ImpactedServiceResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpactedServiceResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {ServiceTypeEnum}
+     * @memberof ImpactedServiceResponse
+     */
+    'type': ServiceTypeEnum;
+}
+
+
 /**
  * @type InfrastructureOutputs
  * @export
@@ -23320,6 +23684,31 @@ export interface OrganizationCustomDomainResponse {
      * @memberof OrganizationCustomDomainResponse
      */
     'use_cdn': boolean;
+    /**
+     * The hostnames the domain must point to with a CNAME record. One value, except for a legacy domain spread over several service routers.
+     * @type {Array<string>}
+     * @memberof OrganizationCustomDomainResponse
+     */
+    'cname_targets'?: Array<string>;
+    /**
+     * Every hostname served for the domain by its routes.
+     * @type {Array<GeneratedHostnameResponse>}
+     * @memberof OrganizationCustomDomainResponse
+     */
+    'generated_hostnames'?: Array<GeneratedHostnameResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface OrganizationCustomDomainResponseList
+ */
+export interface OrganizationCustomDomainResponseList {
+    /**
+     * 
+     * @type {Array<OrganizationCustomDomainResponse>}
+     * @memberof OrganizationCustomDomainResponseList
+     */
+    'results': Array<OrganizationCustomDomainResponse>;
 }
 /**
  * 
@@ -26776,6 +27165,19 @@ export const Route53StaticCredentialsResponseTypeEnum = {
 export type Route53StaticCredentialsResponseTypeEnum = typeof Route53StaticCredentialsResponseTypeEnum[keyof typeof Route53StaticCredentialsResponseTypeEnum];
 
 /**
+ * What the routing mode of the environment allows on its custom domains.
+ * @export
+ * @interface RoutingCapabilitiesResponse
+ */
+export interface RoutingCapabilitiesResponse {
+    /**
+     * Whether several services can route the same custom domain. `false` on a `PER_ROUTER_LISTENER_SET` environment, where a domain belongs to one service.
+     * @type {boolean}
+     * @memberof RoutingCapabilitiesResponse
+     */
+    'can_share': boolean;
+}
+/**
  * 
  * @export
  * @interface ScalarArrayItemResponse
@@ -27734,6 +28136,123 @@ export const ServiceDeploymentStatusEnum = {
 export type ServiceDeploymentStatusEnum = typeof ServiceDeploymentStatusEnum[keyof typeof ServiceDeploymentStatusEnum];
 
 
+/**
+ * A custom domain the service routes, possibly shared with other services of the environment.
+ * @export
+ * @interface ServiceDomainCustomResponse
+ */
+export interface ServiceDomainCustomResponse {
+    /**
+     * 
+     * @type {ServiceDomainKindEnum}
+     * @memberof ServiceDomainCustomResponse
+     */
+    'kind': ServiceDomainKindEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ServiceDomainCustomResponse
+     */
+    'domain': string;
+    /**
+     * Whether Qovery generates a certificate for the domain.
+     * @type {boolean}
+     * @memberof ServiceDomainCustomResponse
+     */
+    'generate_certificate': boolean;
+    /**
+     * Whether the domain is behind a CDN.
+     * @type {boolean}
+     * @memberof ServiceDomainCustomResponse
+     */
+    'use_cdn': boolean;
+    /**
+     * The hostnames the domain must point to with a CNAME record. One value, except for a legacy domain spread over several service routers.
+     * @type {Array<string>}
+     * @memberof ServiceDomainCustomResponse
+     */
+    'cname_targets': Array<string>;
+    /**
+     * The hostnames served by the routes of this service only.
+     * @type {Array<GeneratedHostnameResponse>}
+     * @memberof ServiceDomainCustomResponse
+     */
+    'generated_hostnames': Array<GeneratedHostnameResponse>;
+    /**
+     * Every route of the domain, the routes of the other services included.
+     * @type {Array<CustomDomainRouteResponse>}
+     * @memberof ServiceDomainCustomResponse
+     */
+    'routes': Array<CustomDomainRouteResponse>;
+    /**
+     * The other services routing the domain. When it is not empty, removing this service\'s route keeps the domain for them.
+     * @type {Array<CustomDomainServiceResponse>}
+     * @memberof ServiceDomainCustomResponse
+     */
+    'other_services': Array<CustomDomainServiceResponse>;
+}
+
+
+/**
+ * * `QOVERY`: the domain Qovery generates for the service. It cannot be edited or deleted. * `CUSTOM`: a custom domain the service routes. 
+ * @export
+ * @enum {string}
+ */
+
+export const ServiceDomainKindEnum = {
+    QOVERY: 'QOVERY',
+    CUSTOM: 'CUSTOM'
+} as const;
+
+export type ServiceDomainKindEnum = typeof ServiceDomainKindEnum[keyof typeof ServiceDomainKindEnum];
+
+
+/**
+ * The read-only domain Qovery generates for the service.
+ * @export
+ * @interface ServiceDomainQoveryResponse
+ */
+export interface ServiceDomainQoveryResponse {
+    /**
+     * 
+     * @type {ServiceDomainKindEnum}
+     * @memberof ServiceDomainQoveryResponse
+     */
+    'kind': ServiceDomainKindEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ServiceDomainQoveryResponse
+     */
+    'domain': string;
+    /**
+     * 
+     * @type {Array<GeneratedHostnameResponse>}
+     * @memberof ServiceDomainQoveryResponse
+     */
+    'generated_hostnames': Array<GeneratedHostnameResponse>;
+}
+
+
+/**
+ * @type ServiceDomainResponse
+ * @export
+ */
+export type ServiceDomainResponse = { kind: 'CUSTOM' } & ServiceDomainCustomResponse | { kind: 'QOVERY' } & ServiceDomainQoveryResponse;
+
+/**
+ * 
+ * @export
+ * @interface ServiceDomainResponseList
+ */
+export interface ServiceDomainResponseList {
+    /**
+     * 
+     * @type {Array<ServiceDomainResponse>}
+     * @memberof ServiceDomainResponseList
+     */
+    'results': Array<ServiceDomainResponse>;
+}
 /**
  * 
  * @export
@@ -34401,7 +34920,7 @@ export const ApplicationCustomDomainApiAxiosParamCreator = function (configurati
             };
         },
         /**
-         * Add a custom domain to this application in order not to use qovery autogenerated domain
+         * Add a custom domain to this application in order not to use qovery autogenerated domain. A conflict with another service returns every reason in `errors`.
          * @summary Add custom domain to the application.
          * @param {string} applicationId Application ID
          * @param {CustomDomainRequest} [customDomainRequest] 
@@ -34446,7 +34965,7 @@ export const ApplicationCustomDomainApiAxiosParamCreator = function (configurati
             };
         },
         /**
-         * To delete an CustomDomain you must have the project user permission
+         * Remove the custom domain from this application only, with its routes. Other services routing the same domain name keep it. To delete the domain for every service, use `deleteEnvironmentCustomDomain`. The project user permission is required.
          * @summary Delete a Custom Domain
          * @param {string} applicationId Application ID
          * @param {string} customDomainId Custom Domain ID
@@ -34491,7 +35010,7 @@ export const ApplicationCustomDomainApiAxiosParamCreator = function (configurati
             };
         },
         /**
-         * To edit a Custom Domain you must have the project user permission
+         * Edit a custom domain of the application. The project user permission is required. When other services route the same domain name in the environment, a change of the name, `generate_certificate` or `use_cdn` applies to all of them. A conflict returns every reason in `errors`. Nothing is deployed: redeploy the services routing the domain to apply the change. 
          * @summary Edit a Custom Domain
          * @param {string} applicationId Application ID
          * @param {string} customDomainId Custom Domain ID
@@ -34625,6 +35144,47 @@ export const ApplicationCustomDomainApiAxiosParamCreator = function (configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * List the domains of the application, as shown on its settings page: its Qovery domain (`kind` `QOVERY`, read-only) and each custom domain it routes (`kind` `CUSTOM`). A custom domain also lists the other services routing it, so a client can tell removing this application\'s route from deleting the domain. 
+         * @summary List the domains of the application
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listApplicationCustomDomainView: async (applicationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'applicationId' is not null or undefined
+            assertParamExists('listApplicationCustomDomainView', 'applicationId', applicationId)
+            const localVarPath = `/application/{applicationId}/customDomainView`
+                .replace(`{${"applicationId"}}`, encodeURIComponent(String(applicationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -34649,7 +35209,7 @@ export const ApplicationCustomDomainApiFp = function(configuration?: Configurati
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Add a custom domain to this application in order not to use qovery autogenerated domain
+         * Add a custom domain to this application in order not to use qovery autogenerated domain. A conflict with another service returns every reason in `errors`.
          * @summary Add custom domain to the application.
          * @param {string} applicationId Application ID
          * @param {CustomDomainRequest} [customDomainRequest] 
@@ -34663,7 +35223,7 @@ export const ApplicationCustomDomainApiFp = function(configuration?: Configurati
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * To delete an CustomDomain you must have the project user permission
+         * Remove the custom domain from this application only, with its routes. Other services routing the same domain name keep it. To delete the domain for every service, use `deleteEnvironmentCustomDomain`. The project user permission is required.
          * @summary Delete a Custom Domain
          * @param {string} applicationId Application ID
          * @param {string} customDomainId Custom Domain ID
@@ -34677,7 +35237,7 @@ export const ApplicationCustomDomainApiFp = function(configuration?: Configurati
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * To edit a Custom Domain you must have the project user permission
+         * Edit a custom domain of the application. The project user permission is required. When other services route the same domain name in the environment, a change of the name, `generate_certificate` or `use_cdn` applies to all of them. A conflict returns every reason in `errors`. Nothing is deployed: redeploy the services routing the domain to apply the change. 
          * @summary Edit a Custom Domain
          * @param {string} applicationId Application ID
          * @param {string} customDomainId Custom Domain ID
@@ -34718,6 +35278,19 @@ export const ApplicationCustomDomainApiFp = function(configuration?: Configurati
             const localVarOperationServerBasePath = operationServerMap['ApplicationCustomDomainApi.listApplicationCustomDomain']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * List the domains of the application, as shown on its settings page: its Qovery domain (`kind` `QOVERY`, read-only) and each custom domain it routes (`kind` `CUSTOM`). A custom domain also lists the other services routing it, so a client can tell removing this application\'s route from deleting the domain. 
+         * @summary List the domains of the application
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listApplicationCustomDomainView(applicationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceDomainResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listApplicationCustomDomainView(applicationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ApplicationCustomDomainApi.listApplicationCustomDomainView']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -34739,7 +35312,7 @@ export const ApplicationCustomDomainApiFactory = function (configuration?: Confi
             return localVarFp.checkApplicationCustomDomain(applicationId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Add a custom domain to this application in order not to use qovery autogenerated domain
+         * Add a custom domain to this application in order not to use qovery autogenerated domain. A conflict with another service returns every reason in `errors`.
          * @summary Add custom domain to the application.
          * @param {string} applicationId Application ID
          * @param {CustomDomainRequest} [customDomainRequest] 
@@ -34750,7 +35323,7 @@ export const ApplicationCustomDomainApiFactory = function (configuration?: Confi
             return localVarFp.createApplicationCustomDomain(applicationId, customDomainRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * To delete an CustomDomain you must have the project user permission
+         * Remove the custom domain from this application only, with its routes. Other services routing the same domain name keep it. To delete the domain for every service, use `deleteEnvironmentCustomDomain`. The project user permission is required.
          * @summary Delete a Custom Domain
          * @param {string} applicationId Application ID
          * @param {string} customDomainId Custom Domain ID
@@ -34761,7 +35334,7 @@ export const ApplicationCustomDomainApiFactory = function (configuration?: Confi
             return localVarFp.deleteCustomDomain(applicationId, customDomainId, options).then((request) => request(axios, basePath));
         },
         /**
-         * To edit a Custom Domain you must have the project user permission
+         * Edit a custom domain of the application. The project user permission is required. When other services route the same domain name in the environment, a change of the name, `generate_certificate` or `use_cdn` applies to all of them. A conflict returns every reason in `errors`. Nothing is deployed: redeploy the services routing the domain to apply the change. 
          * @summary Edit a Custom Domain
          * @param {string} applicationId Application ID
          * @param {string} customDomainId Custom Domain ID
@@ -34793,6 +35366,16 @@ export const ApplicationCustomDomainApiFactory = function (configuration?: Confi
         listApplicationCustomDomain(applicationId: string, options?: RawAxiosRequestConfig): AxiosPromise<CustomDomainResponseList> {
             return localVarFp.listApplicationCustomDomain(applicationId, options).then((request) => request(axios, basePath));
         },
+        /**
+         * List the domains of the application, as shown on its settings page: its Qovery domain (`kind` `QOVERY`, read-only) and each custom domain it routes (`kind` `CUSTOM`). A custom domain also lists the other services routing it, so a client can tell removing this application\'s route from deleting the domain. 
+         * @summary List the domains of the application
+         * @param {string} applicationId Application ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listApplicationCustomDomainView(applicationId: string, options?: RawAxiosRequestConfig): AxiosPromise<ServiceDomainResponseList> {
+            return localVarFp.listApplicationCustomDomainView(applicationId, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -34816,7 +35399,7 @@ export class ApplicationCustomDomainApi extends BaseAPI {
     }
 
     /**
-     * Add a custom domain to this application in order not to use qovery autogenerated domain
+     * Add a custom domain to this application in order not to use qovery autogenerated domain. A conflict with another service returns every reason in `errors`.
      * @summary Add custom domain to the application.
      * @param {string} applicationId Application ID
      * @param {CustomDomainRequest} [customDomainRequest] 
@@ -34829,7 +35412,7 @@ export class ApplicationCustomDomainApi extends BaseAPI {
     }
 
     /**
-     * To delete an CustomDomain you must have the project user permission
+     * Remove the custom domain from this application only, with its routes. Other services routing the same domain name keep it. To delete the domain for every service, use `deleteEnvironmentCustomDomain`. The project user permission is required.
      * @summary Delete a Custom Domain
      * @param {string} applicationId Application ID
      * @param {string} customDomainId Custom Domain ID
@@ -34842,7 +35425,7 @@ export class ApplicationCustomDomainApi extends BaseAPI {
     }
 
     /**
-     * To edit a Custom Domain you must have the project user permission
+     * Edit a custom domain of the application. The project user permission is required. When other services route the same domain name in the environment, a change of the name, `generate_certificate` or `use_cdn` applies to all of them. A conflict returns every reason in `errors`. Nothing is deployed: redeploy the services routing the domain to apply the change. 
      * @summary Edit a Custom Domain
      * @param {string} applicationId Application ID
      * @param {string} customDomainId Custom Domain ID
@@ -34878,6 +35461,18 @@ export class ApplicationCustomDomainApi extends BaseAPI {
      */
     public listApplicationCustomDomain(applicationId: string, options?: RawAxiosRequestConfig) {
         return ApplicationCustomDomainApiFp(this.configuration).listApplicationCustomDomain(applicationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List the domains of the application, as shown on its settings page: its Qovery domain (`kind` `QOVERY`, read-only) and each custom domain it routes (`kind` `CUSTOM`). A custom domain also lists the other services routing it, so a client can tell removing this application\'s route from deleting the domain. 
+     * @summary List the domains of the application
+     * @param {string} applicationId Application ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApplicationCustomDomainApi
+     */
+    public listApplicationCustomDomainView(applicationId: string, options?: RawAxiosRequestConfig) {
+        return ApplicationCustomDomainApiFp(this.configuration).listApplicationCustomDomainView(applicationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -49120,7 +49715,7 @@ export const ContainerCustomDomainApiAxiosParamCreator = function (configuration
             };
         },
         /**
-         * Add a custom domain to this container in order not to use qovery autogenerated domain
+         * Add a custom domain to this container in order not to use qovery autogenerated domain. A conflict with another service returns every reason in `errors`.
          * @summary Add custom domain to the container.
          * @param {string} containerId Container ID
          * @param {CustomDomainRequest} [customDomainRequest] 
@@ -49165,7 +49760,7 @@ export const ContainerCustomDomainApiAxiosParamCreator = function (configuration
             };
         },
         /**
-         * To delete an CustomDomain you must have the project user permission
+         * Remove the custom domain from this container only, with its routes. Other services routing the same domain name keep it. To delete the domain for every service, use `deleteEnvironmentCustomDomain`. The project user permission is required.
          * @summary Delete a Custom Domain
          * @param {string} containerId Container ID
          * @param {string} customDomainId Custom Domain ID
@@ -49210,7 +49805,7 @@ export const ContainerCustomDomainApiAxiosParamCreator = function (configuration
             };
         },
         /**
-         * To edit a Custom Domain  you must have the project user permission
+         * Edit a custom domain of the container. The project user permission is required. When other services route the same domain name in the environment, a change of the name, `generate_certificate` or `use_cdn` applies to all of them. A conflict returns every reason in `errors`. Nothing is deployed: redeploy the services routing the domain to apply the change. 
          * @summary Edit a Custom Domain
          * @param {string} containerId Container ID
          * @param {string} customDomainId Custom Domain ID
@@ -49344,6 +49939,47 @@ export const ContainerCustomDomainApiAxiosParamCreator = function (configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * List the domains of the container, as shown on its settings page: its Qovery domain (`kind` `QOVERY`, read-only) and each custom domain it routes (`kind` `CUSTOM`). A custom domain also lists the other services routing it, so a client can tell removing this container\'s route from deleting the domain. 
+         * @summary List the domains of the container
+         * @param {string} containerId Container ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listContainerCustomDomainView: async (containerId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'containerId' is not null or undefined
+            assertParamExists('listContainerCustomDomainView', 'containerId', containerId)
+            const localVarPath = `/container/{containerId}/customDomainView`
+                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -49368,7 +50004,7 @@ export const ContainerCustomDomainApiFp = function(configuration?: Configuration
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Add a custom domain to this container in order not to use qovery autogenerated domain
+         * Add a custom domain to this container in order not to use qovery autogenerated domain. A conflict with another service returns every reason in `errors`.
          * @summary Add custom domain to the container.
          * @param {string} containerId Container ID
          * @param {CustomDomainRequest} [customDomainRequest] 
@@ -49382,7 +50018,7 @@ export const ContainerCustomDomainApiFp = function(configuration?: Configuration
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * To delete an CustomDomain you must have the project user permission
+         * Remove the custom domain from this container only, with its routes. Other services routing the same domain name keep it. To delete the domain for every service, use `deleteEnvironmentCustomDomain`. The project user permission is required.
          * @summary Delete a Custom Domain
          * @param {string} containerId Container ID
          * @param {string} customDomainId Custom Domain ID
@@ -49396,7 +50032,7 @@ export const ContainerCustomDomainApiFp = function(configuration?: Configuration
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * To edit a Custom Domain  you must have the project user permission
+         * Edit a custom domain of the container. The project user permission is required. When other services route the same domain name in the environment, a change of the name, `generate_certificate` or `use_cdn` applies to all of them. A conflict returns every reason in `errors`. Nothing is deployed: redeploy the services routing the domain to apply the change. 
          * @summary Edit a Custom Domain
          * @param {string} containerId Container ID
          * @param {string} customDomainId Custom Domain ID
@@ -49437,6 +50073,19 @@ export const ContainerCustomDomainApiFp = function(configuration?: Configuration
             const localVarOperationServerBasePath = operationServerMap['ContainerCustomDomainApi.listContainerCustomDomain']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * List the domains of the container, as shown on its settings page: its Qovery domain (`kind` `QOVERY`, read-only) and each custom domain it routes (`kind` `CUSTOM`). A custom domain also lists the other services routing it, so a client can tell removing this container\'s route from deleting the domain. 
+         * @summary List the domains of the container
+         * @param {string} containerId Container ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listContainerCustomDomainView(containerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceDomainResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listContainerCustomDomainView(containerId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ContainerCustomDomainApi.listContainerCustomDomainView']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -49458,7 +50107,7 @@ export const ContainerCustomDomainApiFactory = function (configuration?: Configu
             return localVarFp.checkContainerCustomDomain(containerId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Add a custom domain to this container in order not to use qovery autogenerated domain
+         * Add a custom domain to this container in order not to use qovery autogenerated domain. A conflict with another service returns every reason in `errors`.
          * @summary Add custom domain to the container.
          * @param {string} containerId Container ID
          * @param {CustomDomainRequest} [customDomainRequest] 
@@ -49469,7 +50118,7 @@ export const ContainerCustomDomainApiFactory = function (configuration?: Configu
             return localVarFp.createContainerCustomDomain(containerId, customDomainRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * To delete an CustomDomain you must have the project user permission
+         * Remove the custom domain from this container only, with its routes. Other services routing the same domain name keep it. To delete the domain for every service, use `deleteEnvironmentCustomDomain`. The project user permission is required.
          * @summary Delete a Custom Domain
          * @param {string} containerId Container ID
          * @param {string} customDomainId Custom Domain ID
@@ -49480,7 +50129,7 @@ export const ContainerCustomDomainApiFactory = function (configuration?: Configu
             return localVarFp.deleteContainerCustomDomain(containerId, customDomainId, options).then((request) => request(axios, basePath));
         },
         /**
-         * To edit a Custom Domain  you must have the project user permission
+         * Edit a custom domain of the container. The project user permission is required. When other services route the same domain name in the environment, a change of the name, `generate_certificate` or `use_cdn` applies to all of them. A conflict returns every reason in `errors`. Nothing is deployed: redeploy the services routing the domain to apply the change. 
          * @summary Edit a Custom Domain
          * @param {string} containerId Container ID
          * @param {string} customDomainId Custom Domain ID
@@ -49512,6 +50161,16 @@ export const ContainerCustomDomainApiFactory = function (configuration?: Configu
         listContainerCustomDomain(containerId: string, options?: RawAxiosRequestConfig): AxiosPromise<CustomDomainResponseList> {
             return localVarFp.listContainerCustomDomain(containerId, options).then((request) => request(axios, basePath));
         },
+        /**
+         * List the domains of the container, as shown on its settings page: its Qovery domain (`kind` `QOVERY`, read-only) and each custom domain it routes (`kind` `CUSTOM`). A custom domain also lists the other services routing it, so a client can tell removing this container\'s route from deleting the domain. 
+         * @summary List the domains of the container
+         * @param {string} containerId Container ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listContainerCustomDomainView(containerId: string, options?: RawAxiosRequestConfig): AxiosPromise<ServiceDomainResponseList> {
+            return localVarFp.listContainerCustomDomainView(containerId, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -49535,7 +50194,7 @@ export class ContainerCustomDomainApi extends BaseAPI {
     }
 
     /**
-     * Add a custom domain to this container in order not to use qovery autogenerated domain
+     * Add a custom domain to this container in order not to use qovery autogenerated domain. A conflict with another service returns every reason in `errors`.
      * @summary Add custom domain to the container.
      * @param {string} containerId Container ID
      * @param {CustomDomainRequest} [customDomainRequest] 
@@ -49548,7 +50207,7 @@ export class ContainerCustomDomainApi extends BaseAPI {
     }
 
     /**
-     * To delete an CustomDomain you must have the project user permission
+     * Remove the custom domain from this container only, with its routes. Other services routing the same domain name keep it. To delete the domain for every service, use `deleteEnvironmentCustomDomain`. The project user permission is required.
      * @summary Delete a Custom Domain
      * @param {string} containerId Container ID
      * @param {string} customDomainId Custom Domain ID
@@ -49561,7 +50220,7 @@ export class ContainerCustomDomainApi extends BaseAPI {
     }
 
     /**
-     * To edit a Custom Domain  you must have the project user permission
+     * Edit a custom domain of the container. The project user permission is required. When other services route the same domain name in the environment, a change of the name, `generate_certificate` or `use_cdn` applies to all of them. A conflict returns every reason in `errors`. Nothing is deployed: redeploy the services routing the domain to apply the change. 
      * @summary Edit a Custom Domain
      * @param {string} containerId Container ID
      * @param {string} customDomainId Custom Domain ID
@@ -49597,6 +50256,18 @@ export class ContainerCustomDomainApi extends BaseAPI {
      */
     public listContainerCustomDomain(containerId: string, options?: RawAxiosRequestConfig) {
         return ContainerCustomDomainApiFp(this.configuration).listContainerCustomDomain(containerId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List the domains of the container, as shown on its settings page: its Qovery domain (`kind` `QOVERY`, read-only) and each custom domain it routes (`kind` `CUSTOM`). A custom domain also lists the other services routing it, so a client can tell removing this container\'s route from deleting the domain. 
+     * @summary List the domains of the container
+     * @param {string} containerId Container ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContainerCustomDomainApi
+     */
+    public listContainerCustomDomainView(containerId: string, options?: RawAxiosRequestConfig) {
+        return ContainerCustomDomainApiFp(this.configuration).listContainerCustomDomainView(containerId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -57116,6 +57787,542 @@ export class EnvironmentActionsApi extends BaseAPI {
 
 
 /**
+ * EnvironmentCustomDomainApi - axios parameter creator
+ * @export
+ */
+export const EnvironmentCustomDomainApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Create a custom domain on several services of the environment at once: one custom domain and one `/` route per service, served by the service default port. If any service conflicts, nothing is created and the response lists every conflict. More than one service is refused with a 400 on an environment whose `routing_capabilities.can_share` is `false`. Nothing is deployed: redeploy the services listed in `impacted_services` to serve the domain. 
+         * @summary Create a custom domain for several services
+         * @param {string} environmentId Environment ID
+         * @param {EnvironmentCustomDomainRequest} environmentCustomDomainRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEnvironmentCustomDomain: async (environmentId: string, environmentCustomDomainRequest: EnvironmentCustomDomainRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('createEnvironmentCustomDomain', 'environmentId', environmentId)
+            // verify required parameter 'environmentCustomDomainRequest' is not null or undefined
+            assertParamExists('createEnvironmentCustomDomain', 'environmentCustomDomainRequest', environmentCustomDomainRequest)
+            const localVarPath = `/environment/{environmentId}/customDomain`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(environmentCustomDomainRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete every custom domain row of `domainName` in the environment, for every service routing it, with their routes. To remove the domain from one service only, use the delete endpoint of that service. Nothing is deployed: redeploy the services listed in `impacted_services` to apply the change. 
+         * @summary Delete a custom domain of several services
+         * @param {string} environmentId Environment ID
+         * @param {string} domainName The current name of the custom domain.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEnvironmentCustomDomain: async (environmentId: string, domainName: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('deleteEnvironmentCustomDomain', 'environmentId', environmentId)
+            // verify required parameter 'domainName' is not null or undefined
+            assertParamExists('deleteEnvironmentCustomDomain', 'domainName', domainName)
+            const localVarPath = `/environment/{environmentId}/customDomain/{domainName}`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)))
+                .replace(`{${"domainName"}}`, encodeURIComponent(String(domainName)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Replace every custom domain row of `domainName` in the environment with the state of the body: * services not in the body lose their row and its routes; * services new in the body get a row and a `/` route; * kept services get the name, `generate_certificate` and `use_cdn` of the body. Renaming is allowed and is checked like a creation. If any service conflicts, nothing changes and the response lists every conflict. Nothing is deployed: redeploy the services listed in `impacted_services` to apply the change. 
+         * @summary Edit a custom domain of several services
+         * @param {string} environmentId Environment ID
+         * @param {string} domainName The current name of the custom domain.
+         * @param {EnvironmentCustomDomainRequest} environmentCustomDomainRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editEnvironmentCustomDomain: async (environmentId: string, domainName: string, environmentCustomDomainRequest: EnvironmentCustomDomainRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('editEnvironmentCustomDomain', 'environmentId', environmentId)
+            // verify required parameter 'domainName' is not null or undefined
+            assertParamExists('editEnvironmentCustomDomain', 'domainName', domainName)
+            // verify required parameter 'environmentCustomDomainRequest' is not null or undefined
+            assertParamExists('editEnvironmentCustomDomain', 'environmentCustomDomainRequest', environmentCustomDomainRequest)
+            const localVarPath = `/environment/{environmentId}/customDomain/{domainName}`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)))
+                .replace(`{${"domainName"}}`, encodeURIComponent(String(domainName)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(environmentCustomDomainRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * The hostname a new custom domain of the environment must point to with a CNAME record. Returns 404 until the environment is deployed for the first time and has its router.
+         * @summary Get the CNAME target of the environment
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentCustomDomainCnameTarget: async (environmentId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('getEnvironmentCustomDomainCnameTarget', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/customDomain/cnameTarget`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List the custom domains of the environment. Each result is one domain name, with every route that serves it: a domain shared by several services is a single result. The items are the same as in the organization list. The list is not paginated. 
+         * @summary List environment custom domains
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listEnvironmentCustomDomain: async (environmentId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('listEnvironmentCustomDomain', 'environmentId', environmentId)
+            const localVarPath = `/environment/{environmentId}/customDomain`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Run the checks of a custom domain creation or edit for several services, without saving anything. Returns every conflict, not only the first one. The services of the body are checked against each other as well as against the existing domains. It takes no lock: a later creation can still fail if the domains change meanwhile. A service outside the environment returns a 403. 
+         * @summary Validate a custom domain for several services
+         * @param {string} environmentId Environment ID
+         * @param {CustomDomainValidationRequest} customDomainValidationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        validateEnvironmentCustomDomain: async (environmentId: string, customDomainValidationRequest: CustomDomainValidationRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'environmentId' is not null or undefined
+            assertParamExists('validateEnvironmentCustomDomain', 'environmentId', environmentId)
+            // verify required parameter 'customDomainValidationRequest' is not null or undefined
+            assertParamExists('validateEnvironmentCustomDomain', 'customDomainValidationRequest', customDomainValidationRequest)
+            const localVarPath = `/environment/{environmentId}/customDomain/validate`
+                .replace(`{${"environmentId"}}`, encodeURIComponent(String(environmentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(customDomainValidationRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * EnvironmentCustomDomainApi - functional programming interface
+ * @export
+ */
+export const EnvironmentCustomDomainApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = EnvironmentCustomDomainApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Create a custom domain on several services of the environment at once: one custom domain and one `/` route per service, served by the service default port. If any service conflicts, nothing is created and the response lists every conflict. More than one service is refused with a 400 on an environment whose `routing_capabilities.can_share` is `false`. Nothing is deployed: redeploy the services listed in `impacted_services` to serve the domain. 
+         * @summary Create a custom domain for several services
+         * @param {string} environmentId Environment ID
+         * @param {EnvironmentCustomDomainRequest} environmentCustomDomainRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createEnvironmentCustomDomain(environmentId: string, environmentCustomDomainRequest: EnvironmentCustomDomainRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentCustomDomainResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createEnvironmentCustomDomain(environmentId, environmentCustomDomainRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['EnvironmentCustomDomainApi.createEnvironmentCustomDomain']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Delete every custom domain row of `domainName` in the environment, for every service routing it, with their routes. To remove the domain from one service only, use the delete endpoint of that service. Nothing is deployed: redeploy the services listed in `impacted_services` to apply the change. 
+         * @summary Delete a custom domain of several services
+         * @param {string} environmentId Environment ID
+         * @param {string} domainName The current name of the custom domain.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteEnvironmentCustomDomain(environmentId: string, domainName: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CustomDomainDeletionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEnvironmentCustomDomain(environmentId, domainName, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['EnvironmentCustomDomainApi.deleteEnvironmentCustomDomain']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Replace every custom domain row of `domainName` in the environment with the state of the body: * services not in the body lose their row and its routes; * services new in the body get a row and a `/` route; * kept services get the name, `generate_certificate` and `use_cdn` of the body. Renaming is allowed and is checked like a creation. If any service conflicts, nothing changes and the response lists every conflict. Nothing is deployed: redeploy the services listed in `impacted_services` to apply the change. 
+         * @summary Edit a custom domain of several services
+         * @param {string} environmentId Environment ID
+         * @param {string} domainName The current name of the custom domain.
+         * @param {EnvironmentCustomDomainRequest} environmentCustomDomainRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editEnvironmentCustomDomain(environmentId: string, domainName: string, environmentCustomDomainRequest: EnvironmentCustomDomainRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentCustomDomainResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editEnvironmentCustomDomain(environmentId, domainName, environmentCustomDomainRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['EnvironmentCustomDomainApi.editEnvironmentCustomDomain']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * The hostname a new custom domain of the environment must point to with a CNAME record. Returns 404 until the environment is deployed for the first time and has its router.
+         * @summary Get the CNAME target of the environment
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEnvironmentCustomDomainCnameTarget(environmentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentCnameTargetResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironmentCustomDomainCnameTarget(environmentId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['EnvironmentCustomDomainApi.getEnvironmentCustomDomainCnameTarget']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * List the custom domains of the environment. Each result is one domain name, with every route that serves it: a domain shared by several services is a single result. The items are the same as in the organization list. The list is not paginated. 
+         * @summary List environment custom domains
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listEnvironmentCustomDomain(environmentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationCustomDomainResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listEnvironmentCustomDomain(environmentId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['EnvironmentCustomDomainApi.listEnvironmentCustomDomain']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Run the checks of a custom domain creation or edit for several services, without saving anything. Returns every conflict, not only the first one. The services of the body are checked against each other as well as against the existing domains. It takes no lock: a later creation can still fail if the domains change meanwhile. A service outside the environment returns a 403. 
+         * @summary Validate a custom domain for several services
+         * @param {string} environmentId Environment ID
+         * @param {CustomDomainValidationRequest} customDomainValidationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async validateEnvironmentCustomDomain(environmentId: string, customDomainValidationRequest: CustomDomainValidationRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CustomDomainErrorsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.validateEnvironmentCustomDomain(environmentId, customDomainValidationRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['EnvironmentCustomDomainApi.validateEnvironmentCustomDomain']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * EnvironmentCustomDomainApi - factory interface
+ * @export
+ */
+export const EnvironmentCustomDomainApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = EnvironmentCustomDomainApiFp(configuration)
+    return {
+        /**
+         * Create a custom domain on several services of the environment at once: one custom domain and one `/` route per service, served by the service default port. If any service conflicts, nothing is created and the response lists every conflict. More than one service is refused with a 400 on an environment whose `routing_capabilities.can_share` is `false`. Nothing is deployed: redeploy the services listed in `impacted_services` to serve the domain. 
+         * @summary Create a custom domain for several services
+         * @param {string} environmentId Environment ID
+         * @param {EnvironmentCustomDomainRequest} environmentCustomDomainRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEnvironmentCustomDomain(environmentId: string, environmentCustomDomainRequest: EnvironmentCustomDomainRequest, options?: RawAxiosRequestConfig): AxiosPromise<EnvironmentCustomDomainResponse> {
+            return localVarFp.createEnvironmentCustomDomain(environmentId, environmentCustomDomainRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete every custom domain row of `domainName` in the environment, for every service routing it, with their routes. To remove the domain from one service only, use the delete endpoint of that service. Nothing is deployed: redeploy the services listed in `impacted_services` to apply the change. 
+         * @summary Delete a custom domain of several services
+         * @param {string} environmentId Environment ID
+         * @param {string} domainName The current name of the custom domain.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEnvironmentCustomDomain(environmentId: string, domainName: string, options?: RawAxiosRequestConfig): AxiosPromise<CustomDomainDeletionResponse> {
+            return localVarFp.deleteEnvironmentCustomDomain(environmentId, domainName, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Replace every custom domain row of `domainName` in the environment with the state of the body: * services not in the body lose their row and its routes; * services new in the body get a row and a `/` route; * kept services get the name, `generate_certificate` and `use_cdn` of the body. Renaming is allowed and is checked like a creation. If any service conflicts, nothing changes and the response lists every conflict. Nothing is deployed: redeploy the services listed in `impacted_services` to apply the change. 
+         * @summary Edit a custom domain of several services
+         * @param {string} environmentId Environment ID
+         * @param {string} domainName The current name of the custom domain.
+         * @param {EnvironmentCustomDomainRequest} environmentCustomDomainRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editEnvironmentCustomDomain(environmentId: string, domainName: string, environmentCustomDomainRequest: EnvironmentCustomDomainRequest, options?: RawAxiosRequestConfig): AxiosPromise<EnvironmentCustomDomainResponse> {
+            return localVarFp.editEnvironmentCustomDomain(environmentId, domainName, environmentCustomDomainRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * The hostname a new custom domain of the environment must point to with a CNAME record. Returns 404 until the environment is deployed for the first time and has its router.
+         * @summary Get the CNAME target of the environment
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironmentCustomDomainCnameTarget(environmentId: string, options?: RawAxiosRequestConfig): AxiosPromise<EnvironmentCnameTargetResponse> {
+            return localVarFp.getEnvironmentCustomDomainCnameTarget(environmentId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List the custom domains of the environment. Each result is one domain name, with every route that serves it: a domain shared by several services is a single result. The items are the same as in the organization list. The list is not paginated. 
+         * @summary List environment custom domains
+         * @param {string} environmentId Environment ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listEnvironmentCustomDomain(environmentId: string, options?: RawAxiosRequestConfig): AxiosPromise<OrganizationCustomDomainResponseList> {
+            return localVarFp.listEnvironmentCustomDomain(environmentId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Run the checks of a custom domain creation or edit for several services, without saving anything. Returns every conflict, not only the first one. The services of the body are checked against each other as well as against the existing domains. It takes no lock: a later creation can still fail if the domains change meanwhile. A service outside the environment returns a 403. 
+         * @summary Validate a custom domain for several services
+         * @param {string} environmentId Environment ID
+         * @param {CustomDomainValidationRequest} customDomainValidationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        validateEnvironmentCustomDomain(environmentId: string, customDomainValidationRequest: CustomDomainValidationRequest, options?: RawAxiosRequestConfig): AxiosPromise<CustomDomainErrorsResponse> {
+            return localVarFp.validateEnvironmentCustomDomain(environmentId, customDomainValidationRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * EnvironmentCustomDomainApi - object-oriented interface
+ * @export
+ * @class EnvironmentCustomDomainApi
+ * @extends {BaseAPI}
+ */
+export class EnvironmentCustomDomainApi extends BaseAPI {
+    /**
+     * Create a custom domain on several services of the environment at once: one custom domain and one `/` route per service, served by the service default port. If any service conflicts, nothing is created and the response lists every conflict. More than one service is refused with a 400 on an environment whose `routing_capabilities.can_share` is `false`. Nothing is deployed: redeploy the services listed in `impacted_services` to serve the domain. 
+     * @summary Create a custom domain for several services
+     * @param {string} environmentId Environment ID
+     * @param {EnvironmentCustomDomainRequest} environmentCustomDomainRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentCustomDomainApi
+     */
+    public createEnvironmentCustomDomain(environmentId: string, environmentCustomDomainRequest: EnvironmentCustomDomainRequest, options?: RawAxiosRequestConfig) {
+        return EnvironmentCustomDomainApiFp(this.configuration).createEnvironmentCustomDomain(environmentId, environmentCustomDomainRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete every custom domain row of `domainName` in the environment, for every service routing it, with their routes. To remove the domain from one service only, use the delete endpoint of that service. Nothing is deployed: redeploy the services listed in `impacted_services` to apply the change. 
+     * @summary Delete a custom domain of several services
+     * @param {string} environmentId Environment ID
+     * @param {string} domainName The current name of the custom domain.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentCustomDomainApi
+     */
+    public deleteEnvironmentCustomDomain(environmentId: string, domainName: string, options?: RawAxiosRequestConfig) {
+        return EnvironmentCustomDomainApiFp(this.configuration).deleteEnvironmentCustomDomain(environmentId, domainName, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Replace every custom domain row of `domainName` in the environment with the state of the body: * services not in the body lose their row and its routes; * services new in the body get a row and a `/` route; * kept services get the name, `generate_certificate` and `use_cdn` of the body. Renaming is allowed and is checked like a creation. If any service conflicts, nothing changes and the response lists every conflict. Nothing is deployed: redeploy the services listed in `impacted_services` to apply the change. 
+     * @summary Edit a custom domain of several services
+     * @param {string} environmentId Environment ID
+     * @param {string} domainName The current name of the custom domain.
+     * @param {EnvironmentCustomDomainRequest} environmentCustomDomainRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentCustomDomainApi
+     */
+    public editEnvironmentCustomDomain(environmentId: string, domainName: string, environmentCustomDomainRequest: EnvironmentCustomDomainRequest, options?: RawAxiosRequestConfig) {
+        return EnvironmentCustomDomainApiFp(this.configuration).editEnvironmentCustomDomain(environmentId, domainName, environmentCustomDomainRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The hostname a new custom domain of the environment must point to with a CNAME record. Returns 404 until the environment is deployed for the first time and has its router.
+     * @summary Get the CNAME target of the environment
+     * @param {string} environmentId Environment ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentCustomDomainApi
+     */
+    public getEnvironmentCustomDomainCnameTarget(environmentId: string, options?: RawAxiosRequestConfig) {
+        return EnvironmentCustomDomainApiFp(this.configuration).getEnvironmentCustomDomainCnameTarget(environmentId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List the custom domains of the environment. Each result is one domain name, with every route that serves it: a domain shared by several services is a single result. The items are the same as in the organization list. The list is not paginated. 
+     * @summary List environment custom domains
+     * @param {string} environmentId Environment ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentCustomDomainApi
+     */
+    public listEnvironmentCustomDomain(environmentId: string, options?: RawAxiosRequestConfig) {
+        return EnvironmentCustomDomainApiFp(this.configuration).listEnvironmentCustomDomain(environmentId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Run the checks of a custom domain creation or edit for several services, without saving anything. Returns every conflict, not only the first one. The services of the body are checked against each other as well as against the existing domains. It takes no lock: a later creation can still fail if the domains change meanwhile. A service outside the environment returns a 403. 
+     * @summary Validate a custom domain for several services
+     * @param {string} environmentId Environment ID
+     * @param {CustomDomainValidationRequest} customDomainValidationRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentCustomDomainApi
+     */
+    public validateEnvironmentCustomDomain(environmentId: string, customDomainValidationRequest: CustomDomainValidationRequest, options?: RawAxiosRequestConfig) {
+        return EnvironmentCustomDomainApiFp(this.configuration).validateEnvironmentCustomDomain(environmentId, customDomainValidationRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * EnvironmentDeploymentHistoryApi - axios parameter creator
  * @export
  */
@@ -61141,7 +62348,7 @@ export const HelmCustomDomainApiAxiosParamCreator = function (configuration?: Co
             };
         },
         /**
-         * Add a custom domain to this helm in order not to use qovery autogenerated domain
+         * Add a custom domain to this helm in order not to use qovery autogenerated domain. A conflict with another service returns every reason in `errors`.
          * @summary Add custom domain to the helm.
          * @param {string} helmId Helm ID
          * @param {CustomDomainRequest} [customDomainRequest] 
@@ -61186,7 +62393,7 @@ export const HelmCustomDomainApiAxiosParamCreator = function (configuration?: Co
             };
         },
         /**
-         * To delete an CustomDomain you must have the project user permission
+         * Remove the custom domain from this helm only, with its routes. Other services routing the same domain name keep it. To delete the domain for every service, use `deleteEnvironmentCustomDomain`. The project user permission is required.
          * @summary Delete a Custom Domain
          * @param {string} helmId Helm ID
          * @param {string} customDomainId Custom Domain ID
@@ -61231,7 +62438,7 @@ export const HelmCustomDomainApiAxiosParamCreator = function (configuration?: Co
             };
         },
         /**
-         * To edit a Custom Domain you must have the project user permission
+         * Edit a custom domain of the helm. The project user permission is required. When other services route the same domain name in the environment, a change of the name, `generate_certificate` or `use_cdn` applies to all of them. A conflict returns every reason in `errors`. Nothing is deployed: redeploy the services routing the domain to apply the change. 
          * @summary Edit a Custom Domain
          * @param {string} helmId Helm ID
          * @param {string} customDomainId Custom Domain ID
@@ -61365,6 +62572,47 @@ export const HelmCustomDomainApiAxiosParamCreator = function (configuration?: Co
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * List the domains of the helm, as shown on its settings page: its Qovery domain (`kind` `QOVERY`, read-only) and each custom domain it routes (`kind` `CUSTOM`). A custom domain also lists the other services routing it, so a client can tell removing this helm\'s route from deleting the domain. 
+         * @summary List the domains of the helm
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listHelmCustomDomainView: async (helmId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'helmId' is not null or undefined
+            assertParamExists('listHelmCustomDomainView', 'helmId', helmId)
+            const localVarPath = `/helm/{helmId}/customDomainView`
+                .replace(`{${"helmId"}}`, encodeURIComponent(String(helmId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -61389,7 +62637,7 @@ export const HelmCustomDomainApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Add a custom domain to this helm in order not to use qovery autogenerated domain
+         * Add a custom domain to this helm in order not to use qovery autogenerated domain. A conflict with another service returns every reason in `errors`.
          * @summary Add custom domain to the helm.
          * @param {string} helmId Helm ID
          * @param {CustomDomainRequest} [customDomainRequest] 
@@ -61403,7 +62651,7 @@ export const HelmCustomDomainApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * To delete an CustomDomain you must have the project user permission
+         * Remove the custom domain from this helm only, with its routes. Other services routing the same domain name keep it. To delete the domain for every service, use `deleteEnvironmentCustomDomain`. The project user permission is required.
          * @summary Delete a Custom Domain
          * @param {string} helmId Helm ID
          * @param {string} customDomainId Custom Domain ID
@@ -61417,7 +62665,7 @@ export const HelmCustomDomainApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * To edit a Custom Domain you must have the project user permission
+         * Edit a custom domain of the helm. The project user permission is required. When other services route the same domain name in the environment, a change of the name, `generate_certificate` or `use_cdn` applies to all of them. A conflict returns every reason in `errors`. Nothing is deployed: redeploy the services routing the domain to apply the change. 
          * @summary Edit a Custom Domain
          * @param {string} helmId Helm ID
          * @param {string} customDomainId Custom Domain ID
@@ -61458,6 +62706,19 @@ export const HelmCustomDomainApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['HelmCustomDomainApi.listHelmCustomDomain']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * List the domains of the helm, as shown on its settings page: its Qovery domain (`kind` `QOVERY`, read-only) and each custom domain it routes (`kind` `CUSTOM`). A custom domain also lists the other services routing it, so a client can tell removing this helm\'s route from deleting the domain. 
+         * @summary List the domains of the helm
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listHelmCustomDomainView(helmId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceDomainResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listHelmCustomDomainView(helmId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['HelmCustomDomainApi.listHelmCustomDomainView']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -61479,7 +62740,7 @@ export const HelmCustomDomainApiFactory = function (configuration?: Configuratio
             return localVarFp.checkHelmCustomDomain(helmId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Add a custom domain to this helm in order not to use qovery autogenerated domain
+         * Add a custom domain to this helm in order not to use qovery autogenerated domain. A conflict with another service returns every reason in `errors`.
          * @summary Add custom domain to the helm.
          * @param {string} helmId Helm ID
          * @param {CustomDomainRequest} [customDomainRequest] 
@@ -61490,7 +62751,7 @@ export const HelmCustomDomainApiFactory = function (configuration?: Configuratio
             return localVarFp.createHelmCustomDomain(helmId, customDomainRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * To delete an CustomDomain you must have the project user permission
+         * Remove the custom domain from this helm only, with its routes. Other services routing the same domain name keep it. To delete the domain for every service, use `deleteEnvironmentCustomDomain`. The project user permission is required.
          * @summary Delete a Custom Domain
          * @param {string} helmId Helm ID
          * @param {string} customDomainId Custom Domain ID
@@ -61501,7 +62762,7 @@ export const HelmCustomDomainApiFactory = function (configuration?: Configuratio
             return localVarFp.deleteHelmCustomDomain(helmId, customDomainId, options).then((request) => request(axios, basePath));
         },
         /**
-         * To edit a Custom Domain you must have the project user permission
+         * Edit a custom domain of the helm. The project user permission is required. When other services route the same domain name in the environment, a change of the name, `generate_certificate` or `use_cdn` applies to all of them. A conflict returns every reason in `errors`. Nothing is deployed: redeploy the services routing the domain to apply the change. 
          * @summary Edit a Custom Domain
          * @param {string} helmId Helm ID
          * @param {string} customDomainId Custom Domain ID
@@ -61533,6 +62794,16 @@ export const HelmCustomDomainApiFactory = function (configuration?: Configuratio
         listHelmCustomDomain(helmId: string, options?: RawAxiosRequestConfig): AxiosPromise<CustomDomainResponseList> {
             return localVarFp.listHelmCustomDomain(helmId, options).then((request) => request(axios, basePath));
         },
+        /**
+         * List the domains of the helm, as shown on its settings page: its Qovery domain (`kind` `QOVERY`, read-only) and each custom domain it routes (`kind` `CUSTOM`). A custom domain also lists the other services routing it, so a client can tell removing this helm\'s route from deleting the domain. 
+         * @summary List the domains of the helm
+         * @param {string} helmId Helm ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listHelmCustomDomainView(helmId: string, options?: RawAxiosRequestConfig): AxiosPromise<ServiceDomainResponseList> {
+            return localVarFp.listHelmCustomDomainView(helmId, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -61556,7 +62827,7 @@ export class HelmCustomDomainApi extends BaseAPI {
     }
 
     /**
-     * Add a custom domain to this helm in order not to use qovery autogenerated domain
+     * Add a custom domain to this helm in order not to use qovery autogenerated domain. A conflict with another service returns every reason in `errors`.
      * @summary Add custom domain to the helm.
      * @param {string} helmId Helm ID
      * @param {CustomDomainRequest} [customDomainRequest] 
@@ -61569,7 +62840,7 @@ export class HelmCustomDomainApi extends BaseAPI {
     }
 
     /**
-     * To delete an CustomDomain you must have the project user permission
+     * Remove the custom domain from this helm only, with its routes. Other services routing the same domain name keep it. To delete the domain for every service, use `deleteEnvironmentCustomDomain`. The project user permission is required.
      * @summary Delete a Custom Domain
      * @param {string} helmId Helm ID
      * @param {string} customDomainId Custom Domain ID
@@ -61582,7 +62853,7 @@ export class HelmCustomDomainApi extends BaseAPI {
     }
 
     /**
-     * To edit a Custom Domain you must have the project user permission
+     * Edit a custom domain of the helm. The project user permission is required. When other services route the same domain name in the environment, a change of the name, `generate_certificate` or `use_cdn` applies to all of them. A conflict returns every reason in `errors`. Nothing is deployed: redeploy the services routing the domain to apply the change. 
      * @summary Edit a Custom Domain
      * @param {string} helmId Helm ID
      * @param {string} customDomainId Custom Domain ID
@@ -61618,6 +62889,18 @@ export class HelmCustomDomainApi extends BaseAPI {
      */
     public listHelmCustomDomain(helmId: string, options?: RawAxiosRequestConfig) {
         return HelmCustomDomainApiFp(this.configuration).listHelmCustomDomain(helmId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List the domains of the helm, as shown on its settings page: its Qovery domain (`kind` `QOVERY`, read-only) and each custom domain it routes (`kind` `CUSTOM`). A custom domain also lists the other services routing it, so a client can tell removing this helm\'s route from deleting the domain. 
+     * @summary List the domains of the helm
+     * @param {string} helmId Helm ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelmCustomDomainApi
+     */
+    public listHelmCustomDomainView(helmId: string, options?: RawAxiosRequestConfig) {
+        return HelmCustomDomainApiFp(this.configuration).listHelmCustomDomainView(helmId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -71435,6 +72718,53 @@ export class OrganizationClusterLockApi extends BaseAPI {
 export const OrganizationCustomDomainApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Delete custom domains of several environments of the organization at once: all of them, or none. Each item deletes every row of the domain name in its environment, for every service routing it, with their routes. The caller needs the permission to manage each environment. An environment of another organization refuses the whole call with a 403, and nothing is deleted. Nothing is deployed: redeploy the services listed in `impacted_services` to apply the change. 
+         * @summary Delete custom domains of several environments
+         * @param {string} organizationId Organization ID
+         * @param {Array<CustomDomainBulkDeleteItemRequest>} customDomainBulkDeleteItemRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bulkDeleteOrganizationCustomDomain: async (organizationId: string, customDomainBulkDeleteItemRequest: Array<CustomDomainBulkDeleteItemRequest>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('bulkDeleteOrganizationCustomDomain', 'organizationId', organizationId)
+            // verify required parameter 'customDomainBulkDeleteItemRequest' is not null or undefined
+            assertParamExists('bulkDeleteOrganizationCustomDomain', 'customDomainBulkDeleteItemRequest', customDomainBulkDeleteItemRequest)
+            const localVarPath = `/organization/{organizationId}/customDomain/bulkDelete`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(customDomainBulkDeleteItemRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * List the custom domains of every environment of the organization. Only organization admins can call it. Each result is one domain name of one environment, with every route that serves it: a domain shared by several services of an environment is a single result. Results are sorted by project name, environment name, environment id, then domain. A page never splits a domain. 
          * @summary List organization custom domains
          * @param {string} organizationId Organization ID
@@ -71511,6 +72841,20 @@ export const OrganizationCustomDomainApiFp = function(configuration?: Configurat
     const localVarAxiosParamCreator = OrganizationCustomDomainApiAxiosParamCreator(configuration)
     return {
         /**
+         * Delete custom domains of several environments of the organization at once: all of them, or none. Each item deletes every row of the domain name in its environment, for every service routing it, with their routes. The caller needs the permission to manage each environment. An environment of another organization refuses the whole call with a 403, and nothing is deleted. Nothing is deployed: redeploy the services listed in `impacted_services` to apply the change. 
+         * @summary Delete custom domains of several environments
+         * @param {string} organizationId Organization ID
+         * @param {Array<CustomDomainBulkDeleteItemRequest>} customDomainBulkDeleteItemRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async bulkDeleteOrganizationCustomDomain(organizationId: string, customDomainBulkDeleteItemRequest: Array<CustomDomainBulkDeleteItemRequest>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CustomDomainDeletionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.bulkDeleteOrganizationCustomDomain(organizationId, customDomainBulkDeleteItemRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrganizationCustomDomainApi.bulkDeleteOrganizationCustomDomain']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * List the custom domains of every environment of the organization. Only organization admins can call it. Each result is one domain name of one environment, with every route that serves it: a domain shared by several services of an environment is a single result. Results are sorted by project name, environment name, environment id, then domain. A page never splits a domain. 
          * @summary List organization custom domains
          * @param {string} organizationId Organization ID
@@ -71539,6 +72883,17 @@ export const OrganizationCustomDomainApiFactory = function (configuration?: Conf
     const localVarFp = OrganizationCustomDomainApiFp(configuration)
     return {
         /**
+         * Delete custom domains of several environments of the organization at once: all of them, or none. Each item deletes every row of the domain name in its environment, for every service routing it, with their routes. The caller needs the permission to manage each environment. An environment of another organization refuses the whole call with a 403, and nothing is deleted. Nothing is deployed: redeploy the services listed in `impacted_services` to apply the change. 
+         * @summary Delete custom domains of several environments
+         * @param {string} organizationId Organization ID
+         * @param {Array<CustomDomainBulkDeleteItemRequest>} customDomainBulkDeleteItemRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bulkDeleteOrganizationCustomDomain(organizationId: string, customDomainBulkDeleteItemRequest: Array<CustomDomainBulkDeleteItemRequest>, options?: RawAxiosRequestConfig): AxiosPromise<CustomDomainDeletionResponse> {
+            return localVarFp.bulkDeleteOrganizationCustomDomain(organizationId, customDomainBulkDeleteItemRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * List the custom domains of every environment of the organization. Only organization admins can call it. Each result is one domain name of one environment, with every route that serves it: a domain shared by several services of an environment is a single result. Results are sorted by project name, environment name, environment id, then domain. A page never splits a domain. 
          * @summary List organization custom domains
          * @param {string} organizationId Organization ID
@@ -71563,6 +72918,19 @@ export const OrganizationCustomDomainApiFactory = function (configuration?: Conf
  * @extends {BaseAPI}
  */
 export class OrganizationCustomDomainApi extends BaseAPI {
+    /**
+     * Delete custom domains of several environments of the organization at once: all of them, or none. Each item deletes every row of the domain name in its environment, for every service routing it, with their routes. The caller needs the permission to manage each environment. An environment of another organization refuses the whole call with a 403, and nothing is deleted. Nothing is deployed: redeploy the services listed in `impacted_services` to apply the change. 
+     * @summary Delete custom domains of several environments
+     * @param {string} organizationId Organization ID
+     * @param {Array<CustomDomainBulkDeleteItemRequest>} customDomainBulkDeleteItemRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationCustomDomainApi
+     */
+    public bulkDeleteOrganizationCustomDomain(organizationId: string, customDomainBulkDeleteItemRequest: Array<CustomDomainBulkDeleteItemRequest>, options?: RawAxiosRequestConfig) {
+        return OrganizationCustomDomainApiFp(this.configuration).bulkDeleteOrganizationCustomDomain(organizationId, customDomainBulkDeleteItemRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * List the custom domains of every environment of the organization. Only organization admins can call it. Each result is one domain name of one environment, with every route that serves it: a domain shared by several services of an environment is a single result. Results are sorted by project name, environment name, environment id, then domain. A page never splits a domain. 
      * @summary List organization custom domains
