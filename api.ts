@@ -27323,7 +27323,7 @@ export interface SecretResponseList {
     'results'?: Array<Secret>;
 }
 /**
- * Cloud credential of the organization that the cluster runs on, of the same provider as the cluster. This operation only takes and returns its id.
+ * Cloud credential of the organization that the cluster runs on, of the same provider as the cluster; an on-premise credential for the on-premise providers. This operation only takes and returns its id.
  * @export
  * @interface SelfManagedClusterCredentials
  */
@@ -27385,7 +27385,45 @@ export interface SelfManagedClusterPlatformSelection {
     'managedConfig'?: { [key: string]: { [key: string]: any; }; };
 }
 /**
- * Default registry of the cluster, derived from its cloud credential and region: ECR on AWS, Artifact Registry on GCP, Scaleway Container Registry on Scaleway.
+ * Credentials of the registry, checked before anything is created when Qovery can reach the registry; a refused login answers 400. Omit the object for a registry without credentials.
+ * @export
+ * @interface SelfManagedClusterRegistryCredentialsRequest
+ */
+export interface SelfManagedClusterRegistryCredentialsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SelfManagedClusterRegistryCredentialsRequest
+     */
+    'username': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SelfManagedClusterRegistryCredentialsRequest
+     */
+    'password': string;
+}
+/**
+ * Generic registry of an on-premise cluster, created as the cluster\'s own registry. Only for the on-premise providers: it answers 400 on AWS, GCP and SCW, whose registry is derived from the cloud credential. Without it the cluster gets an empty generic registry, to configure with the container registry API before the first application deployment. An unknown key next to `url` and `credentials` answers 400.
+ * @export
+ * @interface SelfManagedClusterRegistryRequest
+ */
+export interface SelfManagedClusterRegistryRequest {
+    /**
+     * URL of the registry: `http` or `https` scheme, host and optional port only, without user info, path, query or fragment, and not localhost.
+     * @type {string}
+     * @memberof SelfManagedClusterRegistryRequest
+     */
+    'url': string;
+    /**
+     * 
+     * @type {SelfManagedClusterRegistryCredentialsRequest}
+     * @memberof SelfManagedClusterRegistryRequest
+     */
+    'credentials'?: SelfManagedClusterRegistryCredentialsRequest;
+}
+/**
+ * Registry of the cluster. On AWS, GCP and Scaleway it is derived from the cloud credential and region: ECR, Artifact Registry or Scaleway Container Registry. On an on-premise provider it is the generic registry given in the request, or an empty generic registry.
  * @export
  * @interface SelfManagedClusterRegistryResponse
  */
@@ -27424,13 +27462,13 @@ export interface SelfManagedClusterRequest {
      */
     'production'?: boolean;
     /**
-     * Cloud provider of the cluster. The cluster kind is EKS_SELF_MANAGED on AWS, GKE_SELF_MANAGED on GCP and SCW_SELF_MANAGED on SCW.
+     * Cloud provider of the cluster. The cluster kind is EKS_SELF_MANAGED on AWS, GKE_SELF_MANAGED on GCP and SCW_SELF_MANAGED on SCW. ON_PREMISE, HETZNER, OVH, CIVO, ORACLE and IBM are the on-premise providers, for any other Kubernetes: the cluster kind is SELF_MANAGED. They are not generally available yet and answer 400 outside a short list of Qovery test organizations.
      * @type {string}
      * @memberof SelfManagedClusterRequest
      */
     'provider': SelfManagedClusterRequestProviderEnum;
     /**
-     * Region of the provider known to Qovery; a zone such as `fr-par-1` on Scaleway.
+     * Region of the provider known to Qovery; a zone such as `fr-par-1` on Scaleway; `on-premise` for the on-premise providers.
      * @type {string}
      * @memberof SelfManagedClusterRequest
      */
@@ -27453,12 +27491,24 @@ export interface SelfManagedClusterRequest {
      * @memberof SelfManagedClusterRequest
      */
     'clusterInputs'?: { [key: string]: { [key: string]: string; }; };
+    /**
+     * 
+     * @type {SelfManagedClusterRegistryRequest}
+     * @memberof SelfManagedClusterRequest
+     */
+    'registry'?: SelfManagedClusterRegistryRequest;
 }
 
 export const SelfManagedClusterRequestProviderEnum = {
     AWS: 'AWS',
     GCP: 'GCP',
-    SCW: 'SCW'
+    SCW: 'SCW',
+    ON_PREMISE: 'ON_PREMISE',
+    HETZNER: 'HETZNER',
+    OVH: 'OVH',
+    CIVO: 'CIVO',
+    ORACLE: 'ORACLE',
+    IBM: 'IBM'
 } as const;
 
 export type SelfManagedClusterRequestProviderEnum = typeof SelfManagedClusterRequestProviderEnum[keyof typeof SelfManagedClusterRequestProviderEnum];
@@ -44821,7 +44871,7 @@ export const ClustersApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Creates a self-managed cluster on an existing AWS, GCP or Scaleway cloud credential of the organization. The organization\'s plan must include self-managed clusters, otherwise the call answers 403. On AWS the credential only needs ECR permissions for the cluster itself, including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the credential whatever the cluster region; features that call other AWS services with the credential, such as managed databases or Terraform services using the cluster credentials, need more. Without `platform.templateKey` and `platform.templateVersion`, Qovery selects its self-managed platform template release and the response returns it: `\"platform\": {}` gives that release with its default configuration. Without `clusterInputs`, the cluster has no cluster inputs. The credential, including its registry access in the cluster region, and the platform configuration are checked before anything is created. One transaction then writes the cluster, its Qovery DNS and build providers, its default registry derived from the credential (ECR on AWS, Artifact Registry on GCP, Scaleway Container Registry on Scaleway), its initial deployment status, its platform configuration and its Qovery Operator enrollment. Install the Operator next with the cluster\'s Operator bootstrap.
+         * Creates a self-managed cluster on an existing cloud credential of the organization: AWS, GCP or Scaleway, or an on-premise credential for any other Kubernetes (`provider` `ON_PREMISE`, `HETZNER`, `OVH`, `CIVO`, `ORACLE` or `IBM`, in region `on-premise`). The on-premise providers are not generally available yet: they are accepted for a short list of Qovery test organizations and answer 400 for the others. The organization\'s plan is not checked. On AWS the credential only needs ECR permissions for the cluster itself, including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the credential whatever the cluster region; features that call other AWS services with the credential, such as managed databases or Terraform services using the cluster credentials, need more. Without `platform.templateKey` and `platform.templateVersion`, Qovery selects its self-managed platform template release and the response returns it: `\"platform\": {}` gives that release with its default configuration. Without `clusterInputs`, the cluster has no cluster inputs. The credential, including its registry access in the cluster region, and the platform configuration are checked before anything is created. One transaction then writes the cluster, its Qovery DNS and build providers, its default registry derived from the credential (ECR on AWS, Artifact Registry on GCP, Scaleway Container Registry on Scaleway), its initial deployment status, its platform configuration and its Qovery Operator enrollment. No registry can be derived from an on-premise credential: the cluster gets the generic registry given in `registry`, or an empty generic registry to configure with the container registry API before the first application deployment. Install the Operator next with the cluster\'s Operator bootstrap.
          * @summary Create a self-managed cluster run by the Qovery Operator
          * @param {string} organizationId Organization ID
          * @param {SelfManagedClusterRequest} selfManagedClusterRequest 
@@ -46687,7 +46737,7 @@ export const ClustersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates a self-managed cluster on an existing AWS, GCP or Scaleway cloud credential of the organization. The organization\'s plan must include self-managed clusters, otherwise the call answers 403. On AWS the credential only needs ECR permissions for the cluster itself, including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the credential whatever the cluster region; features that call other AWS services with the credential, such as managed databases or Terraform services using the cluster credentials, need more. Without `platform.templateKey` and `platform.templateVersion`, Qovery selects its self-managed platform template release and the response returns it: `\"platform\": {}` gives that release with its default configuration. Without `clusterInputs`, the cluster has no cluster inputs. The credential, including its registry access in the cluster region, and the platform configuration are checked before anything is created. One transaction then writes the cluster, its Qovery DNS and build providers, its default registry derived from the credential (ECR on AWS, Artifact Registry on GCP, Scaleway Container Registry on Scaleway), its initial deployment status, its platform configuration and its Qovery Operator enrollment. Install the Operator next with the cluster\'s Operator bootstrap.
+         * Creates a self-managed cluster on an existing cloud credential of the organization: AWS, GCP or Scaleway, or an on-premise credential for any other Kubernetes (`provider` `ON_PREMISE`, `HETZNER`, `OVH`, `CIVO`, `ORACLE` or `IBM`, in region `on-premise`). The on-premise providers are not generally available yet: they are accepted for a short list of Qovery test organizations and answer 400 for the others. The organization\'s plan is not checked. On AWS the credential only needs ECR permissions for the cluster itself, including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the credential whatever the cluster region; features that call other AWS services with the credential, such as managed databases or Terraform services using the cluster credentials, need more. Without `platform.templateKey` and `platform.templateVersion`, Qovery selects its self-managed platform template release and the response returns it: `\"platform\": {}` gives that release with its default configuration. Without `clusterInputs`, the cluster has no cluster inputs. The credential, including its registry access in the cluster region, and the platform configuration are checked before anything is created. One transaction then writes the cluster, its Qovery DNS and build providers, its default registry derived from the credential (ECR on AWS, Artifact Registry on GCP, Scaleway Container Registry on Scaleway), its initial deployment status, its platform configuration and its Qovery Operator enrollment. No registry can be derived from an on-premise credential: the cluster gets the generic registry given in `registry`, or an empty generic registry to configure with the container registry API before the first application deployment. Install the Operator next with the cluster\'s Operator bootstrap.
          * @summary Create a self-managed cluster run by the Qovery Operator
          * @param {string} organizationId Organization ID
          * @param {SelfManagedClusterRequest} selfManagedClusterRequest 
@@ -47257,7 +47307,7 @@ export const ClustersApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.createCluster(organizationId, clusterRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates a self-managed cluster on an existing AWS, GCP or Scaleway cloud credential of the organization. The organization\'s plan must include self-managed clusters, otherwise the call answers 403. On AWS the credential only needs ECR permissions for the cluster itself, including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the credential whatever the cluster region; features that call other AWS services with the credential, such as managed databases or Terraform services using the cluster credentials, need more. Without `platform.templateKey` and `platform.templateVersion`, Qovery selects its self-managed platform template release and the response returns it: `\"platform\": {}` gives that release with its default configuration. Without `clusterInputs`, the cluster has no cluster inputs. The credential, including its registry access in the cluster region, and the platform configuration are checked before anything is created. One transaction then writes the cluster, its Qovery DNS and build providers, its default registry derived from the credential (ECR on AWS, Artifact Registry on GCP, Scaleway Container Registry on Scaleway), its initial deployment status, its platform configuration and its Qovery Operator enrollment. Install the Operator next with the cluster\'s Operator bootstrap.
+         * Creates a self-managed cluster on an existing cloud credential of the organization: AWS, GCP or Scaleway, or an on-premise credential for any other Kubernetes (`provider` `ON_PREMISE`, `HETZNER`, `OVH`, `CIVO`, `ORACLE` or `IBM`, in region `on-premise`). The on-premise providers are not generally available yet: they are accepted for a short list of Qovery test organizations and answer 400 for the others. The organization\'s plan is not checked. On AWS the credential only needs ECR permissions for the cluster itself, including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the credential whatever the cluster region; features that call other AWS services with the credential, such as managed databases or Terraform services using the cluster credentials, need more. Without `platform.templateKey` and `platform.templateVersion`, Qovery selects its self-managed platform template release and the response returns it: `\"platform\": {}` gives that release with its default configuration. Without `clusterInputs`, the cluster has no cluster inputs. The credential, including its registry access in the cluster region, and the platform configuration are checked before anything is created. One transaction then writes the cluster, its Qovery DNS and build providers, its default registry derived from the credential (ECR on AWS, Artifact Registry on GCP, Scaleway Container Registry on Scaleway), its initial deployment status, its platform configuration and its Qovery Operator enrollment. No registry can be derived from an on-premise credential: the cluster gets the generic registry given in `registry`, or an empty generic registry to configure with the container registry API before the first application deployment. Install the Operator next with the cluster\'s Operator bootstrap.
          * @summary Create a self-managed cluster run by the Qovery Operator
          * @param {string} organizationId Organization ID
          * @param {SelfManagedClusterRequest} selfManagedClusterRequest 
@@ -47718,7 +47768,7 @@ export class ClustersApi extends BaseAPI {
     }
 
     /**
-     * Creates a self-managed cluster on an existing AWS, GCP or Scaleway cloud credential of the organization. The organization\'s plan must include self-managed clusters, otherwise the call answers 403. On AWS the credential only needs ECR permissions for the cluster itself, including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the credential whatever the cluster region; features that call other AWS services with the credential, such as managed databases or Terraform services using the cluster credentials, need more. Without `platform.templateKey` and `platform.templateVersion`, Qovery selects its self-managed platform template release and the response returns it: `\"platform\": {}` gives that release with its default configuration. Without `clusterInputs`, the cluster has no cluster inputs. The credential, including its registry access in the cluster region, and the platform configuration are checked before anything is created. One transaction then writes the cluster, its Qovery DNS and build providers, its default registry derived from the credential (ECR on AWS, Artifact Registry on GCP, Scaleway Container Registry on Scaleway), its initial deployment status, its platform configuration and its Qovery Operator enrollment. Install the Operator next with the cluster\'s Operator bootstrap.
+     * Creates a self-managed cluster on an existing cloud credential of the organization: AWS, GCP or Scaleway, or an on-premise credential for any other Kubernetes (`provider` `ON_PREMISE`, `HETZNER`, `OVH`, `CIVO`, `ORACLE` or `IBM`, in region `on-premise`). The on-premise providers are not generally available yet: they are accepted for a short list of Qovery test organizations and answer 400 for the others. The organization\'s plan is not checked. On AWS the credential only needs ECR permissions for the cluster itself, including `ecr:DescribeRepositories` in `us-east-1`, which Qovery calls to check the credential whatever the cluster region; features that call other AWS services with the credential, such as managed databases or Terraform services using the cluster credentials, need more. Without `platform.templateKey` and `platform.templateVersion`, Qovery selects its self-managed platform template release and the response returns it: `\"platform\": {}` gives that release with its default configuration. Without `clusterInputs`, the cluster has no cluster inputs. The credential, including its registry access in the cluster region, and the platform configuration are checked before anything is created. One transaction then writes the cluster, its Qovery DNS and build providers, its default registry derived from the credential (ECR on AWS, Artifact Registry on GCP, Scaleway Container Registry on Scaleway), its initial deployment status, its platform configuration and its Qovery Operator enrollment. No registry can be derived from an on-premise credential: the cluster gets the generic registry given in `registry`, or an empty generic registry to configure with the container registry API before the first application deployment. Install the Operator next with the cluster\'s Operator bootstrap.
      * @summary Create a self-managed cluster run by the Qovery Operator
      * @param {string} organizationId Organization ID
      * @param {SelfManagedClusterRequest} selfManagedClusterRequest 
