@@ -126,6 +126,541 @@ export interface AccountInfoEditRequest {
     'communication_email'?: string;
 }
 /**
+ * Whether Qovery carried out the action (ALLOWED) or refused it (DENIED). A refusal by policy (401) and a refusal by role permissions (403) are both DENIED.
+ * @export
+ * @enum {string}
+ */
+
+export const AgentActionOutcome = {
+    ALLOWED: 'ALLOWED',
+    DENIED: 'DENIED'
+} as const;
+
+export type AgentActionOutcome = typeof AgentActionOutcome[keyof typeof AgentActionOutcome];
+
+
+/**
+ * 
+ * @export
+ * @interface AgentActionsByType
+ */
+export interface AgentActionsByType {
+    /**
+     * The audit event type, as in `OrganizationEventType`.
+     * @type {string}
+     * @memberof AgentActionsByType
+     */
+    'event': string;
+    /**
+     * The audit target type, as in `OrganizationEventTargetType`.
+     * @type {string}
+     * @memberof AgentActionsByType
+     */
+    'target_type': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgentActionsByType
+     */
+    'count': number;
+    /**
+     * How many of them were refused.
+     * @type {number}
+     * @memberof AgentActionsByType
+     */
+    'denied': number;
+}
+/**
+ * 
+ * @export
+ * @interface AgentActivityByMember
+ */
+export interface AgentActivityByMember {
+    /**
+     * 
+     * @type {AgentActorKind}
+     * @memberof AgentActivityByMember
+     */
+    'actor_kind': AgentActorKind;
+    /**
+     * The policy token\'s id when `actor_kind` is POLICY_TOKEN and the token is known. Null otherwise.
+     * @type {string}
+     * @memberof AgentActivityByMember
+     */
+    'policy_token_id'?: string | null;
+    /**
+     * The member\'s id, as returned by \"List organization members\". Null for an actor that loaded no skill in the range, such as a policy token.
+     * @type {string}
+     * @memberof AgentActivityByMember
+     */
+    'user_sub'?: string | null;
+    /**
+     * The username the audit log records for the actor.
+     * @type {string}
+     * @memberof AgentActivityByMember
+     */
+    'user_name': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgentActivityByMember
+     */
+    'skill_loads': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgentActivityByMember
+     */
+    'actions': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgentActivityByMember
+     */
+    'denials': number;
+    /**
+     * The member\'s most used skills, at most 3, most used first.
+     * @type {Array<string>}
+     * @memberof AgentActivityByMember
+     */
+    'top_skills': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentActivityByMember
+     */
+    'last_activity_at': string;
+}
+
+
+/**
+ * One policy token\'s activity, grouped by token id so a renamed token keeps one entry.
+ * @export
+ * @interface AgentActivityByPolicyToken
+ */
+export interface AgentActivityByPolicyToken {
+    /**
+     * The token\'s id. Null groups older role refusals recorded before refusals named the token: a policy token, but not which one.
+     * @type {string}
+     * @memberof AgentActivityByPolicyToken
+     */
+    'policy_token_id'?: string | null;
+    /**
+     * The token\'s current name, or its last audited name when `deleted` is true. Null when unknown.
+     * @type {string}
+     * @memberof AgentActivityByPolicyToken
+     */
+    'token_name'?: string | null;
+    /**
+     * Whether the token no longer exists.
+     * @type {boolean}
+     * @memberof AgentActivityByPolicyToken
+     */
+    'deleted': boolean;
+    /**
+     * The token\'s current role. Null when the token is deleted or unknown.
+     * @type {string}
+     * @memberof AgentActivityByPolicyToken
+     */
+    'role_id'?: string | null;
+    /**
+     * The name of the token\'s current role. Null when the token is deleted or unknown.
+     * @type {string}
+     * @memberof AgentActivityByPolicyToken
+     */
+    'role_name'?: string | null;
+    /**
+     * When the token expires. Null when it never expires, or when it is deleted or unknown.
+     * @type {string}
+     * @memberof AgentActivityByPolicyToken
+     */
+    'expires_at'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgentActivityByPolicyToken
+     */
+    'skill_loads': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgentActivityByPolicyToken
+     */
+    'actions': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgentActivityByPolicyToken
+     */
+    'denials': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentActivityByPolicyToken
+     */
+    'last_activity_at': string;
+    /**
+     * The token\'s most frequent actions, at most 3, most frequent first.
+     * @type {Array<AgentActionsByType>}
+     * @memberof AgentActivityByPolicyToken
+     */
+    'top_actions': Array<AgentActionsByType>;
+    /**
+     * The token\'s most used skills, at most 3, most used first.
+     * @type {Array<string>}
+     * @memberof AgentActivityByPolicyToken
+     */
+    'top_skills': Array<string>;
+    /**
+     * The token\'s actions per bucket of the requested size, oldest first, only for buckets where it acted. Filled when `bucket` is DAY, or when `policyTokenId` is set (so HOUR buckets need `policyTokenId`). Empty otherwise.
+     * @type {Array<AgentActivityTokenPoint>}
+     * @memberof AgentActivityByPolicyToken
+     */
+    'timeline': Array<AgentActivityTokenPoint>;
+}
+/**
+ * 
+ * @export
+ * @interface AgentActivityBySkill
+ */
+export interface AgentActivityBySkill {
+    /**
+     * Null groups the agent actions that name no skill: MCP tool calls and API calls made without a skill user agent, such as by a policy token.
+     * @type {string}
+     * @memberof AgentActivityBySkill
+     */
+    'skill_name'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgentActivityBySkill
+     */
+    'loads': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgentActivityBySkill
+     */
+    'actions': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgentActivityBySkill
+     */
+    'denials': number;
+    /**
+     * Distinct members with activity on this skill.
+     * @type {number}
+     * @memberof AgentActivityBySkill
+     */
+    'members': number;
+}
+/**
+ * What this view can and cannot see.
+ * @export
+ * @interface AgentActivityCoverage
+ */
+export interface AgentActivityCoverage {
+    /**
+     * The sources the view is built from.
+     * @type {Array<AgentActivitySource>}
+     * @memberof AgentActivityCoverage
+     */
+    'sources': Array<AgentActivitySource>;
+    /**
+     * The coverage limit, in plain words, to show next to the data.
+     * @type {string}
+     * @memberof AgentActivityCoverage
+     */
+    'note': string;
+}
+/**
+ * One agent action, as the audit log records it. No request content.
+ * @export
+ * @interface AgentActivityEntry
+ */
+export interface AgentActivityEntry {
+    /**
+     * 
+     * @type {AgentActorKind}
+     * @memberof AgentActivityEntry
+     */
+    'actor_kind': AgentActorKind;
+    /**
+     * The policy token\'s id when `actor_kind` is POLICY_TOKEN and the token is known. Null otherwise.
+     * @type {string}
+     * @memberof AgentActivityEntry
+     */
+    'policy_token_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentActivityEntry
+     */
+    'at': string;
+    /**
+     * The member\'s id. Null when the actor loaded no skill in the range, such as a policy token.
+     * @type {string}
+     * @memberof AgentActivityEntry
+     */
+    'user_sub'?: string | null;
+    /**
+     * The username the audit log records for the actor.
+     * @type {string}
+     * @memberof AgentActivityEntry
+     */
+    'user_name': string;
+    /**
+     * Where the action comes from: SKILL_API_ACTION, MCP_TOOL_CALL, POLICY_DENIAL or POLICY_TOKEN_API_ACTION. Skill loads are counted, never listed here, so SKILL_LOAD does not appear.
+     * @type {AgentActivitySource}
+     * @memberof AgentActivityEntry
+     */
+    'source': AgentActivitySource;
+    /**
+     * The skill named in the user agent. Null when the action names none.
+     * @type {string}
+     * @memberof AgentActivityEntry
+     */
+    'skill_name'?: string | null;
+    /**
+     * The audit event type, as in `OrganizationEventType`.
+     * @type {string}
+     * @memberof AgentActivityEntry
+     */
+    'event': string;
+    /**
+     * The audit target type, as in `OrganizationEventTargetType`.
+     * @type {string}
+     * @memberof AgentActivityEntry
+     */
+    'target_type': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentActivityEntry
+     */
+    'target_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentActivityEntry
+     */
+    'project_name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentActivityEntry
+     */
+    'environment_name'?: string | null;
+    /**
+     * 
+     * @type {AgentActionOutcome}
+     * @memberof AgentActivityEntry
+     */
+    'outcome': AgentActionOutcome;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface AgentActivityPoint
+ */
+export interface AgentActivityPoint {
+    /**
+     * Start of the hour or day. Buckets are cut in UTC; empty buckets are omitted.
+     * @type {string}
+     * @memberof AgentActivityPoint
+     */
+    'start': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgentActivityPoint
+     */
+    'skill_loads': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgentActivityPoint
+     */
+    'actions': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgentActivityPoint
+     */
+    'denials': number;
+}
+/**
+ * 
+ * @export
+ * @interface AgentActivityResponse
+ */
+export interface AgentActivityResponse {
+    /**
+     * Start of the range actually used, after defaults.
+     * @type {string}
+     * @memberof AgentActivityResponse
+     */
+    'from': string;
+    /**
+     * End of the range actually used, after defaults.
+     * @type {string}
+     * @memberof AgentActivityResponse
+     */
+    'to': string;
+    /**
+     * 
+     * @type {SkillUsageBucket}
+     * @memberof AgentActivityResponse
+     */
+    'bucket': SkillUsageBucket;
+    /**
+     * 
+     * @type {AgentActivityCoverage}
+     * @memberof AgentActivityResponse
+     */
+    'coverage': AgentActivityCoverage;
+    /**
+     * 
+     * @type {AgentActivityTotals}
+     * @memberof AgentActivityResponse
+     */
+    'totals': AgentActivityTotals;
+    /**
+     * Activity per hour or per day, oldest first. Buckets are cut in UTC; empty buckets are omitted.
+     * @type {Array<AgentActivityPoint>}
+     * @memberof AgentActivityResponse
+     */
+    'timeline': Array<AgentActivityPoint>;
+    /**
+     * Agent actions per audit event and target type, most frequent first, at most 200 rows.
+     * @type {Array<AgentActionsByType>}
+     * @memberof AgentActivityResponse
+     */
+    'actions_by_type': Array<AgentActionsByType>;
+    /**
+     * Activity per member, most active first, at most 500 rows.
+     * @type {Array<AgentActivityByMember>}
+     * @memberof AgentActivityResponse
+     */
+    'by_member': Array<AgentActivityByMember>;
+    /**
+     * Activity per skill, most active first, at most 100 rows.
+     * @type {Array<AgentActivityBySkill>}
+     * @memberof AgentActivityResponse
+     */
+    'by_skill': Array<AgentActivityBySkill>;
+    /**
+     * Activity per policy token, most active first, at most 100 rows. Always empty on `getMyAgentActivity`.
+     * @type {Array<AgentActivityByPolicyToken>}
+     * @memberof AgentActivityResponse
+     */
+    'by_policy_token': Array<AgentActivityByPolicyToken>;
+    /**
+     * The 100 most recent agent actions, newest first.
+     * @type {Array<AgentActivityEntry>}
+     * @memberof AgentActivityResponse
+     */
+    'recent': Array<AgentActivityEntry>;
+}
+
+
+/**
+ * Where agent activity comes from. SKILL_LOAD: a skill an agent loaded (agent loads only). SKILL_API_ACTION: an audited API call made with the `QoverySkill/<skill>` user agent. MCP_TOOL_CALL: a tool call through the Qovery MCP server. POLICY_DENIAL: a request refused by a policy token\'s policy (401), or by role permissions (403) for a call made from a skill or by a policy token. POLICY_TOKEN_API_ACTION: an audited call made by a policy token without a skill user agent, such as a script, a CI job or an agent\'s own HTTP client.
+ * @export
+ * @enum {string}
+ */
+
+export const AgentActivitySource = {
+    SKILL_LOAD: 'SKILL_LOAD',
+    SKILL_API_ACTION: 'SKILL_API_ACTION',
+    MCP_TOOL_CALL: 'MCP_TOOL_CALL',
+    POLICY_DENIAL: 'POLICY_DENIAL',
+    POLICY_TOKEN_API_ACTION: 'POLICY_TOKEN_API_ACTION'
+} as const;
+
+export type AgentActivitySource = typeof AgentActivitySource[keyof typeof AgentActivitySource];
+
+
+/**
+ * 
+ * @export
+ * @interface AgentActivityTokenPoint
+ */
+export interface AgentActivityTokenPoint {
+    /**
+     * Start of the hour or day. Buckets are cut in UTC; empty buckets are omitted.
+     * @type {string}
+     * @memberof AgentActivityTokenPoint
+     */
+    'start': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgentActivityTokenPoint
+     */
+    'actions': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgentActivityTokenPoint
+     */
+    'denials': number;
+}
+/**
+ * 
+ * @export
+ * @interface AgentActivityTotals
+ */
+export interface AgentActivityTotals {
+    /**
+     * Skills loaded by agents.
+     * @type {number}
+     * @memberof AgentActivityTotals
+     */
+    'skill_loads': number;
+    /**
+     * Agent actions, allowed and denied.
+     * @type {number}
+     * @memberof AgentActivityTotals
+     */
+    'actions': number;
+    /**
+     * Agent actions that were refused.
+     * @type {number}
+     * @memberof AgentActivityTotals
+     */
+    'denials': number;
+    /**
+     * Distinct actors with any activity, policy tokens included.
+     * @type {number}
+     * @memberof AgentActivityTotals
+     */
+    'members': number;
+    /**
+     * Distinct policy tokens with any activity.
+     * @type {number}
+     * @memberof AgentActivityTotals
+     */
+    'policy_tokens': number;
+}
+/**
+ * Who acted. MEMBER: a person, or their agent on their credentials. POLICY_TOKEN: an organization policy token.
+ * @export
+ * @enum {string}
+ */
+
+export const AgentActorKind = {
+    MEMBER: 'MEMBER',
+    POLICY_TOKEN: 'POLICY_TOKEN'
+} as const;
+
+export type AgentActorKind = typeof AgentActorKind[keyof typeof AgentActorKind];
+
+
+/**
  * Where a run executes. IN_PLACE deploys the workflow in the environment it belongs to, and is the default. CLONE_ENVIRONMENT gives each run a throwaway copy of the whole environment, which is the only mode that isolates concurrent runs from each other.
  * @export
  * @enum {string}
@@ -24315,6 +24850,7 @@ export const OrganizationEventSubTargetType = {
     POLICY_API_TOKEN: 'POLICY_API_TOKEN',
     REMOTE_ACCESS: 'REMOTE_ACCESS',
     SECRET: 'SECRET',
+    SKILL_PRESET: 'SKILL_PRESET',
     SSO: 'SSO',
     TERRAFORM: 'TERRAFORM',
     TOOL_CALL: 'TOOL_CALL',
@@ -24446,7 +24982,10 @@ export const OrganizationEventType = {
     LOCK: 'LOCK',
     UNLOCK: 'UNLOCK',
     POLICY_FAILED: 'POLICY_FAILED',
-    ACCESS_DENIED: 'ACCESS_DENIED'
+    ACCESS_DENIED: 'ACCESS_DENIED',
+    SKILL_LOAD: 'SKILL_LOAD',
+    SKILL_PRESET_REJECTED: 'SKILL_PRESET_REJECTED',
+    SKILL_VIEW: 'SKILL_VIEW'
 } as const;
 
 export type OrganizationEventType = typeof OrganizationEventType[keyof typeof OrganizationEventType];
@@ -24759,7 +25298,7 @@ export interface OrganizationPolicyApiToken {
      */
     'role_name'?: string;
     /**
-     * the organization role this token acts as once its policy has allowed a request. Effective access is the intersection of this role and `opa_policy`.
+     * The organization role this token acts as once its policy has allowed a request. Effective access is the intersection of this role and `opa_policy`. Fixed at creation.
      * @type {string}
      * @memberof OrganizationPolicyApiToken
      */
@@ -24832,7 +25371,7 @@ export interface OrganizationPolicyApiTokenCreate {
      */
     'role_name'?: string;
     /**
-     * the organization role this token acts as once its policy has allowed a request. Effective access is the intersection of this role and its policy.
+     * The organization role this token acts as once its policy has allowed a request. Effective access is the intersection of this role and its policy. Fixed at creation.
      * @type {string}
      * @memberof OrganizationPolicyApiTokenCreate
      */
@@ -24887,7 +25426,7 @@ export interface OrganizationPolicyApiTokenCreateRequest {
      */
     'opa_policy': string;
     /**
-     * the roleId provided by the \"List organization custom roles\" endpoint. The role bounds what the token may do once its policy has allowed a request, so effective access is the intersection of the two. Omit it, or send null, for organization-admin.
+     * The organization role the token acts as: a default role id or a custom role id from the \"List organization custom roles\" endpoint. The role bounds what the token may do once its policy has allowed a request, so effective access is the intersection of the two, and a request the role does not permit is refused with 403. Omit it, or send null, for the organization admin role. The Owner role is refused. The role cannot be changed after creation.
      * @type {string}
      * @memberof OrganizationPolicyApiTokenCreateRequest
      */
@@ -29056,6 +29595,810 @@ export interface SignUpRequest {
 
 
 /**
+ * Who reads a skill. LOAD: a member\'s coding agent loads it to follow it, audited as `SKILL_LOAD` and counted in usage. VIEW: a person reads it, for example in the Console, audited as `SKILL_VIEW` and not counted in usage.
+ * @export
+ * @enum {string}
+ */
+
+export const SkillLoadPurpose = {
+    LOAD: 'LOAD',
+    VIEW: 'VIEW'
+} as const;
+
+export type SkillLoadPurpose = typeof SkillLoadPurpose[keyof typeof SkillLoadPurpose];
+
+
+/**
+ * Who receives the preset. A target (the organization default, a role or a member) receives at most one preset. When several presets could apply to a member, a member assignment wins over a role assignment, which wins over the organization default.
+ * @export
+ * @interface SkillPresetAssignedTo
+ */
+export interface SkillPresetAssignedTo {
+    /**
+     * Whether the preset applies to every member with no member or role assignment of their own.
+     * @type {boolean}
+     * @memberof SkillPresetAssignedTo
+     */
+    'organization_default'?: boolean;
+    /**
+     * Default or custom roles of the organization, as returned by \"List organization roles\".
+     * @type {Array<string>}
+     * @memberof SkillPresetAssignedTo
+     */
+    'role_ids'?: Array<string>;
+    /**
+     * Members of the organization, by the id returned by \"List organization members\".
+     * @type {Array<string>}
+     * @memberof SkillPresetAssignedTo
+     */
+    'user_ids'?: Array<string>;
+}
+/**
+ * The Qovery skill set a preset starts from. FULL: every Qovery skill, as published. LEAN: one short CLI-first skill that relies on the `qovery` CLI and its `--help`. NONE: no Qovery skill, only the preset\'s own skills and team context.
+ * @export
+ * @enum {string}
+ */
+
+export const SkillPresetBase = {
+    FULL: 'FULL',
+    LEAN: 'LEAN',
+    NONE: 'NONE'
+} as const;
+
+export type SkillPresetBase = typeof SkillPresetBase[keyof typeof SkillPresetBase];
+
+
+/**
+ * The change that produced a revision. A DELETE revision holds the state the preset had when it was deleted.
+ * @export
+ * @enum {string}
+ */
+
+export const SkillPresetChangeType = {
+    CREATE: 'CREATE',
+    UPDATE: 'UPDATE',
+    DELETE: 'DELETE'
+} as const;
+
+export type SkillPresetChangeType = typeof SkillPresetChangeType[keyof typeof SkillPresetChangeType];
+
+
+/**
+ * Enough for the agent to tell the member what will be injected, and for the member to verify it.
+ * @export
+ * @interface SkillPresetContentSummary
+ */
+export interface SkillPresetContentSummary {
+    /**
+     * Estimated size in tokens, the number of characters divided by 4. An estimate for the member, not a bill.
+     * @type {number}
+     * @memberof SkillPresetContentSummary
+     */
+    'approx_tokens': number;
+    /**
+     * Hex-encoded SHA-256 of the UTF-8 text.
+     * @type {string}
+     * @memberof SkillPresetContentSummary
+     */
+    'sha256': string;
+}
+/**
+ * Who raised a finding. RULES: the deterministic rules, and `rule_id` is a rule. MODEL: the model review, and `rule_id` is a category.
+ * @export
+ * @enum {string}
+ */
+
+export const SkillPresetFindingSource = {
+    RULES: 'RULES',
+    MODEL: 'MODEL'
+} as const;
+
+export type SkillPresetFindingSource = typeof SkillPresetFindingSource[keyof typeof SkillPresetFindingSource];
+
+
+/**
+ * The preset as the member sees it. No content, no assignments, no creator.
+ * @export
+ * @interface SkillPresetManifest
+ */
+export interface SkillPresetManifest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetManifest
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetManifest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {SkillPresetBase}
+     * @memberof SkillPresetManifest
+     */
+    'base': SkillPresetBase;
+    /**
+     * 
+     * @type {number}
+     * @memberof SkillPresetManifest
+     */
+    'revision': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetManifest
+     */
+    'updated_at': string;
+    /**
+     * Size and hash of the team context, which comes with every skill fetched. Null when the preset has none.
+     * @type {SkillPresetContentSummary}
+     * @memberof SkillPresetManifest
+     */
+    'team_context'?: SkillPresetContentSummary | null;
+    /**
+     * 
+     * @type {Array<SkillPresetManifestSkill>}
+     * @memberof SkillPresetManifest
+     */
+    'skills': Array<SkillPresetManifestSkill>;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface SkillPresetManifestResponse
+ */
+export interface SkillPresetManifestResponse {
+    /**
+     * 
+     * @type {SkillPresetResolutionSource}
+     * @memberof SkillPresetManifestResponse
+     */
+    'source': SkillPresetResolutionSource;
+    /**
+     * The preset that applies to the caller. Null when `source` is QOVERY_DEFAULT.
+     * @type {SkillPresetManifest}
+     * @memberof SkillPresetManifestResponse
+     */
+    'skill_preset'?: SkillPresetManifest | null;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface SkillPresetManifestSkill
+ */
+export interface SkillPresetManifestSkill {
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetManifestSkill
+     */
+    'skill_name': string;
+    /**
+     * 
+     * @type {SkillPresetSkillMode}
+     * @memberof SkillPresetManifestSkill
+     */
+    'mode': SkillPresetSkillMode;
+    /**
+     * When the agent should use the skill. Null when the entry has none.
+     * @type {string}
+     * @memberof SkillPresetManifestSkill
+     */
+    'description'?: string | null;
+    /**
+     * Size and hash of the content, never the content itself. Null for DISABLE, which injects nothing.
+     * @type {SkillPresetContentSummary}
+     * @memberof SkillPresetManifestSkill
+     */
+    'content'?: SkillPresetContentSummary | null;
+}
+
+
+/**
+ * A problem detail (RFC 9457).
+ * @export
+ * @interface SkillPresetProblemResponse
+ */
+export interface SkillPresetProblemResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetProblemResponse
+     */
+    'type'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetProblemResponse
+     */
+    'title': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SkillPresetProblemResponse
+     */
+    'status': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetProblemResponse
+     */
+    'detail': string;
+    /**
+     * The request path.
+     * @type {string}
+     * @memberof SkillPresetProblemResponse
+     */
+    'instance'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface SkillPresetReference
+ */
+export interface SkillPresetReference {
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetReference
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetReference
+     */
+    'name': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SkillPresetReference
+     */
+    'revision': number;
+}
+/**
+ * 
+ * @export
+ * @interface SkillPresetRejectionFinding
+ */
+export interface SkillPresetRejectionFinding {
+    /**
+     * 
+     * @type {SkillPresetFindingSource}
+     * @memberof SkillPresetRejectionFinding
+     */
+    'source': SkillPresetFindingSource;
+    /**
+     * For `source` RULES, the rule that matched, for example `override-instructions`, `conceal-from-user`, `skip-confirmation`, `read-credentials`, `dump-secrets`, `exfiltration-endpoint`, `upload-command`, `remote-exec`, `obfuscated-exec`, `external-url`, `invisible-characters`, `html-comment`, `encoded-blob` or `credential`. For `source` MODEL, the category: `prompt-injection`, `concealment`, `credential-access`, `data-exfiltration`, `unsafe-execution`, `approval-bypass`, `social-engineering` or `other`. New rules and categories can be added.
+     * @type {string}
+     * @memberof SkillPresetRejectionFinding
+     */
+    'rule_id': string;
+    /**
+     * The field that holds the finding: `description`, `team context`, `description of skill \'<name>\'` or `content of skill \'<name>\'`.
+     * @type {string}
+     * @memberof SkillPresetRejectionFinding
+     */
+    'location': string;
+    /**
+     * 1-based line within that field.
+     * @type {number}
+     * @memberof SkillPresetRejectionFinding
+     */
+    'line': number;
+    /**
+     * Why the content was refused. Never contains the offending text.
+     * @type {string}
+     * @memberof SkillPresetRejectionFinding
+     */
+    'reason': string;
+}
+
+
+/**
+ * A problem detail (RFC 9457) listing every finding of the security inspection.
+ * @export
+ * @interface SkillPresetRejectionResponse
+ */
+export interface SkillPresetRejectionResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetRejectionResponse
+     */
+    'type'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetRejectionResponse
+     */
+    'title': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SkillPresetRejectionResponse
+     */
+    'status': number;
+    /**
+     * Every finding in one sentence, safe to log.
+     * @type {string}
+     * @memberof SkillPresetRejectionResponse
+     */
+    'detail': string;
+    /**
+     * The request path.
+     * @type {string}
+     * @memberof SkillPresetRejectionResponse
+     */
+    'instance'?: string;
+    /**
+     * 
+     * @type {Array<SkillPresetRejectionFinding>}
+     * @memberof SkillPresetRejectionResponse
+     */
+    'findings': Array<SkillPresetRejectionFinding>;
+}
+/**
+ * Create and edit share this body. An edit replaces the whole preset, skill entries and assignments included.
+ * @export
+ * @interface SkillPresetRequest
+ */
+export interface SkillPresetRequest {
+    /**
+     * Preset name, unique in the organization, 1 to 100 characters
+     * @type {string}
+     * @memberof SkillPresetRequest
+     */
+    'name': string;
+    /**
+     * What the preset is for, at most 1024 characters. Shown to the members it applies to.
+     * @type {string}
+     * @memberof SkillPresetRequest
+     */
+    'description'?: string;
+    /**
+     * The Qovery skill set the preset starts from. Defaults to FULL.
+     * @type {SkillPresetBase}
+     * @memberof SkillPresetRequest
+     */
+    'base'?: SkillPresetBase;
+    /**
+     * Whether this is a template: a starting point admins copy into new presets. A template is never resolved for a member and cannot have assignments (400 otherwise). Defaults to false.
+     * @type {boolean}
+     * @memberof SkillPresetRequest
+     */
+    'is_template'?: boolean;
+    /**
+     * Markdown on how the team uses Qovery, delivered with every skill the agent loads, at most 32 KB. Null or blank means none.
+     * @type {string}
+     * @memberof SkillPresetRequest
+     */
+    'team_context'?: string | null;
+    /**
+     * Changes on top of the base, at most 50, each skill name at most once.
+     * @type {Array<SkillPresetSkillRequest>}
+     * @memberof SkillPresetRequest
+     */
+    'skills'?: Array<SkillPresetSkillRequest>;
+    /**
+     * 
+     * @type {SkillPresetAssignedTo}
+     * @memberof SkillPresetRequest
+     */
+    'assigned_to'?: SkillPresetAssignedTo;
+}
+
+
+/**
+ * Which assignment made the preset apply to the caller. USER: assigned to the caller as a member. ROLE: assigned to the caller\'s role in the organization. ORGANIZATION: the organization default. QOVERY_DEFAULT: no preset applies, and the agent uses the Qovery skills as published.
+ * @export
+ * @enum {string}
+ */
+
+export const SkillPresetResolutionSource = {
+    USER: 'USER',
+    ROLE: 'ROLE',
+    ORGANIZATION: 'ORGANIZATION',
+    QOVERY_DEFAULT: 'QOVERY_DEFAULT'
+} as const;
+
+export type SkillPresetResolutionSource = typeof SkillPresetResolutionSource[keyof typeof SkillPresetResolutionSource];
+
+
+/**
+ * What the agent loads for one skill, and what it shows the member.
+ * @export
+ * @interface SkillPresetResolvedSkillResponse
+ */
+export interface SkillPresetResolvedSkillResponse {
+    /**
+     * 
+     * @type {SkillPresetResolutionSource}
+     * @memberof SkillPresetResolvedSkillResponse
+     */
+    'source': SkillPresetResolutionSource;
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetResolvedSkillResponse
+     */
+    'skill_name': string;
+    /**
+     * The preset that applies to the caller. Null when `source` is QOVERY_DEFAULT.
+     * @type {SkillPresetReference}
+     * @memberof SkillPresetResolvedSkillResponse
+     */
+    'skill_preset'?: SkillPresetReference | null;
+    /**
+     * Null when the preset leaves this Qovery skill alone, or when no preset applies: load the Qovery skill as published. DISABLE means the agent must not load the skill.
+     * @type {SkillPresetSkillMode}
+     * @memberof SkillPresetResolvedSkillResponse
+     */
+    'mode'?: SkillPresetSkillMode | null;
+    /**
+     * The entry\'s description. Null when the preset leaves the skill alone or the entry has none.
+     * @type {string}
+     * @memberof SkillPresetResolvedSkillResponse
+     */
+    'description'?: string | null;
+    /**
+     * Markdown to load: team instructions after the Qovery skill for OVERLAY, the whole skill for REPLACE and ADD. Null for DISABLE and when the preset leaves the skill alone.
+     * @type {string}
+     * @memberof SkillPresetResolvedSkillResponse
+     */
+    'content'?: string | null;
+    /**
+     * Hex-encoded SHA-256 of `content`. Null when `content` is null.
+     * @type {string}
+     * @memberof SkillPresetResolvedSkillResponse
+     */
+    'content_sha256'?: string | null;
+    /**
+     * The preset\'s team context, delivered with every skill. Null when there is none or no preset applies.
+     * @type {string}
+     * @memberof SkillPresetResolvedSkillResponse
+     */
+    'team_context'?: string | null;
+    /**
+     * Hex-encoded SHA-256 of `team_context`. Null when `team_context` is null.
+     * @type {string}
+     * @memberof SkillPresetResolvedSkillResponse
+     */
+    'team_context_sha256'?: string | null;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface SkillPresetResponse
+ */
+export interface SkillPresetResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetResponse
+     */
+    'updated_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetResponse
+     */
+    'description': string;
+    /**
+     * 
+     * @type {SkillPresetBase}
+     * @memberof SkillPresetResponse
+     */
+    'base': SkillPresetBase;
+    /**
+     * Whether this is a template, never resolved for a member and never assigned.
+     * @type {boolean}
+     * @memberof SkillPresetResponse
+     */
+    'is_template': boolean;
+    /**
+     * Markdown delivered with every skill the agent loads. Null when the preset has none.
+     * @type {string}
+     * @memberof SkillPresetResponse
+     */
+    'team_context'?: string | null;
+    /**
+     * 
+     * @type {Array<SkillPresetSkillResponse>}
+     * @memberof SkillPresetResponse
+     */
+    'skills': Array<SkillPresetSkillResponse>;
+    /**
+     * Starts at 1 and increases by one on every edit.
+     * @type {number}
+     * @memberof SkillPresetResponse
+     */
+    'revision': number;
+    /**
+     * Name of the member who created the preset. Null when unknown.
+     * @type {string}
+     * @memberof SkillPresetResponse
+     */
+    'creator_name'?: string | null;
+    /**
+     * 
+     * @type {SkillPresetAssignedTo}
+     * @memberof SkillPresetResponse
+     */
+    'assigned_to': SkillPresetAssignedTo;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface SkillPresetResponseList
+ */
+export interface SkillPresetResponseList {
+    /**
+     * 
+     * @type {Array<SkillPresetResponse>}
+     * @memberof SkillPresetResponseList
+     */
+    'results': Array<SkillPresetResponse>;
+}
+/**
+ * One saved state of a preset, immutable.
+ * @export
+ * @interface SkillPresetRevisionResponse
+ */
+export interface SkillPresetRevisionResponse {
+    /**
+     * The preset\'s id. Still listed after the preset is deleted.
+     * @type {string}
+     * @memberof SkillPresetRevisionResponse
+     */
+    'skill_preset_id': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SkillPresetRevisionResponse
+     */
+    'revision': number;
+    /**
+     * 
+     * @type {SkillPresetChangeType}
+     * @memberof SkillPresetRevisionResponse
+     */
+    'change_type': SkillPresetChangeType;
+    /**
+     * Who saved this state.
+     * @type {string}
+     * @memberof SkillPresetRevisionResponse
+     */
+    'edited_by': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetRevisionResponse
+     */
+    'edited_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetRevisionResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetRevisionResponse
+     */
+    'description': string;
+    /**
+     * 
+     * @type {SkillPresetBase}
+     * @memberof SkillPresetRevisionResponse
+     */
+    'base': SkillPresetBase;
+    /**
+     * Whether the preset was a template at this revision.
+     * @type {boolean}
+     * @memberof SkillPresetRevisionResponse
+     */
+    'is_template': boolean;
+    /**
+     * Null when the preset had none at this revision.
+     * @type {string}
+     * @memberof SkillPresetRevisionResponse
+     */
+    'team_context'?: string | null;
+    /**
+     * 
+     * @type {Array<SkillPresetSkillResponse>}
+     * @memberof SkillPresetRevisionResponse
+     */
+    'skills': Array<SkillPresetSkillResponse>;
+    /**
+     * 
+     * @type {SkillPresetAssignedTo}
+     * @memberof SkillPresetRevisionResponse
+     */
+    'assigned_to': SkillPresetAssignedTo;
+    /**
+     * The model review this state passed. Null for a DELETE revision, and for a save made while the review was turned off, when presets are saved after the rules only.
+     * @type {SkillPresetSecurityReview}
+     * @memberof SkillPresetRevisionResponse
+     */
+    'security_review'?: SkillPresetSecurityReview | null;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface SkillPresetRevisionResponseList
+ */
+export interface SkillPresetRevisionResponseList {
+    /**
+     * 
+     * @type {Array<SkillPresetRevisionResponse>}
+     * @memberof SkillPresetRevisionResponseList
+     */
+    'results': Array<SkillPresetRevisionResponse>;
+}
+/**
+ * The model review a saved state passed.
+ * @export
+ * @interface SkillPresetSecurityReview
+ */
+export interface SkillPresetSecurityReview {
+    /**
+     * 
+     * @type {SkillPresetSecurityReviewVerdict}
+     * @memberof SkillPresetSecurityReview
+     */
+    'verdict': SkillPresetSecurityReviewVerdict;
+    /**
+     * The model that reviewed the content.
+     * @type {string}
+     * @memberof SkillPresetSecurityReview
+     */
+    'model': string;
+    /**
+     * Version of the review instructions the model used.
+     * @type {string}
+     * @memberof SkillPresetSecurityReview
+     */
+    'prompt_version': string;
+    /**
+     * Notes the model raised without blocking. Usually empty.
+     * @type {Array<SkillPresetRejectionFinding>}
+     * @memberof SkillPresetSecurityReview
+     */
+    'findings': Array<SkillPresetRejectionFinding>;
+}
+
+
+/**
+ * The model review\'s verdict. A saved state always passed with ALLOW.
+ * @export
+ * @enum {string}
+ */
+
+export const SkillPresetSecurityReviewVerdict = {
+    ALLOW: 'ALLOW',
+    BLOCK: 'BLOCK'
+} as const;
+
+export type SkillPresetSecurityReviewVerdict = typeof SkillPresetSecurityReviewVerdict[keyof typeof SkillPresetSecurityReviewVerdict];
+
+
+/**
+ * What a skill entry does on top of the base. DISABLE: the Qovery skill is never loaded. OVERLAY: the Qovery skill is loaded, then the entry\'s content as team instructions. REPLACE: the entry\'s content is loaded in place of the Qovery skill. ADD: a skill of the organization\'s own. DISABLE, OVERLAY and REPLACE apply to a Qovery skill (named `qovery` or `qovery-*`) and only on the FULL base. ADD applies to any name that does not start with `qovery`, on any base.
+ * @export
+ * @enum {string}
+ */
+
+export const SkillPresetSkillMode = {
+    DISABLE: 'DISABLE',
+    OVERLAY: 'OVERLAY',
+    REPLACE: 'REPLACE',
+    ADD: 'ADD'
+} as const;
+
+export type SkillPresetSkillMode = typeof SkillPresetSkillMode[keyof typeof SkillPresetSkillMode];
+
+
+/**
+ * One skill entry. Each mode takes only some fields: DISABLE takes neither `description` nor `content`, OVERLAY takes `content` only, REPLACE and ADD take both. Sending a field the mode does not take is refused with 400 rather than dropped.
+ * @export
+ * @interface SkillPresetSkillRequest
+ */
+export interface SkillPresetSkillRequest {
+    /**
+     * Lowercase letters, digits and hyphens, at most 64 characters. A Qovery skill name (`qovery` or `qovery-*`) for DISABLE, OVERLAY and REPLACE; any other name for ADD.
+     * @type {string}
+     * @memberof SkillPresetSkillRequest
+     */
+    'skill_name': string;
+    /**
+     * 
+     * @type {SkillPresetSkillMode}
+     * @memberof SkillPresetSkillRequest
+     */
+    'mode': SkillPresetSkillMode;
+    /**
+     * When the agent should use the skill, at most 1024 characters. Required for ADD and REPLACE, since agents pick a skill from its description. DISABLE and OVERLAY take none: a non-blank value is refused with 400.
+     * @type {string}
+     * @memberof SkillPresetSkillRequest
+     */
+    'description'?: string | null;
+    /**
+     * Markdown delivered to the agent, at most 64 KB. Required for every mode except DISABLE, which takes none: a non-blank value is refused with 400.
+     * @type {string}
+     * @memberof SkillPresetSkillRequest
+     */
+    'content'?: string | null;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface SkillPresetSkillResponse
+ */
+export interface SkillPresetSkillResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillPresetSkillResponse
+     */
+    'skill_name': string;
+    /**
+     * 
+     * @type {SkillPresetSkillMode}
+     * @memberof SkillPresetSkillResponse
+     */
+    'mode': SkillPresetSkillMode;
+    /**
+     * When the agent should use the skill. Null when the entry has none.
+     * @type {string}
+     * @memberof SkillPresetSkillResponse
+     */
+    'description'?: string | null;
+    /**
+     * Markdown delivered to the agent. Null for DISABLE.
+     * @type {string}
+     * @memberof SkillPresetSkillResponse
+     */
+    'content'?: string | null;
+}
+
+
+/**
  * 
  * @export
  * @interface SkillTrackingRequest
@@ -29067,6 +30410,232 @@ export interface SkillTrackingRequest {
      * @memberof SkillTrackingRequest
      */
     'skill_name': string;
+}
+/**
+ * Width of each timeline point, an hour or a day, cut in UTC.
+ * @export
+ * @enum {string}
+ */
+
+export const SkillUsageBucket = {
+    HOUR: 'HOUR',
+    DAY: 'DAY'
+} as const;
+
+export type SkillUsageBucket = typeof SkillUsageBucket[keyof typeof SkillUsageBucket];
+
+
+/**
+ * 
+ * @export
+ * @interface SkillUsageByMember
+ */
+export interface SkillUsageByMember {
+    /**
+     * The member\'s id, as returned by \"List organization members\".
+     * @type {string}
+     * @memberof SkillUsageByMember
+     */
+    'user_sub': string;
+    /**
+     * The member\'s name at their most recent load in the range.
+     * @type {string}
+     * @memberof SkillUsageByMember
+     */
+    'user_name': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SkillUsageByMember
+     */
+    'loads': number;
+    /**
+     * Distinct skills this member\'s agent loaded.
+     * @type {number}
+     * @memberof SkillUsageByMember
+     */
+    'skills': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillUsageByMember
+     */
+    'last_loaded_at': string;
+}
+/**
+ * 
+ * @export
+ * @interface SkillUsageByPreset
+ */
+export interface SkillUsageByPreset {
+    /**
+     * Null groups the loads made when no preset applied.
+     * @type {string}
+     * @memberof SkillUsageByPreset
+     */
+    'skill_preset_id'?: string | null;
+    /**
+     * The preset\'s name at its most recent load in the range. Null when no preset applied.
+     * @type {string}
+     * @memberof SkillUsageByPreset
+     */
+    'skill_preset_name'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof SkillUsageByPreset
+     */
+    'loads': number;
+}
+/**
+ * 
+ * @export
+ * @interface SkillUsageBySkill
+ */
+export interface SkillUsageBySkill {
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillUsageBySkill
+     */
+    'skill_name': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SkillUsageBySkill
+     */
+    'loads': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SkillUsageBySkill
+     */
+    'cached_loads': number;
+    /**
+     * Distinct members who loaded this skill.
+     * @type {number}
+     * @memberof SkillUsageBySkill
+     */
+    'members': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SkillUsageBySkill
+     */
+    'last_loaded_at': string;
+}
+/**
+ * 
+ * @export
+ * @interface SkillUsagePoint
+ */
+export interface SkillUsagePoint {
+    /**
+     * Start of the hour or day, in UTC.
+     * @type {string}
+     * @memberof SkillUsagePoint
+     */
+    'start': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SkillUsagePoint
+     */
+    'loads': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SkillUsagePoint
+     */
+    'cached_loads': number;
+}
+/**
+ * 
+ * @export
+ * @interface SkillUsageResponse
+ */
+export interface SkillUsageResponse {
+    /**
+     * Start of the range actually used, after defaults.
+     * @type {string}
+     * @memberof SkillUsageResponse
+     */
+    'from': string;
+    /**
+     * End of the range actually used, after defaults.
+     * @type {string}
+     * @memberof SkillUsageResponse
+     */
+    'to': string;
+    /**
+     * 
+     * @type {SkillUsageBucket}
+     * @memberof SkillUsageResponse
+     */
+    'bucket': SkillUsageBucket;
+    /**
+     * 
+     * @type {SkillUsageTotals}
+     * @memberof SkillUsageResponse
+     */
+    'totals': SkillUsageTotals;
+    /**
+     * Loads per hour or per day, oldest first. Buckets are cut in UTC, and buckets with no load are left out rather than returned as zero.
+     * @type {Array<SkillUsagePoint>}
+     * @memberof SkillUsageResponse
+     */
+    'timeline': Array<SkillUsagePoint>;
+    /**
+     * Loads per skill, most loaded first, at most 100 rows.
+     * @type {Array<SkillUsageBySkill>}
+     * @memberof SkillUsageResponse
+     */
+    'by_skill': Array<SkillUsageBySkill>;
+    /**
+     * Loads per member, most active first, at most 500 rows.
+     * @type {Array<SkillUsageByMember>}
+     * @memberof SkillUsageResponse
+     */
+    'by_member': Array<SkillUsageByMember>;
+    /**
+     * Loads per preset, most loaded first. A row with a null preset groups the loads made with no preset.
+     * @type {Array<SkillUsageByPreset>}
+     * @memberof SkillUsageResponse
+     */
+    'by_preset': Array<SkillUsageByPreset>;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface SkillUsageTotals
+ */
+export interface SkillUsageTotals {
+    /**
+     * Skill loads in the range, cached ones included.
+     * @type {number}
+     * @memberof SkillUsageTotals
+     */
+    'loads': number;
+    /**
+     * Loads answered with a 304, where the agent reused its cached copy.
+     * @type {number}
+     * @memberof SkillUsageTotals
+     */
+    'cached_loads': number;
+    /**
+     * Distinct members whose agents loaded at least one skill.
+     * @type {number}
+     * @memberof SkillUsageTotals
+     */
+    'members': number;
+    /**
+     * Estimated tokens of organization content and team context sent to agents, the number of characters divided by 4. Cached loads send nothing and add zero. The text of the Qovery skills themselves is not counted.
+     * @type {number}
+     * @memberof SkillUsageTotals
+     */
+    'approx_injected_tokens': number;
 }
 /**
  * 
@@ -32116,6 +33685,325 @@ export const GetPublicServiceVersionServiceTypeEnum = {
     QOVERY_OPERATOR_CHART: 'QOVERY_OPERATOR_CHART'
 } as const;
 export type GetPublicServiceVersionServiceTypeEnum = typeof GetPublicServiceVersionServiceTypeEnum[keyof typeof GetPublicServiceVersionServiceTypeEnum];
+
+
+/**
+ * AgentActivityApi - axios parameter creator
+ * @export
+ */
+export const AgentActivityApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Return what members\' coding agents did on Qovery over a time range, linked to the skills they loaded: skill loads (agent loads only, a person\'s VIEW is not counted), API calls made from a Qovery skill, Qovery MCP server tool calls, every audited call made by a policy token, and requests refused by a policy or by role permissions. A refusal by a policy token\'s policy (401) and a refusal by role permissions (403) both count as DENIED. Activity is shown by member, by skill and by policy token. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin); members read their own activity with `getMyAgentActivity`.  Every filter is optional and they combine. `policyTokenId` implies `actorKind` POLICY_TOKEN, and neither combines with `userSub`: those combinations, an unknown enum value or a malformed id are refused with 400.  Coverage: only actions taken through Qovery (its API, CLI, skills and MCP server) are visible. What an agent does elsewhere, such as in a shell, in git or in a cloud console, is not. The response repeats this in `coverage`.  Attribution is indicative, not proof. A member is matched on the username the audit log records, and an action is attributed to a skill from the `QoverySkill/<skill>` user agent the client sends: a client can claim a skill it does not run, or leave the user agent out. What an agent may actually do is enforced by its token\'s policy, and every refusal is recorded.  No request content is returned: only what the audit log shows (event, target, project and environment names, time, source), never prompt text or request bodies.  The range defaults to the 30 days ending now and spans at most 90 days. `by_member` holds at most 500 rows, `by_skill` 100, `by_policy_token` 100, `actions_by_type` 200 and `recent` the 100 most recent agent actions. Buckets are cut in UTC; empty buckets are omitted.
+         * @summary Get agent activity
+         * @param {string} organizationId Organization ID
+         * @param {string} [from] Start of the range, inclusive. Defaults to 30 days before &#x60;to&#x60;.
+         * @param {string} [to] End of the range, exclusive. Defaults to now. Must be after &#x60;from&#x60;, and the range must not exceed 90 days, otherwise the request is refused with 400.
+         * @param {SkillUsageBucket} [bucket] Width of each point of the timeline. Defaults to DAY.
+         * @param {string} [userSub] Only show this member, by the id returned by \&quot;List organization members\&quot;. The member is matched on the username of their most recent skill load, so a member with no skill load in the last 90 days shows no action.
+         * @param {string} [skillName] Only count the activity attributed to this skill. Lowercase letters, digits, &#x60;.&#x60;, &#x60;_&#x60; or &#x60;-&#x60;, at most 64 characters, otherwise the request is refused with 400.
+         * @param {AgentActorKind} [actorKind] Only count members (MEMBER) or policy tokens (POLICY_TOKEN). Cannot be combined with &#x60;userSub&#x60; when POLICY_TOKEN, otherwise the request is refused with 400.
+         * @param {string} [policyTokenId] Only count this policy token, by its id. Implies &#x60;actorKind&#x60; POLICY_TOKEN. Cannot be combined with &#x60;actorKind&#x60; MEMBER or with &#x60;userSub&#x60;, otherwise the request is refused with 400. With &#x60;bucket&#x60; HOUR, it is required to fill the token\&#39;s &#x60;timeline&#x60; in &#x60;by_policy_token&#x60;.
+         * @param {AgentActionOutcome} [outcome] DENIED lists refusals only, and leaves skill loads out. ALLOWED lists everything else, skill loads included.
+         * @param {AgentActivitySource} [source] Only count the activity from this source.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentActivity: async (organizationId: string, from?: string, to?: string, bucket?: SkillUsageBucket, userSub?: string, skillName?: string, actorKind?: AgentActorKind, policyTokenId?: string, outcome?: AgentActionOutcome, source?: AgentActivitySource, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getAgentActivity', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/agentActivity`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (from !== undefined) {
+                localVarQueryParameter['from'] = (from as any instanceof Date) ?
+                    (from as any).toISOString() :
+                    from;
+            }
+
+            if (to !== undefined) {
+                localVarQueryParameter['to'] = (to as any instanceof Date) ?
+                    (to as any).toISOString() :
+                    to;
+            }
+
+            if (bucket !== undefined) {
+                localVarQueryParameter['bucket'] = bucket;
+            }
+
+            if (userSub !== undefined) {
+                localVarQueryParameter['userSub'] = userSub;
+            }
+
+            if (skillName !== undefined) {
+                localVarQueryParameter['skillName'] = skillName;
+            }
+
+            if (actorKind !== undefined) {
+                localVarQueryParameter['actorKind'] = actorKind;
+            }
+
+            if (policyTokenId !== undefined) {
+                localVarQueryParameter['policyTokenId'] = policyTokenId;
+            }
+
+            if (outcome !== undefined) {
+                localVarQueryParameter['outcome'] = outcome;
+            }
+
+            if (source !== undefined) {
+                localVarQueryParameter['source'] = source;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Return the caller\'s own agent activity: exactly what admins see about them through `getAgentActivity`, and nothing about other members. Any organization member can call it (READ_ORGANIZATION_DATA). Policy tokens belong to the organization, so this view takes no `actorKind` or `policyTokenId` and its `by_policy_token` is always empty. A refusal by policy (401) or by role permissions (403) counts as DENIED. API and policy tokens cannot call it (400): they are not members.  Coverage: only actions taken through Qovery (its API, CLI, skills and MCP server) are visible. What an agent does elsewhere, such as in a shell, in git or in a cloud console, is not. The response repeats this in `coverage`.  Attribution is indicative, not proof. A member is matched on the username the audit log records, and an action is attributed to a skill from the `QoverySkill/<skill>` user agent the client sends: a client can claim a skill it does not run, or leave the user agent out. What an agent may actually do is enforced by its token\'s policy, and every refusal is recorded.  No request content is returned: only what the audit log shows (event, target, project and environment names, time, source), never prompt text or request bodies.  The range defaults to the 30 days ending now and spans at most 90 days. `by_member` holds at most 500 rows, `by_skill` 100, `by_policy_token` 100, `actions_by_type` 200 and `recent` the 100 most recent agent actions. Buckets are cut in UTC; empty buckets are omitted.
+         * @summary Get my agent activity
+         * @param {string} organizationId Organization ID
+         * @param {string} [from] Start of the range, inclusive. Defaults to 30 days before &#x60;to&#x60;.
+         * @param {string} [to] End of the range, exclusive. Defaults to now. Must be after &#x60;from&#x60;, and the range must not exceed 90 days, otherwise the request is refused with 400.
+         * @param {SkillUsageBucket} [bucket] Width of each point of the timeline. Defaults to DAY.
+         * @param {string} [skillName] Only count the activity attributed to this skill. Lowercase letters, digits, &#x60;.&#x60;, &#x60;_&#x60; or &#x60;-&#x60;, at most 64 characters, otherwise the request is refused with 400.
+         * @param {AgentActionOutcome} [outcome] DENIED lists refusals only, and leaves skill loads out. ALLOWED lists everything else, skill loads included.
+         * @param {AgentActivitySource} [source] Only count the activity from this source.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMyAgentActivity: async (organizationId: string, from?: string, to?: string, bucket?: SkillUsageBucket, skillName?: string, outcome?: AgentActionOutcome, source?: AgentActivitySource, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getMyAgentActivity', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/agentActivity/me`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (from !== undefined) {
+                localVarQueryParameter['from'] = (from as any instanceof Date) ?
+                    (from as any).toISOString() :
+                    from;
+            }
+
+            if (to !== undefined) {
+                localVarQueryParameter['to'] = (to as any instanceof Date) ?
+                    (to as any).toISOString() :
+                    to;
+            }
+
+            if (bucket !== undefined) {
+                localVarQueryParameter['bucket'] = bucket;
+            }
+
+            if (skillName !== undefined) {
+                localVarQueryParameter['skillName'] = skillName;
+            }
+
+            if (outcome !== undefined) {
+                localVarQueryParameter['outcome'] = outcome;
+            }
+
+            if (source !== undefined) {
+                localVarQueryParameter['source'] = source;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AgentActivityApi - functional programming interface
+ * @export
+ */
+export const AgentActivityApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AgentActivityApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Return what members\' coding agents did on Qovery over a time range, linked to the skills they loaded: skill loads (agent loads only, a person\'s VIEW is not counted), API calls made from a Qovery skill, Qovery MCP server tool calls, every audited call made by a policy token, and requests refused by a policy or by role permissions. A refusal by a policy token\'s policy (401) and a refusal by role permissions (403) both count as DENIED. Activity is shown by member, by skill and by policy token. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin); members read their own activity with `getMyAgentActivity`.  Every filter is optional and they combine. `policyTokenId` implies `actorKind` POLICY_TOKEN, and neither combines with `userSub`: those combinations, an unknown enum value or a malformed id are refused with 400.  Coverage: only actions taken through Qovery (its API, CLI, skills and MCP server) are visible. What an agent does elsewhere, such as in a shell, in git or in a cloud console, is not. The response repeats this in `coverage`.  Attribution is indicative, not proof. A member is matched on the username the audit log records, and an action is attributed to a skill from the `QoverySkill/<skill>` user agent the client sends: a client can claim a skill it does not run, or leave the user agent out. What an agent may actually do is enforced by its token\'s policy, and every refusal is recorded.  No request content is returned: only what the audit log shows (event, target, project and environment names, time, source), never prompt text or request bodies.  The range defaults to the 30 days ending now and spans at most 90 days. `by_member` holds at most 500 rows, `by_skill` 100, `by_policy_token` 100, `actions_by_type` 200 and `recent` the 100 most recent agent actions. Buckets are cut in UTC; empty buckets are omitted.
+         * @summary Get agent activity
+         * @param {string} organizationId Organization ID
+         * @param {string} [from] Start of the range, inclusive. Defaults to 30 days before &#x60;to&#x60;.
+         * @param {string} [to] End of the range, exclusive. Defaults to now. Must be after &#x60;from&#x60;, and the range must not exceed 90 days, otherwise the request is refused with 400.
+         * @param {SkillUsageBucket} [bucket] Width of each point of the timeline. Defaults to DAY.
+         * @param {string} [userSub] Only show this member, by the id returned by \&quot;List organization members\&quot;. The member is matched on the username of their most recent skill load, so a member with no skill load in the last 90 days shows no action.
+         * @param {string} [skillName] Only count the activity attributed to this skill. Lowercase letters, digits, &#x60;.&#x60;, &#x60;_&#x60; or &#x60;-&#x60;, at most 64 characters, otherwise the request is refused with 400.
+         * @param {AgentActorKind} [actorKind] Only count members (MEMBER) or policy tokens (POLICY_TOKEN). Cannot be combined with &#x60;userSub&#x60; when POLICY_TOKEN, otherwise the request is refused with 400.
+         * @param {string} [policyTokenId] Only count this policy token, by its id. Implies &#x60;actorKind&#x60; POLICY_TOKEN. Cannot be combined with &#x60;actorKind&#x60; MEMBER or with &#x60;userSub&#x60;, otherwise the request is refused with 400. With &#x60;bucket&#x60; HOUR, it is required to fill the token\&#39;s &#x60;timeline&#x60; in &#x60;by_policy_token&#x60;.
+         * @param {AgentActionOutcome} [outcome] DENIED lists refusals only, and leaves skill loads out. ALLOWED lists everything else, skill loads included.
+         * @param {AgentActivitySource} [source] Only count the activity from this source.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAgentActivity(organizationId: string, from?: string, to?: string, bucket?: SkillUsageBucket, userSub?: string, skillName?: string, actorKind?: AgentActorKind, policyTokenId?: string, outcome?: AgentActionOutcome, source?: AgentActivitySource, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentActivityResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentActivity(organizationId, from, to, bucket, userSub, skillName, actorKind, policyTokenId, outcome, source, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentActivityApi.getAgentActivity']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Return the caller\'s own agent activity: exactly what admins see about them through `getAgentActivity`, and nothing about other members. Any organization member can call it (READ_ORGANIZATION_DATA). Policy tokens belong to the organization, so this view takes no `actorKind` or `policyTokenId` and its `by_policy_token` is always empty. A refusal by policy (401) or by role permissions (403) counts as DENIED. API and policy tokens cannot call it (400): they are not members.  Coverage: only actions taken through Qovery (its API, CLI, skills and MCP server) are visible. What an agent does elsewhere, such as in a shell, in git or in a cloud console, is not. The response repeats this in `coverage`.  Attribution is indicative, not proof. A member is matched on the username the audit log records, and an action is attributed to a skill from the `QoverySkill/<skill>` user agent the client sends: a client can claim a skill it does not run, or leave the user agent out. What an agent may actually do is enforced by its token\'s policy, and every refusal is recorded.  No request content is returned: only what the audit log shows (event, target, project and environment names, time, source), never prompt text or request bodies.  The range defaults to the 30 days ending now and spans at most 90 days. `by_member` holds at most 500 rows, `by_skill` 100, `by_policy_token` 100, `actions_by_type` 200 and `recent` the 100 most recent agent actions. Buckets are cut in UTC; empty buckets are omitted.
+         * @summary Get my agent activity
+         * @param {string} organizationId Organization ID
+         * @param {string} [from] Start of the range, inclusive. Defaults to 30 days before &#x60;to&#x60;.
+         * @param {string} [to] End of the range, exclusive. Defaults to now. Must be after &#x60;from&#x60;, and the range must not exceed 90 days, otherwise the request is refused with 400.
+         * @param {SkillUsageBucket} [bucket] Width of each point of the timeline. Defaults to DAY.
+         * @param {string} [skillName] Only count the activity attributed to this skill. Lowercase letters, digits, &#x60;.&#x60;, &#x60;_&#x60; or &#x60;-&#x60;, at most 64 characters, otherwise the request is refused with 400.
+         * @param {AgentActionOutcome} [outcome] DENIED lists refusals only, and leaves skill loads out. ALLOWED lists everything else, skill loads included.
+         * @param {AgentActivitySource} [source] Only count the activity from this source.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMyAgentActivity(organizationId: string, from?: string, to?: string, bucket?: SkillUsageBucket, skillName?: string, outcome?: AgentActionOutcome, source?: AgentActivitySource, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentActivityResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMyAgentActivity(organizationId, from, to, bucket, skillName, outcome, source, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentActivityApi.getMyAgentActivity']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AgentActivityApi - factory interface
+ * @export
+ */
+export const AgentActivityApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AgentActivityApiFp(configuration)
+    return {
+        /**
+         * Return what members\' coding agents did on Qovery over a time range, linked to the skills they loaded: skill loads (agent loads only, a person\'s VIEW is not counted), API calls made from a Qovery skill, Qovery MCP server tool calls, every audited call made by a policy token, and requests refused by a policy or by role permissions. A refusal by a policy token\'s policy (401) and a refusal by role permissions (403) both count as DENIED. Activity is shown by member, by skill and by policy token. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin); members read their own activity with `getMyAgentActivity`.  Every filter is optional and they combine. `policyTokenId` implies `actorKind` POLICY_TOKEN, and neither combines with `userSub`: those combinations, an unknown enum value or a malformed id are refused with 400.  Coverage: only actions taken through Qovery (its API, CLI, skills and MCP server) are visible. What an agent does elsewhere, such as in a shell, in git or in a cloud console, is not. The response repeats this in `coverage`.  Attribution is indicative, not proof. A member is matched on the username the audit log records, and an action is attributed to a skill from the `QoverySkill/<skill>` user agent the client sends: a client can claim a skill it does not run, or leave the user agent out. What an agent may actually do is enforced by its token\'s policy, and every refusal is recorded.  No request content is returned: only what the audit log shows (event, target, project and environment names, time, source), never prompt text or request bodies.  The range defaults to the 30 days ending now and spans at most 90 days. `by_member` holds at most 500 rows, `by_skill` 100, `by_policy_token` 100, `actions_by_type` 200 and `recent` the 100 most recent agent actions. Buckets are cut in UTC; empty buckets are omitted.
+         * @summary Get agent activity
+         * @param {string} organizationId Organization ID
+         * @param {string} [from] Start of the range, inclusive. Defaults to 30 days before &#x60;to&#x60;.
+         * @param {string} [to] End of the range, exclusive. Defaults to now. Must be after &#x60;from&#x60;, and the range must not exceed 90 days, otherwise the request is refused with 400.
+         * @param {SkillUsageBucket} [bucket] Width of each point of the timeline. Defaults to DAY.
+         * @param {string} [userSub] Only show this member, by the id returned by \&quot;List organization members\&quot;. The member is matched on the username of their most recent skill load, so a member with no skill load in the last 90 days shows no action.
+         * @param {string} [skillName] Only count the activity attributed to this skill. Lowercase letters, digits, &#x60;.&#x60;, &#x60;_&#x60; or &#x60;-&#x60;, at most 64 characters, otherwise the request is refused with 400.
+         * @param {AgentActorKind} [actorKind] Only count members (MEMBER) or policy tokens (POLICY_TOKEN). Cannot be combined with &#x60;userSub&#x60; when POLICY_TOKEN, otherwise the request is refused with 400.
+         * @param {string} [policyTokenId] Only count this policy token, by its id. Implies &#x60;actorKind&#x60; POLICY_TOKEN. Cannot be combined with &#x60;actorKind&#x60; MEMBER or with &#x60;userSub&#x60;, otherwise the request is refused with 400. With &#x60;bucket&#x60; HOUR, it is required to fill the token\&#39;s &#x60;timeline&#x60; in &#x60;by_policy_token&#x60;.
+         * @param {AgentActionOutcome} [outcome] DENIED lists refusals only, and leaves skill loads out. ALLOWED lists everything else, skill loads included.
+         * @param {AgentActivitySource} [source] Only count the activity from this source.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentActivity(organizationId: string, from?: string, to?: string, bucket?: SkillUsageBucket, userSub?: string, skillName?: string, actorKind?: AgentActorKind, policyTokenId?: string, outcome?: AgentActionOutcome, source?: AgentActivitySource, options?: RawAxiosRequestConfig): AxiosPromise<AgentActivityResponse> {
+            return localVarFp.getAgentActivity(organizationId, from, to, bucket, userSub, skillName, actorKind, policyTokenId, outcome, source, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Return the caller\'s own agent activity: exactly what admins see about them through `getAgentActivity`, and nothing about other members. Any organization member can call it (READ_ORGANIZATION_DATA). Policy tokens belong to the organization, so this view takes no `actorKind` or `policyTokenId` and its `by_policy_token` is always empty. A refusal by policy (401) or by role permissions (403) counts as DENIED. API and policy tokens cannot call it (400): they are not members.  Coverage: only actions taken through Qovery (its API, CLI, skills and MCP server) are visible. What an agent does elsewhere, such as in a shell, in git or in a cloud console, is not. The response repeats this in `coverage`.  Attribution is indicative, not proof. A member is matched on the username the audit log records, and an action is attributed to a skill from the `QoverySkill/<skill>` user agent the client sends: a client can claim a skill it does not run, or leave the user agent out. What an agent may actually do is enforced by its token\'s policy, and every refusal is recorded.  No request content is returned: only what the audit log shows (event, target, project and environment names, time, source), never prompt text or request bodies.  The range defaults to the 30 days ending now and spans at most 90 days. `by_member` holds at most 500 rows, `by_skill` 100, `by_policy_token` 100, `actions_by_type` 200 and `recent` the 100 most recent agent actions. Buckets are cut in UTC; empty buckets are omitted.
+         * @summary Get my agent activity
+         * @param {string} organizationId Organization ID
+         * @param {string} [from] Start of the range, inclusive. Defaults to 30 days before &#x60;to&#x60;.
+         * @param {string} [to] End of the range, exclusive. Defaults to now. Must be after &#x60;from&#x60;, and the range must not exceed 90 days, otherwise the request is refused with 400.
+         * @param {SkillUsageBucket} [bucket] Width of each point of the timeline. Defaults to DAY.
+         * @param {string} [skillName] Only count the activity attributed to this skill. Lowercase letters, digits, &#x60;.&#x60;, &#x60;_&#x60; or &#x60;-&#x60;, at most 64 characters, otherwise the request is refused with 400.
+         * @param {AgentActionOutcome} [outcome] DENIED lists refusals only, and leaves skill loads out. ALLOWED lists everything else, skill loads included.
+         * @param {AgentActivitySource} [source] Only count the activity from this source.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMyAgentActivity(organizationId: string, from?: string, to?: string, bucket?: SkillUsageBucket, skillName?: string, outcome?: AgentActionOutcome, source?: AgentActivitySource, options?: RawAxiosRequestConfig): AxiosPromise<AgentActivityResponse> {
+            return localVarFp.getMyAgentActivity(organizationId, from, to, bucket, skillName, outcome, source, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AgentActivityApi - object-oriented interface
+ * @export
+ * @class AgentActivityApi
+ * @extends {BaseAPI}
+ */
+export class AgentActivityApi extends BaseAPI {
+    /**
+     * Return what members\' coding agents did on Qovery over a time range, linked to the skills they loaded: skill loads (agent loads only, a person\'s VIEW is not counted), API calls made from a Qovery skill, Qovery MCP server tool calls, every audited call made by a policy token, and requests refused by a policy or by role permissions. A refusal by a policy token\'s policy (401) and a refusal by role permissions (403) both count as DENIED. Activity is shown by member, by skill and by policy token. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin); members read their own activity with `getMyAgentActivity`.  Every filter is optional and they combine. `policyTokenId` implies `actorKind` POLICY_TOKEN, and neither combines with `userSub`: those combinations, an unknown enum value or a malformed id are refused with 400.  Coverage: only actions taken through Qovery (its API, CLI, skills and MCP server) are visible. What an agent does elsewhere, such as in a shell, in git or in a cloud console, is not. The response repeats this in `coverage`.  Attribution is indicative, not proof. A member is matched on the username the audit log records, and an action is attributed to a skill from the `QoverySkill/<skill>` user agent the client sends: a client can claim a skill it does not run, or leave the user agent out. What an agent may actually do is enforced by its token\'s policy, and every refusal is recorded.  No request content is returned: only what the audit log shows (event, target, project and environment names, time, source), never prompt text or request bodies.  The range defaults to the 30 days ending now and spans at most 90 days. `by_member` holds at most 500 rows, `by_skill` 100, `by_policy_token` 100, `actions_by_type` 200 and `recent` the 100 most recent agent actions. Buckets are cut in UTC; empty buckets are omitted.
+     * @summary Get agent activity
+     * @param {string} organizationId Organization ID
+     * @param {string} [from] Start of the range, inclusive. Defaults to 30 days before &#x60;to&#x60;.
+     * @param {string} [to] End of the range, exclusive. Defaults to now. Must be after &#x60;from&#x60;, and the range must not exceed 90 days, otherwise the request is refused with 400.
+     * @param {SkillUsageBucket} [bucket] Width of each point of the timeline. Defaults to DAY.
+     * @param {string} [userSub] Only show this member, by the id returned by \&quot;List organization members\&quot;. The member is matched on the username of their most recent skill load, so a member with no skill load in the last 90 days shows no action.
+     * @param {string} [skillName] Only count the activity attributed to this skill. Lowercase letters, digits, &#x60;.&#x60;, &#x60;_&#x60; or &#x60;-&#x60;, at most 64 characters, otherwise the request is refused with 400.
+     * @param {AgentActorKind} [actorKind] Only count members (MEMBER) or policy tokens (POLICY_TOKEN). Cannot be combined with &#x60;userSub&#x60; when POLICY_TOKEN, otherwise the request is refused with 400.
+     * @param {string} [policyTokenId] Only count this policy token, by its id. Implies &#x60;actorKind&#x60; POLICY_TOKEN. Cannot be combined with &#x60;actorKind&#x60; MEMBER or with &#x60;userSub&#x60;, otherwise the request is refused with 400. With &#x60;bucket&#x60; HOUR, it is required to fill the token\&#39;s &#x60;timeline&#x60; in &#x60;by_policy_token&#x60;.
+     * @param {AgentActionOutcome} [outcome] DENIED lists refusals only, and leaves skill loads out. ALLOWED lists everything else, skill loads included.
+     * @param {AgentActivitySource} [source] Only count the activity from this source.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentActivityApi
+     */
+    public getAgentActivity(organizationId: string, from?: string, to?: string, bucket?: SkillUsageBucket, userSub?: string, skillName?: string, actorKind?: AgentActorKind, policyTokenId?: string, outcome?: AgentActionOutcome, source?: AgentActivitySource, options?: RawAxiosRequestConfig) {
+        return AgentActivityApiFp(this.configuration).getAgentActivity(organizationId, from, to, bucket, userSub, skillName, actorKind, policyTokenId, outcome, source, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Return the caller\'s own agent activity: exactly what admins see about them through `getAgentActivity`, and nothing about other members. Any organization member can call it (READ_ORGANIZATION_DATA). Policy tokens belong to the organization, so this view takes no `actorKind` or `policyTokenId` and its `by_policy_token` is always empty. A refusal by policy (401) or by role permissions (403) counts as DENIED. API and policy tokens cannot call it (400): they are not members.  Coverage: only actions taken through Qovery (its API, CLI, skills and MCP server) are visible. What an agent does elsewhere, such as in a shell, in git or in a cloud console, is not. The response repeats this in `coverage`.  Attribution is indicative, not proof. A member is matched on the username the audit log records, and an action is attributed to a skill from the `QoverySkill/<skill>` user agent the client sends: a client can claim a skill it does not run, or leave the user agent out. What an agent may actually do is enforced by its token\'s policy, and every refusal is recorded.  No request content is returned: only what the audit log shows (event, target, project and environment names, time, source), never prompt text or request bodies.  The range defaults to the 30 days ending now and spans at most 90 days. `by_member` holds at most 500 rows, `by_skill` 100, `by_policy_token` 100, `actions_by_type` 200 and `recent` the 100 most recent agent actions. Buckets are cut in UTC; empty buckets are omitted.
+     * @summary Get my agent activity
+     * @param {string} organizationId Organization ID
+     * @param {string} [from] Start of the range, inclusive. Defaults to 30 days before &#x60;to&#x60;.
+     * @param {string} [to] End of the range, exclusive. Defaults to now. Must be after &#x60;from&#x60;, and the range must not exceed 90 days, otherwise the request is refused with 400.
+     * @param {SkillUsageBucket} [bucket] Width of each point of the timeline. Defaults to DAY.
+     * @param {string} [skillName] Only count the activity attributed to this skill. Lowercase letters, digits, &#x60;.&#x60;, &#x60;_&#x60; or &#x60;-&#x60;, at most 64 characters, otherwise the request is refused with 400.
+     * @param {AgentActionOutcome} [outcome] DENIED lists refusals only, and leaves skill loads out. ALLOWED lists everything else, skill loads included.
+     * @param {AgentActivitySource} [source] Only count the activity from this source.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentActivityApi
+     */
+    public getMyAgentActivity(organizationId: string, from?: string, to?: string, bucket?: SkillUsageBucket, skillName?: string, outcome?: AgentActionOutcome, source?: AgentActivitySource, options?: RawAxiosRequestConfig) {
+        return AgentActivityApiFp(this.configuration).getMyAgentActivity(organizationId, from, to, bucket, skillName, outcome, source, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 
 /**
@@ -76627,7 +78515,7 @@ export class OrganizationMainCallsApi extends BaseAPI {
 export const OrganizationPolicyApiTokenApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Create a policy api token, intended for autonomous agents calling the Qovery API.  Unlike a regular api token, a policy api token carries **no organization role**. The Open Policy Agent (rego) policy attached to it is evaluated on every request and is the only thing constraining what the token can do: a policy that allows everything grants full organization admin access. For that reason only an organization owner or admin can create one.  The generated token value is returned only in this response and cannot be retrieved afterwards.
+         * Create a policy api token, intended for autonomous agents calling the Qovery API.  A policy api token carries two limits, and a request must pass both:  1. Its Open Policy Agent (rego) policy, evaluated on every request. A request the policy does not allow is refused with 401. 2. Its organization role, set with `role_id`. A request the policy allows then runs with that role\'s permissions, and a request the role does not permit is refused with 403.  Effective access is therefore the intersection of the policy and the role. When `role_id` is omitted, the token gets the organization admin role, so a policy that allows everything then grants full admin access. A token can never act as the Owner role.  Who can create one depends on the role requested: an organization owner or admin can create a token for any role except Owner; a DevOps member only for the DevOps, Viewer or Billing role or a custom role. Other callers are refused with 403.  A token cannot be edited: its policy, role and expiry are fixed at creation. To change them, create a new token and delete the old one. Deleting a custom role also deletes the policy api tokens that use it.  The generated token value is returned only in this response and cannot be retrieved afterwards.
          * @summary Create an organization policy api token
          * @param {string} organizationId Organization ID
          * @param {OrganizationPolicyApiTokenCreateRequest} [organizationPolicyApiTokenCreateRequest] 
@@ -76768,7 +78656,7 @@ export const OrganizationPolicyApiTokenApiFp = function(configuration?: Configur
     const localVarAxiosParamCreator = OrganizationPolicyApiTokenApiAxiosParamCreator(configuration)
     return {
         /**
-         * Create a policy api token, intended for autonomous agents calling the Qovery API.  Unlike a regular api token, a policy api token carries **no organization role**. The Open Policy Agent (rego) policy attached to it is evaluated on every request and is the only thing constraining what the token can do: a policy that allows everything grants full organization admin access. For that reason only an organization owner or admin can create one.  The generated token value is returned only in this response and cannot be retrieved afterwards.
+         * Create a policy api token, intended for autonomous agents calling the Qovery API.  A policy api token carries two limits, and a request must pass both:  1. Its Open Policy Agent (rego) policy, evaluated on every request. A request the policy does not allow is refused with 401. 2. Its organization role, set with `role_id`. A request the policy allows then runs with that role\'s permissions, and a request the role does not permit is refused with 403.  Effective access is therefore the intersection of the policy and the role. When `role_id` is omitted, the token gets the organization admin role, so a policy that allows everything then grants full admin access. A token can never act as the Owner role.  Who can create one depends on the role requested: an organization owner or admin can create a token for any role except Owner; a DevOps member only for the DevOps, Viewer or Billing role or a custom role. Other callers are refused with 403.  A token cannot be edited: its policy, role and expiry are fixed at creation. To change them, create a new token and delete the old one. Deleting a custom role also deletes the policy api tokens that use it.  The generated token value is returned only in this response and cannot be retrieved afterwards.
          * @summary Create an organization policy api token
          * @param {string} organizationId Organization ID
          * @param {OrganizationPolicyApiTokenCreateRequest} [organizationPolicyApiTokenCreateRequest] 
@@ -76819,7 +78707,7 @@ export const OrganizationPolicyApiTokenApiFactory = function (configuration?: Co
     const localVarFp = OrganizationPolicyApiTokenApiFp(configuration)
     return {
         /**
-         * Create a policy api token, intended for autonomous agents calling the Qovery API.  Unlike a regular api token, a policy api token carries **no organization role**. The Open Policy Agent (rego) policy attached to it is evaluated on every request and is the only thing constraining what the token can do: a policy that allows everything grants full organization admin access. For that reason only an organization owner or admin can create one.  The generated token value is returned only in this response and cannot be retrieved afterwards.
+         * Create a policy api token, intended for autonomous agents calling the Qovery API.  A policy api token carries two limits, and a request must pass both:  1. Its Open Policy Agent (rego) policy, evaluated on every request. A request the policy does not allow is refused with 401. 2. Its organization role, set with `role_id`. A request the policy allows then runs with that role\'s permissions, and a request the role does not permit is refused with 403.  Effective access is therefore the intersection of the policy and the role. When `role_id` is omitted, the token gets the organization admin role, so a policy that allows everything then grants full admin access. A token can never act as the Owner role.  Who can create one depends on the role requested: an organization owner or admin can create a token for any role except Owner; a DevOps member only for the DevOps, Viewer or Billing role or a custom role. Other callers are refused with 403.  A token cannot be edited: its policy, role and expiry are fixed at creation. To change them, create a new token and delete the old one. Deleting a custom role also deletes the policy api tokens that use it.  The generated token value is returned only in this response and cannot be retrieved afterwards.
          * @summary Create an organization policy api token
          * @param {string} organizationId Organization ID
          * @param {OrganizationPolicyApiTokenCreateRequest} [organizationPolicyApiTokenCreateRequest] 
@@ -76861,7 +78749,7 @@ export const OrganizationPolicyApiTokenApiFactory = function (configuration?: Co
  */
 export class OrganizationPolicyApiTokenApi extends BaseAPI {
     /**
-     * Create a policy api token, intended for autonomous agents calling the Qovery API.  Unlike a regular api token, a policy api token carries **no organization role**. The Open Policy Agent (rego) policy attached to it is evaluated on every request and is the only thing constraining what the token can do: a policy that allows everything grants full organization admin access. For that reason only an organization owner or admin can create one.  The generated token value is returned only in this response and cannot be retrieved afterwards.
+     * Create a policy api token, intended for autonomous agents calling the Qovery API.  A policy api token carries two limits, and a request must pass both:  1. Its Open Policy Agent (rego) policy, evaluated on every request. A request the policy does not allow is refused with 401. 2. Its organization role, set with `role_id`. A request the policy allows then runs with that role\'s permissions, and a request the role does not permit is refused with 403.  Effective access is therefore the intersection of the policy and the role. When `role_id` is omitted, the token gets the organization admin role, so a policy that allows everything then grants full admin access. A token can never act as the Owner role.  Who can create one depends on the role requested: an organization owner or admin can create a token for any role except Owner; a DevOps member only for the DevOps, Viewer or Billing role or a custom role. Other callers are refused with 403.  A token cannot be edited: its policy, role and expiry are fixed at creation. To change them, create a new token and delete the old one. Deleting a custom role also deletes the policy api tokens that use it.  The generated token value is returned only in this response and cannot be retrieved afterwards.
      * @summary Create an organization policy api token
      * @param {string} organizationId Organization ID
      * @param {OrganizationPolicyApiTokenCreateRequest} [organizationPolicyApiTokenCreateRequest] 
@@ -81128,6 +83016,854 @@ export const GetIngressDeploymentStatusServiceTypeEnum = {
     HELM: 'helm'
 } as const;
 export type GetIngressDeploymentStatusServiceTypeEnum = typeof GetIngressDeploymentStatusServiceTypeEnum[keyof typeof GetIngressDeploymentStatusServiceTypeEnum];
+
+
+/**
+ * SkillPresetsApi - axios parameter creator
+ * @export
+ */
+export const SkillPresetsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Create a skill preset and its assignments. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin). The preset starts at revision 1.  Set `is_template` to save a template: a starting point admins copy into new presets. A template is never resolved for a member and cannot have assignments.  A preset runs inside each assigned member\'s coding agent, on their machine, so every create and edit is checked before anything reaches members. The check covers every field that reaches an agent (the preset description, the team context, and each skill\'s description and content) and runs in two steps:  1. Deterministic rules look for content that could turn the agent against its user: overriding its instructions, hiding actions from the user, skipping confirmations, reading local credentials, dumping secrets, sending data out, running remote or obfuscated code, links outside an allowlist of documentation hosts, invisible characters, HTML comments, encoded blobs and pasted credentials. Any finding answers 422 (findings with `source` RULES) and the model is not called. 2. A model review on AWS Bedrock then reads the content as untrusted data, to catch paraphrased or new attacks the rules miss. A BLOCK verdict answers 422 (findings with `source` MODEL).  The check fails closed: if the model review cannot give a verdict (error, timeout or unusable answer), the request answers 503 and nothing is saved. Because every save is sent to the model, an organization with AI features turned off cannot create or edit presets (403). Reading, resolving, loading and deleting presets are not affected. A save refused for security is recorded in the audit log as a `SKILL_PRESET_REJECTED` event with sub-target `SKILL_PRESET`, holding hashes and findings, never the text.  The creation is recorded in the audit log as a `CREATE` event with sub-target `SKILL_PRESET`, holding the saved state with its full text, and as revision 1 in the revision history.
+         * @summary Create a skill preset
+         * @param {string} organizationId Organization ID
+         * @param {SkillPresetRequest} skillPresetRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createSkillPreset: async (organizationId: string, skillPresetRequest: SkillPresetRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('createSkillPreset', 'organizationId', organizationId)
+            // verify required parameter 'skillPresetRequest' is not null or undefined
+            assertParamExists('createSkillPreset', 'skillPresetRequest', skillPresetRequest)
+            const localVarPath = `/organization/{organizationId}/skillPreset`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(skillPresetRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete a skill preset and its assignments. Members it applied to fall back to the next preset in the resolution order, or to the Qovery skills as published. Requires the MANAGE_ORGANIZATION_DATA permission on the preset\'s organization. The deletion is recorded in the audit log as a `DELETE` event with sub-target `SKILL_PRESET`, holding the deleted state, and as a final `DELETE` revision in the revision history.
+         * @summary Delete a skill preset
+         * @param {string} skillPresetId Skill Preset ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteSkillPreset: async (skillPresetId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'skillPresetId' is not null or undefined
+            assertParamExists('deleteSkillPreset', 'skillPresetId', skillPresetId)
+            const localVarPath = `/skillPreset/{skillPresetId}`
+                .replace(`{${"skillPresetId"}}`, encodeURIComponent(String(skillPresetId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Replace a skill preset, its skill entries and its assignments with the request body, and increase its revision by one. Requires the MANAGE_ORGANIZATION_DATA permission on the preset\'s organization. The content is checked as on creation, by the rules and then by the model review on AWS Bedrock, and the check fails closed: a finding answers 422, an unavailable review answers 503, and in both cases nothing is saved. An organization with AI features turned off cannot edit presets (403). A refusal for security is recorded as a `SKILL_PRESET_REJECTED` audit event.  The edit is recorded in the audit log as an `UPDATE` event with sub-target `SKILL_PRESET`: the change holds the new state with its full text and a summary of what changed (skills added, removed and modified, and whether the base, the template flag, the team context or the assignments changed), and the original change holds the previous state. When the text of a preset is larger than 64 KB, the audit entry keeps only the SHA-256 of each text and sets `content_omitted`; the revision history always holds the full text.
+         * @summary Edit a skill preset
+         * @param {string} skillPresetId Skill Preset ID
+         * @param {SkillPresetRequest} skillPresetRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editSkillPreset: async (skillPresetId: string, skillPresetRequest: SkillPresetRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'skillPresetId' is not null or undefined
+            assertParamExists('editSkillPreset', 'skillPresetId', skillPresetId)
+            // verify required parameter 'skillPresetRequest' is not null or undefined
+            assertParamExists('editSkillPreset', 'skillPresetRequest', skillPresetRequest)
+            const localVarPath = `/skillPreset/{skillPresetId}`
+                .replace(`{${"skillPresetId"}}`, encodeURIComponent(String(skillPresetId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(skillPresetRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Return what the caller\'s agent must load for one skill, under the preset that applies to the caller (resolved as in `getResolvedSkillPreset`): the organization\'s content for that skill if any, the team context, and the SHA-256 of each, so the member can check that what their agent follows is what an admin saved. Any organization member can call it (READ_ORGANIZATION_DATA).  A Qovery skill (`qovery` or `qovery-*`) that the preset leaves alone, or any Qovery skill when no preset applies, answers 200 with a null `mode`: load the Qovery skill as published, with the team context if there is one. A `DISABLE` mode means the agent must not load the skill. Any other name that is not in the preset answers 404.  The ETag is the same as the manifest\'s, so a single revision covers every skill of the preset. Send it in `If-None-Match` to get a 304 with no body when the cached copy is current.  Set `purpose` to say who reads the skill. LOAD (the default) is a member\'s coding agent loading it to follow it. VIEW is a person reading it, for example in the Console: same body and same ETag and 304 behaviour, recorded as a `SKILL_VIEW` audit event with the same content as a `SKILL_LOAD` entry, and not counted in `getSkillUsage`.  Every LOAD call is recorded in the audit log as a `SKILL_LOAD` event with sub-target `SKILL_PRESET`, 304s included (with `from_cache` set to true): the entry gives the skill, the preset and revision that applied (or `QOVERY_DEFAULT`), the mode, and the SHA-256 of the content and team context that were injected. A 404 is not recorded.
+         * @summary Get what to load for one skill
+         * @param {string} organizationId Organization ID
+         * @param {string} skillName Name of the skill to load, for example &#x60;qovery-deploy&#x60; or a skill the preset adds
+         * @param {SkillLoadPurpose} [purpose] Who reads the skill. Defaults to LOAD. Any other value than LOAD or VIEW is refused with 400.
+         * @param {string} [ifNoneMatch] The ETag of the caller\&#39;s cached copy. When it matches the current ETag, the response is a 304 with no body.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getResolvedSkill: async (organizationId: string, skillName: string, purpose?: SkillLoadPurpose, ifNoneMatch?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getResolvedSkill', 'organizationId', organizationId)
+            // verify required parameter 'skillName' is not null or undefined
+            assertParamExists('getResolvedSkill', 'skillName', skillName)
+            const localVarPath = `/organization/{organizationId}/skillPreset/resolved/skill/{skillName}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"skillName"}}`, encodeURIComponent(String(skillName)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (purpose !== undefined) {
+                localVarQueryParameter['purpose'] = purpose;
+            }
+
+            if (ifNoneMatch != null) {
+                localVarHeaderParameter['If-None-Match'] = String(ifNoneMatch);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Return the manifest of the skill preset that applies to the caller in this organization: its name, base, revision and, for each skill entry, the mode, the description and the size and SHA-256 of the content, but never the content itself. This is what the Qovery loader skill reads first. It then fetches only the skills a task needs with `getResolvedSkill`. Any organization member can call it (READ_ORGANIZATION_DATA). Assignments and the preset\'s creator are left out.  The preset is resolved in this order: a preset assigned to the caller as a member, then a preset assigned to the caller\'s role in the organization, then the organization default. When none applies, `source` is `QOVERY_DEFAULT`, `skill_preset` is null and the agent uses the Qovery skills as published. API tokens have no member behind them, so they only receive a role preset or the organization default.  The response carries an `ETag`. Treat it as opaque: it changes when the preset is edited, when the caller moves to another preset, and when the caller reaches the same preset through another assignment. Send it back in `If-None-Match` to get a 304 with no body when nothing changed. Templates are never resolved.
+         * @summary Get the skill preset that applies to the caller
+         * @param {string} organizationId Organization ID
+         * @param {string} [ifNoneMatch] The ETag of the caller\&#39;s cached copy. When it matches the current ETag, the response is a 304 with no body.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getResolvedSkillPreset: async (organizationId: string, ifNoneMatch?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getResolvedSkillPreset', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/skillPreset/resolved`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (ifNoneMatch != null) {
+                localVarHeaderParameter['If-None-Match'] = String(ifNoneMatch);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get a skill preset with its full content and assignments. Requires the MANAGE_ORGANIZATION_DATA permission on the preset\'s organization.
+         * @summary Get a skill preset
+         * @param {string} skillPresetId Skill Preset ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSkillPreset: async (skillPresetId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'skillPresetId' is not null or undefined
+            assertParamExists('getSkillPreset', 'skillPresetId', skillPresetId)
+            const localVarPath = `/skillPreset/{skillPresetId}`
+                .replace(`{${"skillPresetId"}}`, encodeURIComponent(String(skillPresetId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Return how the members\' coding agents loaded skills in the organization over a time range: totals, a timeline, and breakdowns by skill, by member and by preset. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin).  Usage counts agent loads only: a load is one call to `getResolvedSkill` with `purpose` LOAD (the default) that returned a skill, cached ones included. A 304 counts as a cached load, a 404 is not counted, and VIEW calls (a person reading a skill) are never counted. Loads are counted whether or not a preset applies. Recording a load is best effort and never blocks the agent, so a load can be missing here while the audit log, which records every load as a `SKILL_LOAD` event, still has it.  The range defaults to the 30 days ending now and spans at most 90 days. Timeline buckets are cut in UTC, and buckets with no load are left out rather than returned as zero. Rows in `by_skill` and `by_member` are sorted by loads, most first, and capped at 100 and 500 rows.
+         * @summary Get skill usage
+         * @param {string} organizationId Organization ID
+         * @param {string} [from] Start of the range, inclusive. Defaults to 30 days before &#x60;to&#x60;.
+         * @param {string} [to] End of the range, exclusive. Defaults to now. Must be after &#x60;from&#x60;, and the range must not exceed 90 days, otherwise the request is refused with 400.
+         * @param {SkillUsageBucket} [bucket] Width of each point of the timeline. Defaults to DAY.
+         * @param {string} [skillName] Only count the loads of this skill.
+         * @param {string} [userSub] Only count the loads of this member, by the id returned by \&quot;List organization members\&quot;.
+         * @param {string} [skillPresetId] Only count the loads made under this preset.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSkillUsage: async (organizationId: string, from?: string, to?: string, bucket?: SkillUsageBucket, skillName?: string, userSub?: string, skillPresetId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('getSkillUsage', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/skillPreset/usage`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (from !== undefined) {
+                localVarQueryParameter['from'] = (from as any instanceof Date) ?
+                    (from as any).toISOString() :
+                    from;
+            }
+
+            if (to !== undefined) {
+                localVarQueryParameter['to'] = (to as any instanceof Date) ?
+                    (to as any).toISOString() :
+                    to;
+            }
+
+            if (bucket !== undefined) {
+                localVarQueryParameter['bucket'] = bucket;
+            }
+
+            if (skillName !== undefined) {
+                localVarQueryParameter['skillName'] = skillName;
+            }
+
+            if (userSub !== undefined) {
+                localVarQueryParameter['userSub'] = userSub;
+            }
+
+            if (skillPresetId !== undefined) {
+                localVarQueryParameter['skillPresetId'] = skillPresetId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List the saved states of the organization\'s skill presets, most recent first, each with its full content, who saved it and when. Every create, edit and delete adds one immutable revision. Revisions are kept after a preset is deleted: the deletion adds a final `DELETE` revision holding the state the preset had. A save that fails, for example with a 422, adds nothing. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin).
+         * @summary List skill preset revisions
+         * @param {string} organizationId Organization ID
+         * @param {string} [skillPresetId] Only list the revisions of this preset, deleted or not. Omit it to list the revisions of every preset of the organization.
+         * @param {number} [limit] Maximum number of revisions to return. A value outside 1 to 100 is brought back into that range.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listSkillPresetRevisions: async (organizationId: string, skillPresetId?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listSkillPresetRevisions', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/skillPreset/revision`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (skillPresetId !== undefined) {
+                localVarQueryParameter['skillPresetId'] = skillPresetId;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List the skill presets of the organization, with their full content and who each one is assigned to. Templates are listed too unless `isTemplate` filters them. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin).
+         * @summary List organization skill presets
+         * @param {string} organizationId Organization ID
+         * @param {boolean} [isTemplate] &#x60;true&#x60; lists templates only, &#x60;false&#x60; lists assignable presets only. Omit it to list both.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listSkillPresets: async (organizationId: string, isTemplate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('listSkillPresets', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/skillPreset`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (isTemplate !== undefined) {
+                localVarQueryParameter['isTemplate'] = isTemplate;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * SkillPresetsApi - functional programming interface
+ * @export
+ */
+export const SkillPresetsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = SkillPresetsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Create a skill preset and its assignments. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin). The preset starts at revision 1.  Set `is_template` to save a template: a starting point admins copy into new presets. A template is never resolved for a member and cannot have assignments.  A preset runs inside each assigned member\'s coding agent, on their machine, so every create and edit is checked before anything reaches members. The check covers every field that reaches an agent (the preset description, the team context, and each skill\'s description and content) and runs in two steps:  1. Deterministic rules look for content that could turn the agent against its user: overriding its instructions, hiding actions from the user, skipping confirmations, reading local credentials, dumping secrets, sending data out, running remote or obfuscated code, links outside an allowlist of documentation hosts, invisible characters, HTML comments, encoded blobs and pasted credentials. Any finding answers 422 (findings with `source` RULES) and the model is not called. 2. A model review on AWS Bedrock then reads the content as untrusted data, to catch paraphrased or new attacks the rules miss. A BLOCK verdict answers 422 (findings with `source` MODEL).  The check fails closed: if the model review cannot give a verdict (error, timeout or unusable answer), the request answers 503 and nothing is saved. Because every save is sent to the model, an organization with AI features turned off cannot create or edit presets (403). Reading, resolving, loading and deleting presets are not affected. A save refused for security is recorded in the audit log as a `SKILL_PRESET_REJECTED` event with sub-target `SKILL_PRESET`, holding hashes and findings, never the text.  The creation is recorded in the audit log as a `CREATE` event with sub-target `SKILL_PRESET`, holding the saved state with its full text, and as revision 1 in the revision history.
+         * @summary Create a skill preset
+         * @param {string} organizationId Organization ID
+         * @param {SkillPresetRequest} skillPresetRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createSkillPreset(organizationId: string, skillPresetRequest: SkillPresetRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SkillPresetResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createSkillPreset(organizationId, skillPresetRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SkillPresetsApi.createSkillPreset']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Delete a skill preset and its assignments. Members it applied to fall back to the next preset in the resolution order, or to the Qovery skills as published. Requires the MANAGE_ORGANIZATION_DATA permission on the preset\'s organization. The deletion is recorded in the audit log as a `DELETE` event with sub-target `SKILL_PRESET`, holding the deleted state, and as a final `DELETE` revision in the revision history.
+         * @summary Delete a skill preset
+         * @param {string} skillPresetId Skill Preset ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteSkillPreset(skillPresetId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSkillPreset(skillPresetId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SkillPresetsApi.deleteSkillPreset']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Replace a skill preset, its skill entries and its assignments with the request body, and increase its revision by one. Requires the MANAGE_ORGANIZATION_DATA permission on the preset\'s organization. The content is checked as on creation, by the rules and then by the model review on AWS Bedrock, and the check fails closed: a finding answers 422, an unavailable review answers 503, and in both cases nothing is saved. An organization with AI features turned off cannot edit presets (403). A refusal for security is recorded as a `SKILL_PRESET_REJECTED` audit event.  The edit is recorded in the audit log as an `UPDATE` event with sub-target `SKILL_PRESET`: the change holds the new state with its full text and a summary of what changed (skills added, removed and modified, and whether the base, the template flag, the team context or the assignments changed), and the original change holds the previous state. When the text of a preset is larger than 64 KB, the audit entry keeps only the SHA-256 of each text and sets `content_omitted`; the revision history always holds the full text.
+         * @summary Edit a skill preset
+         * @param {string} skillPresetId Skill Preset ID
+         * @param {SkillPresetRequest} skillPresetRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editSkillPreset(skillPresetId: string, skillPresetRequest: SkillPresetRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SkillPresetResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editSkillPreset(skillPresetId, skillPresetRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SkillPresetsApi.editSkillPreset']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Return what the caller\'s agent must load for one skill, under the preset that applies to the caller (resolved as in `getResolvedSkillPreset`): the organization\'s content for that skill if any, the team context, and the SHA-256 of each, so the member can check that what their agent follows is what an admin saved. Any organization member can call it (READ_ORGANIZATION_DATA).  A Qovery skill (`qovery` or `qovery-*`) that the preset leaves alone, or any Qovery skill when no preset applies, answers 200 with a null `mode`: load the Qovery skill as published, with the team context if there is one. A `DISABLE` mode means the agent must not load the skill. Any other name that is not in the preset answers 404.  The ETag is the same as the manifest\'s, so a single revision covers every skill of the preset. Send it in `If-None-Match` to get a 304 with no body when the cached copy is current.  Set `purpose` to say who reads the skill. LOAD (the default) is a member\'s coding agent loading it to follow it. VIEW is a person reading it, for example in the Console: same body and same ETag and 304 behaviour, recorded as a `SKILL_VIEW` audit event with the same content as a `SKILL_LOAD` entry, and not counted in `getSkillUsage`.  Every LOAD call is recorded in the audit log as a `SKILL_LOAD` event with sub-target `SKILL_PRESET`, 304s included (with `from_cache` set to true): the entry gives the skill, the preset and revision that applied (or `QOVERY_DEFAULT`), the mode, and the SHA-256 of the content and team context that were injected. A 404 is not recorded.
+         * @summary Get what to load for one skill
+         * @param {string} organizationId Organization ID
+         * @param {string} skillName Name of the skill to load, for example &#x60;qovery-deploy&#x60; or a skill the preset adds
+         * @param {SkillLoadPurpose} [purpose] Who reads the skill. Defaults to LOAD. Any other value than LOAD or VIEW is refused with 400.
+         * @param {string} [ifNoneMatch] The ETag of the caller\&#39;s cached copy. When it matches the current ETag, the response is a 304 with no body.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getResolvedSkill(organizationId: string, skillName: string, purpose?: SkillLoadPurpose, ifNoneMatch?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SkillPresetResolvedSkillResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getResolvedSkill(organizationId, skillName, purpose, ifNoneMatch, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SkillPresetsApi.getResolvedSkill']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Return the manifest of the skill preset that applies to the caller in this organization: its name, base, revision and, for each skill entry, the mode, the description and the size and SHA-256 of the content, but never the content itself. This is what the Qovery loader skill reads first. It then fetches only the skills a task needs with `getResolvedSkill`. Any organization member can call it (READ_ORGANIZATION_DATA). Assignments and the preset\'s creator are left out.  The preset is resolved in this order: a preset assigned to the caller as a member, then a preset assigned to the caller\'s role in the organization, then the organization default. When none applies, `source` is `QOVERY_DEFAULT`, `skill_preset` is null and the agent uses the Qovery skills as published. API tokens have no member behind them, so they only receive a role preset or the organization default.  The response carries an `ETag`. Treat it as opaque: it changes when the preset is edited, when the caller moves to another preset, and when the caller reaches the same preset through another assignment. Send it back in `If-None-Match` to get a 304 with no body when nothing changed. Templates are never resolved.
+         * @summary Get the skill preset that applies to the caller
+         * @param {string} organizationId Organization ID
+         * @param {string} [ifNoneMatch] The ETag of the caller\&#39;s cached copy. When it matches the current ETag, the response is a 304 with no body.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getResolvedSkillPreset(organizationId: string, ifNoneMatch?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SkillPresetManifestResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getResolvedSkillPreset(organizationId, ifNoneMatch, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SkillPresetsApi.getResolvedSkillPreset']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Get a skill preset with its full content and assignments. Requires the MANAGE_ORGANIZATION_DATA permission on the preset\'s organization.
+         * @summary Get a skill preset
+         * @param {string} skillPresetId Skill Preset ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSkillPreset(skillPresetId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SkillPresetResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSkillPreset(skillPresetId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SkillPresetsApi.getSkillPreset']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Return how the members\' coding agents loaded skills in the organization over a time range: totals, a timeline, and breakdowns by skill, by member and by preset. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin).  Usage counts agent loads only: a load is one call to `getResolvedSkill` with `purpose` LOAD (the default) that returned a skill, cached ones included. A 304 counts as a cached load, a 404 is not counted, and VIEW calls (a person reading a skill) are never counted. Loads are counted whether or not a preset applies. Recording a load is best effort and never blocks the agent, so a load can be missing here while the audit log, which records every load as a `SKILL_LOAD` event, still has it.  The range defaults to the 30 days ending now and spans at most 90 days. Timeline buckets are cut in UTC, and buckets with no load are left out rather than returned as zero. Rows in `by_skill` and `by_member` are sorted by loads, most first, and capped at 100 and 500 rows.
+         * @summary Get skill usage
+         * @param {string} organizationId Organization ID
+         * @param {string} [from] Start of the range, inclusive. Defaults to 30 days before &#x60;to&#x60;.
+         * @param {string} [to] End of the range, exclusive. Defaults to now. Must be after &#x60;from&#x60;, and the range must not exceed 90 days, otherwise the request is refused with 400.
+         * @param {SkillUsageBucket} [bucket] Width of each point of the timeline. Defaults to DAY.
+         * @param {string} [skillName] Only count the loads of this skill.
+         * @param {string} [userSub] Only count the loads of this member, by the id returned by \&quot;List organization members\&quot;.
+         * @param {string} [skillPresetId] Only count the loads made under this preset.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSkillUsage(organizationId: string, from?: string, to?: string, bucket?: SkillUsageBucket, skillName?: string, userSub?: string, skillPresetId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SkillUsageResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSkillUsage(organizationId, from, to, bucket, skillName, userSub, skillPresetId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SkillPresetsApi.getSkillUsage']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * List the saved states of the organization\'s skill presets, most recent first, each with its full content, who saved it and when. Every create, edit and delete adds one immutable revision. Revisions are kept after a preset is deleted: the deletion adds a final `DELETE` revision holding the state the preset had. A save that fails, for example with a 422, adds nothing. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin).
+         * @summary List skill preset revisions
+         * @param {string} organizationId Organization ID
+         * @param {string} [skillPresetId] Only list the revisions of this preset, deleted or not. Omit it to list the revisions of every preset of the organization.
+         * @param {number} [limit] Maximum number of revisions to return. A value outside 1 to 100 is brought back into that range.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listSkillPresetRevisions(organizationId: string, skillPresetId?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SkillPresetRevisionResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listSkillPresetRevisions(organizationId, skillPresetId, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SkillPresetsApi.listSkillPresetRevisions']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * List the skill presets of the organization, with their full content and who each one is assigned to. Templates are listed too unless `isTemplate` filters them. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin).
+         * @summary List organization skill presets
+         * @param {string} organizationId Organization ID
+         * @param {boolean} [isTemplate] &#x60;true&#x60; lists templates only, &#x60;false&#x60; lists assignable presets only. Omit it to list both.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listSkillPresets(organizationId: string, isTemplate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SkillPresetResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listSkillPresets(organizationId, isTemplate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SkillPresetsApi.listSkillPresets']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * SkillPresetsApi - factory interface
+ * @export
+ */
+export const SkillPresetsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = SkillPresetsApiFp(configuration)
+    return {
+        /**
+         * Create a skill preset and its assignments. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin). The preset starts at revision 1.  Set `is_template` to save a template: a starting point admins copy into new presets. A template is never resolved for a member and cannot have assignments.  A preset runs inside each assigned member\'s coding agent, on their machine, so every create and edit is checked before anything reaches members. The check covers every field that reaches an agent (the preset description, the team context, and each skill\'s description and content) and runs in two steps:  1. Deterministic rules look for content that could turn the agent against its user: overriding its instructions, hiding actions from the user, skipping confirmations, reading local credentials, dumping secrets, sending data out, running remote or obfuscated code, links outside an allowlist of documentation hosts, invisible characters, HTML comments, encoded blobs and pasted credentials. Any finding answers 422 (findings with `source` RULES) and the model is not called. 2. A model review on AWS Bedrock then reads the content as untrusted data, to catch paraphrased or new attacks the rules miss. A BLOCK verdict answers 422 (findings with `source` MODEL).  The check fails closed: if the model review cannot give a verdict (error, timeout or unusable answer), the request answers 503 and nothing is saved. Because every save is sent to the model, an organization with AI features turned off cannot create or edit presets (403). Reading, resolving, loading and deleting presets are not affected. A save refused for security is recorded in the audit log as a `SKILL_PRESET_REJECTED` event with sub-target `SKILL_PRESET`, holding hashes and findings, never the text.  The creation is recorded in the audit log as a `CREATE` event with sub-target `SKILL_PRESET`, holding the saved state with its full text, and as revision 1 in the revision history.
+         * @summary Create a skill preset
+         * @param {string} organizationId Organization ID
+         * @param {SkillPresetRequest} skillPresetRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createSkillPreset(organizationId: string, skillPresetRequest: SkillPresetRequest, options?: RawAxiosRequestConfig): AxiosPromise<SkillPresetResponse> {
+            return localVarFp.createSkillPreset(organizationId, skillPresetRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete a skill preset and its assignments. Members it applied to fall back to the next preset in the resolution order, or to the Qovery skills as published. Requires the MANAGE_ORGANIZATION_DATA permission on the preset\'s organization. The deletion is recorded in the audit log as a `DELETE` event with sub-target `SKILL_PRESET`, holding the deleted state, and as a final `DELETE` revision in the revision history.
+         * @summary Delete a skill preset
+         * @param {string} skillPresetId Skill Preset ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteSkillPreset(skillPresetId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteSkillPreset(skillPresetId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Replace a skill preset, its skill entries and its assignments with the request body, and increase its revision by one. Requires the MANAGE_ORGANIZATION_DATA permission on the preset\'s organization. The content is checked as on creation, by the rules and then by the model review on AWS Bedrock, and the check fails closed: a finding answers 422, an unavailable review answers 503, and in both cases nothing is saved. An organization with AI features turned off cannot edit presets (403). A refusal for security is recorded as a `SKILL_PRESET_REJECTED` audit event.  The edit is recorded in the audit log as an `UPDATE` event with sub-target `SKILL_PRESET`: the change holds the new state with its full text and a summary of what changed (skills added, removed and modified, and whether the base, the template flag, the team context or the assignments changed), and the original change holds the previous state. When the text of a preset is larger than 64 KB, the audit entry keeps only the SHA-256 of each text and sets `content_omitted`; the revision history always holds the full text.
+         * @summary Edit a skill preset
+         * @param {string} skillPresetId Skill Preset ID
+         * @param {SkillPresetRequest} skillPresetRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editSkillPreset(skillPresetId: string, skillPresetRequest: SkillPresetRequest, options?: RawAxiosRequestConfig): AxiosPromise<SkillPresetResponse> {
+            return localVarFp.editSkillPreset(skillPresetId, skillPresetRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Return what the caller\'s agent must load for one skill, under the preset that applies to the caller (resolved as in `getResolvedSkillPreset`): the organization\'s content for that skill if any, the team context, and the SHA-256 of each, so the member can check that what their agent follows is what an admin saved. Any organization member can call it (READ_ORGANIZATION_DATA).  A Qovery skill (`qovery` or `qovery-*`) that the preset leaves alone, or any Qovery skill when no preset applies, answers 200 with a null `mode`: load the Qovery skill as published, with the team context if there is one. A `DISABLE` mode means the agent must not load the skill. Any other name that is not in the preset answers 404.  The ETag is the same as the manifest\'s, so a single revision covers every skill of the preset. Send it in `If-None-Match` to get a 304 with no body when the cached copy is current.  Set `purpose` to say who reads the skill. LOAD (the default) is a member\'s coding agent loading it to follow it. VIEW is a person reading it, for example in the Console: same body and same ETag and 304 behaviour, recorded as a `SKILL_VIEW` audit event with the same content as a `SKILL_LOAD` entry, and not counted in `getSkillUsage`.  Every LOAD call is recorded in the audit log as a `SKILL_LOAD` event with sub-target `SKILL_PRESET`, 304s included (with `from_cache` set to true): the entry gives the skill, the preset and revision that applied (or `QOVERY_DEFAULT`), the mode, and the SHA-256 of the content and team context that were injected. A 404 is not recorded.
+         * @summary Get what to load for one skill
+         * @param {string} organizationId Organization ID
+         * @param {string} skillName Name of the skill to load, for example &#x60;qovery-deploy&#x60; or a skill the preset adds
+         * @param {SkillLoadPurpose} [purpose] Who reads the skill. Defaults to LOAD. Any other value than LOAD or VIEW is refused with 400.
+         * @param {string} [ifNoneMatch] The ETag of the caller\&#39;s cached copy. When it matches the current ETag, the response is a 304 with no body.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getResolvedSkill(organizationId: string, skillName: string, purpose?: SkillLoadPurpose, ifNoneMatch?: string, options?: RawAxiosRequestConfig): AxiosPromise<SkillPresetResolvedSkillResponse> {
+            return localVarFp.getResolvedSkill(organizationId, skillName, purpose, ifNoneMatch, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Return the manifest of the skill preset that applies to the caller in this organization: its name, base, revision and, for each skill entry, the mode, the description and the size and SHA-256 of the content, but never the content itself. This is what the Qovery loader skill reads first. It then fetches only the skills a task needs with `getResolvedSkill`. Any organization member can call it (READ_ORGANIZATION_DATA). Assignments and the preset\'s creator are left out.  The preset is resolved in this order: a preset assigned to the caller as a member, then a preset assigned to the caller\'s role in the organization, then the organization default. When none applies, `source` is `QOVERY_DEFAULT`, `skill_preset` is null and the agent uses the Qovery skills as published. API tokens have no member behind them, so they only receive a role preset or the organization default.  The response carries an `ETag`. Treat it as opaque: it changes when the preset is edited, when the caller moves to another preset, and when the caller reaches the same preset through another assignment. Send it back in `If-None-Match` to get a 304 with no body when nothing changed. Templates are never resolved.
+         * @summary Get the skill preset that applies to the caller
+         * @param {string} organizationId Organization ID
+         * @param {string} [ifNoneMatch] The ETag of the caller\&#39;s cached copy. When it matches the current ETag, the response is a 304 with no body.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getResolvedSkillPreset(organizationId: string, ifNoneMatch?: string, options?: RawAxiosRequestConfig): AxiosPromise<SkillPresetManifestResponse> {
+            return localVarFp.getResolvedSkillPreset(organizationId, ifNoneMatch, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get a skill preset with its full content and assignments. Requires the MANAGE_ORGANIZATION_DATA permission on the preset\'s organization.
+         * @summary Get a skill preset
+         * @param {string} skillPresetId Skill Preset ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSkillPreset(skillPresetId: string, options?: RawAxiosRequestConfig): AxiosPromise<SkillPresetResponse> {
+            return localVarFp.getSkillPreset(skillPresetId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Return how the members\' coding agents loaded skills in the organization over a time range: totals, a timeline, and breakdowns by skill, by member and by preset. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin).  Usage counts agent loads only: a load is one call to `getResolvedSkill` with `purpose` LOAD (the default) that returned a skill, cached ones included. A 304 counts as a cached load, a 404 is not counted, and VIEW calls (a person reading a skill) are never counted. Loads are counted whether or not a preset applies. Recording a load is best effort and never blocks the agent, so a load can be missing here while the audit log, which records every load as a `SKILL_LOAD` event, still has it.  The range defaults to the 30 days ending now and spans at most 90 days. Timeline buckets are cut in UTC, and buckets with no load are left out rather than returned as zero. Rows in `by_skill` and `by_member` are sorted by loads, most first, and capped at 100 and 500 rows.
+         * @summary Get skill usage
+         * @param {string} organizationId Organization ID
+         * @param {string} [from] Start of the range, inclusive. Defaults to 30 days before &#x60;to&#x60;.
+         * @param {string} [to] End of the range, exclusive. Defaults to now. Must be after &#x60;from&#x60;, and the range must not exceed 90 days, otherwise the request is refused with 400.
+         * @param {SkillUsageBucket} [bucket] Width of each point of the timeline. Defaults to DAY.
+         * @param {string} [skillName] Only count the loads of this skill.
+         * @param {string} [userSub] Only count the loads of this member, by the id returned by \&quot;List organization members\&quot;.
+         * @param {string} [skillPresetId] Only count the loads made under this preset.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSkillUsage(organizationId: string, from?: string, to?: string, bucket?: SkillUsageBucket, skillName?: string, userSub?: string, skillPresetId?: string, options?: RawAxiosRequestConfig): AxiosPromise<SkillUsageResponse> {
+            return localVarFp.getSkillUsage(organizationId, from, to, bucket, skillName, userSub, skillPresetId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List the saved states of the organization\'s skill presets, most recent first, each with its full content, who saved it and when. Every create, edit and delete adds one immutable revision. Revisions are kept after a preset is deleted: the deletion adds a final `DELETE` revision holding the state the preset had. A save that fails, for example with a 422, adds nothing. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin).
+         * @summary List skill preset revisions
+         * @param {string} organizationId Organization ID
+         * @param {string} [skillPresetId] Only list the revisions of this preset, deleted or not. Omit it to list the revisions of every preset of the organization.
+         * @param {number} [limit] Maximum number of revisions to return. A value outside 1 to 100 is brought back into that range.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listSkillPresetRevisions(organizationId: string, skillPresetId?: string, limit?: number, options?: RawAxiosRequestConfig): AxiosPromise<SkillPresetRevisionResponseList> {
+            return localVarFp.listSkillPresetRevisions(organizationId, skillPresetId, limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List the skill presets of the organization, with their full content and who each one is assigned to. Templates are listed too unless `isTemplate` filters them. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin).
+         * @summary List organization skill presets
+         * @param {string} organizationId Organization ID
+         * @param {boolean} [isTemplate] &#x60;true&#x60; lists templates only, &#x60;false&#x60; lists assignable presets only. Omit it to list both.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listSkillPresets(organizationId: string, isTemplate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<SkillPresetResponseList> {
+            return localVarFp.listSkillPresets(organizationId, isTemplate, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * SkillPresetsApi - object-oriented interface
+ * @export
+ * @class SkillPresetsApi
+ * @extends {BaseAPI}
+ */
+export class SkillPresetsApi extends BaseAPI {
+    /**
+     * Create a skill preset and its assignments. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin). The preset starts at revision 1.  Set `is_template` to save a template: a starting point admins copy into new presets. A template is never resolved for a member and cannot have assignments.  A preset runs inside each assigned member\'s coding agent, on their machine, so every create and edit is checked before anything reaches members. The check covers every field that reaches an agent (the preset description, the team context, and each skill\'s description and content) and runs in two steps:  1. Deterministic rules look for content that could turn the agent against its user: overriding its instructions, hiding actions from the user, skipping confirmations, reading local credentials, dumping secrets, sending data out, running remote or obfuscated code, links outside an allowlist of documentation hosts, invisible characters, HTML comments, encoded blobs and pasted credentials. Any finding answers 422 (findings with `source` RULES) and the model is not called. 2. A model review on AWS Bedrock then reads the content as untrusted data, to catch paraphrased or new attacks the rules miss. A BLOCK verdict answers 422 (findings with `source` MODEL).  The check fails closed: if the model review cannot give a verdict (error, timeout or unusable answer), the request answers 503 and nothing is saved. Because every save is sent to the model, an organization with AI features turned off cannot create or edit presets (403). Reading, resolving, loading and deleting presets are not affected. A save refused for security is recorded in the audit log as a `SKILL_PRESET_REJECTED` event with sub-target `SKILL_PRESET`, holding hashes and findings, never the text.  The creation is recorded in the audit log as a `CREATE` event with sub-target `SKILL_PRESET`, holding the saved state with its full text, and as revision 1 in the revision history.
+     * @summary Create a skill preset
+     * @param {string} organizationId Organization ID
+     * @param {SkillPresetRequest} skillPresetRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SkillPresetsApi
+     */
+    public createSkillPreset(organizationId: string, skillPresetRequest: SkillPresetRequest, options?: RawAxiosRequestConfig) {
+        return SkillPresetsApiFp(this.configuration).createSkillPreset(organizationId, skillPresetRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete a skill preset and its assignments. Members it applied to fall back to the next preset in the resolution order, or to the Qovery skills as published. Requires the MANAGE_ORGANIZATION_DATA permission on the preset\'s organization. The deletion is recorded in the audit log as a `DELETE` event with sub-target `SKILL_PRESET`, holding the deleted state, and as a final `DELETE` revision in the revision history.
+     * @summary Delete a skill preset
+     * @param {string} skillPresetId Skill Preset ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SkillPresetsApi
+     */
+    public deleteSkillPreset(skillPresetId: string, options?: RawAxiosRequestConfig) {
+        return SkillPresetsApiFp(this.configuration).deleteSkillPreset(skillPresetId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Replace a skill preset, its skill entries and its assignments with the request body, and increase its revision by one. Requires the MANAGE_ORGANIZATION_DATA permission on the preset\'s organization. The content is checked as on creation, by the rules and then by the model review on AWS Bedrock, and the check fails closed: a finding answers 422, an unavailable review answers 503, and in both cases nothing is saved. An organization with AI features turned off cannot edit presets (403). A refusal for security is recorded as a `SKILL_PRESET_REJECTED` audit event.  The edit is recorded in the audit log as an `UPDATE` event with sub-target `SKILL_PRESET`: the change holds the new state with its full text and a summary of what changed (skills added, removed and modified, and whether the base, the template flag, the team context or the assignments changed), and the original change holds the previous state. When the text of a preset is larger than 64 KB, the audit entry keeps only the SHA-256 of each text and sets `content_omitted`; the revision history always holds the full text.
+     * @summary Edit a skill preset
+     * @param {string} skillPresetId Skill Preset ID
+     * @param {SkillPresetRequest} skillPresetRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SkillPresetsApi
+     */
+    public editSkillPreset(skillPresetId: string, skillPresetRequest: SkillPresetRequest, options?: RawAxiosRequestConfig) {
+        return SkillPresetsApiFp(this.configuration).editSkillPreset(skillPresetId, skillPresetRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Return what the caller\'s agent must load for one skill, under the preset that applies to the caller (resolved as in `getResolvedSkillPreset`): the organization\'s content for that skill if any, the team context, and the SHA-256 of each, so the member can check that what their agent follows is what an admin saved. Any organization member can call it (READ_ORGANIZATION_DATA).  A Qovery skill (`qovery` or `qovery-*`) that the preset leaves alone, or any Qovery skill when no preset applies, answers 200 with a null `mode`: load the Qovery skill as published, with the team context if there is one. A `DISABLE` mode means the agent must not load the skill. Any other name that is not in the preset answers 404.  The ETag is the same as the manifest\'s, so a single revision covers every skill of the preset. Send it in `If-None-Match` to get a 304 with no body when the cached copy is current.  Set `purpose` to say who reads the skill. LOAD (the default) is a member\'s coding agent loading it to follow it. VIEW is a person reading it, for example in the Console: same body and same ETag and 304 behaviour, recorded as a `SKILL_VIEW` audit event with the same content as a `SKILL_LOAD` entry, and not counted in `getSkillUsage`.  Every LOAD call is recorded in the audit log as a `SKILL_LOAD` event with sub-target `SKILL_PRESET`, 304s included (with `from_cache` set to true): the entry gives the skill, the preset and revision that applied (or `QOVERY_DEFAULT`), the mode, and the SHA-256 of the content and team context that were injected. A 404 is not recorded.
+     * @summary Get what to load for one skill
+     * @param {string} organizationId Organization ID
+     * @param {string} skillName Name of the skill to load, for example &#x60;qovery-deploy&#x60; or a skill the preset adds
+     * @param {SkillLoadPurpose} [purpose] Who reads the skill. Defaults to LOAD. Any other value than LOAD or VIEW is refused with 400.
+     * @param {string} [ifNoneMatch] The ETag of the caller\&#39;s cached copy. When it matches the current ETag, the response is a 304 with no body.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SkillPresetsApi
+     */
+    public getResolvedSkill(organizationId: string, skillName: string, purpose?: SkillLoadPurpose, ifNoneMatch?: string, options?: RawAxiosRequestConfig) {
+        return SkillPresetsApiFp(this.configuration).getResolvedSkill(organizationId, skillName, purpose, ifNoneMatch, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Return the manifest of the skill preset that applies to the caller in this organization: its name, base, revision and, for each skill entry, the mode, the description and the size and SHA-256 of the content, but never the content itself. This is what the Qovery loader skill reads first. It then fetches only the skills a task needs with `getResolvedSkill`. Any organization member can call it (READ_ORGANIZATION_DATA). Assignments and the preset\'s creator are left out.  The preset is resolved in this order: a preset assigned to the caller as a member, then a preset assigned to the caller\'s role in the organization, then the organization default. When none applies, `source` is `QOVERY_DEFAULT`, `skill_preset` is null and the agent uses the Qovery skills as published. API tokens have no member behind them, so they only receive a role preset or the organization default.  The response carries an `ETag`. Treat it as opaque: it changes when the preset is edited, when the caller moves to another preset, and when the caller reaches the same preset through another assignment. Send it back in `If-None-Match` to get a 304 with no body when nothing changed. Templates are never resolved.
+     * @summary Get the skill preset that applies to the caller
+     * @param {string} organizationId Organization ID
+     * @param {string} [ifNoneMatch] The ETag of the caller\&#39;s cached copy. When it matches the current ETag, the response is a 304 with no body.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SkillPresetsApi
+     */
+    public getResolvedSkillPreset(organizationId: string, ifNoneMatch?: string, options?: RawAxiosRequestConfig) {
+        return SkillPresetsApiFp(this.configuration).getResolvedSkillPreset(organizationId, ifNoneMatch, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get a skill preset with its full content and assignments. Requires the MANAGE_ORGANIZATION_DATA permission on the preset\'s organization.
+     * @summary Get a skill preset
+     * @param {string} skillPresetId Skill Preset ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SkillPresetsApi
+     */
+    public getSkillPreset(skillPresetId: string, options?: RawAxiosRequestConfig) {
+        return SkillPresetsApiFp(this.configuration).getSkillPreset(skillPresetId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Return how the members\' coding agents loaded skills in the organization over a time range: totals, a timeline, and breakdowns by skill, by member and by preset. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin).  Usage counts agent loads only: a load is one call to `getResolvedSkill` with `purpose` LOAD (the default) that returned a skill, cached ones included. A 304 counts as a cached load, a 404 is not counted, and VIEW calls (a person reading a skill) are never counted. Loads are counted whether or not a preset applies. Recording a load is best effort and never blocks the agent, so a load can be missing here while the audit log, which records every load as a `SKILL_LOAD` event, still has it.  The range defaults to the 30 days ending now and spans at most 90 days. Timeline buckets are cut in UTC, and buckets with no load are left out rather than returned as zero. Rows in `by_skill` and `by_member` are sorted by loads, most first, and capped at 100 and 500 rows.
+     * @summary Get skill usage
+     * @param {string} organizationId Organization ID
+     * @param {string} [from] Start of the range, inclusive. Defaults to 30 days before &#x60;to&#x60;.
+     * @param {string} [to] End of the range, exclusive. Defaults to now. Must be after &#x60;from&#x60;, and the range must not exceed 90 days, otherwise the request is refused with 400.
+     * @param {SkillUsageBucket} [bucket] Width of each point of the timeline. Defaults to DAY.
+     * @param {string} [skillName] Only count the loads of this skill.
+     * @param {string} [userSub] Only count the loads of this member, by the id returned by \&quot;List organization members\&quot;.
+     * @param {string} [skillPresetId] Only count the loads made under this preset.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SkillPresetsApi
+     */
+    public getSkillUsage(organizationId: string, from?: string, to?: string, bucket?: SkillUsageBucket, skillName?: string, userSub?: string, skillPresetId?: string, options?: RawAxiosRequestConfig) {
+        return SkillPresetsApiFp(this.configuration).getSkillUsage(organizationId, from, to, bucket, skillName, userSub, skillPresetId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List the saved states of the organization\'s skill presets, most recent first, each with its full content, who saved it and when. Every create, edit and delete adds one immutable revision. Revisions are kept after a preset is deleted: the deletion adds a final `DELETE` revision holding the state the preset had. A save that fails, for example with a 422, adds nothing. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin).
+     * @summary List skill preset revisions
+     * @param {string} organizationId Organization ID
+     * @param {string} [skillPresetId] Only list the revisions of this preset, deleted or not. Omit it to list the revisions of every preset of the organization.
+     * @param {number} [limit] Maximum number of revisions to return. A value outside 1 to 100 is brought back into that range.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SkillPresetsApi
+     */
+    public listSkillPresetRevisions(organizationId: string, skillPresetId?: string, limit?: number, options?: RawAxiosRequestConfig) {
+        return SkillPresetsApiFp(this.configuration).listSkillPresetRevisions(organizationId, skillPresetId, limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List the skill presets of the organization, with their full content and who each one is assigned to. Templates are listed too unless `isTemplate` filters them. Requires the MANAGE_ORGANIZATION_DATA permission (organization owner or admin).
+     * @summary List organization skill presets
+     * @param {string} organizationId Organization ID
+     * @param {boolean} [isTemplate] &#x60;true&#x60; lists templates only, &#x60;false&#x60; lists assignable presets only. Omit it to list both.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SkillPresetsApi
+     */
+    public listSkillPresets(organizationId: string, isTemplate?: boolean, options?: RawAxiosRequestConfig) {
+        return SkillPresetsApiFp(this.configuration).listSkillPresets(organizationId, isTemplate, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 
 /**
