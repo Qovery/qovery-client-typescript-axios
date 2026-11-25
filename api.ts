@@ -11802,13 +11802,13 @@ export interface ContainerRequest {
      */
     'healthchecks': Healthcheck;
     /**
-     * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment.  On a container with a Git repository source, it must be false or not specified: `true` returns 400. When not specified on a create from, or a switch to, `git_repository`, it is set to false. 
+     * Indicates if the \'environment preview option\' is enabled for this container.   If enabled, a preview environment will be automatically cloned when `/preview` endpoint is called.   If not specified, it takes the value of the `auto_preview` property from the associated environment.  On a container with a Git repository source, `true` makes a pull request start a preview environment that builds the pull request\'s code, pull requests from forks included, and runs it with the environment\'s variables and secrets. When not specified: false on a create from, or a switch to, `git_repository`; the stored value on an update that keeps `git_repository`; false on a switch from `git_repository` to an image. 
      * @type {boolean}
      * @memberof ContainerRequest
      */
     'auto_preview'?: boolean;
     /**
-     * Specify if the container will be automatically updated after receiving a new image tag.  The new image tag shall be communicated via the \"Auto Deploy container\" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments  On a container with a Git repository source, it must be false or not specified: `true` returns 400. When not specified on a create from, or a switch to, `git_repository`, it is set to false. 
+     * Specify if the container will be automatically updated after receiving a new image tag.  The new image tag shall be communicated via the \"Auto Deploy container\" endpoint https://api-doc.qovery.com/#tag/Containers/operation/autoDeployContainerEnvironments  On a container with a Git repository source, `true` makes a push to the source branch deploy the container: anyone who can push to that branch can deploy it. On a preview\'s copy of the container, `true` makes later pushes to the pull request redeploy it, as for applications. When not specified: false on a create from, or a switch to, `git_repository`; the stored value on an update that keeps `git_repository`. 
      * @type {boolean}
      * @memberof ContainerRequest
      */
@@ -12093,7 +12093,7 @@ export interface ContainerSource {
 }
 /**
  * @type ContainerSourceRequest
- * Where the container image comes from. Send exactly one of `image` or `git_repository`; both, or neither, returns 400. A `null` `image` or `git_repository` counts as not sent. - `image`: an image from a container registry, like the flat `registry_id`, `image_name` and `tag` fields. - `git_repository`: a Git repository with a Dockerfile. Qovery builds the image from the deployed commit. Accepted on create (`POST /environment/{environmentId}/container`) and on update (`PUT /container/{containerId}`). Building from Git needs Qovery engine v1.417.0 or later on the cluster: on an older engine, the deployment fails.  Switching the source keeps the same container: its id, Kubernetes names, volumes and built-in variables. The switch does not deploy; the next deployment uses the new source.  A container with a Git repository source has three more built-in variables. `<ID>` is the identifier its other built-in variables use, as in `QOVERY_CONTAINER_<ID>_HOST_INTERNAL`: - `QOVERY_CONTAINER_<ID>_GIT_COMMIT_ID`: the deployed commit; - `QOVERY_CONTAINER_<ID>_GIT_BRANCH`: the branch configured on the source; - `QOVERY_CONTAINER_<ID>_GIT_REPOSITORY_URL`: the repository URL, without credentials, query or fragment.  They are added when missing, when the container is created from, or switched to, a Git repository. A switch back to an image keeps them, with empty values.  Rules: - On update (`PUT /container/{containerId}`), `source` is ignored when it repeats the stored source, and the flat `registry_id`, `image_name` and `tag` fields are ignored when every one sent equals the image the container runs (the `registry.id`, `image_name` and `tag` that GET returns). A body built from the GET response is accepted as is; only the side the client changed is applied. - On update, `source` and the flat fields both asking for a change returns 400, unless both name the same image. This includes a `source.git_repository` change sent with changed flat fields. On create, sending `source` together with the flat fields still returns 400. - On update of a container with an image source, `source.image.registry_id` may be omitted: the stored registry is kept. Switching a container with a Git repository source back to an image, and create, require it. - When `source` is not sent, the stored source is kept. Flat fields never switch the source. - On a container with a Git repository source, flat fields equal to the `registry.id`, `image_name` and `tag` that GET returns are accepted and change nothing; different values return 400 unless `source.image` asks for the same image. A deployment that finishes between the GET and the PUT changes these values: get the container again and retry. Send `source.image` to switch back to an image. - A `git_repository` source requires `auto_deploy` and `auto_preview` to be false or not specified: 400 otherwise. When not specified on a create from, or a switch to, `git_repository`, both are set to false. 
+ * Where the container image comes from. Send exactly one of `image` or `git_repository`; both, or neither, returns 400. A `null` `image` or `git_repository` counts as not sent. - `image`: an image from a container registry, like the flat `registry_id`, `image_name` and `tag` fields. - `git_repository`: a Git repository with a Dockerfile. Qovery builds the image from the deployed commit. Accepted on create (`POST /environment/{environmentId}/container`) and on update (`PUT /container/{containerId}`). Building from Git needs Qovery engine v1.417.0 or later on the cluster: on an older engine, the deployment fails.  Switching the source keeps the same container: its id, Kubernetes names, volumes and built-in variables. The switch does not deploy; the next deployment uses the new source.  A container with a Git repository source has three more built-in variables. `<ID>` is the identifier its other built-in variables use, as in `QOVERY_CONTAINER_<ID>_HOST_INTERNAL`: - `QOVERY_CONTAINER_<ID>_GIT_COMMIT_ID`: the deployed commit; - `QOVERY_CONTAINER_<ID>_GIT_BRANCH`: the branch configured on the source; - `QOVERY_CONTAINER_<ID>_GIT_REPOSITORY_URL`: the repository URL, without credentials, query or fragment.  They are added when missing, when the container is created from, or switched to, a Git repository. A switch back to an image keeps them, with empty values.  Rules: - On update (`PUT /container/{containerId}`), `source` is ignored when it repeats the stored source, and the flat `registry_id`, `image_name` and `tag` fields are ignored when every one sent equals the image the container runs (the `registry.id`, `image_name` and `tag` that GET returns). A body built from the GET response is accepted as is; only the side the client changed is applied. - On update, `source` and the flat fields both asking for a change returns 400, unless both name the same image. This includes a `source.git_repository` change sent with changed flat fields. On create, sending `source` together with the flat fields still returns 400. - On update of a container with an image source, `source.image.registry_id` may be omitted: the stored registry is kept. Switching a container with a Git repository source back to an image, and create, require it. - When `source` is not sent, the stored source is kept. Flat fields never switch the source. - On a container with a Git repository source, flat fields equal to the `registry.id`, `image_name` and `tag` that GET returns are accepted and change nothing; different values return 400 unless `source.image` asks for the same image. A deployment that finishes between the GET and the PUT changes these values: get the container again and retry. Send `source.image` to switch back to an image. - `auto_deploy` and `auto_preview` are accepted with a `git_repository` source. When not sent, they are set to false on a create from, or a switch to, `git_repository`, and keep their stored values on an update that keeps `git_repository`. A switch from `git_repository` to an image without `auto_preview` sets it to false. - With `auto_deploy` true, a push to the source branch deploys the container: anyone who can push to that branch can deploy it. Deployment restrictions (`/service/{serviceId}/deploymentRestriction`) limit which changed paths trigger it. - With `auto_preview` true, a pull request starts a preview environment that builds the pull request\'s code, pull requests from forks included, and runs it with the environment\'s variables and secrets. Later pushes to the pull request redeploy the preview\'s copy of the container only when that copy has `auto_deploy` true, as for applications. 
  * @export
  */
 export type ContainerSourceRequest = ContainerSourceRequestOneOf | ContainerSourceRequestOneOf1;
@@ -28776,6 +28776,91 @@ export interface ServiceAnnotationRequest {
 /**
  * 
  * @export
+ * @interface ServiceDeploymentRestrictionRequest
+ */
+export interface ServiceDeploymentRestrictionRequest {
+    /**
+     * 
+     * @type {DeploymentRestrictionModeEnum}
+     * @memberof ServiceDeploymentRestrictionRequest
+     */
+    'mode': DeploymentRestrictionModeEnum;
+    /**
+     * 
+     * @type {DeploymentRestrictionTypeEnum}
+     * @memberof ServiceDeploymentRestrictionRequest
+     */
+    'type': DeploymentRestrictionTypeEnum;
+    /**
+     * For `PATH` restrictions, the value must not start with `/`
+     * @type {string}
+     * @memberof ServiceDeploymentRestrictionRequest
+     */
+    'value': string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ServiceDeploymentRestrictionResponse
+ */
+export interface ServiceDeploymentRestrictionResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ServiceDeploymentRestrictionResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ServiceDeploymentRestrictionResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ServiceDeploymentRestrictionResponse
+     */
+    'updated_at'?: string;
+    /**
+     * 
+     * @type {DeploymentRestrictionModeEnum}
+     * @memberof ServiceDeploymentRestrictionResponse
+     */
+    'mode': DeploymentRestrictionModeEnum;
+    /**
+     * 
+     * @type {DeploymentRestrictionTypeEnum}
+     * @memberof ServiceDeploymentRestrictionResponse
+     */
+    'type': DeploymentRestrictionTypeEnum;
+    /**
+     * For `PATH` restrictions, the value must not start with `/`
+     * @type {string}
+     * @memberof ServiceDeploymentRestrictionResponse
+     */
+    'value': string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ServiceDeploymentRestrictionResponseList
+ */
+export interface ServiceDeploymentRestrictionResponseList {
+    /**
+     * 
+     * @type {Array<ServiceDeploymentRestrictionResponse>}
+     * @memberof ServiceDeploymentRestrictionResponseList
+     */
+    'results'?: Array<ServiceDeploymentRestrictionResponse>;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -37693,11 +37778,12 @@ export class ApplicationDeploymentHistoryApi extends BaseAPI {
 export const ApplicationDeploymentRestrictionApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Create an application deployment restriction
+         * Create an application deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Create an application deployment restriction
          * @param {string} applicationId Application ID
          * @param {ApplicationDeploymentRestrictionRequest} [applicationDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         createApplicationDeploymentRestriction: async (applicationId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -37738,11 +37824,12 @@ export const ApplicationDeploymentRestrictionApiAxiosParamCreator = function (co
             };
         },
         /**
-         * Delete an application deployment restriction
+         * Delete an application deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Delete an application deployment restriction
          * @param {string} applicationId Application ID
          * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         deleteApplicationDeploymentRestriction: async (applicationId: string, deploymentRestrictionId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -37783,12 +37870,13 @@ export const ApplicationDeploymentRestrictionApiAxiosParamCreator = function (co
             };
         },
         /**
-         * Edit an application deployment restriction
+         * Edit an application deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Edit an application deployment restriction
          * @param {string} applicationId Application ID
          * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {ApplicationDeploymentRestrictionRequest} [applicationDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         editApplicationDeploymentRestriction: async (applicationId: string, deploymentRestrictionId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -37832,10 +37920,11 @@ export const ApplicationDeploymentRestrictionApiAxiosParamCreator = function (co
             };
         },
         /**
-         * Get application deployment restrictions
+         * Get application deployment restrictions  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Get application deployment restrictions
          * @param {string} applicationId Application ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getApplicationDeploymentRestrictions: async (applicationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -37883,11 +37972,12 @@ export const ApplicationDeploymentRestrictionApiFp = function(configuration?: Co
     const localVarAxiosParamCreator = ApplicationDeploymentRestrictionApiAxiosParamCreator(configuration)
     return {
         /**
-         * Create an application deployment restriction
+         * Create an application deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Create an application deployment restriction
          * @param {string} applicationId Application ID
          * @param {ApplicationDeploymentRestrictionRequest} [applicationDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async createApplicationDeploymentRestriction(applicationId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationDeploymentRestriction>> {
@@ -37897,11 +37987,12 @@ export const ApplicationDeploymentRestrictionApiFp = function(configuration?: Co
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Delete an application deployment restriction
+         * Delete an application deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Delete an application deployment restriction
          * @param {string} applicationId Application ID
          * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async deleteApplicationDeploymentRestriction(applicationId: string, deploymentRestrictionId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
@@ -37911,12 +38002,13 @@ export const ApplicationDeploymentRestrictionApiFp = function(configuration?: Co
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Edit an application deployment restriction
+         * Edit an application deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Edit an application deployment restriction
          * @param {string} applicationId Application ID
          * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {ApplicationDeploymentRestrictionRequest} [applicationDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async editApplicationDeploymentRestriction(applicationId: string, deploymentRestrictionId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationDeploymentRestriction>> {
@@ -37926,10 +38018,11 @@ export const ApplicationDeploymentRestrictionApiFp = function(configuration?: Co
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Get application deployment restrictions
+         * Get application deployment restrictions  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Get application deployment restrictions
          * @param {string} applicationId Application ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async getApplicationDeploymentRestrictions(applicationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationDeploymentRestrictionResponseList>> {
@@ -37949,44 +38042,48 @@ export const ApplicationDeploymentRestrictionApiFactory = function (configuratio
     const localVarFp = ApplicationDeploymentRestrictionApiFp(configuration)
     return {
         /**
-         * Create an application deployment restriction
+         * Create an application deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Create an application deployment restriction
          * @param {string} applicationId Application ID
          * @param {ApplicationDeploymentRestrictionRequest} [applicationDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         createApplicationDeploymentRestriction(applicationId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): AxiosPromise<ApplicationDeploymentRestriction> {
             return localVarFp.createApplicationDeploymentRestriction(applicationId, applicationDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Delete an application deployment restriction
+         * Delete an application deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Delete an application deployment restriction
          * @param {string} applicationId Application ID
          * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         deleteApplicationDeploymentRestriction(applicationId: string, deploymentRestrictionId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteApplicationDeploymentRestriction(applicationId, deploymentRestrictionId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Edit an application deployment restriction
+         * Edit an application deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Edit an application deployment restriction
          * @param {string} applicationId Application ID
          * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {ApplicationDeploymentRestrictionRequest} [applicationDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         editApplicationDeploymentRestriction(applicationId: string, deploymentRestrictionId: string, applicationDeploymentRestrictionRequest?: ApplicationDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): AxiosPromise<ApplicationDeploymentRestriction> {
             return localVarFp.editApplicationDeploymentRestriction(applicationId, deploymentRestrictionId, applicationDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get application deployment restrictions
+         * Get application deployment restrictions  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Get application deployment restrictions
          * @param {string} applicationId Application ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getApplicationDeploymentRestrictions(applicationId: string, options?: RawAxiosRequestConfig): AxiosPromise<ApplicationDeploymentRestrictionResponseList> {
@@ -38003,11 +38100,12 @@ export const ApplicationDeploymentRestrictionApiFactory = function (configuratio
  */
 export class ApplicationDeploymentRestrictionApi extends BaseAPI {
     /**
-     * Create an application deployment restriction
+     * Create an application deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
      * @summary Create an application deployment restriction
      * @param {string} applicationId Application ID
      * @param {ApplicationDeploymentRestrictionRequest} [applicationDeploymentRestrictionRequest] 
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ApplicationDeploymentRestrictionApi
      */
@@ -38016,11 +38114,12 @@ export class ApplicationDeploymentRestrictionApi extends BaseAPI {
     }
 
     /**
-     * Delete an application deployment restriction
+     * Delete an application deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
      * @summary Delete an application deployment restriction
      * @param {string} applicationId Application ID
      * @param {string} deploymentRestrictionId Deployment Restriction ID
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ApplicationDeploymentRestrictionApi
      */
@@ -38029,12 +38128,13 @@ export class ApplicationDeploymentRestrictionApi extends BaseAPI {
     }
 
     /**
-     * Edit an application deployment restriction
+     * Edit an application deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
      * @summary Edit an application deployment restriction
      * @param {string} applicationId Application ID
      * @param {string} deploymentRestrictionId Deployment Restriction ID
      * @param {ApplicationDeploymentRestrictionRequest} [applicationDeploymentRestrictionRequest] 
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ApplicationDeploymentRestrictionApi
      */
@@ -38043,10 +38143,11 @@ export class ApplicationDeploymentRestrictionApi extends BaseAPI {
     }
 
     /**
-     * Get application deployment restrictions
+     * Get application deployment restrictions  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
      * @summary Get application deployment restrictions
      * @param {string} applicationId Application ID
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ApplicationDeploymentRestrictionApi
      */
@@ -53162,7 +53263,7 @@ export const ContainerMainCallsApiAxiosParamCreator = function (configuration?: 
             };
         },
         /**
-         * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. - To switch the container between an image and a Git repository, send `source`. The container keeps its id, Kubernetes names, volumes and built-in variables. When `source` is not sent, the stored source is kept. - A body built from the `GET /container/{containerId}` response is accepted as is: `source` is ignored when it repeats the stored source, and `registry_id`, `image_name` and `tag` when they repeat the image the container runs. Only what changed is applied. To change the image with the flat fields, send all three of `registry_id`, `image_name` and `tag`: GET returns `registry.id`, not `registry_id`.  Returns 400 when: - `source` and `registry_id`, `image_name` or `tag` both ask for a change, unless both name the same image; - `source` has both `image` and `git_repository`, or neither; - the container has an image source, only some of `registry_id`, `image_name` and `tag` are sent, and either `source` is not sent or one of them differs from the image the container runs: send all three, or none to keep the image; - the container has a Git repository source, `source.image` is not sent, and `registry_id`, `image_name` or `tag` differ from the `registry.id`, `image_name` and `tag` that `GET /container/{containerId}` returns. A deployment that finishes between the GET and the PUT changes these values, so the PUT gets a 400: get the container again and retry; - `auto_deploy` or `auto_preview` is `true` while `source.git_repository` is sent, or while the container has a Git repository source and `source` is not sent; - `build_settings` is sent while the container keeps, or switches to, an image source. 
+         * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. - To switch the container between an image and a Git repository, send `source`. The container keeps its id, Kubernetes names, volumes and built-in variables. When `source` is not sent, the stored source is kept. - A body built from the `GET /container/{containerId}` response is accepted as is: `source` is ignored when it repeats the stored source, and `registry_id`, `image_name` and `tag` when they repeat the image the container runs. Only what changed is applied. To change the image with the flat fields, send all three of `registry_id`, `image_name` and `tag`: GET returns `registry.id`, not `registry_id`. - `auto_deploy` and `auto_preview` when not sent: on a container that keeps its Git repository source, they keep their stored values; on a switch from an image to `git_repository`, they are set to false; on a switch from `git_repository` to an image, `auto_preview` is set to false. - On a container with a Git repository source, `auto_deploy` true lets anyone who can push to the source branch deploy the container. `auto_preview` true makes a pull request start a preview environment that builds the pull request\'s code, pull requests from forks included, and runs it with the environment\'s variables and secrets. Later pushes to the pull request redeploy the preview\'s copy of the container only when that copy has `auto_deploy` true, as for applications.  Returns 400 when: - `source` and `registry_id`, `image_name` or `tag` both ask for a change, unless both name the same image; - `source` has both `image` and `git_repository`, or neither; - the container has an image source, only some of `registry_id`, `image_name` and `tag` are sent, and either `source` is not sent or one of them differs from the image the container runs: send all three, or none to keep the image; - the container has a Git repository source, `source.image` is not sent, and `registry_id`, `image_name` or `tag` differ from the `registry.id`, `image_name` and `tag` that `GET /container/{containerId}` returns. A deployment that finishes between the GET and the PUT changes these values, so the PUT gets a 400: get the container again and retry; - `build_settings` is sent while the container keeps, or switches to, an image source. 
          * @summary Edit container
          * @param {string} containerId Container ID
          * @param {ContainerRequest} [containerRequest] 
@@ -53405,7 +53506,7 @@ export const ContainerMainCallsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. - To switch the container between an image and a Git repository, send `source`. The container keeps its id, Kubernetes names, volumes and built-in variables. When `source` is not sent, the stored source is kept. - A body built from the `GET /container/{containerId}` response is accepted as is: `source` is ignored when it repeats the stored source, and `registry_id`, `image_name` and `tag` when they repeat the image the container runs. Only what changed is applied. To change the image with the flat fields, send all three of `registry_id`, `image_name` and `tag`: GET returns `registry.id`, not `registry_id`.  Returns 400 when: - `source` and `registry_id`, `image_name` or `tag` both ask for a change, unless both name the same image; - `source` has both `image` and `git_repository`, or neither; - the container has an image source, only some of `registry_id`, `image_name` and `tag` are sent, and either `source` is not sent or one of them differs from the image the container runs: send all three, or none to keep the image; - the container has a Git repository source, `source.image` is not sent, and `registry_id`, `image_name` or `tag` differ from the `registry.id`, `image_name` and `tag` that `GET /container/{containerId}` returns. A deployment that finishes between the GET and the PUT changes these values, so the PUT gets a 400: get the container again and retry; - `auto_deploy` or `auto_preview` is `true` while `source.git_repository` is sent, or while the container has a Git repository source and `source` is not sent; - `build_settings` is sent while the container keeps, or switches to, an image source. 
+         * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. - To switch the container between an image and a Git repository, send `source`. The container keeps its id, Kubernetes names, volumes and built-in variables. When `source` is not sent, the stored source is kept. - A body built from the `GET /container/{containerId}` response is accepted as is: `source` is ignored when it repeats the stored source, and `registry_id`, `image_name` and `tag` when they repeat the image the container runs. Only what changed is applied. To change the image with the flat fields, send all three of `registry_id`, `image_name` and `tag`: GET returns `registry.id`, not `registry_id`. - `auto_deploy` and `auto_preview` when not sent: on a container that keeps its Git repository source, they keep their stored values; on a switch from an image to `git_repository`, they are set to false; on a switch from `git_repository` to an image, `auto_preview` is set to false. - On a container with a Git repository source, `auto_deploy` true lets anyone who can push to the source branch deploy the container. `auto_preview` true makes a pull request start a preview environment that builds the pull request\'s code, pull requests from forks included, and runs it with the environment\'s variables and secrets. Later pushes to the pull request redeploy the preview\'s copy of the container only when that copy has `auto_deploy` true, as for applications.  Returns 400 when: - `source` and `registry_id`, `image_name` or `tag` both ask for a change, unless both name the same image; - `source` has both `image` and `git_repository`, or neither; - the container has an image source, only some of `registry_id`, `image_name` and `tag` are sent, and either `source` is not sent or one of them differs from the image the container runs: send all three, or none to keep the image; - the container has a Git repository source, `source.image` is not sent, and `registry_id`, `image_name` or `tag` differ from the `registry.id`, `image_name` and `tag` that `GET /container/{containerId}` returns. A deployment that finishes between the GET and the PUT changes these values, so the PUT gets a 400: get the container again and retry; - `build_settings` is sent while the container keeps, or switches to, an image source. 
          * @summary Edit container
          * @param {string} containerId Container ID
          * @param {ContainerRequest} [containerRequest] 
@@ -53494,7 +53595,7 @@ export const ContainerMainCallsApiFactory = function (configuration?: Configurat
             return localVarFp.deleteContainer(containerId, skipReconcile, options).then((request) => request(axios, basePath));
         },
         /**
-         * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. - To switch the container between an image and a Git repository, send `source`. The container keeps its id, Kubernetes names, volumes and built-in variables. When `source` is not sent, the stored source is kept. - A body built from the `GET /container/{containerId}` response is accepted as is: `source` is ignored when it repeats the stored source, and `registry_id`, `image_name` and `tag` when they repeat the image the container runs. Only what changed is applied. To change the image with the flat fields, send all three of `registry_id`, `image_name` and `tag`: GET returns `registry.id`, not `registry_id`.  Returns 400 when: - `source` and `registry_id`, `image_name` or `tag` both ask for a change, unless both name the same image; - `source` has both `image` and `git_repository`, or neither; - the container has an image source, only some of `registry_id`, `image_name` and `tag` are sent, and either `source` is not sent or one of them differs from the image the container runs: send all three, or none to keep the image; - the container has a Git repository source, `source.image` is not sent, and `registry_id`, `image_name` or `tag` differ from the `registry.id`, `image_name` and `tag` that `GET /container/{containerId}` returns. A deployment that finishes between the GET and the PUT changes these values, so the PUT gets a 400: get the container again and retry; - `auto_deploy` or `auto_preview` is `true` while `source.git_repository` is sent, or while the container has a Git repository source and `source` is not sent; - `build_settings` is sent while the container keeps, or switches to, an image source. 
+         * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. - To switch the container between an image and a Git repository, send `source`. The container keeps its id, Kubernetes names, volumes and built-in variables. When `source` is not sent, the stored source is kept. - A body built from the `GET /container/{containerId}` response is accepted as is: `source` is ignored when it repeats the stored source, and `registry_id`, `image_name` and `tag` when they repeat the image the container runs. Only what changed is applied. To change the image with the flat fields, send all three of `registry_id`, `image_name` and `tag`: GET returns `registry.id`, not `registry_id`. - `auto_deploy` and `auto_preview` when not sent: on a container that keeps its Git repository source, they keep their stored values; on a switch from an image to `git_repository`, they are set to false; on a switch from `git_repository` to an image, `auto_preview` is set to false. - On a container with a Git repository source, `auto_deploy` true lets anyone who can push to the source branch deploy the container. `auto_preview` true makes a pull request start a preview environment that builds the pull request\'s code, pull requests from forks included, and runs it with the environment\'s variables and secrets. Later pushes to the pull request redeploy the preview\'s copy of the container only when that copy has `auto_deploy` true, as for applications.  Returns 400 when: - `source` and `registry_id`, `image_name` or `tag` both ask for a change, unless both name the same image; - `source` has both `image` and `git_repository`, or neither; - the container has an image source, only some of `registry_id`, `image_name` and `tag` are sent, and either `source` is not sent or one of them differs from the image the container runs: send all three, or none to keep the image; - the container has a Git repository source, `source.image` is not sent, and `registry_id`, `image_name` or `tag` differ from the `registry.id`, `image_name` and `tag` that `GET /container/{containerId}` returns. A deployment that finishes between the GET and the PUT changes these values, so the PUT gets a 400: get the container again and retry; - `build_settings` is sent while the container keeps, or switches to, an image source. 
          * @summary Edit container
          * @param {string} containerId Container ID
          * @param {ContainerRequest} [containerRequest] 
@@ -53570,7 +53671,7 @@ export class ContainerMainCallsApi extends BaseAPI {
     }
 
     /**
-     * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. - To switch the container between an image and a Git repository, send `source`. The container keeps its id, Kubernetes names, volumes and built-in variables. When `source` is not sent, the stored source is kept. - A body built from the `GET /container/{containerId}` response is accepted as is: `source` is ignored when it repeats the stored source, and `registry_id`, `image_name` and `tag` when they repeat the image the container runs. Only what changed is applied. To change the image with the flat fields, send all three of `registry_id`, `image_name` and `tag`: GET returns `registry.id`, not `registry_id`.  Returns 400 when: - `source` and `registry_id`, `image_name` or `tag` both ask for a change, unless both name the same image; - `source` has both `image` and `git_repository`, or neither; - the container has an image source, only some of `registry_id`, `image_name` and `tag` are sent, and either `source` is not sent or one of them differs from the image the container runs: send all three, or none to keep the image; - the container has a Git repository source, `source.image` is not sent, and `registry_id`, `image_name` or `tag` differ from the `registry.id`, `image_name` and `tag` that `GET /container/{containerId}` returns. A deployment that finishes between the GET and the PUT changes these values, so the PUT gets a 400: get the container again and retry; - `auto_deploy` or `auto_preview` is `true` while `source.git_repository` is sent, or while the container has a Git repository source and `source` is not sent; - `build_settings` is sent while the container keeps, or switches to, an image source. 
+     * - To edit the container you must have the admin permission. - For port edition, if you provide a port id, we will update the corresponding port. If you don\'t we will create a new one. If you remove a port from the payload, we will delete it. - For storage edition, if you provide a storage id, we will update the corresponding storage. If you don\'t we will create a new one. If you remove a storage from the payload, we will delete it. - To switch the container between an image and a Git repository, send `source`. The container keeps its id, Kubernetes names, volumes and built-in variables. When `source` is not sent, the stored source is kept. - A body built from the `GET /container/{containerId}` response is accepted as is: `source` is ignored when it repeats the stored source, and `registry_id`, `image_name` and `tag` when they repeat the image the container runs. Only what changed is applied. To change the image with the flat fields, send all three of `registry_id`, `image_name` and `tag`: GET returns `registry.id`, not `registry_id`. - `auto_deploy` and `auto_preview` when not sent: on a container that keeps its Git repository source, they keep their stored values; on a switch from an image to `git_repository`, they are set to false; on a switch from `git_repository` to an image, `auto_preview` is set to false. - On a container with a Git repository source, `auto_deploy` true lets anyone who can push to the source branch deploy the container. `auto_preview` true makes a pull request start a preview environment that builds the pull request\'s code, pull requests from forks included, and runs it with the environment\'s variables and secrets. Later pushes to the pull request redeploy the preview\'s copy of the container only when that copy has `auto_deploy` true, as for applications.  Returns 400 when: - `source` and `registry_id`, `image_name` or `tag` both ask for a change, unless both name the same image; - `source` has both `image` and `git_repository`, or neither; - the container has an image source, only some of `registry_id`, `image_name` and `tag` are sent, and either `source` is not sent or one of them differs from the image the container runs: send all three, or none to keep the image; - the container has a Git repository source, `source.image` is not sent, and `registry_id`, `image_name` or `tag` differ from the `registry.id`, `image_name` and `tag` that `GET /container/{containerId}` returns. A deployment that finishes between the GET and the PUT changes these values, so the PUT gets a 400: get the container again and retry; - `build_settings` is sent while the container keeps, or switches to, an image source. 
      * @summary Edit container
      * @param {string} containerId Container ID
      * @param {ContainerRequest} [containerRequest] 
@@ -54907,7 +55008,7 @@ export const ContainersApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * A container is created from an image or from a Git repository: - image: send `registry_id`, `image_name` and `tag`, or `source.image`; - Git repository: send `source.git_repository`, and optionally `build_settings`. The repository, its token, the Dockerfile and the build settings go through the same checks, with the same errors, as a switch to `git_repository` with `PUT /container/{containerId}`. Nothing is created when a check fails.  Returns 400 when: - `source` is sent together with `registry_id`, `image_name` or `tag`; - `source` has both `image` and `git_repository`, or neither; - `source` is not sent and `registry_id`, `image_name` and `tag` are not all sent; - `auto_deploy` or `auto_preview` is `true` while `source.git_repository` is sent; - `build_settings` is sent with an image source; - `source.git_repository` is sent and the environment\'s cluster has no build registry.  Returns 404 when the registry in `registry_id` or `source.image.registry_id` does not exist in the environment\'s organization. 
+         * A container is created from an image or from a Git repository: - image: send `registry_id`, `image_name` and `tag`, or `source.image`; - Git repository: send `source.git_repository`, and optionally `build_settings`. The repository, its token, the Dockerfile and the build settings go through the same checks, with the same errors, as a switch to `git_repository` with `PUT /container/{containerId}`. Nothing is created when a check fails.  On a container created from a Git repository, `auto_deploy` and `auto_preview` are false when not sent. When true: - with `auto_deploy`, a push to the source branch deploys the container, so anyone who can push to that branch can deploy it; - with `auto_preview`, a pull request starts a preview environment that builds the pull request\'s code, pull requests from forks included, and runs it with the environment\'s variables and secrets. Later pushes to the pull request redeploy the preview\'s copy of the container only when that copy has `auto_deploy` true, as for applications.  Returns 400 when: - `source` is sent together with `registry_id`, `image_name` or `tag`; - `source` has both `image` and `git_repository`, or neither; - `source` is not sent and `registry_id`, `image_name` and `tag` are not all sent; - `build_settings` is sent with an image source; - `source.git_repository` is sent and the environment\'s cluster has no build registry.  Returns 404 when the registry in `registry_id` or `source.image.registry_id` does not exist in the environment\'s organization. 
          * @summary Create a container
          * @param {string} environmentId Environment ID
          * @param {ContainerRequest} [containerRequest] 
@@ -55199,7 +55300,7 @@ export const ContainersApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * A container is created from an image or from a Git repository: - image: send `registry_id`, `image_name` and `tag`, or `source.image`; - Git repository: send `source.git_repository`, and optionally `build_settings`. The repository, its token, the Dockerfile and the build settings go through the same checks, with the same errors, as a switch to `git_repository` with `PUT /container/{containerId}`. Nothing is created when a check fails.  Returns 400 when: - `source` is sent together with `registry_id`, `image_name` or `tag`; - `source` has both `image` and `git_repository`, or neither; - `source` is not sent and `registry_id`, `image_name` and `tag` are not all sent; - `auto_deploy` or `auto_preview` is `true` while `source.git_repository` is sent; - `build_settings` is sent with an image source; - `source.git_repository` is sent and the environment\'s cluster has no build registry.  Returns 404 when the registry in `registry_id` or `source.image.registry_id` does not exist in the environment\'s organization. 
+         * A container is created from an image or from a Git repository: - image: send `registry_id`, `image_name` and `tag`, or `source.image`; - Git repository: send `source.git_repository`, and optionally `build_settings`. The repository, its token, the Dockerfile and the build settings go through the same checks, with the same errors, as a switch to `git_repository` with `PUT /container/{containerId}`. Nothing is created when a check fails.  On a container created from a Git repository, `auto_deploy` and `auto_preview` are false when not sent. When true: - with `auto_deploy`, a push to the source branch deploys the container, so anyone who can push to that branch can deploy it; - with `auto_preview`, a pull request starts a preview environment that builds the pull request\'s code, pull requests from forks included, and runs it with the environment\'s variables and secrets. Later pushes to the pull request redeploy the preview\'s copy of the container only when that copy has `auto_deploy` true, as for applications.  Returns 400 when: - `source` is sent together with `registry_id`, `image_name` or `tag`; - `source` has both `image` and `git_repository`, or neither; - `source` is not sent and `registry_id`, `image_name` and `tag` are not all sent; - `build_settings` is sent with an image source; - `source.git_repository` is sent and the environment\'s cluster has no build registry.  Returns 404 when the registry in `registry_id` or `source.image.registry_id` does not exist in the environment\'s organization. 
          * @summary Create a container
          * @param {string} environmentId Environment ID
          * @param {ContainerRequest} [containerRequest] 
@@ -55311,7 +55412,7 @@ export const ContainersApiFactory = function (configuration?: Configuration, bas
             return localVarFp.cloneContainer(containerId, cloneServiceRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * A container is created from an image or from a Git repository: - image: send `registry_id`, `image_name` and `tag`, or `source.image`; - Git repository: send `source.git_repository`, and optionally `build_settings`. The repository, its token, the Dockerfile and the build settings go through the same checks, with the same errors, as a switch to `git_repository` with `PUT /container/{containerId}`. Nothing is created when a check fails.  Returns 400 when: - `source` is sent together with `registry_id`, `image_name` or `tag`; - `source` has both `image` and `git_repository`, or neither; - `source` is not sent and `registry_id`, `image_name` and `tag` are not all sent; - `auto_deploy` or `auto_preview` is `true` while `source.git_repository` is sent; - `build_settings` is sent with an image source; - `source.git_repository` is sent and the environment\'s cluster has no build registry.  Returns 404 when the registry in `registry_id` or `source.image.registry_id` does not exist in the environment\'s organization. 
+         * A container is created from an image or from a Git repository: - image: send `registry_id`, `image_name` and `tag`, or `source.image`; - Git repository: send `source.git_repository`, and optionally `build_settings`. The repository, its token, the Dockerfile and the build settings go through the same checks, with the same errors, as a switch to `git_repository` with `PUT /container/{containerId}`. Nothing is created when a check fails.  On a container created from a Git repository, `auto_deploy` and `auto_preview` are false when not sent. When true: - with `auto_deploy`, a push to the source branch deploys the container, so anyone who can push to that branch can deploy it; - with `auto_preview`, a pull request starts a preview environment that builds the pull request\'s code, pull requests from forks included, and runs it with the environment\'s variables and secrets. Later pushes to the pull request redeploy the preview\'s copy of the container only when that copy has `auto_deploy` true, as for applications.  Returns 400 when: - `source` is sent together with `registry_id`, `image_name` or `tag`; - `source` has both `image` and `git_repository`, or neither; - `source` is not sent and `registry_id`, `image_name` and `tag` are not all sent; - `build_settings` is sent with an image source; - `source.git_repository` is sent and the environment\'s cluster has no build registry.  Returns 404 when the registry in `registry_id` or `source.image.registry_id` does not exist in the environment\'s organization. 
          * @summary Create a container
          * @param {string} environmentId Environment ID
          * @param {ContainerRequest} [containerRequest] 
@@ -55409,7 +55510,7 @@ export class ContainersApi extends BaseAPI {
     }
 
     /**
-     * A container is created from an image or from a Git repository: - image: send `registry_id`, `image_name` and `tag`, or `source.image`; - Git repository: send `source.git_repository`, and optionally `build_settings`. The repository, its token, the Dockerfile and the build settings go through the same checks, with the same errors, as a switch to `git_repository` with `PUT /container/{containerId}`. Nothing is created when a check fails.  Returns 400 when: - `source` is sent together with `registry_id`, `image_name` or `tag`; - `source` has both `image` and `git_repository`, or neither; - `source` is not sent and `registry_id`, `image_name` and `tag` are not all sent; - `auto_deploy` or `auto_preview` is `true` while `source.git_repository` is sent; - `build_settings` is sent with an image source; - `source.git_repository` is sent and the environment\'s cluster has no build registry.  Returns 404 when the registry in `registry_id` or `source.image.registry_id` does not exist in the environment\'s organization. 
+     * A container is created from an image or from a Git repository: - image: send `registry_id`, `image_name` and `tag`, or `source.image`; - Git repository: send `source.git_repository`, and optionally `build_settings`. The repository, its token, the Dockerfile and the build settings go through the same checks, with the same errors, as a switch to `git_repository` with `PUT /container/{containerId}`. Nothing is created when a check fails.  On a container created from a Git repository, `auto_deploy` and `auto_preview` are false when not sent. When true: - with `auto_deploy`, a push to the source branch deploys the container, so anyone who can push to that branch can deploy it; - with `auto_preview`, a pull request starts a preview environment that builds the pull request\'s code, pull requests from forks included, and runs it with the environment\'s variables and secrets. Later pushes to the pull request redeploy the preview\'s copy of the container only when that copy has `auto_deploy` true, as for applications.  Returns 400 when: - `source` is sent together with `registry_id`, `image_name` or `tag`; - `source` has both `image` and `git_repository`, or neither; - `source` is not sent and `registry_id`, `image_name` and `tag` are not all sent; - `build_settings` is sent with an image source; - `source.git_repository` is sent and the environment\'s cluster has no build registry.  Returns 404 when the registry in `registry_id` or `source.image.registry_id` does not exist in the environment\'s organization. 
      * @summary Create a container
      * @param {string} environmentId Environment ID
      * @param {ContainerRequest} [containerRequest] 
@@ -65113,11 +65214,12 @@ export class HelmDeploymentHistoryApi extends BaseAPI {
 export const HelmDeploymentRestrictionApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Create a helm deployment restriction
+         * Create a helm deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Create a helm deployment restriction
          * @param {string} helmId Helm ID
          * @param {HelmDeploymentRestrictionRequest} [helmDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         createHelmDeploymentRestriction: async (helmId: string, helmDeploymentRestrictionRequest?: HelmDeploymentRestrictionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -65158,11 +65260,12 @@ export const HelmDeploymentRestrictionApiAxiosParamCreator = function (configura
             };
         },
         /**
-         * Delete a helm deployment restriction
+         * Delete a helm deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Delete a helm deployment restriction
          * @param {string} helmId Helm ID
          * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         deleteHelmDeploymentRestriction: async (helmId: string, deploymentRestrictionId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -65203,12 +65306,13 @@ export const HelmDeploymentRestrictionApiAxiosParamCreator = function (configura
             };
         },
         /**
-         * Edit a helm deployment restriction
+         * Edit a helm deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Edit a helm deployment restriction
          * @param {string} helmId Helm ID
          * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {HelmDeploymentRestrictionRequest} [helmDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         editHelmDeploymentRestriction: async (helmId: string, deploymentRestrictionId: string, helmDeploymentRestrictionRequest?: HelmDeploymentRestrictionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -65252,10 +65356,11 @@ export const HelmDeploymentRestrictionApiAxiosParamCreator = function (configura
             };
         },
         /**
-         * Get helm deployment restrictions
+         * Get helm deployment restrictions  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Get helm deployment restrictions
          * @param {string} helmId Helm ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getHelmDeploymentRestrictions: async (helmId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -65303,11 +65408,12 @@ export const HelmDeploymentRestrictionApiFp = function(configuration?: Configura
     const localVarAxiosParamCreator = HelmDeploymentRestrictionApiAxiosParamCreator(configuration)
     return {
         /**
-         * Create a helm deployment restriction
+         * Create a helm deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Create a helm deployment restriction
          * @param {string} helmId Helm ID
          * @param {HelmDeploymentRestrictionRequest} [helmDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async createHelmDeploymentRestriction(helmId: string, helmDeploymentRestrictionRequest?: HelmDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmDeploymentRestrictionResponse>> {
@@ -65317,11 +65423,12 @@ export const HelmDeploymentRestrictionApiFp = function(configuration?: Configura
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Delete a helm deployment restriction
+         * Delete a helm deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Delete a helm deployment restriction
          * @param {string} helmId Helm ID
          * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async deleteHelmDeploymentRestriction(helmId: string, deploymentRestrictionId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
@@ -65331,12 +65438,13 @@ export const HelmDeploymentRestrictionApiFp = function(configuration?: Configura
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Edit a helm deployment restriction
+         * Edit a helm deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Edit a helm deployment restriction
          * @param {string} helmId Helm ID
          * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {HelmDeploymentRestrictionRequest} [helmDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async editHelmDeploymentRestriction(helmId: string, deploymentRestrictionId: string, helmDeploymentRestrictionRequest?: HelmDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmDeploymentRestrictionResponse>> {
@@ -65346,10 +65454,11 @@ export const HelmDeploymentRestrictionApiFp = function(configuration?: Configura
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Get helm deployment restrictions
+         * Get helm deployment restrictions  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Get helm deployment restrictions
          * @param {string} helmId Helm ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async getHelmDeploymentRestrictions(helmId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelmDeploymentRestrictionResponseList>> {
@@ -65369,44 +65478,48 @@ export const HelmDeploymentRestrictionApiFactory = function (configuration?: Con
     const localVarFp = HelmDeploymentRestrictionApiFp(configuration)
     return {
         /**
-         * Create a helm deployment restriction
+         * Create a helm deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Create a helm deployment restriction
          * @param {string} helmId Helm ID
          * @param {HelmDeploymentRestrictionRequest} [helmDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         createHelmDeploymentRestriction(helmId: string, helmDeploymentRestrictionRequest?: HelmDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): AxiosPromise<HelmDeploymentRestrictionResponse> {
             return localVarFp.createHelmDeploymentRestriction(helmId, helmDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Delete a helm deployment restriction
+         * Delete a helm deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Delete a helm deployment restriction
          * @param {string} helmId Helm ID
          * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         deleteHelmDeploymentRestriction(helmId: string, deploymentRestrictionId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteHelmDeploymentRestriction(helmId, deploymentRestrictionId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Edit a helm deployment restriction
+         * Edit a helm deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Edit a helm deployment restriction
          * @param {string} helmId Helm ID
          * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {HelmDeploymentRestrictionRequest} [helmDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         editHelmDeploymentRestriction(helmId: string, deploymentRestrictionId: string, helmDeploymentRestrictionRequest?: HelmDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): AxiosPromise<HelmDeploymentRestrictionResponse> {
             return localVarFp.editHelmDeploymentRestriction(helmId, deploymentRestrictionId, helmDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get helm deployment restrictions
+         * Get helm deployment restrictions  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Get helm deployment restrictions
          * @param {string} helmId Helm ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getHelmDeploymentRestrictions(helmId: string, options?: RawAxiosRequestConfig): AxiosPromise<HelmDeploymentRestrictionResponseList> {
@@ -65423,11 +65536,12 @@ export const HelmDeploymentRestrictionApiFactory = function (configuration?: Con
  */
 export class HelmDeploymentRestrictionApi extends BaseAPI {
     /**
-     * Create a helm deployment restriction
+     * Create a helm deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
      * @summary Create a helm deployment restriction
      * @param {string} helmId Helm ID
      * @param {HelmDeploymentRestrictionRequest} [helmDeploymentRestrictionRequest] 
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof HelmDeploymentRestrictionApi
      */
@@ -65436,11 +65550,12 @@ export class HelmDeploymentRestrictionApi extends BaseAPI {
     }
 
     /**
-     * Delete a helm deployment restriction
+     * Delete a helm deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
      * @summary Delete a helm deployment restriction
      * @param {string} helmId Helm ID
      * @param {string} deploymentRestrictionId Deployment Restriction ID
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof HelmDeploymentRestrictionApi
      */
@@ -65449,12 +65564,13 @@ export class HelmDeploymentRestrictionApi extends BaseAPI {
     }
 
     /**
-     * Edit a helm deployment restriction
+     * Edit a helm deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
      * @summary Edit a helm deployment restriction
      * @param {string} helmId Helm ID
      * @param {string} deploymentRestrictionId Deployment Restriction ID
      * @param {HelmDeploymentRestrictionRequest} [helmDeploymentRestrictionRequest] 
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof HelmDeploymentRestrictionApi
      */
@@ -65463,10 +65579,11 @@ export class HelmDeploymentRestrictionApi extends BaseAPI {
     }
 
     /**
-     * Get helm deployment restrictions
+     * Get helm deployment restrictions  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
      * @summary Get helm deployment restrictions
      * @param {string} helmId Helm ID
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof HelmDeploymentRestrictionApi
      */
@@ -68348,11 +68465,12 @@ export class JobDeploymentHistoryApi extends BaseAPI {
 export const JobDeploymentRestrictionApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Create a job deployment restriction
+         * Create a job deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Create a job deployment restriction
          * @param {string} jobId Job ID
          * @param {JobDeploymentRestrictionRequest} [jobDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         createJobDeploymentRestriction: async (jobId: string, jobDeploymentRestrictionRequest?: JobDeploymentRestrictionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -68393,11 +68511,12 @@ export const JobDeploymentRestrictionApiAxiosParamCreator = function (configurat
             };
         },
         /**
-         * Delete a job deployment restriction
+         * Delete a job deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Delete a job deployment restriction
          * @param {string} jobId Job ID
          * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         deleteJobDeploymentRestriction: async (jobId: string, deploymentRestrictionId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -68438,12 +68557,13 @@ export const JobDeploymentRestrictionApiAxiosParamCreator = function (configurat
             };
         },
         /**
-         * Edit a job deployment restriction
+         * Edit a job deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Edit a job deployment restriction
          * @param {string} jobId Job ID
          * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {JobDeploymentRestrictionRequest} [jobDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         editJobDeploymentRestriction: async (jobId: string, deploymentRestrictionId: string, jobDeploymentRestrictionRequest?: JobDeploymentRestrictionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -68487,10 +68607,11 @@ export const JobDeploymentRestrictionApiAxiosParamCreator = function (configurat
             };
         },
         /**
-         * Get job deployment restrictions
+         * Get job deployment restrictions  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Get job deployment restrictions
          * @param {string} jobId Job ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getJobDeploymentRestrictions: async (jobId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -68538,11 +68659,12 @@ export const JobDeploymentRestrictionApiFp = function(configuration?: Configurat
     const localVarAxiosParamCreator = JobDeploymentRestrictionApiAxiosParamCreator(configuration)
     return {
         /**
-         * Create a job deployment restriction
+         * Create a job deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Create a job deployment restriction
          * @param {string} jobId Job ID
          * @param {JobDeploymentRestrictionRequest} [jobDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async createJobDeploymentRestriction(jobId: string, jobDeploymentRestrictionRequest?: JobDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JobDeploymentRestrictionResponse>> {
@@ -68552,11 +68674,12 @@ export const JobDeploymentRestrictionApiFp = function(configuration?: Configurat
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Delete a job deployment restriction
+         * Delete a job deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Delete a job deployment restriction
          * @param {string} jobId Job ID
          * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async deleteJobDeploymentRestriction(jobId: string, deploymentRestrictionId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
@@ -68566,12 +68689,13 @@ export const JobDeploymentRestrictionApiFp = function(configuration?: Configurat
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Edit a job deployment restriction
+         * Edit a job deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Edit a job deployment restriction
          * @param {string} jobId Job ID
          * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {JobDeploymentRestrictionRequest} [jobDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async editJobDeploymentRestriction(jobId: string, deploymentRestrictionId: string, jobDeploymentRestrictionRequest?: JobDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JobDeploymentRestrictionResponse>> {
@@ -68581,10 +68705,11 @@ export const JobDeploymentRestrictionApiFp = function(configuration?: Configurat
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Get job deployment restrictions
+         * Get job deployment restrictions  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Get job deployment restrictions
          * @param {string} jobId Job ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async getJobDeploymentRestrictions(jobId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JobDeploymentRestrictionResponseList>> {
@@ -68604,44 +68729,48 @@ export const JobDeploymentRestrictionApiFactory = function (configuration?: Conf
     const localVarFp = JobDeploymentRestrictionApiFp(configuration)
     return {
         /**
-         * Create a job deployment restriction
+         * Create a job deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Create a job deployment restriction
          * @param {string} jobId Job ID
          * @param {JobDeploymentRestrictionRequest} [jobDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         createJobDeploymentRestriction(jobId: string, jobDeploymentRestrictionRequest?: JobDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): AxiosPromise<JobDeploymentRestrictionResponse> {
             return localVarFp.createJobDeploymentRestriction(jobId, jobDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Delete a job deployment restriction
+         * Delete a job deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Delete a job deployment restriction
          * @param {string} jobId Job ID
          * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         deleteJobDeploymentRestriction(jobId: string, deploymentRestrictionId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteJobDeploymentRestriction(jobId, deploymentRestrictionId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Edit a job deployment restriction
+         * Edit a job deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Edit a job deployment restriction
          * @param {string} jobId Job ID
          * @param {string} deploymentRestrictionId Deployment Restriction ID
          * @param {JobDeploymentRestrictionRequest} [jobDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         editJobDeploymentRestriction(jobId: string, deploymentRestrictionId: string, jobDeploymentRestrictionRequest?: JobDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): AxiosPromise<JobDeploymentRestrictionResponse> {
             return localVarFp.editJobDeploymentRestriction(jobId, deploymentRestrictionId, jobDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get job deployment restrictions
+         * Get job deployment restrictions  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Get job deployment restrictions
          * @param {string} jobId Job ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getJobDeploymentRestrictions(jobId: string, options?: RawAxiosRequestConfig): AxiosPromise<JobDeploymentRestrictionResponseList> {
@@ -68658,11 +68787,12 @@ export const JobDeploymentRestrictionApiFactory = function (configuration?: Conf
  */
 export class JobDeploymentRestrictionApi extends BaseAPI {
     /**
-     * Create a job deployment restriction
+     * Create a job deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
      * @summary Create a job deployment restriction
      * @param {string} jobId Job ID
      * @param {JobDeploymentRestrictionRequest} [jobDeploymentRestrictionRequest] 
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof JobDeploymentRestrictionApi
      */
@@ -68671,11 +68801,12 @@ export class JobDeploymentRestrictionApi extends BaseAPI {
     }
 
     /**
-     * Delete a job deployment restriction
+     * Delete a job deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
      * @summary Delete a job deployment restriction
      * @param {string} jobId Job ID
      * @param {string} deploymentRestrictionId Deployment Restriction ID
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof JobDeploymentRestrictionApi
      */
@@ -68684,12 +68815,13 @@ export class JobDeploymentRestrictionApi extends BaseAPI {
     }
 
     /**
-     * Edit a job deployment restriction
+     * Edit a job deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
      * @summary Edit a job deployment restriction
      * @param {string} jobId Job ID
      * @param {string} deploymentRestrictionId Deployment Restriction ID
      * @param {JobDeploymentRestrictionRequest} [jobDeploymentRestrictionRequest] 
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof JobDeploymentRestrictionApi
      */
@@ -68698,10 +68830,11 @@ export class JobDeploymentRestrictionApi extends BaseAPI {
     }
 
     /**
-     * Get job deployment restrictions
+     * Get job deployment restrictions  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
      * @summary Get job deployment restrictions
      * @param {string} jobId Job ID
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof JobDeploymentRestrictionApi
      */
@@ -82801,6 +82934,145 @@ export class SecretManagerAccessApi extends BaseAPI {
 export const ServiceMainCallsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Creates a deployment restriction on a service. Works for applications, jobs, Helm, Terraform and containers. Restrictions filter which pushes to the source branch deploy the service, by changed file path.  Returns 400 when the service cannot have restrictions: a job or container with an image source, a Helm or Terraform service not using a Git repository, or a kind without restrictions: a database or an agentic workflow. 
+         * @summary Create a service deployment restriction
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {ServiceDeploymentRestrictionRequest} [serviceDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createServiceDeploymentRestriction: async (serviceId: string, serviceDeploymentRestrictionRequest?: ServiceDeploymentRestrictionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'serviceId' is not null or undefined
+            assertParamExists('createServiceDeploymentRestriction', 'serviceId', serviceId)
+            const localVarPath = `/service/{serviceId}/deploymentRestriction`
+                .replace(`{${"serviceId"}}`, encodeURIComponent(String(serviceId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(serviceDeploymentRestrictionRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Deletes a deployment restriction of a service. Works for applications, jobs, Helm, Terraform and containers.  Works on any container, whatever its source: a container\'s restrictions survive a switch to an image source, without effect until it switches back to a Git repository source.  Returns 400 when the service is a kind that cannot have deployment restrictions: a database or an agentic workflow. 
+         * @summary Delete a service deployment restriction
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteServiceDeploymentRestriction: async (serviceId: string, deploymentRestrictionId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'serviceId' is not null or undefined
+            assertParamExists('deleteServiceDeploymentRestriction', 'serviceId', serviceId)
+            // verify required parameter 'deploymentRestrictionId' is not null or undefined
+            assertParamExists('deleteServiceDeploymentRestriction', 'deploymentRestrictionId', deploymentRestrictionId)
+            const localVarPath = `/service/{serviceId}/deploymentRestriction/{deploymentRestrictionId}`
+                .replace(`{${"serviceId"}}`, encodeURIComponent(String(serviceId)))
+                .replace(`{${"deploymentRestrictionId"}}`, encodeURIComponent(String(deploymentRestrictionId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Edits a deployment restriction of a service. Works for applications, jobs, Helm, Terraform and containers.  Returns 400 when the service is a container with an image source, or a kind that cannot have deployment restrictions: a database or an agentic workflow. 
+         * @summary Edit a service deployment restriction
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {ServiceDeploymentRestrictionRequest} [serviceDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editServiceDeploymentRestriction: async (serviceId: string, deploymentRestrictionId: string, serviceDeploymentRestrictionRequest?: ServiceDeploymentRestrictionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'serviceId' is not null or undefined
+            assertParamExists('editServiceDeploymentRestriction', 'serviceId', serviceId)
+            // verify required parameter 'deploymentRestrictionId' is not null or undefined
+            assertParamExists('editServiceDeploymentRestriction', 'deploymentRestrictionId', deploymentRestrictionId)
+            const localVarPath = `/service/{serviceId}/deploymentRestriction/{deploymentRestrictionId}`
+                .replace(`{${"serviceId"}}`, encodeURIComponent(String(serviceId)))
+                .replace(`{${"deploymentRestrictionId"}}`, encodeURIComponent(String(deploymentRestrictionId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(serviceDeploymentRestrictionRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns the webhook status for a git-based service. Checks if the Qovery webhook is correctly configured on the git provider (GitHub, GitLab, or Bitbucket).
          * @summary Get git webhook status for a service
          * @param {string} serviceId Service ID of an application/job/container/database
@@ -82811,6 +83083,47 @@ export const ServiceMainCallsApiAxiosParamCreator = function (configuration?: Co
             // verify required parameter 'serviceId' is not null or undefined
             assertParamExists('getServiceGitWebhookStatus', 'serviceId', serviceId)
             const localVarPath = `/service/{serviceId}/gitWebhookStatus`
+                .replace(`{${"serviceId"}}`, encodeURIComponent(String(serviceId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Lists the deployment restrictions of a service. Works for applications, jobs, Helm, Terraform and containers. Restrictions filter which pushes to the source branch deploy the service, by changed file path.  Works on any container, whatever its source: a container\'s restrictions survive a switch to an image source, without effect until it switches back to a Git repository source.  Returns 400 when the service is a kind that cannot have deployment restrictions: a database or an agentic workflow. 
+         * @summary List service deployment restrictions
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listServiceDeploymentRestrictions: async (serviceId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'serviceId' is not null or undefined
+            assertParamExists('listServiceDeploymentRestrictions', 'serviceId', serviceId)
+            const localVarPath = `/service/{serviceId}/deploymentRestriction`
                 .replace(`{${"serviceId"}}`, encodeURIComponent(String(serviceId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -82893,6 +83206,49 @@ export const ServiceMainCallsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ServiceMainCallsApiAxiosParamCreator(configuration)
     return {
         /**
+         * Creates a deployment restriction on a service. Works for applications, jobs, Helm, Terraform and containers. Restrictions filter which pushes to the source branch deploy the service, by changed file path.  Returns 400 when the service cannot have restrictions: a job or container with an image source, a Helm or Terraform service not using a Git repository, or a kind without restrictions: a database or an agentic workflow. 
+         * @summary Create a service deployment restriction
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {ServiceDeploymentRestrictionRequest} [serviceDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createServiceDeploymentRestriction(serviceId: string, serviceDeploymentRestrictionRequest?: ServiceDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceDeploymentRestrictionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createServiceDeploymentRestriction(serviceId, serviceDeploymentRestrictionRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ServiceMainCallsApi.createServiceDeploymentRestriction']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Deletes a deployment restriction of a service. Works for applications, jobs, Helm, Terraform and containers.  Works on any container, whatever its source: a container\'s restrictions survive a switch to an image source, without effect until it switches back to a Git repository source.  Returns 400 when the service is a kind that cannot have deployment restrictions: a database or an agentic workflow. 
+         * @summary Delete a service deployment restriction
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteServiceDeploymentRestriction(serviceId: string, deploymentRestrictionId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteServiceDeploymentRestriction(serviceId, deploymentRestrictionId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ServiceMainCallsApi.deleteServiceDeploymentRestriction']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Edits a deployment restriction of a service. Works for applications, jobs, Helm, Terraform and containers.  Returns 400 when the service is a container with an image source, or a kind that cannot have deployment restrictions: a database or an agentic workflow. 
+         * @summary Edit a service deployment restriction
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {ServiceDeploymentRestrictionRequest} [serviceDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async editServiceDeploymentRestriction(serviceId: string, deploymentRestrictionId: string, serviceDeploymentRestrictionRequest?: ServiceDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceDeploymentRestrictionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.editServiceDeploymentRestriction(serviceId, deploymentRestrictionId, serviceDeploymentRestrictionRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ServiceMainCallsApi.editServiceDeploymentRestriction']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the webhook status for a git-based service. Checks if the Qovery webhook is correctly configured on the git provider (GitHub, GitLab, or Bitbucket).
          * @summary Get git webhook status for a service
          * @param {string} serviceId Service ID of an application/job/container/database
@@ -82903,6 +83259,19 @@ export const ServiceMainCallsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getServiceGitWebhookStatus(serviceId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ServiceMainCallsApi.getServiceGitWebhookStatus']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Lists the deployment restrictions of a service. Works for applications, jobs, Helm, Terraform and containers. Restrictions filter which pushes to the source branch deploy the service, by changed file path.  Works on any container, whatever its source: a container\'s restrictions survive a switch to an image source, without effect until it switches back to a Git repository source.  Returns 400 when the service is a kind that cannot have deployment restrictions: a database or an agentic workflow. 
+         * @summary List service deployment restrictions
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listServiceDeploymentRestrictions(serviceId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ServiceDeploymentRestrictionResponseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listServiceDeploymentRestrictions(serviceId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ServiceMainCallsApi.listServiceDeploymentRestrictions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -82929,6 +83298,40 @@ export const ServiceMainCallsApiFactory = function (configuration?: Configuratio
     const localVarFp = ServiceMainCallsApiFp(configuration)
     return {
         /**
+         * Creates a deployment restriction on a service. Works for applications, jobs, Helm, Terraform and containers. Restrictions filter which pushes to the source branch deploy the service, by changed file path.  Returns 400 when the service cannot have restrictions: a job or container with an image source, a Helm or Terraform service not using a Git repository, or a kind without restrictions: a database or an agentic workflow. 
+         * @summary Create a service deployment restriction
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {ServiceDeploymentRestrictionRequest} [serviceDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createServiceDeploymentRestriction(serviceId: string, serviceDeploymentRestrictionRequest?: ServiceDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): AxiosPromise<ServiceDeploymentRestrictionResponse> {
+            return localVarFp.createServiceDeploymentRestriction(serviceId, serviceDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Deletes a deployment restriction of a service. Works for applications, jobs, Helm, Terraform and containers.  Works on any container, whatever its source: a container\'s restrictions survive a switch to an image source, without effect until it switches back to a Git repository source.  Returns 400 when the service is a kind that cannot have deployment restrictions: a database or an agentic workflow. 
+         * @summary Delete a service deployment restriction
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteServiceDeploymentRestriction(serviceId: string, deploymentRestrictionId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteServiceDeploymentRestriction(serviceId, deploymentRestrictionId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Edits a deployment restriction of a service. Works for applications, jobs, Helm, Terraform and containers.  Returns 400 when the service is a container with an image source, or a kind that cannot have deployment restrictions: a database or an agentic workflow. 
+         * @summary Edit a service deployment restriction
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {string} deploymentRestrictionId Deployment Restriction ID
+         * @param {ServiceDeploymentRestrictionRequest} [serviceDeploymentRestrictionRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        editServiceDeploymentRestriction(serviceId: string, deploymentRestrictionId: string, serviceDeploymentRestrictionRequest?: ServiceDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): AxiosPromise<ServiceDeploymentRestrictionResponse> {
+            return localVarFp.editServiceDeploymentRestriction(serviceId, deploymentRestrictionId, serviceDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns the webhook status for a git-based service. Checks if the Qovery webhook is correctly configured on the git provider (GitHub, GitLab, or Bitbucket).
          * @summary Get git webhook status for a service
          * @param {string} serviceId Service ID of an application/job/container/database
@@ -82937,6 +83340,16 @@ export const ServiceMainCallsApiFactory = function (configuration?: Configuratio
          */
         getServiceGitWebhookStatus(serviceId: string, options?: RawAxiosRequestConfig): AxiosPromise<GitWebhookStatusResponse> {
             return localVarFp.getServiceGitWebhookStatus(serviceId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Lists the deployment restrictions of a service. Works for applications, jobs, Helm, Terraform and containers. Restrictions filter which pushes to the source branch deploy the service, by changed file path.  Works on any container, whatever its source: a container\'s restrictions survive a switch to an image source, without effect until it switches back to a Git repository source.  Returns 400 when the service is a kind that cannot have deployment restrictions: a database or an agentic workflow. 
+         * @summary List service deployment restrictions
+         * @param {string} serviceId Service ID of an application/job/container/database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listServiceDeploymentRestrictions(serviceId: string, options?: RawAxiosRequestConfig): AxiosPromise<ServiceDeploymentRestrictionResponseList> {
+            return localVarFp.listServiceDeploymentRestrictions(serviceId, options).then((request) => request(axios, basePath));
         },
         /**
          * Synchronizes the Qovery webhook configuration for a git-based service. - If no webhook exists, creates one with the correct configuration - If webhook exists but is misconfigured, updates it with the correct events - If webhook is already correctly configured, returns current status Works with GitHub, GitLab, and Bitbucket repositories. 
@@ -82959,6 +83372,46 @@ export const ServiceMainCallsApiFactory = function (configuration?: Configuratio
  */
 export class ServiceMainCallsApi extends BaseAPI {
     /**
+     * Creates a deployment restriction on a service. Works for applications, jobs, Helm, Terraform and containers. Restrictions filter which pushes to the source branch deploy the service, by changed file path.  Returns 400 when the service cannot have restrictions: a job or container with an image source, a Helm or Terraform service not using a Git repository, or a kind without restrictions: a database or an agentic workflow. 
+     * @summary Create a service deployment restriction
+     * @param {string} serviceId Service ID of an application/job/container/database
+     * @param {ServiceDeploymentRestrictionRequest} [serviceDeploymentRestrictionRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ServiceMainCallsApi
+     */
+    public createServiceDeploymentRestriction(serviceId: string, serviceDeploymentRestrictionRequest?: ServiceDeploymentRestrictionRequest, options?: RawAxiosRequestConfig) {
+        return ServiceMainCallsApiFp(this.configuration).createServiceDeploymentRestriction(serviceId, serviceDeploymentRestrictionRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Deletes a deployment restriction of a service. Works for applications, jobs, Helm, Terraform and containers.  Works on any container, whatever its source: a container\'s restrictions survive a switch to an image source, without effect until it switches back to a Git repository source.  Returns 400 when the service is a kind that cannot have deployment restrictions: a database or an agentic workflow. 
+     * @summary Delete a service deployment restriction
+     * @param {string} serviceId Service ID of an application/job/container/database
+     * @param {string} deploymentRestrictionId Deployment Restriction ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ServiceMainCallsApi
+     */
+    public deleteServiceDeploymentRestriction(serviceId: string, deploymentRestrictionId: string, options?: RawAxiosRequestConfig) {
+        return ServiceMainCallsApiFp(this.configuration).deleteServiceDeploymentRestriction(serviceId, deploymentRestrictionId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Edits a deployment restriction of a service. Works for applications, jobs, Helm, Terraform and containers.  Returns 400 when the service is a container with an image source, or a kind that cannot have deployment restrictions: a database or an agentic workflow. 
+     * @summary Edit a service deployment restriction
+     * @param {string} serviceId Service ID of an application/job/container/database
+     * @param {string} deploymentRestrictionId Deployment Restriction ID
+     * @param {ServiceDeploymentRestrictionRequest} [serviceDeploymentRestrictionRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ServiceMainCallsApi
+     */
+    public editServiceDeploymentRestriction(serviceId: string, deploymentRestrictionId: string, serviceDeploymentRestrictionRequest?: ServiceDeploymentRestrictionRequest, options?: RawAxiosRequestConfig) {
+        return ServiceMainCallsApiFp(this.configuration).editServiceDeploymentRestriction(serviceId, deploymentRestrictionId, serviceDeploymentRestrictionRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns the webhook status for a git-based service. Checks if the Qovery webhook is correctly configured on the git provider (GitHub, GitLab, or Bitbucket).
      * @summary Get git webhook status for a service
      * @param {string} serviceId Service ID of an application/job/container/database
@@ -82968,6 +83421,18 @@ export class ServiceMainCallsApi extends BaseAPI {
      */
     public getServiceGitWebhookStatus(serviceId: string, options?: RawAxiosRequestConfig) {
         return ServiceMainCallsApiFp(this.configuration).getServiceGitWebhookStatus(serviceId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lists the deployment restrictions of a service. Works for applications, jobs, Helm, Terraform and containers. Restrictions filter which pushes to the source branch deploy the service, by changed file path.  Works on any container, whatever its source: a container\'s restrictions survive a switch to an image source, without effect until it switches back to a Git repository source.  Returns 400 when the service is a kind that cannot have deployment restrictions: a database or an agentic workflow. 
+     * @summary List service deployment restrictions
+     * @param {string} serviceId Service ID of an application/job/container/database
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ServiceMainCallsApi
+     */
+    public listServiceDeploymentRestrictions(serviceId: string, options?: RawAxiosRequestConfig) {
+        return ServiceMainCallsApiFp(this.configuration).listServiceDeploymentRestrictions(serviceId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -84581,11 +85046,12 @@ export class TerraformDeploymentHistoryApi extends BaseAPI {
 export const TerraformDeploymentRestrictionApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Create a terraform deployment restriction
+         * Create a terraform deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Create a terraform deployment restriction
          * @param {string} terraformId 
          * @param {TerraformDeploymentRestrictionRequest} [terraformDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         createTerraformDeploymentRestriction: async (terraformId: string, terraformDeploymentRestrictionRequest?: TerraformDeploymentRestrictionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -84626,11 +85092,12 @@ export const TerraformDeploymentRestrictionApiAxiosParamCreator = function (conf
             };
         },
         /**
-         * Delete a terraform deployment restriction
+         * Delete a terraform deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Delete a terraform deployment restriction
          * @param {string} terraformId 
          * @param {string} deploymentRestrictionId 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         deleteTerraformDeploymentRestriction: async (terraformId: string, deploymentRestrictionId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -84671,12 +85138,13 @@ export const TerraformDeploymentRestrictionApiAxiosParamCreator = function (conf
             };
         },
         /**
-         * Edit a terraform deployment restriction
+         * Edit a terraform deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Edit a terraform deployment restriction
          * @param {string} terraformId 
          * @param {string} deploymentRestrictionId 
          * @param {TerraformDeploymentRestrictionRequest} [terraformDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         editTerraformDeploymentRestriction: async (terraformId: string, deploymentRestrictionId: string, terraformDeploymentRestrictionRequest?: TerraformDeploymentRestrictionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -84720,10 +85188,11 @@ export const TerraformDeploymentRestrictionApiAxiosParamCreator = function (conf
             };
         },
         /**
-         * Get terraform deployment restrictions
+         * Get terraform deployment restrictions  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Get terraform deployment restrictions
          * @param {string} terraformId 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getTerraformDeploymentRestrictions: async (terraformId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -84771,11 +85240,12 @@ export const TerraformDeploymentRestrictionApiFp = function(configuration?: Conf
     const localVarAxiosParamCreator = TerraformDeploymentRestrictionApiAxiosParamCreator(configuration)
     return {
         /**
-         * Create a terraform deployment restriction
+         * Create a terraform deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Create a terraform deployment restriction
          * @param {string} terraformId 
          * @param {TerraformDeploymentRestrictionRequest} [terraformDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async createTerraformDeploymentRestriction(terraformId: string, terraformDeploymentRestrictionRequest?: TerraformDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TerraformDeploymentRestrictionResponse>> {
@@ -84785,11 +85255,12 @@ export const TerraformDeploymentRestrictionApiFp = function(configuration?: Conf
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Delete a terraform deployment restriction
+         * Delete a terraform deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Delete a terraform deployment restriction
          * @param {string} terraformId 
          * @param {string} deploymentRestrictionId 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async deleteTerraformDeploymentRestriction(terraformId: string, deploymentRestrictionId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
@@ -84799,12 +85270,13 @@ export const TerraformDeploymentRestrictionApiFp = function(configuration?: Conf
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Edit a terraform deployment restriction
+         * Edit a terraform deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Edit a terraform deployment restriction
          * @param {string} terraformId 
          * @param {string} deploymentRestrictionId 
          * @param {TerraformDeploymentRestrictionRequest} [terraformDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async editTerraformDeploymentRestriction(terraformId: string, deploymentRestrictionId: string, terraformDeploymentRestrictionRequest?: TerraformDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TerraformDeploymentRestrictionResponse>> {
@@ -84814,10 +85286,11 @@ export const TerraformDeploymentRestrictionApiFp = function(configuration?: Conf
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Get terraform deployment restrictions
+         * Get terraform deployment restrictions  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Get terraform deployment restrictions
          * @param {string} terraformId 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async getTerraformDeploymentRestrictions(terraformId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TerraformDeploymentRestrictionResponseList>> {
@@ -84837,44 +85310,48 @@ export const TerraformDeploymentRestrictionApiFactory = function (configuration?
     const localVarFp = TerraformDeploymentRestrictionApiFp(configuration)
     return {
         /**
-         * Create a terraform deployment restriction
+         * Create a terraform deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Create a terraform deployment restriction
          * @param {string} terraformId 
          * @param {TerraformDeploymentRestrictionRequest} [terraformDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         createTerraformDeploymentRestriction(terraformId: string, terraformDeploymentRestrictionRequest?: TerraformDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): AxiosPromise<TerraformDeploymentRestrictionResponse> {
             return localVarFp.createTerraformDeploymentRestriction(terraformId, terraformDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Delete a terraform deployment restriction
+         * Delete a terraform deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Delete a terraform deployment restriction
          * @param {string} terraformId 
          * @param {string} deploymentRestrictionId 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         deleteTerraformDeploymentRestriction(terraformId: string, deploymentRestrictionId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteTerraformDeploymentRestriction(terraformId, deploymentRestrictionId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Edit a terraform deployment restriction
+         * Edit a terraform deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Edit a terraform deployment restriction
          * @param {string} terraformId 
          * @param {string} deploymentRestrictionId 
          * @param {TerraformDeploymentRestrictionRequest} [terraformDeploymentRestrictionRequest] 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         editTerraformDeploymentRestriction(terraformId: string, deploymentRestrictionId: string, terraformDeploymentRestrictionRequest?: TerraformDeploymentRestrictionRequest, options?: RawAxiosRequestConfig): AxiosPromise<TerraformDeploymentRestrictionResponse> {
             return localVarFp.editTerraformDeploymentRestriction(terraformId, deploymentRestrictionId, terraformDeploymentRestrictionRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get terraform deployment restrictions
+         * Get terraform deployment restrictions  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
          * @summary Get terraform deployment restrictions
          * @param {string} terraformId 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getTerraformDeploymentRestrictions(terraformId: string, options?: RawAxiosRequestConfig): AxiosPromise<TerraformDeploymentRestrictionResponseList> {
@@ -84891,11 +85368,12 @@ export const TerraformDeploymentRestrictionApiFactory = function (configuration?
  */
 export class TerraformDeploymentRestrictionApi extends BaseAPI {
     /**
-     * Create a terraform deployment restriction
+     * Create a terraform deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
      * @summary Create a terraform deployment restriction
      * @param {string} terraformId 
      * @param {TerraformDeploymentRestrictionRequest} [terraformDeploymentRestrictionRequest] 
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof TerraformDeploymentRestrictionApi
      */
@@ -84904,11 +85382,12 @@ export class TerraformDeploymentRestrictionApi extends BaseAPI {
     }
 
     /**
-     * Delete a terraform deployment restriction
+     * Delete a terraform deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
      * @summary Delete a terraform deployment restriction
      * @param {string} terraformId 
      * @param {string} deploymentRestrictionId 
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof TerraformDeploymentRestrictionApi
      */
@@ -84917,12 +85396,13 @@ export class TerraformDeploymentRestrictionApi extends BaseAPI {
     }
 
     /**
-     * Edit a terraform deployment restriction
+     * Edit a terraform deployment restriction  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
      * @summary Edit a terraform deployment restriction
      * @param {string} terraformId 
      * @param {string} deploymentRestrictionId 
      * @param {TerraformDeploymentRestrictionRequest} [terraformDeploymentRestrictionRequest] 
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof TerraformDeploymentRestrictionApi
      */
@@ -84931,10 +85411,11 @@ export class TerraformDeploymentRestrictionApi extends BaseAPI {
     }
 
     /**
-     * Get terraform deployment restrictions
+     * Get terraform deployment restrictions  Deprecated: use `/service/{serviceId}/deploymentRestriction`, which works for every service kind. This endpoint keeps working. 
      * @summary Get terraform deployment restrictions
      * @param {string} terraformId 
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof TerraformDeploymentRestrictionApi
      */
