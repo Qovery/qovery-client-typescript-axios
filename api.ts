@@ -20913,7 +20913,7 @@ export interface JobRequestAllOfScheduleOnStart {
     'entrypoint'?: string;
 }
 /**
- * 
+ * Where the job image comes from: - `image`: an image from a container registry; - `docker`: an image that Qovery builds from a Git repository, with a Dockerfile read from the repository (`dockerfile_path`) or sent in the request (`dockerfile_raw`).  Send `image` or `docker`, not both: a body with both returns 400, on create and on update. A `null` key counts as not sent.  On update (`PUT /job/{jobId}`), sending the other key switches the source in place. The job keeps its id, schedule, lifecycle events and variables. The switch does not deploy: a cron job keeps running its current image on schedule until the next deployment, which uses the new source. - A switch from `docker` to `image` removes the job\'s Git repository link and its Dockerfile settings (`dockerfile_path`, `dockerfile_raw`, `docker_target_build_stage`). When `build_settings` is not sent, it resets the job\'s build settings to the cluster defaults. When `build_settings` is sent, they are saved, as on any edit of an image job. - A switch to `docker` sends `git_repository` and a Dockerfile, as on create. When `build_settings` is not sent, the job keeps its stored build settings, or the cluster defaults when none are stored. - When not sent, `auto_deploy` and `auto_preview` are set to false on any switch, from `image` to `docker` or from `docker` to `image`: a switch never turns a trigger on by itself. - The job gets the missing built-in variables of its new source: `QOVERY_JOB_<ID>_GIT_COMMIT_ID` and `QOVERY_JOB_<ID>_GIT_BRANCH` for `docker`, `QOVERY_JOB_<ID>_TAG` for `image`. Those of the previous source are kept, with empty values. - `<ID>` is the job\'s engine id, the identifier its other built-in variables use, as in `QOVERY_JOB_<ID>_ENVIRONMENT_NAME`: `Z` followed by the first 8 characters of the job id, in upper case. It is not the full job id.  With `image`, on create and on update: - a `registry_id` of a registry in another organization returns 404, as for an unknown registry. The response does not name the registry; - an `image_name` with a `tag` not found in the registry returns 400. 
  * @export
  * @interface JobRequestAllOfSource
  */
@@ -20981,7 +20981,7 @@ export interface JobRequestAllOfSourceImage {
      */
     'tag'?: string;
     /**
-     * tag of the image container
+     * id of the container registry that holds the image
      * @type {string}
      * @memberof JobRequestAllOfSourceImage
      */
@@ -69605,7 +69605,7 @@ export const JobMainCallsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * - To edit the job you must have the admin permission. 
+         * - To edit the job you must have the admin permission. - `source` can switch the job between `image` and `docker` in place. The job keeps its id, schedule, lifecycle events and variables. A switch from `docker` to `image` removes the job\'s Git repository link and resets its build settings. See `source` in the request body for the details.  Returns 404 when `source.image.registry_id` is a registry of another organization. The response does not name the registry.  Returns 400 when: - `source` has both `image` and `docker`; - `source.image.image_name` with `source.image.tag` is not found in the registry. 
          * @summary Edit job
          * @param {string} jobId Job ID
          * @param {JobRequest} [jobRequest] 
@@ -69807,7 +69807,7 @@ export const JobMainCallsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * - To edit the job you must have the admin permission. 
+         * - To edit the job you must have the admin permission. - `source` can switch the job between `image` and `docker` in place. The job keeps its id, schedule, lifecycle events and variables. A switch from `docker` to `image` removes the job\'s Git repository link and resets its build settings. See `source` in the request body for the details.  Returns 404 when `source.image.registry_id` is a registry of another organization. The response does not name the registry.  Returns 400 when: - `source` has both `image` and `docker`; - `source.image.image_name` with `source.image.tag` is not found in the registry. 
          * @summary Edit job
          * @param {string} jobId Job ID
          * @param {JobRequest} [jobRequest] 
@@ -69883,7 +69883,7 @@ export const JobMainCallsApiFactory = function (configuration?: Configuration, b
             return localVarFp.deleteJob(jobId, skipReconcile, options).then((request) => request(axios, basePath));
         },
         /**
-         * - To edit the job you must have the admin permission. 
+         * - To edit the job you must have the admin permission. - `source` can switch the job between `image` and `docker` in place. The job keeps its id, schedule, lifecycle events and variables. A switch from `docker` to `image` removes the job\'s Git repository link and resets its build settings. See `source` in the request body for the details.  Returns 404 when `source.image.registry_id` is a registry of another organization. The response does not name the registry.  Returns 400 when: - `source` has both `image` and `docker`; - `source.image.image_name` with `source.image.tag` is not found in the registry. 
          * @summary Edit job
          * @param {string} jobId Job ID
          * @param {JobRequest} [jobRequest] 
@@ -69949,7 +69949,7 @@ export class JobMainCallsApi extends BaseAPI {
     }
 
     /**
-     * - To edit the job you must have the admin permission. 
+     * - To edit the job you must have the admin permission. - `source` can switch the job between `image` and `docker` in place. The job keeps its id, schedule, lifecycle events and variables. A switch from `docker` to `image` removes the job\'s Git repository link and resets its build settings. See `source` in the request body for the details.  Returns 404 when `source.image.registry_id` is a registry of another organization. The response does not name the registry.  Returns 400 when: - `source` has both `image` and `docker`; - `source.image.image_name` with `source.image.tag` is not found in the registry. 
      * @summary Edit job
      * @param {string} jobId Job ID
      * @param {JobRequest} [jobRequest] 
@@ -70607,7 +70607,7 @@ export const JobsApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Returns 404 when `source.image.registry_id` is a registry of another organization. The response does not name the registry.  Returns 400 when: - `source` has both `image` and `docker`; - `source.image.image_name` with `source.image.tag` is not found in the registry. 
          * @summary Create a job
          * @param {string} environmentId Environment ID
          * @param {JobRequest} [jobRequest] 
@@ -70805,7 +70805,7 @@ export const JobsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Returns 404 when `source.image.registry_id` is a registry of another organization. The response does not name the registry.  Returns 400 when: - `source` has both `image` and `docker`; - `source.image.image_name` with `source.image.tag` is not found in the registry. 
          * @summary Create a job
          * @param {string} environmentId Environment ID
          * @param {JobRequest} [jobRequest] 
@@ -70880,7 +70880,7 @@ export const JobsApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.cloneJob(jobId, cloneServiceRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Returns 404 when `source.image.registry_id` is a registry of another organization. The response does not name the registry.  Returns 400 when: - `source` has both `image` and `docker`; - `source.image.image_name` with `source.image.tag` is not found in the registry. 
          * @summary Create a job
          * @param {string} environmentId Environment ID
          * @param {JobRequest} [jobRequest] 
@@ -70945,7 +70945,7 @@ export class JobsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Returns 404 when `source.image.registry_id` is a registry of another organization. The response does not name the registry.  Returns 400 when: - `source` has both `image` and `docker`; - `source.image.image_name` with `source.image.tag` is not found in the registry. 
      * @summary Create a job
      * @param {string} environmentId Environment ID
      * @param {JobRequest} [jobRequest] 
