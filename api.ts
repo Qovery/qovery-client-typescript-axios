@@ -24143,6 +24143,44 @@ export interface OrganizationCurrentCost {
 /**
  * 
  * @export
+ * @interface OrganizationCustomDomainCheckListResponse
+ */
+export interface OrganizationCustomDomainCheckListResponse {
+    /**
+     * One result per domain name of one environment of the page, in the order of `listOrganizationCustomDomain`.
+     * @type {Array<OrganizationCustomDomainCheckResponse>}
+     * @memberof OrganizationCustomDomainCheckListResponse
+     */
+    'results': Array<OrganizationCustomDomainCheckResponse>;
+}
+/**
+ * The DNS checks of one domain name of one environment. `environment_id` and `domain` identify it, as in `OrganizationCustomDomainResponse`.
+ * @export
+ * @interface OrganizationCustomDomainCheckResponse
+ */
+export interface OrganizationCustomDomainCheckResponse {
+    /**
+     * Id of the environment of the domain.
+     * @type {string}
+     * @memberof OrganizationCustomDomainCheckResponse
+     */
+    'environment_id': string;
+    /**
+     * The domain name as `listOrganizationCustomDomain` returns it. A wildcard domain keeps its `*.` prefix.
+     * @type {string}
+     * @memberof OrganizationCustomDomainCheckResponse
+     */
+    'domain': string;
+    /**
+     * One check per service the domain routes to. Empty when no service of the domain can be checked.
+     * @type {Array<OrganizationCustomDomainServiceCheck>}
+     * @memberof OrganizationCustomDomainCheckResponse
+     */
+    'checks': Array<OrganizationCustomDomainServiceCheck>;
+}
+/**
+ * 
+ * @export
  * @interface OrganizationCustomDomainPaginatedResponseList
  */
 export interface OrganizationCustomDomainPaginatedResponseList {
@@ -24245,6 +24283,39 @@ export interface OrganizationCustomDomainResponseList {
      */
     'results': Array<OrganizationCustomDomainResponse>;
 }
+/**
+ * The DNS check of a domain for one service it routes to.
+ * @export
+ * @interface OrganizationCustomDomainServiceCheck
+ */
+export interface OrganizationCustomDomainServiceCheck {
+    /**
+     * Id of the service.
+     * @type {string}
+     * @memberof OrganizationCustomDomainServiceCheck
+     */
+    'service_id': string;
+    /**
+     * Type of the service. Only `APPLICATION`, `CONTAINER` and `HELM` services have custom domains.
+     * @type {ServiceTypeEnum}
+     * @memberof OrganizationCustomDomainServiceCheck
+     */
+    'service_type': ServiceTypeEnum;
+    /**
+     * The result of the check. `null` when the check could not run (cluster unreachable, timeout, service never deployed); `error_details` then gives the reason.
+     * @type {CheckedCustomDomainStatus}
+     * @memberof OrganizationCustomDomainServiceCheck
+     */
+    'status': CheckedCustomDomainStatus | null;
+    /**
+     * Why the check failed or could not run. `null` when the check succeeded.
+     * @type {string}
+     * @memberof OrganizationCustomDomainServiceCheck
+     */
+    'error_details': string | null;
+}
+
+
 /**
  * 
  * @export
@@ -74899,6 +74970,72 @@ export const OrganizationCustomDomainApiAxiosParamCreator = function (configurat
             };
         },
         /**
+         * Check the DNS of the custom domains of a page of the organization domains list, in one call. Only organization admins can call it. The query parameters are the ones of `listOrganizationCustomDomain`: the same values select the same domains, in the same order. There is one result per domain name of one environment, and one check per service the domain routes to. A check that could not run (cluster unreachable, timeout, service never deployed) has a `null` `status`; the other checks are still returned. 
+         * @summary Check the DNS of the organization\'s custom domains
+         * @param {string} organizationId Organization ID
+         * @param {string} [projectId] Only check the domains of this project. A project of another organization gives an empty list.
+         * @param {string} [environmentId] Only check the domains of this environment. An environment of another organization gives an empty list.
+         * @param {string} [search] Only check the domains whose name contains this text, ignoring case. The text is trimmed and matched literally, with no wildcard. A blank value does not filter.
+         * @param {number} [page] The page to check, starting at 1. A page after the last one has no results.
+         * @param {number} [pageSize] The number of domains per page.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkOrganizationCustomDomains: async (organizationId: string, projectId?: string, environmentId?: string, search?: string, page?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('checkOrganizationCustomDomains', 'organizationId', organizationId)
+            const localVarPath = `/organization/{organizationId}/customDomain/check`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (projectId !== undefined) {
+                localVarQueryParameter['projectId'] = projectId;
+            }
+
+            if (environmentId !== undefined) {
+                localVarQueryParameter['environmentId'] = environmentId;
+            }
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * List the custom domains of every environment of the organization. Only organization admins can call it. Each result is one domain name of one environment, with every route that serves it: a domain shared by several services of an environment is a single result. Results are sorted by project name, environment name, environment id, then domain. A page never splits a domain. 
          * @summary List organization custom domains
          * @param {string} organizationId Organization ID
@@ -74989,6 +75126,24 @@ export const OrganizationCustomDomainApiFp = function(configuration?: Configurat
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Check the DNS of the custom domains of a page of the organization domains list, in one call. Only organization admins can call it. The query parameters are the ones of `listOrganizationCustomDomain`: the same values select the same domains, in the same order. There is one result per domain name of one environment, and one check per service the domain routes to. A check that could not run (cluster unreachable, timeout, service never deployed) has a `null` `status`; the other checks are still returned. 
+         * @summary Check the DNS of the organization\'s custom domains
+         * @param {string} organizationId Organization ID
+         * @param {string} [projectId] Only check the domains of this project. A project of another organization gives an empty list.
+         * @param {string} [environmentId] Only check the domains of this environment. An environment of another organization gives an empty list.
+         * @param {string} [search] Only check the domains whose name contains this text, ignoring case. The text is trimmed and matched literally, with no wildcard. A blank value does not filter.
+         * @param {number} [page] The page to check, starting at 1. A page after the last one has no results.
+         * @param {number} [pageSize] The number of domains per page.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async checkOrganizationCustomDomains(organizationId: string, projectId?: string, environmentId?: string, search?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationCustomDomainCheckListResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkOrganizationCustomDomains(organizationId, projectId, environmentId, search, page, pageSize, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrganizationCustomDomainApi.checkOrganizationCustomDomains']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * List the custom domains of every environment of the organization. Only organization admins can call it. Each result is one domain name of one environment, with every route that serves it: a domain shared by several services of an environment is a single result. Results are sorted by project name, environment name, environment id, then domain. A page never splits a domain. 
          * @summary List organization custom domains
          * @param {string} organizationId Organization ID
@@ -75028,6 +75183,21 @@ export const OrganizationCustomDomainApiFactory = function (configuration?: Conf
             return localVarFp.bulkDeleteOrganizationCustomDomain(organizationId, customDomainBulkDeleteItemRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * Check the DNS of the custom domains of a page of the organization domains list, in one call. Only organization admins can call it. The query parameters are the ones of `listOrganizationCustomDomain`: the same values select the same domains, in the same order. There is one result per domain name of one environment, and one check per service the domain routes to. A check that could not run (cluster unreachable, timeout, service never deployed) has a `null` `status`; the other checks are still returned. 
+         * @summary Check the DNS of the organization\'s custom domains
+         * @param {string} organizationId Organization ID
+         * @param {string} [projectId] Only check the domains of this project. A project of another organization gives an empty list.
+         * @param {string} [environmentId] Only check the domains of this environment. An environment of another organization gives an empty list.
+         * @param {string} [search] Only check the domains whose name contains this text, ignoring case. The text is trimmed and matched literally, with no wildcard. A blank value does not filter.
+         * @param {number} [page] The page to check, starting at 1. A page after the last one has no results.
+         * @param {number} [pageSize] The number of domains per page.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkOrganizationCustomDomains(organizationId: string, projectId?: string, environmentId?: string, search?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig): AxiosPromise<OrganizationCustomDomainCheckListResponse> {
+            return localVarFp.checkOrganizationCustomDomains(organizationId, projectId, environmentId, search, page, pageSize, options).then((request) => request(axios, basePath));
+        },
+        /**
          * List the custom domains of every environment of the organization. Only organization admins can call it. Each result is one domain name of one environment, with every route that serves it: a domain shared by several services of an environment is a single result. Results are sorted by project name, environment name, environment id, then domain. A page never splits a domain. 
          * @summary List organization custom domains
          * @param {string} organizationId Organization ID
@@ -75063,6 +75233,23 @@ export class OrganizationCustomDomainApi extends BaseAPI {
      */
     public bulkDeleteOrganizationCustomDomain(organizationId: string, customDomainBulkDeleteItemRequest: Array<CustomDomainBulkDeleteItemRequest>, options?: RawAxiosRequestConfig) {
         return OrganizationCustomDomainApiFp(this.configuration).bulkDeleteOrganizationCustomDomain(organizationId, customDomainBulkDeleteItemRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Check the DNS of the custom domains of a page of the organization domains list, in one call. Only organization admins can call it. The query parameters are the ones of `listOrganizationCustomDomain`: the same values select the same domains, in the same order. There is one result per domain name of one environment, and one check per service the domain routes to. A check that could not run (cluster unreachable, timeout, service never deployed) has a `null` `status`; the other checks are still returned. 
+     * @summary Check the DNS of the organization\'s custom domains
+     * @param {string} organizationId Organization ID
+     * @param {string} [projectId] Only check the domains of this project. A project of another organization gives an empty list.
+     * @param {string} [environmentId] Only check the domains of this environment. An environment of another organization gives an empty list.
+     * @param {string} [search] Only check the domains whose name contains this text, ignoring case. The text is trimmed and matched literally, with no wildcard. A blank value does not filter.
+     * @param {number} [page] The page to check, starting at 1. A page after the last one has no results.
+     * @param {number} [pageSize] The number of domains per page.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationCustomDomainApi
+     */
+    public checkOrganizationCustomDomains(organizationId: string, projectId?: string, environmentId?: string, search?: string, page?: number, pageSize?: number, options?: RawAxiosRequestConfig) {
+        return OrganizationCustomDomainApiFp(this.configuration).checkOrganizationCustomDomains(organizationId, projectId, environmentId, search, page, pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
